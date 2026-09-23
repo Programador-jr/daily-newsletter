@@ -3,15 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Resumo Diário: política, economia, tecnologia, Acre, Brasil e mundo.">
-  <title>Resumo Diário</title>
+  <meta name="description" content="King's Newsletter: política, economia, tecnologia, Acre, Brasil e mundo.">
+  <title>King's Newsletter</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="./">Resumo Diário</a>
-      <span class="edition-label">Edição diária</span>
+      <a class="brand" href="./">King's Newsletter</a>
+      <div class="header-right">
+        <span class="edition-label">Edição diária</span>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
+          <i class="fas fa-sun sun-icon"></i>
+          <i class="fas fa-moon moon-icon"></i>
+        </button>
+      </div>
     </div>
   </header>
   <main class="container">
@@ -22,11 +29,11 @@
     </section>
     <section id="news-grid" class="news-grid" aria-live="polite"></section>
     <section class="about">
-      <div><p class="eyebrow">SOBRE O RESUMO</p><h2>Informação antes da opinião.</h2></div>
+      <div><p class="eyebrow">SOBRE O KING'S NEWSLETTER</p><h2>Informação antes da opinião.</h2></div>
       <p>O objetivo é separar o fato do comentário: cada edição resume o acontecimento e explica por que ele merece atenção. As fontes ficam disponíveis em cada notícia.</p>
     </section>
   </main>
-  <footer class="site-footer"><div class="container footer-inner"><span>Resumo Diário</span><span>Atualização diária</span></div></footer>
+  <footer class="site-footer"><div class="container footer-inner"><span>King's Newsletter</span><span>Atualização diária</span></div></footer>
   <script src="script.js"></script>
 </body>
 </html>
