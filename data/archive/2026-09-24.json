@@ -108,6 +108,69 @@
       "source": "The Guardian",
       "publishedAt": "24/09/2026",
       "url": "https://www.theguardian.com/technology/artificialintelligenceai/2026/sep/24/all"
+    },
+    {
+      "category": "Eleições",
+      "title": "Justiça Eleitoral amplia acessibilidade para as eleições de 2026",
+      "summary": "Cerca de 1,97 milhão de eleitoras e eleitores com deficiência estão aptos a votar neste ano.",
+      "context": "A Agência Brasil, com dados do TSE, informou que o eleitorado com deficiência cresceu 42% desde 2022 e que o número de seções principais com acessibilidade subiu para 220.577.",
+      "source": "Agência Brasil",
+      "publishedAt": "24/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/conheca-os-recursos-de-acessibilidade-que-ampliam-autonomia-na-votacao"
+    },
+    {
+      "category": "Eleições",
+      "title": "Seis candidatos disputam o governo do Acre em 2026",
+      "summary": "O Acre tem 614.375 eleitores aptos a votar e seis candidatos registrados para o governo estadual.",
+      "context": "A Agência Brasil publicou nesta quinta-feira um panorama da disputa no estado. O primeiro turno está marcado para 4 de outubro.",
+      "source": "Agência Brasil",
+      "publishedAt": "24/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/eleicoes-2026-saiba-quem-sao-os-candidatos-ao-governo-do-acre"
+    },
+    {
+      "category": "Eleições",
+      "title": "PF deflagra operação sobre desvio de recursos e financiamento eleitoral irregular",
+      "summary": "A Polícia Federal cumpriu seis mandados de busca e apreensão em investigação relacionada às eleições de 2022 no Amazonas.",
+      "context": "Segundo a PF, a investigação apura suspeitas de desvio de recursos públicos, lavagem de dinheiro e financiamento eleitoral irregular. A Justiça Eleitoral determinou bloqueio de bens e valores superiores a R$ 17 milhões.",
+      "source": "Polícia Federal",
+      "publishedAt": "24/09/2026",
+      "url": "https://www.gov.br/pf/pt-br/assuntos/noticias/2026/09/pf-investiga-desvio-de-recursos-publicos-e-financiamento-eleitoral-irregular"
+    },
+    {
+      "category": "Economia",
+      "title": "Bolsa Família paga parcela de setembro para beneficiários com NIS final 6",
+      "summary": "A Caixa iniciou nesta quinta-feira o pagamento da parcela de setembro para beneficiários cujo NIS termina em 6.",
+      "context": "Segundo a Agência Brasil, 19,29 milhões de famílias recebem o benefício neste mês, com valor médio de R$ 678,18. O pagamento mínimo é de R$ 600.",
+      "source": "Agência Brasil",
+      "publishedAt": "24/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/beneficiarios-com-nis-de-final-6-recebem-bolsa-familia-de-setembro"
+    },
+    {
+      "category": "Eleições",
+      "title": "Sete candidatos disputam o governo do Amazonas nas eleições de 2026",
+      "summary": "O Amazonas tem 2.801.182 eleitores aptos a votar e sete candidatos ao governo estadual.",
+      "context": "A Agência Brasil publicou o levantamento nesta quinta-feira. O primeiro turno ocorre em 4 de outubro e eventual segundo turno em 25 de outubro.",
+      "source": "Agência Brasil",
+      "publishedAt": "24/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/sete-candidatos-concorrem-ao-governo-do-amazonas-veja-quem-sao"
+    },
+    {
+      "category": "Eleições",
+      "title": "Roraima tem cinco candidatos na disputa pelo governo estadual",
+      "summary": "Cinco candidatos concorrem ao governo de Roraima nas eleições de 2026, segundo levantamento da Agência Brasil.",
+      "context": "O estado tem 401.496 eleitores aptos a votar. O primeiro turno está marcado para 4 de outubro.",
+      "source": "Agência Brasil",
+      "publishedAt": "24/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/saiba-quais-sao-os-candidatos-na-disputa-ao-governo-de-roraima"
+    },
+    {
+      "category": "Geral",
+      "title": "Mega-Sena sorteia prêmio estimado em R$ 38 milhões nesta quinta-feira",
+      "summary": "O concurso 3.062 da Mega-Sena será sorteado nesta quinta-feira, com prêmio estimado em R$ 38 milhões.",
+      "context": "Segundo a Agência Brasil, as apostas podem ser feitas até as 20h e o sorteio ocorre às 21h, no horário de Brasília.",
+      "source": "Agência Brasil",
+      "publishedAt": "24/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/geral/noticia/2026-09/mega-sena-sorteia-premio-acumulado-de-r-38-milhoes-nesta-quinta-feira"
     }
   ]
 }
