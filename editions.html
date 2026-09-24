@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="King's Newsletter: política, economia, tecnologia, Brasil e mundo.">
-  <title>King's Newsletter - Home</title>
+  <title>King's Newsletter - Edições</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,10 +20,14 @@
       </div>
       <nav>
         <ul>
-          <li><a href="index.html" class="active">Home</a></li>
-          <li><a href="editions.html">Edições</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="editions.html" class="active">Edições</a></li>
           <li><a href="about.html">Sobre</a></li>
         </ul>
+        <div class="nav-search">
+          <input type="text" id="search-input" placeholder="Buscar notícias...">
+          <i class="fas fa-search"></i>
+        </div>
       </nav>
       <div class="theme-toggle">
         <span class="theme-label" id="theme-label"></span>
@@ -35,16 +39,17 @@
     </header>
 
     <main>
-      <section class="hero">
-        <p class="eyebrow" id="edition-date">CARREGANDO...</p>
-        <h1>As notícias que importam,<br>sem enrolação.</h1>
-        <p class="lead">Um briefing direto com resumo e contexto sobre política, economia, tecnologia, Brasil e mundo.</p>
-        <a href="editions.html" class="cta-button">Ver Edição Atual</a>
-      </section>
-      
-      <section class="preview-section">
-        <h2>Destaque de Hoje</h2>
-        <div id="featured-news" class="featured-news"></div>
+      <section class="editions">
+        <h2>Edição Atual</h2>
+        <div class="filter-buttons" id="filter-buttons">
+          <button class="filter-btn active" data-filter="all">Todas</button>
+          <button class="filter-btn" data-filter="Política">Política</button>
+          <button class="filter-btn" data-filter="Economia">Economia</button>
+          <button class="filter-btn" data-filter="Tecnologia">Tecnologia</button>
+          <button class="filter-btn" data-filter="Brasil">Brasil</button>
+          <button class="filter-btn" data-filter="Mundo">Mundo</button>
+        </div>
+        <div id="news-grid" class="news-grid" aria-live="polite"></div>
       </section>
     </main>
 
