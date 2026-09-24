@@ -2,46 +2,82 @@
   "date": "2026-09-24",
   "stories": [
     {
-      "category": "Eleições",
-      "title": "Flávio Bolsonaro procura União-PP em busca de apoio para o segundo turno",
-      "summary": "O candidato do PL busca apoio do União-PP para uma eventual segunda etapa da eleição presidencial.",
-      "context": "A Folha informou que o partido avalia condições para um eventual apoio, incluindo articulações relacionadas ao Senado. A informação foi publicada às 4h de 24 de setembro.",
-      "source": "Folha de S.Paulo",
+      "category": "Economia",
+      "title": "Banco Central reduz projeção de crescimento da economia para 1,8% em 2026",
+      "summary": "O Banco Central reduziu de 2% para 1,8% a projeção de crescimento do PIB brasileiro em 2026 e manteve em 5,2% a estimativa de inflação.",
+      "context": "O Relatório de Política Monetária aponta desaceleração da atividade, inflação ainda acima da meta e necessidade de cautela na condução dos juros.",
+      "source": "Agência Brasil",
       "publishedAt": "24/09/2026",
-      "url": "https://www1.folha.uol.com.br/poder/2026/09/flavio-bolsonaro-procura-uniao-pp-que-avalia-apoio-no-2o-turno-com-garantia-para-alcolumbre-no-senado.shtml"
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/bc-reduz-projecao-de-crescimento-da-economia-para-18"
     },
     {
       "category": "Eleições",
-      "title": "Debate da CNN discute possíveis interferências externas nas eleições",
-      "summary": "O programa O Grande Debate analisou a possibilidade de interferência dos Estados Unidos no processo eleitoral brasileiro.",
-      "context": "O conteúdo foi publicado pela CNN Brasil às 3h24 de 24 de setembro e apresenta posições distintas dos comentaristas sobre o tema.",
+      "title": "Pesquisa PoderData aponta 51% de desaprovação ao governo Lula",
+      "summary": "Levantamento divulgado pela CNN Brasil mostra 51% de desaprovação e 42% de aprovação ao governo federal.",
+      "context": "A pesquisa ouviu 3 mil eleitores entre 20 e 23 de setembro, com margem de erro de 1,8 ponto percentual e registro no TSE sob o protocolo BR-01739/2026.",
       "source": "CNN Brasil",
       "publishedAt": "24/09/2026",
-      "url": "https://www.cnnbrasil.com.br/eleicoes/o-grande-debate-interferencia-dos-eua-e-ameaca-ou-discurso-eleitoral/"
+      "url": "https://www.cnnbrasil.com.br/eleicoes/poderdata-aya-51-desaprovam-governo-lula-42-aprovam/"
+    },
+    {
+      "category": "Eleições",
+      "title": "Nova pesquisa Futura mostra disputa presidencial acirrada",
+      "summary": "Segundo a CNN Brasil, levantamento Futura divulgado nesta quinta-feira registrou Flávio Bolsonaro à frente de Lula no primeiro turno e também no segundo turno simulado.",
+      "context": "Os resultados são de uma pesquisa eleitoral específica e devem ser interpretados junto com sua metodologia, período de coleta e margem de erro; não representam previsão do resultado final.",
+      "source": "CNN Brasil",
+      "publishedAt": "24/09/2026",
+      "url": "https://www.cnnbrasil.com.br/tudo-sobre/luiz-inacio-lula-da-silva-lula/"
+    },
+    {
+      "category": "Eleições",
+      "title": "Sete candidatos disputam o governo do Amazonas",
+      "summary": "O Amazonas tem 2.801.182 eleitores aptos a votar e sete candidaturas registradas para o governo estadual.",
+      "context": "A Agência Brasil informa que o primeiro turno será realizado em 4 de outubro e eventual segundo turno em 25 de outubro.",
+      "source": "Agência Brasil",
+      "publishedAt": "24/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/sete-candidatos-concorrem-ao-governo-do-amazonas-veja-quem-sao"
+    },
+    {
+      "category": "Economia",
+      "title": "Bolsa Família paga parcela de setembro para beneficiários com NIS final 6",
+      "summary": "A Caixa iniciou o pagamento da parcela de setembro para beneficiários cujo Número de Inscrição Social termina em 6.",
+      "context": "Neste mês, 19,29 milhões de famílias recebem o benefício, com valor médio de R$ 678,18 e valor mínimo de R$ 600.",
+      "source": "Agência Brasil",
+      "publishedAt": "24/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/beneficiarios-com-nis-de-final-6-recebem-bolsa-familia-de-setembro"
+    },
+    {
+      "category": "Tecnologia e IA",
+      "title": "BlackRock vê potencial do Brasil para atrair investimentos em inteligência artificial",
+      "summary": "O presidente-executivo da BlackRock Brasil afirmou que o país tem capacidade de atrair investimentos ligados à IA, mas precisa melhorar seu posicionamento competitivo.",
+      "context": "A avaliação destaca energia, infraestrutura e a necessidade de um arcabouço regulatório capaz de aumentar a competitividade brasileira na cadeia de inteligência artificial.",
+      "source": "Reuters via UOL Tilt",
+      "publishedAt": "24/09/2026",
+      "url": "https://www.uol.com.br/tilt/noticias/reuters/2026/09/24/brasil-tem-capacidade-de-atrair-investimento-em-ia-questao-e-como-se-posicionar-diz-blackrock.amp.htm"
     },
     {
       "category": "Mundo",
-      "title": "Taiwan amplia patrulhamento marítimo em área disputada do Mar do Sul da China",
-      "summary": "Taiwan reforçou a capacidade de patrulhamento marítimo ao redor das ilhas Pratas, em uma área disputada do Mar do Sul da China.",
-      "context": "A Reuters informou que embarcações maiores passaram a ser enviadas regularmente para a região.",
+      "title": "EUA e China estendem trégua comercial durante visita de Xi Jinping",
+      "summary": "Washington e Pequim estenderam a trégua comercial enquanto Donald Trump recebe o presidente chinês Xi Jinping nos Estados Unidos.",
+      "context": "A Reuters informa que comércio, tarifas e negociações entre as duas maiores economias estão no centro da visita diplomática.",
       "source": "Reuters",
       "publishedAt": "24/09/2026",
-      "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/09/24/taiwan-upgrades-maritime-patrol-capacity-for-vulnerable-south-china-sea-outpost"
+      "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/09/24/us-says-china-trade-truce-extended-as-trump-welcomes-xi"
     },
     {
       "category": "Mundo",
       "title": "Venezuela promete eleições durante transição política",
-      "summary": "A presidente interina da Venezuela, Delcy Rodríguez, afirmou na Assembleia Geral da ONU que o país realizará eleições durante a transição.",
-      "context": "A declaração foi feita em Nova York, segundo a Reuters, em meio às discussões internacionais sobre a situação política venezuelana.",
+      "summary": "A presidente interina da Venezuela, Delcy Rodríguez, afirmou na ONU que o país realizará eleições durante a transição para uma democracia plena.",
+      "context": "A declaração foi feita em Nova York durante a Assembleia Geral das Nações Unidas, segundo a Reuters.",
       "source": "Reuters",
       "publishedAt": "24/09/2026",
       "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/09/24/venezuela-s-rodriguez-promises-elections-in-transition-to-full-democracy"
     },
     {
       "category": "Mundo",
-      "title": "Ataque russo a Kiev deixa mortos e feridos",
-      "summary": "Forças russas atacaram Kiev com mísseis balísticos na madrugada de quinta-feira, segundo autoridades ucranianas.",
-      "context": "A Reuters informou duas mortes e seis feridos no ataque, com destroços atingindo diferentes áreas da capital.",
+      "title": "Ataque russo a Kiev deixa mortos e feridos, dizem autoridades ucranianas",
+      "summary": "Um ataque com mísseis contra a capital ucraniana matou duas pessoas e feriu outras seis, de acordo com autoridades locais citadas pela Reuters.",
+      "context": "O episódio ocorreu durante a madrugada de quinta-feira, em meio à continuidade da guerra entre Rússia e Ucrânia.",
       "source": "Reuters",
       "publishedAt": "24/09/2026",
       "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/09/24/kyiv-under-russian-missile-attack-two-dead-six-injured-mayor-says"
@@ -49,128 +85,11 @@
     {
       "category": "Mundo",
       "title": "EUA anunciam mais US$ 267 milhões para combate ao Ebola na África Central",
-      "summary": "O Departamento de Estado dos EUA anunciou novo financiamento para combater o surto de Ebola na África Central.",
-      "context": "O anúncio foi feito na Assembleia Geral da ONU e eleva o apoio americano às ações de resposta ao surto.",
+      "summary": "O governo americano anunciou novo financiamento para ações de resposta ao surto de Ebola na África Central.",
+      "context": "O anúncio foi feito durante a Assembleia Geral da ONU e amplia o apoio dos Estados Unidos às operações de saúde pública na região.",
       "source": "Reuters",
       "publishedAt": "24/09/2026",
       "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/09/24/us-pledges-267-million-more-to-fight-ebola-in-central-africa"
-    },
-    {
-      "category": "Mundo",
-      "title": "EUA e China estendem trégua comercial durante visita de Xi",
-      "summary": "Washington e Pequim estenderam a trégua comercial enquanto Donald Trump recebe Xi Jinping nos Estados Unidos.",
-      "context": "A Reuters informou que a relação comercial e as negociações entre as duas maiores economias estão no centro da visita.",
-      "source": "Reuters",
-      "publishedAt": "24/09/2026",
-      "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/09/24/us-says-china-trade-truce-extended-as-trump-welcomes-xi"
-    },
-    {
-      "category": "Mundo",
-      "title": "Rússia realiza novos ataques com drones contra Kiev",
-      "summary": "A capital ucraniana foi alvo de uma nova onda de ataques com drones russos durante a madrugada.",
-      "context": "Segundo a Reuters, instalações ferroviárias, armazéns e infraestrutura de combustíveis foram atingidos.",
-      "source": "Reuters",
-      "publishedAt": "24/09/2026",
-      "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/09/24/russia-pounds-kyiv-with-drone-strikes-as-zelenskiy-addresses-un"
-    },
-    {
-      "category": "Mundo",
-      "title": "Ucrânia transfere dois prisioneiros norte-coreanos para a Coreia do Sul",
-      "summary": "A Ucrânia transferiu para a Coreia do Sul dois soldados norte-coreanos capturados durante a guerra.",
-      "context": "A informação foi divulgada pelo presidente Volodymyr Zelensky e noticiada pela Reuters.",
-      "source": "Reuters",
-      "publishedAt": "24/09/2026",
-      "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/09/24/ukraine-sent-two-captured-north-korean-soldiers-to-south-korea-zelenskiy-says"
-    },
-    {
-      "category": "Economia",
-      "title": "Mercados asiáticos oscilam enquanto investidores acompanham juros e tensões geopolíticas",
-      "summary": "Os mercados de dívida e ações da Ásia começaram a quinta-feira sob pressão, com investidores monitorando juros, petróleo e tensões no Oriente Médio.",
-      "context": "A Reuters destacou a alta dos juros dos títulos japoneses e a atenção dos mercados às negociações entre Estados Unidos e China.",
-      "source": "Reuters",
-      "publishedAt": "24/09/2026",
-      "url": "https://www.fidelity.com/news/article/top-news/202609232148RTRSNEWSCOMBINED_KBN3VA051-OUSBS_1"
-    },
-    {
-      "category": "Tecnologia",
-      "title": "Meta apresenta novos óculos inteligentes sem câmera",
-      "summary": "A Meta apresentou uma nova linha de óculos inteligentes voltada a experiências de realidade virtual e recursos digitais.",
-      "context": "A novidade aparece entre os principais destaques de tecnologia publicados nesta quinta-feira.",
-      "source": "The Guardian",
-      "publishedAt": "24/09/2026",
-      "url": "https://www.theguardian.com/technology/artificialintelligenceai/2026/sep/24/all"
-    },
-    {
-      "category": "Tecnologia",
-      "title": "Debate sobre segurança de agentes de IA ganha destaque após caso na Austrália",
-      "summary": "O governo australiano informou que um agente de IA acessou sistemas do Medicare, levantando discussões sobre segurança e divulgação de incidentes.",
-      "context": "O caso ganhou repercussão internacional nesta quinta-feira e reacendeu o debate sobre os riscos de agentes capazes de executar ações em sistemas digitais.",
-      "source": "The Guardian",
-      "publishedAt": "24/09/2026",
-      "url": "https://www.theguardian.com/technology/artificialintelligenceai/2026/sep/24/all"
-    },
-    {
-      "category": "Eleições",
-      "title": "Justiça Eleitoral amplia acessibilidade para as eleições de 2026",
-      "summary": "Cerca de 1,97 milhão de eleitoras e eleitores com deficiência estão aptos a votar neste ano.",
-      "context": "A Agência Brasil, com dados do TSE, informou que o eleitorado com deficiência cresceu 42% desde 2022 e que o número de seções principais com acessibilidade subiu para 220.577.",
-      "source": "Agência Brasil",
-      "publishedAt": "24/09/2026",
-      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/conheca-os-recursos-de-acessibilidade-que-ampliam-autonomia-na-votacao"
-    },
-    {
-      "category": "Eleições",
-      "title": "Seis candidatos disputam o governo do Acre em 2026",
-      "summary": "O Acre tem 614.375 eleitores aptos a votar e seis candidatos registrados para o governo estadual.",
-      "context": "A Agência Brasil publicou nesta quinta-feira um panorama da disputa no estado. O primeiro turno está marcado para 4 de outubro.",
-      "source": "Agência Brasil",
-      "publishedAt": "24/09/2026",
-      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/eleicoes-2026-saiba-quem-sao-os-candidatos-ao-governo-do-acre"
-    },
-    {
-      "category": "Eleições",
-      "title": "PF deflagra operação sobre desvio de recursos e financiamento eleitoral irregular",
-      "summary": "A Polícia Federal cumpriu seis mandados de busca e apreensão em investigação relacionada às eleições de 2022 no Amazonas.",
-      "context": "Segundo a PF, a investigação apura suspeitas de desvio de recursos públicos, lavagem de dinheiro e financiamento eleitoral irregular. A Justiça Eleitoral determinou bloqueio de bens e valores superiores a R$ 17 milhões.",
-      "source": "Polícia Federal",
-      "publishedAt": "24/09/2026",
-      "url": "https://www.gov.br/pf/pt-br/assuntos/noticias/2026/09/pf-investiga-desvio-de-recursos-publicos-e-financiamento-eleitoral-irregular"
-    },
-    {
-      "category": "Economia",
-      "title": "Bolsa Família paga parcela de setembro para beneficiários com NIS final 6",
-      "summary": "A Caixa iniciou nesta quinta-feira o pagamento da parcela de setembro para beneficiários cujo NIS termina em 6.",
-      "context": "Segundo a Agência Brasil, 19,29 milhões de famílias recebem o benefício neste mês, com valor médio de R$ 678,18. O pagamento mínimo é de R$ 600.",
-      "source": "Agência Brasil",
-      "publishedAt": "24/09/2026",
-      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/beneficiarios-com-nis-de-final-6-recebem-bolsa-familia-de-setembro"
-    },
-    {
-      "category": "Eleições",
-      "title": "Sete candidatos disputam o governo do Amazonas nas eleições de 2026",
-      "summary": "O Amazonas tem 2.801.182 eleitores aptos a votar e sete candidatos ao governo estadual.",
-      "context": "A Agência Brasil publicou o levantamento nesta quinta-feira. O primeiro turno ocorre em 4 de outubro e eventual segundo turno em 25 de outubro.",
-      "source": "Agência Brasil",
-      "publishedAt": "24/09/2026",
-      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/sete-candidatos-concorrem-ao-governo-do-amazonas-veja-quem-sao"
-    },
-    {
-      "category": "Eleições",
-      "title": "Roraima tem cinco candidatos na disputa pelo governo estadual",
-      "summary": "Cinco candidatos concorrem ao governo de Roraima nas eleições de 2026, segundo levantamento da Agência Brasil.",
-      "context": "O estado tem 401.496 eleitores aptos a votar. O primeiro turno está marcado para 4 de outubro.",
-      "source": "Agência Brasil",
-      "publishedAt": "24/09/2026",
-      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/saiba-quais-sao-os-candidatos-na-disputa-ao-governo-de-roraima"
-    },
-    {
-      "category": "Geral",
-      "title": "Mega-Sena sorteia prêmio estimado em R$ 38 milhões nesta quinta-feira",
-      "summary": "O concurso 3.062 da Mega-Sena será sorteado nesta quinta-feira, com prêmio estimado em R$ 38 milhões.",
-      "context": "Segundo a Agência Brasil, as apostas podem ser feitas até as 20h e o sorteio ocorre às 21h, no horário de Brasília.",
-      "source": "Agência Brasil",
-      "publishedAt": "24/09/2026",
-      "url": "https://agenciabrasil.ebc.com.br/geral/noticia/2026-09/mega-sena-sorteia-premio-acumulado-de-r-38-milhoes-nesta-quinta-feira"
     }
   ]
 }
