@@ -86,24 +86,13 @@ fetch("data/news.json")
     } else if (currentPage === 'editions.html') {
       // Editions page - show full grid with filters
       currentStories = data.stories;
+      setupCategoryFilters(currentStories);
       
-      // Setup search and filters
+      // Setup search
       if (searchInput) {
         searchInput.addEventListener('input', (e) => {
           currentSearch = e.target.value.toLowerCase();
           applyFiltersAndSearch();
-        });
-      }
-      
-      if (filterButtons) {
-        const buttons = filterButtons.querySelectorAll('.filter-btn');
-        buttons.forEach(btn => {
-          btn.addEventListener('click', () => {
-            buttons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentFilter = btn.dataset.filter;
-            applyFiltersAndSearch();
-          });
         });
       }
       
@@ -186,21 +175,11 @@ window.loadArchiveEdition = function(date) {
       // Update current stories and stats
       currentStories = data.stories;
       
-      if (editionStats) {
-        const stats = calculateStats(data.stories);
-        editionStats.innerHTML = stats;
-      }
       
-      // Reset filters
       currentFilter = 'all';
       currentSearch = '';
       if (searchInput) searchInput.value = '';
-      if (filterButtons) {
-        filterButtons.querySelectorAll('.filter-btn').forEach(btn => {
-          btn.classList.remove('active');
-          if (btn.dataset.filter === 'all') btn.classList.add('active');
-        });
-      }
+      setupCategoryFilters(currentStories);
       
       // Render stories
       renderStories(currentStories);
@@ -245,6 +224,24 @@ function renderStories(stories) {
       `<article class="story ${i === 0 ? "featured" : ""}"><div class="story-meta"><span class="category">${s.category}</span><span class="dot"></span><span class="source">${s.source}</span></div><h2>${s.title}</h2><p>${s.summary}</p><p class="context"><strong>Contexto:</strong> ${s.context}</p><div class="story-footer"><span class="source">${s.publishedAt || ""}</span><a class="source-link" href="${s.url}" target="_blank" rel="noopener noreferrer">Ler fonte</a></div></article>`,
     )
     .join("");
+}
+
+function setupCategoryFilters(stories) {
+  if (!filterButtons) return;
+  const categories = [...new Set(stories.map(story => story.category).filter(Boolean))]
+    .sort((a, b) => a.localeCompare(b, "pt-BR"));
+  filterButtons.innerHTML = [
+    '<button class="filter-btn active" data-filter="all">Todas</button>',
+    ...categories.map(category => '<button class="filter-btn" data-filter="' + category + '">' + category + '</button>')
+  ].join("");
+  filterButtons.querySelectorAll(".filter-btn").forEach(button => {
+    button.addEventListener("click", () => {
+      filterButtons.querySelectorAll(".filter-btn").forEach(item => item.classList.remove("active"));
+      button.classList.add("active");
+      currentFilter = button.dataset.filter;
+      applyFiltersAndSearch();
+    });
+  });
 }
 
 function applyFiltersAndSearch() {
