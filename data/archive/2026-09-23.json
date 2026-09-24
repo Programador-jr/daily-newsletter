@@ -3,54 +3,81 @@
   "stories": [
     {
       "category": "Economia",
-      "title": "Dólar fecha a R$ 5,168 e Ibovespa recua",
-      "summary": "O dólar subiu 1,28% ante o real e fechou a R$ 5,168, enquanto o Ibovespa recuou em meio à pressão do petróleo e a preocupações com inflação nos EUA.",
-      "context": "O Brent subiu e o PMI americano veio forte, elevando preocupações sobre inflação e juros. O mercado brasileiro também acompanhou a disputa eleitoral.",
-      "source": "UOL / Reuters",
-      "publishedAt": "23/09/2026",
-      "url": "https://economia.uol.com.br/cotacoes/noticias/redacao/2026/09/23/dolar-bolsa-fechamento-hoje-23-de-setembro-de-2026.ghtm"
-    },
-    {
-      "category": "Economia",
-      "title": "ANP aplica mais de R$ 200 milhões em multas por combustíveis",
+      "title": "ANP aplica mais de R$ 200 milhões em multas por alta abusiva de combustíveis",
       "summary": "A ANP informou ter aplicado mais de R$ 200 milhões em multas a distribuidoras por aumentos considerados abusivos nas margens de combustíveis.",
-      "context": "As decisões são administrativas de primeira instância e ainda podem ser contestadas.",
+      "context": "As decisões são administrativas de primeira instância e ainda podem ser contestadas. A Senacon também abriu 70 processos contra postos após denúncias sobre aumentos de margens.",
       "source": "Agência Brasil",
       "publishedAt": "23/09/2026",
-      "url": "https://agenciabrasil.ebc.com.br/economia"
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/anp-aplicou-r-200-milhoes-em-multas-por-alta-abusiva-de-combustiveis"
+    },
+    {
+      "category": "Política",
+      "title": "TSE lança assistente de IA para orientar eleitores nas eleições de 2026",
+      "summary": "O Tribunal Superior Eleitoral lançou o ChatVote, assistente virtual que responde dúvidas sobre votação e serviços eleitorais.",
+      "context": "A ferramenta informa sobre local e horário de votação, justificativa de ausência, orientações a mesários e regras das eleições. O TSE afirma que acompanhará a qualidade das respostas.",
+      "source": "Agência Brasil",
+      "publishedAt": "23/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/tse-cria-ferramenta-de-ia-para-acesso-informacoes-sobre-eleicoes"
     },
     {
       "category": "Justiça",
-      "title": "CNJ cancela R$ 4,7 bilhões em precatórios ligados ao Banco Master",
-      "summary": "O Conselho Nacional de Justiça determinou o cancelamento de precatórios vinculados a negociações envolvendo o Banco Master.",
-      "context": "A decisão envolve 16 precatórios que estavam em contas judiciais sem trânsito em julgado.",
+      "title": "CNJ determina cancelamento de R$ 4,7 bilhões em precatórios ligados ao Banco Master",
+      "summary": "O corregedor nacional de Justiça determinou o cancelamento de precatórios de usinas sucroalcooleiras negociados com o Banco Master.",
+      "context": "A decisão envolve 16 precatórios que estavam em contas judiciais sem trânsito em julgado. O caso também é alvo de investigações e disputas judiciais.",
       "source": "Agência Brasil",
       "publishedAt": "23/09/2026",
-      "url": "https://agenciabrasil.ebc.com.br/justica"
-    },
-    {
-      "category": "Tecnologia",
-      "title": "TSE lança assistente virtual de IA para as eleições de 2026",
-      "summary": "O Tribunal Superior Eleitoral lançou um assistente virtual para responder dúvidas sobre votação e serviços eleitorais.",
-      "context": "A ferramenta está disponível no e-Título e no Portal do TSE, segundo o tribunal.",
-      "source": "TSE",
-      "publishedAt": "23/09/2026",
-      "url": "https://www.tse.jus.br/comunicacao/noticias/2026/Setembro"
+      "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/cnj-cancela-r-47-bilhoes-em-precatorios-ligados-ao-master"
     },
     {
       "category": "Economia",
-      "title": "Governo reduz projeção do PIB de 2026 para 2%",
-      "summary": "A projeção oficial de crescimento do PIB foi reduzida para 2%, ante 2,3% na previsão anterior.",
-      "context": "Para 2027, a projeção caiu de 2,5% para 2,3%, refletindo expectativa mais fraca para serviços e indústria.",
-      "source": "Reuters",
+      "title": "Petrobras firma acordo de cooperação em petróleo e gás com empresa de Moçambique",
+      "summary": "A Petrobras assinou memorando de entendimento com a Empresa Nacional de Hidrocarbonetos de Moçambique para cooperação no setor de petróleo e gás.",
+      "context": "O acordo prevê estudos, avaliação, desenvolvimento, comercialização e troca de conhecimento técnico. A validade inicial é de dois anos.",
+      "source": "Agência Brasil",
       "publishedAt": "23/09/2026",
-      "url": "https://www.reuters.com/world/americas/brazil-government-cuts-2026-growth-forecast-20-2026-09-22/"
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/petrobras-fecha-acordo-para-cooperar-na-area-de-petroleo-em-mocambique"
+    },
+    {
+      "category": "Economia",
+      "title": "Brasil chega a 35% de empreendedores com registro no CNPJ",
+      "summary": "Dados do IBGE mostram que 35% dos empreendedores brasileiros tinham CNPJ em 2025, o maior percentual da série histórica.",
+      "context": "O levantamento aponta 10,7 milhões de empreendedores formalizados entre 30,6 milhões de pessoas classificadas como empreendedoras.",
+      "source": "Agência Brasil",
+      "publishedAt": "23/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/brasil-chega-a-35-dos-empreendedores-com-registro-no-cnpj"
+    },
+    {
+      "category": "Economia",
+      "title": "Governo reduz projeção de crescimento do PIB para 2% em 2026",
+      "summary": "A projeção oficial para o crescimento do PIB brasileiro em 2026 foi reduzida para 2%, ante 2,3% anteriormente.",
+      "context": "Para 2027, a estimativa também caiu, para 2,3%. A revisão ocorre em meio a uma desaceleração da atividade econômica.",
+      "source": "Agência Brasil",
+      "publishedAt": "22/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/governo-reduz-projecao-do-pib-para-2-em-2026-e-23-em-2027"
+    },
+    {
+      "category": "Justiça",
+      "title": "Pesquisa do CNJ aponta maior conversão em prisão preventiva em flagrantes por drogas",
+      "summary": "Estudo do Conselho Nacional de Justiça aponta que 60% dos flagrantes relacionados a drogas analisados resultaram em prisão preventiva.",
+      "context": "A taxa foi superior aos 37,5% registrados para flagrantes de outros delitos no período comparado. O estudo analisou audiências de custódia entre 2019 e 2025.",
+      "source": "Agência Brasil",
+      "publishedAt": "23/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/flagrante-por-drogas-gera-mais-prisao-preventiva-do-que-outros-crimes"
+    },
+    {
+      "category": "Saúde",
+      "title": "Planos de saúde terão de cobrir DIU hormonal em casos de endometriose",
+      "summary": "A ANS aprovou a inclusão do DIU hormonal na cobertura obrigatória para casos específicos de endometriose.",
+      "context": "A regra vale quando há contraindicação ou não adesão a contraceptivos orais combinados e entra em vigor em 1º de outubro de 2026.",
+      "source": "Agência Brasil",
+      "publishedAt": "23/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/saude/noticia/2026-09/planos-de-saude-terao-que-cobrir-diu-hormonal-em-casos-de-endometriose"
     },
     {
       "category": "Meio Ambiente",
-      "title": "Rio vive setembro mais chuvoso em quase 30 anos",
-      "summary": "A cidade do Rio de Janeiro acumulou chuva acima do recorde anterior para setembro, segundo o Alerta Rio.",
-      "context": "O município registrou uma sequência de dias chuvosos e previsão de continuidade da instabilidade.",
+      "title": "Rio registra setembro mais chuvoso em 29 anos",
+      "summary": "A cidade do Rio de Janeiro acumulou 171,9 milímetros de chuva até a tarde de 23 de setembro, superando o recorde anterior para setembro.",
+      "context": "Segundo o Alerta Rio, foram 19 dias seguidos de chuva. A previsão indica continuidade de chuva fraca a moderada nos dias seguintes.",
       "source": "Agência Brasil",
       "publishedAt": "23/09/2026",
       "url": "https://agenciabrasil.ebc.com.br/meio-ambiente/noticia/2026-09/cidade-do-rio-vive-o-setembro-mais-chuvoso-em-quase-30-anos"
@@ -58,20 +85,65 @@
     {
       "category": "Ciência",
       "title": "Pesquisadores descrevem nova espécie de rã-de-vidro no Cerrado",
-      "summary": "Cientistas descreveram uma nova espécie de rã-de-vidro encontrada em Luziânia, em Goiás.",
-      "context": "Os pesquisadores recomendam inicialmente a categoria de Dados Insuficientes enquanto a população da espécie é estudada.",
+      "summary": "Cientistas de instituições de Goiás e do Distrito Federal descreveram a espécie Vitreorana micaelae, encontrada em Luziânia.",
+      "context": "A espécie é a segunda do gênero conhecida como exclusiva do Cerrado no Brasil. Os pesquisadores recomendam a classificação como Dados Insuficientes enquanto sua população é estudada.",
       "source": "Agência Brasil",
       "publishedAt": "23/09/2026",
       "url": "https://agenciabrasil.ebc.com.br/meio-ambiente/noticia/2026-09/pesquisadores-descrevem-nova-especie-de-ra-de-vidro-no-cerrado"
     },
     {
-      "category": "Mundo",
-      "title": "DeepSeek participa de debate do Conselho de Segurança da ONU sobre IA",
-      "summary": "A empresa chinesa DeepSeek foi convidada a participar de discussões do Conselho de Segurança da ONU sobre riscos e segurança da inteligência artificial.",
-      "context": "O encontro ocorre durante a Assembleia Geral e reúne representantes do setor de tecnologia e governos para discutir segurança e governança da IA.",
-      "source": "Reuters",
+      "category": "Política",
+      "title": "Comunidade científica alerta para riscos de interferência nas eleições",
+      "summary": "Pesquisadores e instituições científicas discutem riscos de interferência e uso de tecnologias digitais no processo eleitoral de 2026.",
+      "context": "O debate envolve inteligência artificial, vídeos falsos, desinformação e segurança do processo eleitoral.",
+      "source": "Agência Brasil",
       "publishedAt": "23/09/2026",
-      "url": "https://www.reuters.com/world/asia-pacific/deepseek-brief-un-security-council-ai-this-week-2026-09-22/"
+      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/comunidade-cientifica-alerta-para-risco-de-interferencia-nas-eleicoes"
+    },
+    {
+      "category": "Justiça",
+      "title": "Fux pede ao Senado informações sobre registros de entrada de Vorcaro e outras pessoas",
+      "summary": "O ministro Luiz Fux deu dez dias para o Senado se manifestar sobre pedidos de acesso a registros de entrada e saída de pessoas relacionadas ao caso Banco Master.",
+      "context": "A decisão ocorre em mandado de segurança e não determina, por si só, a divulgação imediata dos registros.",
+      "source": "Agência Brasil",
+      "publishedAt": "23/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/fux-manda-senado-informar-registros-sobre-vorcaro-e-esposa-de-moraes"
+    },
+    {
+      "category": "Economia",
+      "title": "Nova lei aumenta penas para furto e roubo de combustíveis",
+      "summary": "Entrou em vigor legislação que endurece as punições para crimes relacionados ao furto, roubo e comercialização ilícita de combustíveis.",
+      "context": "A norma também amplia o alcance penal para quem armazena produtos sabendo de sua origem ilícita.",
+      "source": "Agência Brasil",
+      "publishedAt": "23/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/nova-lei-aumenta-penas-para-furto-e-roubo-de-combustiveis"
+    },
+    {
+      "category": "Mundo",
+      "title": "Trump e Xi se reúnem em meio a tensões sobre IA, comércio e Irã",
+      "summary": "Os presidentes dos Estados Unidos e da China se encontram em Washington enquanto os dois países tentam administrar disputas comerciais e tecnológicas.",
+      "context": "A inteligência artificial, chips avançados, comércio, Taiwan e o conflito envolvendo o Irã estão entre os temas que pressionam a relação bilateral.",
+      "source": "Associated Press",
+      "publishedAt": "22/09/2026",
+      "url": "https://apnews.com/article/e560910c897fedb0448eda4cdbfdbaea"
+    },
+    {
+      "category": "Mundo",
+      "title": "Preço do petróleo reage a incertezas sobre negociações entre EUA e Irã",
+      "summary": "As cotações do petróleo foram pressionadas por incertezas sobre o prazo para um possível acordo entre Estados Unidos e Irã.",
+      "context": "O mercado acompanha também os fluxos pelo Estreito de Ormuz, uma rota estratégica para o transporte mundial de petróleo e gás.",
+      "source": "Reuters",
+      "publishedAt": "22/09/2026",
+      "url": "https://www.reuters.com/business/energy/oil-rises-slightly-ahead-potential-us-iran-talks-2026-09-22/"
+    },
+    {
+      "category": "Tecnologia",
+      "title": "Governos discutem regras e riscos da inteligência artificial na ONU",
+      "summary": "A inteligência artificial ganhou destaque nos debates da Assembleia Geral da ONU, com líderes defendendo diferentes abordagens para segurança e governança.",
+      "context": "O debate inclui riscos de sistemas autônomos, desinformação, segurança e necessidade de cooperação internacional.",
+      "source": "Euronews",
+      "publishedAt": "23/09/2026",
+      "url": "https://www.euronews.com/2026/09/23"
     }
   ]
 }
