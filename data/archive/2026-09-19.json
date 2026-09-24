@@ -1,0 +1,68 @@
+{
+  "date": "2026-09-19",
+  "stories": [
+    {
+      "category": "Política",
+      "title": "Candidatos apresentam propostas de governo para as eleições de 2026",
+      "summary": "A Agência Brasil publicou os planos de governo de candidatos à Presidência, incluindo propostas de Ronaldo Caiado e Renan Santos.",
+      "context": "Os documentos apresentados ao TSE detalham propostas para segurança, economia, educação, saúde e outras áreas. As informações são posições declaradas pelas campanhas, não resultados de políticas implementadas.",
+      "source": "Agência Brasil",
+      "publishedAt": "19/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/caiado-promete-governo-transformador-e-reformas-estruturais"
+    },
+    {
+      "category": "Economia",
+      "title": "Petrobras adere a subvenção de R$ 1 por litro para o diesel",
+      "summary": "A Petrobras aprovou a adesão ao programa federal de subvenção econômica ao óleo diesel.",
+      "context": "A empresa informou que receberá R$ 1 por litro de diesel A por 30 dias, com possibilidade de prorrogação. O desconto compensa aumento anunciado no preço às revendedoras.",
+      "source": "Agência Brasil",
+      "publishedAt": "19/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/petrobras-aprova-adesao-subvencao-ao-oleo-diesel"
+    },
+    {
+      "category": "Tecnologia",
+      "title": "FMI aponta potencial de ganho de produtividade com IA na Europa",
+      "summary": "Documento do FMI estima que a inteligência artificial pode elevar a produtividade europeia em cerca de 1% em cinco anos.",
+      "context": "O fundo também alerta para possíveis efeitos desiguais entre países e trabalhadores, além de maior demanda energética e dependência tecnológica.",
+      "source": "Agência Brasil / Reuters",
+      "publishedAt": "19/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/internacional/noticia/2026-09/fmi-ia-pode-impulsionar-crescimento-mas-aumentar-tensoes-economicas"
+    },
+    {
+      "category": "Ciência",
+      "title": "Pesquisa brasileira identifica oito exoplanetas candidatos a condições favoráveis à vida",
+      "summary": "Pesquisador do Observatório Nacional analisou mais de 6 mil exoplanetas e selecionou oito com características que podem favorecer água líquida.",
+      "context": "A pesquisa é uma seleção de candidatos com base em raio, densidade e distância da estrela; ela não demonstra a existência de vida nesses planetas.",
+      "source": "Agência Brasil",
+      "publishedAt": "19/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/educacao/noticia/2026-09/pesquisa-identifica-oito-planetas-candidatos-ter-vida-extraterrestre"
+    },
+    {
+      "category": "Mundo",
+      "title": "Dinamarca e Groenlândia dizem que acordo com EUA não comprometerá soberania",
+      "summary": "Dinamarca e Groenlândia afirmaram que um acordo de segurança com os Estados Unidos não deverá ceder soberania sobre o território ártico.",
+      "context": "O entendimento prevê ampliação da presença militar americana na Groenlândia, enquanto os detalhes sobre sua execução ainda estavam em negociação.",
+      "source": "Agência Brasil / Reuters",
+      "publishedAt": "19/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/internacional/noticia/2026-09/groenlandia-e-dinamarca-dizem-que-acordo-com-eua-nao-cedera-soberania"
+    },
+    {
+      "category": "Economia",
+      "title": "Petrobras batiza navio com tripulação 100% feminina",
+      "summary": "A Petrobras batizou o Starnav Elektra, embarcação do Programa Mar Aberto que navegou de Santa Catarina ao Rio com 16 mulheres na tripulação.",
+      "context": "A embarcação recebeu investimento de R$ 450 milhões e será utilizada em operações nas bacias petrolíferas brasileiras.",
+      "source": "Agência Brasil",
+      "publishedAt": "19/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/petrobras-batiza-primeiro-navio-navegar-com-tripulacao-100-feminina"
+    },
+    {
+      "category": "Mundo",
+      "title": "Rússia relata ataques durante eleições parlamentares",
+      "summary": "Autoridades russas relataram ataques cibernéticos e a linhas de comunicação durante as eleições parlamentares realizadas entre 18 e 20 de setembro.",
+      "context": "O governo russo classificou o episódio como parte de uma tentativa de interferência no processo eleitoral. A eleição ocorre em um sistema político fortemente controlado.",
+      "source": "Agência Brasil / Reuters",
+      "publishedAt": "19/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/internacional/noticia/2026-09/russia-relata-ataques-ciberneticos-ao-sistema-eleitoral"
+    }
+  ]
+}
