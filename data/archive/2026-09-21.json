@@ -1,0 +1,68 @@
+{
+  "date": "2026-09-21",
+  "stories": [
+    {
+      "category": "Economia",
+      "title": "Mercado reduz projeção da Selic para 13,50% no fim de 2026",
+      "summary": "O Boletim Focus mostrou redução da expectativa para a Selic ao fim do ano, de 13,75% para 13,50%.",
+      "context": "A revisão ocorreu poucos dias após o Copom reduzir a Selic para 13,75%. A projeção de inflação para 2026 subiu para 4,92%.",
+      "source": "Agência Brasil",
+      "publishedAt": "21/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/mercado-reduz-projecao-da-selic-para-1350"
+    },
+    {
+      "category": "Tecnologia",
+      "title": "Exército inicia exercício nacional de defesa cibernética",
+      "summary": "O Brasil iniciou a oitava edição do exercício Guardião Cibernético para simular respostas a ataques digitais.",
+      "context": "A atividade reúne Forças Armadas, órgãos públicos, reguladores e operadores de infraestruturas estratégicas em sete cidades.",
+      "source": "Agência Brasil",
+      "publishedAt": "21/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/geral/noticia/2026-09/exercito-brasileiro-promove-exercicio-de-defesa-cibernetica"
+    },
+    {
+      "category": "Internacional",
+      "title": "Lula se reúne com prefeito de Nova York antes da Assembleia Geral da ONU",
+      "summary": "O presidente Luiz Inácio Lula da Silva se reuniu com o prefeito de Nova York, Zohran Mamdani, antes da abertura da Assembleia Geral.",
+      "context": "Segundo a Agência Brasil, os dois trataram de democracia, combate à desinformação e políticas voltadas à população de baixa renda.",
+      "source": "Agência Brasil",
+      "publishedAt": "21/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/internacional/noticia/2026-09/nos-eua-lula-se-reune-com-prefeito-de-nova-york-e-presidente-uruguaio"
+    },
+    {
+      "category": "Economia",
+      "title": "Senacon investiga 70 postos por possível aumento abusivo de preços",
+      "summary": "A Secretaria Nacional do Consumidor abriu investigação sobre 70 postos após denúncias relacionadas a aumentos de margens sobre combustíveis.",
+      "context": "A apuração ocorre em meio a ações do governo para monitorar preços de combustíveis e práticas comerciais.",
+      "source": "Agência Brasil",
+      "publishedAt": "21/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/economia"
+    },
+    {
+      "category": "Brasil",
+      "title": "Região Sul recebe alerta vermelho para tempestades e ventos acima de 100 km/h",
+      "summary": "O Inmet emitiu alerta de grande perigo para tempestades, ventos fortes e granizo em partes do Paraná, Santa Catarina e Rio Grande do Sul.",
+      "context": "A instabilidade foi associada ao deslocamento de um ciclone extratropical da Argentina para o Atlântico.",
+      "source": "Agência Brasil",
+      "publishedAt": "21/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/geral/noticia/2026-09/tempestade-ventos-fortes-e-granizo-deixam-regiao-sul-em-alerta"
+    },
+    {
+      "category": "Mundo",
+      "title": "Partido governista vence eleição parlamentar russa",
+      "summary": "O Rússia Unida manteve maioria decisiva na Duma, segundo resultados divulgados após a eleição.",
+      "context": "A Reuters destacou que o pleito ocorreu em um sistema político rigidamente controlado e que muitos candidatos contrários à guerra foram excluídos das cédulas.",
+      "source": "Reuters",
+      "publishedAt": "21/09/2026",
+      "url": "https://www.devdiscourse.com/article/international/3979986-reuters-world-news-summary"
+    },
+    {
+      "category": "Mundo",
+      "title": "Mercados globais avançam com petróleo em queda",
+      "summary": "As bolsas internacionais iniciaram a semana em alta, enquanto o petróleo recuou diante de expectativas diplomáticas no Oriente Médio.",
+      "context": "Investidores também acompanharam a expectativa pelo encontro entre Donald Trump e Xi Jinping e as negociações envolvendo comércio e inteligência artificial.",
+      "source": "UOL / Reuters",
+      "publishedAt": "21/09/2026",
+      "url": "https://economia.uol.com.br/cotacoes/noticias/redacao/2026/09/21/bolsas-mundiais-21-de-setembro-de-2026.ghtm"
+    }
+  ]
+}
