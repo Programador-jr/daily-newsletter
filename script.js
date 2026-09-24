@@ -14,12 +14,22 @@ let currentStories = [];
 let currentFilter = 'all';
 let currentSearch = '';
 
-const formatDate = (value) =>
-  new Intl.DateTimeFormat("pt-BR", {
+const formatDate = (value) => {
+  if (!value) return "";
+
+  // Datas YYYY-MM-DD representam uma data do calendário, não um instante UTC.
+  // Criar a data localmente evita que fusos como America/Rio_Branco voltem um dia.
+  const match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  const date = match
+    ? new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]))
+    : new Date(value);
+
+  return new Intl.DateTimeFormat("pt-BR", {
     day: "2-digit",
     month: "long",
     year: "numeric",
-  }).format(new Date(value));
+  }).format(date);
+};
 
 // Detect current page
 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
