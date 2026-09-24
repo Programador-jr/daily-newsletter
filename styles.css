@@ -1118,3 +1118,38 @@ a {
     gap: .75rem;
   }
 }
+
+
+/* CABEÇALHO MOBILE — logo e tema lado a lado */
+@media (max-width: 992px) {
+  .site-header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    text-align: left;
+  }
+
+  .site-header .logo {
+    justify-self: start;
+  }
+
+  .site-header .theme-toggle {
+    justify-self: end;
+    margin-top: 0;
+  }
+
+  .site-header > nav {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .75rem;
+  }
+
+  .site-header .theme-toggle {
+    gap: .5rem;
+  }
+}
