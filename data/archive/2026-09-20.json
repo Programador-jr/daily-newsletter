@@ -1,0 +1,68 @@
+{
+  "date": "2026-09-20",
+  "stories": [
+    {
+      "category": "Política",
+      "title": "Candidatos divulgam propostas para a Presidência nas eleições de 2026",
+      "summary": "Planos de governo de Romeu Zema, Samara Martins e Wilson Grassi foram divulgados pela Agência Brasil.",
+      "context": "As propostas abrangem economia, trabalho, segurança e política externa. São posições declaradas pelas campanhas e devem ser diferenciadas de políticas efetivamente implementadas.",
+      "source": "Agência Brasil",
+      "publishedAt": "20/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/zema-propoe-saida-do-brics-e-reducao-de-supersalarios-e-de-impostos"
+    },
+    {
+      "category": "Justiça",
+      "title": "STF determina revisão de regras da CVM em decisão envolvendo caso Master",
+      "summary": "O ministro Flávio Dino determinou que o governo promova avaliação técnica e reapreciação de regras normativas da CVM.",
+      "context": "A decisão estabeleceu prazo de 90 dias e ocorre em processo que também envolve determinação anterior de plano emergencial para fiscalização da autarquia.",
+      "source": "Agência Brasil",
+      "publishedAt": "20/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/dino-cita-master-e-determina-revisao-de-regras-da-cvm"
+    },
+    {
+      "category": "Mundo",
+      "title": "Michelle Bachelet desiste da disputa pelo comando da ONU",
+      "summary": "A ex-presidente chilena retirou sua candidatura à secretaria-geral das Nações Unidas.",
+      "context": "A decisão deixou sete candidatos na disputa naquele momento. O mandato de António Guterres termina em 31 de dezembro de 2026.",
+      "source": "Agência Brasil / Reuters",
+      "publishedAt": "20/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/internacional/noticia/2026-09/michelle-bachelet-desiste-da-disputa-pelo-comando-da-onu"
+    },
+    {
+      "category": "Mundo",
+      "title": "Rússia relata ataques cibernéticos durante eleições parlamentares",
+      "summary": "Autoridades russas informaram ataques a sistemas eleitorais e linhas de comunicação durante o segundo dia das eleições parlamentares.",
+      "context": "O pleito ocorreu entre 18 e 20 de setembro e foi apresentado pelo governo como teste ao apoio público à guerra na Ucrânia.",
+      "source": "Agência Brasil / Reuters",
+      "publishedAt": "20/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/internacional/noticia/2026-09/russia-relata-ataques-ciberneticos-ao-sistema-eleitoral"
+    },
+    {
+      "category": "Brasil",
+      "title": "Acidente com ônibus mata cinco pessoas no interior de São Paulo",
+      "summary": "Um ônibus com 48 passageiros caiu em uma ribanceira em Cruzeiro, no interior paulista, deixando pelo menos cinco mortos.",
+      "context": "O acidente ocorreu na madrugada de 20 de setembro. Naquele momento, as causas e o estado de saúde dos demais passageiros ainda estavam sendo apurados.",
+      "source": "Agência Brasil",
+      "publishedAt": "20/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/geral/noticia/2026-09/cinco-pessoas-morrem-em-acidente-com-onibus-no-interior-de-sp"
+    },
+    {
+      "category": "Meio Ambiente",
+      "title": "Rio tem fim de semana mais firme após sequência de chuvas",
+      "summary": "Após chuva em 13 dos primeiros 15 dias de setembro, o Rio de Janeiro teve um fim de semana de tempo mais firme e temperaturas em elevação.",
+      "context": "O Alerta Rio previa máximas de 35°C na segunda-feira e 36°C na terça, antes de nova mudança de tempo na quarta.",
+      "source": "Agência Brasil",
+      "publishedAt": "20/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/meio-ambiente/noticia/2026-09/apos-dias-de-chuva-rio-tem-fim-de-semana-com-tempo-mais-firme-e-calor"
+    },
+    {
+      "category": "Mundo",
+      "title": "Líderes mundiais se reúnem para Assembleia Geral da ONU",
+      "summary": "Quase 130 chefes de Estado e de governo se prepararam para a Assembleia Geral da ONU em meio a conflitos no Oriente Médio e na Ucrânia.",
+      "context": "Inteligência artificial, guerras, energia e o futuro da governança internacional estavam entre os principais temas do encontro.",
+      "source": "Reuters",
+      "publishedAt": "20/09/2026",
+      "url": "https://www.reuters.com/world/china/world-leaders-return-un-amid-wars-middle-east-ukraine-2026-09-20/"
+    }
+  ]
+}
