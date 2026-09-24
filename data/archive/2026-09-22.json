@@ -1,0 +1,68 @@
+{
+  "date": "2026-09-22",
+  "stories": [
+    {
+      "category": "Economia",
+      "title": "Governo reduz projeção de crescimento do PIB para 2% em 2026",
+      "summary": "A projeção oficial de crescimento do PIB brasileiro foi reduzida de 2,3% para 2% em 2026.",
+      "context": "Para 2027, a estimativa caiu de 2,5% para 2,3%. O governo citou desempenho mais fraco esperado nos setores de serviços e indústria.",
+      "source": "Reuters",
+      "publishedAt": "22/09/2026",
+      "url": "https://www.reuters.com/world/americas/brazil-government-cuts-2026-growth-forecast-20-2026-09-22/"
+    },
+    {
+      "category": "Política",
+      "title": "Lula alerta contra interferência nas eleições em discurso na ONU",
+      "summary": "Em discurso na Assembleia Geral da ONU, Lula afirmou que o Brasil não permitirá interferência interna ou externa nas eleições de outubro.",
+      "context": "O presidente também defendeu cooperação internacional contra o crime organizado e criticou intervenções estrangeiras.",
+      "source": "Reuters",
+      "publishedAt": "22/09/2026",
+      "url": "https://www.reuters.com/world/americas/brazil-needs-cooperation-not-intervention-fight-crime-lula-says-2026-09-22/"
+    },
+    {
+      "category": "Tecnologia",
+      "title": "Secretário-geral da ONU pede governança global para inteligência artificial",
+      "summary": "António Guterres defendeu regras internacionais para administrar riscos da inteligência artificial em seu último discurso à Assembleia Geral.",
+      "context": "Guterres pediu cooperação em testes, avaliação e salvaguardas para sistemas de IA, além de supervisão independente.",
+      "source": "Reuters",
+      "publishedAt": "22/09/2026",
+      "url": "https://www.reuters.com/world/europe/un-chief-calls-ai-curbs-end-wars-his-last-assembly-address-2026-09-22/"
+    },
+    {
+      "category": "Mercados",
+      "title": "Nasdaq registra recorde intradiário com otimismo sobre IA",
+      "summary": "O Nasdaq atingiu novo recorde intradiário em meio ao otimismo de investidores com a adoção de inteligência artificial.",
+      "context": "O movimento ocorreu enquanto o petróleo recuava e os mercados aguardavam o encontro entre Trump e Xi Jinping.",
+      "source": "Reuters",
+      "publishedAt": "22/09/2026",
+      "url": "https://www.reuters.com/world/china/global-markets-wrapup-1-2026-09-22/"
+    },
+    {
+      "category": "Mundo",
+      "title": "EUA, Dinamarca e Groenlândia avançam em acordo de segurança no Ártico",
+      "summary": "Os Estados Unidos avançaram em acordo para ampliar sua presença militar na Groenlândia, mantendo a soberania do território sob a Dinamarca.",
+      "context": "O entendimento busca reduzir meses de tensão sobre a ilha e reforçar a presença militar americana no Ártico.",
+      "source": "Reuters",
+      "publishedAt": "22/09/2026",
+      "url": "https://www.devdiscourse.com/article/international/3980630-reuters-world-news-summary"
+    },
+    {
+      "category": "Mundo",
+      "title": "Trump faz discurso na ONU com novas ameaças ao Irã",
+      "summary": "Donald Trump voltou a ameaçar o Irã durante seu discurso na Assembleia Geral da ONU, mas também indicou expectativa de solução diplomática.",
+      "context": "As declarações ocorreram em meio às tensões militares e diplomáticas entre Estados Unidos e Irã.",
+      "source": "Reuters",
+      "publishedAt": "22/09/2026",
+      "url": "https://www.reuters.com/live/live-trump-address-un-general-assembly-world-leaders-grapple-with-iran-ukraine-2026-09-22/"
+    },
+    {
+      "category": "Economia",
+      "title": "Arrecadação federal ultrapassa R$ 2 trilhões em oito meses",
+      "summary": "A arrecadação federal acumulada até agosto superou R$ 2 trilhões, segundo dados divulgados pelo governo.",
+      "context": "O resultado é acompanhado pelo mercado por seus efeitos sobre as contas públicas e as projeções fiscais.",
+      "source": "Agência Brasil",
+      "publishedAt": "22/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/economia"
+    }
+  ]
+}
