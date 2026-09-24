@@ -1,0 +1,95 @@
+{
+  "date": "2026-09-24",
+  "stories": [
+    {
+      "category": "Eleições",
+      "title": "Presidenciáveis cumprem agendas de campanha em diferentes estados",
+      "summary": "Os candidatos à Presidência realizaram debates, entrevistas, atos e encontros com apoiadores ao longo da quarta-feira (23).",
+      "context": "A Agência Brasil registrou as agendas públicas de candidatos de diferentes partidos, incluindo Lula, Flávio Bolsonaro, Romeu Zema, Ronaldo Caiado e outros concorrentes. As informações são descritivas das atividades divulgadas pelas campanhas.",
+      "source": "Agência Brasil",
+      "publishedAt": "23/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/veja-como-foi-quarta-feira-23-dos-presidenciaveis"
+    },
+    {
+      "category": "Eleições",
+      "title": "São Paulo inicia preparação de mais de 114 mil urnas para o primeiro turno",
+      "summary": "A Justiça Eleitoral paulista começou a inserir dados oficiais nas urnas eletrônicas que serão usadas no primeiro turno de 4 de outubro.",
+      "context": "O processo inclui geração de mídias, inserção de dados, testes, auditoria por amostragem e lacração dos equipamentos. A preparação deve terminar em 2 de outubro.",
+      "source": "Agência Brasil",
+      "publishedAt": "23/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/maior-colegio-eleitoral-do-pais-sp-tera-mais-de-114-mil-urnas"
+    },
+    {
+      "category": "Eleições",
+      "title": "TSE disponibiliza assistente de IA para dúvidas sobre as eleições",
+      "summary": "O Tribunal Superior Eleitoral lançou o ChatVote, ferramenta baseada em inteligência artificial para orientar eleitores.",
+      "context": "O assistente responde dúvidas sobre local e horário de votação, justificativa, mesários e regras eleitorais. O TSE informou que acompanhará a qualidade das respostas.",
+      "source": "Agência Brasil",
+      "publishedAt": "23/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/tse-cria-ferramenta-de-ia-para-acesso-informacoes-sobre-eleicoes"
+    },
+    {
+      "category": "Eleições",
+      "title": "Entidades relatam aumento de casos de violência política de gênero",
+      "summary": "Organizações e dados eleitorais apontam crescimento de denúncias envolvendo agressões e ameaças contra mulheres na política.",
+      "context": "Segundo dados citados pela Agência Brasil, processos relacionados à violência política de gênero aumentaram 11 vezes entre 2022 e 2024. O levantamento também destaca a ocorrência de ataques durante o atual ciclo eleitoral.",
+      "source": "Agência Brasil",
+      "publishedAt": "23/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/entidades-denunciam-agressoes-mulheres-que-disputam-cargos"
+    },
+    {
+      "category": "Eleições",
+      "title": "Comunidade científica alerta para riscos de interferência no processo eleitoral",
+      "summary": "Pesquisadores e instituições científicas discutem riscos relacionados a inteligência artificial, vídeos falsos e desinformação nas eleições de 2026.",
+      "context": "O debate concentra-se no impacto das tecnologias digitais sobre a circulação de informações e na necessidade de proteger a integridade do processo eleitoral.",
+      "source": "Agência Brasil",
+      "publishedAt": "23/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/comunidade-cientifica-alerta-para-risco-de-interferencia-nas-eleicoes"
+    },
+    {
+      "category": "Economia",
+      "title": "Dólar fecha perto de R$ 5,17 e Ibovespa recua",
+      "summary": "O dólar comercial subiu 1,27% e fechou a R$ 5,169 na quarta-feira, enquanto o Ibovespa caiu 0,86%, para 185.814 pontos.",
+      "context": "Segundo a Agência Brasil, a alta do dólar foi influenciada pela valorização da moeda americana no exterior, pelo cenário eleitoral brasileiro e pelo petróleo.",
+      "source": "Agência Brasil",
+      "publishedAt": "23/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/dolar-aproxima-se-de-r-517-com-noticias-do-exterior-e-eleicoes"
+    },
+    {
+      "category": "Economia",
+      "title": "Banco Central amplia controle sobre criptomoedas",
+      "summary": "O Banco Central anunciou novas medidas de supervisão voltadas ao mercado de ativos virtuais e às chamadas carteiras próprias.",
+      "context": "A mudança faz parte do esforço regulatório sobre empresas e operações com criptoativos no sistema financeiro brasileiro.",
+      "source": "Agência Brasil",
+      "publishedAt": "23/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/ultimas"
+    },
+    {
+      "category": "Tecnologia",
+      "title": "Empresas de IA discutem riscos da tecnologia em debate na ONU",
+      "summary": "A inteligência artificial foi tema de discussões internacionais sobre segurança, governança e possíveis riscos de sistemas cada vez mais avançados.",
+      "context": "O debate inclui preocupações com sistemas autônomos, desinformação e mecanismos de cooperação internacional para reduzir riscos.",
+      "source": "g1",
+      "publishedAt": "24/09/2026",
+      "url": "https://g1.globo.com/jornal-nacional/noticia/2026/09/24/resumao-diario-do-jn-na-onu-empresas-de-ia-admitem-que-tecnologia-representa-risco-para-humanidade-brasil-estara-entre-paises-mais-afetados-pelo-el-nino-calculam-cientistas.ghtml"
+    },
+    {
+      "category": "Mundo",
+      "title": "Trump e Xi se encontram em Washington em meio a disputas comerciais e tecnológicas",
+      "summary": "Os presidentes dos Estados Unidos e da China se reúnem nesta quinta-feira em Washington, com comércio e tecnologia entre os temas de interesse.",
+      "context": "A reunião ocorre enquanto os dois países tentam administrar a relação comercial e questões estratégicas envolvendo IA, cadeias de tecnologia e outras áreas.",
+      "source": "Reuters",
+      "publishedAt": "24/09/2026",
+      "url": "https://www.reuters.com/world/china/xi-rolls-into-trump-summit-with-chinas-trade-engine-roaring-2026-09-21/"
+    },
+    {
+      "category": "Brasil",
+      "title": "Estudo projeta impacto do Super El Niño sobre mortes relacionadas ao calor",
+      "summary": "Pesquisadores estimam que o Brasil pode estar entre os países mais afetados por uma onda de calor associada ao chamado Super El Niño.",
+      "context": "A estimativa divulgada pela Agência Brasil aponta até 13,3 mil mortes no Brasil e mais de 450 mil no mundo, segundo o estudo citado.",
+      "source": "Agência Brasil",
+      "publishedAt": "23/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/meio-ambiente/noticia/2026-09/estudo-preve-ate-133-mil-mortes-no-brasil-com-calor-do-super-el-nino"
+    }
+  ]
+}
