@@ -2,6 +2,51 @@
   "date": "2026-09-25",
   "stories": [
     {
+      "category": "Eleições",
+      "title": "TSE anuncia que e-Título poderá ser baixado nos dias de votação",
+      "summary": "O Tribunal Superior Eleitoral informou que o aplicativo e-Título poderá ser baixado durante os dias de votação das eleições de 2026.",
+      "context": "O TSE afirmou que reforçou a infraestrutura do aplicativo e manterá equipes de prontidão no primeiro e no segundo turno para garantir o funcionamento do serviço. A medida amplia a possibilidade de acesso ao aplicativo para eleitores que ainda não o tenham instalado.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/eleicoes/tse-anuncia-que-e-titulo-podera-ser-baixado-nos-dias-de-votacao/"
+    },
+    {
+      "category": "Tecnologia e IA",
+      "title": "Estudo aponta que IA pode influenciar respostas políticas ao traçar perfil de eleitores",
+      "summary": "Uma análise divulgada pela CNN Brasil mostra que sistemas de inteligência artificial podem direcionar respostas sobre política quando identificam características do usuário.",
+      "context": "O tema ganhou relevância eleitoral porque o TSE estabeleceu regras para limitar o uso de sistemas de IA que comparem, recomendem ou priorizem conteúdos políticos. O caso envolve o uso da tecnologia em interações personalizadas, não uma previsão de resultado eleitoral.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/eleicoes/ia-direciona-voto-em-quase-metade-das-respostas-ao-tracar-perfil-do-eleitor/"
+    },
+    {
+      "category": "Política",
+      "title": "Flávio Bolsonaro planeja proposta de corte de gastos de R$ 300 bilhões",
+      "summary": "Segundo a CNN Brasil, a equipe econômica de Flávio Bolsonaro avalia apresentar uma proposta de ajuste fiscal com corte de gastos estimado em R$ 300 bilhões caso ele vença a eleição.",
+      "context": "A informação é atribuída a interlocutores e integrantes da equipe econômica do candidato. O desenho das medidas, os setores atingidos e a eventual implementação ainda não estão definidos.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/blogs/caio-junqueira/eleicoes/flavio-planeja-pec-da-transicao-com-corte-de-gastos-de-r-300-bilhoes/"
+    },
+    {
+      "category": "Política e Governo",
+      "title": "Governo prepara medidas sobre bets e apoio financeiro a clubes",
+      "summary": "O governo federal avalia uma medida provisória para proibir casas de apostas esportivas e cassinos online, enquanto discute mecanismos de apoio aos clubes de futebol afetados pela mudança.",
+      "context": "Segundo a CNN Brasil, entre as alternativas discutidas estão linhas de crédito e renegociação de dívidas. A decisão final e o texto da medida dependem de definição do governo e posterior tramitação no Congresso.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/eleicoes/governo-encaminha-pendencias-com-clubes-antes-de-editar-mp-de-veto-a-bets/"
+    },
+    {
+      "category": "Tecnologia e IA",
+      "title": "Executivos de Nvidia, AMD, Tesla e outras gigantes de tecnologia participam de jantar com Trump e Xi",
+      "summary": "Líderes de grandes empresas de tecnologia participaram de um jantar de Estado na Casa Branca durante a visita do presidente chinês Xi Jinping aos Estados Unidos.",
+      "context": "Entre os executivos estavam Jensen Huang, da Nvidia, Lisa Su, da AMD, Elon Musk e Tim Cook, além de lideranças de Amazon, Meta, OpenAI, Microsoft e Google. Inteligência artificial e relações entre Washington e Pequim estavam entre os temas de destaque da visita.",
+      "source": "CNN Brasil / Reuters",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/internacional/nvidia-lidera-executivos-de-tecnologia-a-mesa-com-trump-e-xi-na-casa-branca/"
+    },
+    {
       "category": "Política",
       "title": "Conselho Superior do MPF analisa mensagens de Vorcaro sobre Gonet",
       "summary": "O Conselho Superior do Ministério Público Federal se reúne nesta sexta-feira para avaliar se há elementos para abrir investigação sobre a atuação do procurador-geral da República, Paulo Gonet, no caso Banco Master.",
