@@ -2,6 +2,87 @@
   "date": "2026-09-25",
   "stories": [
     {
+      "category": "Política",
+      "title": "The Economist critica cenário eleitoral brasileiro e aponta Renan Santos como candidato mais adequado",
+      "summary": "Em editorial publicado em 24 de setembro, a revista britânica The Economist criticou o cenário da eleição presidencial brasileira e afirmou que Renan Santos, do Missão, é o candidato cujas ideias se adequam ao momento atual.",
+      "context": "O editorial critica Lula e Flávio Bolsonaro em temas como gastos públicos, dívida, crescimento e corrupção, ao mesmo tempo em que elogia posições de Lula sobre democracia e meio ambiente. A publicação também apresenta propostas de Renan Santos. A avaliação é da própria revista e não representa uma medição eleitoral.",
+      "source": "The Economist / Folha de S.Paulo",
+      "publishedAt": "24/09/2026",
+      "url": "https://www1.folha.uol.com.br/poder/2026/09/entre-lula-e-flavio-brasil-da-as-costas-ao-futuro-e-renan-e-candidato-mais-adequado-diz-the-economist.shtml"
+    },
+    {
+      "category": "Política",
+      "title": "Conselho Superior do MPF analisa mensagens de Vorcaro sobre Gonet",
+      "summary": "O Conselho Superior do Ministério Público Federal se reúne nesta sexta-feira para avaliar se há elementos para abrir investigação sobre a atuação do procurador-geral da República, Paulo Gonet, no caso Banco Master.",
+      "context": "A análise ocorre após a divulgação de mensagens extraídas pela Polícia Federal do celular de Daniel Vorcaro. Gonet afirma que não tinha relação de proximidade com o ex-banqueiro e classificou seu único encontro com ele como breve e banal.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/politica/conselho-superior-do-mpf-analisa-hoje-mensagens-de-vorcaro-sobre-gonet/"
+    },
+    {
+      "category": "Economia",
+      "title": "Governo eleva previsão de déficit primário para R$ 80,9 bilhões em 2026",
+      "summary": "A equipe econômica passou a prever déficit primário efetivo de R$ 80,9 bilhões para 2026, acima dos R$ 52 bilhões estimados anteriormente.",
+      "context": "Ao mesmo tempo, a previsão de necessidade de contenção de despesas foi reduzida para R$ 16,1 bilhões. O governo afirma que ainda prevê cumprir a meta fiscal estabelecida para o ano.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/macroeconomia/governo-ve-resultado-fiscal-pior-para-2026-e-eleva-estimativa-de-rombo/"
+    },
+    {
+      "category": "Mercados",
+      "title": "Citi vê oportunidades no Brasil e diz que eleições não alteram decisões de longo prazo",
+      "summary": "O CEO do Citi no Brasil, André Cury, afirmou que empresas estrangeiras continuam avaliando investimentos no país com foco em estratégias de longo prazo.",
+      "context": "Segundo o executivo, oportunidades estão ligadas a alimentos, energia e insumos para inteligência artificial. Ele apontou o custo de capital elevado como um fator que pode levar empresas a postergar decisões.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/negocios/eleicoes-nao-impactam-decisoes-das-empresas-diz-ceo-do-citi-no-brasil/"
+    },
+    {
+      "category": "Mercados",
+      "title": "Futuros de Wall Street sobem com otimismo em torno da IA e petróleo em queda",
+      "summary": "Os futuros dos principais índices acionários dos Estados Unidos avançaram nesta sexta-feira, enquanto investidores acompanhavam o petróleo e novas perspectivas para o setor de inteligência artificial.",
+      "context": "Segundo a Reuters, o entusiasmo com a IA ajudou a compensar parte das preocupações com preços elevados do petróleo e juros dos títulos americanos.",
+      "source": "Reuters",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.reuters.com/business/wall-st-futures-gain-ai-enthusiasm-eases-worries-over-higher-oil-prices-yields-2026-09-25/"
+    },
+    {
+      "category": "Mercados",
+      "title": "Petróleo recua com expectativa de trégua entre EUA e Irã",
+      "summary": "Os preços do petróleo caíram mais de 1% nesta sexta-feira diante das expectativas de uma possível trégua entre Estados Unidos e Irã.",
+      "context": "O mercado continua equilibrando a possibilidade de redução das tensões no Oriente Médio com os riscos de novos ataques que possam afetar a oferta e o transporte de petróleo.",
+      "source": "Reuters",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.reuters.com/business/energy/oil-prices-fall-markets-look-iran-truce-remain-wary-attacks-oil-facilities-2026-09-25/"
+    },
+    {
+      "category": "Mundo",
+      "title": "Ataque russo interrompe produção da maior siderúrgica da Ucrânia",
+      "summary": "A ArcelorMittal informou que não conseguiu retomar a produção de sua maior usina siderúrgica na Ucrânia após ataques russos.",
+      "context": "A empresa afirmou que os ataques atingiram a região de Kryvyi Rih, afetando a infraestrutura da unidade. O episódio ocorre em meio à continuidade dos ataques entre Rússia e Ucrânia.",
+      "source": "Reuters",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.reuters.com/world/europe/russian-drone-hits-central-kyiv-killing-child-injuring-least-seven-people-2026-09-25/"
+    },
+    {
+      "category": "Política",
+      "title": "Campanha de Flávio Bolsonaro prepara resposta política a Lula em meio ao caso Master",
+      "summary": "A campanha de Flávio Bolsonaro prepara uma estratégia de comunicação para responder às críticas de Lula e às repercussões de documentos relacionados a Daniel Vorcaro e ao Banco Master.",
+      "context": "Segundo a CNN Brasil, a estratégia deve explorar temas como Lulinha, STF e investigações envolvendo o PT. As informações descrevem planos de campanha, não fatos comprovados sobre as acusações citadas.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/blogs/jussara-soares/eleicoes/sob-ofensiva-do-pt-flavio-prepara-contra-ataque-a-lula-antes-do-1o-turno/"
+    },
+    {
+      "category": "Acre",
+      "title": "Operação MUTE realiza pente-fino em presídios de quatro cidades do Acre",
+      "summary": "A Polícia Penal do Acre realizou a 13ª fase da Operação MUTE entre os dias 21 e 25 de setembro em unidades prisionais de quatro municípios.",
+      "context": "As ações ocorreram em Senador Guiomard, Rio Branco, Sena Madureira e Cruzeiro do Sul e tiveram foco na fiscalização das unidades prisionais.",
+      "source": "ContilNet",
+      "publishedAt": "25/09/2026",
+      "url": "https://contilnetnoticias.com.br/noticia/operacao-faz-pente-fino-em-presidios-de-quatro-cidades-do-acre/"
+    },
+    {
       "category": "Economia",
       "title": "IPCA-15 sobe 0,70% em setembro, pressionado pela energia elétrica",
       "summary": "A prévia da inflação oficial subiu 0,70% em setembro, após queda de 0,40% em agosto, segundo o IBGE.",
