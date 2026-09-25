@@ -1,0 +1,122 @@
+{
+  "date": "2026-09-25",
+  "stories": [
+    {
+      "category": "Política",
+      "title": "Conselho Superior do MPF analisa mensagens de Vorcaro sobre Gonet",
+      "summary": "O Conselho Superior do Ministério Público Federal se reúne nesta sexta-feira para avaliar se há elementos para abrir investigação sobre a atuação do procurador-geral da República, Paulo Gonet, no caso Banco Master.",
+      "context": "A análise ocorre após a divulgação de mensagens extraídas pela Polícia Federal do celular de Daniel Vorcaro. Gonet afirma que não tinha relação de proximidade com o ex-banqueiro e classificou seu único encontro com ele como breve e banal.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/politica/conselho-superior-do-mpf-analisa-hoje-mensagens-de-vorcaro-sobre-gonet/"
+    },
+    {
+      "category": "Economia e Justiça",
+      "title": "STF veta revogação unilateral de benefícios de ICMS aprovados pelo Confaz",
+      "summary": "O Supremo Tribunal Federal decidiu que estados não podem revogar unilateralmente benefícios fiscais de ICMS que tenham sido aprovados em convênios do Conselho Nacional de Política Fazendária.",
+      "context": "O julgamento envolve ações de Rondônia, Acre, Amapá e Roraima contra uma norma de São Paulo. Após a incorporação do benefício à legislação estadual, sua revogação deve seguir as regras do Confaz.",
+      "source": "Agência Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/ultimas"
+    },
+    {
+      "category": "Economia",
+      "title": "Governo prepara anúncios de medidas econômicas em São Paulo",
+      "summary": "O governo federal planeja anunciar nesta sexta-feira medidas econômicas durante uma agenda do Ministério da Fazenda em São Paulo.",
+      "context": "Entre os temas em discussão estão medidas sobre combustíveis e apostas online. A programação ocorre no mesmo dia em que Lula tem jantar previsto com empresários na capital paulista.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/politica/governo-planeja-anuncio-de-medidas-economicas-para-esta-sexta-feira-em-sp/"
+    },
+    {
+      "category": "Economia",
+      "title": "Governo eleva previsão de déficit primário para R$ 80,9 bilhões em 2026",
+      "summary": "A equipe econômica passou a prever déficit primário efetivo de R$ 80,9 bilhões para 2026, acima dos R$ 52 bilhões estimados anteriormente.",
+      "context": "Ao mesmo tempo, a previsão de necessidade de contenção de despesas foi reduzida para R$ 16,1 bilhões. O governo afirma que ainda prevê cumprir a meta fiscal estabelecida para o ano.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/macroeconomia/governo-ve-resultado-fiscal-pior-para-2026-e-eleva-estimativa-de-rombo/"
+    },
+    {
+      "category": "Mercados",
+      "title": "Citi vê oportunidades no Brasil e diz que eleições não alteram decisões de longo prazo",
+      "summary": "O CEO do Citi no Brasil, André Cury, afirmou que empresas estrangeiras continuam avaliando investimentos no país com foco em estratégias de longo prazo.",
+      "context": "Segundo o executivo, oportunidades estão ligadas a alimentos, energia e insumos para inteligência artificial. Ele apontou o custo de capital elevado como um fator que pode levar empresas a postergar decisões.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/negocios/eleicoes-nao-impactam-decisoes-das-empresas-diz-ceo-do-citi-no-brasil/"
+    },
+    {
+      "category": "Tecnologia e IA",
+      "title": "Google prepara teste de chips de inteligência artificial em órbita",
+      "summary": "A Alphabet, dona do Google, anunciou um protótipo de satélite para testar chips de inteligência artificial no espaço como parte do Projeto Suncatcher.",
+      "context": "O teste deve avaliar o funcionamento de unidades de processamento de IA em condições de radiação, temperatura e resfriamento diferentes das encontradas na Terra. A empresa prevê novos testes com dois satélites em 2027.",
+      "source": "Reuters via CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/tecnologia/google-planeja-primeiro-teste-de-chips-de-ia/"
+    },
+    {
+      "category": "Mercados",
+      "title": "Futuros de Wall Street sobem com otimismo em torno da IA e petróleo em queda",
+      "summary": "Os futuros dos principais índices acionários dos Estados Unidos avançaram nesta sexta-feira, enquanto investidores acompanhavam o petróleo e novas perspectivas para o setor de inteligência artificial.",
+      "context": "Segundo a Reuters, o entusiasmo com a IA ajudou a compensar parte das preocupações com preços elevados do petróleo e juros dos títulos americanos.",
+      "source": "Reuters",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.reuters.com/business/wall-st-futures-gain-ai-enthusiasm-eases-worries-over-higher-oil-prices-yields-2026-09-25/"
+    },
+    {
+      "category": "Mercados",
+      "title": "Petróleo recua com expectativa de trégua entre EUA e Irã",
+      "summary": "Os preços do petróleo caíram mais de 1% nesta sexta-feira diante das expectativas de uma possível trégua entre Estados Unidos e Irã.",
+      "context": "O mercado continua equilibrando a possibilidade de redução das tensões no Oriente Médio com os riscos de novos ataques que possam afetar a oferta e o transporte de petróleo.",
+      "source": "Reuters",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.reuters.com/business/energy/oil-prices-fall-markets-look-iran-truce-remain-wary-attacks-oil-facilities-2026-09-25/"
+    },
+    {
+      "category": "Mundo",
+      "title": "EUA propõem reunião trilateral entre Rússia e Ucrânia nos Emirados Árabes Unidos",
+      "summary": "O presidente ucraniano Volodymyr Zelenskiy afirmou que os Estados Unidos propuseram que os Emirados Árabes Unidos recebam uma reunião entre representantes de EUA, Rússia e Ucrânia.",
+      "context": "A proposta busca criar um novo canal de negociação sobre a guerra. A realização e o formato do encontro ainda dependem de acordos entre os envolvidos.",
+      "source": "Reuters",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.reuters.com/world/europe/us-proposes-trilateral-meeting-with-ukraine-russia-uae-zelenskiy-says-2026-09-25/"
+    },
+    {
+      "category": "Mundo",
+      "title": "Ataque russo interrompe produção da maior siderúrgica da Ucrânia",
+      "summary": "A ArcelorMittal informou que não conseguiu retomar a produção de sua maior usina siderúrgica na Ucrânia após ataques russos.",
+      "context": "A empresa afirmou que os ataques atingiram a região de Kryvyi Rih, afetando a infraestrutura da unidade. O episódio ocorre em meio à continuidade dos ataques entre Rússia e Ucrânia.",
+      "source": "Reuters",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.reuters.com/world/europe/russian-drone-hits-central-kyiv-killing-child-injuring-least-seven-people-2026-09-25/"
+    },
+    {
+      "category": "Mundo",
+      "title": "Trump e Xi encerram encontro em Washington sem grande acordo anunciado",
+      "summary": "Donald Trump e Xi Jinping realizaram uma reunião na Casa Branca com comércio, tecnologia e relações entre Estados Unidos e China no centro das discussões.",
+      "context": "A Reuters informou que o encontro teve forte componente diplomático, mas não produziu um grande avanço imediato em temas como comércio, Taiwan e minerais estratégicos.",
+      "source": "Reuters",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.reuters.com/world/china/how-trumps-diplomatic-week-exposed-limits-his-power-2026-09-25/"
+    },
+    {
+      "category": "Política",
+      "title": "Campanha de Flávio Bolsonaro prepara resposta política a Lula em meio ao caso Master",
+      "summary": "A campanha de Flávio Bolsonaro prepara uma estratégia de comunicação para responder às críticas de Lula e às repercussões de documentos relacionados a Daniel Vorcaro e ao Banco Master.",
+      "context": "Segundo a CNN Brasil, a estratégia deve explorar temas como Lulinha, STF e investigações envolvendo o PT. As informações descrevem planos de campanha, não fatos comprovados sobre as acusações citadas.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/blogs/jussara-soares/eleicoes/sob-ofensiva-do-pt-flavio-prepara-contra-ataque-a-lula-antes-do-1o-turno/"
+    },
+    {
+      "category": "Acre",
+      "title": "Operação MUTE realiza pente-fino em presídios de quatro cidades do Acre",
+      "summary": "A Polícia Penal do Acre realizou a 13ª fase da Operação MUTE entre os dias 21 e 25 de setembro em unidades prisionais de quatro municípios.",
+      "context": "As ações ocorreram em Senador Guiomard, Rio Branco, Sena Madureira e Cruzeiro do Sul e tiveram foco na fiscalização das unidades prisionais.",
+      "source": "ContilNet",
+      "publishedAt": "25/09/2026",
+      "url": "https://contilnetnoticias.com.br/noticia/operacao-faz-pente-fino-em-presidios-de-quatro-cidades-do-acre/"
+    }
+  ]
+}
