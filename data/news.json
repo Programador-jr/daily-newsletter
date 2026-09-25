@@ -3,6 +3,15 @@
   "stories": [
     {
       "category": "Política",
+      "title": "The Economist critica cenário eleitoral brasileiro e aponta Renan Santos como candidato mais adequado",
+      "summary": "Em editorial publicado em 24 de setembro, a revista britânica The Economist criticou o cenário da eleição presidencial brasileira e afirmou que Renan Santos, do Missão, é o candidato cujas ideias mais se adequam ao momento atual.",
+      "context": "O editorial critica Lula e Flávio Bolsonaro em temas como gastos públicos, dívida, crescimento e corrupção, ao mesmo tempo em que elogia posições de Lula sobre democracia e meio ambiente. A publicação também apresenta propostas de Renan Santos e afirma que nenhum outsider demonstrou força suficiente diante das estruturas políticas dos dois principais candidatos. A avaliação é da própria revista e não representa uma medição eleitoral.",
+      "source": "The Economist / Folha de S.Paulo",
+      "publishedAt": "24/09/2026",
+      "url": "https://www1.folha.uol.com.br/poder/2026/09/entre-lula-e-flavio-brasil-da-as-costas-ao-futuro-e-renan-e-candidato-mais-adequado-diz-the-economist.shtml"
+    },
+    {
+      "category": "Política",
       "title": "Conselho Superior do MPF analisa mensagens de Vorcaro sobre Gonet",
       "summary": "O Conselho Superior do Ministério Público Federal se reúne nesta sexta-feira para avaliar se há elementos para abrir investigação sobre a atuação do procurador-geral da República, Paulo Gonet, no caso Banco Master.",
       "context": "A análise ocorre após a divulgação de mensagens extraídas pela Polícia Federal do celular de Daniel Vorcaro. Gonet afirma que não tinha relação de proximidade com o ex-banqueiro e classificou seu único encontro com ele como breve e banal.",
