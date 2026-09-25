@@ -162,6 +162,60 @@
       "source": "Reuters",
       "publishedAt": "25/09/2026",
       "url": "https://www.reuters.com/world/europe/us-proposes-trilateral-meeting-with-ukraine-russia-uae-zelenskiy-says-2026-09-25/"
+    },
+    {
+      "category": "Economia",
+      "title": "Banco Central reduz projeção de crescimento do Brasil para 1,8% em 2026",
+      "summary": "O Banco Central reduziu de 2% para 1,8% a projeção de crescimento da economia brasileira em 2026.",
+      "context": "O Relatório de Política Monetária aponta desaceleração da atividade e projeta crescimento de 1,4% em 2027. O BC manteve a projeção de inflação de 5,2% para o fim de 2026 e destacou riscos externos e expectativas de inflação acima da meta.",
+      "source": "Agência Brasil",
+      "publishedAt": "24/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/bc-reduz-projecao-de-crescimento-da-economia-para-18"
+    },
+    {
+      "category": "Tecnologia e IA",
+      "title": "IA entra em nova fase e gestores avaliam menor risco de bolha no setor",
+      "summary": "Especialistas avaliam que a inteligência artificial entrou em uma fase de adoção mais ampla, com empresas buscando aplicações específicas e oportunidades em tecnologia e mercados.",
+      "context": "Segundo análise publicada pela CNN Brasil, a competição entre modelos de IA e a expansão do uso corporativo estão mudando o perfil dos investimentos no setor. A avaliação é de um gestor entrevistado e representa uma análise de mercado, não uma garantia sobre os preços dos ativos.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/negocios/ia-entra-em-nova-fase-e-reduz-risco-de-bolha-diz-gestor/"
+    },
+    {
+      "category": "Mercados",
+      "title": "Dólar abre em queda com IPCA-15 e cenário eleitoral no radar",
+      "summary": "O dólar iniciou a sessão desta sexta-feira em baixa, enquanto investidores acompanhavam o IPCA-15 e o cenário eleitoral brasileiro.",
+      "context": "Na sessão anterior, o dólar à vista fechou a R$ 5,1931. O mercado também acompanha os juros americanos, o petróleo e as expectativas para a política monetária brasileira.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/mercado/mercado-financeiro-ibovespa-dolar-25-setembro-2026/"
+    },
+    {
+      "category": "Economia",
+      "title": "Pedidos de bens de capital nos EUA sobem mais que o esperado em agosto",
+      "summary": "Os pedidos de bens de capital nos Estados Unidos avançaram acima das expectativas em agosto, sinalizando continuidade dos investimentos empresariais.",
+      "context": "Os dados reforçaram a leitura de que os gastos das empresas com equipamentos permanecem robustos, em meio à expansão da infraestrutura ligada à tecnologia e à inteligência artificial.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/macroeconomia/pedidos-de-bens-de-capital-nos-eua-sobem-mais-que-o-esperado-em-agosto/"
+    },
+    {
+      "category": "Economia",
+      "title": "Confiança do consumidor dos EUA cai para menor nível em quatro meses",
+      "summary": "A confiança dos consumidores americanos caiu em setembro para o menor nível em quatro meses, segundo a leitura final da Universidade de Michigan.",
+      "context": "O índice ficou em 48 pontos. O indicador é acompanhado pelos mercados porque ajuda a medir a percepção das famílias sobre a economia e pode influenciar expectativas para consumo, crescimento e juros.",
+      "source": "CNN Brasil",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/macroeconomia/confianca-do-consumidor-nos-eua-cai-para-menor-nivel-em-quatro-meses-em-setembro/"
+    },
+    {
+      "category": "Mundo",
+      "title": "Aliados se unem à Arábia Saudita diante de escalada de ataques houthis",
+      "summary": "Arábia Saudita, Turquia e Paquistão devem realizar uma reunião de alto nível após a intensificação dos ataques dos houthis na região.",
+      "context": "Segundo a Reuters, os países discutem respostas no âmbito de um pacto de defesa. A escalada aumenta a atenção sobre a segurança regional e seus possíveis impactos geopolíticos e energéticos.",
+      "source": "Reuters",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.reuters.com/world/middle-east/allies-unite-behind-saudi-arabia-houthis-step-up-attacks-2026-09-25/"
     }
   ]
 }
