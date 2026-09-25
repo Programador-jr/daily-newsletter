@@ -1,15 +1,17 @@
 :root {
-  --bg-body: #eef0f4;
+  --bg-body: #edf4f1;
   --bg-container: #ffffff;
-  --text-main: #111111;
-  --text-muted: #555555;
-  --primary: #6345ed;
-  --primary-hover: #5235cc;
-  --border: #eeeeee;
-  --switch-bg: #ffd233;
-  --switch-circle: #ffffff;
+  --text-main: #1c2d2a;
+  --text-muted: #536762;
+  --primary: #0b766b;
+  --primary-hover: #095f56;
+  --border: #d8e5e1;
+  --switch-focus: #6345ed;
+  --switch-bg: #a5a4a4;
+  --switch-sun: #ffd233;
+  --switch-circle: #313131;
   --card-bg: #ffffff;
-  --card-border: #eeeeee;
+  --card-border: #dce8e4;
 }
 
 [data-theme="dark"] {
@@ -20,7 +22,7 @@
   --primary: #6345ed;
   --primary-hover: #7b61ff;
   --border: #30363d;
-  --switch-bg: #ffffff;
+  --switch-bg: #30363d;
   --switch-circle: #1a1e27;
   --card-bg: #1a1e27;
   --card-border: #30363d;
@@ -34,6 +36,31 @@
     background-color 0.3s ease,
     color 0.3s ease,
     border-color 0.3s ease;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-muted) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background-color: var(--text-muted);
+  background-clip: content-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary);
 }
 
 html,
@@ -192,6 +219,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 10px;
+  transition: background-color 0.8s ease;
 }
 
 .slider:before {
@@ -200,7 +228,7 @@ body {
   font-family: "Font Awesome 6 Free";
   font-weight: 900;
   font-size: 14px;
-  color: var(--switch-bg);
+  color: var(--switch-sun);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -211,12 +239,28 @@ body {
   background: var(--switch-circle);
   border-radius: 50%;
   z-index: 2;
+  transition:
+    transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.7s ease,
+    color 0.7s ease;
 }
 
 input:checked + .slider:before {
-  transform: translateX(31px);
+  transform: translateX(31px) rotate(180deg);
   content: "\f186";
   color: #00bfff;
+}
+
+.switch input:focus-visible + .slider {
+  outline: 3px solid var(--switch-focus);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slider,
+  .slider:before {
+    transition-duration: 0.01ms;
+  }
 }
 
 /* GENERAL */
@@ -351,6 +395,55 @@ input:checked + .slider:before {
 
 .story.featured {
   grid-column: span 2;
+}
+
+#featured-news .spotlight-card,
+.news-grid .story {
+  padding: 2rem;
+  border: 1px solid var(--card-border);
+  border-left: 4px solid var(--primary);
+  border-radius: 8px;
+  box-shadow: 0 14px 34px rgba(17, 17, 17, 0.07);
+}
+
+#featured-news .spotlight-card .category,
+.news-grid .story .category {
+  padding: 0.35rem 0.55rem;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--primary) 12%, var(--card-bg));
+}
+
+#featured-news .spotlight-card h2 {
+  max-width: 30ch;
+  margin-bottom: 0.85rem;
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+#news-grid .story.featured h2 {
+  max-width: 30ch;
+  margin-bottom: 0.85rem;
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+#featured-news .spotlight-card > p:not(.context) {
+  max-width: 72ch;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+#featured-news .spotlight-card .context,
+.news-grid .story .context {
+  margin-top: 0.25rem;
+  padding: 0.9rem 1rem;
+  border-left: 3px solid var(--primary);
+  border-radius: 0 4px 4px 0;
+  background: color-mix(in srgb, var(--bg-body) 55%, var(--card-bg));
+}
+
+#featured-news .spotlight-card .story-footer {
+  margin-top: 0.5rem;
 }
 
 .story-meta {
@@ -721,7 +814,6 @@ input:checked + .slider:before {
     flex-wrap: nowrap;
     overflow-x: auto;
     padding-bottom: 0.25rem;
-    scrollbar-width: thin;
   }
 
   .filter-btn {
@@ -846,6 +938,22 @@ input:checked + .slider:before {
 
   .story {
     padding: 1rem;
+  }
+
+  .news-grid .story {
+    padding: 1.25rem;
+  }
+
+  #news-grid .story.featured h2 {
+    font-size: 1.35rem;
+  }
+
+  #featured-news .spotlight-card {
+    padding: 1.25rem;
+  }
+
+  #featured-news .spotlight-card h2 {
+    font-size: 1.35rem;
   }
 
   .story h2 {
