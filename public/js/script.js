@@ -1,7 +1,6 @@
 const grid = document.querySelector("#news-grid"),
   dateEl = document.querySelector("#edition-date"),
   featuredNews = document.querySelector("#featured-news"),
-  historyToggle = document.getElementById('history-toggle'),
   historyPanel = document.getElementById('history-panel'),
   closeHistory = document.getElementById('close-history'),
   historyList = document.getElementById('history-list'),
@@ -13,6 +12,7 @@ const grid = document.querySelector("#news-grid"),
 let currentStories = [];
 let currentFilter = 'all';
 let currentSearch = '';
+let currentEditionDate = null;
 
 const formatDate = (value) => {
   if (!value) return "";
@@ -29,7 +29,7 @@ const formatDate = (value) => {
   }).format(date);
 };
 
-const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+const currentPage = window.location.pathname;
 
 const savedTheme = localStorage.getItem("theme") || "light";
 document.documentElement.setAttribute("data-theme", savedTheme);
@@ -54,22 +54,25 @@ switchInput.addEventListener('change', (e) => {
   }
 });
 
-fetch("data/news.json")
+fetch("/data/news.json")
   .then((r) => {
     if (!r.ok) throw new Error("Não foi possível carregar a edição.");
     return r.json();
   })
   .then((data) => {
+    currentEditionDate = data.date;
+
     if (dateEl) {
       dateEl.textContent = formatDate(data.date).toUpperCase();
     }
 
     document.title = `King's Newsletter — ${formatDate(data.date)}`;
 
-    if (currentPage === 'index.html' || currentPage === '') {
+    if (currentPage === '/') {
       if (featuredNews && data.stories.length > 0) {
         const featured = data.stories[0];
         featuredNews.innerHTML = `
+          <article class="story featured spotlight-card">
           <div class="story-meta">
             <span class="category">${featured.category}</span>
             <span class="dot"></span>
@@ -82,9 +85,10 @@ fetch("data/news.json")
             <span class="source">${featured.publishedAt || ""}</span>
             <a class="source-link" href="${featured.url}" target="_blank" rel="noopener noreferrer">Ler fonte</a>
           </div>
+          </article>
         `;
       }
-    } else if (currentPage === 'editions.html') {
+    } else if (currentPage === '/editions') {
       currentStories = data.stories;
       setupCategoryFilters(currentStories);
 
@@ -107,20 +111,24 @@ fetch("data/news.json")
     }
   });
 
-if (historyToggle && historyPanel && closeHistory && historyList) {
-  historyToggle.addEventListener('click', () => {
-    historyPanel.classList.toggle('open');
-    if (historyPanel.classList.contains('open')) {
-      loadHistoryList();
-    }
-  });
-
-  closeHistory.addEventListener('click', () => {
-    historyPanel.classList.remove('open');
-  });
-
+if (historyPanel && closeHistory && historyList) {
   document.addEventListener('click', (e) => {
-    if (historyPanel && historyToggle && !historyPanel.contains(e.target) && !historyToggle.contains(e.target)) {
+    const historyToggle = e.target.closest('#history-toggle');
+
+    if (historyToggle) {
+      historyPanel.classList.toggle('open');
+      if (historyPanel.classList.contains('open')) {
+        loadHistoryList();
+      }
+      return;
+    }
+
+    if (closeHistory.contains(e.target)) {
+      historyPanel.classList.remove('open');
+      return;
+    }
+
+    if (!historyPanel.contains(e.target)) {
       historyPanel.classList.remove('open');
     }
   });
@@ -128,7 +136,7 @@ if (historyToggle && historyPanel && closeHistory && historyList) {
 
 async function loadHistoryList() {
   try {
-    const response = await fetch("data/archive/list.json");
+    const response = await fetch("/data/archive/list.json");
     if (!response.ok) throw new Error("Não foi possível carregar o histórico.");
 
     const archives = await response.json();
@@ -136,7 +144,7 @@ async function loadHistoryList() {
     const archivesWithCounts = await Promise.all(
       archives.map(async (archive) => {
         try {
-          const archiveResponse = await fetch(`data/archive/${archive.date}.json`);
+          const archiveResponse = await fetch(`/data/archive/${archive.date}.json`);
           if (!archiveResponse.ok) throw new Error("Arquivo não encontrado.");
 
           const edition = await archiveResponse.json();
@@ -168,12 +176,12 @@ async function loadHistoryList() {
 }
 
 window.loadArchiveEdition = function(date) {
-  if (currentPage !== 'editions.html') {
-    window.location.href = `editions.html?date=${date}`;
+  if (currentPage !== '/editions') {
+    window.location.href = `/editions?date=${date}`;
     return;
   }
 
-  fetch(`data/archive/${date}.json`)
+  fetch(`/data/archive/${date}.json`)
     .then((r) => {
       if (!r.ok) {
         throw new Error(`Arquivo da edição ${date} não encontrado.`);
@@ -181,6 +189,13 @@ window.loadArchiveEdition = function(date) {
       return r.json();
     })
     .then((data) => {
+      const editionTitle = document.querySelector('#edition-title');
+      if (editionTitle) {
+        editionTitle.textContent = data.date === currentEditionDate
+          ? 'Edição Atual'
+          : `Edição ${formatDate(data.date)}`;
+      }
+
       if (dateEl) {
         dateEl.textContent = formatDate(data.date).toUpperCase();
       }
@@ -209,7 +224,7 @@ window.loadArchiveEdition = function(date) {
 
 const urlParams = new URLSearchParams(window.location.search);
 const dateParam = urlParams.get('date');
-if (dateParam && currentPage === 'editions.html') {
+if (dateParam && (currentPage === '/editions')) {
   setTimeout(() => {
     window.loadArchiveEdition(dateParam);
   }, 500);

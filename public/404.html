@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Página não encontrada - King's Newsletter">
+  <title>404 - Página Não Encontrada</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .error-page {
+      text-align: center;
+      padding: 4rem 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .error-code {
+      font-family: 'Playfair Display', serif;
+      font-size: 8rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .error-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--text-main);
+    }
+    .error-message {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .error-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .error-btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .error-btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+    .error-btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+    .error-btn-secondary {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+    .error-btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="logo">
+        <div class="logo-top"><i class="fas fa-crown"></i> KING'S</div>
+        <div class="logo-bottom">Newsletter</div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="editions">Edições</a></li>
+          <li><a href="about" class="active">Sobre</a></li>
+        </ul>
+      </nav>
+      <div class="theme-toggle">
+        <span class="theme-label" id="theme-label"></span>
+        <label class="switch">
+          <input type="checkbox" id="theme-switch">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </header>
+
+    <main>
+      <div class="error-page">
+        <div class="error-code">404</div>
+        <h1 class="error-title">Página Não Encontrada</h1>
+        <p class="error-message">A página que você está procurando não existe ou foi movida. Verifique o URL ou retorne à página inicial.</p>
+        <div class="error-actions">
+          <a href="/" class="error-btn error-btn-primary">Voltar à Home</a>
+          <a href="/editions" class="error-btn error-btn-secondary">Ver Edições</a>
+        </div>
+      </div>
+    </main>
+  <div id="footer"></div>
+  </div>
+</body>
+<script src="js/footer.js"></script>
+<script src="js/script.js"></script>
+</html>

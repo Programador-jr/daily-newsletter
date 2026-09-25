@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -20,9 +20,9 @@
       </div>
       <nav>
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="editions.html" class="active">Edições</a></li>
-          <li><a href="about.html">Sobre</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="editions" class="active">Edições</a></li>
+          <li><a href="about">Sobre</a></li>
         </ul>
         <div class="nav-search">
           <input type="text" id="search-input" placeholder="Buscar notícias...">
@@ -40,7 +40,7 @@
 
     <main>
       <section class="editions">
-        <div class="editions-heading"><div><span class="eyebrow">Arquivo editorial</span><h2>Edição Atual</h2></div><p>Consulte a edição de hoje ou pesquise pelo histórico.</p></div>
+        <div class="editions-heading"><div><span class="eyebrow">Arquivo editorial</span><h2 id="edition-title">Edição Atual</h2></div><p>Consulte a edição de hoje ou pesquise pelo histórico.</p></div>
         <div class="filter-buttons" id="filter-buttons">
           <button class="filter-btn active" data-filter="all">Todas</button>
           <button class="filter-btn" data-filter="Política">Política</button>
@@ -53,13 +53,7 @@
       </section>
     </main>
 
-    <footer class="site-footer">
-      <div class="daniel"><strong><i class="fas fa-coffee"></i> Feito com café e JavaScript por Daniel Melo</strong></div>
-      <div>&copy; 2026 King's Newsletter</div>
-      <button class="history-toggle" id="history-toggle" aria-label="Abrir histórico">
-        <i class="fas fa-history"></i>
-      </button>
-    </footer>
+    <div id="footer"></div>
     
     <div class="history-panel" id="history-panel">
       <div class="history-header">
@@ -71,6 +65,7 @@
       <div class="history-list" id="history-list"></div>
     </div>
   </div>
-  <script src="script.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/footer.js"></script>
 </body>
 </html>
