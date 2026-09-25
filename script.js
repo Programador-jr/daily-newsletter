@@ -17,8 +17,6 @@ let currentSearch = '';
 const formatDate = (value) => {
   if (!value) return "";
 
-  // Datas YYYY-MM-DD representam uma data do calendário, não um instante UTC.
-  // Criar a data localmente evita que fusos como America/Rio_Branco voltem um dia.
   const match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
   const date = match
     ? new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]))
@@ -31,10 +29,8 @@ const formatDate = (value) => {
   }).format(date);
 };
 
-// Detect current page
 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
-// Theme toggle
 const savedTheme = localStorage.getItem("theme") || "light";
 document.documentElement.setAttribute("data-theme", savedTheme);
 
@@ -58,24 +54,19 @@ switchInput.addEventListener('change', (e) => {
   }
 });
 
-// Load news data
 fetch("data/news.json")
   .then((r) => {
     if (!r.ok) throw new Error("Não foi possível carregar a edição.");
     return r.json();
   })
   .then((data) => {
-    // Update date if on home or editions page
     if (dateEl) {
       dateEl.textContent = formatDate(data.date).toUpperCase();
     }
-    
-    // Update page title
+
     document.title = `King's Newsletter — ${formatDate(data.date)}`;
-    
-    // Load content based on page
+
     if (currentPage === 'index.html' || currentPage === '') {
-      // Home page - show featured news only
       if (featuredNews && data.stories.length > 0) {
         const featured = data.stories[0];
         featuredNews.innerHTML = `
@@ -94,19 +85,16 @@ fetch("data/news.json")
         `;
       }
     } else if (currentPage === 'editions.html') {
-      // Editions page - show full grid with filters
       currentStories = data.stories;
       setupCategoryFilters(currentStories);
-      
-      // Setup search
+
       if (searchInput) {
         searchInput.addEventListener('input', (e) => {
           currentSearch = e.target.value.toLowerCase();
           applyFiltersAndSearch();
         });
       }
-      
-      // Initial render
+
       renderStories(currentStories);
     }
   })
@@ -119,7 +107,6 @@ fetch("data/news.json")
     }
   });
 
-// History panel functionality
 if (historyToggle && historyPanel && closeHistory && historyList) {
   historyToggle.addEventListener('click', () => {
     historyPanel.classList.toggle('open');
@@ -132,7 +119,6 @@ if (historyToggle && historyPanel && closeHistory && historyList) {
     historyPanel.classList.remove('open');
   });
 
-  // Close panel when clicking outside
   document.addEventListener('click', (e) => {
     if (historyPanel && historyToggle && !historyPanel.contains(e.target) && !historyToggle.contains(e.target)) {
       historyPanel.classList.remove('open');
@@ -140,31 +126,48 @@ if (historyToggle && historyPanel && closeHistory && historyList) {
   });
 }
 
-function loadHistoryList() {
-  fetch("data/archive/list.json")
-    .then((r) => {
-      if (!r.ok) throw new Error("Não foi possível carregar o histórico.");
-      return r.json();
-    })
-    .then((archives) => {
-      historyList.innerHTML = archives
-        .map((archive) => `
-          <div class="history-item" onclick="loadArchiveEdition('${archive.date}')">
-            <div class="history-date">${formatDate(archive.date).toUpperCase()}</div>
-            <div class="history-title">${archive.title || `Edição ${archive.date}`}</div>
-            <div class="history-meta">${archive.stories} notícias</div>
-          </div>
-        `)
-        .join("");
-    })
-    .catch((error) => {
-      historyList.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 1rem;">Nenhum histórico disponível.</p>`;
-    });
+async function loadHistoryList() {
+  try {
+    const response = await fetch("data/archive/list.json");
+    if (!response.ok) throw new Error("Não foi possível carregar o histórico.");
+
+    const archives = await response.json();
+
+    const archivesWithCounts = await Promise.all(
+      archives.map(async (archive) => {
+        try {
+          const archiveResponse = await fetch(`data/archive/${archive.date}.json`);
+          if (!archiveResponse.ok) throw new Error("Arquivo não encontrado.");
+
+          const edition = await archiveResponse.json();
+          return {
+            ...archive,
+            stories: Array.isArray(edition.stories) ? edition.stories.length : 0
+          };
+        } catch {
+          return {
+            ...archive,
+            stories: Number.isFinite(archive.stories) ? archive.stories : 0
+          };
+        }
+      })
+    );
+
+    historyList.innerHTML = archivesWithCounts
+      .map((archive) => `
+        <div class="history-item" onclick="loadArchiveEdition('${archive.date}')">
+          <div class="history-date">${formatDate(archive.date).toUpperCase()}</div>
+          <div class="history-title">${archive.title || `Edição ${archive.date}`}</div>
+          <div class="history-meta">${archive.stories} notícias</div>
+        </div>
+      `)
+      .join("");
+  } catch (error) {
+    historyList.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 1rem;">Nenhum histórico disponível.</p>`;
+  }
 }
 
-// Function to load archived edition
 window.loadArchiveEdition = function(date) {
-  // If not on editions page, redirect to editions page first
   if (currentPage !== 'editions.html') {
     window.location.href = `editions.html?date=${date}`;
     return;
@@ -181,25 +184,18 @@ window.loadArchiveEdition = function(date) {
       if (dateEl) {
         dateEl.textContent = formatDate(data.date).toUpperCase();
       }
-      
-      // Update current stories and stats
+
       currentStories = data.stories;
-      
-      
       currentFilter = 'all';
       currentSearch = '';
       if (searchInput) searchInput.value = '';
       setupCategoryFilters(currentStories);
-      
-      // Render stories
       renderStories(currentStories);
-      
-      // Close history panel
+
       if (historyPanel) {
         historyPanel.classList.remove('open');
       }
-      
-      // Scroll to news grid
+
       if (grid) {
         grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
@@ -211,7 +207,6 @@ window.loadArchiveEdition = function(date) {
     });
 };
 
-// Check if there's a date parameter in URL (for redirected users)
 const urlParams = new URLSearchParams(window.location.search);
 const dateParam = urlParams.get('date');
 if (dateParam && currentPage === 'editions.html') {
@@ -220,15 +215,14 @@ if (dateParam && currentPage === 'editions.html') {
   }, 500);
 }
 
-// Helper functions for editions page
 function renderStories(stories) {
   if (!grid) return;
-  
+
   if (stories.length === 0) {
     grid.innerHTML = `<article class="story featured"><h2>Nenhuma notícia encontrada</h2><p>Tente ajustar os filtros ou a busca.</p></article>`;
     return;
   }
-  
+
   grid.innerHTML = stories
     .map((s, i) =>
       `<article class="story ${i === 0 ? "featured" : ""}"><div class="story-meta"><span class="category">${s.category}</span><span class="dot"></span><span class="source">${s.source}</span></div><h2>${s.title}</h2><p>${s.summary}</p><p class="context"><strong>Contexto:</strong> ${s.context}</p><div class="story-footer"><span class="source">${s.publishedAt || ""}</span><a class="source-link" href="${s.url}" target="_blank" rel="noopener noreferrer">Ler fonte</a></div></article>`,
@@ -256,20 +250,18 @@ function setupCategoryFilters(stories) {
 
 function applyFiltersAndSearch() {
   let filtered = currentStories;
-  
-  // Apply category filter
+
   if (currentFilter !== 'all') {
     filtered = filtered.filter(story => story.category === currentFilter);
   }
-  
-  // Apply search filter
+
   if (currentSearch) {
-    filtered = filtered.filter(story => 
+    filtered = filtered.filter(story =>
       story.title.toLowerCase().includes(currentSearch) ||
       story.summary.toLowerCase().includes(currentSearch) ||
       story.context.toLowerCase().includes(currentSearch)
     );
   }
-  
+
   renderStories(filtered);
 }
