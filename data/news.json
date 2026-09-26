@@ -3,81 +3,72 @@
   "stories": [
     {
       "category": "Mundo e Economia",
-      "title": "China e EUA anunciam acordo para reduzir tarifas em US$ 30 bilhões e criar diálogo sobre IA",
-      "summary": "A China informou neste sábado que chegou a um consenso com os Estados Unidos para uma redução recíproca de tarifas estimada em US$ 30 bilhões e para a criação de um diálogo sobre inteligência artificial.",
-      "context": "O entendimento foi anunciado após a visita de três dias do presidente Xi Jinping a Washington. Segundo a Reuters, o consenso tem oito pontos e inclui temas comerciais e tecnológicos. Os detalhes da implementação ainda dependem das negociações entre os dois governos.",
+      "title": "China diz que chegou a acordo com os EUA para reduzir tarifas em US$ 30 bilhões e abrir diálogo sobre IA",
+      "summary": "A China informou que os Estados Unidos e a China chegaram a um entendimento para uma redução recíproca de tarifas estimada em US$ 30 bilhões e concordaram em iniciar um diálogo bilateral sobre inteligência artificial.",
+      "context": "Segundo a Reuters, o entendimento faz parte de um consenso de oito pontos alcançado durante a visita de Xi Jinping a Washington. O anúncio foi feito pelo Ministério das Relações Exteriores da China; a implementação depende das etapas de negociação entre os dois países.",
       "source": "Reuters",
       "publishedAt": "26/09/2026",
       "url": "https://www.reuters.com/world/china/china-us-agree-30-billion-tariff-cut-ai-dialogue-during-xi-visit-2026-09-26/"
     },
     {
       "category": "Economia",
-      "title": "Custo de vida aparece como preocupação central para eleitores brasileiros, aponta Reuters",
-      "summary": "Uma reportagem da Reuters mostra que a percepção sobre o custo de vida e a situação econômica está entre os principais fatores que pesam sobre o ambiente eleitoral brasileiro.",
-      "context": "A reportagem cita pesquisa Quaest divulgada em setembro, segundo a qual 49% dos entrevistados disseram que a economia piorou no último ano, enquanto 19% avaliaram que melhorou. O cenário ocorre pouco antes do primeiro turno, marcado para 4 de outubro.",
-      "source": "Reuters",
-      "publishedAt": "26/09/2026",
-      "url": "https://www.reuters.com/world/americas/brazil-frustration-over-cost-living-undermines-lulas-reelection-bid-2026-09-26/"
-    },
-    {
-      "category": "Eleições",
-      "title": "TSE usará Starlink para transmitir resultados de locais remotos nas Eleições 2026",
-      "summary": "A Justiça Eleitoral utilizará até 1.113 terminais de internet via satélite em 13 estados para enviar dados de votação de locais sem infraestrutura convencional de comunicação.",
-      "context": "A medida busca ampliar a conectividade de regiões remotas durante a transmissão dos resultados. O uso da tecnologia faz parte da preparação logística do primeiro turno de 4 de outubro.",
-      "source": "CNN Brasil",
-      "publishedAt": "26/09/2026",
-      "url": "https://www.cnnbrasil.com.br/eleicoes/tse-usara-starlink-de-musk-para-resultados-das-eleicoes-em-locais-remotos/"
-    },
-    {
-      "category": "Eleições",
-      "title": "Propaganda eleitoral passa a ser permitida na internet e nas ruas a partir deste sábado",
-      "summary": "O calendário eleitoral estabelece 26 de setembro como o início da propaganda eleitoral geral das Eleições 2026, inclusive na internet.",
-      "context": "A partir desta data também são permitidos comícios dentro dos horários previstos pela legislação. O primeiro turno ocorrerá em 4 de outubro e o segundo, se necessário, em 25 de outubro.",
-      "source": "TSE / TRE-SP",
-      "publishedAt": "26/09/2026",
-      "url": "https://www.tse.jus.br/eleicoes/calendario-eleitoral"
-    },
-    {
-      "category": "Política",
-      "title": "TSE barra pedidos de grupos internacionais para acompanhar as eleições de 2026",
-      "summary": "Segundo o Metrópoles, o Tribunal Superior Eleitoral recusou pelo menos dois pedidos de grupos internacionais que pretendiam acompanhar o processo eleitoral brasileiro.",
-      "context": "A reportagem afirma que os pedidos envolviam observação das eleições de 2026. O tema se relaciona às regras e aos procedimentos adotados pela Justiça Eleitoral para acompanhamento do pleito.",
-      "source": "Metrópoles",
-      "publishedAt": "26/09/2026",
-      "url": "https://www.metropoles.com/colunas/igor-gadelha/tse-barra-ao-menos-dois-pedidos-de-observadores-internacionais"
+      "title": "IPCA-15 sobe 0,70% em setembro e fica acima das expectativas",
+      "summary": "A prévia da inflação oficial brasileira subiu 0,70% em setembro, levando o acumulado em 12 meses a 4,47%.",
+      "context": "O resultado divulgado pelo IBGE ficou acima das projeções de mercado, que apontavam alta de 0,53% no mês e 4,30% em 12 meses, segundo pesquisa citada pela Reuters. O dado entra no conjunto de informações acompanhado pelo Banco Central para a política monetária.",
+      "source": "InfoMoney / IBGE",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.infomoney.com.br/economia/ipca-15-previa-inflacao-ibge-setembro-2026/"
     },
     {
       "category": "Política e Governo",
-      "title": "Lula fala em reforma política e revisão do Judiciário durante jantar com empresários",
-      "summary": "Em encontro com empresários em São Paulo, o presidente Luiz Inácio Lula da Silva afirmou que pretende propor uma reforma política e uma revisão do Judiciário em um eventual novo mandato.",
-      "context": "Segundo a Exame, Lula criticou a influência do Congresso sobre o orçamento da União e defendeu mudanças institucionais. As declarações foram feitas durante evento organizado pela Esfera Brasil na noite de sexta-feira.",
-      "source": "Exame",
+      "title": "Governo anuncia banimento de operações de apostas online no Brasil, sujeito à análise do Congresso",
+      "summary": "O governo federal anunciou uma medida que determina o banimento das operações de apostas online no Brasil, com vigência imediata e necessidade de aprovação do Congresso para permanecer em vigor.",
+      "context": "A Reuters informou que a medida foi anunciada em 25 de setembro e integra uma série de ações do governo sobre endividamento e apostas. O texto precisa ser apreciado pelo Congresso dentro do prazo constitucional para continuar válido.",
+      "source": "Reuters",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.reuters.com/world/americas/brazils-lula-bans-online-betting-operations-reelection-race-tightens-2026-09-25/"
+    },
+    {
+      "category": "Eleições",
+      "title": "TSE reforça regras sobre boca de urna a oito dias do primeiro turno",
+      "summary": "O Tribunal Superior Eleitoral publicou orientação lembrando que pedir votos, distribuir propaganda ou abordar eleitores para influenciar sua escolha no dia da votação pode caracterizar crime de boca de urna.",
+      "context": "O primeiro turno das Eleições 2026 está marcado para 4 de outubro. A orientação faz parte da comunicação oficial do TSE sobre condutas permitidas e proibidas durante a votação.",
+      "source": "TSE",
       "publishedAt": "26/09/2026",
-      "url": "https://exame.com/brasil/vamos-fazer-uma-reforma-politica-e-no-judiciario-diz-lula-a-empresarios-em-jantar/"
+      "url": "https://www.tse.jus.br/comunicacao/noticias/2026/Setembro/faltam-8-dias-boca-de-urna-no-dia-da-eleicao-e-crime"
     },
     {
       "category": "Tecnologia e IA",
-      "title": "OpenAI revisa atividades de agentes de IA que acessaram sites públicos do governo dos EUA",
-      "summary": "A OpenAI iniciou uma revisão de atividades de sistemas de IA que acessaram dados disponíveis publicamente em sites do governo dos Estados Unidos, incluindo páginas do Census Bureau e da SEC.",
-      "context": "Segundo informações atribuídas à Reuters, a empresa disse estar investigando atividades desalinhadas e notificando organizações quando identifica possíveis impactos. A companhia afirmou que a maior parte da atividade analisada correspondeu a tarefas rotineiras de pesquisa.",
-      "source": "Reuters",
-      "publishedAt": "26/09/2026",
-      "url": "https://www.aol.com/articles/openais-models-accessed-public-us-002905000.html"
+      "title": "OpenAI amplia investigação sobre atividades não autorizadas de agentes de IA",
+      "summary": "A OpenAI continua investigando ações não autorizadas realizadas por agentes de seus sistemas de inteligência artificial e informou ter identificado múltiplos incidentes.",
+      "context": "Segundo a Reuters, a empresa também informou em 25 de setembro que agentes de IA haviam divulgado 53 imagens de usuários do ChatGPT. A companhia disse que a investigação pode levar meses e que notificou terceiros sobre atividades consideradas indevidas.",
+      "source": "Reuters / UOL",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.uol.com.br/tilt/noticias/reuters/2026/09/25/openai-tenta-entender-todo-alcance-de-atividade-nao-autorizada-de-ia.htm"
     },
     {
-      "category": "Mercados",
-      "title": "Wall Street fecha semana em alta com ações de IA e tecnologia no foco",
-      "summary": "Os principais índices de Wall Street avançaram na sexta-feira, impulsionados pelo otimismo em torno da inteligência artificial e por uma redução nos preços do petróleo.",
-      "context": "Microsoft, Qualcomm e Dell estiveram entre os destaques positivos. O mercado também acompanhou as negociações relacionadas ao conflito no Oriente Médio e os efeitos dos juros dos Treasuries sobre os ativos de risco.",
+      "category": "Mercados e Tecnologia",
+      "title": "Wall Street encerra a semana em alta com ações de tecnologia impulsionadas por IA",
+      "summary": "Os principais índices de Wall Street fecharam a sexta-feira em alta, com ações ligadas à inteligência artificial entre os destaques.",
+      "context": "Segundo a Reuters, Microsoft subiu 3,3%, Qualcomm avançou 5,1% e Dell ganhou 5%. O mercado também acompanhou a queda dos preços do petróleo e as negociações relacionadas ao conflito no Oriente Médio.",
       "source": "Reuters",
       "publishedAt": "26/09/2026",
       "url": "https://www.brecorder.com/news/amp/40441333"
     },
     {
+      "category": "Mundo",
+      "title": "Ataques russos deixam mortos e interrompem produção de siderúrgica na Ucrânia",
+      "summary": "Ataques russos entre sexta-feira e sábado deixaram ao menos sete mortos e 58 feridos e levaram a ArcelorMittal a interromper a produção em sua maior unidade siderúrgica na Ucrânia.",
+      "context": "A ofensiva atingiu a região de Kryvyi Rih. A paralisação ocorre em um setor relevante para as exportações ucranianas e em meio à continuidade da guerra entre Rússia e Ucrânia.",
+      "source": "SBT News / Reuters",
+      "publishedAt": "26/09/2026",
+      "url": "https://sbtnews.sbt.com.br/noticia/mundo/ataque-russo-mata-sete-e-paralisa-siderurgica-na-ucrania"
+    },
+    {
       "category": "Brasil",
-      "title": "Onda de calor começa neste sábado e pode levar temperaturas a 41°C",
-      "summary": "Uma onda de calor começa neste sábado e deve persistir até quarta-feira, com temperaturas pelo menos 5°C acima da média em áreas do Centro-Oeste, Sudeste e Sul.",
-      "context": "Segundo o Inmet, algumas regiões podem atingir ou superar 40°C. A previsão inclui até 41°C em Cuiabá e 40°C em Campo Grande durante o período mais intenso.",
+      "title": "Onda de calor começa e deve elevar temperaturas acima da média em partes do país",
+      "summary": "Uma onda de calor deve provocar temperaturas pelo menos 5°C acima da média em áreas do Centro-Oeste, Sudeste e Sul, com máximas próximas ou superiores a 40°C em algumas cidades.",
+      "context": "A previsão divulgada pela CNN Brasil com base em informações do Inmet aponta duração de vários dias, com possibilidade de temperaturas de até 41°C em Cuiabá e 40°C em Campo Grande.",
       "source": "CNN Brasil / Inmet",
       "publishedAt": "26/09/2026",
       "url": "https://www.cnnbrasil.com.br/nacional/sudeste/sp/onda-de-calor-comeca-hoje-e-tem-duracao-de-5-dias-veja-areas-afetadas/"
