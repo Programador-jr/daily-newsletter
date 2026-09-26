@@ -2,6 +2,15 @@
   "date": "2026-09-25",
   "stories": [
     {
+      "category": "Política e Governo",
+      "title": "Governo proíbe bets no Brasil por meio de Medida Provisória",
+      "summary": "A Medida Provisória nº 1.394, publicada em 25 de setembro, proíbe no Brasil a exploração, oferta, intermediação e publicidade de loterias de aposta de quota fixa, incluindo apostas esportivas e jogos online.",
+      "context": "A MP entrou em vigor na data da publicação. Novos recursos não podem ser depositados nas plataformas; os sites e aplicativos devem ficar indisponíveis 10 dias após a publicação, em 5 de outubro, e os operadores devem retirar publicidade e patrocínios nesse mesmo prazo. A restituição dos valores aos apostadores segue os prazos previstos na própria MP. Outras modalidades lotéricas autorizadas por lei não são abrangidas pela proibição. O texto ainda precisa ser analisado pelo Congresso.",
+      "source": "CNN Brasil / UOL",
+      "publishedAt": "25/09/2026",
+      "url": "https://www.cnnbrasil.com.br/eleicoes/governo-anuncia-proibicao-de-bets-e-endurecimento-a-mercado-ilegal/"
+    },
+    {
       "category": "Eleições",
       "title": "TSE anuncia que e-Título poderá ser baixado nos dias de votação",
       "summary": "O Tribunal Superior Eleitoral informou que o aplicativo e-Título poderá ser baixado durante os dias de votação das eleições de 2026.",
@@ -27,15 +36,6 @@
       "source": "CNN Brasil",
       "publishedAt": "25/09/2026",
       "url": "https://www.cnnbrasil.com.br/blogs/caio-junqueira/eleicoes/flavio-planeja-pec-da-transicao-com-corte-de-gastos-de-r-300-bilhoes/"
-    },
-    {
-      "category": "Política e Governo",
-      "title": "Governo proíbe bets no Brasil por meio de Medida Provisória",
-      "summary": "A Medida Provisória nº 1.394, publicada em 25 de setembro, proíbe no Brasil a exploração, oferta, intermediação e publicidade de loterias de aposta de quota fixa, incluindo apostas esportivas e jogos online.",
-      "context": "A MP entrou em vigor na data da publicação. Novos recursos não podem ser depositados nas plataformas; os sites e aplicativos devem ficar indisponíveis 10 dias após a publicação, em 5 de outubro, e os operadores devem retirar publicidade e patrocínios nesse mesmo prazo. A restituição dos valores aos apostadores segue os prazos previstos na própria MP. Outras modalidades lotéricas autorizadas por lei não são abrangidas pela proibição. O texto ainda precisa ser analisado pelo Congresso.",
-      "source": "CNN Brasil / UOL",
-      "publishedAt": "25/09/2026",
-      "url": "https://www.cnnbrasil.com.br/eleicoes/governo-anuncia-proibicao-de-bets-e-endurecimento-a-mercado-ilegal/"
     },
     {
       "category": "Tecnologia e IA",
