@@ -2,6 +2,16 @@
   "date": "2026-09-26",
   "stories": [
     {
+      "category": "Esportes e Economia",
+      "title": "Bets notificam clubes e governo estuda linha de crédito para reduzir impacto no futebol",
+      "summary": "Casas de apostas começaram a notificar clubes patrocinados sobre possíveis mudanças ou rescisões dos contratos após a medida provisória que proibiu as apostas esportivas e jogos online no Brasil.",
+      "context": "O SBT News informou em 26 de setembro que Betano, Sportingbet e Superbet notificaram clubes sobre possíveis alterações nos acordos. Segundo a publicação, o governo estuda uma linha de crédito com juros mais baixos e outras medidas para reduzir o impacto financeiro sobre as equipes, mas ainda não definiu valor, critérios ou formato final. O BNDES, por sua vez, informou que não participou dessas discussões e que seu estatuto não permite uma operação criada especificamente para compensar clubes pelas perdas provocadas pelo mercado de apostas.",
+      "source": "SBT News / DOL",
+      "publishedAt": "26/09/2026",
+      "url": "https://sbtnews.sbt.com.br/noticia/brasil/bets-notificam-clubes-e-avaliam-contratos-apos-proibicao",
+      "headline": true
+    },
+    {
       "category": "Mundo e Economia",
       "title": "China anuncia acordo com os EUA para redução de tarifas e diálogo sobre IA",
       "summary": "A China informou neste sábado que chegou a um entendimento com os Estados Unidos para uma redução recíproca de tarifas estimada em US$ 30 bilhões e para iniciar um diálogo sobre inteligência artificial.",
