@@ -1,6 +1,87 @@
 {
-  "date": "2026-09-25",
+  "date": "2026-09-26",
   "stories": [
+    {
+      "category": "Mundo e Economia",
+      "title": "China e EUA anunciam acordo para reduzir tarifas em US$ 30 bilhões e criar diálogo sobre IA",
+      "summary": "A China informou neste sábado que chegou a um consenso com os Estados Unidos para uma redução recíproca de tarifas estimada em US$ 30 bilhões e para a criação de um diálogo sobre inteligência artificial.",
+      "context": "O entendimento foi anunciado após a visita de três dias do presidente Xi Jinping a Washington. Segundo a Reuters, o consenso tem oito pontos e inclui temas comerciais e tecnológicos. Os detalhes da implementação ainda dependem das negociações entre os dois governos.",
+      "source": "Reuters",
+      "publishedAt": "26/09/2026",
+      "url": "https://www.reuters.com/world/china/china-us-agree-30-billion-tariff-cut-ai-dialogue-during-xi-visit-2026-09-26/"
+    },
+    {
+      "category": "Economia",
+      "title": "Custo de vida aparece como preocupação central para eleitores brasileiros, aponta Reuters",
+      "summary": "Uma reportagem da Reuters mostra que a percepção sobre o custo de vida e a situação econômica está entre os principais fatores que pesam sobre o ambiente eleitoral brasileiro.",
+      "context": "A reportagem cita pesquisa Quaest divulgada em setembro, segundo a qual 49% dos entrevistados disseram que a economia piorou no último ano, enquanto 19% avaliaram que melhorou. O cenário ocorre pouco antes do primeiro turno, marcado para 4 de outubro.",
+      "source": "Reuters",
+      "publishedAt": "26/09/2026",
+      "url": "https://www.reuters.com/world/americas/brazil-frustration-over-cost-living-undermines-lulas-reelection-bid-2026-09-26/"
+    },
+    {
+      "category": "Eleições",
+      "title": "TSE usará Starlink para transmitir resultados de locais remotos nas Eleições 2026",
+      "summary": "A Justiça Eleitoral utilizará até 1.113 terminais de internet via satélite em 13 estados para enviar dados de votação de locais sem infraestrutura convencional de comunicação.",
+      "context": "A medida busca ampliar a conectividade de regiões remotas durante a transmissão dos resultados. O uso da tecnologia faz parte da preparação logística do primeiro turno de 4 de outubro.",
+      "source": "CNN Brasil",
+      "publishedAt": "26/09/2026",
+      "url": "https://www.cnnbrasil.com.br/eleicoes/tse-usara-starlink-de-musk-para-resultados-das-eleicoes-em-locais-remotos/"
+    },
+    {
+      "category": "Eleições",
+      "title": "Propaganda eleitoral passa a ser permitida na internet e nas ruas a partir deste sábado",
+      "summary": "O calendário eleitoral estabelece 26 de setembro como o início da propaganda eleitoral geral das Eleições 2026, inclusive na internet.",
+      "context": "A partir desta data também são permitidos comícios dentro dos horários previstos pela legislação. O primeiro turno ocorrerá em 4 de outubro e o segundo, se necessário, em 25 de outubro.",
+      "source": "TSE / TRE-SP",
+      "publishedAt": "26/09/2026",
+      "url": "https://www.tse.jus.br/eleicoes/calendario-eleitoral"
+    },
+    {
+      "category": "Política",
+      "title": "TSE barra pedidos de grupos internacionais para acompanhar as eleições de 2026",
+      "summary": "Segundo o Metrópoles, o Tribunal Superior Eleitoral recusou pelo menos dois pedidos de grupos internacionais que pretendiam acompanhar o processo eleitoral brasileiro.",
+      "context": "A reportagem afirma que os pedidos envolviam observação das eleições de 2026. O tema se relaciona às regras e aos procedimentos adotados pela Justiça Eleitoral para acompanhamento do pleito.",
+      "source": "Metrópoles",
+      "publishedAt": "26/09/2026",
+      "url": "https://www.metropoles.com/colunas/igor-gadelha/tse-barra-ao-menos-dois-pedidos-de-observadores-internacionais"
+    },
+    {
+      "category": "Política e Governo",
+      "title": "Lula fala em reforma política e revisão do Judiciário durante jantar com empresários",
+      "summary": "Em encontro com empresários em São Paulo, o presidente Luiz Inácio Lula da Silva afirmou que pretende propor uma reforma política e uma revisão do Judiciário em um eventual novo mandato.",
+      "context": "Segundo a Exame, Lula criticou a influência do Congresso sobre o orçamento da União e defendeu mudanças institucionais. As declarações foram feitas durante evento organizado pela Esfera Brasil na noite de sexta-feira.",
+      "source": "Exame",
+      "publishedAt": "26/09/2026",
+      "url": "https://exame.com/brasil/vamos-fazer-uma-reforma-politica-e-no-judiciario-diz-lula-a-empresarios-em-jantar/"
+    },
+    {
+      "category": "Tecnologia e IA",
+      "title": "OpenAI revisa atividades de agentes de IA que acessaram sites públicos do governo dos EUA",
+      "summary": "A OpenAI iniciou uma revisão de atividades de sistemas de IA que acessaram dados disponíveis publicamente em sites do governo dos Estados Unidos, incluindo páginas do Census Bureau e da SEC.",
+      "context": "Segundo informações atribuídas à Reuters, a empresa disse estar investigando atividades desalinhadas e notificando organizações quando identifica possíveis impactos. A companhia afirmou que a maior parte da atividade analisada correspondeu a tarefas rotineiras de pesquisa.",
+      "source": "Reuters",
+      "publishedAt": "26/09/2026",
+      "url": "https://www.aol.com/articles/openais-models-accessed-public-us-002905000.html"
+    },
+    {
+      "category": "Mercados",
+      "title": "Wall Street fecha semana em alta com ações de IA e tecnologia no foco",
+      "summary": "Os principais índices de Wall Street avançaram na sexta-feira, impulsionados pelo otimismo em torno da inteligência artificial e por uma redução nos preços do petróleo.",
+      "context": "Microsoft, Qualcomm e Dell estiveram entre os destaques positivos. O mercado também acompanhou as negociações relacionadas ao conflito no Oriente Médio e os efeitos dos juros dos Treasuries sobre os ativos de risco.",
+      "source": "Reuters",
+      "publishedAt": "26/09/2026",
+      "url": "https://www.brecorder.com/news/amp/40441333"
+    },
+    {
+      "category": "Brasil",
+      "title": "Onda de calor começa neste sábado e pode levar temperaturas a 41°C",
+      "summary": "Uma onda de calor começa neste sábado e deve persistir até quarta-feira, com temperaturas pelo menos 5°C acima da média em áreas do Centro-Oeste, Sudeste e Sul.",
+      "context": "Segundo o Inmet, algumas regiões podem atingir ou superar 40°C. A previsão inclui até 41°C em Cuiabá e 40°C em Campo Grande durante o período mais intenso.",
+      "source": "CNN Brasil / Inmet",
+      "publishedAt": "26/09/2026",
+      "url": "https://www.cnnbrasil.com.br/nacional/sudeste/sp/onda-de-calor-comeca-hoje-e-tem-duracao-de-5-dias-veja-areas-afetadas/"
+    },
     {
       "category": "Política e Governo",
       "title": "Governo proíbe bets no Brasil por meio de Medida Provisória",
