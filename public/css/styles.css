@@ -544,6 +544,142 @@ input:checked + .slider:before {
   margin: 0 0 1rem;
 }
 
+
+/* SUBSCRIPTION */
+.subscription-section {
+  margin: 0 3rem 4rem;
+  padding: 2rem;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 12px;
+  background: var(--card-bg);
+}
+
+.subscription-content {
+  max-width: 760px;
+}
+
+.subscription-section .eyebrow {
+  margin-bottom: 0.6rem;
+}
+
+.subscription-section h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
+}
+
+.subscription-section p:not(.eyebrow):not(.subscription-message) {
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.subscription-form {
+  display: flex;
+  gap: 0.75rem;
+  max-width: 680px;
+}
+
+.subscription-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-container);
+  color: var(--text-main);
+  font: inherit;
+  outline: none;
+}
+
+.subscription-form input:focus {
+  border-color: var(--primary);
+}
+
+.subscription-form button {
+  flex: 0 0 auto;
+  padding: 0.9rem 1.25rem;
+  border: 0;
+  border-radius: 8px;
+  background: var(--primary);
+  color: white;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.subscription-form button:hover {
+  background: var(--primary-hover);
+}
+
+.subscription-form button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.subscription-section small {
+  display: block;
+  margin-top: 0.8rem;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.subscription-message {
+  min-height: 1.25rem;
+  margin-top: 0.8rem;
+  margin-bottom: 0 !important;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.subscription-message.success {
+  color: var(--primary) !important;
+}
+
+.subscription-message.error {
+  color: #b42318 !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 768px) {
+  .subscription-section {
+    margin: 0 1.25rem 2.5rem;
+    padding: 1.5rem;
+  }
+
+  .subscription-form {
+    flex-direction: column;
+  }
+
+  .subscription-form button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .subscription-section {
+    margin: 0 1rem 2rem;
+    padding: 1.25rem;
+  }
+
+  .subscription-section h2 {
+    font-size: 1.45rem;
+  }
+}
+
 /* FOOTER */
 .site-footer {
   padding: 2rem 3rem;
