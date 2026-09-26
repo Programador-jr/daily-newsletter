@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/data/news.json",
+      "destination": "/api/data?path=news.json"
+    },
+    {
+      "source": "/data/archive/list.json",
+      "destination": "/api/data?path=archive/list.json"
+    },
+    {
+      "source": "/data/archive/:date.json",
+      "destination": "/api/data?path=archive/:date.json"
+    }
+  ],
+  "functions": {
+    "api/data.js": {
+      "includeFiles": "data/**"
+    }
+  }
+}
