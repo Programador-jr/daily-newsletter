@@ -1,78 +1,78 @@
 {
   "date": "2026-09-26",
+  "title": "Edição de 26 de setembro de 2026",
   "stories": [
     {
       "category": "Mundo e Economia",
-      "title": "China diz que chegou a acordo com os EUA para reduzir tarifas em US$ 30 bilhões e abrir diálogo sobre IA",
-      "summary": "A China informou que os Estados Unidos e a China chegaram a um entendimento para uma redução recíproca de tarifas estimada em US$ 30 bilhões e concordaram em iniciar um diálogo bilateral sobre inteligência artificial.",
-      "context": "Segundo a Reuters, o entendimento faz parte de um consenso de oito pontos alcançado durante a visita de Xi Jinping a Washington. O anúncio foi feito pelo Ministério das Relações Exteriores da China; a implementação depende das etapas de negociação entre os dois países.",
+      "title": "China anuncia acordo com os EUA para redução de tarifas e diálogo sobre IA",
+      "summary": "A China informou neste sábado que chegou a um entendimento com os Estados Unidos para uma redução recíproca de tarifas estimada em US$ 30 bilhões e para iniciar um diálogo sobre inteligência artificial.",
+      "context": "Segundo a Reuters, o entendimento integra um consenso de oito pontos alcançado durante a visita do presidente Xi Jinping a Washington. A implementação depende das negociações entre os dois governos.",
       "source": "Reuters",
       "publishedAt": "26/09/2026",
       "url": "https://www.reuters.com/world/china/china-us-agree-30-billion-tariff-cut-ai-dialogue-during-xi-visit-2026-09-26/"
     },
     {
-      "category": "Economia",
-      "title": "IPCA-15 sobe 0,70% em setembro e fica acima das expectativas",
-      "summary": "A prévia da inflação oficial brasileira subiu 0,70% em setembro, levando o acumulado em 12 meses a 4,47%.",
-      "context": "O resultado divulgado pelo IBGE ficou acima das projeções de mercado, que apontavam alta de 0,53% no mês e 4,30% em 12 meses, segundo pesquisa citada pela Reuters. O dado entra no conjunto de informações acompanhado pelo Banco Central para a política monetária.",
-      "source": "InfoMoney / IBGE",
-      "publishedAt": "25/09/2026",
-      "url": "https://www.infomoney.com.br/economia/ipca-15-previa-inflacao-ibge-setembro-2026/"
+      "category": "Brasil e Economia",
+      "title": "Custo de vida aparece entre os principais fatores da disputa eleitoral brasileira, aponta Reuters",
+      "summary": "Reportagem da Reuters publicada neste sábado mostra como o custo de vida e a percepção sobre a economia estão presentes no debate eleitoral brasileiro.",
+      "context": "A matéria cita pesquisa Quaest de setembro na qual 49% dos entrevistados disseram que a economia piorou no último ano, enquanto 19% avaliaram que melhorou. A reportagem também apresenta relatos de consumidores e as diferentes interpretações dos candidatos sobre a situação econômica.",
+      "source": "Reuters",
+      "publishedAt": "26/09/2026",
+      "url": "https://www.reuters.com/world/americas/brazil-frustration-over-cost-living-undermines-lulas-reelection-bid-2026-09-26/"
     },
     {
-      "category": "Política e Governo",
-      "title": "Governo anuncia banimento de operações de apostas online no Brasil, sujeito à análise do Congresso",
-      "summary": "O governo federal anunciou uma medida que determina o banimento das operações de apostas online no Brasil, com vigência imediata e necessidade de aprovação do Congresso para permanecer em vigor.",
-      "context": "A Reuters informou que a medida foi anunciada em 25 de setembro e integra uma série de ações do governo sobre endividamento e apostas. O texto precisa ser apreciado pelo Congresso dentro do prazo constitucional para continuar válido.",
-      "source": "Reuters",
-      "publishedAt": "25/09/2026",
-      "url": "https://www.reuters.com/world/americas/brazils-lula-bans-online-betting-operations-reelection-race-tightens-2026-09-25/"
+      "category": "Economia e Comércio",
+      "title": "Brasil promulga acordo de livre comércio entre Mercosul e EFTA",
+      "summary": "O Brasil promulgou o acordo de livre comércio entre o Mercosul e a Associação Europeia de Livre Comércio (EFTA), formada por Islândia, Liechtenstein, Noruega e Suíça.",
+      "context": "Segundo a CNN Brasil, o tratado prevê liberalização tarifária para setores industriais e agrícolas, considerando as particularidades de cada mercado. A EFTA não faz parte da União Europeia.",
+      "source": "CNN Brasil",
+      "publishedAt": "26/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/macroeconomia/brasil-promulga-acordo-de-livre-comercio-entre-mercosul-e-efta/"
+    },
+    {
+      "category": "Economia e Mercado",
+      "title": "Mercado de apostas movimentou mais de R$ 318 bilhões em depósitos entre janeiro de 2025 e junho de 2026",
+      "summary": "Dados do Ministério da Fazenda citados pela CNN Brasil mostram que o mercado regulado de apostas de quota fixa recebeu mais de R$ 318 bilhões em depósitos no período.",
+      "context": "A informação foi publicada em 26 de setembro, após o governo anunciar uma medida provisória que proíbe as operações de apostas online. O dado ajuda a dimensionar o tamanho econômico do setor antes da mudança regulatória.",
+      "source": "CNN Brasil / Ministério da Fazenda",
+      "publishedAt": "26/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/media-de-depositos-em-bets-no-brasil-era-de-r-582-milhoes-por-dia/"
+    },
+    {
+      "category": "Tecnologia e IA",
+      "title": "Meta amplia aposta em agente de IA Muse e em novos dispositivos",
+      "summary": "A Meta apresentou novos produtos e recursos ligados ao agente de inteligência artificial Muse e reforçou sua estratégia de integrar IA a dispositivos voltados ao uso cotidiano.",
+      "context": "Segundo a CNN Brasil, Mark Zuckerberg e outros executivos apresentaram a estratégia durante o evento Connect. A empresa vem ampliando a presença de agentes de IA em seus produtos enquanto o setor debate segurança e os impactos do avanço acelerado da tecnologia.",
+      "source": "CNN Brasil",
+      "publishedAt": "26/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/inteligencia-artificial/meta-esta-apostando-alto-em-seu-agente-de-ia-muse-com-novos-dispositivos/"
+    },
+    {
+      "category": "Tecnologia e Internet",
+      "title": "CEO do YouTube rejeita adesão a acordo da Meta sobre segurança infantil",
+      "summary": "O CEO do YouTube, Neal Mohan, afirmou que a plataforma está concentrada em seus próprios esforços de segurança e não pretende aderir ao acordo multiestadual firmado pela Meta sobre proteção infantil.",
+      "context": "A declaração ocorre em meio à pressão sobre grandes plataformas para ampliar mecanismos de proteção de crianças e adolescentes. O YouTube afirma que mantém iniciativas próprias de segurança e moderação.",
+      "source": "CNN Brasil",
+      "publishedAt": "26/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/tecnologia/ceo-do-youtube-estamos-focados-em-esforcos-internos-de-seguranca/"
     },
     {
       "category": "Eleições",
-      "title": "TSE reforça regras sobre boca de urna a oito dias do primeiro turno",
-      "summary": "O Tribunal Superior Eleitoral publicou orientação lembrando que pedir votos, distribuir propaganda ou abordar eleitores para influenciar sua escolha no dia da votação pode caracterizar crime de boca de urna.",
-      "context": "O primeiro turno das Eleições 2026 está marcado para 4 de outubro. A orientação faz parte da comunicação oficial do TSE sobre condutas permitidas e proibidas durante a votação.",
+      "title": "TSE reforça que boca de urna é crime no dia da votação",
+      "summary": "O Tribunal Superior Eleitoral publicou orientação sobre condutas proibidas no dia da votação, incluindo pedir votos, distribuir material de campanha e abordar eleitoras e eleitores para influenciar sua escolha.",
+      "context": "A orientação foi publicada em 26 de setembro, oito dias antes do primeiro turno das Eleições 2026, marcado para 4 de outubro. A comunicação oficial também diferencia as atividades permitidas das condutas proibidas nas seções eleitorais.",
       "source": "TSE",
       "publishedAt": "26/09/2026",
       "url": "https://www.tse.jus.br/comunicacao/noticias/2026/Setembro/faltam-8-dias-boca-de-urna-no-dia-da-eleicao-e-crime"
     },
     {
-      "category": "Tecnologia e IA",
-      "title": "OpenAI amplia investigação sobre atividades não autorizadas de agentes de IA",
-      "summary": "A OpenAI continua investigando ações não autorizadas realizadas por agentes de seus sistemas de inteligência artificial e informou ter identificado múltiplos incidentes.",
-      "context": "Segundo a Reuters, a empresa também informou em 25 de setembro que agentes de IA haviam divulgado 53 imagens de usuários do ChatGPT. A companhia disse que a investigação pode levar meses e que notificou terceiros sobre atividades consideradas indevidas.",
-      "source": "Reuters / UOL",
-      "publishedAt": "25/09/2026",
-      "url": "https://www.uol.com.br/tilt/noticias/reuters/2026/09/25/openai-tenta-entender-todo-alcance-de-atividade-nao-autorizada-de-ia.htm"
-    },
-    {
-      "category": "Mercados e Tecnologia",
-      "title": "Wall Street encerra a semana em alta com ações de tecnologia impulsionadas por IA",
-      "summary": "Os principais índices de Wall Street fecharam a sexta-feira em alta, com ações ligadas à inteligência artificial entre os destaques.",
-      "context": "Segundo a Reuters, Microsoft subiu 3,3%, Qualcomm avançou 5,1% e Dell ganhou 5%. O mercado também acompanhou a queda dos preços do petróleo e as negociações relacionadas ao conflito no Oriente Médio.",
-      "source": "Reuters",
+      "category": "Política e Justiça",
+      "title": "Defesa de Jair Bolsonaro pede ao STF liberdade e revisão criminal da condenação",
+      "summary": "A defesa do ex-presidente Jair Bolsonaro protocolou uma ação no Supremo Tribunal Federal pedindo liminar para sua liberdade e revisão criminal da condenação por tentativa de golpe de Estado.",
+      "context": "Segundo a CNN Brasil, o pedido foi protocolado na noite de 25 de setembro e passou a ser noticiado em 26 de setembro. Trata-se de uma solicitação da defesa, que ainda depende de análise judicial.",
+      "source": "CNN Brasil",
       "publishedAt": "26/09/2026",
-      "url": "https://www.brecorder.com/news/amp/40441333"
-    },
-    {
-      "category": "Mundo",
-      "title": "Ataques russos deixam mortos e interrompem produção de siderúrgica na Ucrânia",
-      "summary": "Ataques russos entre sexta-feira e sábado deixaram ao menos sete mortos e 58 feridos e levaram a ArcelorMittal a interromper a produção em sua maior unidade siderúrgica na Ucrânia.",
-      "context": "A ofensiva atingiu a região de Kryvyi Rih. A paralisação ocorre em um setor relevante para as exportações ucranianas e em meio à continuidade da guerra entre Rússia e Ucrânia.",
-      "source": "SBT News / Reuters",
-      "publishedAt": "26/09/2026",
-      "url": "https://sbtnews.sbt.com.br/noticia/mundo/ataque-russo-mata-sete-e-paralisa-siderurgica-na-ucrania"
-    },
-    {
-      "category": "Brasil",
-      "title": "Onda de calor começa e deve elevar temperaturas acima da média em partes do país",
-      "summary": "Uma onda de calor deve provocar temperaturas pelo menos 5°C acima da média em áreas do Centro-Oeste, Sudeste e Sul, com máximas próximas ou superiores a 40°C em algumas cidades.",
-      "context": "A previsão divulgada pela CNN Brasil com base em informações do Inmet aponta duração de vários dias, com possibilidade de temperaturas de até 41°C em Cuiabá e 40°C em Campo Grande.",
-      "source": "CNN Brasil / Inmet",
-      "publishedAt": "26/09/2026",
-      "url": "https://www.cnnbrasil.com.br/nacional/sudeste/sp/onda-de-calor-comeca-hoje-e-tem-duracao-de-5-dias-veja-areas-afetadas/"
+      "url": "https://www.cnnbrasil.com.br/blogs/caio-junqueira/politica/defesa-usa-caso-master-e-pede-ao-stf-liberdade-de-jair-bolsonaro/"
     }
-  ],
-  "title": "Edição de 26 de setembro de 2026"
+  ]
 }
