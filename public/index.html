@@ -41,7 +41,24 @@
         <p class="lead">Um briefing direto com resumo e contexto sobre política, economia, tecnologia, Brasil e mundo.</p>
         <a href="/editions" class="cta-button">Ver Edição Atual</a>
       </section>
-      
+
+      <section class="subscription-section" aria-labelledby="subscription-title">
+        <div class="subscription-content">
+          <p class="eyebrow">Receba as novidades</p>
+          <h2 id="subscription-title">Novas atualizações direto no seu e-mail.</h2>
+          <p>Cadastre seu e-mail para receber as novas notícias do King's Newsletter. Sem conta e sem senha.</p>
+
+          <form id="subscription-form" class="subscription-form">
+            <label class="sr-only" for="subscriber-email">Seu e-mail</label>
+            <input id="subscriber-email" name="email" type="email" autocomplete="email" placeholder="seuemail@exemplo.com" maxlength="254" required>
+            <button type="submit">Quero receber</button>
+          </form>
+
+          <p id="subscription-message" class="subscription-message" role="status" aria-live="polite"></p>
+          <small>Você receberá um e-mail para confirmar a inscrição.</small>
+        </div>
+      </section>
+
       <section class="preview-section">
         <h2>Destaque de Hoje</h2>
         <div id="featured-news" class="featured-news"></div>
@@ -49,7 +66,7 @@
     </main>
 
     <div id="footer"></div>
-    
+
     <div class="history-panel" id="history-panel">
       <div class="history-header">
         <h3>Histórico de Publicações</h3>
@@ -62,6 +79,7 @@
   </div>
   <script src="js/footer.js"></script>
   <script src="js/script.js"></script>
+  <script src="js/subscribe.js"></script>
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
