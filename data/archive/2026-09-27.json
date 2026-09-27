@@ -1,0 +1,79 @@
+{
+  "date": "2026-09-27",
+  "title": "Edição de 27 de setembro de 2026",
+  "stories": [
+    {
+      "category": "Esportes e Economia",
+      "title": "Governo prepara plano de até R$ 20 bilhões para clubes após veto das bets",
+      "summary": "O governo federal negocia com clubes um programa de crédito de até R$ 20 bilhões para refinanciar dívidas do futebol após a proibição das casas de apostas online.",
+      "context": "Segundo o UOL, a proposta prevê que clubes e SAFs troquem dívidas mais caras por financiamento de prazo maior e juros menores. O plano ainda está em negociação e não representa um repasse ou perdão de dívidas já aprovado.",
+      "source": "UOL",
+      "publishedAt": "27/09/2026",
+      "url": "https://www.uol.com.br/esporte/futebol/ultimas-noticias/2026/09/27/governo-prepara-plano-de-ate-r-20-bi-para-clubes-veja-regras.ghtm",
+      "headline": true
+    },
+    {
+      "category": "Economia e Governo",
+      "title": "Medidas recentes exigem ajuste de R$ 42,3 bilhões no Orçamento de 2027",
+      "summary": "A equipe econômica terá de ajustar o projeto de Orçamento de 2027 após medidas como o Desenrola 3.0, o reajuste do Bolsa Família e o fim das bets.",
+      "context": "Segundo a CNN Brasil, o cálculo inclui cerca de R$ 22 bilhões de gasto adicional com o Bolsa Família, R$ 15 bilhões estimados para a compra de dívidas pelo Desenrola e aproximadamente R$ 5,3 bilhões em receitas que deixarão de entrar com o fim das apostas reguladas.",
+      "source": "CNN Brasil",
+      "publishedAt": "27/09/2026",
+      "url": "https://www.cnnbrasil.com.br/politica/medidas-antes-das-eleicoes-demandam-ajuste-de-r-42-bi-de-orcamento-de-2027/"
+    },
+    {
+      "category": "Política e Eleições",
+      "title": "Presidente do TSE suspende jingle de Lula que associa Flávio Bolsonaro a Vorcaro",
+      "summary": "O presidente do Tribunal Superior Eleitoral, Nunes Marques, concedeu liminar suspendendo a veiculação de um jingle da campanha de Lula que fazia associações entre Flávio Bolsonaro e o empresário Daniel Vorcaro.",
+      "context": "A decisão é provisória e ainda será analisada pelo plenário do TSE. A peça também fazia referências a acusações envolvendo rachadinha e compra de imóveis, segundo a CNN Brasil.",
+      "source": "CNN Brasil",
+      "publishedAt": "27/09/2026",
+      "url": "https://www.cnnbrasil.com.br/eleicoes/nunes-marques-suspende-jingle-de-lula-que-liga-flavio-a-vorcaro/"
+    },
+    {
+      "category": "Internacional",
+      "title": "Rússia lança ataques contra infraestrutura militar e embarcações na Ucrânia",
+      "summary": "Autoridades ucranianas informaram uma morte e vários feridos após ataques russos na região de Kiev; Odessa também foi atingida.",
+      "context": "O Ministério da Defesa russo afirmou ter atingido centros logísticos, infraestrutura portuária e de transporte e instalações militares. A Reuters informou que não conseguiu verificar de forma independente todas as alegações russas.",
+      "source": "CNN Brasil / Reuters",
+      "publishedAt": "27/09/2026",
+      "url": "https://www.cnnbrasil.com.br/internacional/russia-lanca-ataque-contra-infraestrutura-militar-e-embarcacoes-da-ucrania/"
+    },
+    {
+      "category": "Tecnologia e IA",
+      "title": "Suzano usa IA generativa para acelerar desenvolvimento de mudas de eucalipto",
+      "summary": "A Suzano firmou parceria com o Google Cloud para utilizar inteligência artificial no desenvolvimento de mudas de eucalipto, com objetivo de reduzir pela metade o tempo de desenvolvimento.",
+      "context": "O projeto combina IA generativa, dados da empresa e infraestrutura de nuvem e satélite para apoiar o melhoramento genético das mudas e o monitoramento de áreas produtivas e de preservação.",
+      "source": "CNN Brasil",
+      "publishedAt": "27/09/2026",
+      "url": "https://www.cnnbrasil.com.br/agro/empresa-usa-ia-para-acelerar-desenvolvimento-de-mudas/"
+    },
+    {
+      "category": "Economia e Negócios",
+      "title": "Unilever amplia investimentos em sua operação de alimentos no Brasil",
+      "summary": "A Unilever informou que mantém a expansão de sua operação de alimentos no Brasil, uma das três maiores da companhia no mundo.",
+      "context": "A empresa afirma que pretende ampliar investimentos em expansão, tecnologia e novas oportunidades de consumo. A operação brasileira é apresentada como estratégica dentro do negócio global de alimentos.",
+      "source": "CNN Brasil",
+      "publishedAt": "27/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/negocios/unilever-alimentos-mantem-aposta-no-brasil-e-amplia-investimentos/"
+    },
+    {
+      "category": "Internacional",
+      "title": "Líderes defendem que próxima secretária-geral da ONU seja uma mulher",
+      "summary": "Durante a Assembleia Geral da ONU, líderes de diferentes países defenderam que a próxima pessoa a comandar a organização seja uma mulher.",
+      "context": "Desde a criação do cargo, em 1946, todos os secretários-gerais da ONU foram homens. António Guterres, atual secretário-geral, deixará o posto em 31 de dezembro.",
+      "source": "CNN",
+      "publishedAt": "27/09/2026",
+      "url": "https://www.cnnbrasil.com.br/internacional/pela-primeira-vez-em-80-anos-proxima-lider-da-onu-pode-ser-uma-mulher/"
+    },
+    {
+      "category": "Brasil e Economia",
+      "title": "Proibição das bets deve reduzir arrecadação federal em cerca de R$ 5,3 bilhões em 2027",
+      "summary": "A equipe econômica estima que o fim das apostas de quota fixa retire cerca de R$ 5,3 bilhões da previsão de receitas do Orçamento de 2027.",
+      "context": "A estimativa considera a arrecadação que estava prevista com o mercado regulado. Empresas do setor também estudam medidas judiciais contra a proibição e questionam valores pagos anteriormente ao governo.",
+      "source": "TV Sim Brasil",
+      "publishedAt": "27/09/2026",
+      "url": "https://tvsimbrasil.com.br/brasil/economia/noticia/2026/09/27/proibicao-bets-orcamento-justica"
+    }
+  ]
+}
