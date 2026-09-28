@@ -12,6 +12,51 @@
       "headline": true
     },
     {
+      "category": "Política e Eleições",
+      "title": "Flávio Dino derruba decisão de Mendonça e libera postagem sobre Nossa Senhora",
+      "summary": "O ministro Flávio Dino, do STF, suspendeu uma decisão de André Mendonça e determinou o restabelecimento de uma publicação relacionada a Nossa Senhora Aparecida.",
+      "context": "A decisão também determinou o restabelecimento de outras publicações removidas pelo mesmo fundamento. A medida gerou reação da campanha de Flávio Bolsonaro, que questionou a atuação do STF em matéria eleitoral. A decisão e as críticas são fatos distintos e devem ser analisados separadamente.",
+      "source": "CNN Brasil",
+      "publishedAt": "27/09/2026",
+      "url": "https://www.cnnbrasil.com.br/eleicoes/dino-usurpa-competencia-do-tse-para-liberar-mentira-diz-campanha-de-flavio/"
+    },
+    {
+      "category": "Internacional",
+      "title": "Rússia atinge sede da maior operadora móvel da Ucrânia em Kiev",
+      "summary": "Um ataque russo atingiu a sede da Kyivstar, maior operadora de telefonia móvel da Ucrânia, durante uma nova ofensiva contra infraestrutura de comunicações.",
+      "context": "A empresa informou que não houve vítimas na sede atingida. A Rússia também afirmou ter atingido um data center da Vodafone Ucrânia. O presidente Volodymyr Zelensky disse que um data center em Kiev foi atacado duas vezes e que três pessoas ficaram feridas, incluindo duas crianças.",
+      "source": "Reuters / SBT News",
+      "publishedAt": "27/09/2026",
+      "url": "https://sbtnews.sbt.com.br/noticia/mundo/russia-ataca-maior-operadora-de-telefonia-movel-da-ucrania"
+    },
+    {
+      "category": "Tecnologia e IA",
+      "title": "Bill Gates defende regras obrigatórias para segurança da inteligência artificial",
+      "summary": "Bill Gates afirmou que a autorregulação das empresas não é suficiente para lidar com os riscos de sistemas de inteligência artificial cada vez mais capazes.",
+      "context": "Em entrevista à NBC, Gates defendeu participação obrigatória de autoridades na definição de salvaguardas e mecanismos de monitoramento. O debate ocorre nos Estados Unidos em meio a propostas para ampliar a supervisão pública sobre o desenvolvimento de sistemas avançados de IA.",
+      "source": "Reuters / CNN Brasil",
+      "publishedAt": "27/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/inteligencia-artificial/bill-gates-defende-protecao-contra-ia-e-diz-que-autorregulacao-nao-basta/"
+    },
+    {
+      "category": "Internacional e Economia",
+      "title": "EUA e China reduzem tarifas sobre US$ 30 bilhões e ampliam diálogo sobre IA",
+      "summary": "Estados Unidos e China concordaram em reduzir tarifas sobre cerca de US$ 30 bilhões em mercadorias e iniciar um diálogo específico sobre inteligência artificial.",
+      "context": "Segundo a Reuters, o entendimento envolve produtos como agrícolas, madeira, cosméticos, pequenos eletrodomésticos, brinquedos e artigos de decoração. Os dois países também criaram um canal para discutir riscos e incidentes relacionados à IA, com nova rodada prevista para novembro.",
+      "source": "Reuters / Money Times",
+      "publishedAt": "27/09/2026",
+      "url": "https://www.moneytimes.com.br/china-eua-concordam-em-dialogar-sobre-ia-e-reduzir-tarifas-sobre-us30-bilhoes-em-mercadorias-durante-visita-de-xi-rens/"
+    },
+    {
+      "category": "Política e Eleições",
+      "title": "Toffoli determina retirada de Federação PSDB-Cidadania de coligação de Raquel Lyra",
+      "summary": "O ministro Dias Toffoli determinou a retirada da Federação PSDB-Cidadania da coligação da governadora de Pernambuco, Raquel Lyra, candidata à reeleição.",
+      "context": "A decisão também determinou que o TRE-PE recalcule o tempo de propaganda eleitoral no rádio e na televisão. A controvérsia envolve divergências entre os diretórios estaduais e nacionais da federação sobre a participação na chapa majoritária.",
+      "source": "CNN Brasil",
+      "publishedAt": "27/09/2026",
+      "url": "https://www.cnnbrasil.com.br/politica/toffoli-manda-retirar-federacao-psdb-cidadania-da-coligacao-de-raquel-lyra/"
+    },
+    {
       "category": "Economia e Governo",
       "title": "Medidas recentes exigem ajuste de R$ 42,3 bilhões no Orçamento de 2027",
       "summary": "A equipe econômica terá de ajustar o projeto de Orçamento de 2027 após medidas como o Desenrola 3.0, o reajuste do Bolsa Família e o fim das bets.",
