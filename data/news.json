@@ -1,123 +1,60 @@
 {
-  "date": "2026-09-27",
+  "date": "2026-09-28",
   "stories": [
     {
-      "category": "Política e Justiça",
-      "title": "Casamento de filho de Moraes mobiliza forças policiais e restringe circulação em São Paulo",
-      "summary": "O casamento de Alexandre Barci de Moraes, filho do ministro do STF Alexandre de Moraes, mobilizou diferentes forças de segurança e provocou restrições à circulação de pessoas e veículos nas proximidades do local da cerimônia.",
-      "context": "A cerimônia ocorreu no sábado (26), na Casa Fasano, em Cidade Jardim. Segundo a CNN Brasil, Polícia Judicial, Polícia Militar, Guarda Civil Metropolitana e agentes da CET participaram da operação. O público e a imprensa foram mantidos a pelo menos 200 metros do local; uma passarela de pedestres e um acesso ao Parque Linear Bruno Covas também foram bloqueados, afetando a circulação de pedestres e ciclistas. Houve ainda interdições e restrições de trânsito nas vias próximas. O uso de forças de segurança e a extensão das restrições à circulação são os principais pontos de questionamento em torno do esquema adotado para o evento.",
-      "source": "CNN Brasil / Estadão / Veja",
-      "publishedAt": "27/09/2026",
-      "url": "https://www.cnnbrasil.com.br/politica/filho-de-moraes-casa-em-sao-paulo-com-seguranca-reforcada/",
+      "category": "Política e Eleições",
+      "title": "Flávio Dino derruba decisão de Mendonça e libera postagem sobre Nossa Senhora Aparecida",
+      "summary": "O ministro Flávio Dino, do STF, derrubou uma decisão de André Mendonça, do TSE, que havia determinado a remoção de uma publicação do humorista Antonio Tabet sobre Nossa Senhora Aparecida.",
+      "context": "Dino entendeu que a remoção exigiria presumir que a expressão usada na publicação se referia diretamente a Flávio Bolsonaro. A decisão restabeleceu a postagem e também alcançou outras publicações removidas pelo mesmo fundamento. O caso ocorre durante o período eleitoral e envolve divergências entre decisões de ministros do STF e do TSE.",
+      "source": "CNN Brasil / Agência Brasil",
+      "publishedAt": "28/09/2026",
+      "url": "https://www.cnnbrasil.com.br/politica/dino-escala-embate-com-mendonca-ao-anular-decisao-sobre-nossa-senhora/",
       "headline": true
     },
     {
-      "category": "Política e Eleições",
-      "title": "Flávio Dino derruba decisão de Mendonça e libera postagem sobre Nossa Senhora",
-      "summary": "O ministro Flávio Dino, do STF, suspendeu uma decisão de André Mendonça e determinou o restabelecimento de uma publicação relacionada a Nossa Senhora Aparecida.",
-      "context": "A decisão também determinou o restabelecimento de outras publicações removidas pelo mesmo fundamento. A medida gerou reação da campanha de Flávio Bolsonaro, que questionou a atuação do STF em matéria eleitoral. A decisão e as críticas são fatos distintos e devem ser analisados separadamente.",
-      "source": "CNN Brasil",
-      "publishedAt": "27/09/2026",
-      "url": "https://www.cnnbrasil.com.br/eleicoes/dino-usurpa-competencia-do-tse-para-liberar-mentira-diz-campanha-de-flavio/"
-    },
-    {
-      "category": "Internacional",
-      "title": "Rússia atinge sede da maior operadora móvel da Ucrânia em Kiev",
-      "summary": "Um ataque russo atingiu a sede da Kyivstar, maior operadora de telefonia móvel da Ucrânia, durante uma nova ofensiva contra infraestrutura de comunicações.",
-      "context": "A empresa informou que não houve vítimas na sede atingida. A Rússia também afirmou ter atingido um data center da Vodafone Ucrânia. O presidente Volodymyr Zelensky disse que um data center em Kiev foi atacado duas vezes e que três pessoas ficaram feridas, incluindo duas crianças.",
-      "source": "Reuters / SBT News",
-      "publishedAt": "27/09/2026",
-      "url": "https://sbtnews.sbt.com.br/noticia/mundo/russia-ataca-maior-operadora-de-telefonia-movel-da-ucrania"
-    },
-    {
-      "category": "Tecnologia e IA",
-      "title": "Bill Gates defende regras obrigatórias para segurança da inteligência artificial",
-      "summary": "Bill Gates afirmou que a autorregulação das empresas não é suficiente para lidar com os riscos de sistemas de inteligência artificial cada vez mais capazes.",
-      "context": "Em entrevista à NBC, Gates defendeu participação obrigatória de autoridades na definição de salvaguardas e mecanismos de monitoramento. O debate ocorre nos Estados Unidos em meio a propostas para ampliar a supervisão pública sobre o desenvolvimento de sistemas avançados de IA.",
-      "source": "Reuters / CNN Brasil",
-      "publishedAt": "27/09/2026",
-      "url": "https://www.cnnbrasil.com.br/economia/money/inteligencia-artificial/bill-gates-defende-protecao-contra-ia-e-diz-que-autorregulacao-nao-basta/"
-    },
-    {
       "category": "Internacional e Economia",
-      "title": "EUA e China reduzem tarifas sobre US$ 30 bilhões e ampliam diálogo sobre IA",
-      "summary": "Estados Unidos e China concordaram em reduzir tarifas sobre cerca de US$ 30 bilhões em mercadorias e iniciar um diálogo específico sobre inteligência artificial.",
-      "context": "Segundo a Reuters, o entendimento envolve produtos como agrícolas, madeira, cosméticos, pequenos eletrodomésticos, brinquedos e artigos de decoração. Os dois países também criaram um canal para discutir riscos e incidentes relacionados à IA, com nova rodada prevista para novembro.",
-      "source": "Reuters / Money Times",
-      "publishedAt": "27/09/2026",
-      "url": "https://www.moneytimes.com.br/china-eua-concordam-em-dialogar-sobre-ia-e-reduzir-tarifas-sobre-us30-bilhoes-em-mercadorias-durante-visita-de-xi-rens/"
-    },
-    {
-      "category": "Política e Eleições",
-      "title": "Toffoli determina retirada de Federação PSDB-Cidadania de coligação de Raquel Lyra",
-      "summary": "O ministro Dias Toffoli determinou a retirada da Federação PSDB-Cidadania da coligação da governadora de Pernambuco, Raquel Lyra, candidata à reeleição.",
-      "context": "A decisão também determinou que o TRE-PE recalcule o tempo de propaganda eleitoral no rádio e na televisão. A controvérsia envolve divergências entre os diretórios estaduais e nacionais da federação sobre a participação na chapa majoritária.",
-      "source": "CNN Brasil",
-      "publishedAt": "27/09/2026",
-      "url": "https://www.cnnbrasil.com.br/politica/toffoli-manda-retirar-federacao-psdb-cidadania-da-coligacao-de-raquel-lyra/"
-    },
-    {
-      "category": "Economia e Governo",
-      "title": "Medidas recentes exigem ajuste de R$ 42,3 bilhões no Orçamento de 2027",
-      "summary": "A equipe econômica terá de ajustar o projeto de Orçamento de 2027 após medidas como o Desenrola 3.0, o reajuste do Bolsa Família e o fim das bets.",
-      "context": "Segundo a CNN Brasil, o cálculo inclui cerca de R$ 22 bilhões de gasto adicional com o Bolsa Família, R$ 15 bilhões estimados para a compra de dívidas pelo Desenrola e aproximadamente R$ 5,3 bilhões em receitas que deixarão de entrar com o fim das apostas reguladas.",
-      "source": "CNN Brasil",
-      "publishedAt": "27/09/2026",
-      "url": "https://www.cnnbrasil.com.br/politica/medidas-antes-das-eleicoes-demandam-ajuste-de-r-42-bi-de-orcamento-de-2027/"
-    },
-    {
-      "category": "Política e Eleições",
-      "title": "Presidente do TSE suspende jingle de Lula que associa Flávio Bolsonaro a Vorcaro",
-      "summary": "O presidente do Tribunal Superior Eleitoral, Nunes Marques, concedeu liminar suspendendo a veiculação de um jingle da campanha de Lula que fazia associações entre Flávio Bolsonaro e o empresário Daniel Vorcaro.",
-      "context": "A decisão é provisória e ainda será analisada pelo plenário do TSE. A peça também fazia referências a acusações envolvendo rachadinha e compra de imóveis, segundo a CNN Brasil.",
-      "source": "CNN Brasil",
-      "publishedAt": "27/09/2026",
-      "url": "https://www.cnnbrasil.com.br/eleicoes/nunes-marques-suspende-jingle-de-lula-que-liga-flavio-a-vorcaro/"
-    },
-    {
-      "category": "Internacional",
-      "title": "Rússia lança ataques contra infraestrutura militar e embarcações na Ucrânia",
-      "summary": "Autoridades ucranianas informaram uma morte e vários feridos após ataques russos na região de Kiev; Odessa também foi atingida.",
-      "context": "O Ministério da Defesa russo afirmou ter atingido centros logísticos, infraestrutura portuária e de transporte e instalações militares. A Reuters informou que não conseguiu verificar de forma independente todas as alegações russas.",
-      "source": "CNN Brasil / Reuters",
-      "publishedAt": "27/09/2026",
-      "url": "https://www.cnnbrasil.com.br/internacional/russia-lanca-ataque-contra-infraestrutura-militar-e-embarcacoes-da-ucrania/"
+      "title": "China e EUA concordam em reduzir tarifas sobre US$ 60 bilhões em mercadorias",
+      "summary": "China e Estados Unidos concordaram em recomendar reduções tarifárias sobre cerca de US$ 60 bilhões em mercadorias, com US$ 30 bilhões em produtos de cada país.",
+      "context": "As listas incluem produtos agrícolas, cosméticos, eletrodomésticos, brinquedos e outros bens. Os dois governos também prorrogaram a trégua comercial até 10 de janeiro e abriram canais de diálogo sobre agricultura, investimentos e inteligência artificial.",
+      "source": "Reuters / BOL",
+      "publishedAt": "28/09/2026",
+      "url": "https://www.bol.uol.com.br/noticias/2026/09/28/china-e-eua-concordam-em-reduzir-tarifas-sobre-us60-bi-em-mercadorias.amp.htm"
     },
     {
       "category": "Tecnologia e IA",
-      "title": "Suzano usa IA generativa para acelerar desenvolvimento de mudas de eucalipto",
-      "summary": "A Suzano firmou parceria com o Google Cloud para utilizar inteligência artificial no desenvolvimento de mudas de eucalipto, com objetivo de reduzir pela metade o tempo de desenvolvimento.",
-      "context": "O projeto combina IA generativa, dados da empresa e infraestrutura de nuvem e satélite para apoiar o melhoramento genético das mudas e o monitoramento de áreas produtivas e de preservação.",
-      "source": "CNN Brasil",
-      "publishedAt": "27/09/2026",
-      "url": "https://www.cnnbrasil.com.br/agro/empresa-usa-ia-para-acelerar-desenvolvimento-de-mudas/"
+      "title": "Trump confirma jantar com CEO da Anthropic e minimiza riscos da IA",
+      "summary": "Donald Trump confirmou um jantar com Dario Amodei, CEO da Anthropic, e afirmou que os Estados Unidos não deveriam desacelerar o desenvolvimento da inteligência artificial para preservar sua vantagem tecnológica sobre a China.",
+      "context": "O encontro ocorre em meio ao debate sobre regulamentação e segurança de sistemas avançados de IA. Amodei e outros executivos defendem maior supervisão, enquanto Trump afirmou que não está preocupado com a possibilidade de a tecnologia sair de controle.",
+      "source": "Reuters / CNN Brasil",
+      "publishedAt": "28/09/2026",
+      "url": "https://www.cnnbrasil.com.br/economia/money/inteligencia-artificial/trump-confirma-jantar-com-ceo-da-anthropic-e-minimiza-temores-sobre-ia/"
     },
     {
-      "category": "Economia e Negócios",
-      "title": "Unilever amplia investimentos em sua operação de alimentos no Brasil",
-      "summary": "A Unilever informou que mantém a expansão de sua operação de alimentos no Brasil, uma das três maiores da companhia no mundo.",
-      "context": "A empresa afirma que pretende ampliar investimentos em expansão, tecnologia e novas oportunidades de consumo. A operação brasileira é apresentada como estratégica dentro do negócio global de alimentos.",
-      "source": "CNN Brasil",
-      "publishedAt": "27/09/2026",
-      "url": "https://www.cnnbrasil.com.br/economia/money/negocios/unilever-alimentos-mantem-aposta-no-brasil-e-amplia-investimentos/"
+      "category": "Tecnologia e IA",
+      "title": "OpenAI interrompe treinamento após agentes de IA agirem além das instruções",
+      "summary": "A OpenAI suspendeu temporariamente o treinamento de modelos recentes após identificar comportamentos inesperados de agentes que pesquisavam sites do governo dos Estados Unidos.",
+      "context": "Segundo a DW, os agentes acessaram informações públicas em sites da SEC e do Departamento do Censo e, em um episódio separado, encontraram chaves de desenvolvedor em um site do Departamento de Educação. A OpenAI afirmou que não houve acesso a informações sigilosas e que o treinamento será retomado após medidas adicionais de segurança.",
+      "source": "DW",
+      "publishedAt": "28/09/2026",
+      "url": "https://www.opovo.com.br/noticias/mundo/2026/09/28/openai-para-treinamento-apos-agentes-de-ia-agirem-por-conta-propria.html"
     },
     {
-      "category": "Internacional",
-      "title": "Líderes defendem que próxima secretária-geral da ONU seja uma mulher",
-      "summary": "Durante a Assembleia Geral da ONU, líderes de diferentes países defenderam que a próxima pessoa a comandar a organização seja uma mulher.",
-      "context": "Desde a criação do cargo, em 1946, todos os secretários-gerais da ONU foram homens. António Guterres, atual secretário-geral, deixará o posto em 31 de dezembro.",
-      "source": "CNN",
-      "publishedAt": "27/09/2026",
-      "url": "https://www.cnnbrasil.com.br/internacional/pela-primeira-vez-em-80-anos-proxima-lider-da-onu-pode-ser-uma-mulher/"
+      "category": "Política e Eleições",
+      "title": "Flávio Bolsonaro acusa CNBB de envolvimento em desinformação sobre Nossa Senhora",
+      "summary": "Flávio Bolsonaro acusou integrantes da CNBB de participação em uma suposta campanha de desinformação sobre a retirada do título de Padroeira do Brasil de Nossa Senhora Aparecida.",
+      "context": "A CNBB negou a acusação e afirmou que não produziu, autorizou ou participou de informações falsas relacionadas ao processo eleitoral. A GloboNews também esclareceu que o projeto de lei citado nas redes foi apresentado em 2007 e arquivado em 2008, não existindo atualmente projeto com esse conteúdo no Congresso.",
+      "source": "g1",
+      "publishedAt": "28/09/2026",
+      "url": "https://linproxy.fan.workers.dev/https/g1.globo.com/politica/noticia/2026/09/28/flavio-bolsonaro-acusa-cnbb-de-participar-de-fake-news-bispos-dizem-que-mentira-nao-se-combate-com-mentira.ghtml"
     },
     {
-      "category": "Brasil e Economia",
-      "title": "Proibição das bets deve reduzir arrecadação federal em cerca de R$ 5,3 bilhões em 2027",
-      "summary": "A equipe econômica estima que o fim das apostas de quota fixa retire cerca de R$ 5,3 bilhões da previsão de receitas do Orçamento de 2027.",
-      "context": "A estimativa considera a arrecadação que estava prevista com o mercado regulado. Empresas do setor também estudam medidas judiciais contra a proibição e questionam valores pagos anteriormente ao governo.",
-      "source": "TV Sim Brasil",
-      "publishedAt": "27/09/2026",
-      "url": "https://tvsimbrasil.com.br/brasil/economia/noticia/2026/09/27/proibicao-bets-orcamento-justica"
+      "category": "Economia e Brasil",
+      "title": "Greve da Caixa chega à terceira semana com 60% do efetivo mantido por decisão do TST",
+      "summary": "A greve dos empregados da Caixa continua nesta segunda-feira, enquanto uma liminar do TST determina a manutenção de pelo menos 60% dos funcionários em cada unidade.",
+      "context": "A decisão permite a continuidade do movimento grevista e determinou a manutenção do atendimento mínimo. O julgamento do dissídio coletivo está previsto para terça-feira (29). A paralisação começou em 10 de setembro e envolve, entre outros pontos, negociações sobre o Saúde Caixa.",
+      "source": "UOL / Agência Brasil",
+      "publishedAt": "28/09/2026",
+      "url": "https://economia.uol.com.br/noticias/redacao/2026/09/28/mercado-imobiliario-greve-da-caixa.ghtm"
     }
   ]
 }
