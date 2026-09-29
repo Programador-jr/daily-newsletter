@@ -43,20 +43,15 @@ module.exports = async function handler(req, res) {
         const history = await News.aggregate([
           { $group: { _id: '$editionDate', stories: { $sum: 1 } } },
           { $sort: { _id: -1 } },
-          {
-            $project: {
-              _id: 0,
-              date: '$_id',
-              title: { $concat: ['Edição de ', { $function: {
-                body: formatDateBR.toString(),
-                args: ['$_id'],
-                lang: 'js'
-              } }] },
-              stories: 1
-            }
-          }
+          { $project: { _id: 0, date: '$_id', stories: 1 } }
         ]);
-        return res.status(200).json(history);
+
+        return res.status(200).json(
+          history.map(archive => ({
+            ...archive,
+            title: `Edição de ${formatDateBR(archive.date)}`
+          }))
+        );
       }
 
       let date = req.query.date;
