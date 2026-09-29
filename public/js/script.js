@@ -24,7 +24,7 @@ const formatDate = (value) => {
 
   return new Intl.DateTimeFormat("pt-BR", {
     day: "2-digit",
-    month: "long",
+    month: "2-digit",
     year: "numeric",
   }).format(date);
 };
@@ -82,7 +82,7 @@ fetch("/api/news")
           <p>${featured.summary}</p>
           <p class="context"><strong>Contexto:</strong> ${featured.context}</p>
           <div class="story-footer">
-            <span class="source">${featured.publishedAt || ""}</span>
+            <span class="source">${formatDate(featured.publishedAt)}</span>
             <a class="source-link" href="${featured.url}" target="_blank" rel="noopener noreferrer">Ler fonte</a>
           </div>
           </article>
@@ -240,7 +240,7 @@ function renderStories(stories) {
 
   grid.innerHTML = stories
     .map((s, i) =>
-      `<article class="story ${i === 0 ? "featured" : ""}"><div class="story-meta"><span class="category">${s.category}</span><span class="dot"></span><span class="source">${s.source}</span></div><h2>${s.title}</h2><p>${s.summary}</p><p class="context"><strong>Contexto:</strong> ${s.context}</p><div class="story-footer"><span class="source">${s.publishedAt || ""}</span><a class="source-link" href="${s.url}" target="_blank" rel="noopener noreferrer">Ler fonte</a></div></article>`,
+      `<article class="story ${i === 0 ? "featured" : ""}"><div class="story-meta"><span class="category">${s.category}</span><span class="dot"></span><span class="source">${s.source}</span></div><h2>${s.title}</h2><p>${s.summary}</p><p class="context"><strong>Contexto:</strong> ${s.context}</p><div class="story-footer"><span class="source">${formatDate(s.publishedAt)}</span><a class="source-link" href="${s.url}" target="_blank" rel="noopener noreferrer">Ler fonte</a></div></article>`,
     )
     .join("");
 }
