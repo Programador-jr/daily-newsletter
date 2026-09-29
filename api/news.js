@@ -5,6 +5,12 @@ function isValidDate(value) {
   return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value);
 }
 
+function formatDateBR(value) {
+  if (!isValidDate(value)) return value;
+  const [year, month, day] = value.split('-');
+  return `${day}/${month}/${year}`;
+}
+
 function normalizeStory(story, editionDate) {
   return {
     editionDate,
@@ -37,7 +43,18 @@ module.exports = async function handler(req, res) {
         const history = await News.aggregate([
           { $group: { _id: '$editionDate', stories: { $sum: 1 } } },
           { $sort: { _id: -1 } },
-          { $project: { _id: 0, date: '$_id', title: { $concat: ['Edição de ', '$_id'] }, stories: 1 } }
+          {
+            $project: {
+              _id: 0,
+              date: '$_id',
+              title: { $concat: ['Edição de ', { $function: {
+                body: formatDateBR.toString(),
+                args: ['$_id'],
+                lang: 'js'
+              } }] },
+              stories: 1
+            }
+          }
         ]);
         return res.status(200).json(history);
       }
