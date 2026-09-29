@@ -10,13 +10,46 @@ Newsletter diária com notícias relevantes de política, economia, investimento
 - `public/css/styles.css` — identidade visual e responsividade
 - `public/js/script.js` — carregamento, filtros, busca, tema e histórico
 - `public/js/subscribe.js` — formulário de inscrição
-- `data/news.json` — edição atual
-- `data/archive/YYYY-MM-DD.json` — uma edição histórica por dia
+- `data/news.schema.json` — schema de referência dos documentos de notícias
+- `api/news.js` — leitura e gravação das notícias no MongoDB
 - `api/subscribe.js` — cadastro e envio do e-mail de confirmação
 - `api/confirm.js` — confirmação da inscrição
 - `api/unsubscribe.js` — cancelamento da inscrição
 - `api/notify-news.js` — envio protegido das novas notícias
+- `api/migrate-news.js` — migração única dos antigos JSONs para o MongoDB
 - `lib/` — conexão com MongoDB, modelos, tokens e envio SMTP
+
+## MongoDB
+
+O MongoDB é a fonte única das notícias. O projeto não usa mais arquivos JSON como banco de conteúdo.
+
+Cada notícia é armazenada com:
+
+- `editionDate` — edição no formato YYYY-MM-DD
+- `category`
+- `title`
+- `summary`
+- `context`
+- `source`
+- `publishedAt`
+- `url`
+
+O modelo está em `lib/news.js` e o schema de referência em `data/news.schema.json`.
+
+A API:
+
+- `GET /api/news` — retorna a edição mais recente
+- `GET /api/news?date=YYYY-MM-DD` — retorna uma edição específica
+- `GET /api/news?history=true` — retorna o histórico com a quantidade real de notícias
+- `POST /api/news` — insere ou atualiza notícias de uma edição, protegido por `NOTIFY_SECRET`
+
+A coleção de notícias pode ser criada automaticamente pelo MongoDB quando a primeira gravação ocorrer; não é necessário criá-la manualmente.
+
+### Migração inicial
+
+Enquanto os arquivos antigos ainda estiverem presentes, a rota protegida `POST /api/migrate-news` importa todas as edições para o MongoDB.
+
+Depois de confirmar a migração, os arquivos antigos de `data/news.json` e `data/archive/` podem ser removidos. O único arquivo mantido em `data/` será `news.schema.json`.
 
 ## Inscrição por e-mail
 
@@ -46,16 +79,9 @@ Copie `.env.example` para `.env` no desenvolvimento local e configure as mesmas 
 
 A rota `POST /api/notify-news` é protegida por `NOTIFY_SECRET`.
 
-Exemplo:
+Ela consulta o MongoDB, identifica notícias da edição mais recente que ainda não foram enviadas e manda um único e-mail com todas as novidades encontradas.
 
-```bash
-curl -X POST https://seu-projeto.vercel.app/api/notify-news \
-  -H "Authorization: Bearer $NOTIFY_SECRET"
-```
-
-Ela lê `data/news.json`, identifica notícias ainda não registradas como enviadas e manda um único e-mail com todas as novidades encontradas.
-
-A automação que atualiza o `news.json` pode chamar essa rota depois de publicar uma nova atualização.
+A automação que publica novas notícias deve primeiro usar `POST /api/news` e, depois, chamar `POST /api/notify-news`.
 
 ## Desenvolvimento local
 
@@ -64,4 +90,4 @@ npm install
 npm start
 ```
 
-O servidor local também expõe as rotas de inscrição, confirmação, descadastro e notificação.
+O servidor local também expõe as rotas de notícias, inscrição, confirmação, descadastro, migração e notificação.
