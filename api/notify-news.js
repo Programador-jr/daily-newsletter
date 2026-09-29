@@ -1,13 +1,12 @@
-const fs = require('fs');
-const path = require('path');
 const { connectDatabase } = require('../lib/db');
+const News = require('../lib/news');
 const Subscriber = require('../lib/subscriber');
 const NewsDelivery = require('../lib/news-delivery');
 const { sendEmail } = require('../lib/email');
 const { createToken, hashToken } = require('../lib/tokens');
 
 function getNewsKey(story) {
-  return story.url || `${story.publishedAt || ''}|${story.title || ''}`;
+  return story.url || `${story.editionDate || ''}|${story.title || ''}`;
 }
 
 function getAppUrl(req) {
@@ -34,11 +33,16 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const newsPath = path.join(process.cwd(), 'data', 'news.json');
-    const edition = JSON.parse(fs.readFileSync(newsPath, 'utf8'));
-    const stories = Array.isArray(edition.stories) ? edition.stories : [];
-
     await connectDatabase();
+
+    const latest = await News.findOne().sort({ editionDate: -1 }).select('editionDate').lean();
+    if (!latest) {
+      return res.status(200).json({ sent: false, newStories: 0, recipients: 0 });
+    }
+
+    const stories = await News.find({ editionDate: latest.editionDate })
+      .sort({ publishedAt: -1, _id: 1 })
+      .lean();
 
     const keys = stories.map(getNewsKey);
     const delivered = await NewsDelivery.find({ newsKey: { $in: keys } }).select('newsKey').lean();
@@ -59,7 +63,7 @@ module.exports = async function handler(req, res) {
     let recipients = 0;
 
     for (const subscriber of subscribers) {
-      let unsubscribeToken = createToken();
+      const unsubscribeToken = createToken();
       await Subscriber.updateOne(
         { _id: subscriber._id },
         { $set: { unsubscribeTokenHash: hashToken(unsubscribeToken) } }
@@ -106,6 +110,7 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({
       sent: true,
+      editionDate: latest.editionDate,
       newStories: newStories.length,
       recipients
     });
