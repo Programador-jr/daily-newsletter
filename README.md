@@ -16,6 +16,8 @@ Newsletter diária com notícias relevantes de política, economia, investimento
 - `api/confirm.js` — confirmação da inscrição
 - `api/unsubscribe.js` — cancelamento da inscrição
 - `api/notify-news.js` — envio protegido das novas notícias
+- `api/oauth2.js` — autorização OAuth2 do Gmail para desenvolvimento local
+- `lib/google-oauth.js` — cliente OAuth2 e geração do refresh token
 - `api/migrate-news.js` — migração única dos antigos JSONs para o MongoDB
 - `lib/` — conexão com MongoDB, modelos, tokens e envio SMTP
 
@@ -70,7 +72,10 @@ Copie `.env.example` para `.env` no desenvolvimento local e configure as mesmas 
 
 - `MONGODB_URI`
 - `EMAIL_USER`
-- `EMAIL_PASS` — use uma Senha de app do Gmail, não a senha normal da conta.
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
+- `GOOGLE_REFRESH_TOKEN`
+- `GOOGLE_REDIRECT_URI` — use `http://localhost:3000/api/oauth2/callback` no desenvolvimento local.
 - `EMAIL_FROM`
 - `APP_URL`
 - `NOTIFY_SECRET`
@@ -90,4 +95,16 @@ npm install
 npm start
 ```
 
-O servidor local também expõe as rotas de notícias, inscrição, confirmação, descadastro, migração e notificação.
+O servidor local também expõe as rotas de notícias, inscrição, confirmação, descadastro, migração, notificação e autorização OAuth2.
+
+### Configuração do Gmail OAuth2
+
+1. Ative a Gmail API no Google Cloud.
+2. Crie um cliente OAuth 2.0 do tipo Web e autorize `http://localhost:3000/api/oauth2/callback` como URI de redirecionamento.
+3. Coloque `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET` no `.env`.
+4. Inicie o servidor e abra `/api/oauth2/authorize`.
+5. Autorize a conta Gmail usada em `EMAIL_USER`.
+6. A rota de callback exibirá o `refresh_token`; coloque esse valor em `GOOGLE_REFRESH_TOKEN` no `.env`.
+7. Reinicie o servidor antes de testar o cadastro de inscritos.
+
+O fluxo usa acesso offline e o escopo `https://mail.google.com/`, necessário para a autenticação SMTP OAuth2 do Nodemailer. O refresh token é uma credencial secreta e nunca deve ser versionado.
