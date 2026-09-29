@@ -30,6 +30,7 @@ const formatDate = (value) => {
 };
 
 const currentPage = window.location.pathname;
+const isEditionsPage = currentPage === "/editions" || currentPage === "/editions/" || currentPage === "/editions.html";
 
 const savedTheme = localStorage.getItem("theme") || "light";
 document.documentElement.setAttribute("data-theme", savedTheme);
@@ -88,7 +89,7 @@ fetch("/api/news")
           </article>
         `;
       }
-    } else if (currentPage === '/editions') {
+    } else if (isEditionsPage) {
       currentStories = data.stories;
       setupCategoryFilters(currentStories);
 
@@ -176,7 +177,7 @@ async function loadHistoryList() {
 }
 
 window.loadArchiveEdition = function(date) {
-  if (currentPage !== '/editions') {
+  if (!isEditionsPage) {
     window.location.href = `/editions?date=${date}`;
     return;
   }
@@ -224,7 +225,7 @@ window.loadArchiveEdition = function(date) {
 
 const urlParams = new URLSearchParams(window.location.search);
 const dateParam = urlParams.get('date');
-if (dateParam && (currentPage === '/editions')) {
+if (dateParam && isEditionsPage) {
   setTimeout(() => {
     window.loadArchiveEdition(dateParam);
   }, 500);
