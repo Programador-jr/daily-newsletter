@@ -54,7 +54,7 @@ switchInput.addEventListener('change', (e) => {
   }
 });
 
-fetch("/data/news.json")
+fetch("/api/news")
   .then((r) => {
     if (!r.ok) throw new Error("Não foi possível carregar a edição.");
     return r.json();
@@ -136,7 +136,7 @@ if (historyPanel && closeHistory && historyList) {
 
 async function loadHistoryList() {
   try {
-    const response = await fetch("/data/archive/list.json");
+    const response = await fetch("/api/news?history=true");
     if (!response.ok) throw new Error("Não foi possível carregar o histórico.");
 
     const archives = await response.json();
@@ -144,7 +144,7 @@ async function loadHistoryList() {
     const archivesWithCounts = await Promise.all(
       archives.map(async (archive) => {
         try {
-          const archiveResponse = await fetch(`/data/archive/${archive.date}.json`);
+          const archiveResponse = await fetch(`/api/news?date=${archive.date}`);
           if (!archiveResponse.ok) throw new Error("Arquivo não encontrado.");
 
           const edition = await archiveResponse.json();
@@ -181,10 +181,10 @@ window.loadArchiveEdition = function(date) {
     return;
   }
 
-  fetch(`/data/archive/${date}.json`)
+  fetch(`/api/news?date=${date}`)
     .then((r) => {
       if (!r.ok) {
-        throw new Error(`Arquivo da edição ${date} não encontrado.`);
+        throw new Error(`Edição ${date} não encontrada.`);
       }
       return r.json();
     })
