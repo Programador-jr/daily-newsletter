@@ -12,6 +12,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/data', express.static(path.join(__dirname, 'data')));
 
+app.get('/api/news', require('./api/news'));
+app.post('/api/news', require('./api/news'));
 app.post('/api/subscribe', require('./api/subscribe'));
 app.get('/api/confirm', require('./api/confirm'));
 app.get('/api/unsubscribe', require('./api/unsubscribe'));
