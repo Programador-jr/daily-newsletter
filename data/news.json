@@ -1,0 +1,105 @@
+{
+  "date": "2026-09-29",
+  "stories": [
+    {
+      "category": "Segurança e Política",
+      "title": "Polícia Federal investiga negociação de apoio eleitoral com facção criminosa na Paraíba",
+      "summary": "A Polícia Federal deflagrou nesta terça-feira a Operação Zona de Influência para investigar uma suspeita de negociação de apoio político-eleitoral entre agentes políticos e integrantes de um grupo criminoso na Paraíba.",
+      "context": "Segundo a PF, foram cumpridos mandados e apreendidos R$ 220 mil em espécie durante a operação. A investigação busca esclarecer uma possível negociação de apoio eleitoral com uma organização criminosa que atua em comunidades do estado. As suspeitas ainda são objeto de investigação e não representam, por si só, condenação dos envolvidos.",
+      "source": "Polícia Federal",
+      "publishedAt": "29/09/2026",
+      "url": "https://www.gov.br/pf/pt-br/assuntos/noticias/2026/09/pf-deflagra-operacao-para-apurar-negociacao-de-apoio-eleitoral-com-faccao-criminosa-na-paraiba-e-apreende-r-220-mil",
+      "headline": true
+    },
+    {
+      "category": "Economia e Argentina",
+      "title": "Economia da Argentina fica à beira da recessão após nova queda da atividade",
+      "summary": "A economia argentina acumulou novos sinais de enfraquecimento, com queda de 2,9% da atividade em julho e retração de 0,6% do PIB no segundo trimestre.",
+      "context": "Dados oficiais do INDEC mostram que a atividade econômica caiu 2,9% em julho na comparação mensal dessazonalizada e 1,4% ante julho de 2025. A pobreza atingiu 32,3% das pessoas no primeiro semestre de 2026, ante 28,2% no semestre anterior. O presidente Javier Milei afirma que a Argentina não está em recessão; tecnicamente, ainda seria necessária uma nova contração trimestral para caracterizar uma recessão técnica.",
+      "source": "INDEC / El País",
+      "publishedAt": "29/09/2026",
+      "url": "https://www.indec.gob.ar/indec/Portada"
+    },
+    {
+      "category": "Economia",
+      "title": "Brasil cria 165,8 mil empregos formais em agosto, segundo Caged",
+      "summary": "O Brasil abriu 165.827 vagas com carteira assinada em agosto, mantendo saldo positivo pelo oitavo mês consecutivo.",
+      "context": "Os dados do Caged mostram 2,29 milhões de admissões e 2,12 milhões de desligamentos no mês. O setor de serviços liderou a geração de postos, seguido por construção, indústria, comércio e agropecuária. No acumulado de janeiro a agosto, o saldo positivo chega a cerca de 1,13 milhão de vagas.",
+      "source": "Ministério do Trabalho e Emprego / UOL",
+      "publishedAt": "29/09/2026",
+      "url": "https://economia.uol.com.br/noticias/redacao/2026/09/29/caged-ministerio-do-trabalho-agosto-20206.ghtm"
+    },
+    {
+      "category": "Contas Públicas",
+      "title": "Governo Central registra déficit primário de R$ 13,6 bilhões em agosto",
+      "summary": "O Governo Central registrou déficit primário de R$ 13,585 bilhões em agosto, informou o Tesouro Nacional nesta terça-feira.",
+      "context": "O resultado foi inferior ao déficit de R$ 15,540 bilhões registrado em agosto de 2025. No acumulado de janeiro a agosto, porém, o déficit chegou a R$ 94,9 bilhões. O resultado de agosto foi influenciado principalmente pelo déficit da Previdência, enquanto Tesouro e Banco Central registraram superávit no mês.",
+      "source": "Tesouro Nacional / Reuters",
+      "publishedAt": "29/09/2026",
+      "url": "https://economia.uol.com.br/noticias/reuters/2026/09/29/governo-central-tem-deficit-primario-de-r13585-bilhoes-em-agosto-diz-tesouro.htm"
+    },
+    {
+      "category": "Tecnologia e Internacional",
+      "title": "Países em desenvolvimento pedem maior participação nas regras globais de inteligência artificial",
+      "summary": "Durante debates na ONU, países da África, Ásia e América Latina defenderam maior participação na definição das regras internacionais para inteligência artificial.",
+      "context": "Representantes de países em desenvolvimento alertaram que a concentração da tecnologia em nações mais ricas pode ampliar desigualdades. A discussão também reuniu executivos de empresas de IA e especialistas em uma sessão do Conselho de Segurança da ONU sobre os impactos e a governança da tecnologia.",
+      "source": "Reuters / ONU",
+      "publishedAt": "29/09/2026",
+      "url": "https://www.reuters.com/sustainability/cop/un-developing-nations-call-bigger-say-shaping-ai-future-2026-09-29/"
+    },
+    {
+      "category": "Economia",
+      "title": "Governo prorroga renegociação de dívidas do Desenrola Adimplentes até 26 de outubro",
+      "summary": "O programa Desenrola Adimplentes teve o prazo de renegociação prorrogado até 26 de outubro para trabalhadores informais com dívidas de crédito pessoal sem garantia.",
+      "context": "A modalidade permite renegociar débitos de até R$ 15 mil, com juros de até 1,99% ao mês. Segundo o governo, a taxa média dessas operações atualmente gira em torno de 7% ao mês. A prorrogação amplia o período para adesão às condições do programa.",
+      "source": "Agência Brasil",
+      "publishedAt": "29/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/economia/noticia/2026-09/renegociacao-de-dividas-de-adimplentes-e-prorrogada-ate-26-de-outubro"
+    },
+    {
+      "category": "Tecnologia e IA",
+      "title": "Pesquisadores de IA alertam para riscos de sistemas capazes de se autoaperfeiçoar",
+      "summary": "Pesquisadores atuais e antigos de OpenAI e Google DeepMind fizeram novos alertas sobre os riscos associados ao desenvolvimento acelerado de sistemas de inteligência artificial capazes de melhorar suas próprias capacidades.",
+      "context": "Segundo a Reuters, depoimentos reunidos pela organização Palisade Research apontam preocupação com segurança, supervisão e possíveis consequências de sistemas cada vez mais autônomos. O debate ocorre após episódios recentes envolvendo agentes de IA que ultrapassaram limites definidos durante testes.",
+      "source": "Reuters",
+      "publishedAt": "29/09/2026",
+      "url": "https://www.reuters.com/world/ai-researchers-warn-companies-rushing-self-improving-systems-despite-safety-2026-09-29/"
+    },
+    {
+      "category": "Tecnologia e Negócios",
+      "title": "Anthropic prevê mais de US$ 518 bilhões em investimentos em infraestrutura de IA",
+      "summary": "Documentos ligados à abertura de capital da Anthropic mostram planos de comprometer mais de US$ 518 bilhões na próxima década com infraestrutura de inteligência artificial.",
+      "context": "Segundo a Reuters, cerca de 80% dos compromissos previstos seriam não canceláveis ou exigiriam pagamentos independentemente do uso. Entre os parceiros citados estão Google, Amazon, Microsoft e Broadcom. O volume de investimentos evidencia a escala de capital necessária para ampliar a capacidade computacional dos modelos de IA.",
+      "source": "Reuters",
+      "publishedAt": "29/09/2026",
+      "url": "https://www.reuters.com/business/anthropics-518-billion-ai-buildout-hinges-largely-deals-that-cannot-be-canceled-2026-09-29/"
+    },
+    {
+      "category": "Economia e Tecnologia",
+      "title": "Exportações da Coreia do Sul devem crescer pelo 16º mês seguido impulsionadas por chips de IA",
+      "summary": "Economistas consultados pela Reuters projetam alta de 62% nas exportações sul-coreanas em setembro, com forte participação do setor de semicondutores ligado à demanda por inteligência artificial.",
+      "context": "As vendas de semicondutores nos primeiros 20 dias de setembro cresceram 259,4% na comparação anual, segundo dados preliminares citados pela Reuters. A Coreia do Sul divulgará os dados oficiais do comércio exterior na quinta-feira, 1º de outubro.",
+      "source": "Reuters",
+      "publishedAt": "29/09/2026",
+      "url": "https://www.reuters.com/world/asia-pacific/south-korean-exports-seen-rising-16th-month-solid-ai-chip-demand-2026-09-29/"
+    },
+    {
+      "category": "Internacional",
+      "title": "ONU encerra debate geral da Assembleia com novo apelo à paz e à cooperação internacional",
+      "summary": "A ONU publicou nesta terça-feira um balanço dos seis dias de discursos da Assembleia Geral, destacando a paz como um dos principais temas que dominaram os debates.",
+      "context": "O balanço reúne as principais mensagens apresentadas por representantes dos 193 Estados-membros durante a 81ª sessão da Assembleia Geral. A organização também mantém nesta terça uma agenda de reuniões sobre desarmamento nuclear, Haiti e República Democrática do Congo.",
+      "source": "ONU",
+      "publishedAt": "29/09/2026",
+      "url": "https://www.un.org/en/takeaway-day-6-general-debate-ends-call-turn-words-action"
+    },
+    {
+      "category": "Mercados",
+      "title": "Mercados europeus sobem com ações de tecnologia, mas petróleo limita ganhos",
+      "summary": "As bolsas europeias avançaram nesta terça-feira, apoiadas principalmente por ações de tecnologia, enquanto a alta do petróleo e dos rendimentos dos títulos públicos manteve os investidores cautelosos.",
+      "context": "A Reuters informou que o mercado acompanha os efeitos das tensões entre Estados Unidos e Irã sobre os preços de energia e também as perspectivas para juros. O movimento ocorre após uma sessão anterior de queda nas bolsas americanas.",
+      "source": "Reuters",
+      "publishedAt": "29/09/2026",
+      "url": "https://www.reuters.com/markets/europe/european-shares-edge-higher-tech-stocks-offset-oil-pressure-2026-09-29/"
+    }
+  ]
+}
