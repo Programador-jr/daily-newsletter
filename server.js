@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const express = require('express');
 const path = require('path');
-const oauth2 = require('./api/oauth2');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,8 +18,6 @@ app.post('/api/subscribe', require('./api/subscribe'));
 app.get('/api/confirm', require('./api/confirm'));
 app.get('/api/unsubscribe', require('./api/unsubscribe'));
 app.post('/api/notify-news', require('./api/notify-news'));
-app.get('/api/oauth2/authorize', oauth2.authorize);
-app.get('/api/oauth2/callback', oauth2.callback);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
