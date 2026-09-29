@@ -16,8 +16,6 @@ Newsletter diária com notícias relevantes de política, economia, investimento
 - `api/confirm.js` — confirmação da inscrição
 - `api/unsubscribe.js` — cancelamento da inscrição
 - `api/notify-news.js` — envio protegido das novas notícias
-- `api/oauth2.js` — autorização OAuth2 do Gmail para desenvolvimento local
-- `lib/google-oauth.js` — cliente OAuth2 e geração do refresh token
 - `api/migrate-news.js` — migração única dos antigos JSONs para o MongoDB
 - `lib/` — conexão com MongoDB, modelos, tokens e envio SMTP
 
@@ -66,16 +64,25 @@ O cadastro utiliza double opt-in:
 
 Os e-mails dos inscritos não ficam no repositório nem em arquivos públicos.
 
+### Gmail
+
+O envio utiliza o Gmail via SMTP com **Senha de App**.
+
+No desenvolvimento local:
+
+1. Use uma conta Gmail com a verificação em duas etapas ativada.
+2. Gere uma Senha de App na Conta Google.
+3. Coloque o e-mail da conta em `EMAIL_USER`.
+4. Coloque a Senha de App em `EMAIL_PASS`.
+5. Não coloque a Senha de App diretamente no código nem no GitHub.
+
 ## Variáveis de ambiente
 
 Copie `.env.example` para `.env` no desenvolvimento local e configure as mesmas variáveis na Vercel:
 
 - `MONGODB_URI`
 - `EMAIL_USER`
-- `GOOGLE_CLIENT_ID`
-- `GOOGLE_CLIENT_SECRET`
-- `GOOGLE_REFRESH_TOKEN`
-- `GOOGLE_REDIRECT_URI` — use `http://localhost:3000/api/oauth2/callback` no desenvolvimento local.
+- `EMAIL_PASS` — Senha de App do Gmail
 - `EMAIL_FROM`
 - `APP_URL`
 - `NOTIFY_SECRET`
@@ -95,16 +102,4 @@ npm install
 npm start
 ```
 
-O servidor local também expõe as rotas de notícias, inscrição, confirmação, descadastro, migração, notificação e autorização OAuth2.
-
-### Configuração do Gmail OAuth2
-
-1. Ative a Gmail API no Google Cloud.
-2. Crie um cliente OAuth 2.0 do tipo Web e autorize `http://localhost:3000/api/oauth2/callback` como URI de redirecionamento.
-3. Coloque `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET` no `.env`.
-4. Inicie o servidor e abra `/api/oauth2/authorize`.
-5. Autorize a conta Gmail usada em `EMAIL_USER`.
-6. A rota de callback exibirá o `refresh_token`; coloque esse valor em `GOOGLE_REFRESH_TOKEN` no `.env`.
-7. Reinicie o servidor antes de testar o cadastro de inscritos.
-
-O fluxo usa acesso offline e o escopo `https://mail.google.com/`, necessário para a autenticação SMTP OAuth2 do Nodemailer. O refresh token é uma credencial secreta e nunca deve ser versionado.
+O servidor local expõe as rotas de notícias, inscrição, confirmação, descadastro, migração e notificação.
