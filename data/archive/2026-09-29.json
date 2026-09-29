@@ -12,6 +12,42 @@
       "headline": true
     },
     {
+      "category": "Economia e Argentina",
+      "title": "Economia da Argentina fica à beira da recessão após nova queda da atividade",
+      "summary": "A economia argentina acumulou novos sinais de enfraquecimento, com queda de 2,9% da atividade em julho e retração de 0,6% do PIB no segundo trimestre.",
+      "context": "Dados oficiais do INDEC mostram que a atividade econômica caiu 2,9% em julho na comparação mensal dessazonalizada e 1,4% ante julho de 2025. A pobreza atingiu 32,3% das pessoas no primeiro semestre de 2026, ante 28,2% no semestre anterior. O presidente Javier Milei afirma que a Argentina não está em recessão; tecnicamente, ainda seria necessária uma nova contração trimestral para caracterizar uma recessão técnica.",
+      "source": "INDEC / El País",
+      "publishedAt": "29/09/2026",
+      "url": "https://www.indec.gob.ar/indec/Portada"
+    },
+    {
+      "category": "Economia",
+      "title": "Brasil cria 165,8 mil empregos formais em agosto, segundo Caged",
+      "summary": "O Brasil abriu 165.827 vagas com carteira assinada em agosto, mantendo saldo positivo pelo oitavo mês consecutivo.",
+      "context": "Os dados do Caged mostram 2,29 milhões de admissões e 2,12 milhões de desligamentos no mês. O setor de serviços liderou a geração de postos, seguido por construção, indústria, comércio e agropecuária. No acumulado de janeiro a agosto, o saldo positivo chega a cerca de 1,13 milhão de vagas.",
+      "source": "Ministério do Trabalho e Emprego / UOL",
+      "publishedAt": "29/09/2026",
+      "url": "https://economia.uol.com.br/noticias/redacao/2026/09/29/caged-ministerio-do-trabalho-agosto-20206.ghtm"
+    },
+    {
+      "category": "Contas Públicas",
+      "title": "Governo Central registra déficit primário de R$ 13,6 bilhões em agosto",
+      "summary": "O Governo Central registrou déficit primário de R$ 13,585 bilhões em agosto, informou o Tesouro Nacional nesta terça-feira.",
+      "context": "O resultado foi inferior ao déficit de R$ 15,540 bilhões registrado em agosto de 2025. No acumulado de janeiro a agosto, porém, o déficit chegou a R$ 94,9 bilhões. O resultado de agosto foi influenciado principalmente pelo déficit da Previdência, enquanto Tesouro e Banco Central registraram superávit no mês.",
+      "source": "Tesouro Nacional / Reuters",
+      "publishedAt": "29/09/2026",
+      "url": "https://economia.uol.com.br/noticias/reuters/2026/09/29/governo-central-tem-deficit-primario-de-r13585-bilhoes-em-agosto-diz-tesouro.htm"
+    },
+    {
+      "category": "Tecnologia e Internacional",
+      "title": "Países em desenvolvimento pedem maior participação nas regras globais de inteligência artificial",
+      "summary": "Durante debates na ONU, países da África, Ásia e América Latina defenderam maior participação na definição das regras internacionais para inteligência artificial.",
+      "context": "Representantes de países em desenvolvimento alertaram que a concentração da tecnologia em nações mais ricas pode ampliar desigualdades. A discussão também reuniu executivos de empresas de IA e especialistas em uma sessão do Conselho de Segurança da ONU sobre os impactos e a governança da tecnologia.",
+      "source": "Reuters / ONU",
+      "publishedAt": "29/09/2026",
+      "url": "https://www.reuters.com/sustainability/cop/un-developing-nations-call-bigger-say-shaping-ai-future-2026-09-29/"
+    },
+    {
       "category": "Economia",
       "title": "Governo prorroga renegociação de dívidas do Desenrola Adimplentes até 26 de outubro",
       "summary": "O programa Desenrola Adimplentes teve o prazo de renegociação prorrogado até 26 de outubro para trabalhadores informais com dívidas de crédito pessoal sem garantia.",
