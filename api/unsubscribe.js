@@ -4,6 +4,7 @@ const { hashToken } = require('../lib/tokens');
 
 module.exports = async function handler(req, res) {
   const token = String(req.query?.token || '');
+  const confirm = String(req.query?.confirm || '') === '1';
 
   if (!token) {
     return res.redirect('/subscription-status?status=invalid');
@@ -19,6 +20,13 @@ module.exports = async function handler(req, res) {
 
     if (!subscriber) {
       return res.redirect('/subscription-status?status=invalid');
+    }
+
+    if (!confirm) {
+      return res.redirect(
+        '/subscription-status?status=unsubscribe-confirm&token=' +
+          encodeURIComponent(token)
+      );
     }
 
     subscriber.confirmed = false;
