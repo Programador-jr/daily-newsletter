@@ -37,7 +37,8 @@ function normalizeStory(story, editionDate) {
     context: String(story.context || '').trim(),
     source: String(story.source || '').trim(),
     publishedAt: String(story.publishedAt || '').trim(),
-    url: String(story.url || '').trim()
+    url: String(story.url || '').trim(),
+    headline: Boolean(story.headline)
   };
 }
 
@@ -102,8 +103,12 @@ module.exports = async function handler(req, res) {
         if (!publishedA) return 1;
         if (!publishedB) return -1;
 
+        if (Boolean(b.headline) !== Boolean(a.headline)) {
+          return Boolean(b.headline) ? 1 : -1;
+        }
+
         const difference = publishedB - publishedA;
-        return difference || String(a._id).localeCompare(String(b._id));
+        return difference || String(b._id).localeCompare(String(a._id));
       });
 
       return res.status(200).json({ date, stories });
