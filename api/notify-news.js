@@ -75,11 +75,15 @@ async function notifyLatestNews(req) {
     let recipients = 0;
 
     for (const subscriber of subscribers) {
-      const unsubscribeToken = createToken();
-      await Subscriber.updateOne(
-        { _id: subscriber._id },
-        { $set: { unsubscribeTokenHash: hashToken(unsubscribeToken) } }
-      );
+      let unsubscribeToken = subscriber.unsubscribeTokenHash;
+
+      if (!unsubscribeToken) {
+        unsubscribeToken = hashToken(createToken());
+        await Subscriber.updateOne(
+          { _id: subscriber._id },
+          { $set: { unsubscribeTokenHash: unsubscribeToken } }
+        );
+      }
 
       const unsubscribeUrl = `${appUrl}/api/unsubscribe?token=${unsubscribeToken}`;
       const items = newStories.map(story => `

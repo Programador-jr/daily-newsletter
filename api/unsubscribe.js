@@ -14,7 +14,10 @@ module.exports = async function handler(req, res) {
     await connectDatabase();
 
     const subscriber = await Subscriber.findOne({
-      unsubscribeTokenHash: hashToken(token),
+      $or: [
+        { unsubscribeTokenHash: hashToken(token) },
+        { unsubscribeTokenHash: token }
+      ],
       confirmed: true
     });
 
