@@ -35,43 +35,35 @@ module.exports = async function handler(req, res) {
   try {
     await connectDatabase();
 
-    const latest = await News.aggregate([
-      {
-        $addFields: {
-          sortDate: {
-            $dateFromString: {
-              date: '$editionDate',
-              format: '%d/%m/%Y'
-            }
-          }
-        }
-      },
-      { $sort: { sortDate: -1 } },
-      { $limit: 1 },
-      { $project: { _id: 0, editionDate: 1 } }
-    ]);
+    const latest = await News.find().select('editionDate').lean();
 
     if (!latest.length) {
       return res.status(200).json({ sent: false, newStories: 0, recipients: 0 });
     }
 
-    const latestEditionDate = latest[0].editionDate;
+    const latestEditionDate = latest
+      .sort((a, b) => {
+        const parseDate = value => {
+          const match = String(value || '').match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+          if (!match) return 0;
+          return Date.UTC(Number(match[3]), Number(match[2]) - 1, Number(match[1]));
+        };
 
-    const stories = await News.aggregate([
-      { $match: { editionDate: latestEditionDate } },
-      {
-        $addFields: {
-          publishedAtSort: {
-            $dateFromString: {
-              date: '$publishedAt',
-              format: '%d/%m/%Y'
-            }
-          }
-        }
-      },
-      { $sort: { publishedAtSort: -1, _id: 1 } },
-      { $project: { publishedAtSort: 0 } }
-    ]);
+        return parseDate(b.editionDate) - parseDate(a.editionDate);
+      })[0]
+      .editionDate;
+
+    const stories = await News.find({ editionDate: latestEditionDate }).lean();
+    stories.sort((a, b) => {
+      const parseDate = value => {
+        const match = String(value || '').match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+        if (!match) return 0;
+        return Date.UTC(Number(match[3]), Number(match[2]) - 1, Number(match[1]));
+      };
+
+      const difference = parseDate(b.publishedAt) - parseDate(a.publishedAt);
+      return difference || String(a._id).localeCompare(String(b._id));
+    });
 
     const keys = stories.map(getNewsKey);
     const delivered = await NewsDelivery.find({ newsKey: { $in: keys } }).select('newsKey').lean();
