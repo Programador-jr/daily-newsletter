@@ -32,6 +32,17 @@ const formatDate = (value) => {
   }).format(date);
 };
 
+const checkPendingEmailNotifications = async () => {
+  try {
+    await fetch('/api/notify-news', {
+      method: 'GET',
+      cache: 'no-store'
+    });
+  } catch (error) {
+    console.error('Não foi possível verificar notificações pendentes:', error);
+  }
+};
+
 const setLoadingState = (loading) => {
   isLoadingEdition = loading;
 
@@ -134,6 +145,8 @@ fetch("/api/news")
 
       renderStories(currentStories);
     }
+
+    checkPendingEmailNotifications();
   })
   .catch((error) => {
     setLoadingState(false);
