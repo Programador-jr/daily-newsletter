@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "King's Newsletter — News",
+  "type": "object",
+  "required": ["editionDate", "category", "title", "summary", "context", "source", "publishedAt", "url"],
+  "properties": {
+    "editionDate": { "type": "string", "pattern": "^[0-9]{2}\\/[0-9]{2}\\/[0-9]{4}$" },
+    "category": { "type": "string" },
+    "title": { "type": "string" },
+    "summary": { "type": "string" },
+    "context": { "type": "string" },
+    "source": { "type": "string" },
+    "publishedAt": { "type": "string" },
+    "url": { "type": "string", "format": "uri" }
+  }
+}
