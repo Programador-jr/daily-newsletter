@@ -2,13 +2,7 @@ const { connectDatabase } = require('../lib/db');
 const News = require('../lib/news');
 
 function isValidDate(value) {
-  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value);
-}
-
-function formatDateBR(value) {
-  if (!isValidDate(value)) return value;
-  const [year, month, day] = value.split('-');
-  return `${day}/${month}/${year}`;
+  return typeof value === 'string' && /^\d{2}\/\d{2}\/\d{4}$/.test(value);
 }
 
 function normalizeStory(story, editionDate) {
@@ -41,15 +35,30 @@ module.exports = async function handler(req, res) {
     if (req.method === 'GET') {
       if (req.query.history === 'true') {
         const history = await News.aggregate([
-          { $group: { _id: '$editionDate', stories: { $sum: 1 } } },
-          { $sort: { _id: -1 } },
+          {
+            $group: {
+              _id: '$editionDate',
+              stories: { $sum: 1 }
+            }
+          },
+          {
+            $addFields: {
+              sortDate: {
+                $dateFromString: {
+                  date: '$_id',
+                  format: '%d/%m/%Y'
+                }
+              }
+            }
+          },
+          { $sort: { sortDate: -1 } },
           { $project: { _id: 0, date: '$_id', stories: 1 } }
         ]);
 
         return res.status(200).json(
           history.map(archive => ({
             ...archive,
-            title: `Edição de ${formatDateBR(archive.date)}`
+            title: 'Edição de ' + archive.date
           }))
         );
       }
@@ -60,14 +69,41 @@ module.exports = async function handler(req, res) {
       }
 
       if (!date) {
-        const latest = await News.findOne().sort({ editionDate: -1 }).select('editionDate').lean();
-        if (!latest) return res.status(200).json({ date: null, stories: [] });
-        date = latest.editionDate;
+        const latest = await News.aggregate([
+          {
+            $addFields: {
+              sortDate: {
+                $dateFromString: {
+                  date: '$editionDate',
+                  format: '%d/%m/%Y'
+                }
+              }
+            }
+          },
+          { $sort: { sortDate: -1 } },
+          { $limit: 1 },
+          { $project: { _id: 0, editionDate: 1 } }
+        ]);
+
+        if (!latest.length) return res.status(200).json({ date: null, stories: [] });
+        date = latest[0].editionDate;
       }
 
-      const stories = await News.find({ editionDate: date })
-        .sort({ publishedAt: -1, _id: 1 })
-        .lean();
+      const stories = await News.aggregate([
+        { $match: { editionDate: date } },
+        {
+          $addFields: {
+            publishedAtSort: {
+              $dateFromString: {
+                date: '$publishedAt',
+                format: '%d/%m/%Y'
+              }
+            }
+          }
+        },
+        { $sort: { publishedAtSort: -1, _id: 1 } },
+        { $project: { publishedAtSort: 0 } }
+      ]);
 
       return res.status(200).json({ date, stories });
     }
