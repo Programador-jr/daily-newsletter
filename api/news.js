@@ -1,8 +1,30 @@
 const { connectDatabase } = require('../lib/db');
 const News = require('../lib/news');
 
+function parseDate(value) {
+  if (typeof value !== 'string') return null;
+
+  const match = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (!match) return null;
+
+  const day = Number(match[1]);
+  const month = Number(match[2]);
+  const year = Number(match[3]);
+  const date = new Date(Date.UTC(year, month - 1, day));
+
+  if (
+    date.getUTCDate() !== day ||
+    date.getUTCMonth() !== month - 1 ||
+    date.getUTCFullYear() !== year
+  ) {
+    return null;
+  }
+
+  return date;
+}
+
 function isValidDate(value) {
-  return typeof value === 'string' && /^\d{2}\/\d{2}\/\d{4}$/.test(value);
+  return Boolean(parseDate(value));
 }
 
 function normalizeStory(story, editionDate) {
@@ -34,26 +56,19 @@ module.exports = async function handler(req, res) {
 
     if (req.method === 'GET') {
       if (req.query.history === 'true') {
-        const history = await News.aggregate([
-          {
-            $group: {
-              _id: '$editionDate',
-              stories: { $sum: 1 }
-            }
-          },
-          {
-            $addFields: {
-              sortDate: {
-                $dateFromString: {
-                  date: '$_id',
-                  format: '%d/%m/%Y'
-                }
-              }
-            }
-          },
-          { $sort: { sortDate: -1 } },
-          { $project: { _id: 0, date: '$_id', stories: 1 } }
-        ]);
+        const historyStories = await News.find().select('editionDate').lean();
+        const historyMap = new Map();
+
+        historyStories.forEach(story => {
+          if (!historyMap.has(story.editionDate)) {
+            historyMap.set(story.editionDate, 0);
+          }
+          historyMap.set(story.editionDate, historyMap.get(story.editionDate) + 1);
+        });
+
+        const history = [...historyMap.entries()]
+          .map(([date, stories]) => ({ date, stories }))
+          .sort((a, b) => parseDate(b.date) - parseDate(a.date));
 
         return res.status(200).json(
           history.map(archive => ({
@@ -69,41 +84,26 @@ module.exports = async function handler(req, res) {
       }
 
       if (!date) {
-        const latest = await News.aggregate([
-          {
-            $addFields: {
-              sortDate: {
-                $dateFromString: {
-                  date: '$editionDate',
-                  format: '%d/%m/%Y'
-                }
-              }
-            }
-          },
-          { $sort: { sortDate: -1 } },
-          { $limit: 1 },
-          { $project: { _id: 0, editionDate: 1 } }
-        ]);
-
+        const latest = await News.find().select('editionDate').lean();
         if (!latest.length) return res.status(200).json({ date: null, stories: [] });
-        date = latest[0].editionDate;
+
+        date = latest
+          .sort((a, b) => parseDate(b.editionDate) - parseDate(a.editionDate))[0]
+          .editionDate;
       }
 
-      const stories = await News.aggregate([
-        { $match: { editionDate: date } },
-        {
-          $addFields: {
-            publishedAtSort: {
-              $dateFromString: {
-                date: '$publishedAt',
-                format: '%d/%m/%Y'
-              }
-            }
-          }
-        },
-        { $sort: { publishedAtSort: -1, _id: 1 } },
-        { $project: { publishedAtSort: 0 } }
-      ]);
+      const stories = await News.find({ editionDate: date }).lean();
+      stories.sort((a, b) => {
+        const publishedA = parseDate(a.publishedAt);
+        const publishedB = parseDate(b.publishedAt);
+
+        if (!publishedA && !publishedB) return String(a._id).localeCompare(String(b._id));
+        if (!publishedA) return 1;
+        if (!publishedB) return -1;
+
+        const difference = publishedB - publishedA;
+        return difference || String(a._id).localeCompare(String(b._id));
+      });
 
       return res.status(200).json({ date, stories });
     }
