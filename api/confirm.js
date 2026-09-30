@@ -6,7 +6,7 @@ module.exports = async function handler(req, res) {
   const token = String(req.query?.token || '');
 
   if (!token) {
-    return res.status(400).send('Token de confirmação ausente.');
+    return res.redirect('/subscription-status?status=invalid');
   }
 
   try {
@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
     });
 
     if (!subscriber) {
-      return res.status(400).send('Este link de confirmação é inválido ou expirou.');
+      return res.redirect('/subscription-status?status=invalid');
     }
 
     subscriber.confirmed = true;
@@ -27,9 +27,9 @@ module.exports = async function handler(req, res) {
     subscriber.confirmationTokenExpiresAt = null;
     await subscriber.save();
 
-    return res.redirect('/?subscription=confirmed');
+    return res.redirect('/subscription-status?status=confirmed');
   } catch (error) {
     console.error('Erro ao confirmar inscrição:', error);
-    return res.status(500).send('Não foi possível confirmar a inscrição agora.');
+    return res.redirect('/subscription-status?status=error');
   }
 };
