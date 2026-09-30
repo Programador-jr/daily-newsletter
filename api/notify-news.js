@@ -22,23 +22,14 @@ function escapeHtml(value = '') {
     .replaceAll("'", '&#039;');
 }
 
-module.exports = async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return res.status(405).json({ error: 'Método não permitido.' });
-  }
-
-  if (!process.env.NOTIFY_SECRET || req.headers.authorization !== `Bearer ${process.env.NOTIFY_SECRET}`) {
-    return res.status(401).json({ error: 'Não autorizado.' });
-  }
-
+async function notifyLatestNews(req) {
   try {
     await connectDatabase();
 
     const latest = await News.find().select('editionDate').lean();
 
     if (!latest.length) {
-      return res.status(200).json({ sent: false, newStories: 0, recipients: 0 });
+      return { sent: false, newStories: 0, recipients: 0 };
     }
 
     const latestEditionDate = latest
@@ -77,7 +68,7 @@ module.exports = async function handler(req, res) {
     const subscribers = await Subscriber.find({ confirmed: true }).lean();
 
     if (!subscribers.length) {
-      return res.status(200).json({ sent: false, newStories: newStories.length, recipients: 0 });
+      return { sent: false, newStories: newStories.length, recipients: 0 };
     }
 
     const appUrl = getAppUrl(req);
@@ -129,14 +120,36 @@ module.exports = async function handler(req, res) {
       { ordered: false }
     );
 
-    return res.status(200).json({
+    return {
       sent: true,
       editionDate: latestEditionDate,
       newStories: newStories.length,
       recipients
-    });
+    };
+  } catch (error) {
+    console.error('Erro ao enviar atualizações:', error);
+    throw error;
+  }
+};
+
+
+module.exports = async function handler(req, res) {
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    return res.status(405).json({ error: 'Método não permitido.' });
+  }
+
+  if (!process.env.NOTIFY_SECRET || req.headers.authorization !== `Bearer ${process.env.NOTIFY_SECRET}`) {
+    return res.status(401).json({ error: 'Não autorizado.' });
+  }
+
+  try {
+    const result = await notifyLatestNews(req);
+    return res.status(200).json(result);
   } catch (error) {
     console.error('Erro ao enviar atualizações:', error);
     return res.status(500).json({ error: 'Não foi possível enviar as atualizações.' });
   }
 };
+
+module.exports.notifyLatestNews = notifyLatestNews;
