@@ -75,24 +75,13 @@ async function notifyLatestNews(req) {
     let recipients = 0;
 
     for (const subscriber of subscribers) {
-      let unsubscribeToken = null;
-
-      if (subscriber.unsubscribeTokenHash) {
-        unsubscribeToken = null;
-      } else {
-        unsubscribeToken = createToken();
-        await Subscriber.updateOne(
-          { _id: subscriber._id },
-          { $set: { unsubscribeTokenHash: hashToken(unsubscribeToken) } }
-        );
-      }
+      let unsubscribeToken = subscriber.unsubscribeTokenHash;
 
       if (!unsubscribeToken) {
-        unsubscribeToken = createToken();
-        const tokenHash = hashToken(unsubscribeToken);
+        unsubscribeToken = hashToken(createToken());
         await Subscriber.updateOne(
           { _id: subscriber._id },
-          { $set: { unsubscribeTokenHash: tokenHash } }
+          { $set: { unsubscribeTokenHash: unsubscribeToken } }
         );
       }
 
