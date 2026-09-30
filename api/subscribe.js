@@ -32,8 +32,8 @@ module.exports = async function handler(req, res) {
     const token = createToken();
 
     if (subscriber?.confirmed) {
-      return res.status(200).json({
-        message: 'Este e-mail já está inscrito no King\'s Newsletter.'
+      return res.status(409).json({
+        error: 'Este e-mail já está inscrito no King\'s Newsletter.'
       });
     }
 
