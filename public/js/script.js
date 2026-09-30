@@ -84,12 +84,15 @@ switchInput.addEventListener('change', (e) => {
   }
 });
 
-setLoadingState(true);\n\nfetch("/api/news")
+setLoadingState(true);
+
+fetch("/api/news")
   .then((r) => {
     if (!r.ok) throw new Error("Não foi possível carregar a edição.");
     return r.json();
   })
   .then((data) => {
+    setLoadingState(false);
     currentEditionDate = data.date;
 
     if (dateEl) {
@@ -133,6 +136,7 @@ setLoadingState(true);\n\nfetch("/api/news")
     }
   })
   .catch((error) => {
+    setLoadingState(false);
     if (grid) {
       grid.innerHTML = `<article class="story featured"><h2>Não foi possível carregar esta edição.</h2><p>${error.message}</p></article>`;
     }
@@ -165,6 +169,13 @@ if (historyPanel && closeHistory && historyList) {
 }
 
 async function loadHistoryList() {
+  historyList.innerHTML = `
+    <div class="data-loading data-loading-history" role="status" aria-live="polite">
+      <span class="data-loading-spinner" aria-hidden="true"></span>
+      <span>Carregando histórico...</span>
+    </div>
+  `;
+
   try {
     const response = await fetch("/api/news?history=true");
     if (!response.ok) throw new Error("Não foi possível carregar o histórico.");
@@ -209,6 +220,15 @@ window.loadArchiveEdition = function(date) {
   if (!isEditionsPage) {
     window.location.href = `/editions?date=${date}`;
     return;
+  }
+
+  if (grid) {
+    grid.innerHTML = `
+      <div class="data-loading data-loading-grid" role="status" aria-live="polite">
+        <span class="data-loading-spinner" aria-hidden="true"></span>
+        <span>Carregando edição...</span>
+      </div>
+    `;
   }
 
   fetch(`/api/news?date=${date}`)
