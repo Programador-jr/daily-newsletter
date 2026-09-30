@@ -1,0 +1,78 @@
+{
+  "date": "30/09/2026",
+  "stories": [
+    {
+      "category": "Economia e Comércio",
+      "title": "China impõe sobretaxa de 55% sobre carne bovina brasileira a partir de outubro",
+      "summary": "A China anunciou uma tarifa adicional de 55% sobre a carne bovina importada do Brasil a partir de 1º de outubro, depois que o país atingiu a cota anual de importação.",
+      "context": "O Ministério do Comércio da China informou que a cota brasileira de 2026, de 1,1 milhão de toneladas, foi atingida em 29 de setembro. A sobretaxa será aplicada sobre a alíquota já existente para as importações que excederem a cota. A medida pode afetar exportadores brasileiros em um dos principais mercados da carne nacional.",
+      "source": "Ministério do Comércio da China / Reuters",
+      "publishedAt": "30/09/2026",
+      "url": "https://cacs.mofcom.gov.cn/cacscms/article/jkdc?articleId=189379&type=11",
+      "headline": true
+    },
+    {
+      "category": "Brasil e Trabalho",
+      "title": "TST encerra greve da Caixa e determina retorno dos empregados",
+      "summary": "O Tribunal Superior do Trabalho determinou o fim da greve dos empregados da Caixa Econômica Federal e definiu regras para o reajuste e o plano de saúde.",
+      "context": "O TST considerou a paralisação legítima, mas determinou o retorno imediato dos trabalhadores. O plano de saúde deverá ser reajustado pelo INPC, mantendo a mensalidade em 3,5% da remuneração do empregado, conforme a decisão divulgada pela Agência Brasil.",
+      "source": "Agência Brasil / TST",
+      "publishedAt": "30/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/tst-determina-reajuste-de-plano-de-saude-e-fim-da-greve-da-caixa"
+    },
+    {
+      "category": "Política e Eleições",
+      "title": "TSE julga nesta quarta decisão sobre postagens envolvendo Nossa Senhora Aparecida",
+      "summary": "O Tribunal Superior Eleitoral iniciou nesta quarta-feira o julgamento virtual da decisão que determinou a remoção de postagens relacionadas a uma alegação envolvendo Flávio Bolsonaro e Nossa Senhora Aparecida.",
+      "context": "O caso envolve decisões anteriores do ministro André Mendonça, posteriormente questionadas por outras decisões judiciais. O julgamento virtual foi convocado para ocorrer entre 30 de setembro e 2 de outubro. O plenário deverá analisar a manutenção ou alteração das decisões relacionadas às publicações.",
+      "source": "Agência Brasil / TSE",
+      "publishedAt": "30/09/2026",
+      "url": "https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/tse-ira-julgar-decisao-que-barrou-postagens-sobre-nossa-senhora"
+    },
+    {
+      "category": "Mercados e Energia",
+      "title": "Petróleo supera US$ 103 com impasse nas negociações entre EUA e Irã",
+      "summary": "Os preços do petróleo subiram nesta quarta-feira, com o Brent acima de US$ 103 por barril, enquanto as negociações entre Estados Unidos e Irã permanecem sem avanço.",
+      "context": "Segundo a Reuters, o Brent chegou a US$ 103,16 e caminha para uma alta mensal próxima de 14%. A recuperação das exportações de petróleo do Golfo ajudou a ampliar a oferta, mas os mercados continuam preocupados com estoques de combustíveis, custos de transporte e possíveis restrições às exportações de diesel dos EUA.",
+      "source": "Reuters",
+      "publishedAt": "30/09/2026",
+      "url": "https://www.reuters.com/business/energy/oil-climbs-after-trump-denies-he-is-willing-ease-sanctions-iran-2026-09-30/"
+    },
+    {
+      "category": "Economia Internacional",
+      "title": "Atividade industrial da China volta a crescer em setembro, impulsionada pelo setor de tecnologia",
+      "summary": "Pesquisas oficiais e privadas apontaram expansão da atividade industrial chinesa em setembro, após uma sequência de meses de retração.",
+      "context": "A Reuters informou que a recuperação foi favorecida pela normalização das condições climáticas e pelo desempenho de setores ligados à inteligência artificial. Os dados são acompanhados de perto porque a indústria chinesa influencia o comércio global e a demanda por commodities.",
+      "source": "Reuters",
+      "publishedAt": "30/09/2026",
+      "url": "https://www.reuters.com/world/china/chinese-factory-activity-returns-growth-september-amid-ai-boom-2026-09-30/"
+    },
+    {
+      "category": "Internacional e Argentina",
+      "title": "Argentina registra superávit de US$ 2,21 bilhões em conta corrente no segundo trimestre",
+      "summary": "A Argentina registrou superávit de US$ 2,21 bilhões em sua conta corrente no segundo trimestre de 2026, segundo dados oficiais.",
+      "context": "O resultado representa uma mudança em relação ao déficit de US$ 2,45 bilhões registrado no mesmo trimestre de 2025 e ao déficit de US$ 2,41 bilhões no primeiro trimestre deste ano. O dado mostra melhora no setor externo argentino, apesar dos sinais recentes de enfraquecimento da atividade econômica.",
+      "source": "Reuters / dados oficiais da Argentina",
+      "publishedAt": "30/09/2026",
+      "url": "https://www.reuters.com/world/americas/argentina-posts-221-billion-current-account-surplus-second-quarter-2026-09-29/"
+    },
+    {
+      "category": "Internacional",
+      "title": "ONU alerta para aumento dos riscos nucleares e cobra novas salvaguardas",
+      "summary": "A ONU encerrou a semana de alto nível da Assembleia Geral com novos debates sobre desarmamento e os riscos associados às tensões internacionais.",
+      "context": "O debate desta semana inclui os efeitos da guerra e ataques contra infraestrutura nuclear no Irã e na Ucrânia. A organização defende o fortalecimento das salvaguardas e da cooperação internacional para reduzir riscos relacionados às armas nucleares.",
+      "source": "ONU",
+      "publishedAt": "30/09/2026",
+      "url": "https://www.un.org/en/live-weighing-nuclear-risks-amid-rising-tensions-and-war"
+    },
+    {
+      "category": "Mercados",
+      "title": "Bolsas dos EUA iniciam o dia perto da estabilidade antes de novo dado de inflação",
+      "summary": "Os futuros dos principais índices acionários dos Estados Unidos operavam perto da estabilidade nesta quarta-feira, enquanto investidores aguardavam novos dados de inflação.",
+      "context": "A divulgação do índice PCE de agosto é acompanhada de perto pelo Federal Reserve. Os rendimentos dos títulos americanos recuaram após atingirem níveis elevados, enquanto ações de grandes empresas de tecnologia mostraram movimentos modestos no pré-mercado.",
+      "source": "Reuters",
+      "publishedAt": "30/09/2026",
+      "url": "https://www.reuters.com/business/us-stock-futures-inch-up-yields-ease-inflation-report-looms-2026-09-30/"
+    }
+  ]
+}
