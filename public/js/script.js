@@ -10,6 +10,7 @@ const grid = document.querySelector("#news-grid"),
   themeLabel = document.getElementById('theme-label');
 
 let currentStories = [];
+let isLoadingEdition = true;
 let currentFilter = 'all';
 let currentSearch = '';
 let currentEditionDate = null;
@@ -29,6 +30,32 @@ const formatDate = (value) => {
     month: "2-digit",
     year: "numeric",
   }).format(date);
+};
+
+const setLoadingState = (loading) => {
+  isLoadingEdition = loading;
+
+  if (dateEl && loading) {
+    dateEl.textContent = "CARREGANDO...";
+  }
+
+  if (featuredNews && loading) {
+    featuredNews.innerHTML = `
+      <div class="data-loading" role="status" aria-live="polite">
+        <span class="data-loading-spinner" aria-hidden="true"></span>
+        <span>Buscando as notícias...</span>
+      </div>
+    `;
+  }
+
+  if (grid && loading) {
+    grid.innerHTML = `
+      <div class="data-loading data-loading-grid" role="status" aria-live="polite">
+        <span class="data-loading-spinner" aria-hidden="true"></span>
+        <span>Carregando notícias...</span>
+      </div>
+    `;
+  }
 };
 
 const currentPage = window.location.pathname;
@@ -57,7 +84,7 @@ switchInput.addEventListener('change', (e) => {
   }
 });
 
-fetch("/api/news")
+setLoadingState(true);\n\nfetch("/api/news")
   .then((r) => {
     if (!r.ok) throw new Error("Não foi possível carregar a edição.");
     return r.json();
