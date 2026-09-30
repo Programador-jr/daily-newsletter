@@ -27,12 +27,14 @@
       </div>
     </header>
 
-    <main class="subscription-status">
+    <main class="subscription-status" id="status-content">
       <div class="subscription-status-icon" id="status-icon"></div>
       <p class="eyebrow">King's Newsletter</p>
       <h1 id="status-title">Processando...</h1>
       <p id="status-message">Aguarde enquanto verificamos sua solicitação.</p>
-      <a href="/" class="cta-button">Voltar para a Newsletter</a>
+      <div class="subscription-status-actions" id="status-actions">
+        <a href="/" class="cta-button">Voltar para a Newsletter</a>
+      </div>
     </main>
 
     <div id="footer"></div>
@@ -62,6 +64,7 @@
   <script>
     const params = new URLSearchParams(window.location.search);
     const status = params.get('status');
+    const token = params.get('token');
 
     const content = {
       confirmed: {
@@ -70,9 +73,15 @@
         icon: '<i class="fas fa-check"></i>',
         className: 'success'
       },
+      'unsubscribe-confirm': {
+        title: 'Tem certeza que deseja cancelar?',
+        message: 'Vamos sentir sua falta por aqui. Se você cancelar, deixará de receber as próximas atualizações do King\'s Newsletter.',
+        icon: '<i class="fas fa-envelope"></i>',
+        className: 'warning'
+      },
       unsubscribed: {
         title: 'Inscrição cancelada',
-        message: 'Seu e-mail foi removido da lista de atualizações. Você não receberá mais os próximos e-mails da Newsletter.',
+        message: 'Tudo certo. Seu e-mail foi removido da lista de atualizações e você não receberá mais os próximos e-mails da Newsletter.',
         icon: '<i class="fas fa-check"></i>',
         className: 'success'
       },
@@ -98,6 +107,17 @@
     const icon = document.getElementById('status-icon');
     icon.innerHTML = result.icon;
     icon.className = 'subscription-status-icon ' + result.className;
+
+    const actions = document.getElementById('status-actions');
+
+    if (status === 'unsubscribe-confirm' && token) {
+      actions.innerHTML = `
+        <a href="/api/unsubscribe?token=${encodeURIComponent(token)}&confirm=1" class="cta-button">Sim, cancelar inscrição</a>
+        <a href="/" class="subscription-secondary-button">Manter minha inscrição</a>
+      `;
+    } else if (status === 'unsubscribe-confirm') {
+      actions.innerHTML = '<a href="/" class="cta-button">Voltar para a Newsletter</a>';
+    }
   </script>
 </body>
 </html>
