@@ -17,19 +17,22 @@ let currentEditionDate = null;
 const formatDate = (value) => {
   if (!value) return "";
 
-  const match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  const date = match
-    ? new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]))
-    : new Date(value);
+  const match = String(value).match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (match) {
+    return match[1] + '/' + match[2] + '/' + match[3];
+  }
 
-  return new Intl.DateTimeFormat("pt-BR", {
+  const date = new Date(value);
+
+  return Number.isNaN(date.getTime()) ? "" : new Intl.DateTimeFormat("pt-BR", {
     day: "2-digit",
-    month: "long",
+    month: "2-digit",
     year: "numeric",
   }).format(date);
 };
 
 const currentPage = window.location.pathname;
+const isEditionsPage = currentPage === "/editions" || currentPage === "/editions/" || currentPage === "/editions.html";
 
 const savedTheme = localStorage.getItem("theme") || "light";
 document.documentElement.setAttribute("data-theme", savedTheme);
@@ -54,7 +57,7 @@ switchInput.addEventListener('change', (e) => {
   }
 });
 
-fetch("/data/news.json")
+fetch("/api/news")
   .then((r) => {
     if (!r.ok) throw new Error("Não foi possível carregar a edição.");
     return r.json();
@@ -82,13 +85,13 @@ fetch("/data/news.json")
           <p>${featured.summary}</p>
           <p class="context"><strong>Contexto:</strong> ${featured.context}</p>
           <div class="story-footer">
-            <span class="source">${featured.publishedAt || ""}</span>
+            <span class="source">${formatDate(featured.publishedAt)}</span>
             <a class="source-link" href="${featured.url}" target="_blank" rel="noopener noreferrer">Ler fonte</a>
           </div>
           </article>
         `;
       }
-    } else if (currentPage === '/editions') {
+    } else if (isEditionsPage) {
       currentStories = data.stories;
       setupCategoryFilters(currentStories);
 
@@ -136,7 +139,7 @@ if (historyPanel && closeHistory && historyList) {
 
 async function loadHistoryList() {
   try {
-    const response = await fetch("/data/archive/list.json");
+    const response = await fetch("/api/news?history=true");
     if (!response.ok) throw new Error("Não foi possível carregar o histórico.");
 
     const archives = await response.json();
@@ -144,7 +147,7 @@ async function loadHistoryList() {
     const archivesWithCounts = await Promise.all(
       archives.map(async (archive) => {
         try {
-          const archiveResponse = await fetch(`/data/archive/${archive.date}.json`);
+          const archiveResponse = await fetch(`/api/news?date=${archive.date}`);
           if (!archiveResponse.ok) throw new Error("Arquivo não encontrado.");
 
           const edition = await archiveResponse.json();
@@ -176,15 +179,15 @@ async function loadHistoryList() {
 }
 
 window.loadArchiveEdition = function(date) {
-  if (currentPage !== '/editions') {
+  if (!isEditionsPage) {
     window.location.href = `/editions?date=${date}`;
     return;
   }
 
-  fetch(`/data/archive/${date}.json`)
+  fetch(`/api/news?date=${date}`)
     .then((r) => {
       if (!r.ok) {
-        throw new Error(`Arquivo da edição ${date} não encontrado.`);
+        throw new Error(`Edição ${date} não encontrada.`);
       }
       return r.json();
     })
@@ -224,7 +227,7 @@ window.loadArchiveEdition = function(date) {
 
 const urlParams = new URLSearchParams(window.location.search);
 const dateParam = urlParams.get('date');
-if (dateParam && (currentPage === '/editions')) {
+if (dateParam && isEditionsPage) {
   setTimeout(() => {
     window.loadArchiveEdition(dateParam);
   }, 500);
@@ -240,7 +243,7 @@ function renderStories(stories) {
 
   grid.innerHTML = stories
     .map((s, i) =>
-      `<article class="story ${i === 0 ? "featured" : ""}"><div class="story-meta"><span class="category">${s.category}</span><span class="dot"></span><span class="source">${s.source}</span></div><h2>${s.title}</h2><p>${s.summary}</p><p class="context"><strong>Contexto:</strong> ${s.context}</p><div class="story-footer"><span class="source">${s.publishedAt || ""}</span><a class="source-link" href="${s.url}" target="_blank" rel="noopener noreferrer">Ler fonte</a></div></article>`,
+      `<article class="story ${i === 0 ? "featured" : ""}"><div class="story-meta"><span class="category">${s.category}</span><span class="dot"></span><span class="source">${s.source}</span></div><h2>${s.title}</h2><p>${s.summary}</p><p class="context"><strong>Contexto:</strong> ${s.context}</p><div class="story-footer"><span class="source">${formatDate(s.publishedAt)}</span><a class="source-link" href="${s.url}" target="_blank" rel="noopener noreferrer">Ler fonte</a></div></article>`,
     )
     .join("");
 }
