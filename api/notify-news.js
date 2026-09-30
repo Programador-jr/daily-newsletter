@@ -98,12 +98,12 @@ async function notifyLatestNews(req) {
 
       await sendEmail({
         to: subscriber.email,
-        subject: "Novas atualizações — King's Newsletter",
-        text: `King's Newsletter\n\nNovas atualizações\n\n${textItems}\n\nCancelar inscrição: ${unsubscribeUrl}`,
+        subject: `Novas atualizações — ${latestEditionDate}`,
+        text: `King's Newsletter\n\nNovas atualizações — ${latestEditionDate}\n\n${textItems}\n\nCancelar inscrição: ${unsubscribeUrl}`,
         html: `
           <div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;padding:32px;color:#1c2d2a">
             <h1 style="font-family:Georgia,serif;margin:0 0 8px">King's Newsletter</h1>
-            <p style="color:#536762">Novas atualizações</p>
+            <p style="color:#536762">Novas atualizações — ${escapeHtml(latestEditionDate)}</p>
             ${items}
             <p style="font-size:13px;color:#536762">Você está recebendo este e-mail porque confirmou sua inscrição.</p>
             <p style="font-size:13px"><a href="${unsubscribeUrl}" style="color:#0b766b">Cancelar inscrição</a></p>
