@@ -62,7 +62,7 @@ async function notifyLatestNews(req) {
     const newStories = stories.filter(story => !deliveredKeys.has(getNewsKey(story)));
 
     if (!newStories.length) {
-      return res.status(200).json({ sent: false, newStories: 0, recipients: 0 });
+      return { sent: false, newStories: 0, recipients: 0 };
     }
 
     const subscribers = await Subscriber.find({ confirmed: true }).lean();
