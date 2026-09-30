@@ -35,14 +35,43 @@ module.exports = async function handler(req, res) {
   try {
     await connectDatabase();
 
-    const latest = await News.findOne().sort({ editionDate: -1 }).select('editionDate').lean();
-    if (!latest) {
+    const latest = await News.aggregate([
+      {
+        $addFields: {
+          sortDate: {
+            $dateFromString: {
+              date: '$editionDate',
+              format: '%d/%m/%Y'
+            }
+          }
+        }
+      },
+      { $sort: { sortDate: -1 } },
+      { $limit: 1 },
+      { $project: { _id: 0, editionDate: 1 } }
+    ]);
+
+    if (!latest.length) {
       return res.status(200).json({ sent: false, newStories: 0, recipients: 0 });
     }
 
-    const stories = await News.find({ editionDate: latest.editionDate })
-      .sort({ publishedAt: -1, _id: 1 })
-      .lean();
+    const latestEditionDate = latest[0].editionDate;
+
+    const stories = await News.aggregate([
+      { $match: { editionDate: latestEditionDate } },
+      {
+        $addFields: {
+          publishedAtSort: {
+            $dateFromString: {
+              date: '$publishedAt',
+              format: '%d/%m/%Y'
+            }
+          }
+        }
+      },
+      { $sort: { publishedAtSort: -1, _id: 1 } },
+      { $project: { publishedAtSort: 0 } }
+    ]);
 
     const keys = stories.map(getNewsKey);
     const delivered = await NewsDelivery.find({ newsKey: { $in: keys } }).select('newsKey').lean();
@@ -110,7 +139,7 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({
       sent: true,
-      editionDate: latest.editionDate,
+      editionDate: latestEditionDate,
       newStories: newStories.length,
       recipients
     });
