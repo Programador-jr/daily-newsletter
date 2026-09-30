@@ -38,7 +38,26 @@
     <div id="footer"></div>
   </div>
 
-  <script src="js/theme.js"></script>
+  <script>
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") document.documentElement.setAttribute("data-theme", "dark");
+
+    const themeSwitch = document.getElementById("theme-switch");
+    const themeLabel = document.getElementById("theme-label");
+    const updateTheme = () => {
+      const dark = document.documentElement.getAttribute("data-theme") === "dark";
+      themeSwitch.checked = dark;
+      themeLabel.textContent = dark ? "Escuro" : "Claro";
+    };
+    updateTheme();
+    themeSwitch.addEventListener("change", () => {
+      const dark = themeSwitch.checked;
+      document.documentElement.toggleAttribute("data-theme", dark);
+      if (dark) document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", dark ? "dark" : "light");
+      updateTheme();
+    });
+  </script>
   <script src="js/footer.js"></script>
   <script>
     const params = new URLSearchParams(window.location.search);
