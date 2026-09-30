@@ -1376,3 +1376,69 @@ body.subscription-popup-open {
     animation: none;
   }
 }
+
+
+/* SUBSCRIPTION STATUS */
+.subscription-status-page {
+  min-height: calc(100vh - 4rem);
+}
+
+.subscription-status {
+  min-height: 560px;
+  padding: 5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.subscription-status .eyebrow {
+  margin-bottom: 0.75rem;
+}
+
+.subscription-status h1 {
+  max-width: 650px;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.subscription-status > p:not(.eyebrow) {
+  max-width: 560px;
+  margin-bottom: 2rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.subscription-status-icon {
+  width: 76px;
+  height: 76px;
+  margin-bottom: 1.5rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1.8rem;
+}
+
+.subscription-status-icon.success {
+  background: color-mix(in srgb, var(--primary) 14%, var(--card-bg));
+  color: var(--primary);
+}
+
+.subscription-status-icon.error {
+  background: rgba(180, 35, 24, 0.1);
+  color: #b42318;
+}
+
+@media (max-width: 768px) {
+  .subscription-status-page {
+    min-height: 100vh;
+  }
+
+  .subscription-status {
+    min-height: 520px;
+    padding: 3.5rem 1.25rem;
+  }
+}

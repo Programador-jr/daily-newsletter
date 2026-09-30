@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="King's Newsletter - confirmação da inscrição">
+  <title>King's Newsletter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container subscription-status-page">
+    <header class="site-header">
+      <div class="logo">
+        <div class="logo-top"><i class="fas fa-crown"></i> KING'S</div>
+        <div class="logo-bottom">Newsletter</div>
+      </div>
+      <div class="theme-toggle">
+        <span class="theme-label" id="theme-label"></span>
+        <label class="switch">
+          <input type="checkbox" id="theme-switch">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </header>
+
+    <main class="subscription-status">
+      <div class="subscription-status-icon" id="status-icon"></div>
+      <p class="eyebrow">King's Newsletter</p>
+      <h1 id="status-title">Processando...</h1>
+      <p id="status-message">Aguarde enquanto verificamos sua solicitação.</p>
+      <a href="/" class="cta-button">Voltar para a Newsletter</a>
+    </main>
+
+    <div id="footer"></div>
+  </div>
+
+  <script>
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") document.documentElement.setAttribute("data-theme", "dark");
+
+    const themeSwitch = document.getElementById("theme-switch");
+    const themeLabel = document.getElementById("theme-label");
+    const updateTheme = () => {
+      const dark = document.documentElement.getAttribute("data-theme") === "dark";
+      themeSwitch.checked = dark;
+      themeLabel.textContent = dark ? "Escuro" : "Claro";
+    };
+    updateTheme();
+    themeSwitch.addEventListener("change", () => {
+      const dark = themeSwitch.checked;
+      document.documentElement.toggleAttribute("data-theme", dark);
+      if (dark) document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", dark ? "dark" : "light");
+      updateTheme();
+    });
+  </script>
+  <script src="js/footer.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get('status');
+
+    const content = {
+      confirmed: {
+        title: 'Inscrição confirmada!',
+        message: 'Seu e-mail foi confirmado. A partir de agora, você receberá as novas atualizações do King\'s Newsletter.',
+        icon: '<i class="fas fa-check"></i>',
+        className: 'success'
+      },
+      unsubscribed: {
+        title: 'Inscrição cancelada',
+        message: 'Seu e-mail foi removido da lista de atualizações. Você não receberá mais os próximos e-mails da Newsletter.',
+        icon: '<i class="fas fa-check"></i>',
+        className: 'success'
+      },
+      invalid: {
+        title: 'Link inválido ou expirado',
+        message: 'Este link não é mais válido. Se precisar, faça uma nova solicitação pela página da Newsletter.',
+        icon: '<i class="fas fa-exclamation"></i>',
+        className: 'error'
+      },
+      error: {
+        title: 'Não foi possível concluir',
+        message: 'Ocorreu um problema ao processar sua solicitação. Tente novamente mais tarde.',
+        icon: '<i class="fas fa-exclamation"></i>',
+        className: 'error'
+      }
+    };
+
+    const result = content[status] || content.error;
+    document.title = result.title + ' — King\'s Newsletter';
+    document.getElementById('status-title').textContent = result.title;
+    document.getElementById('status-message').textContent = result.message;
+
+    const icon = document.getElementById('status-icon');
+    icon.innerHTML = result.icon;
+    icon.className = 'subscription-status-icon ' + result.className;
+  </script>
+</body>
+</html>

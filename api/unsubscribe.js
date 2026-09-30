@@ -6,7 +6,7 @@ module.exports = async function handler(req, res) {
   const token = String(req.query?.token || '');
 
   if (!token) {
-    return res.status(400).send('Token de descadastro ausente.');
+    return res.redirect('/subscription-status?status=invalid');
   }
 
   try {
@@ -18,15 +18,15 @@ module.exports = async function handler(req, res) {
     });
 
     if (!subscriber) {
-      return res.status(400).send('Este link de descadastro é inválido.');
+      return res.redirect('/subscription-status?status=invalid');
     }
 
     subscriber.confirmed = false;
     await subscriber.save();
 
-    return res.redirect('/?subscription=unsubscribed');
+    return res.redirect('/subscription-status?status=unsubscribed');
   } catch (error) {
     console.error('Erro ao cancelar inscrição:', error);
-    return res.status(500).send('Não foi possível cancelar a inscrição agora.');
+    return res.redirect('/subscription-status?status=error');
   }
 };
