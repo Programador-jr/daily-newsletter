@@ -561,61 +561,68 @@
 /* Modal state */
 .history-detail.open {
   position: fixed;
-  inset: 0;
+  top: 50%;
+  left: 50%;
   z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: min(980px, calc(100vw - 4rem));
+  max-height: min(90vh, 900px);
+  transform: translate(-50%, -50%);
   margin: 0;
-  padding: 2rem;
-  border: 0;
-  border-radius: 0;
-  background: rgba(0, 0, 0, .58);
-  overflow: hidden;
-  box-sizing: border-box;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card-bg);
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .58), 0 24px 70px rgba(0, 0, 0, .28);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
 }
 
-.history-detail.open::before {
-  content: "";
-  position: absolute;
-  inset: 0;
+.history-detail.open::-webkit-scrollbar {
+  width: 9px;
 }
 
-.history-detail.open > * {
-  position: relative;
-  z-index: 1;
+.history-detail.open::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: var(--border);
+}
+
+.history-detail.open::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .history-detail.open .detail-header,
 .history-detail.open .detail-intro,
 .history-detail.open .leaders,
 .history-detail.open .events {
-  width: min(100%, 980px);
+  width: 100%;
   box-sizing: border-box;
   background: var(--card-bg);
 }
 
-.history-detail.open .detail-header,
-.history-detail.open .detail-intro,
-.history-detail.open .leaders,
-.history-detail.open .events {
-  width: min(100%, 980px);
-}
-
 .history-detail.open .detail-header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
   border-radius: 16px 16px 0 0;
   padding: 1.35rem 1.5rem;
+  box-shadow: 0 8px 18px rgba(0,0,0,.05);
 }
 
 .history-detail.open .detail-intro {
-  max-height: none;
-  overflow: visible;
+  max-width: none;
   padding: 1.5rem;
 }
 
 .history-detail.open .leaders,
 .history-detail.open .events {
   padding: 1.5rem;
+}
+
+.history-detail.open .leaders {
+  max-height: none;
+  overflow: visible;
 }
 
 .history-detail.open .events {
@@ -624,85 +631,28 @@
   border-radius: 0 0 16px 16px;
 }
 
-.history-detail.open {
-  color: var(--text-main);
-}
-
-.history-detail.open .detail-header,
-.history-detail.open .detail-intro,
-.history-detail.open .leaders,
-.history-detail.open .events {
-  flex: 0 0 auto;
-}
-
-.history-detail.open .detail-header,
-.history-detail.open .detail-intro,
-.history-detail.open .leaders,
-.history-detail.open .events {
-  margin-inline: 0;
-}
-
-.history-detail.open .detail-header {
-  box-shadow: 0 -12px 30px rgba(0,0,0,.12);
-}
-
-.history-detail.open .events {
-  box-shadow: 0 12px 30px rgba(0,0,0,.12);
-}
-
 body.history-modal-open {
   overflow: hidden;
 }
 
-.history-detail.open .leaders {
-  max-height: min(54vh, 560px);
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-}
-
-.history-detail.open .leaders::-webkit-scrollbar {
-  width: 8px;
-}
-
-.history-detail.open .leaders::-webkit-scrollbar-thumb {
-  border-radius: 999px;
-  background: var(--border);
-}
-
-.history-detail.open .leaders::-webkit-scrollbar-track {
-  background: transparent;
-}
-
 @media (max-width: 768px) {
   .history-detail.open {
-    align-items: stretch;
-    justify-content: flex-start;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 1rem .75rem;
-  }
-
-  .history-detail.open .detail-header,
-  .history-detail.open .detail-intro,
-  .history-detail.open .leaders,
-  .history-detail.open .events {
-    width: 100%;
-  }
-
-  .history-detail.open .leaders {
-    max-height: none;
-    overflow: visible;
+    top: 1rem;
+    left: .75rem;
+    width: calc(100vw - 1.5rem);
+    max-height: calc(100vh - 2rem);
+    transform: none;
+    border-radius: 14px;
   }
 
   .history-detail.open .detail-header {
-    position: sticky;
-    top: 0;
-    z-index: 3;
+    padding: 1.1rem 1.15rem;
   }
 
+  .history-detail.open .detail-intro,
+  .history-detail.open .leaders,
   .history-detail.open .events {
-    margin-bottom: 1rem;
+    padding: 1.15rem;
   }
 }
 
