@@ -301,6 +301,60 @@ function renderTimeline() {
   });
 }
 
+
+let timelinePointer = null;
+
+timeline.addEventListener("pointerdown", event => {
+  if (event.button !== 0) return;
+
+  timelinePointer = {
+    id: event.pointerId,
+    startX: event.clientX,
+    startScrollLeft: timeline.scrollLeft,
+    moved: false
+  };
+
+  timeline.setPointerCapture(event.pointerId);
+});
+
+timeline.addEventListener("pointermove", event => {
+  if (!timelinePointer || event.pointerId !== timelinePointer.id) return;
+
+  const distance = event.clientX - timelinePointer.startX;
+  if (Math.abs(distance) > 5) timelinePointer.moved = true;
+
+  if (timelinePointer.moved) {
+    timeline.classList.add("is-dragging");
+    timeline.scrollLeft = timelinePointer.startScrollLeft - distance;
+  }
+});
+
+function stopTimelinePointer(event) {
+  if (!timelinePointer || event.pointerId !== timelinePointer.id) return;
+
+  timelinePointer = null;
+  timeline.classList.remove("is-dragging");
+}
+
+timeline.addEventListener("pointerup", stopTimelinePointer);
+timeline.addEventListener("pointercancel", stopTimelinePointer);
+
+timeline.addEventListener("click", event => {
+  if (timeline.classList.contains("is-dragging")) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+}, true);
+
+timeline.addEventListener("wheel", event => {
+  if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+
+  if (timeline.scrollWidth <= timeline.clientWidth) return;
+
+  event.preventDefault();
+  timeline.scrollLeft += event.deltaY;
+}, { passive: false });
+
 function selectPeriod(id) {
   const period = periods.find(item => item.id === id);
   if (!period) return;
