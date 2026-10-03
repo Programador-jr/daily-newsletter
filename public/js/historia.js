@@ -1313,15 +1313,10 @@ function centerActiveEntry() {
 function resetDetail() {
   activeEntry = null;
   detail.classList.remove("open");
-  document.body.classList.remove("history-modal-open");
-  detail.innerHTML = '<div class="history-detail-empty"><span class="detail-kicker">Selecione uma história</span><h2>Explore a História do Brasil.</h2><p>A linha do tempo apresenta capítulos completos e alguns acontecimentos que merecem uma narrativa própria. Clique em uma entrada para abrir os detalhes.</p></div>';
+  detail.innerHTML = "";
   renderTimeline();
 }
 
-function closeEntryModal(event) {
-  if (event && event.target !== detail) return;
-  resetDetail();
-}
 
 function buildLeaderCards(period, relevantYear) {
   if (!period) return "";
@@ -1354,12 +1349,21 @@ function buildSources(entry) {
   return '<div class="history-source-note"><strong>Fontes de referência:</strong> ' + names.map(escapeHtml).join(" · ") + '. A narrativa combina documentação institucional, acervos históricos e referências acadêmicas; interpretações controversas são apresentadas com contexto, sem tratá-las como fatos isolados.</div>';
 }
 
-function buildPeriodMilestones(periodId) {
-  const entries = periodMilestoneMap[periodId] || [];
+
+function buildMilestoneAccordion(entries) {
   if (!entries.length) return "";
-  return '<section class="period-history"><div class="period-history-header"><span class="detail-kicker">Marcos importantes</span><h3>Acontecimentos deste período</h3><p>Cada marco abre sua própria narrativa detalhada.</p></div><div class="period-history-list">' +
-    entries.map(entry => '<button class="period-history-item" type="button" data-milestone-key="' + escapeHtml(entry.key) + '"><span class="period-history-year">' + escapeHtml(entry.year) + '</span><span><strong>' + escapeHtml(entry.title) + '</strong><small>' + escapeHtml(entry.summary) + '</small></span></button>').join("") +
-    '</div></section>';
+  return '<section class="history-accordion-section"><div class="detail-section-title"><span>Marcos importantes</span><small>' + entries.length + ' acontecimentos</small></div><div class="history-accordion-list">' +
+    entries.map(entry => {
+      const isOpen = activeEntry === entry.key ? " open" : "";
+      return '<details class="history-accordion-item"' + isOpen + ' data-accordion-key="' + escapeHtml(entry.key) + '">' +
+        '<summary><span class="accordion-year">' + escapeHtml(entry.year) + '</span><span class="accordion-title"><strong>' + escapeHtml(entry.title) + '</strong><small>' + escapeHtml(entry.summary) + '</small></span><span class="accordion-icon"><i class="fas fa-chevron-down"></i></span></summary>' +
+        '<div class="accordion-content">' +
+          '<div class="accordion-intro"><span class="detail-kicker">Marco histórico</span><p>' + escapeHtml(entry.summary) + '</p></div>' +
+          buildSections(entry.sections) +
+          buildSources(entry) +
+        '</div></details>';
+    }).join("") +
+  '</div></section>';
 }
 
 function openEntry(key) {
@@ -1367,40 +1371,48 @@ function openEntry(key) {
   if (!entry) return;
 
   activeEntry = key;
-  renderTimeline();
-
   const period = periodFor(entry);
-  const kicker = entry.type === "event" ? "Marco aprofundado" : "Capítulo histórico";
-  const intro = entry.type === "event" ? entry.summary : entry.lead;
+  const milestoneEntriesForPeriod = periodMilestoneMap[entry.period] || [];
 
   detail.innerHTML =
-    '<div class="detail-header"><div class="detail-title"><span class="detail-kicker">' + escapeHtml(kicker) + ' · ' + escapeHtml(period.era) + '</span><h2>' + escapeHtml(entry.title) + '</h2><span class="detail-years">' + escapeHtml(entry.year) + '</span></div><div class="detail-actions"><button class="detail-expand" type="button" aria-label="Expandir modal" title="Expandir"><i class="fas fa-expand"></i></button><button class="detail-close" type="button" aria-label="Fechar detalhes" title="Fechar"><i class="fas fa-times"></i></button></div></div>' +
-    '<div class="detail-intro"><p class="history-lead">' + escapeHtml(intro) + '</p></div>' +
-    buildSections(entry.sections) +
-    (entry.type === "chapter" ? buildLeaderCards(period) + buildPeriodMilestones(entry.period) : "") +
-    buildSources(entry);
+    '<div class="history-accordion-header">' +
+      '<div><span class="detail-kicker">' + escapeHtml(entry.type === "event" ? "Marco histórico" : "Capítulo histórico") + ' · ' + escapeHtml(period.era) + '</span>' +
+      '<h2>' + escapeHtml(entry.title) + '</h2><span class="detail-years">' + escapeHtml(entry.year) + '</span></div>' +
+      '<button class="accordion-close" type="button" aria-label="Fechar história"><i class="fas fa-times"></i></button>' +
+    '</div>' +
+    '<div class="history-accordion-lead"><p>' + escapeHtml(entry.type === "event" ? entry.summary : entry.lead) + '</p></div>' +
+    (entry.type === "chapter"
+      ? buildSections(entry.sections) + buildLeaderCards(period) + buildMilestoneAccordion(milestoneEntriesForPeriod) + buildSources(entry)
+      : buildSections(entry.sections) + buildSources(entry));
 
   detail.classList.add("open");
-  document.body.classList.add("history-modal-open");
-  detail.querySelector(".detail-close").focus();
-  const expandButton = detail.querySelector(".detail-expand");
-  expandButton.addEventListener("click", event => {
-    event.stopPropagation();
-    detail.classList.toggle("expanded");
-    const expanded = detail.classList.contains("expanded");
-    expandButton.innerHTML = expanded ? '<i class="fas fa-compress"></i>' : '<i class="fas fa-expand"></i>';
-    expandButton.setAttribute("aria-label", expanded ? "Reduzir modal" : "Expandir modal");
-    expandButton.title = expanded ? "Reduzir" : "Expandir";
+  document.body.classList.remove("history-modal-open");
+
+  detail.querySelector(".accordion-close").addEventListener("click", resetDetail);
+
+  detail.querySelectorAll("details[data-accordion-key]").forEach(item => {
+    item.addEventListener("toggle", () => {
+      if (item.open) {
+        activeEntry = item.dataset.accordionKey;
+        renderTimeline();
+      }
+    });
   });
-  detail.querySelectorAll("[data-milestone-key]").forEach(button => {
-    button.addEventListener("click", () => openEntry(button.dataset.milestoneKey));
+
+  detail.querySelectorAll(".history-accordion-item").forEach(item => {
+    item.addEventListener("click", event => {
+      if (!event.target.closest("summary")) return;
+      requestAnimationFrame(() => {
+        if (item.open) item.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+    });
   });
+
+  renderTimeline();
+  requestAnimationFrame(() => detail.scrollIntoView({ behavior: "smooth", block: "start" }));
 }
 
-detail.addEventListener("click", closeEntryModal);
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape" && detail.classList.contains("open")) resetDetail();
-});
+
 
 search.addEventListener("input", renderTimeline);
 renderFilters();
