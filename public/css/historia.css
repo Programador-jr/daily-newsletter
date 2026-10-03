@@ -1686,3 +1686,36 @@ body.history-modal-open {
     animation: none !important;
   }
 }
+
+
+/* Final motion correction: animate cards without overriding timeline focus states */
+.timeline-item {
+  animation: none;
+}
+
+.timeline-card {
+  animation: history-card-enter 560ms var(--history-ease) both;
+}
+
+.timeline-item:nth-child(2) .timeline-card { animation-delay: 35ms; }
+.timeline-item:nth-child(3) .timeline-card { animation-delay: 70ms; }
+.timeline-item:nth-child(4) .timeline-card { animation-delay: 105ms; }
+.timeline-item:nth-child(5) .timeline-card { animation-delay: 140ms; }
+.timeline-item:nth-child(n+6) .timeline-card { animation-delay: 175ms; }
+
+@keyframes history-card-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-18px) translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-card {
+    animation: none !important;
+  }
+}
