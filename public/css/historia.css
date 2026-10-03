@@ -739,3 +739,69 @@ body.history-modal-open {
     transition: none;
   }
 }
+
+
+.timeline-item.event .timeline-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.timeline-item.event .timeline-card {
+  border-style: dashed;
+}
+
+.timeline-item.event .timeline-card strong::before {
+  content: "Marco · ";
+  color: var(--primary);
+  font-family: Inter, sans-serif;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.history-story {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.history-story-section {
+  max-width: 850px;
+}
+
+.history-story-section + .history-story-section {
+  margin-top: .25rem;
+}
+
+.history-story-section h3 {
+  color: var(--text-main);
+}
+
+.history-story-section p {
+  color: var(--text-muted);
+}
+
+.history-source-note {
+  margin: 0 1.5rem 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 55px 28px minmax(0, 1fr);
+    min-height: 150px;
+    flex-basis: auto;
+  }
+
+  .timeline-year {
+    font-size: .72rem;
+  }
+
+  .history-story {
+    padding: 0 1.15rem 1.15rem;
+  }
+
+  .history-source-note {
+    margin: 0 1.15rem 1.15rem;
+  }
+}
