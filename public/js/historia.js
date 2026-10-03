@@ -385,6 +385,64 @@ const periodNarratives = {
   }
 };
 
+
+const milestoneStories = {
+  "1500|Chegada da expedição de Cabral": "A chegada da frota de Pedro Álvares Cabral, em 22 de abril de 1500, marcou o início da presença portuguesa permanente na história do território que viria a formar o Brasil. O contato ocorreu com sociedades indígenas já estabelecidas; a ocupação portuguesa ainda seria gradual e concentrada no litoral durante as primeiras décadas.",
+  "1530|Início da colonização sistemática": "A expedição de Martim Afonso de Sousa, enviada em 1530, representou uma mudança de estratégia da Coroa portuguesa. Em vez de apenas explorar recursos, Portugal passou a organizar povoamento, distribuição de terras, defesa e estruturas locais de administração.",
+  "1534|Capitanias hereditárias": "As capitanias dividiram extensas faixas do litoral e concederam a particulares responsabilidades pela colonização. O sistema encontrou dificuldades em várias regiões, mas Pernambuco e São Vicente desenvolveram núcleos mais duradouros e ajudaram a consolidar a ocupação portuguesa.",
+  "1549|Criação do Governo-Geral": "A Coroa criou o Governo-Geral para coordenar uma colônia que estava se tornando mais complexa. Tomé de Sousa chegou em 1549, Salvador foi fundada e foram estruturados cargos ligados à justiça, fazenda e defesa, criando uma administração central sem eliminar as capitanias.",
+  "1580|União Ibérica": "A crise sucessória portuguesa de 1580 colocou Portugal e seus domínios sob a mesma monarquia dos Habsburgos espanhóis. No Brasil, a união alterou o contexto diplomático e militar e facilitou a expansão portuguesa para áreas além da linha de Tordesilhas, ao mesmo tempo em que tornou possessões portuguesas alvos dos inimigos da Espanha.",
+  "1690s|Expansão da mineração": "A descoberta de grandes jazidas de ouro deslocou população, comércio e investimentos para o interior. Surgiram vilas e caminhos, enquanto a Coroa ampliou mecanismos de cobrança e fiscalização; a mineração também aprofundou a circulação de pessoas escravizadas e mercadorias pelo território.",
+  "1750s|Reformas pombalinas": "As reformas associadas ao marquês de Pombal buscaram fortalecer o poder da Coroa e reorganizar a administração colonial. A expulsão dos jesuítas, mudanças educacionais e medidas econômicas reduziram autonomias anteriores e aumentaram a intervenção estatal.",
+  "1789|Inconfidência Mineira": "A conspiração mineira reuniu membros de grupos locais descontentes com a administração portuguesa, especialmente em torno da tributação e das dificuldades econômicas. O movimento foi denunciado antes de uma revolta aberta; Tiradentes acabou executado e posteriormente tornou-se símbolo da Inconfidência.",
+  "1808|Chegada da corte portuguesa": "A transferência da corte para o Rio de Janeiro transformou a cidade em centro político do Império Português. Ministérios, tribunais, instituições financeiras e culturais foram instalados ou reorganizados, alterando a estrutura administrativa e a vida econômica da América portuguesa.",
+  "1808|Abertura dos portos": "A abertura dos portos às nações amigas rompeu parte do exclusivo comercial que ligava a colônia à metrópole. O comércio exterior se diversificou e a influência britânica cresceu, modificando a economia brasileira antes da Independência.",
+  "1815|Brasil elevado a Reino": "A elevação do Brasil a Reino Unido modificou formalmente sua posição dentro da monarquia portuguesa. O Rio de Janeiro passou a sediar uma corte que já funcionava como centro do Império, fortalecendo grupos políticos e econômicos instalados no Brasil.",
+  "1817|Revolução Pernambucana": "A revolta pernambucana combinou oposição ao governo central, insatisfação econômica e ideias republicanas. Os rebeldes instalaram um governo provisório, mas a reação militar portuguesa restaurou o controle da monarquia após algumas semanas.",
+  "1822|Independência do Brasil": "A ruptura com Portugal foi resultado de uma crise política desenvolvida ao longo de 1822, e não apenas de um ato isolado em 7 de setembro. A separação precisou ser consolidada em diferentes províncias por campanhas militares e negociações, enquanto o novo Império buscava reconhecimento internacional.",
+  "1824|Constituição do Império": "Depois da dissolução da Assembleia Constituinte de 1823, D. Pedro I outorgou a Constituição de 1824. O texto criou o Poder Moderador e uma monarquia constitucional centralizada, estabelecendo a estrutura política do Império por décadas.",
+  "1824|Confederação do Equador": "A Confederação do Equador surgiu como reação à centralização imperial e defendeu uma alternativa republicana e federativa. A repressão militar foi rápida e severa, revelando os limites da autonomia provincial no primeiro reinado.",
+  "1831|Abdicação de D. Pedro I": "A abdicação encerrou o primeiro reinado e transferiu a sucessão para Pedro de Alcântara, ainda criança. A solução constitucional foi a Regência, período em que diferentes grupos disputaram o grau de autonomia das províncias e o poder do governo central.",
+  "1834|Ato Adicional": "O Ato Adicional reformou a Constituição e criou Assembleias Legislativas Provinciais. A mudança tentou acomodar demandas por autonomia regional, mas não eliminou os conflitos entre centralização e federalismo que atravessaram todo o período regencial.",
+  "1835|Início da Cabanagem e Farroupilha": "A Cabanagem e a Farroupilha começaram em 1835, mas representaram conflitos diferentes. No Grão-Pará, a revolta envolveu fortemente setores populares e disputas pelo poder provincial; no Rio Grande do Sul, a Farroupilha teve forte participação de elites regionais e durou quase uma década.",
+  "1840|Golpe da Maioridade": "A antecipação da maioridade de D. Pedro II encerrou a Regência quando o herdeiro tinha apenas 14 anos. A medida foi defendida como forma de estabilizar o sistema político e abriu o longo período do Segundo Reinado.",
+  "1850|Lei Eusébio de Queirós": "A lei de 1850 reprimiu o tráfico transatlântico de africanos escravizados para o Brasil. O fim do tráfico internacional não acabou com a escravidão: o trabalho escravizado continuou e o tráfico interno entre províncias aumentou.",
+  "1864|Início da Guerra do Paraguai": "O conflito começou no contexto das disputas políticas e territoriais da região do Rio da Prata. O Brasil entrou na guerra após a intervenção paraguaia no Mato Grosso e a captura de um navio brasileiro; a guerra se prolongou até 1870 e mobilizou enormes recursos humanos e financeiros.",
+  "1871|Lei do Ventre Livre": "A Lei do Ventre Livre declarou livres os filhos de mulheres escravizadas nascidos depois de sua promulgação, mas estabeleceu condições que permitiam sua permanência sob autoridade dos senhores durante anos. Foi uma etapa gradual de uma abolição que só ocorreria em 1888.",
+  "1888|Lei Áurea": "A Lei Áurea aboliu juridicamente a escravidão em 13 de maio de 1888. A legislação não estabeleceu políticas de distribuição de terras, indenização aos libertos ou integração econômica, e a população negra recém-liberta permaneceu diante de profundas desigualdades sociais.",
+  "1889|Proclamação da República": "A República foi proclamada por um movimento militar em 15 de novembro de 1889. A mudança derrubou a monarquia sem uma guerra civil nacional e instalou um Governo Provisório, que reorganizou instituições e preparou a nova ordem constitucional.",
+  "1891|Constituição republicana": "A Constituição de 1891 consolidou o federalismo, o presidencialismo e a separação entre Igreja e Estado. O sistema ampliou a autonomia dos estados, mas manteve participação eleitoral restrita, especialmente pela exclusão dos analfabetos.",
+  "1896–1897|Guerra de Canudos": "Canudos cresceu no sertão da Bahia sob a liderança de Antônio Conselheiro e reuniu milhares de sertanejos. Depois de três expedições derrotadas, o Exército destruiu a comunidade em 1897; o conflito tornou-se um dos episódios mais estudados da Primeira República.",
+  "1904|Revolta da Vacina": "A vacinação obrigatória contra a varíola ocorreu em meio a reformas urbanas que removiam moradias e alteravam bairros do Rio de Janeiro. A reação popular transformou uma disputa sanitária em uma crise política e social, reprimida pelas forças do governo.",
+  "1922|Semana de Arte Moderna": "A Semana de 1922 reuniu artistas que defendiam novas formas de expressão e maior liberdade estética. O evento tornou-se referência do modernismo brasileiro, embora suas repercussões tenham se desenvolvido principalmente nos anos posteriores.",
+  "1930|Revolução de 1930": "A ruptura de 1930 derrubou Washington Luís e impediu a posse de Júlio Prestes. Getúlio Vargas assumiu em novembro e iniciou um governo provisório que dissolveu órgãos legislativos e reorganizou a administração federal.",
+  "1934|Constituição de 1934": "A nova Constituição foi promulgada após a pressão política da Revolução Constitucionalista. Ela criou novas regras eleitorais, reconheceu direitos sociais e confirmou o voto feminino e secreto. Vargas passou a governar constitucionalmente após ser eleito de forma indireta pela Assembleia.",
+  "1937|Estado Novo": "Em novembro de 1937, Vargas fechou o Congresso e instaurou o Estado Novo. A nova Constituição concentrou poderes no Executivo, enquanto censura, propaganda estatal e repressão política passaram a fazer parte da estrutura do regime.",
+  "1943|Consolidação das Leis do Trabalho": "A CLT reuniu em um único diploma diversas normas trabalhistas existentes e criou uma referência central para relações de trabalho no Brasil. Ao mesmo tempo, o modelo sindical do período permanecia fortemente subordinado ao Estado.",
+  "1946|Nova Constituição democrática": "A Constituição de 1946 restabeleceu eleições e reorganizou os poderes depois do Estado Novo. O período seguinte combinou democracia eleitoral, industrialização acelerada e crises políticas que culminariam na ruptura de 1964.",
+  "1953|Criação da Petrobras": "A criação da Petrobras resultou da política nacionalista de petróleo desenvolvida durante o segundo governo Vargas. A empresa passou a desempenhar papel central na exploração e refino e tornou-se uma das maiores instituições econômicas do país.",
+  "1956|Início do governo Juscelino Kubitschek": "O Plano de Metas buscou acelerar a industrialização por meio de investimentos em energia, transporte, indústria de base e infraestrutura. O governo atraiu capital estrangeiro e ampliou a produção industrial, mas também conviveu com inflação e aumento do endividamento.",
+  "1960|Inauguração de Brasília": "Brasília foi inaugurada em 21 de abril de 1960 após uma construção acelerada no Planalto Central. A mudança de capital concretizou uma antiga proposta de interiorização e modificou a distribuição espacial das instituições federais.",
+  "1961|Renúncia de Jânio Quadros": "Jânio Quadros renunciou após apenas sete meses de governo. A sucessão provocou crise porque setores militares resistiam à posse de João Goulart; o parlamentarismo foi adotado como solução temporária até o plebiscito de 1963.",
+  "1964|Ruptura institucional": "O movimento militar iniciado em 31 de março derrubou João Goulart e alterou a ordem constitucional. O novo regime iniciou uma sequência de Atos Institucionais, cassações, intervenções e restrições à participação política.",
+  "1968|AI-5": "O AI-5 marcou o endurecimento do regime iniciado em 1964. O governo passou a dispor de instrumentos mais amplos para fechar o Congresso, cassar mandatos e suspender direitos políticos, enquanto a censura e a repressão se intensificaram.",
+  "1979|Lei da Anistia": "A Lei da Anistia integrou a abertura política iniciada no final dos anos 1970. Seu texto beneficiou perseguidos políticos e também alcançou agentes públicos nos termos estabelecidos pela lei, tornando sua interpretação posterior um tema importante de debate jurídico e histórico.",
+  "1983–1984|Diretas Já": "A campanha pelas Diretas Já levou milhões de pessoas a manifestações em várias cidades. A emenda que previa eleição presidencial direta não foi aprovada, mas a mobilização aumentou a pressão social pela transição democrática.",
+  "1985|Transição para o governo civil": "Tancredo Neves foi eleito indiretamente pelo Colégio Eleitoral, mas morreu antes de tomar posse. José Sarney assumiu e iniciou o período civil conhecido como Nova República, que posteriormente seria consolidado pela Constituição de 1988.",
+  "1988|Constituição Federal": "A Constituição de 1988 redefiniu direitos, instituições e competências federativas. Ela estabeleceu garantias individuais, direitos sociais e mecanismos de controle do poder público que formam a base constitucional da República atual.",
+  "1989|Primeira eleição presidencial direta desde 1960": "A eleição de 1989 marcou o retorno do voto direto para presidente após quase três décadas. Fernando Collor venceu o segundo turno e assumiu em 1990, inaugurando uma nova fase de competição eleitoral presidencial.",
+  "1992|Impeachment de Fernando Collor": "O processo de 1992 foi o primeiro impeachment presidencial da Nova República. Após a autorização da Câmara e o julgamento no Senado, Collor renunciou, mas perdeu os direitos políticos por decisão dos senadores; Itamar Franco assumiu a Presidência.",
+  "1994|Plano Real": "O Plano Real reorganizou a política monetária e introduziu uma nova moeda em julho de 1994. A inflação caiu rapidamente em relação aos níveis anteriores, encerrando um ciclo de sucessivos planos de estabilização fracassados.",
+  "2003|Início do primeiro governo Lula": "O governo iniciado em 2003 combinou continuidade de elementos da política macroeconômica com expansão de programas sociais. O Bolsa Família foi criado ainda em 2003 pela unificação de programas anteriores e se tornou uma das principais políticas federais de transferência de renda.",
+  "2010|Eleição de Dilma Rousseff": "Dilma Rousseff venceu a eleição presidencial de 2010 e tomou posse em 2011. Foi a primeira mulher eleita para a Presidência do Brasil. Seu governo manteve programas sociais e investimentos públicos, mas enfrentou posteriormente desaceleração econômica e crescente crise política.",
+  "2016|Impeachment de Dilma Rousseff": "O Senado concluiu o processo de impeachment em agosto de 2016 e decidiu pela perda do mandato. Michel Temer, vice-presidente, assumiu definitivamente. As acusações estavam relacionadas a decretos de crédito suplementar e atrasos em repasses, enquanto a defesa de Dilma contestou a caracterização jurídica dos fatos.",
+  "2018|Eleição presidencial": "Jair Bolsonaro venceu a eleição presidencial de 2018 e tomou posse em janeiro de 2019. A eleição ocorreu após um período de intensa polarização política, crise econômica e mudanças no sistema partidário.",
+  "2020|Pandemia de COVID-19": "A COVID-19 provocou uma crise sanitária nacional a partir de 2020. O período envolveu disputas sobre medidas de prevenção, vacinação e responsabilidades entre União, estados e municípios, além de fortes impactos sobre saúde, emprego, educação e atividade econômica.",
+  "2022|Eleição presidencial": "A eleição de 2022 terminou com a vitória de Luiz Inácio Lula da Silva no segundo turno. A transição ocorreu em ambiente de forte polarização política e foi seguida por disputas e manifestações relacionadas ao resultado eleitoral.",
+  "2023|Início do terceiro governo Lula": "Lula iniciou seu terceiro mandato em janeiro de 2023. O governo reorganizou a estrutura ministerial, retomou programas federais e apresentou novas propostas econômicas, sociais e ambientais, enquanto negociava sua agenda com um Congresso de composição diversa.",
+  "2023–2024|Reforma tributária": "A Emenda Constitucional 132, promulgada em 2023, criou a base constitucional para uma reforma da tributação sobre o consumo. A implementação foi planejada de forma gradual e dependeu de leis complementares e regulamentações posteriores."
+};
+
 const milestones = [
   { year: "1500", title: "Chegada da expedição de Cabral", description: "A expedição portuguesa comandada por Pedro Álvares Cabral chega ao território que posteriormente seria chamado Brasil.", period: "colonial" },
   { year: "1530", title: "Início da colonização sistemática", description: "A Coroa portuguesa passa a organizar de forma mais estruturada a ocupação e exploração do território.", period: "colonial" },
@@ -499,11 +557,11 @@ function renderTimeline() {
     return;
   }
 
-  timeline.innerHTML = visible.map(milestone => {
+  timeline.innerHTML = visible.map((milestone, index) => {
     const period = periods.find(item => item.id === milestone.period);
-    const active = activePeriod === milestone.period ? "active" : "";
-
-    return '<button class="timeline-item ' + active + '" data-period="' + escapeHtml(milestone.period) + '">' +
+    const active = activePeriod === milestone.key ? "active" : "";
+    milestone.key = milestone.year + "|" + milestone.title;
+    return '<button class="timeline-item ' + active + '" data-milestone="' + escapeHtml(milestone.key) + '">' +
       '<span class="timeline-year">' + escapeHtml(milestone.year) + '</span>' +
       '<span class="timeline-dot"></span>' +
       '<span class="timeline-card"><small>' + escapeHtml(period.era) + ' · ' + escapeHtml(period.label) + '</small><strong>' + escapeHtml(milestone.title) + '</strong><span>' + escapeHtml(milestone.description) + '</span></span>' +
@@ -511,12 +569,11 @@ function renderTimeline() {
   }).join("");
 
   timeline.querySelectorAll(".timeline-item").forEach(item => {
-    item.addEventListener("click", () => selectPeriod(item.dataset.period));
+    item.addEventListener("click", () => selectMilestone(item.dataset.milestone));
   });
 
   centerActivePeriod();
 }
-
 
 function updateTimelineFocus() {
   const center = timeline.scrollTop + timeline.clientHeight / 2;
@@ -550,58 +607,36 @@ function centerActivePeriod() {
   requestAnimationFrame(updateTimelineFocus);
 }
 
-function selectPeriod(id) {
-  const period = periods.find(item => item.id === id);
-  if (!period) return;
+function selectMilestone(key) {
+  const milestone = milestones.find(item => (item.year + "|" + item.title) === key);
+  if (!milestone) return;
 
-  activePeriod = id;
+  activePeriod = key;
   renderTimeline();
 
+  const period = periods.find(item => item.id === milestone.period);
+  const narrative = milestoneStories[key] || milestone.description;
+
   detail.innerHTML =
-    '<div class="detail-header">' +
-      '<div><span class="detail-kicker">' + escapeHtml(period.era) + '</span><h2>' + escapeHtml(period.label) + '</h2><span class="detail-years">' + escapeHtml(period.years) + '</span></div>' +
-      '<button class="detail-close" type="button" aria-label="Fechar detalhes"><i class="fas fa-times"></i></button>' +
-    '</div>' +
-    '<div class="detail-intro"><p class="history-lead">' + escapeHtml((periodNarratives[period.id] && periodNarratives[period.id].lead) || period.description) + '</p>' +
-    ((periodNarratives[period.id] && periodNarratives[period.id].sections) || []).map(section =>
-      '<section class="history-story-section"><h3>' + escapeHtml(section[0]) + '</h3><p>' + escapeHtml(section[1]) + '</p></section>'
-    ).join("") +
-    '<div class="history-source-note"><strong>Contexto administrativo:</strong> ' + escapeHtml(period.context) + '</div>' +
-    '<div class="period-history"><div class="detail-section-title"><span>O que aconteceu neste período</span><small>' + milestones.filter(item => item.period === period.id).length + ' marcos</small></div>' +
-      '<div class="period-history-list">' + milestones.filter(item => item.period === period.id).map(item =>
-        '<article class="period-history-item"><time>' + escapeHtml(item.year) + '</time><div><h4>' + escapeHtml(item.title) + '</h4><p>' + escapeHtml(item.description) + '</p></div></article>'
-      ).join("") + '</div></div>' +
+    '<div class="detail-header"><div><span class="detail-kicker">' + escapeHtml(period.era) + '</span><h2>' + escapeHtml(milestone.title) + '</h2><span class="detail-years">' + escapeHtml(milestone.year) + '</span></div><button class="detail-close" type="button" aria-label="Fechar detalhes"><i class="fas fa-times"></i></button></div>' +
+    '<div class="detail-intro"><p class="history-lead">' + escapeHtml(narrative) + '</p></div>' +
     '<div class="leaders"><div class="detail-section-title"><span>Governantes e ocupantes do poder</span><small>' + period.leaders.length + ' registro' + (period.leaders.length === 1 ? "" : "s") + '</small></div>' +
     period.leaders.map(leader =>
-      '<article class="leader-card">' +
-        '<div class="leader-heading"><div><h3>' + escapeHtml(leader.name) + '</h3><span>' + escapeHtml(leader.role) + '</span></div><time>' + escapeHtml(leader.years) + '</time></div>' +
-        '<div class="leader-columns">' +
-          '<div><h4>Realizações e medidas</h4><ul>' + leader.achievements.map(item => '<li>' + escapeHtml(item) + '</li>').join("") + '</ul></div>' +
-          '<div><h4>Problemas e controvérsias</h4><ul>' + leader.controversies.map(item => '<li>' + escapeHtml(item) + '</li>').join("") + '</ul></div>' +
-        '</div>' +
-      '</article>'
+      '<article class="leader-card"><div class="leader-heading"><div><h3>' + escapeHtml(leader.name) + '</h3><span>' + escapeHtml(leader.role) + '</span></div><time>' + escapeHtml(leader.years) + '</time></div><div class="leader-columns"><div><h4>Realizações e medidas</h4><ul>' + leader.achievements.map(item => '<li>' + escapeHtml(item) + '</li>').join("") + '</ul></div><div><h4>Problemas e controvérsias</h4><ul>' + leader.controversies.map(item => '<li>' + escapeHtml(item) + '</li>').join("") + '</ul></div></div></article>'
     ).join("") +
     '</div>' +
-    '<div class="events"><h3>Principais acontecimentos</h3><div class="event-list">' + period.events.map(event => '<span>' + escapeHtml(event) + '</span>').join("") + '</div></div>';
+    '<div class="events"><h3>Contexto do período</h3><p>' + escapeHtml(period.context) + '</p></div>';
 
   const closeModal = () => {
     activePeriod = null;
     detail.classList.remove("open");
     document.body.classList.remove("history-modal-open");
     renderTimeline();
-    detail.innerHTML = '<div class="history-detail-empty"><span class="detail-kicker">Selecione um período</span><h2>Explore a história política do Brasil.</h2><p>Escolha um marco na linha do tempo para abrir o período histórico, seus ocupantes do poder, principais medidas e controvérsias.</p></div>';
+    detail.innerHTML = '<div class="history-detail-empty"><span class="detail-kicker">Selecione um período</span><h2>Explore a história política do Brasil.</h2><p>Escolha um marco na linha do tempo para abrir a história daquele momento, seus ocupantes do poder, medidas e controvérsias.</p></div>';
   };
 
   detail.querySelector(".detail-close").addEventListener("click", closeModal);
-
-  detail.addEventListener("click", event => {
-    if (event.target === detail) closeModal();
-  });
-
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape" && detail.classList.contains("open")) closeModal();
-  });
-
+  detail.addEventListener("click", event => { if (event.target === detail) closeModal(); });
   detail.classList.add("open");
   document.body.classList.add("history-modal-open");
   detail.querySelector(".detail-close").focus();
