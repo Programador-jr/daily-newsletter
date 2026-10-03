@@ -1,3 +1,18 @@
+const switchInput = document.getElementById("theme-switch");
+const themeLabel = document.getElementById("theme-label");
+const savedTheme = localStorage.getItem("theme") || "light";
+
+document.documentElement.setAttribute("data-theme", savedTheme);
+if (switchInput) switchInput.checked = savedTheme === "dark";
+
+if (switchInput) {
+  switchInput.addEventListener("change", event => {
+    const theme = event.target.checked ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  });
+}
+
 const periods = [
   {
     id: "colonial",
