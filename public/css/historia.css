@@ -421,6 +421,43 @@
   line-height: 1.5;
 }
 
+.period-history {
+  padding: 0 1.5rem 1.5rem;
+  background: var(--card-bg);
+}
+
+.period-history-list {
+  display: grid;
+  gap: .7rem;
+}
+
+.period-history-item {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.period-history-item time {
+  padding-top: .1rem;
+  color: var(--primary);
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.period-history-item h4 {
+  margin-bottom: .3rem;
+  font-size: .95rem;
+}
+
+.period-history-item p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .84rem;
+  line-height: 1.6;
+}
+
 .events {
   margin-top: 1.5rem;
   padding-top: 1.5rem;
@@ -535,6 +572,15 @@
   .history-detail {
     margin: 0 1.25rem 3rem;
     padding: 1.35rem;
+  }
+
+  .period-history {
+    padding: 0 1.15rem 1.15rem;
+  }
+
+  .period-history-item {
+    grid-template-columns: 65px minmax(0, 1fr);
+    gap: .75rem;
   }
 
   .leader-columns {
