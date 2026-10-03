@@ -659,6 +659,283 @@ const deepDives = [
   }
 ];
 
+
+deepDives.push(
+  {
+    id: "capitanias-1534", period: "colonial", year: "1534", title: "As capitanias hereditárias",
+    summary: "A Coroa portuguesa dividiu parte do território em grandes faixas entregues a donatários para estimular a ocupação e reduzir os custos da colonização.",
+    sections: [
+      ["O problema da ocupação", "Portugal precisava transformar uma costa extensa em território efetivamente ocupado. A presença de outros europeus e os custos de defesa aumentavam a pressão para criar núcleos permanentes de povoamento."],
+      ["O sistema", "As capitanias eram grandes porções de terra concedidas a particulares por meio de cartas de doação e forais. Os donatários recebiam atribuições administrativas e econômicas, mas o território continuava submetido à soberania da Coroa."],
+      ["Resultados desiguais", "Poucas capitanias conseguiram desenvolver núcleos coloniais duradouros. Pernambuco e São Vicente se destacaram, enquanto outras enfrentaram dificuldades financeiras, conflitos locais e resistência indígena."],
+      ["O que veio depois", "A experiência ajudou a demonstrar a necessidade de maior coordenação central. Em 1549, a Coroa criou o Governo-Geral, sem eliminar as capitanias."]
+    ]
+  },
+  {
+    id: "governo-geral-1549", period: "colonial", year: "1549", title: "O Governo-Geral",
+    summary: "A criação do Governo-Geral procurou coordenar a colonização portuguesa e fortalecer a administração na América.",
+    sections: [
+      ["A criação", "Tomé de Sousa chegou à Bahia em 1549 como primeiro governador-geral. A cidade de Salvador foi fundada para funcionar como sede administrativa."],
+      ["Administração", "O novo sistema reuniu funções militares, judiciais e administrativas e buscou articular as capitanias. A administração também envolveu relações com povos indígenas, missões religiosas e organização da produção."],
+      ["Igreja e colonização", "Jesuítas acompanharam o processo de colonização e atuaram na catequese e na educação. As relações entre missionários, colonos e povos indígenas foram marcadas tanto por alianças quanto por conflitos sobre escravização e controle territorial."],
+      ["Legado", "O Governo-Geral foi uma etapa importante na construção de uma administração colonial centralizada, embora as autoridades locais e os poderes econômicos continuassem fundamentais."]
+    ]
+  },
+  {
+    id: "uniao-iberica-1580", period: "colonial", year: "1580", title: "A União Ibérica",
+    summary: "A crise sucessória portuguesa colocou Portugal e seus domínios sob a mesma monarquia dos Habsburgo espanhóis por seis décadas.",
+    sections: [
+      ["A crise sucessória", "Em 1578, o rei português D. Sebastião morreu sem deixar herdeiro. Depois de uma sucessão disputada, Filipe II da Espanha tornou-se Filipe I de Portugal em 1580."],
+      ["Dois reinos, um monarca", "Portugal manteve instituições próprias, mas passou a compartilhar o soberano com a monarquia espanhola. O período ficou conhecido como União Ibérica e durou até 1640."],
+      ["Efeitos no Brasil", "A mudança facilitou a expansão territorial portuguesa para áreas além dos limites definidos pelo Tratado de Tordesilhas, já que a divisão entre domínios portugueses e espanhóis perdeu parte de sua função política."],
+      ["O fim", "A restauração da independência portuguesa em 1640 encerrou a União Ibérica. A experiência deixou consequências duradouras nas fronteiras e nas disputas coloniais."]
+    ]
+  },
+  {
+    id: "ouro-1690", period: "colonial", year: "1690s", title: "A mineração e o ouro",
+    summary: "A descoberta de grandes jazidas de ouro deslocou o centro econômico da colônia para o interior e acelerou a ocupação de novas áreas.",
+    sections: [
+      ["A descoberta", "No final do século XVII, descobertas de ouro em Minas Gerais atraíram pessoas de diferentes partes da colônia e de Portugal. Novos arraiais cresceram rapidamente."],
+      ["A economia", "A mineração estimulou comércio, transporte, criação de animais e abastecimento. O ouro também aumentou a arrecadação da Coroa e a circulação monetária."],
+      ["Controle e impostos", "Portugal criou mecanismos para controlar a produção e cobrar tributos. O quinto, correspondente a uma parcela do ouro extraído, tornou-se símbolo da fiscalização metropolitana."],
+      ["Uma nova sociedade", "A região mineradora produziu uma sociedade urbana e diversificada, mas profundamente desigual, dependente do trabalho escravizado e marcada por conflitos entre autoridades, mineradores e população."]
+    ]
+  },
+  {
+    id: "inconfidencia-1789", period: "colonial", year: "1789", title: "A Inconfidência Mineira",
+    summary: "Uma conspiração articulada em Minas Gerais contestou o domínio português e foi reprimida antes de chegar à ação planejada.",
+    sections: [
+      ["O contexto", "A queda da produção de ouro e a cobrança de tributos alimentaram tensões entre setores da elite mineira e a administração portuguesa. Ideias políticas vindas do Iluminismo e da independência dos Estados Unidos também circulavam entre grupos letrados."],
+      ["A conspiração", "Participaram militares, religiosos, proprietários e intelectuais. O movimento discutia a criação de uma república em Minas e outras mudanças, mas não chegou a iniciar uma rebelião aberta."],
+      ["A denúncia", "A conspiração foi denunciada às autoridades. Joaquim Silvério dos Reis entregou informações ao governador, e os envolvidos foram presos."],
+      ["Tiradentes", "Joaquim José da Silva Xavier, o Tiradentes, foi executado em 1792. Outros participantes receberam penas diferentes, posteriormente comutadas ou reduzidas."],
+      ["Memória", "O episódio ganhou novos significados ao longo dos séculos. Durante a República, Tiradentes foi transformado em símbolo nacional, embora o movimento original tenha reunido interesses e projetos variados."]
+    ]
+  },
+  {
+    id: "revolucao-pernambucana-1817", period: "joanino", year: "1817", title: "A Revolução Pernambucana",
+    summary: "Uma revolta republicana e separatista tomou o poder em Pernambuco por algumas semanas antes de ser derrotada pelas forças do governo.",
+    sections: [
+      ["As causas", "Impostos, dificuldades econômicas, insatisfação com a presença da corte no Rio de Janeiro e circulação de ideias republicanas contribuíram para o movimento."],
+      ["O governo revolucionário", "Em março de 1817, os revoltosos derrubaram o governo provincial e formaram um governo provisório. O movimento buscou apoio em outras capitanias, mas não conseguiu consolidar uma revolução de escala nacional."],
+      ["A repressão", "Forças leais à monarquia cercaram os rebeldes. A experiência terminou em maio de 1817 e seus principais líderes foram presos e executados ou condenados."],
+      ["Importância", "A Revolução Pernambucana demonstrou que a presença da corte não eliminara os conflitos regionais e políticos. Pernambuco voltaria a ser centro de oposição durante a Confederação do Equador."]
+    ]
+  },
+  {
+    id: "confederacao-equador-1824", period: "primeiro-reinado", year: "1824", title: "A Confederação do Equador",
+    summary: "Uma revolta republicana e federalista surgiu no Nordeste contra a centralização do novo Império e foi derrotada militarmente.",
+    sections: [
+      ["O conflito", "A dissolução da Assembleia Constituinte em 1823 e a Constituição outorgada em 1824 provocaram forte oposição em Pernambuco e outras províncias."],
+      ["O projeto", "Os revoltosos defendiam maior autonomia provincial e organizaram uma confederação de inspiração republicana. Frei Caneca tornou-se uma das figuras mais conhecidas do movimento."],
+      ["A repressão", "O governo imperial enviou forças militares e bloqueou a região. A revolta foi derrotada ainda em 1824."],
+      ["Consequências", "A repressão consolidou temporariamente a autoridade central do Império, mas também deixou uma memória duradoura de resistência ao centralismo imperial."]
+    ]
+  },
+  {
+    id: "abdicao-1831", period: "primeiro-reinado", year: "1831", title: "A abdicação de D. Pedro I",
+    summary: "A crise política que se agravou no final do Primeiro Reinado levou D. Pedro I a abdicar do trono em favor de seu filho.",
+    sections: [
+      ["A crise", "Conflitos entre grupos políticos, dificuldades econômicas, a Guerra da Cisplatina e a intensa disputa em torno da influência portuguesa desgastaram o governo."],
+      ["A pressão política", "No Rio de Janeiro, manifestações e confrontos entre grupos políticos e portugueses aumentaram. O imperador perdeu apoio de setores que antes sustentavam sua autoridade."],
+      ["7 de abril", "D. Pedro I abdicou em 7 de abril de 1831. Seu filho Pedro de Alcântara tinha cinco anos, o que tornou impossível um governo pessoal imediato."],
+      ["O novo período", "A Constituição previa regência durante a menoridade. Começava uma década de experiências institucionais e conflitos provinciais."]
+    ]
+  },
+  {
+    id: "cabanagem-1835", period: "regencias", year: "1835", title: "A Cabanagem",
+    summary: "Uma das maiores revoltas do período regencial levou grupos populares ao controle de Belém e provocou uma guerra prolongada no Grão-Pará.",
+    sections: [
+      ["A sociedade amazônica", "A população do Grão-Pará era marcada por profundas desigualdades e pela distância em relação ao centro político do Império. Indígenas, mestiços, negros, pobres urbanos e setores das elites participaram do conflito em diferentes momentos."],
+      ["A tomada de Belém", "Em 1835, os rebeldes ocuparam a capital provincial e estabeleceram governos próprios. O movimento passou por diferentes lideranças e alianças."],
+      ["A guerra", "As forças imperiais retomaram Belém, mas a resistência continuou no interior. A repressão foi extremamente violenta e provocou grande número de mortes."],
+      ["Significado", "A Cabanagem mostrou que a construção do Estado imperial enfrentava conflitos profundos sobre poder local, condições sociais e integração territorial."]
+    ]
+  },
+  {
+    id: "farroupilha-1835", period: "regencias", year: "1835", title: "A Revolução Farroupilha",
+    summary: "A mais longa revolta do período regencial começou no Rio Grande do Sul e chegou a formar uma república separatista.",
+    sections: [
+      ["As causas", "Disputas sobre impostos, comércio de charque, autonomia provincial e relações com o governo central contribuíram para a revolta."],
+      ["A República Rio-Grandense", "Os farroupilhas proclamaram uma república em 1836. A guerra também alcançou Santa Catarina, onde foi proclamada a República Juliana em 1839."],
+      ["A longa guerra", "O conflito atravessou o período regencial e parte do Segundo Reinado. Giuseppe Garibaldi participou da luta ao lado dos farroupilhas antes de retornar à Europa."],
+      ["O acordo", "Em 1845, o governo imperial negociou a paz. Parte das reivindicações foi acomodada por meio da anistia e de acordos com os líderes rebeldes."]
+    ]
+  },
+  {
+    id: "guerra-paraguai-1864", period: "segundo-reinado", year: "1864", title: "A Guerra do Paraguai",
+    summary: "O maior conflito armado do Brasil no século XIX envolveu a Tríplice Aliança contra o Paraguai e produziu profundas consequências humanas, econômicas e políticas.",
+    sections: [
+      ["A formação do conflito", "As disputas pelo controle político e econômico da região do Prata envolveram Brasil, Argentina, Paraguai e Uruguai. Em 1864, tropas paraguaias invadiram Mato Grosso e, posteriormente, territórios argentinos e brasileiros."],
+      ["A Tríplice Aliança", "Brasil, Argentina e Uruguai formaram uma aliança contra o Paraguai em 1865. O conflito se prolongou por cinco anos."],
+      ["A guerra", "Batalhas como Tuiuti, Curupaiti, Humaitá e a campanha final no Paraguai marcaram o conflito. O Brasil mobilizou grande quantidade de soldados, incluindo escravizados e libertos em diferentes condições."],
+      ["Consequências", "A guerra ampliou o peso político das Forças Armadas brasileiras e aumentou os custos financeiros do Estado. O Paraguai sofreu destruição e enorme perda populacional, embora as estimativas históricas sobre o número exato de mortos variem."],
+      ["Depois da guerra", "A experiência militar contribuiu para mudanças na sociedade brasileira e para o fortalecimento de setores do Exército que posteriormente participariam da crise da monarquia."]
+    ]
+  },
+  {
+    id: "lei-eusebio-1850", period: "segundo-reinado", year: "1850", title: "A Lei Eusébio de Queirós",
+    summary: "A lei de 1850 reprimiu o tráfico transatlântico de africanos escravizados e alterou profundamente a dinâmica do sistema escravista.",
+    sections: [
+      ["O tráfico", "Milhões de africanos foram transportados à força para as Américas ao longo de séculos. O Brasil recebeu a maior parcela dos africanos desembarcados nas Américas."],
+      ["A pressão contra o tráfico", "A Grã-Bretanha pressionava o Brasil para cumprir acordos anteriores de combate ao comércio transatlântico. A legislação brasileira contra o tráfico existia, mas sua aplicação havia sido limitada."],
+      ["A lei", "A Lei nº 581, de 4 de setembro de 1850, estabeleceu medidas mais efetivas contra a entrada de africanos escravizados. A repressão naval e administrativa aumentou."],
+      ["Consequências", "O tráfico transatlântico diminuiu fortemente. O sistema escravista, porém, continuou por quase quatro décadas, agora dependendo principalmente do crescimento natural da população escravizada e do tráfico interno entre províncias."]
+    ]
+  },
+  {
+    id: "revolta-vacina-1904", period: "primeira-republica", year: "1904", title: "A Revolta da Vacina",
+    summary: "A campanha obrigatória de vacinação contra a varíola desencadeou uma revolta urbana no Rio de Janeiro em meio a reformas profundas da cidade.",
+    sections: [
+      ["A cidade em transformação", "O governo Rodrigues Alves promoveu reformas urbanas e sanitárias no Rio de Janeiro. A abertura de avenidas e demolições alterou bairros e deslocou moradores."],
+      ["As campanhas sanitárias", "Oswaldo Cruz coordenou ações contra doenças como febre amarela, peste bubônica e varíola. Algumas medidas eram coercitivas e provocavam forte reação social."],
+      ["A revolta", "Em novembro de 1904, protestos contra a vacinação obrigatória se transformaram em confrontos e barricadas. Também participaram grupos políticos que buscavam aproveitar a crise."],
+      ["Depois", "O governo reprimiu o movimento e suspendeu a obrigatoriedade temporariamente. O episódio mostrou que políticas públicas de saúde podiam gerar resistência quando aplicadas sem consenso social e em meio a profundas desigualdades urbanas."]
+    ]
+  },
+  {
+    id: "canudos-1896", period: "primeira-republica", year: "1896–1897", title: "A Guerra de Canudos",
+    summary: "O conflito no sertão baiano colocou a comunidade de Canudos contra expedições militares da República e terminou com sua destruição.",
+    sections: [
+      ["Antônio Conselheiro", "Antônio Vicente Mendes Maciel, conhecido como Antônio Conselheiro, reuniu seguidores no sertão nordestino. A comunidade de Belo Monte, em Canudos, cresceu rapidamente."],
+      ["O conflito", "Autoridades locais e setores das elites passaram a enxergar Canudos como ameaça. Expedições militares foram enviadas contra a comunidade e as primeiras foram derrotadas."],
+      ["A campanha final", "Uma grande expedição do Exército cercou Canudos em 1897. Após combates prolongados, a comunidade foi destruída."],
+      ["A memória", "Euclides da Cunha registrou o conflito em Os Sertões. Canudos tornou-se um dos episódios mais estudados da Primeira República e revelou as tensões entre Estado, elites regionais, pobreza rural e comunidades sertanejas."]
+    ]
+  },
+  {
+    id: "revolucao-1932", period: "vargas", year: "1932", title: "A Revolução Constitucionalista",
+    summary: "São Paulo se levantou contra o Governo Provisório de Vargas em 1932, defendendo a convocação de uma Constituinte e maior autonomia política.",
+    sections: [
+      ["O Governo Provisório", "Após 1930, Vargas governava sem uma Constituição nacional em vigor. São Paulo perdeu parte da autonomia política que possuía durante a Primeira República."],
+      ["O movimento", "Em julho de 1932, forças paulistas iniciaram a luta armada. O movimento recebeu apoio social significativo no estado e mobilizou uma campanha de propaganda e arrecadação."],
+      ["A derrota", "As tropas federais cercaram os revoltosos. Após cerca de três meses de combates, São Paulo se rendeu em outubro."],
+      ["O resultado político", "Embora militarmente derrotado, o movimento acelerou a convocação de eleições para uma Assembleia Constituinte. Em 1934, o Brasil recebeu uma nova Constituição."]
+    ]
+  },
+  {
+    id: "clt-1943", period: "vargas", year: "1943", title: "A Consolidação das Leis do Trabalho",
+    summary: "A CLT reuniu e sistematizou normas trabalhistas construídas durante a Era Vargas e tornou-se uma das principais referências da legislação do trabalho no Brasil.",
+    sections: [
+      ["Antes da CLT", "Durante as décadas anteriores a 1943, o governo federal criou diversas normas sobre jornada, descanso, salário, sindicatos e relações de trabalho. A legislação estava espalhada em diferentes atos."],
+      ["A consolidação", "O Decreto-Lei nº 5.452, de 1º de maio de 1943, aprovou a Consolidação das Leis do Trabalho. A CLT organizou normas já existentes e criou uma estrutura sistemática para as relações trabalhistas."],
+      ["Trabalho e Estado", "A legislação fortaleceu a presença do Estado nas relações entre trabalhadores e empregadores e vinculou sindicatos a regras de organização e reconhecimento oficial."],
+      ["Legado e debates", "A CLT atravessou diferentes regimes políticos e foi modificada muitas vezes. Sua existência se tornou central nos debates sobre direitos trabalhistas, sindicalismo e relações entre Estado, empresas e trabalhadores."]
+    ]
+  },
+  {
+    id: "petrobras-1953", period: "republica-1946", year: "1953", title: "A criação da Petrobras",
+    summary: "A criação da Petrobras consolidou uma política estatal de exploração de petróleo e se tornou um marco do nacionalismo econômico brasileiro.",
+    sections: [
+      ["A campanha do petróleo", "Desde a década de 1940, o petróleo era tema de intenso debate. A campanha 'O petróleo é nosso' defendia maior participação do Estado na exploração do recurso."],
+      ["A criação", "Em 1953, o governo Getúlio Vargas sancionou a lei que criou a Petrobras, estabelecendo um modelo estatal para a exploração, produção, refino e transporte de petróleo."],
+      ["O papel econômico", "A empresa passou a ocupar posição central na política energética brasileira e posteriormente ampliou sua atuação com descobertas de novas reservas e desenvolvimento tecnológico."],
+      ["Debate histórico", "A criação refletiu uma disputa maior sobre o papel do Estado na economia, a participação estrangeira e o controle de recursos estratégicos."]
+    ]
+  },
+  {
+    id: "brasilia-1960", period: "republica-1946", year: "1960", title: "A construção de Brasília",
+    summary: "A transferência da capital para o interior foi um dos maiores projetos do governo Juscelino Kubitschek e marcou a arquitetura, a infraestrutura e a ocupação territorial do país.",
+    sections: [
+      ["Um projeto antigo", "A ideia de transferir a capital para o interior aparecia em projetos anteriores e foi incorporada à Constituição de 1891. Juscelino Kubitschek decidiu executá-la como parte de seu programa de desenvolvimento."],
+      ["A construção", "O Plano de Metas incluiu a construção de Brasília. Lúcio Costa elaborou o plano urbanístico e Oscar Niemeyer projetou os principais edifícios públicos."],
+      ["A inauguração", "Brasília foi inaugurada em 21 de abril de 1960 e tornou-se a nova capital federal."],
+      ["Impactos", "A nova capital estimulou a abertura de estradas e a ocupação do Centro-Oeste, mas também envolveu grandes deslocamentos de trabalhadores e produziu debates sobre custos, urbanização e desigualdade."]
+    ]
+  },
+  {
+    id: "ai5-1968", period: "regime-militar", year: "1968", title: "O AI-5",
+    summary: "O Ato Institucional nº 5 ampliou drasticamente os poderes do regime militar e marcou uma fase de maior repressão política.",
+    sections: [
+      ["O contexto", "Em 1968, o país vivia protestos estudantis, greves, manifestações políticas e confrontos entre grupos de diferentes orientações ideológicas. O governo também enfrentava oposição no Congresso."],
+      ["A edição", "Em 13 de dezembro de 1968, o governo Costa e Silva decretou o AI-5. O ato permitiu fechar o Congresso, intervir em estados e municípios e suspender direitos políticos, entre outras medidas."],
+      ["A repressão", "A censura se intensificou e órgãos de segurança passaram a atuar com maior alcance contra opositores. Prisões, tortura, desaparecimentos e outras violações de direitos humanos ocorreram durante o regime."],
+      ["A revogação", "O AI-5 foi revogado em 1978, durante o governo Ernesto Geisel, como parte do processo de abertura política."]
+    ]
+  },
+  {
+    id: "anistia-1979", period: "regime-militar", year: "1979", title: "A Lei da Anistia",
+    summary: "A Lei de Anistia de 1979 foi um marco da transição política e permitiu o retorno de exilados e a libertação de parte dos presos por crimes políticos.",
+    sections: [
+      ["A pressão pela anistia", "Movimentos sociais, familiares de presos e desaparecidos e setores políticos passaram a exigir anistia ampla e retorno dos exilados. A campanha ganhou força durante a abertura política."],
+      ["A lei", "A Lei nº 6.683, de agosto de 1979, concedeu anistia a pessoas atingidas por atos políticos entre determinados períodos, incluindo crimes políticos e conexos previstos no texto."],
+      ["Retorno", "A medida permitiu o retorno de numerosos brasileiros que estavam no exílio e alterou o cenário político, que também passava por reorganização partidária."],
+      ["Controvérsia histórica", "A interpretação da extensão da anistia a agentes estatais envolvidos em violações de direitos humanos tornou-se objeto de disputas jurídicas e políticas posteriores."]
+    ]
+  },
+  {
+    id: "diretas-1984", period: "regime-militar", year: "1983–1984", title: "Diretas Já",
+    summary: "A campanha pelas eleições diretas para presidente mobilizou grandes manifestações e se tornou um marco da redemocratização.",
+    sections: [
+      ["A proposta", "O deputado Dante de Oliveira apresentou uma emenda constitucional para restabelecer a eleição direta para presidente. A proposta ganhou apoio de diferentes partidos e movimentos sociais."],
+      ["As manifestações", "Entre 1983 e 1984, comícios reuniram grandes multidões em diversas cidades. Artistas, políticos, sindicatos, estudantes e organizações da sociedade civil participaram da campanha."],
+      ["A votação", "Em abril de 1984, a emenda não alcançou os votos necessários na Câmara dos Deputados. A eleição presidencial de 1985 permaneceu indireta."],
+      ["O resultado histórico", "Mesmo sem aprovar a eleição direta naquele momento, a campanha fortaleceu a mobilização pela abertura política e se tornou símbolo da transição democrática."]
+    ]
+  },
+  {
+    id: "collor-1992", period: "nova-republica", year: "1992", title: "O impeachment de Fernando Collor",
+    summary: "Uma crise política iniciada por denúncias de corrupção culminou na abertura e conclusão de um processo de impeachment presidencial em 1992.",
+    sections: [
+      ["O governo", "Fernando Collor assumiu em 1990 após a primeira eleição presidencial direta desde 1960. Seu governo adotou medidas de abertura econômica e tentou combater a inflação."],
+      ["As denúncias", "Em 1992, Pedro Collor acusou Paulo César Farias de operar um esquema de arrecadação ligado ao governo. Uma comissão parlamentar de inquérito e investigações ampliaram a crise."],
+      ["O processo", "A Câmara dos Deputados autorizou a abertura do processo de impeachment em setembro de 1992. Collor renunciou em dezembro, durante o julgamento no Senado."],
+      ["A sucessão", "Itamar Franco assumiu a Presidência. O processo representou um teste das instituições estabelecidas pela Constituição de 1988."]
+    ]
+  },
+  {
+    id: "eleicao-2002", period: "nova-republica", year: "2003", title: "A eleição de Lula e a mudança de governo",
+    summary: "A eleição de 2002 levou Luiz Inácio Lula da Silva à Presidência e marcou uma importante alternância política na Nova República.",
+    sections: [
+      ["A campanha", "Lula disputou a Presidência pela quarta vez e venceu José Serra no segundo turno de 2002. A transição ocorreu em ambiente de preocupação com inflação, dívida e estabilidade econômica."],
+      ["A transição", "O governo Fernando Henrique Cardoso conduziu a passagem de poder para a equipe de Lula. O novo governo assumiu em janeiro de 2003."],
+      ["As políticas", "O governo combinou manutenção de pilares de estabilidade macroeconômica com expansão de políticas sociais e programas de transferência de renda, além de políticas de valorização do salário mínimo."],
+      ["O período", "Os anos seguintes foram marcados por crescimento econômico, redução de pobreza em diversos indicadores e expansão do consumo, mas também pelo escândalo do mensalão e outras disputas políticas."]
+    ]
+  },
+  {
+    id: "dilma-2016", period: "nova-republica", year: "2016", title: "O impeachment de Dilma Rousseff",
+    summary: "O processo de impeachment de 2016 encerrou o segundo mandato de Dilma Rousseff e transferiu a Presidência a Michel Temer.",
+    sections: [
+      ["O segundo mandato", "Dilma Rousseff foi reeleita em 2014. O governo enfrentou recessão, dificuldades fiscais, queda da arrecadação e forte conflito político no Congresso."],
+      ["A abertura do processo", "Em dezembro de 2015, o então presidente da Câmara, Eduardo Cunha, aceitou denúncia que deu início ao processo de impeachment. A Câmara autorizou a abertura em abril de 2016."],
+      ["O julgamento", "O Senado aprovou o afastamento definitivo em 31 de agosto de 2016. A acusação se concentrou em decretos de crédito suplementar e atrasos em repasses relacionados ao Plano Safra, enquadrados pelos acusadores como crimes de responsabilidade."],
+      ["A sucessão", "Michel Temer, que já exercia interinamente a Presidência desde maio, assumiu definitivamente após a decisão do Senado."]
+    ]
+  },
+  {
+    id: "pandemia-2020", period: "nova-republica", year: "2020", title: "A pandemia de COVID-19",
+    summary: "A pandemia provocou uma crise sanitária, econômica e social de escala nacional e alterou profundamente a rotina do Brasil.",
+    sections: [
+      ["A chegada", "Os primeiros casos foram confirmados no Brasil no final de fevereiro de 2020. O vírus se espalhou rapidamente e os estados começaram a adotar medidas de distanciamento e restrição de atividades."],
+      ["O sistema de saúde", "Hospitais e unidades do SUS enfrentaram aumento da demanda, enquanto profissionais de saúde trabalhavam em condições de emergência. A vacinação começou no país em janeiro de 2021."],
+      ["Economia e proteção social", "A pandemia provocou queda de atividade econômica e levou o governo federal e o Congresso a criar medidas emergenciais, incluindo o auxílio emergencial para milhões de brasileiros."],
+      ["Conflitos institucionais", "Houve disputas entre União, estados e municípios sobre medidas sanitárias, aquisição de vacinas e comunicação pública. O período também foi marcado por uma CPI da Pandemia no Senado."],
+      ["Consequências", "A pandemia deixou centenas de milhares de mortes no Brasil, impactos educacionais, econômicos e sociais e acelerou mudanças no trabalho, na saúde digital e nos hábitos cotidianos."]
+    ]
+  },
+  {
+    id: "eleicao-2022", period: "nova-republica", year: "2022", title: "A eleição presidencial de 2022",
+    summary: "A eleição de 2022 ocorreu em um ambiente de forte polarização e terminou com a vitória de Luiz Inácio Lula da Silva no segundo turno.",
+    sections: [
+      ["A disputa", "Jair Bolsonaro buscou a reeleição e Luiz Inácio Lula da Silva voltou a disputar a Presidência. Outros candidatos participaram do primeiro turno, que não produziu maioria absoluta."],
+      ["O segundo turno", "Lula venceu Bolsonaro no segundo turno por uma diferença inferior a dois pontos percentuais dos votos válidos, em uma das eleições presidenciais mais disputadas da história recente."],
+      ["A transição", "O resultado foi reconhecido pelas instituições responsáveis pelo processo eleitoral. A equipe de transição iniciou os trabalhos ainda em novembro."],
+      ["A posse", "Lula tomou posse em 1º de janeiro de 2023, iniciando seu terceiro mandato presidencial."]
+    ]
+  },
+  {
+    id: "reforma-tributaria-2023", period: "nova-republica", year: "2023–2024", title: "A reforma tributária do consumo",
+    summary: "A Emenda Constitucional 132 mudou a estrutura constitucional da tributação sobre o consumo e abriu uma longa etapa de regulamentação.",
+    sections: [
+      ["O problema histórico", "O sistema brasileiro de tributação sobre o consumo era composto por vários tributos distribuídos entre União, estados e municípios, com regras complexas e diferentes bases de incidência."],
+      ["A aprovação", "Em dezembro de 2023, o Congresso promulgou a Emenda Constitucional 132. O texto criou bases constitucionais para um novo modelo de tributação sobre o consumo."],
+      ["O novo modelo", "A reforma estabeleceu o Imposto sobre Bens e Serviços, de competência compartilhada entre estados e municípios, e a Contribuição sobre Bens e Serviços, federal, além do Imposto Seletivo. A implementação foi planejada de forma gradual."],
+      ["Regulamentação", "Em 2024 e nos anos seguintes, leis complementares passaram a detalhar alíquotas, regimes específicos, cashback, transição e funcionamento dos novos tributos. A mudança, portanto, não se encerrou na aprovação da emenda constitucional."]
+    ]
+  }
+);
+
 const timelineEntries = [
   ...chapters.map(chapter => ({ ...chapter, key: "chapter|" + chapter.id })),
   ...deepDives.map(event => ({ ...event, type: "event", key: "event|" + event.id }))
