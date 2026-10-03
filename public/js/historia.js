@@ -1212,8 +1212,25 @@ const detail = document.getElementById("history-detail");
 const filterContainer = document.getElementById("history-filters");
 const search = document.getElementById("history-search");
 const count = document.getElementById("timeline-count");
+const timelineViewButtons = document.querySelectorAll("[data-timeline-view]");
+const timelineViews = ["globe", "reel", "list", "grid"];
+const compactTimelineQuery = window.matchMedia("(max-width: 768px)");
+const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+const savedTimelineView = localStorage.getItem("history-timeline-view");
 let activeFilter = "Todos";
+let activeTimelineView = timelineViews.includes(savedTimelineView) ? savedTimelineView : "globe";
+if (compactTimelineQuery.matches && activeTimelineView === "grid") {
+  activeTimelineView = "list";
+  localStorage.setItem("history-timeline-view", activeTimelineView);
+}
 let activeEntry = null;
+let lockedScrollY = 0;
+let reelDrag = null;
+let suppressReelClick = false;
+let reelWheelTarget = 0;
+let reelWheelFrame = 0;
+let reelWheelIdle = true;
+let reelWheelIdleTimeout;
 
 const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, char => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
@@ -1255,7 +1272,34 @@ function renderFilters() {
   });
 }
 
+function updateTimelineViewButtons() {
+  timelineViewButtons.forEach(button => {
+    const isActive = button.dataset.timelineView === activeTimelineView;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+}
+
+timelineViewButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    activeTimelineView = button.dataset.timelineView;
+    localStorage.setItem("history-timeline-view", activeTimelineView);
+    updateTimelineViewButtons();
+    renderTimeline();
+  });
+});
+
+compactTimelineQuery.addEventListener("change", event => {
+  if (!event.matches || activeTimelineView !== "grid") return;
+
+  activeTimelineView = "list";
+  localStorage.setItem("history-timeline-view", activeTimelineView);
+  updateTimelineViewButtons();
+  renderTimeline();
+});
+
 function renderTimeline() {
+  timeline.className = "timeline mode-" + activeTimelineView;
   const visible = filteredEntries();
   count.textContent = visible.length + (visible.length === 1 ? " entrada" : " entradas");
 
@@ -1267,13 +1311,12 @@ function renderTimeline() {
   timeline.innerHTML = visible.map(entry => {
     const period = periodFor(entry);
     const active = activeEntry === entry.key ? "active" : "";
-    const label = entry.type === "event" ? "Marco aprofundado" : "Capítulo histórico";
     const description = entry.type === "event" ? entry.summary : entry.lead;
 
-    return '<button class="timeline-item ' + active + ' ' + entry.type + '" data-entry="' + escapeHtml(entry.key) + '">' +
+    return '<button class="timeline-item ' + active + '" data-entry="' + escapeHtml(entry.key) + '">' +
       '<span class="timeline-year">' + escapeHtml(entry.year) + '</span>' +
       '<span class="timeline-dot"></span>' +
-      '<span class="timeline-card"><small>' + escapeHtml(period.era) + ' · ' + label + '</small><strong>' + escapeHtml(entry.title) + '</strong><span>' + escapeHtml(description) + '</span></span>' +
+      '<span class="timeline-card"><small>' + escapeHtml(period.era) + '</small><strong>' + escapeHtml(entry.title) + '</strong><span>' + escapeHtml(description) + '</span></span>' +
       '</button>';
   }).join("");
 
@@ -1281,22 +1324,146 @@ function renderTimeline() {
     item.addEventListener("click", () => openEntry(item.dataset.entry));
   });
 
-  centerActiveEntry();
+  if (activeTimelineView === "globe") {
+    centerActiveEntry();
+  } else {
+    updateTimelineFocus();
+  }
 }
 
 function updateTimelineFocus() {
+  if (activeTimelineView === "reel") {
+    const timelineRect = timeline.getBoundingClientRect();
+    const center = timelineRect.left + timeline.clientWidth / 2;
+    timeline.querySelectorAll(".timeline-item").forEach(item => {
+      const itemRect = item.getBoundingClientRect();
+      const itemCenter = itemRect.left + itemRect.width / 2;
+      const distance = Math.abs(itemCenter - center);
+      const focus = Math.max(0, 1 - distance / (itemRect.width * 1.25));
+      item.style.setProperty("--reel-focus", focus.toFixed(3));
+      item.style.setProperty("--reel-scale", (0.94 + focus * 0.06).toFixed(3));
+      item.style.setProperty("--reel-opacity", (0.48 + focus * 0.52).toFixed(3));
+      item.classList.toggle("is-center", focus >= 0.6);
+    });
+    return;
+  }
+
+  if (activeTimelineView !== "globe") {
+    timeline.querySelectorAll(".timeline-item").forEach(item => {
+      item.classList.remove("is-center", "is-near", "is-far", "is-above", "is-below");
+    });
+    return;
+  }
+
   const center = timeline.scrollTop + timeline.clientHeight / 2;
   timeline.querySelectorAll(".timeline-item").forEach(item => {
     const itemCenter = item.offsetTop + item.offsetHeight / 2;
-    const distance = Math.abs(center - itemCenter);
+    const offset = itemCenter - center;
+    const distance = Math.abs(offset);
     const ratio = Math.min(distance / (timeline.clientHeight / 2), 1);
-    item.classList.toggle("is-center", distance < item.offsetHeight * .65);
-    item.classList.toggle("is-near", distance >= item.offsetHeight * .65 && ratio < .62);
+    item.classList.toggle("is-center", distance < item.offsetHeight * .42);
+    item.classList.toggle("is-near", distance >= item.offsetHeight * .42 && ratio < .95);
     item.classList.toggle("is-far", ratio >= .62);
+    item.classList.toggle("is-above", offset < 0);
+    item.classList.toggle("is-below", offset > 0);
   });
 }
 
 timeline.addEventListener("scroll", updateTimelineFocus, { passive: true });
+
+function animateReelWheel() {
+  const distance = reelWheelTarget - timeline.scrollLeft;
+
+  if (reelWheelIdle && Math.abs(distance) < 2.5) {
+    timeline.scrollLeft = reelWheelTarget;
+    reelWheelFrame = 0;
+    updateTimelineFocus();
+    return;
+  }
+
+  timeline.scrollLeft += distance * 0.2;
+  reelWheelFrame = window.requestAnimationFrame(animateReelWheel);
+}
+
+timeline.addEventListener("wheel", event => {
+  if (activeTimelineView !== "reel") return;
+
+  const unit = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? 16 : event.deltaMode === WheelEvent.DOM_DELTA_PAGE ? timeline.clientWidth : 1;
+  const delta = (event.deltaX || event.deltaY) * unit;
+  const maxScroll = timeline.scrollWidth - timeline.clientWidth;
+  const start = reelWheelFrame ? reelWheelTarget : timeline.scrollLeft;
+  const nextScroll = Math.max(0, Math.min(maxScroll, start + delta));
+  if (!delta || nextScroll === start) return;
+
+  event.preventDefault();
+  reelWheelTarget = nextScroll;
+  if (reducedMotionQuery.matches) {
+    timeline.scrollLeft = reelWheelTarget;
+    updateTimelineFocus();
+    return;
+  }
+
+  reelWheelIdle = false;
+  window.clearTimeout(reelWheelIdleTimeout);
+  reelWheelIdleTimeout = window.setTimeout(() => {
+    reelWheelIdle = true;
+  }, 120);
+
+  if (!reelWheelFrame) {
+    reelWheelFrame = window.requestAnimationFrame(animateReelWheel);
+  }
+}, { passive: false });
+
+timeline.addEventListener("pointerdown", event => {
+  if (activeTimelineView !== "reel" || event.pointerType !== "mouse" || event.button !== 0) return;
+
+  if (reelWheelFrame) {
+    window.cancelAnimationFrame(reelWheelFrame);
+    reelWheelFrame = 0;
+    reelWheelTarget = timeline.scrollLeft;
+  }
+  window.clearTimeout(reelWheelIdleTimeout);
+  reelWheelIdle = true;
+  reelDrag = {
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startScrollLeft: timeline.scrollLeft,
+    moved: false
+  };
+  timeline.setPointerCapture(event.pointerId);
+});
+
+timeline.addEventListener("pointermove", event => {
+  if (!reelDrag || event.pointerId !== reelDrag.pointerId) return;
+
+  const distance = event.clientX - reelDrag.startX;
+  if (!reelDrag.moved && Math.abs(distance) < 5) return;
+
+  reelDrag.moved = true;
+  timeline.classList.add("is-dragging");
+  timeline.scrollLeft = reelDrag.startScrollLeft - distance;
+});
+
+function finishReelDrag(event) {
+  if (!reelDrag || event.pointerId !== reelDrag.pointerId) return;
+
+  suppressReelClick = reelDrag.moved;
+  reelDrag = null;
+  timeline.classList.remove("is-dragging");
+  if (timeline.hasPointerCapture(event.pointerId)) {
+    timeline.releasePointerCapture(event.pointerId);
+  }
+}
+
+timeline.addEventListener("pointerup", finishReelDrag);
+timeline.addEventListener("pointercancel", finishReelDrag);
+timeline.addEventListener("click", event => {
+  if (!suppressReelClick) return;
+
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  suppressReelClick = false;
+}, true);
 
 function centerTimelineItem(item, behavior = "smooth") {
   if (!item) return;
@@ -1310,10 +1477,22 @@ function centerActiveEntry() {
   requestAnimationFrame(updateTimelineFocus);
 }
 
+function lockPageScroll() {
+  lockedScrollY = window.scrollY;
+  document.body.style.setProperty("--history-scroll-lock-top", "-" + lockedScrollY + "px");
+  document.body.classList.add("history-modal-open");
+}
+
+function unlockPageScroll() {
+  document.body.classList.remove("history-modal-open");
+  document.body.style.removeProperty("--history-scroll-lock-top");
+  window.scrollTo(0, lockedScrollY);
+}
+
 function resetDetail() {
   activeEntry = null;
   detail.classList.remove("open");
-  document.body.classList.remove("history-modal-open");
+  unlockPageScroll();
   detail.innerHTML = "";
   renderTimeline();
 }
@@ -1359,7 +1538,7 @@ function buildMilestoneAccordion(entries) {
       return '<details class="history-accordion-item"' + isOpen + ' data-accordion-key="' + escapeHtml(entry.key) + '">' +
         '<summary><span class="accordion-year">' + escapeHtml(entry.year) + '</span><span class="accordion-title"><strong>' + escapeHtml(entry.title) + '</strong><small>' + escapeHtml(entry.summary) + '</small></span><span class="accordion-icon"><i class="fas fa-chevron-down"></i></span></summary>' +
         '<div class="accordion-content">' +
-          '<div class="accordion-intro"><span class="detail-kicker">Marco histórico</span><p>' + escapeHtml(entry.summary) + '</p></div>' +
+          '<div class="accordion-intro"><p>' + escapeHtml(entry.summary) + '</p></div>' +
           buildSections(entry.sections) +
           buildSources(entry) +
         '</div></details>';
@@ -1379,7 +1558,7 @@ function openEntry(key) {
     '<div class="history-detail-backdrop" aria-hidden="true"></div>' +
     '<div class="history-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="history-detail-title">' +
     '<div class="history-accordion-header">' +
-      '<div><span class="detail-kicker">' + escapeHtml(entry.type === "event" ? "Marco histórico" : "Capítulo histórico") + ' · ' + escapeHtml(period.era) + '</span>' +
+      '<div><span class="detail-kicker">' + escapeHtml(period.era) + '</span>' +
       '<h2>' + escapeHtml(entry.title) + '</h2><span class="detail-years">' + escapeHtml(entry.year) + '</span></div>' +
       '<button class="accordion-close" type="button" aria-label="Fechar história"><i class="fas fa-times"></i></button>' +
     '</div>' +
@@ -1390,7 +1569,7 @@ function openEntry(key) {
     '</div>';
 
   detail.classList.add("open");
-  document.body.classList.add("history-modal-open");
+  lockPageScroll();
 
   detail.querySelector(".accordion-close").addEventListener("click", resetDetail);
   detail.querySelector(".history-detail-backdrop").addEventListener("click", resetDetail);
@@ -1437,5 +1616,6 @@ document.addEventListener("keydown", event => {
 
 
 search.addEventListener("input", renderTimeline);
+updateTimelineViewButtons();
 renderFilters();
 renderTimeline();

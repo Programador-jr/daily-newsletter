@@ -27,6 +27,10 @@ app.get('/editions', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/editions.html'));
 });
 
+app.get('/historia', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/historia.html'));
+});
+
 app.get('/about', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/about.html'));
 });
