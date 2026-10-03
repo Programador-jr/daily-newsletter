@@ -1313,6 +1313,7 @@ function centerActiveEntry() {
 function resetDetail() {
   activeEntry = null;
   detail.classList.remove("open");
+  document.body.classList.remove("history-modal-open");
   detail.innerHTML = "";
   renderTimeline();
 }
@@ -1375,6 +1376,8 @@ function openEntry(key) {
   const milestoneEntriesForPeriod = periodMilestoneMap[entry.period] || [];
 
   detail.innerHTML =
+    '<div class="history-detail-backdrop" aria-hidden="true"></div>' +
+    '<div class="history-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="history-detail-title">' +
     '<div class="history-accordion-header">' +
       '<div><span class="detail-kicker">' + escapeHtml(entry.type === "event" ? "Marco histórico" : "Capítulo histórico") + ' · ' + escapeHtml(period.era) + '</span>' +
       '<h2>' + escapeHtml(entry.title) + '</h2><span class="detail-years">' + escapeHtml(entry.year) + '</span></div>' +
@@ -1383,11 +1386,14 @@ function openEntry(key) {
     '<div class="history-accordion-lead"><p>' + escapeHtml(entry.type === "event" ? entry.summary : entry.lead) + '</p></div>' +
     (entry.type === "chapter"
       ? buildSections(entry.sections) + buildLeaderCards(period) + buildMilestoneAccordion(milestoneEntriesForPeriod) + buildSources(entry)
-      : buildSections(entry.sections) + buildSources(entry));
+      : buildSections(entry.sections) + buildSources(entry)) +
+    '</div>';
 
   detail.classList.add("open");
+  document.body.classList.add("history-modal-open");
 
   detail.querySelector(".accordion-close").addEventListener("click", resetDetail);
+  detail.querySelector(".history-detail-backdrop").addEventListener("click", resetDetail);
 
   detail.querySelectorAll("details[data-accordion-key]").forEach(item => {
     item.addEventListener("click", event => {
@@ -1419,8 +1425,14 @@ function openEntry(key) {
   });
 
   renderTimeline();
-  requestAnimationFrame(() => detail.scrollIntoView({ behavior: "smooth", block: "start" }));
+  requestAnimationFrame(() => detail.querySelector(".accordion-close")?.focus());
 }
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && detail.classList.contains("open")) {
+    resetDetail();
+  }
+});
 
 
 
