@@ -303,6 +303,7 @@ function renderTimeline() {
 
 
 let timelinePointer = null;
+let suppressTimelineClick = false;
 
 timeline.addEventListener("pointerdown", event => {
   if (event.button !== 0) return;
@@ -332,6 +333,7 @@ timeline.addEventListener("pointermove", event => {
 function stopTimelinePointer(event) {
   if (!timelinePointer || event.pointerId !== timelinePointer.id) return;
 
+  suppressTimelineClick = timelinePointer.moved;
   timelinePointer = null;
   timeline.classList.remove("is-dragging");
 }
@@ -340,7 +342,8 @@ timeline.addEventListener("pointerup", stopTimelinePointer);
 timeline.addEventListener("pointercancel", stopTimelinePointer);
 
 timeline.addEventListener("click", event => {
-  if (timeline.classList.contains("is-dragging")) {
+  if (suppressTimelineClick) {
+    suppressTimelineClick = false;
     event.preventDefault();
     event.stopPropagation();
   }
