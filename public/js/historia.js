@@ -1386,7 +1386,6 @@ function openEntry(key) {
       : buildSections(entry.sections) + buildSources(entry));
 
   detail.classList.add("open");
-  document.body.classList.remove("history-modal-open");
 
   detail.querySelector(".accordion-close").addEventListener("click", resetDetail);
 
