@@ -1195,27 +1195,19 @@ function buildSections(sections) {
 
 function buildSources(entry) {
   const sourceLinks = {
-    colonial: ["Arquivo Nacional"],
-    joanino: ["Arquivo Nacional"],
-    "primeiro-reinado": ["Arquivo Nacional"],
-    regencias: ["Arquivo Nacional"],
-    "segundo-reinado": ["Arquivo Nacional"],
-    "primeira-republica": ["Arquivo Nacional"],
-    vargas: ["Arquivo Nacional"],
-    "republica-1946": ["Arquivo Nacional"],
-    "regime-militar": ["Arquivo Nacional"],
-    "nova-republica": ["Arquivo Nacional", "Senado Federal"]
+    colonial: ["Arquivo Nacional", "Biblioteca Brasiliana USP", "USP — Departamento de História"],
+    joanino: ["Arquivo Nacional", "Biblioteca Brasiliana USP", "FGV CPDOC"],
+    "primeiro-reinado": ["Arquivo Nacional", "FGV CPDOC", "Senado Federal"],
+    regencias: ["FGV CPDOC", "Senado Federal", "Biblioteca Brasiliana USP"],
+    "segundo-reinado": ["FGV CPDOC", "USP — Departamento de História", "Biblioteca Brasiliana USP"],
+    "primeira-republica": ["FGV CPDOC", "Biblioteca Brasiliana USP"],
+    vargas: ["FGV CPDOC", "Arquivo Nacional"],
+    "republica-1946": ["FGV CPDOC", "Arquivo Nacional", "Senado Federal"],
+    "regime-militar": ["FGV CPDOC", "Arquivo Nacional"],
+    "nova-republica": ["FGV CPDOC", "Senado Federal", "USP — Departamento de História"]
   };
-  const names = sourceLinks[entry.period] || ["Arquivo Nacional"];
-  return '<div class="history-source-note"><strong>Base documental:</strong> ' + names.map(escapeHtml).join(" · ") + '. A narrativa foi estruturada a partir de fontes institucionais e documentação histórica; questões interpretativas são apresentadas como contexto, não como conclusão.</div>';
-}
-
-function buildPeriodMilestones(periodId) {
-  const entries = periodMilestoneMap[periodId] || [];
-  if (!entries.length) return "";
-  return '<section class="period-history"><div class="period-history-header"><span class="detail-kicker">Marcos importantes</span><h3>Acontecimentos deste período</h3><p>Cada marco abre sua própria narrativa detalhada.</p></div><div class="period-history-list">' +
-    entries.map(entry => '<button class="period-history-item" type="button" data-milestone-key="' + escapeHtml(entry.key) + '"><span class="period-history-year">' + escapeHtml(entry.year) + '</span><span><strong>' + escapeHtml(entry.title) + '</strong><small>' + escapeHtml(entry.summary) + '</small></span></button>').join("") +
-    '</div></section>';
+  const names = sourceLinks[entry.period] || ["FGV CPDOC", "Arquivo Nacional"];
+  return '<div class="history-source-note"><strong>Fontes de referência:</strong> ' + names.map(escapeHtml).join(" · ") + '. A narrativa combina documentação institucional, acervos históricos e referências acadêmicas; interpretações controversas são apresentadas com contexto, sem tratá-las como fatos isolados.</div>';
 }
 
 function openEntry(key) {
