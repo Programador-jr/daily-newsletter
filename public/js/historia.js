@@ -1054,8 +1054,14 @@ function resetDetail() {
 }
 
 function closeEntryModal(event) {
-  if (event && event.target !== detail) return;
-  resetDetail();
+  if (!event) {
+    resetDetail();
+    return;
+  }
+
+  if (event.target === detail || event.target.closest(".detail-close")) {
+    resetDetail();
+  }
 }
 
 function buildLeaderCards(period, relevantYear) {
