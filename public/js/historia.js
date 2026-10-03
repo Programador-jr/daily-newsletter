@@ -1391,10 +1391,14 @@ function openEntry(key) {
 
   detail.querySelectorAll("details[data-accordion-key]").forEach(item => {
     item.addEventListener("toggle", () => {
-      if (item.open) {
-        activeEntry = item.dataset.accordionKey;
-        renderTimeline();
-      }
+      if (!item.open) return;
+
+      detail.querySelectorAll("details[data-accordion-key][open]").forEach(other => {
+        if (other !== item) other.open = false;
+      });
+
+      activeEntry = item.dataset.accordionKey;
+      renderTimeline();
     });
   });
 
