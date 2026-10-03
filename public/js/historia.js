@@ -1035,6 +1035,150 @@ const milestoneDetails = {
   "Início do terceiro governo Lula":[["Eleição","Lula venceu a eleição presidencial de 2022 e tomou posse em 1º de janeiro de 2023."],["Novo contexto","O governo encontrou Congresso fragmentado e sociedade politicamente polarizada."],["Temas","Políticas sociais, meio ambiente, investimento e política fiscal estiveram entre os temas centrais."],["Reforma tributária","Em 2023, a Emenda Constitucional 132 alterou a tributação sobre o consumo."]]
 };
 
+
+const milestoneDetailsExtra = {
+  "Capitanias hereditárias": [
+    ["Por que foram criadas", "A Coroa portuguesa precisava ocupar e administrar um território muito extenso, mas não dispunha de recursos suficientes para financiar diretamente todos os núcleos de povoamento. Em 1534, D. João III dividiu grande parte do litoral em capitanias e entregou sua administração a donatários."],
+    ["Como funcionavam", "Os donatários recebiam direitos e obrigações definidos por cartas de doação e forais. Podiam distribuir terras, fundar vilas, cobrar determinados tributos e organizar a defesa local, mas continuavam submetidos à autoridade da Coroa. O modelo combinava iniciativa privada, ocupação territorial e controle português."],
+    ["Sucessos e fracassos", "Algumas capitanias tiveram dificuldades por falta de recursos, conflitos com populações indígenas, distância de Portugal e problemas de abastecimento. Pernambuco e São Vicente conseguiram desenvolver núcleos coloniais mais estáveis, apoiados principalmente pela produção açucareira."],
+    ["Mudança administrativa", "As dificuldades do sistema contribuíram para a criação do Governo-Geral em 1549. As capitanias não desapareceram imediatamente, mas passaram a coexistir com uma estrutura de coordenação mais centralizada."],
+    ["Importância histórica", "O sistema ajudou a consolidar a ocupação portuguesa e deixou marcas na concentração fundiária e na formação territorial. Também mostra que a colonização foi um processo gradual, desigual e dependente da combinação entre interesses privados e autoridade da monarquia."]
+  ],
+  "União Ibérica": [
+    ["A crise dinástica", "Em 1580, a morte do rei português D. Sebastião e a crise sucessória que se seguiu permitiram que Filipe II da Espanha assumisse também a Coroa portuguesa. Começou a União Ibérica, que manteve Portugal e Espanha sob o mesmo monarca, embora os dois reinos conservassem instituições próprias."],
+    ["O Brasil nesse contexto", "A união das coroas alterou o ambiente político da América portuguesa. A separação formal entre as áreas de influência portuguesa e espanhola perdeu parte de sua força, facilitando a circulação e a expansão de grupos portugueses para áreas além dos limites inicialmente estabelecidos."],
+    ["Invasões e disputas", "Os inimigos da Espanha passaram a atacar também territórios portugueses. No Nordeste, holandeses ocuparam partes da região açucareira a partir de 1630. A experiência revelou como a posição internacional da monarquia afetava diretamente a economia colonial."],
+    ["O fim da união", "Em 1640, uma revolta em Portugal levou à restauração da independência portuguesa e à ascensão da dinastia de Bragança. A separação, porém, não encerrou imediatamente os conflitos militares e econômicos entre Portugal, Espanha e seus aliados."],
+    ["Consequências para a América portuguesa", "O período contribuiu para a expansão territorial portuguesa para além das antigas linhas de divisão e alterou as relações comerciais e militares no Atlântico. É um marco importante para entender a formação posterior das fronteiras brasileiras."]
+  ],
+  "Inconfidência Mineira": [
+    ["O cenário de Minas Gerais", "No final do século XVIII, a mineração já não produzia os mesmos volumes das décadas anteriores, mas a administração portuguesa mantinha mecanismos rígidos de tributação. A possibilidade de cobrança de tributos atrasados aumentava a tensão entre autoridades e parte da elite local."],
+    ["Quem participou", "A conspiração reuniu proprietários, militares, religiosos e homens letrados. Não havia um único projeto social para o futuro de Minas: os participantes tinham interesses econômicos e políticos diferentes, embora compartilhassem oposição a aspectos do domínio português."],
+    ["O plano e a denúncia", "Os conspiradores discutiram a criação de uma república e outras mudanças administrativas. Antes que o levante começasse, Joaquim Silvério dos Reis denunciou a conspiração ao governador. A repressão levou à prisão dos envolvidos."],
+    ["Tiradentes e as sentenças", "Joaquim José da Silva Xavier, o Tiradentes, recebeu a pena de morte e foi executado em 21 de abril de 1792. Outros condenados tiveram suas penas modificadas ou foram enviados para o exílio."],
+    ["A memória posterior", "A importância simbólica do movimento cresceu muito depois de 1889. A República transformou Tiradentes em personagem central da memória nacional. A interpretação atual distingue esse processo de construção do símbolo dos objetivos e limites da conspiração original."]
+  ],
+  "Revolução Pernambucana": [
+    ["Pernambuco antes da revolta", "A economia pernambucana enfrentava dificuldades, enquanto impostos e despesas associadas à presença da corte no Rio de Janeiro alimentavam insatisfação. Circulavam também ideias liberais, republicanas e autonomistas entre setores da sociedade."],
+    ["A tomada do poder", "Em março de 1817, militares e civis revoltosos derrubaram o governador e organizaram um governo provisório. O movimento procurou estabelecer uma república e buscou apoio em outras capitanias do Nordeste."],
+    ["Um projeto regional", "A revolta não foi apenas uma reação fiscal. Seus participantes discutiam representação política, liberdade comercial e autonomia. Ao mesmo tempo, a sociedade continuava marcada pela escravidão, e os diferentes grupos envolvidos não necessariamente defendiam as mesmas mudanças sociais."],
+    ["A repressão", "O governo de D. João enviou forças militares e bloqueou Pernambuco. O movimento foi derrotado após algumas semanas, e seus principais líderes foram presos e executados ou condenados."],
+    ["Legado", "A Revolução Pernambucana tornou-se uma referência de resistência ao centralismo e reapareceu na memória política da região durante a Confederação do Equador, em 1824."]
+  ],
+  "Confederação do Equador": [
+    ["A crise de 1824", "A dissolução da Assembleia Constituinte por D. Pedro I, em 1823, e a outorga da Constituição de 1824 provocaram oposição em várias províncias. Em Pernambuco, setores políticos criticavam a centralização do novo Império."],
+    ["O projeto político", "Os revoltosos defendiam maior autonomia provincial e organizaram uma confederação de caráter republicano. Frei Caneca foi uma das figuras mais conhecidas da resistência e participou da defesa intelectual do movimento."],
+    ["Expansão e dificuldades", "A revolta alcançou outras áreas do Nordeste, mas não conseguiu construir uma coalizão duradoura. Divergências entre grupos locais, falta de recursos militares e a reação do governo imperial enfraqueceram o movimento."],
+    ["A repressão", "Forças imperiais cercaram as áreas controladas pelos rebeldes e retomaram o controle. Frei Caneca foi executado em 1825, depois de sua condenação."],
+    ["Significado", "O episódio revelou que a Independência não havia resolvido a disputa sobre a organização do Estado. Centralização imperial, autonomia provincial e formas republicanas continuariam sendo temas importantes da política brasileira."]
+  ],
+  "Abdicação de D. Pedro I": [
+    ["Desgaste do Primeiro Reinado", "D. Pedro I enfrentou oposição de grupos políticos brasileiros, dificuldades financeiras e críticas relacionadas à Guerra da Cisplatina. A derrota e a independência do Uruguai contribuíram para o desgaste do governo."],
+    ["A crise política", "A relação do imperador com portugueses residentes no Brasil também provocava conflitos. A imprensa e setores da Câmara dos Deputados criticavam a concentração de poder e a influência do monarca sobre a política."],
+    ["A abdicação", "Em 7 de abril de 1831, diante do agravamento da crise, D. Pedro I abdicou do trono em favor de seu filho Pedro de Alcântara, que tinha apenas cinco anos. O imperador deixou o Brasil e retornou à Europa."],
+    ["A Regência", "Como o herdeiro era menor de idade, a Constituição determinava que o país fosse governado por regentes. Começou então uma fase de experimentação institucional e intensa disputa entre centralizadores e defensores de maior autonomia provincial."],
+    ["Consequência histórica", "A abdicação encerrou o Primeiro Reinado, mas não encerrou as disputas que haviam marcado o período. Muitas delas reapareceriam nas revoltas regenciais e no debate sobre a maioridade de Pedro II."]
+  ],
+  "Lei Eusébio de Queirós": [
+    ["O tráfico atlântico", "Durante séculos, o Brasil recebeu milhões de africanos escravizados. O tráfico transatlântico sustentava a reprodução do sistema escravista e envolvia redes comerciais que conectavam África, Brasil e outras partes do Atlântico."],
+    ["Pressão internacional e legislação", "A Grã-Bretanha pressionava o Brasil para cumprir acordos de proibição do tráfico. Leis anteriores haviam declarado o comércio ilegal, mas a fiscalização era insuficiente e o tráfico continuava em grande escala."],
+    ["A lei de 1850", "A Lei nº 581, de 4 de setembro de 1850, fortaleceu os mecanismos de repressão ao tráfico e permitiu uma atuação mais efetiva das autoridades. A medida reduziu drasticamente a entrada de africanos escravizados pelo Atlântico."],
+    ["O escravismo continuou", "O fim do tráfico internacional não significou o fim da escravidão. A mão de obra escravizada continuou sendo utilizada e cresceu o tráfico interno entre províncias, especialmente em direção às áreas cafeeiras do Sudeste."],
+    ["Importância", "A lei foi um passo decisivo na transformação do sistema escravista. Nas décadas seguintes vieram outras medidas, como a Lei do Ventre Livre e a Lei dos Sexagenários, até a abolição em 1888."]
+  ],
+  "Guerra de Canudos": [
+    ["O sertão e Belo Monte", "No sertão da Bahia, comunidades rurais conviviam com pobreza, secas, concentração de terras e relações de dependência. Antônio Conselheiro reuniu seguidores e estabeleceu em Belo Monte, conhecido como Canudos, uma comunidade que cresceu rapidamente."],
+    ["A percepção de ameaça", "Autoridades locais e setores das elites passaram a apresentar Canudos como ameaça à ordem republicana. O conflito também foi interpretado por diferentes grupos como questão religiosa, social e política, embora essas dimensões não possam ser reduzidas a uma única causa."],
+    ["As primeiras expedições", "As primeiras expedições militares enviadas contra a comunidade foram derrotadas. O fracasso levou o governo republicano a mobilizar forças cada vez maiores para a região."],
+    ["A campanha final", "Em 1897, uma grande expedição cercou Canudos. Depois de combates prolongados, a comunidade foi destruída e grande parte de seus habitantes morreu. As estimativas sobre as perdas variam conforme as fontes."],
+    ["Memória e historiografia", "Euclides da Cunha registrou o conflito em Os Sertões, obra que influenciou profundamente a memória nacional. Estudos posteriores passaram a analisar Canudos também a partir da experiência dos sertanejos, das estruturas sociais regionais e da violência praticada pelo Estado."]
+  ],
+  "Revolta da Vacina": [
+    ["Rio de Janeiro em transformação", "No início do século XX, o governo Rodrigues Alves promoveu grandes reformas urbanas e sanitárias no Rio de Janeiro. A abertura de avenidas, demolições e remoções alterou profundamente áreas populares da cidade."],
+    ["A política sanitária", "Oswaldo Cruz coordenou campanhas contra febre amarela, peste bubônica e varíola. Algumas ações eram coercitivas, e a vacinação contra a varíola tornou-se obrigatória em 1904."],
+    ["A revolta", "Em novembro de 1904, protestos contra a obrigatoriedade da vacina se transformaram em confrontos, barricadas e ataques a instalações públicas. A revolta também foi aproveitada por grupos políticos que se opunham ao governo."],
+    ["Repressão e desfecho", "O governo mobilizou forças policiais e militares, reprimiu os participantes e suspendeu temporariamente a obrigatoriedade da vacinação. Houve prisões, deportações e mortes."],
+    ["O que o episódio revela", "A Revolta da Vacina não pode ser explicada apenas como rejeição à ciência. Ela ocorreu em meio a reformas urbanas coercitivas, desigualdade, falta de informação e desconfiança em relação às autoridades. O episódio se tornou referência nos estudos sobre saúde pública e cidadania."]
+  ],
+  "Consolidação das Leis do Trabalho": [
+    ["A legislação antes de 1943", "Durante a Era Vargas, o governo federal criou sucessivamente normas sobre jornada, férias, salário, sindicatos, Justiça do Trabalho e outras relações trabalhistas. Antes da CLT, essas regras estavam distribuídas por diferentes decretos e leis."],
+    ["A consolidação", "O Decreto-Lei nº 5.452, de 1º de maio de 1943, aprovou a Consolidação das Leis do Trabalho. O objetivo foi reunir e sistematizar a legislação existente em um conjunto organizado de normas."],
+    ["O papel do Estado", "A legislação ampliou a presença do Estado na relação entre trabalhadores e empregadores. A organização sindical passou a operar sob regras de reconhecimento e enquadramento definidas pelo poder público, característica do modelo corporativista do período."],
+    ["Direitos e limites", "A CLT estabeleceu e organizou direitos importantes, mas sua aplicação não alcançava todos os trabalhadores da mesma maneira. Trabalhadores rurais, domésticos e outras categorias ficaram durante longos períodos fora de partes relevantes da proteção prevista."],
+    ["Legado", "A CLT atravessou diferentes regimes e recebeu inúmeras alterações. Mesmo após a Constituição de 1988 e reformas posteriores, continua sendo uma referência central para compreender a legislação trabalhista brasileira."]
+  ],
+  "Criação da Petrobras": [
+    ["O debate sobre o petróleo", "Desde a década de 1930, o petróleo passou a ser tratado como recurso estratégico para a industrialização e a segurança energética. Nas décadas de 1940 e 1950, a campanha 'O petróleo é nosso' mobilizou diferentes setores da sociedade."],
+    ["A decisão de 1953", "Em 3 de outubro de 1953, o governo Getúlio Vargas sancionou a lei que criou a Petrobras. A empresa recebeu papel central na exploração, produção, refino e transporte de petróleo no país."],
+    ["Nacionalismo econômico", "A criação da empresa ocorreu em meio ao debate sobre o grau de participação do Estado e do capital estrangeiro na economia. Para seus defensores, o controle estatal de um recurso estratégico era importante para o desenvolvimento nacional."],
+    ["Expansão da empresa", "A Petrobras passou a investir em pesquisa, exploração e refino. Décadas depois, o desenvolvimento tecnológico da empresa seria decisivo para a exploração de petróleo em águas profundas e, posteriormente, no pré-sal."],
+    ["Importância histórica", "A criação da Petrobras consolidou uma das principais empresas estatais brasileiras e marcou a política energética do país. Também se tornou referência permanente no debate sobre soberania, investimento público e participação privada."]
+  ],
+  "AI-5": [
+    ["O ambiente de 1968", "O ano de 1968 foi marcado por manifestações estudantis, greves, conflitos políticos e aumento da oposição ao regime militar. Ao mesmo tempo, organizações armadas começaram a atuar contra o governo e a repressão já estava em expansão."],
+    ["A edição do ato", "Em 13 de dezembro de 1968, o governo Artur da Costa e Silva decretou o Ato Institucional nº 5. O texto permitiu ao presidente fechar o Congresso, intervir em estados e municípios, suspender direitos políticos e ampliar mecanismos de repressão."],
+    ["O endurecimento do regime", "Depois do AI-5, a censura prévia foi ampliada e órgãos de segurança ganharam maior liberdade de atuação. Prisões arbitrárias, tortura, desaparecimentos e outras violações de direitos humanos ocorreram durante essa fase."],
+    ["Impacto institucional", "O ato reduziu ainda mais os espaços de oposição institucional e enfraqueceu mecanismos de controle sobre o Executivo. O Congresso permaneceu fechado em diferentes momentos e a atividade política sofreu fortes restrições."],
+    ["Fim do AI-5", "O ato foi revogado em dezembro de 1978, durante o governo Ernesto Geisel. A revogação ocorreu dentro de um processo gradual de abertura que continuaria nos anos seguintes."]
+  ],
+  "Lei da Anistia": [
+    ["A campanha pela anistia", "Durante a abertura política, familiares de presos e desaparecidos, organizações de direitos humanos, movimentos estudantis, sindicatos e grupos políticos pressionaram pela anistia e pelo retorno de brasileiros exilados."],
+    ["A lei de 1979", "A Lei nº 6.683 foi aprovada em agosto de 1979 e concedeu anistia a pessoas atingidas por atos políticos nos períodos e condições previstos em seu texto. A medida também permitiu o retorno de muitos exilados."],
+    ["A reorganização política", "A anistia coincidiu com a reorganização partidária e com o crescimento de movimentos sociais. Políticos anteriormente afastados puderam voltar à atividade, modificando o cenário da transição."],
+    ["A questão dos agentes do Estado", "A interpretação sobre a extensão da anistia a agentes públicos acusados de violações de direitos humanos tornou-se uma questão jurídica e política nas décadas seguintes. O tema permanece objeto de controvérsia e decisões judiciais."],
+    ["Importância histórica", "A lei foi um dos marcos da abertura política, mas não encerrou as disputas sobre memória, responsabilização e reparação relacionadas à repressão do regime militar."]
+  ],
+  "Diretas Já": [
+    ["O contexto", "No início dos anos 1980, a crise econômica e a pressão social por abertura política aumentaram. A proposta de restabelecer eleições diretas para presidente ganhou força com a Emenda Dante de Oliveira."],
+    ["A mobilização", "Entre 1983 e 1984, comícios e manifestações reuniram grandes públicos em cidades brasileiras. Partidos de oposição, sindicatos, estudantes, artistas e organizações da sociedade civil participaram da campanha."],
+    ["A votação da emenda", "Em 25 de abril de 1984, a emenda não alcançou na Câmara dos Deputados o número de votos necessário para alterar a Constituição. A eleição presidencial de 1985 continuou sendo indireta."],
+    ["A eleição de 1985", "Tancredo Neves foi escolhido pelo Colégio Eleitoral em janeiro de 1985. Ele adoeceu antes da posse e morreu em abril daquele ano, levando José Sarney a assumir a Presidência."],
+    ["Legado", "A campanha não conseguiu produzir a eleição direta naquele momento, mas ampliou a pressão social pela democratização e tornou-se um dos símbolos da transição para a Nova República."]
+  ],
+  "Impeachment de Fernando Collor": [
+    ["A crise do governo", "Fernando Collor assumiu em 1990 após a primeira eleição presidencial direta desde 1960. O governo adotou abertura comercial, medidas de desestatização e planos de combate à inflação, incluindo o bloqueio de ativos financeiros no início do mandato."],
+    ["As denúncias", "Em 1992, Pedro Collor fez denúncias contra Paulo César Farias, tesoureiro da campanha presidencial e personagem central das acusações que atingiram o governo. Uma CPI no Congresso aprofundou a investigação."],
+    ["A autorização", "Após manifestações e crescente pressão política, a Câmara dos Deputados autorizou a abertura do processo de impeachment em 29 de setembro de 1992. Collor foi afastado e Itamar Franco passou a exercer interinamente a Presidência."],
+    ["A renúncia e o Senado", "Em 29 de dezembro de 1992, Collor renunciou durante o julgamento no Senado. Mesmo assim, o processo continuou, e o Senado aprovou a perda de seus direitos políticos pelo período previsto na decisão."],
+    ["Significado institucional", "O episódio foi o primeiro impeachment presidencial concluído sob a Constituição de 1988 e demonstrou o funcionamento conjunto de manifestações sociais, Congresso, Judiciário e regras constitucionais de sucessão."]
+  ],
+  "Impeachment de Dilma Rousseff": [
+    ["O segundo mandato", "Dilma Rousseff iniciou o segundo mandato em janeiro de 2015 em meio à desaceleração econômica, dificuldades fiscais, queda da atividade e forte disputa política. A relação do governo com o Congresso tornou-se progressivamente mais conflituosa."],
+    ["A abertura", "Em dezembro de 2015, o presidente da Câmara dos Deputados aceitou uma denúncia por crime de responsabilidade. A Câmara autorizou a abertura do processo em abril de 2016, e o Senado instaurou o julgamento."],
+    ["O afastamento", "Dilma foi afastada temporariamente em maio de 2016. A acusação no processo concentrou-se principalmente em decretos de crédito suplementar e operações relacionadas ao Plano Safra, enquadradas pelos acusadores como infrações à legislação orçamentária."],
+    ["A decisão do Senado", "Em 31 de agosto de 2016, o Senado aprovou por maioria qualificada o impeachment e a perda definitiva do cargo. Michel Temer, que já exercia interinamente a Presidência, assumiu definitivamente."],
+    ["Debate histórico e jurídico", "O processo gerou intenso debate sobre a caracterização jurídica das condutas, o papel do Congresso e a natureza política do impeachment. As diferentes interpretações continuam presentes na literatura e no debate público."]
+  ],
+  "Eleição presidencial de 2018": [
+    ["O contexto eleitoral", "A eleição de 2018 ocorreu após anos de crise política, recessão, mudanças no sistema partidário e forte polarização. O ex-presidente Luiz Inácio Lula da Silva foi inicialmente registrado como candidato, mas sua candidatura foi indeferida pela Justiça Eleitoral com base na Lei da Ficha Limpa."],
+    ["O primeiro turno", "Jair Bolsonaro, então deputado federal, e Fernando Haddad, que substituiu Lula na chapa do Partido dos Trabalhadores, avançaram para o segundo turno. Outros candidatos receberam parcelas relevantes dos votos."],
+    ["O segundo turno", "Bolsonaro venceu Haddad no segundo turno e tomou posse em 1º de janeiro de 2019. Foi a primeira eleição presidencial desde a redemocratização em que nenhum dos dois principais partidos das disputas anteriores chegou ao segundo turno."],
+    ["O governo que se iniciou", "A nova administração apresentou uma agenda de reformas econômicas, mudanças na segurança pública e revisão de políticas anteriores. O governo também enfrentou conflitos políticos, mudanças ministeriais e disputas institucionais ao longo do mandato."],
+    ["Importância histórica", "A eleição alterou significativamente a composição política do Executivo federal e expressou mudanças no comportamento eleitoral, na força dos partidos tradicionais e no ambiente de polarização que marcou a década de 2010."]
+  ],
+  "Pandemia de COVID-19": [
+    ["A chegada ao Brasil", "O primeiro caso confirmado de COVID-19 no Brasil foi registrado em fevereiro de 2020. Nas semanas seguintes, a transmissão comunitária se expandiu e estados e municípios adotaram medidas de distanciamento e restrição de atividades."],
+    ["Saúde pública", "O Sistema Único de Saúde enfrentou forte pressão sobre hospitais, unidades de terapia intensiva, profissionais e equipamentos. A vacinação começou em janeiro de 2021, depois da autorização de uso das primeiras vacinas pela Anvisa."],
+    ["Economia e proteção social", "As medidas de contenção reduziram a atividade econômica em diversos setores. O Congresso e o governo criaram programas emergenciais, incluindo o auxílio emergencial, enquanto empresas e trabalhadores enfrentaram mudanças rápidas nas condições de trabalho."],
+    ["Conflitos institucionais", "União, estados e municípios divergiram sobre medidas sanitárias, compra de vacinas, restrições e comunicação pública. O Supremo Tribunal Federal também decidiu sobre competências federativas durante a crise. A CPI da Pandemia, instalada no Senado em 2021, investigou ações e omissões do governo federal."],
+    ["Consequências", "A pandemia causou centenas de milhares de mortes no país e deixou impactos duradouros na educação, saúde, mercado de trabalho e economia. Também acelerou a digitalização de serviços e modificou hábitos sociais."]
+  ],
+  "Eleição presidencial de 2022": [
+    ["O cenário", "A eleição de 2022 ocorreu em ambiente de forte polarização política. Jair Bolsonaro buscou a reeleição e Luiz Inácio Lula da Silva retornou à disputa presidencial depois de ter recuperado seus direitos políticos após decisões judiciais que anularam condenações anteriores."],
+    ["O primeiro turno", "Lula e Bolsonaro avançaram para o segundo turno. A disputa mobilizou diferentes forças partidárias e ocorreu em meio a debates sobre economia, políticas sociais, meio ambiente, instituições e o papel das Forças Armadas."],
+    ["O segundo turno", "Em 30 de outubro de 2022, Lula venceu Bolsonaro por margem inferior a dois pontos percentuais dos votos válidos. O Tribunal Superior Eleitoral proclamou o resultado e o processo de transição começou em novembro."],
+    ["A transição", "A equipe de transição reuniu representantes de diferentes áreas para levantar informações sobre programas, orçamento e funcionamento da administração federal. O processo ocorreu em ambiente de elevada tensão política."],
+    ["A posse e o novo governo", "Lula tomou posse em 1º de janeiro de 2023, iniciando seu terceiro mandato presidencial. A nova administração encontrou Congresso fragmentado e um país politicamente dividido."]
+  ],
+  "Reforma tributária": [
+    ["Um problema antigo", "A tributação brasileira sobre o consumo era distribuída entre diferentes impostos federais, estaduais e municipais, com numerosas regras, exceções e disputas sobre créditos e competência. A simplificação do sistema era discutida havia décadas."],
+    ["A mudança constitucional", "Em dezembro de 2023, o Congresso promulgou a Emenda Constitucional 132. O texto criou as bases constitucionais para uma reforma ampla da tributação sobre bens e serviços."],
+    ["O novo desenho", "A reforma criou a Contribuição sobre Bens e Serviços, de competência federal, e o Imposto sobre Bens e Serviços, compartilhado por estados e municípios. Também criou o Imposto Seletivo para determinados bens e serviços."],
+    ["Transição", "A mudança foi planejada para ocorrer gradualmente. A regulamentação posterior precisou definir regimes específicos, alíquotas, cashback, regras de crédito, transição entre os sistemas e funcionamento do Comitê Gestor."],
+    ["Por que é um marco", "A reforma não terminou com a promulgação da emenda constitucional. Sua importância histórica está também no longo processo de implementação e na mudança da distribuição de competências tributárias entre os diferentes níveis de governo."]
+  ]
+};
+
 const milestoneEntries = restoredMilestones.map((milestone, index) => {
   const id = milestoneDeepDiveMap[milestone.year + "|" + milestone.title];
   const deepDive = id ? deepDives.find(item => item.id === id) : null;
@@ -1042,7 +1186,7 @@ const milestoneEntries = restoredMilestones.map((milestone, index) => {
     ...milestone,
     type: "event",
     summary: milestone.description,
-    sections: deepDive?.sections || milestoneDetails[milestone.title] || [
+    sections: deepDive?.sections || milestoneDetails[milestone.title] || milestoneDetailsExtra[milestone.title] || [
       ["Contexto", milestone.description],
       ["O acontecimento", milestone.description],
       ["Consequências", "Este marco integra o processo histórico do período e ajuda a compreender os acontecimentos posteriores."]
@@ -1230,7 +1374,7 @@ function openEntry(key) {
   const intro = entry.type === "event" ? entry.summary : entry.lead;
 
   detail.innerHTML =
-    '<div class="detail-header"><div><span class="detail-kicker">' + escapeHtml(kicker) + ' · ' + escapeHtml(period.era) + '</span><h2>' + escapeHtml(entry.title) + '</h2><span class="detail-years">' + escapeHtml(entry.year) + '</span></div><button class="detail-close" type="button" aria-label="Fechar detalhes"><i class="fas fa-times"></i></button></div>' +
+    '<div class="detail-header"><div class="detail-title"><span class="detail-kicker">' + escapeHtml(kicker) + ' · ' + escapeHtml(period.era) + '</span><h2>' + escapeHtml(entry.title) + '</h2><span class="detail-years">' + escapeHtml(entry.year) + '</span></div><div class="detail-actions"><button class="detail-expand" type="button" aria-label="Expandir modal" title="Expandir"><i class="fas fa-expand"></i></button><button class="detail-close" type="button" aria-label="Fechar detalhes" title="Fechar"><i class="fas fa-times"></i></button></div></div>' +
     '<div class="detail-intro"><p class="history-lead">' + escapeHtml(intro) + '</p></div>' +
     buildSections(entry.sections) +
     (entry.type === "chapter" ? buildLeaderCards(period) + buildPeriodMilestones(entry.period) : "") +
@@ -1239,6 +1383,15 @@ function openEntry(key) {
   detail.classList.add("open");
   document.body.classList.add("history-modal-open");
   detail.querySelector(".detail-close").focus();
+  const expandButton = detail.querySelector(".detail-expand");
+  expandButton.addEventListener("click", event => {
+    event.stopPropagation();
+    detail.classList.toggle("expanded");
+    const expanded = detail.classList.contains("expanded");
+    expandButton.innerHTML = expanded ? '<i class="fas fa-compress"></i>' : '<i class="fas fa-expand"></i>';
+    expandButton.setAttribute("aria-label", expanded ? "Reduzir modal" : "Expandir modal");
+    expandButton.title = expanded ? "Reduzir" : "Expandir";
+  });
   detail.querySelectorAll("[data-milestone-key]").forEach(button => {
     button.addEventListener("click", () => openEntry(button.dataset.milestoneKey));
   });
