@@ -213,37 +213,51 @@
 }
 
 .history-detail {
-  margin: 0 3rem 4rem;
-  padding: 2.25rem;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--card-bg);
-  scroll-margin-top: 1rem;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, .58);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .2s ease, visibility .2s ease;
+}
+
+.history-detail.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.history-detail::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.history-detail > * {
+  position: relative;
+  z-index: 1;
+}
+
+.history-detail-empty,
+.history-detail .detail-header,
+.history-detail .detail-intro,
+.history-detail .leaders,
+.history-detail .events {
+  width: min(100%, 980px);
 }
 
 .history-detail-empty {
-  padding: 2rem 1rem;
+  padding: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card-bg);
   text-align: center;
-}
-
-.history-detail-empty h2 {
-  font-family: "Playfair Display", serif;
-  margin-bottom: .65rem;
-}
-
-.history-detail-empty p {
-  max-width: 650px;
-  margin: auto;
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-
-.detail-kicker {
-  color: var(--primary);
-  font-size: .72rem;
-  font-weight: 800;
-  letter-spacing: .14em;
-  text-transform: uppercase;
 }
 
 .detail-header {
@@ -251,7 +265,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  padding-bottom: 1.5rem;
+  padding: 1.35rem 1.5rem;
   border-bottom: 1px solid var(--border);
 }
 
@@ -278,19 +292,23 @@
   cursor: pointer;
 }
 
+ 
+.history-detail.open .detail-header {
+  border-radius: 16px 16px 0 0;
+  background: var(--card-bg);
+}
+
+.detail-intro,
+.leaders,
+.events {
+  box-sizing: border-box;
+  padding: 1.5rem;
+  background: var(--card-bg);
+}
+
 .detail-intro {
-  max-width: 850px;
-  padding: 1.5rem 0 2rem;
-}
-
-.detail-intro p {
-  color: var(--text-muted);
-  line-height: 1.7;
-  margin-bottom: .85rem;
-}
-
-.detail-intro p:last-child {
-  margin-bottom: 0;
+  max-height: 34vh;
+  overflow-y: auto;
 }
 
 .detail-section-title {
@@ -366,9 +384,7 @@
 }
 
 .events {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
+  margin-top: 0;
 }
 
 .events h3 {
@@ -508,6 +524,54 @@
 
 @media (prefers-reduced-motion: reduce) {
   .timeline-card {
+    transition: none;
+  }
+}
+body.history-modal-open {
+  overflow: hidden;
+}
+
+.history-detail .leader-card:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .history-detail {
+    padding: .75rem;
+  }
+
+  .history-detail-empty,
+  .history-detail .detail-header,
+  .history-detail .detail-intro,
+  .history-detail .leaders,
+  .history-detail .events {
+    width: 100%;
+  }
+
+  .history-detail.open {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .history-detail .detail-header {
+    padding: 1.15rem;
+  }
+
+  .history-detail .detail-intro,
+  .history-detail .leaders,
+  .history-detail .events {
+    padding: 1.15rem;
+  }
+
+  .detail-intro {
+    max-height: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .history-detail {
     transition: none;
   }
 }
