@@ -937,7 +937,6 @@ deepDives.push(
 );
 
 const restoredMilestones = [
- [
   { year: "1500", title: "Chegada da expedição de Cabral", description: "A expedição portuguesa comandada por Pedro Álvares Cabral chega ao território que posteriormente seria chamado Brasil.", period: "colonial" },
   { year: "1530", title: "Início da colonização sistemática", description: "A Coroa portuguesa passa a organizar de forma mais estruturada a ocupação e exploração do território.", period: "colonial" },
   { year: "1534", title: "Capitanias hereditárias", description: "A Coroa divide o território em capitanias para estimular a ocupação e a administração colonial.", period: "colonial" },
