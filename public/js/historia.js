@@ -1390,6 +1390,12 @@ function openEntry(key) {
   detail.querySelector(".accordion-close").addEventListener("click", resetDetail);
 
   detail.querySelectorAll("details[data-accordion-key]").forEach(item => {
+    item.addEventListener("click", event => {
+      if (!event.target.closest("summary")) return;
+      item.classList.add("is-interacting");
+      window.setTimeout(() => item.classList.remove("is-interacting"), 420);
+    });
+  detail.querySelectorAll("details[data-accordion-key]").forEach(item => {
     item.addEventListener("toggle", () => {
       if (!item.open) return;
 
