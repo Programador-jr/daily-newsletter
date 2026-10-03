@@ -333,7 +333,9 @@ function selectPeriod(id) {
     detail.innerHTML = '<div class="history-detail-empty"><span class="detail-kicker">Selecione um período</span><h2>Explore a história política do Brasil.</h2><p>Clique em um ponto da linha do tempo para abrir o contexto histórico e os ocupantes do poder daquele período.</p></div>';
   });
 
-  detail.scrollIntoView({ behavior: "smooth", block: "start" });
+  detail.classList.add("open");
+  document.body.classList.add("history-modal-open");
+  detail.querySelector(".detail-close").focus();
 }
 
 search.addEventListener("input", renderTimeline);
