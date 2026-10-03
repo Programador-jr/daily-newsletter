@@ -327,10 +327,22 @@ function selectPeriod(id) {
     '</div>' +
     '<div class="events"><h3>Principais acontecimentos</h3><div class="event-list">' + period.events.map(event => '<span>' + escapeHtml(event) + '</span>').join("") + '</div></div>';
 
-  detail.querySelector(".detail-close").addEventListener("click", () => {
+  const closeModal = () => {
     activePeriod = null;
+    detail.classList.remove("open");
+    document.body.classList.remove("history-modal-open");
     renderTimeline();
-    detail.innerHTML = '<div class="history-detail-empty"><span class="detail-kicker">Selecione um período</span><h2>Explore a história política do Brasil.</h2><p>Clique em um ponto da linha do tempo para abrir o contexto histórico e os ocupantes do poder daquele período.</p></div>';
+    detail.innerHTML = '<div class="history-detail-empty"><span class="detail-kicker">Selecione um período</span><h2>Explore a história política do Brasil.</h2><p>Escolha um marco na linha do tempo para abrir o período histórico, seus ocupantes do poder, principais medidas e controvérsias.</p></div>';
+  };
+
+  detail.querySelector(".detail-close").addEventListener("click", closeModal);
+
+  detail.addEventListener("click", event => {
+    if (event.target === detail) closeModal();
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && detail.classList.contains("open")) closeModal();
   });
 
   detail.classList.add("open");
