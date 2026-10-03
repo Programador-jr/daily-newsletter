@@ -1061,3 +1061,195 @@ body.history-modal-open {
     max-height: calc(100vh - 1rem);
   }
 }
+
+
+/* History accordion */
+.history-detail {
+  display: none;
+  width: min(1080px, 100%);
+  margin: 0 auto 2.5rem;
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  background: var(--bg-container);
+  overflow: hidden;
+  box-shadow: 0 18px 50px rgba(0,0,0,.08);
+}
+
+.history-detail.open {
+  display: block;
+}
+
+.history-accordion-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.75rem 2rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--card-bg);
+}
+
+.history-accordion-header h2 {
+  margin: .4rem 0 .2rem;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  line-height: 1.08;
+}
+
+.accordion-close {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-container);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.accordion-close:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.history-accordion-lead {
+  padding: 1.6rem 2rem;
+}
+
+.history-accordion-lead p {
+  max-width: 900px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1.02rem;
+  line-height: 1.8;
+}
+
+.history-accordion-list {
+  display: grid;
+  gap: .7rem;
+}
+
+.history-accordion-section {
+  padding: 1.5rem 2rem 2rem;
+}
+
+.history-accordion-item {
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--card-bg);
+  overflow: hidden;
+}
+
+.history-accordion-item summary {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr) 32px;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.15rem 1.25rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.history-accordion-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.history-accordion-item summary:hover {
+  background: var(--bg-container);
+}
+
+.history-accordion-item[open] summary {
+  border-bottom: 1px solid var(--border);
+}
+
+.accordion-year {
+  color: var(--primary);
+  font-size: .8rem;
+  font-weight: 800;
+}
+
+.accordion-title strong {
+  display: block;
+  margin-bottom: .2rem;
+  color: var(--text-main);
+}
+
+.accordion-title small {
+  display: block;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.accordion-icon {
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  transition: transform .2s ease;
+}
+
+.history-accordion-item[open] .accordion-icon {
+  transform: rotate(180deg);
+  color: var(--primary);
+}
+
+.accordion-content {
+  padding: 0 1.35rem 1.35rem;
+}
+
+.accordion-intro {
+  padding: 1.25rem 0 .5rem;
+}
+
+.accordion-intro p {
+  margin: .4rem 0 0;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.history-accordion-item .history-story {
+  padding: 0;
+}
+
+.history-accordion-item .history-story-section {
+  max-width: none;
+}
+
+.history-accordion-item .history-source-note {
+  margin: 1rem 0 0;
+}
+
+.history-accordion-section > .detail-section-title {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 700px) {
+  .history-detail {
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+  }
+
+  .history-accordion-header,
+  .history-accordion-lead,
+  .history-accordion-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .history-accordion-header h2 {
+    font-size: 1.65rem;
+  }
+
+  .history-accordion-item summary {
+    grid-template-columns: 58px minmax(0, 1fr) 24px;
+    gap: .65rem;
+    padding: 1rem;
+  }
+
+  .accordion-title small {
+    font-size: .78rem;
+  }
+
+  .accordion-content {
+    padding-inline: 1rem;
+  }
+}
