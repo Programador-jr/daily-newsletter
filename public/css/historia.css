@@ -1719,3 +1719,137 @@ body.history-modal-open {
     animation: none !important;
   }
 }
+
+
+/* Final visual behavior: explicit theme accent + reliable desktop transitions */
+.history-accordion-item {
+  position: relative;
+  border-top: 2px dashed var(--primary);
+  transition:
+    border-color 260ms ease,
+    box-shadow 320ms var(--history-ease),
+    transform 320ms var(--history-ease),
+    background-color 260ms ease;
+}
+
+.history-accordion-item::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: var(--primary);
+  opacity: 0;
+  transform: scaleX(.35);
+  transform-origin: left center;
+  transition: opacity 240ms ease, transform 420ms var(--history-ease);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.history-accordion-item[open]::before,
+.history-accordion-item.is-interacting::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.history-accordion-item[open] summary {
+  background: color-mix(in srgb, var(--primary) 8%, var(--card-bg));
+  color: var(--text-main);
+  box-shadow: inset 0 3px 0 var(--primary);
+}
+
+.history-accordion-item[open] .accordion-year,
+.history-accordion-item[open] .accordion-icon {
+  color: var(--primary);
+}
+
+.history-accordion-item .accordion-content {
+  background: var(--bg-container);
+  transition: background-color 260ms ease;
+}
+
+.timeline-card {
+  will-change: transform, box-shadow, border-color;
+  transition:
+    transform 420ms var(--history-ease),
+    border-color 260ms ease,
+    box-shadow 420ms var(--history-ease),
+    background-color 260ms ease;
+}
+
+.timeline-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid var(--primary);
+  opacity: 0;
+  transform: scale(.985);
+  transition: opacity 280ms ease, transform 420ms var(--history-ease);
+  pointer-events: none;
+}
+
+.timeline-item:hover .timeline-card::after,
+.timeline-item.is-center .timeline-card::after,
+.timeline-item.active .timeline-card::after {
+  opacity: .42;
+  transform: scale(1);
+}
+
+.timeline-dot {
+  will-change: transform, box-shadow, background-color;
+  transition:
+    transform 420ms var(--history-ease),
+    background-color 260ms ease,
+    border-color 260ms ease,
+    box-shadow 420ms var(--history-ease);
+}
+
+.timeline-year {
+  transition:
+    color 260ms ease,
+    transform 420ms var(--history-ease);
+}
+
+@media (min-width: 769px) {
+  .timeline-item {
+    transition:
+      opacity 420ms ease,
+      transform 420ms var(--history-ease);
+  }
+
+  .timeline-item:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  .timeline-item:hover .timeline-card {
+    transform: translateX(8px) translateY(-4px);
+  }
+
+  .history-accordion-item:hover {
+    transform: translateY(-2px);
+  }
+
+  .history-accordion-item summary {
+    transition:
+      background-color 280ms ease,
+      padding-left 420ms var(--history-ease),
+      color 280ms ease;
+  }
+
+  .history-accordion-item:hover summary {
+    padding-left: 1.45rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .history-accordion-item,
+  .history-accordion-item::before,
+  .history-accordion-item summary,
+  .timeline-card,
+  .timeline-card::after,
+  .timeline-dot,
+  .timeline-year {
+    transition: none !important;
+  }
+}
