@@ -299,64 +299,42 @@ function renderTimeline() {
   timeline.querySelectorAll(".timeline-item").forEach(item => {
     item.addEventListener("click", () => selectPeriod(item.dataset.period));
   });
+
+  centerActivePeriod();
 }
 
 
-let timelinePointer = null;
-let suppressTimelineClick = false;
+function updateTimelineFocus() {
+  const center = timeline.scrollTop + timeline.clientHeight / 2;
 
-timeline.addEventListener("pointerdown", event => {
-  if (event.button !== 0) return;
+  timeline.querySelectorAll(".timeline-item").forEach(item => {
+    const itemCenter = item.offsetTop + item.offsetHeight / 2;
+    const distance = Math.abs(center - itemCenter);
+    const ratio = Math.min(distance / (timeline.clientHeight / 2), 1);
 
-  timelinePointer = {
-    id: event.pointerId,
-    startX: event.clientX,
-    startScrollLeft: timeline.scrollLeft,
-    moved: false
-  };
-
-  timeline.setPointerCapture(event.pointerId);
-});
-
-timeline.addEventListener("pointermove", event => {
-  if (!timelinePointer || event.pointerId !== timelinePointer.id) return;
-
-  const distance = event.clientX - timelinePointer.startX;
-  if (Math.abs(distance) > 5) timelinePointer.moved = true;
-
-  if (timelinePointer.moved) {
-    timeline.classList.add("is-dragging");
-    timeline.scrollLeft = timelinePointer.startScrollLeft - distance;
-  }
-});
-
-function stopTimelinePointer(event) {
-  if (!timelinePointer || event.pointerId !== timelinePointer.id) return;
-
-  suppressTimelineClick = timelinePointer.moved;
-  timelinePointer = null;
-  timeline.classList.remove("is-dragging");
+    item.classList.toggle("is-center", distance < item.offsetHeight * .65);
+    item.classList.toggle("is-near", distance >= item.offsetHeight * .65 && ratio < .62);
+    item.classList.toggle("is-far", ratio >= .62);
+  });
 }
 
-timeline.addEventListener("pointerup", stopTimelinePointer);
-timeline.addEventListener("pointercancel", stopTimelinePointer);
+timeline.addEventListener("scroll", updateTimelineFocus, { passive: true });
 
-timeline.addEventListener("click", event => {
-  if (suppressTimelineClick) {
-    suppressTimelineClick = false;
-    event.preventDefault();
-    event.stopPropagation();
-  }
-}, true);
+function centerTimelineItem(item, behavior = "smooth") {
+  if (!item) return;
 
-timeline.addEventListener("wheel", event => {
-  if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+  const target = item.offsetTop - (timeline.clientHeight - item.offsetHeight) / 2;
+  timeline.scrollTo({
+    top: Math.max(0, target),
+    behavior
+  });
+}
 
-  if (timeline.scrollWidth <= timeline.clientWidth) return;
-
-  event.preventDefault();
-  timeline.scrollLeft += event.deltaY;
-}, { passive: false });
+function centerActivePeriod() {
+  const item = timeline.querySelector(".timeline-item.active") || timeline.querySelector(".timeline-item");
+  centerTimelineItem(item, "auto");
+  requestAnimationFrame(updateTimelineFocus);
+}
 
 function selectPeriod(id) {
   const period = periods.find(item => item.id === id);
