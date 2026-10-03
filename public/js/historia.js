@@ -1395,6 +1395,7 @@ function openEntry(key) {
       item.classList.add("is-interacting");
       window.setTimeout(() => item.classList.remove("is-interacting"), 420);
     });
+  });
   detail.querySelectorAll("details[data-accordion-key]").forEach(item => {
     item.addEventListener("toggle", () => {
       if (!item.open) return;
