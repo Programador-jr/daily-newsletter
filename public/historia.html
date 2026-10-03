@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Linha do tempo da História do Brasil, do período colonial à República contemporânea.">
+  <title>King's Newsletter - História do Brasil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/historia.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="logo">
+        <div class="logo-top"><i class="fas fa-crown"></i> KING'S</div>
+        <div class="logo-bottom">Newsletter</div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="editions">Edições</a></li>
+          <li><a href="historia" class="active">História</a></li>
+          <li><a href="about">Sobre</a></li>
+        </ul>
+      </nav>
+      <div class="theme-toggle">
+        <span class="theme-label" id="theme-label"></span>
+        <label class="switch">
+          <input type="checkbox" id="theme-switch">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </header>
+
+    <main>
+      <section class="history-hero">
+        <span class="eyebrow">História do Brasil</span>
+        <h1>Do período colonial à República contemporânea.</h1>
+        <p>Uma linha do tempo para entender os principais períodos políticos do Brasil, seus governantes, acontecimentos, realizações, conflitos e controvérsias.</p>
+      </section>
+
+      <section class="history-controls" aria-label="Controles da linha do tempo">
+        <div class="history-filters" id="history-filters"></div>
+        <label class="history-search">
+          <i class="fas fa-search" aria-hidden="true"></i>
+          <input id="history-search" type="search" placeholder="Buscar período ou governante..." autocomplete="off">
+        </label>
+      </section>
+
+      <section class="timeline-section" aria-labelledby="timeline-title">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Linha do tempo</span>
+            <h2 id="timeline-title">Os principais períodos</h2>
+          </div>
+          <p id="timeline-count"></p>
+        </div>
+        <div class="timeline" id="timeline"></div>
+      </section>
+
+      <section class="history-detail" id="history-detail" aria-live="polite">
+        <div class="history-detail-empty">
+          <span class="detail-kicker">Selecione um período</span>
+          <h2>Explore a história política do Brasil.</h2>
+          <p>Clique em um ponto da linha do tempo para abrir o contexto histórico e os ocupantes do poder daquele período.</p>
+        </div>
+      </section>
+
+      <section class="history-sources">
+        <span class="eyebrow">Fontes e metodologia</span>
+        <h2>Conteúdo baseado em documentação histórica</h2>
+        <p>A seção prioriza fontes institucionais e documentação histórica. As descrições distinguem acontecimentos documentados de interpretações e controvérsias historiográficas.</p>
+        <div class="source-list">
+          <a href="https://www.gov.br/arquivonacional/" target="_blank" rel="noopener noreferrer">Arquivo Nacional</a>
+          <a href="https://presidentes.an.gov.br/" target="_blank" rel="noopener noreferrer">Centro de Referência de Acervos Presidenciais</a>
+          <a href="https://www.gov.br/planalto/" target="_blank" rel="noopener noreferrer">Presidência da República</a>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer"></div>
+  </div>
+
+  <script src="js/footer.js"></script>
+  <script src="js/historia.js"></script>
+</body>
+</html>
