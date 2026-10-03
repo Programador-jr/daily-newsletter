@@ -171,6 +171,63 @@ const periods = [
   }
 ];
 
+const milestones = [
+  { year: "1500", title: "Chegada da expedição de Cabral", description: "A expedição portuguesa comandada por Pedro Álvares Cabral chega ao território que posteriormente seria chamado Brasil.", period: "colonial" },
+  { year: "1530", title: "Início da colonização sistemática", description: "A Coroa portuguesa passa a organizar de forma mais estruturada a ocupação e exploração do território.", period: "colonial" },
+  { year: "1534", title: "Capitanias hereditárias", description: "A Coroa divide o território em capitanias para estimular a ocupação e a administração colonial.", period: "colonial" },
+  { year: "1549", title: "Criação do Governo-Geral", description: "Tomé de Sousa assume como primeiro governador-geral, reforçando a centralização administrativa da colônia.", period: "colonial" },
+  { year: "1580", title: "União Ibérica", description: "Portugal passa a ser governado pela mesma monarquia que governava a Espanha, período que se estende até 1640.", period: "colonial" },
+  { year: "1690s", title: "Expansão da mineração", description: "A descoberta de ouro em grande escala intensifica a ocupação do interior e transforma a economia colonial.", period: "colonial" },
+  { year: "1750s", title: "Reformas pombalinas", description: "O governo português promove reformas administrativas, econômicas e educacionais que alteram a organização da colônia.", period: "colonial" },
+  { year: "1789", title: "Inconfidência Mineira", description: "Movimento conspiratório em Minas Gerais contra a ordem colonial portuguesa, reprimido pelas autoridades.", period: "colonial" },
+  { year: "1808", title: "Chegada da corte portuguesa", description: "A família real portuguesa chega ao Rio de Janeiro após a transferência da corte para o Brasil.", period: "joanino" },
+  { year: "1808", title: "Abertura dos portos", description: "D. João decreta a abertura dos portos brasileiros às nações amigas, alterando o sistema comercial colonial.", period: "joanino" },
+  { year: "1815", title: "Brasil elevado a Reino", description: "O Brasil passa a integrar o Reino Unido de Portugal, Brasil e Algarves.", period: "joanino" },
+  { year: "1817", title: "Revolução Pernambucana", description: "Movimento republicano e separatista em Pernambuco, derrotado pelas forças do governo.", period: "joanino" },
+  { year: "1822", title: "Independência do Brasil", description: "D. Pedro declara a separação política do Brasil em relação a Portugal.", period: "primeiro-reinado" },
+  { year: "1824", title: "Constituição do Império", description: "D. Pedro I outorga a primeira Constituição brasileira, que estabelece a monarquia constitucional e o Poder Moderador.", period: "primeiro-reinado" },
+  { year: "1824", title: "Confederação do Equador", description: "Revolta de caráter republicano e federalista no Nordeste é reprimida pelo governo imperial.", period: "primeiro-reinado" },
+  { year: "1831", title: "Abdicação de D. Pedro I", description: "D. Pedro I abdica em favor de seu filho, que ainda era menor de idade, iniciando o período regencial.", period: "regencias" },
+  { year: "1834", title: "Ato Adicional", description: "Reforma constitucional amplia a autonomia provincial e cria as Assembleias Legislativas Provinciais.", period: "regencias" },
+  { year: "1835", title: "Início da Cabanagem e Farroupilha", description: "Duas das principais revoltas do período regencial começam em diferentes regiões do país.", period: "regencias" },
+  { year: "1840", title: "Golpe da Maioridade", description: "D. Pedro II é declarado maior de idade aos 14 anos e assume o governo do Império.", period: "segundo-reinado" },
+  { year: "1850", title: "Lei Eusébio de Queirós", description: "A legislação reprime o tráfico transatlântico de escravizados para o Brasil.", period: "segundo-reinado" },
+  { year: "1864", title: "Início da Guerra do Paraguai", description: "O Brasil entra no maior conflito armado da América do Sul no século XIX.", period: "segundo-reinado" },
+  { year: "1871", title: "Lei do Ventre Livre", description: "A lei declara livres os filhos de mulheres escravizadas nascidos a partir de sua vigência, sob condições estabelecidas pela própria legislação.", period: "segundo-reinado" },
+  { year: "1888", title: "Lei Áurea", description: "A escravidão é abolida legalmente no Brasil pela Lei nº 3.353.", period: "segundo-reinado" },
+  { year: "1889", title: "Proclamação da República", description: "A monarquia é derrubada e o Brasil passa a adotar a forma republicana de governo.", period: "primeira-republica" },
+  { year: "1891", title: "Constituição republicana", description: "É promulgada a primeira Constituição republicana, estabelecendo o federalismo e o presidencialismo.", period: "primeira-republica" },
+  { year: "1896–1897", title: "Guerra de Canudos", description: "Conflito no sertão da Bahia termina com a destruição do arraial de Canudos pelas forças republicanas.", period: "primeira-republica" },
+  { year: "1904", title: "Revolta da Vacina", description: "Revolta popular no Rio de Janeiro ocorre em meio às reformas urbanas e à campanha de vacinação obrigatória contra a varíola.", period: "primeira-republica" },
+  { year: "1922", title: "Semana de Arte Moderna", description: "Evento realizado em São Paulo torna-se um marco do modernismo brasileiro.", period: "primeira-republica" },
+  { year: "1930", title: "Revolução de 1930", description: "A ruptura política de 1930 encerra a Primeira República e leva Getúlio Vargas ao poder.", period: "vargas" },
+  { year: "1934", title: "Constituição de 1934", description: "Nova Constituição amplia direitos políticos e sociais, incluindo o voto feminino e secreto.", period: "vargas" },
+  { year: "1937", title: "Estado Novo", description: "Getúlio Vargas fecha o Congresso e instaura um regime autoritário, acompanhado de censura e repressão política.", period: "vargas" },
+  { year: "1943", title: "Consolidação das Leis do Trabalho", description: "A CLT reúne e sistematiza normas trabalhistas durante o governo Vargas.", period: "vargas" },
+  { year: "1946", title: "Nova Constituição democrática", description: "A Constituição de 1946 reorganiza as instituições após o fim do Estado Novo.", period: "republica-1946" },
+  { year: "1953", title: "Criação da Petrobras", description: "A Petrobras é criada durante o segundo governo de Getúlio Vargas.", period: "republica-1946" },
+  { year: "1956", title: "Início do governo Juscelino Kubitschek", description: "O governo inicia o Plano de Metas, com forte investimento em indústria, energia, transporte e infraestrutura.", period: "republica-1946" },
+  { year: "1960", title: "Inauguração de Brasília", description: "A nova capital federal é inaugurada durante o governo Juscelino Kubitschek.", period: "republica-1946" },
+  { year: "1961", title: "Renúncia de Jânio Quadros", description: "A renúncia presidencial desencadeia uma crise política que antecede a posse de João Goulart.", period: "republica-1946" },
+  { year: "1964", title: "Ruptura institucional", description: "João Goulart é deposto e inicia-se o período de governo militar que se estende até 1985.", period: "regime-militar" },
+  { year: "1968", title: "AI-5", description: "O Ato Institucional nº 5 amplia os poderes do regime e intensifica a repressão política e a censura.", period: "regime-militar" },
+  { year: "1979", title: "Lei da Anistia", description: "A Lei nº 6.683 concede anistia em condições definidas pelo texto legal e integra o processo de abertura política.", period: "regime-militar" },
+  { year: "1983–1984", title: "Diretas Já", description: "Movimento nacional mobiliza a sociedade em defesa de eleições diretas para presidente.", period: "regime-militar" },
+  { year: "1985", title: "Transição para o governo civil", description: "José Sarney assume a Presidência após a eleição indireta de Tancredo Neves e o início da Nova República.", period: "nova-republica" },
+  { year: "1988", title: "Constituição Federal", description: "É promulgada a Constituição de 1988, reorganizando o Estado democrático de direito e ampliando direitos e garantias.", period: "nova-republica" },
+  { year: "1989", title: "Primeira eleição presidencial direta desde 1960", description: "Os brasileiros elegem diretamente o presidente da República após o período de transição democrática.", period: "nova-republica" },
+  { year: "1992", title: "Impeachment de Fernando Collor", description: "Fernando Collor deixa a Presidência após o processo de impeachment aprovado pelo Congresso Nacional.", period: "nova-republica" },
+  { year: "1994", title: "Plano Real", description: "O Plano Real estabelece uma nova moeda e contribui para a estabilização da inflação.", period: "nova-republica" },
+  { year: "2003", title: "Início do primeiro governo Lula", description: "Luiz Inácio Lula da Silva assume a Presidência após a eleição de 2002.", period: "nova-republica" },
+  { year: "2010", title: "Eleição de Dilma Rousseff", description: "Dilma Rousseff é eleita presidente e inicia seu primeiro mandato em 2011.", period: "nova-republica" },
+  { year: "2016", title: "Impeachment de Dilma Rousseff", description: "Dilma Rousseff é afastada definitivamente da Presidência após processo de impeachment no Senado.", period: "nova-republica" },
+  { year: "2018", title: "Eleição presidencial", description: "Jair Bolsonaro é eleito presidente para o mandato iniciado em 2019.", period: "nova-republica" },
+  { year: "2020", title: "Pandemia de COVID-19", description: "A pandemia provoca uma crise sanitária, econômica e social de grande escala no Brasil.", period: "nova-republica" },
+  { year: "2022", title: "Eleição presidencial", description: "Luiz Inácio Lula da Silva é eleito para um terceiro mandato presidencial, iniciado em 2023.", period: "nova-republica" },
+  { year: "2023", title: "Início do terceiro governo Lula", description: "Luiz Inácio Lula da Silva assume novamente a Presidência da República.", period: "nova-republica" },
+  { year: "2023–2024", title: "Reforma tributária", description: "O Congresso aprova a Emenda Constitucional nº 132, que altera a estrutura da tributação sobre o consumo.", period: "nova-republica" }
+];
+
 const filters = ["Todos", "Colônia", "Império", "República"];
 const timeline = document.getElementById("timeline");
 const detail = document.getElementById("history-detail");
@@ -184,17 +241,23 @@ const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, char => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
 }[char]));
 
-function filteredPeriods() {
+function filteredMilestones() {
   const query = search.value.trim().toLocaleLowerCase("pt-BR");
-  return periods.filter(period => {
+
+  return milestones.filter(milestone => {
+    const period = periods.find(item => item.id === milestone.period);
+    if (!period) return false;
+
     const matchesFilter = activeFilter === "Todos" || period.era === activeFilter;
     const searchable = [
+      milestone.year,
+      milestone.title,
+      milestone.description,
       period.label,
       period.era,
-      period.years,
-      period.description,
       ...period.leaders.map(leader => leader.name)
     ].join(" ").toLocaleLowerCase("pt-BR");
+
     return matchesFilter && (!query || searchable.includes(query));
   });
 }
@@ -214,20 +277,22 @@ function renderFilters() {
 }
 
 function renderTimeline() {
-  const visible = filteredPeriods();
-  count.textContent = visible.length + (visible.length === 1 ? " período" : " períodos");
+  const visible = filteredMilestones();
+  count.textContent = visible.length + (visible.length === 1 ? " marco" : " marcos");
 
   if (!visible.length) {
-    timeline.innerHTML = '<div class="history-no-results"><h3>Nenhum período encontrado</h3><p>Tente outro termo ou filtro.</p></div>';
+    timeline.innerHTML = '<div class="history-no-results"><h3>Nenhum marco encontrado</h3><p>Tente outro termo ou filtro.</p></div>';
     return;
   }
 
-  timeline.innerHTML = visible.map((period, index) => {
-    const active = activePeriod === period.id ? "active" : "";
-    return '<button class="timeline-item ' + active + '" data-period="' + period.id +">' +
-      '<span class="timeline-year">' + escapeHtml(period.years) + '</span>' +
+  timeline.innerHTML = visible.map(milestone => {
+    const period = periods.find(item => item.id === milestone.period);
+    const active = activePeriod === milestone.period ? "active" : "";
+
+    return '<button class="timeline-item ' + active + '" data-period="' + escapeHtml(milestone.period) + '">' +
+      '<span class="timeline-year">' + escapeHtml(milestone.year) + '</span>' +
       '<span class="timeline-dot"></span>' +
-      '<span class="timeline-card"><small>' + escapeHtml(period.era) + '</small><strong>' + escapeHtml(period.label) + '</strong><span>' + escapeHtml(period.description) + '</span></span>' +
+      '<span class="timeline-card"><small>' + escapeHtml(period.era) + ' · ' + escapeHtml(period.label) + '</small><strong>' + escapeHtml(milestone.title) + '</strong><span>' + escapeHtml(milestone.description) + '</span></span>' +
       '</button>';
   }).join("");
 
