@@ -1210,6 +1210,14 @@ function buildSources(entry) {
   return '<div class="history-source-note"><strong>Fontes de referência:</strong> ' + names.map(escapeHtml).join(" · ") + '. A narrativa combina documentação institucional, acervos históricos e referências acadêmicas; interpretações controversas são apresentadas com contexto, sem tratá-las como fatos isolados.</div>';
 }
 
+function buildPeriodMilestones(periodId) {
+  const entries = periodMilestoneMap[periodId] || [];
+  if (!entries.length) return "";
+  return '<section class="period-history"><div class="period-history-header"><span class="detail-kicker">Marcos importantes</span><h3>Acontecimentos deste período</h3><p>Cada marco abre sua própria narrativa detalhada.</p></div><div class="period-history-list">' +
+    entries.map(entry => '<button class="period-history-item" type="button" data-milestone-key="' + escapeHtml(entry.key) + '"><span class="period-history-year">' + escapeHtml(entry.year) + '</span><span><strong>' + escapeHtml(entry.title) + '</strong><small>' + escapeHtml(entry.summary) + '</small></span></button>').join("") +
+    '</div></section>';
+}
+
 function openEntry(key) {
   const entry = timelineEntries.find(item => item.key === key);
   if (!entry) return;
