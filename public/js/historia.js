@@ -348,7 +348,11 @@ function selectPeriod(id) {
       '<div><span class="detail-kicker">' + escapeHtml(period.era) + '</span><h2>' + escapeHtml(period.label) + '</h2><span class="detail-years">' + escapeHtml(period.years) + '</span></div>' +
       '<button class="detail-close" type="button" aria-label="Fechar detalhes"><i class="fas fa-times"></i></button>' +
     '</div>' +
-    '<div class="detail-intro"><p>' + escapeHtml(period.description) + '</p><p><strong>Contexto:</strong> ' + escapeHtml(period.context) + '</p></div>' +
+    '<div class="detail-intro"><p>' + escapeHtml(period.description) + '</p><p><strong>Contexto histórico:</strong> ' + escapeHtml(period.context) + '</p></div>' +
+    '<div class="period-history"><div class="detail-section-title"><span>O que aconteceu neste período</span><small>' + milestones.filter(item => item.period === period.id).length + ' marcos</small></div>' +
+      '<div class="period-history-list">' + milestones.filter(item => item.period === period.id).map(item =>
+        '<article class="period-history-item"><time>' + escapeHtml(item.year) + '</time><div><h4>' + escapeHtml(item.title) + '</h4><p>' + escapeHtml(item.description) + '</p></div></article>'
+      ).join("") + '</div></div>' +
     '<div class="leaders"><div class="detail-section-title"><span>Governantes e ocupantes do poder</span><small>' + period.leaders.length + ' registro' + (period.leaders.length === 1 ? "" : "s") + '</small></div>' +
     period.leaders.map(leader =>
       '<article class="leader-card">' +
