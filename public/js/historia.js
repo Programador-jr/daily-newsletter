@@ -1589,14 +1589,18 @@ async function loadPresidentPortrait(card) {
 }
 
 const presidentFilterContainer = document.getElementById("presidents-filters");
-const presidentFilters = ["Todos", "Colônia", "Império", "República"];
+const presidentFilters = ["Todos", "República", "Regime Militar"];
 let activePresidentFilter = "Todos";
 
 function presidentMatchesFilter(president) {
   if (activePresidentFilter === "Todos") return true;
+
+  const isMilitaryRegime = president.periodIds.includes("regime-militar");
+  if (activePresidentFilter === "Regime Militar") return isMilitaryRegime;
+
   return president.periodIds.some(periodId => {
     const period = periods.find(item => item.id === periodId);
-    return period?.era === activePresidentFilter;
+    return period?.era === "República" && period.id !== "regime-militar";
   });
 }
 
