@@ -220,7 +220,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 10px;
-  transition: background-color 220ms ease;
+  transition: background-color 800ms ease;
 }
 
 .slider:before {
@@ -241,9 +241,9 @@ body {
   border-radius: 50%;
   z-index: 2;
   transition:
-    transform 220ms cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 220ms ease,
-    color 220ms ease;
+    transform 800ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 800ms ease,
+    color 800ms ease;
 }
 
 input:checked + .slider:before {
