@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="history-document">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="/css/historia.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="history-page">
   <div class="container">
     <header class="site-header">
       <div class="logo">
@@ -68,22 +68,46 @@
         <div class="timeline" id="timeline"></div>
       </section>
 
+      <section class="presidents-section" aria-labelledby="presidents-title">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">República brasileira</span>
+            <h2 id="presidents-title">Presidentes e ocupantes interinos</h2>
+          </div>
+          <p id="presidents-count"></p>
+        </div>
+        <p class="presidents-intro">Conheça as trajetórias, medidas de governo e controvérsias de quem exerceu a Presidência desde a Proclamação da República. Inclui interinatos decorrentes de vacância ou crise institucional; substituições breves não estão listadas. As juntas de 1930 e 1969 aparecem como governos colegiados, e Tancredo Neves não integra a lista porque não chegou a tomar posse. Os resumos distinguem atos de governo de acusações e processos, sem sugerir culpa quando não houve condenação.</p>
+        <label class="presidents-search">
+          <i class="fas fa-search" aria-hidden="true"></i>
+          <input id="presidents-search" type="search" placeholder="Buscar presidente ou período..." autocomplete="off">
+        </label>
+        <div class="presidents-grid" id="presidents-grid" aria-live="polite"></div>
+      </section>
+
       <section class="history-detail" id="history-detail" aria-live="polite"></section>
 
       <section class="history-sources">
         <span class="eyebrow">Fontes e metodologia</span>
         <h2>Conteúdo baseado em documentação histórica</h2>
-        <p>A seção prioriza fontes institucionais e documentação histórica. As descrições distinguem acontecimentos documentados de interpretações e controvérsias historiográficas.</p>
+        <p>As narrativas são sínteses para consulta, não substituem pesquisa historiográfica. Use os acervos e referências acadêmicas abaixo para conferir datas e contexto. O Dicionário Histórico-Biográfico Brasileiro da FGV informa que não inclui interinos e suplentes de curto exercício; portanto, nem todos os perfis terão verbete. As biografias não são mais carregadas da Wikipédia. Os retratos vêm do Wikimedia Commons, um repositório de mídia separado, e só são exibidos quando há autoria e licença reutilizável identificadas; cada foto inclui link para seu arquivo e licença específicos.</p>
         <div class="source-list">
-          <a href="https://www.gov.br/arquivonacional/" target="_blank" rel="noopener noreferrer">Arquivo Nacional</a>
-          <a href="https://presidentes.an.gov.br/" target="_blank" rel="noopener noreferrer">Centro de Referência de Acervos Presidenciais</a>
-          <a href="https://www.gov.br/planalto/" target="_blank" rel="noopener noreferrer">Presidência da República</a>
+          <a href="https://cpdoc.fgv.br/acervo/dicionarios/dhbb" target="_blank" rel="noopener noreferrer">FGV CPDOC — Dicionário Histórico-Biográfico</a>
+          <a href="https://biblioteca.presidencia.gov.br/presidencia/ex-presidentes" target="_blank" rel="noopener noreferrer">Biblioteca da Presidência — ex-presidentes</a>
+          <a href="https://presidentes.an.gov.br/" target="_blank" rel="noopener noreferrer">Arquivo Nacional — Acervos Presidenciais</a>
+          <a href="https://www.tse.jus.br/" target="_blank" rel="noopener noreferrer">Tribunal Superior Eleitoral</a>
+          <a href="https://www12.senado.leg.br/" target="_blank" rel="noopener noreferrer">Senado Federal</a>
+          <a href="https://www.camara.leg.br/" target="_blank" rel="noopener noreferrer">Câmara dos Deputados</a>
+          <a href="https://www.gov.br/planalto/pt-br" target="_blank" rel="noopener noreferrer">Planalto — legislação e Presidência</a>
         </div>
       </section>
     </main>
 
     <div id="footer"></div>
   </div>
+
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="Voltar ao topo" aria-hidden="true" tabindex="-1" title="Voltar ao topo">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </button>
 
   <script src="/js/footer.js"></script>
   <script src="/js/historia.js"></script>

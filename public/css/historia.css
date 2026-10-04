@@ -1,5 +1,45 @@
 /* HISTÓRIA — estrutura visual limpa e consistente */
 
+.back-to-top {
+  position: fixed;
+  right: max(1.25rem, calc((100vw - 1100px) / 2 + 1.25rem));
+  bottom: 1.25rem;
+  z-index: 30;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--primary) 45%, var(--border));
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 6px 20px rgb(20 35 32 / 22%);
+  cursor: pointer;
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(12px) scale(0.86);
+  transition: opacity 180ms ease, transform 220ms ease, visibility 0s linear 220ms, background-color 180ms ease;
+}
+
+.back-to-top.is-visible {
+  visibility: visible;
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition-delay: 0s;
+}
+
+.back-to-top:hover {
+  background: color-mix(in srgb, var(--primary) 82%, #000);
+  transform: translateY(-3px) scale(1.04);
+}
+
+.back-to-top:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--primary) 42%, transparent);
+  outline-offset: 3px;
+}
+
 .history-hero {
   max-width: 860px;
   padding: 4rem 3rem 2.5rem;
@@ -818,6 +858,11 @@ body.history-modal-open {
   line-height: 1.55;
 }
 
+.history-source-note a {
+  color: var(--primary);
+  text-underline-offset: 2px;
+}
+
 /* GOVERNANTES / MARCOS */
 
 .detail-section-title {
@@ -1155,9 +1200,256 @@ body.history-modal-open {
   background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
 }
 
+/* PRESIDENTES */
+
+.presidents-section {
+  margin: 0 3rem 3.5rem;
+}
+
+.presidents-intro {
+  max-width: 850px;
+  margin: -0.5rem 0 1.25rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.presidents-search {
+  position: relative;
+  display: block;
+  width: min(420px, 100%);
+  margin-bottom: 1.25rem;
+}
+
+.presidents-search i {
+  position: absolute;
+  top: 50%;
+  left: 0.9rem;
+  color: var(--text-muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.presidents-search input {
+  width: 100%;
+  padding: 0.72rem 0.9rem 0.72rem 2.4rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  background: var(--bg-container);
+  color: var(--text-main);
+  font: inherit;
+  font-size: 0.85rem;
+  box-sizing: border-box;
+}
+
+.presidents-search input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.presidents-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 1.15rem;
+}
+
+.president-card {
+  overflow: hidden;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card-bg);
+  box-shadow: 0 5px 18px rgb(25 31 40 / 5%);
+}
+
+.president-portrait {
+  position: relative;
+  display: grid;
+  height: 190px;
+  margin: 0;
+  overflow: hidden;
+  place-items: center;
+  background: color-mix(in srgb, var(--primary) 8%, var(--bg-container));
+}
+
+.president-portrait-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 28%;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.president-portrait-image.is-loaded {
+  opacity: 1;
+}
+
+.president-portrait-image[hidden],
+.president-portrait-placeholder[hidden],
+.president-image-credit[hidden] {
+  display: none;
+}
+
+.president-portrait-placeholder {
+  display: grid;
+  max-width: 100%;
+  justify-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-align: center;
+  z-index: 1;
+}
+
+.president-portrait-placeholder span {
+  padding-inline: 0.6rem;
+}
+
+.president-portrait-placeholder i {
+  color: color-mix(in srgb, var(--primary) 70%, var(--text-muted));
+  font-size: 2rem;
+}
+
+.president-image-credit {
+  position: absolute;
+  z-index: 2;
+  inset: auto 0 0;
+  padding: 0.35rem 0.5rem;
+  background: color-mix(in srgb, var(--card-bg) 92%, transparent);
+  color: var(--text-muted);
+  font-size: 0.62rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.president-image-credit a {
+  color: inherit;
+  text-underline-offset: 2px;
+}
+
+.president-card-content {
+  padding: 1.05rem;
+}
+
+.president-years {
+  margin: 0 0 0.25rem;
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+.president-card h3 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+
+.president-role {
+  margin: 0.35rem 0 1rem;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+}
+
+.president-trajectory h4 {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+}
+
+.president-biography {
+  min-height: 4.6em;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.president-source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+}
+
+.president-source {
+  display: inline-block;
+  margin-top: 0.55rem;
+  color: var(--primary);
+  font-size: 0.68rem;
+  text-underline-offset: 2px;
+}
+
+.president-facts {
+  margin-top: 0.65rem;
+}
+
+.history-accordion-item.president-facts summary {
+  grid-template-columns: minmax(0, 1fr) 24px;
+}
+
+.history-accordion-item.president-facts .accordion-title {
+  grid-column: 1;
+}
+
+.history-accordion-item.president-facts .accordion-icon {
+  grid-column: 2;
+}
+
+.president-facts .accordion-content ul {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0.15rem 0 0.15rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+
+.presidents-empty {
+  grid-column: 1 / -1;
+  padding: 1rem;
+  border: 1px dashed var(--border);
+  border-radius: 9px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
 /* RESPONSIVO */
 
+@media (max-width: 1100px) {
+  .presidents-section {
+    margin-inline: 2rem;
+  }
+
+  .presidents-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .presidents-section {
+    margin: 0 1.25rem 2.75rem;
+  }
+
+  .presidents-section .section-heading {
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+  }
+
+  .president-portrait {
+    height: clamp(145px, 32vw, 195px);
+  }
+
+  .president-card-content {
+    padding: 0.85rem;
+  }
+
   .timeline-view-button[data-timeline-view="grid"] {
     display: none;
   }
@@ -1287,7 +1579,57 @@ body.history-modal-open {
   }
 }
 
+@media (max-width: 640px) {
+  .presidents-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 @media (max-width: 480px) {
+  .president-card {
+    display: block;
+  }
+
+  @media (max-width: 480px) {
+    .back-to-top {
+      right: 1rem;
+      bottom: 1rem;
+      width: 44px;
+      height: 44px;
+    }
+  }
+
+  .presidents-grid {
+    gap: 0.85rem;
+  }
+
+  .president-portrait {
+    height: clamp(145px, 44vw, 190px);
+  }
+
+  .president-card-content {
+    padding: 1rem;
+  }
+
+  .president-card h3 {
+    font-size: 1.15rem;
+  }
+
+  .president-biography {
+    min-height: 0;
+    font-size: 0.84rem;
+    line-height: 1.6;
+  }
+
+  .president-source {
+    font-size: 0.74rem;
+  }
+
+  .president-facts .accordion-content ul {
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+
   .history-filters {
     overflow-x: auto;
     flex-wrap: nowrap;
@@ -1504,6 +1846,9 @@ body.history-modal-open {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .back-to-top {
+    transition: none !important;
+  }
   .history-filter,
   .history-search input,
   .timeline-item,

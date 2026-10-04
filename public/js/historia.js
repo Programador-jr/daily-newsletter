@@ -107,6 +107,7 @@ const periods = [
     description: "Período iniciado com a Revolução de 1930 e marcado por forte centralização política, criação de instituições trabalhistas e pelo Estado Novo, regime autoritário instalado em 1937.",
     context: "Getúlio Vargas governou primeiro como chefe do Governo Provisório, depois como presidente constitucional e, a partir de 1937, como chefe do Estado Novo.",
     leaders: [
+      { name: "Junta Governativa Provisória de 1930", years: "1930", role: "Governo provisório", achievements: ["Exerceu o poder após a deposição de Washington Luís e antes da posse de Getúlio Vargas"], controversies: ["Assunção do poder sem eleição durante a ruptura política de 1930"] },
       { name: "Getúlio Vargas", years: "1930–1945", role: "Chefe do Governo Provisório, presidente e chefe do Estado Novo", achievements: ["Criação e consolidação de legislação trabalhista", "Criação de instituições econômicas e administrativas", "Industrialização e fortalecimento do Estado nacional"], controversies: ["Fechamento do Congresso e suspensão de direitos no Estado Novo", "Censura e repressão política", "Perseguição a opositores"] }
     ],
     events: ["Revolução de 1930", "Constituição de 1934", "Estado Novo (1937)", "CLT (1943)", "Entrada do Brasil na Segunda Guerra Mundial"]
@@ -114,10 +115,10 @@ const periods = [
   {
     id: "republica-1946",
     era: "República",
-    label: "República de 1946",
-    years: "1946–1964",
-    description: "Período democrático iniciado após a queda do Estado Novo, com eleições, pluralismo partidário e sucessivas crises políticas até a ruptura institucional de 1964.",
-    context: "A Constituição de 1946 reorganizou as instituições democráticas. O período incluiu governos de diferentes orientações e crises políticas.",
+    label: "Transição democrática e República de 1946",
+    years: "1945–1964",
+    description: "Período de transição iniciado com a queda do Estado Novo em 1945, seguido pela ordem constitucional de 1946. Incluiu eleições, pluralismo partidário e crises políticas até a ruptura institucional de 1964.",
+    context: "José Linhares assumiu a Presidência em outubro de 1945 durante a transição. A Constituição de 1946 reorganizou as instituições democráticas; a fase terminou com a deposição de João Goulart em 1964.",
     leaders: [
       { name: "José Linhares", years: "1945–1946", role: "Presidente interino", achievements: ["Condução da transição para eleições e nova ordem constitucional"], controversies: ["Governo de transição em contexto de forte disputa política"] },
       { name: "Eurico Gaspar Dutra", years: "1946–1951", role: "Presidente", achievements: ["Promulgação e implementação da Constituição de 1946", "Reorganização institucional do pós-Estado Novo"], controversies: ["Proibição do PCB e cassação de seus mandatos", "Política econômica com problemas de inflação e reservas externas"] },
@@ -127,6 +128,7 @@ const periods = [
       { name: "Nereu Ramos", years: "1955–1956", role: "Presidente interino", achievements: ["Garantia da transição para a posse de Juscelino Kubitschek"], controversies: ["Governo marcado pela crise institucional de 1955"] },
       { name: "Juscelino Kubitschek", years: "1956–1961", role: "Presidente", achievements: ["Plano de Metas", "Construção e inauguração de Brasília", "Expansão da indústria e infraestrutura"], controversies: ["Aumento da inflação e da dívida pública", "Desigualdades regionais e críticas ao modelo de desenvolvimento"] },
       { name: "Jânio Quadros", years: "1961", role: "Presidente", achievements: ["Política externa independente em alguns temas", "Medidas de austeridade e reformas administrativas"], controversies: ["Renúncia após poucos meses", "Crise política que antecedeu a posse de João Goulart"] },
+      { name: "Ranieri Mazzilli", years: "1961", role: "Presidente interino", achievements: ["Exercício interino da Presidência durante a crise sucessória após a renúncia de Jânio Quadros"], controversies: ["Instabilidade institucional que antecedeu a adoção do parlamentarismo e a posse de João Goulart"] },
       { name: "João Goulart", years: "1961–1964", role: "Presidente", achievements: ["Propostas de reformas de base", "Ampliação do debate sobre direitos sociais e reforma agrária"], controversies: ["Polarização política e crise econômica", "Ruptura institucional de 1964"] }
     ],
     events: ["Constituição de 1946", "Criação da Petrobras (1953)", "Plano de Metas", "Construção de Brasília", "Renúncia de Jânio Quadros", "Golpe de 1964"]
@@ -162,14 +164,67 @@ const periods = [
       { name: "Itamar Franco", years: "1992–1995", role: "Presidente", achievements: ["Plano Real", "Estabilização monetária a partir de 1994"], controversies: ["Instabilidade ministerial e disputas políticas durante a transição"] },
       { name: "Fernando Henrique Cardoso", years: "1995–2003", role: "Presidente", achievements: ["Continuidade da estabilidade monetária", "Reformas administrativas e privatizações", "Expansão de programas sociais federais"], controversies: ["Crises cambiais e aumento da dívida pública", "Debates sobre privatizações e política econômica"] },
       { name: "Luiz Inácio Lula da Silva", years: "2003–2011", role: "Presidente", achievements: ["Expansão de políticas de transferência de renda", "Crescimento econômico e redução de indicadores de pobreza em parte do período", "Ampliação do acesso ao ensino superior"], controversies: ["Escândalo do mensalão", "Casos de corrupção envolvendo integrantes e aliados do governo"] },
-      { name: "Dilma Rousseff", years: "2011–2016", role: "Presidenta", achievements: ["Expansão de programas sociais e de infraestrutura", "Políticas de ampliação do acesso à educação e moradia"], controversies: ["Recessão e crise fiscal", "Operação Lava Jato e crise política", "Impeachment em 2016"] },
-      { name: "Michel Temer", years: "2016–2019", role: "Presidente", achievements: ["Reforma trabalhista", "Teto de gastos instituído pela Emenda Constitucional 95", "Medidas de ajuste fiscal"], controversies: ["Baixa popularidade", "Denúncias e investigações envolvendo integrantes do governo", "Controvérsias sobre reformas e austeridade"] },
-      { name: "Jair Bolsonaro", years: "2019–2023", role: "Presidente", achievements: ["Reforma da Previdência", "Marco legal de alguns setores de infraestrutura", "Auxílio emergencial durante a pandemia"], controversies: ["Condução e conflitos políticos durante a pandemia de COVID-19", "Conflitos institucionais e questionamentos sobre o processo eleitoral"] },
+      { name: "Dilma Rousseff", years: "2011–2016", role: "Presidenta", achievements: ["Expansão de programas sociais e de infraestrutura", "Políticas de ampliação do acesso à educação e moradia"], controversies: ["Recessão e crise fiscal", "Impeachment concluído em 2016, formalmente relacionado a decretos orçamentários e atrasos em repasses; a interpretação jurídica e política do processo é objeto de debate"] },
+      { name: "Michel Temer", years: "2016–2019", role: "Presidente", achievements: ["Reforma trabalhista", "Teto de gastos instituído pela Emenda Constitucional 95", "Medidas de ajuste fiscal"], controversies: ["Denúncias apresentadas pela Procuradoria-Geral da República em 2017; a Câmara dos Deputados barrou a autorização para processá-lo enquanto ocupava a Presidência", "Controvérsias sobre reformas e austeridade"] },
+      { name: "Jair Bolsonaro", years: "2019–2023", role: "Presidente", achievements: ["Reforma da Previdência", "Marco legal de alguns setores de infraestrutura", "Auxílio emergencial durante a pandemia"], controversies: ["Condução e conflitos políticos durante a pandemia de COVID-19", "Questionamentos públicos sobre o sistema eleitoral; o TSE confirmou o resultado oficial da eleição de 2022"] },
       { name: "Luiz Inácio Lula da Silva", years: "2023–atualidade", role: "Presidente", achievements: ["Retomada e criação de programas e políticas federais", "Reforma tributária aprovada durante o mandato", "Atuação internacional em fóruns multilaterais"], controversies: ["Debates sobre política fiscal e gastos públicos", "Conflitos políticos e divergências sobre prioridades econômicas e sociais"] }
     ],
     events: ["Constituição de 1988", "Plano Real (1994)", "Impeachment de Fernando Collor (1992)", "Impeachment de Dilma Rousseff (2016)", "Pandemia de COVID-19", "Eleição presidencial de 2022"]
   }
 ];
+
+const presidentNames = new Set([
+  "Deodoro da Fonseca", "Floriano Peixoto", "Prudente de Morais", "Campos Sales",
+  "Rodrigues Alves", "Afonso Pena", "Nilo Peçanha", "Hermes da Fonseca",
+  "Venceslau Brás", "Delfim Moreira", "Epitácio Pessoa", "Artur Bernardes",
+  "Washington Luís", "Getúlio Vargas", "José Linhares", "Eurico Gaspar Dutra",
+  "Café Filho", "Carlos Luz", "Nereu Ramos", "Juscelino Kubitschek",
+  "Jânio Quadros", "Ranieri Mazzilli", "João Goulart", "Humberto Castelo Branco",
+  "Artur da Costa e Silva", "Emílio Garrastazu Médici", "Ernesto Geisel",
+  "João Figueiredo", "José Sarney", "Fernando Collor", "Itamar Franco",
+  "Fernando Henrique Cardoso", "Luiz Inácio Lula da Silva", "Dilma Rousseff",
+  "Michel Temer", "Jair Bolsonaro", "Junta Militar",
+  "Junta Governativa Provisória de 1930"
+]);
+
+const presidents = [];
+const presidentByName = new Map();
+
+periods.forEach(period => {
+  period.leaders.forEach(leader => {
+    if (!presidentNames.has(leader.name)) return;
+    let president = presidentByName.get(leader.name);
+    if (!president) {
+      president = {
+        name: leader.name,
+        years: [],
+        roles: [],
+        achievements: [],
+        controversies: [],
+        periods: [],
+        collective: leader.name.startsWith("Junta"),
+        trajectory: leader.name === "Junta Militar"
+          ? "Governo colegiado formado pelos ministros militares durante o impedimento de Costa e Silva; não corresponde a uma presidência individual."
+          : leader.name === "Junta Governativa Provisória de 1930"
+            ? "Governo colegiado que assumiu após a Revolução de 1930 e transferiu o poder a Getúlio Vargas em novembro daquele ano."
+            : ""
+      };
+      presidentByName.set(leader.name, president);
+      presidents.push(president);
+    }
+    [leader.years].forEach(year => {
+      if (!president.years.includes(year)) president.years.push(year);
+    });
+    if (!president.roles.includes(leader.role)) president.roles.push(leader.role);
+    if (!president.periods.includes(period.label)) president.periods.push(period.label);
+    leader.achievements.forEach(item => {
+      if (!president.achievements.includes(item)) president.achievements.push(item);
+    });
+    leader.controversies.forEach(item => {
+      if (!president.controversies.includes(item)) president.controversies.push(item);
+    });
+  });
+});
 
 
 const periodNarratives = {
@@ -496,7 +551,7 @@ const chapters = [
     type: "chapter",
     period: "republica-1946",
     year: "1945–1964",
-    title: "República de 1946",
+    title: "Transição democrática e República de 1946",
     lead: "A queda de Vargas abriu uma nova fase constitucional, com eleições e competição partidária, mas também com crises sucessivas que terminaram na ruptura institucional de 1964.",
     sections: [
       ["A redemocratização", "José Linhares assumiu interinamente após a queda de Vargas e conduziu a transição para eleições. A Constituição de 1946 restabeleceu instituições representativas e ampliou garantias políticas, embora o período continuasse marcado por restrições a determinados grupos e organizações."],
@@ -1240,6 +1295,324 @@ function periodFor(entry) {
   return periods.find(period => period.id === entry.period);
 }
 
+const presidentsGrid = document.getElementById("presidents-grid");
+const presidentsSearch = document.getElementById("presidents-search");
+const presidentsCount = document.getElementById("presidents-count");
+const presidentPortraitCache = new Map();
+let presidentObserver;
+const presidentPortraitFiles = {
+  "Fernando Collor": {
+    title: "File:Fernando Collor 1992 B&W.jpg",
+    requiredDescription: ["imagem oficial em preto e branco do presidente da republica federativa do brasil"]
+  },
+  "Junta Governativa Provisória de 1930": {
+    title: "File:Osvaldo Aranha com a Junta Governativa (2).jpg",
+    requiredDescription: ["izaias de noronha", "menna barreto", "tasso fragoso"]
+  },
+  "Junta Militar": {
+    title: "File:Junta militar de 1969.jpg",
+    requiredDescription: ["military junta of 1969", "aurelio lira", "marcio melo", "augusto rademaker"]
+  },
+  "João Goulart": {
+    title: "File:MO 63.2240.2 - Photograph of João Goulart President of the Republic of Brazil.jpg",
+    requiredDescription: ["black and white portrait photograph", "joao goulart"]
+  }
+};
+const presidentFgvEntries = {
+  "Getúlio Vargas": "getulio-dornelles-vargas",
+  "José Linhares": "linhares-jose-1",
+  "Luiz Inácio Lula da Silva": "luis-inacio-da-silva",
+  "Venceslau Brás": "venceslau-bras-pereira-gomes",
+  "Washington Luís": "washington-luis-pereira-de-sousa",
+  "Eurico Gaspar Dutra": "dutra-eurico-gaspar",
+  "Café Filho": "joao-cafe-filho",
+  "Carlos Luz": "carlos-coimbra-da-luz",
+  "Nereu Ramos": "nereu-de-oliveira-ramos",
+  "Juscelino Kubitschek": "juscelino-kubitschek-de-oliveira",
+  "Jânio Quadros": "janio-da-silva-quadros",
+  "Ranieri Mazzilli": "pascoal-ranieri-mazzilli",
+  "João Goulart": "joao-belchior-marques-goulart",
+  "Humberto Castelo Branco": "humberto-de-alencar-castelo-branco",
+  "Artur da Costa e Silva": "artur-da-costa-e-silva",
+  "Emílio Garrastazu Médici": "medici-emilio-garrastazzu",
+  "Ernesto Geisel": "geisel-ernesto",
+  "João Figueiredo": "joao-batista-de-oliveira-figueiredo",
+  "José Sarney": "jose-ribamar-ferreira-de-araujo-costa",
+  "Fernando Collor": "collor-fernando",
+  "Itamar Franco": "itamar-augusto-cautiero-franco",
+  "Fernando Henrique Cardoso": "cardoso-fernando-henrique",
+  "Dilma Rousseff": "dilma-vana-rousseff",
+  "Michel Temer": "michel-miguel-elias-temer-lulia",
+  "Jair Bolsonaro": "jair-messias-bolsonaro"
+};
+
+function renderPresidentCard(president) {
+  const biography = president.collective
+    ? president.trajectory
+    : (president.roles.length === 1 && president.roles[0] === "Presidente"
+      ? "Exerceu a Presidência em "
+      : "Exerceu a Presidência como " + president.roles.join(" e ") + " em ") + president.years.join(" e ") +
+      ". Sua trajetória está contextualizada nos períodos: " + president.periods.join("; ") + ".";
+  const fgvSlug = presidentFgvEntries[president.name];
+  const fgvUrl = fgvSlug
+    ? "https://www18.fgv.br/CPDOC/acervo/dicionarios/verbete-biografico/" + fgvSlug
+    : "https://www18.fgv.br/CPDOC/acervo/arquivo?busca=" + encodeURIComponent(president.name) + "&TipoUD=3&MacroTipoUD=2&nItens=30";
+  const fgvLinkLabel = fgvSlug ? "Verbete biográfico — FGV CPDOC" : "Buscar no DHBB da FGV CPDOC";
+  return '<article class="president-card" data-president-name="' + escapeHtml(president.name) + '">' +
+    '<figure class="president-portrait">' +
+      '<div class="president-portrait-placeholder"><i class="fas fa-user-tie" aria-hidden="true"></i><span>Retrato de acervo não disponível</span></div>' +
+      '<img class="president-portrait-image" alt="' + (president.collective ? "Fotografia histórica de " : "Retrato de ") + escapeHtml(president.name) + '" loading="lazy" hidden>' +
+      '<figcaption class="president-image-credit" hidden></figcaption>' +
+    '</figure>' +
+    '<div class="president-card-content">' +
+      '<p class="president-years">' + escapeHtml(president.years.join(" · ")) + '</p>' +
+      '<h3>' + escapeHtml(president.name) + '</h3>' +
+      '<p class="president-role">' + escapeHtml(president.roles.join(" · ")) + '</p>' +
+      '<section class="president-trajectory"><h4>Trajetória</h4><p class="president-biography">' + escapeHtml(biography) + '</p>' +
+        '<div class="president-source-list">' +
+          '<a class="president-source" href="' + escapeHtml(fgvUrl) + '" target="_blank" rel="noopener noreferrer">' + fgvLinkLabel + '</a>' +
+          '<a class="president-source" href="https://biblioteca.presidencia.gov.br/presidencia/ex-presidentes" target="_blank" rel="noopener noreferrer">Biblioteca da Presidência</a>' +
+          '<a class="president-source" href="https://presidentes.an.gov.br/" target="_blank" rel="noopener noreferrer">Arquivo Nacional — acervo presidencial</a>' +
+        '</div></section>' +
+      '<details class="history-accordion-item president-facts">' +
+        '<summary><span class="accordion-title"><strong>Medidas e atuação</strong><small>Principais decisões e iniciativas do mandato.</small></span><span class="accordion-icon"><i class="fas fa-chevron-down" aria-hidden="true"></i></span></summary>' +
+        '<div class="accordion-content"><ul>' +
+          president.achievements.map(item => '<li>' + escapeHtml(item) + '</li>').join("") +
+        '</ul></div>' +
+      '</details>' +
+      '<details class="history-accordion-item president-facts">' +
+        '<summary><span class="accordion-title"><strong>Conflitos e controvérsias</strong><small>Crises, disputas e temas controversos do período.</small></span><span class="accordion-icon"><i class="fas fa-chevron-down" aria-hidden="true"></i></span></summary>' +
+        '<div class="accordion-content"><ul>' +
+          president.controversies.map(item => '<li>' + escapeHtml(item) + '</li>').join("") +
+        '</ul></div>' +
+      '</details>' +
+    '</div>' +
+  '</article>';
+}
+
+function commonsText(value) {
+  const parsed = new DOMParser().parseFromString(String(value || ""), "text/html");
+  return parsed.body.textContent.replace(/\s+/g, " ").trim();
+}
+
+function commonsSourceUrl(value) {
+  const parsed = new DOMParser().parseFromString(String(value || ""), "text/html");
+  const href = parsed.querySelector("a[href]")?.getAttribute("href") || parsed.body.textContent.trim();
+  if (!/^https?:\/\//i.test(href)) return "";
+  try {
+    const url = new URL(href);
+    if (url.username || url.password) return "";
+    if (url.protocol === "http:") {
+      if (!/(^|\.)gov\.br$|(^|\.)senado\.leg\.br$|(^|\.)flickr\.com$/.test(url.hostname)) return "";
+      url.protocol = "https:";
+    }
+    return url.protocol === "https:" ? url.href : "";
+  } catch {
+    return "";
+  }
+}
+
+function normalizedSearchText(value) {
+  return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt-BR");
+}
+
+function isReusablePortraitLicense(license) {
+  const normalized = String(license || "").toLowerCase();
+  if (/\b(nc|nd)\b/.test(normalized)) return false;
+  return normalized.includes("public domain") || normalized.includes("cc0") || /\bcc by(?:-sa)?\b/.test(normalized);
+}
+
+function hasUrlOrigin(value, origin) {
+  try {
+    return new URL(value).origin === origin;
+  } catch {
+    return false;
+  }
+}
+
+function fetchCommonsPortrait(president) {
+  const cached = presidentPortraitCache.get(president.name);
+  if (cached) return cached;
+
+  const url = new URL("https://commons.wikimedia.org/w/api.php");
+  const searchParameters = new URLSearchParams({
+    action: "query",
+    prop: "imageinfo",
+    iiprop: "url|extmetadata",
+    iiurlwidth: "440",
+    format: "json",
+    origin: "*"
+  });
+  const portraitFile = presidentPortraitFiles[president.name];
+  if (portraitFile) {
+    searchParameters.set("titles", portraitFile.title);
+  } else {
+    searchParameters.set("generator", "search");
+    searchParameters.set("gsrsearch", 'filetype:bitmap "' + president.name + '"');
+    searchParameters.set("gsrnamespace", "6");
+    searchParameters.set("gsrlimit", "20");
+  }
+  url.search = searchParameters;
+
+  const result = fetch(url)
+    .then(response => {
+      if (!response.ok) throw new Error("Commons respondeu com HTTP " + response.status);
+      return response.json();
+    })
+    .then(data => {
+      const name = normalizedSearchText(president.name);
+      const nameWords = name.split(/\s+/).filter(word => word.length > 2);
+      const pages = Object.values(data.query?.pages || {});
+      const candidates = pages.map(page => {
+        const image = page.imageinfo?.[0];
+        const metadata = image?.extmetadata || {};
+        const title = normalizedSearchText(page.title.replace(/^File:/, ""));
+        const description = normalizedSearchText(commonsText(metadata.ImageDescription?.value));
+        const combined = title + " " + description;
+        const nameMatches = portraitFile || combined.includes(name) || nameWords.every(word => combined.includes(word));
+        const presidentContext = portraitFile
+        ? portraitFile.requiredDescription.every(term => description.includes(term))
+        : /(president|presidente|presidenta|portrait|retrato|fotografia|photograph|official photo)/.test(combined);
+        const nonPortrait = /(signature|assinatura|autograph|autografo|logo|logotipo|coat of arms|brasao)/.test(title);
+        const license = commonsText(metadata.LicenseShortName?.value);
+        const artist = commonsText(metadata.Artist?.value);
+        const creator = !artist || /^(unknown|desconhecido)/i.test(artist)
+          ? "Autoria não identificada"
+          : artist;
+        const credit = commonsText(metadata.Credit?.value);
+        const sourceLabel = /^file:/i.test(credit) ? "" : credit;
+        const sourceUrl = commonsSourceUrl(metadata.Credit?.value) || commonsSourceUrl(metadata.Source?.value);
+        if (!image || !nameMatches || !presidentContext || nonPortrait || !creator || !isReusablePortraitLicense(license)) return null;
+        if (!hasUrlOrigin(image.thumburl, "https://thumb.wikimedia.org") &&
+            !hasUrlOrigin(image.thumburl, "https://upload.wikimedia.org")) return null;
+        if (!hasUrlOrigin(image.descriptionurl, "https://commons.wikimedia.org") ||
+            !new URL(image.descriptionurl).pathname.startsWith("/wiki/File:")) return null;
+        const licenseUrl = metadata.LicenseUrl?.value;
+        if (licenseUrl && (!hasUrlOrigin(licenseUrl, "https://creativecommons.org") ||
+            !/^\/(licenses|publicdomain)\//.test(new URL(licenseUrl).pathname))) return null;
+        const knownCreator = creator !== "Autoria não identificada";
+        const officialSource = /galeria de presidentes|governo do brasil/i.test(credit + " " + artist);
+        const portraitDescription = /(foto oficial|official portrait|official photo|presidente do brasil)/.test(description);
+        return {
+          score: (knownCreator ? 3 : 0) + (officialSource ? 5 : 0) + (portraitDescription ? 2 : 0),
+          imageUrl: image.thumburl,
+          fileUrl: image.descriptionurl,
+          creator,
+          license,
+          licenseUrl,
+          sourceLabel,
+          sourceUrl
+        };
+      }).filter(Boolean).sort((left, right) => right.score - left.score);
+      const portrait = candidates[0] || null;
+      return portrait || null;
+    });
+  presidentPortraitCache.set(president.name, result);
+  return result;
+}
+
+async function loadPresidentPortrait(card) {
+  const president = presidentByName.get(card.dataset.presidentName);
+  if (!president || (president.collective && !presidentPortraitFiles[president.name])) return;
+
+  const placeholder = card.querySelector(".president-portrait-placeholder");
+  const image = card.querySelector(".president-portrait-image");
+  const credit = card.querySelector(".president-image-credit");
+  let portrait;
+  try {
+    portrait = await fetchCommonsPortrait(president);
+  } catch (error) {
+    console.error("Não foi possível consultar os retratos do Wikimedia Commons para " + president.name + ".", error);
+    if (card.isConnected) placeholder.querySelector("span").textContent = "Não foi possível validar retrato e licença agora";
+    return;
+  }
+  if (!card.isConnected) return;
+  if (!portrait) {
+    placeholder.querySelector("span").textContent = "Retrato com licença reutilizável não localizado";
+    return;
+  }
+
+  const showPortrait = () => {
+    image.classList.add("is-loaded");
+    placeholder.hidden = true;
+    credit.hidden = false;
+  };
+  image.addEventListener("load", showPortrait, { once: true });
+  image.addEventListener("error", () => {
+    image.hidden = true;
+    placeholder.querySelector("span").textContent = "Retrato indisponível";
+    console.error("O arquivo de retrato do Wikimedia Commons não pôde ser carregado para " + president.name + ".", portrait.fileUrl);
+  }, { once: true });
+  image.hidden = false;
+  image.loading = "eager";
+  image.src = portrait.imageUrl;
+  if (image.complete && image.naturalWidth > 0) showPortrait();
+  const licenseHref = portrait.licenseUrl || portrait.fileUrl;
+  const licenseLink = '<a href="' + escapeHtml(licenseHref) + '" target="_blank" rel="noopener noreferrer">' +
+    escapeHtml(portrait.license) + '</a>';
+  const sourceLabel = portrait.sourceLabel && portrait.sourceLabel !== portrait.creator
+    ? ' · Fonte informada: ' + (portrait.sourceUrl
+      ? '<a href="' + escapeHtml(portrait.sourceUrl) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(portrait.sourceLabel) + '</a>'
+      : escapeHtml(portrait.sourceLabel))
+    : "";
+  credit.innerHTML = '<a href="' + escapeHtml(portrait.fileUrl) + '" target="_blank" rel="noopener noreferrer">Foto: ' +
+    escapeHtml(portrait.creator) + '</a>' + sourceLabel + ' · ' + licenseLink;
+}
+
+function renderPresidents() {
+  presidentObserver?.disconnect();
+  const query = (presidentsSearch?.value || "").trim().toLocaleLowerCase("pt-BR");
+  const matching = presidents.filter(president =>
+    [president.name, president.years.join(" "), president.roles.join(" "), president.periods.join(" ")]
+      .join(" ").toLocaleLowerCase("pt-BR").includes(query)
+  );
+  presidentsGrid.innerHTML = matching.length
+    ? matching.map(renderPresidentCard).join("")
+    : '<p class="presidents-empty">Nenhum presidente corresponde à busca.</p>';
+  presidentsCount.textContent = matching.length + (matching.length === 1 ? " perfil" : " perfis");
+
+  presidentsGrid.querySelectorAll(".president-facts").forEach(item => {
+    item.addEventListener("toggle", () => {
+      if (!item.open) return;
+      item.parentElement.querySelectorAll(".president-facts[open]").forEach(other => {
+        if (other !== item) other.open = false;
+      });
+    });
+  });
+
+  const cards = presidentsGrid.querySelectorAll(".president-card");
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        loadPresidentPortrait(entry.target);
+      });
+    }, { rootMargin: "180px" });
+    presidentObserver = observer;
+    cards.forEach(card => observer.observe(card));
+  } else {
+    cards.forEach(loadPresidentPortrait);
+  }
+}
+
+const backToTop = document.getElementById("back-to-top");
+
+function updateBackToTop() {
+  const shouldShow = window.scrollY > 600;
+  backToTop.classList.toggle("is-visible", shouldShow);
+  backToTop.setAttribute("aria-hidden", String(!shouldShow));
+  backToTop.tabIndex = shouldShow ? 0 : -1;
+}
+
+window.addEventListener("scroll", updateBackToTop, { passive: true });
+backToTop.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
+  });
+});
+
 function matchesFilter(entry) {
   const period = periodFor(entry);
   return period && (activeFilter === "Todos" || period.era === activeFilter);
@@ -1513,20 +1886,33 @@ function buildSections(sections) {
 }
 
 function buildSources(entry) {
-  const sourceLinks = {
-    colonial: ["Arquivo Nacional", "Biblioteca Brasiliana USP", "USP — Departamento de História"],
-    joanino: ["Arquivo Nacional", "Biblioteca Brasiliana USP", "FGV CPDOC"],
-    "primeiro-reinado": ["Arquivo Nacional", "FGV CPDOC", "Senado Federal"],
-    regencias: ["FGV CPDOC", "Senado Federal", "Biblioteca Brasiliana USP"],
-    "segundo-reinado": ["FGV CPDOC", "USP — Departamento de História", "Biblioteca Brasiliana USP"],
-    "primeira-republica": ["FGV CPDOC", "Biblioteca Brasiliana USP"],
-    vargas: ["FGV CPDOC", "Arquivo Nacional"],
-    "republica-1946": ["FGV CPDOC", "Arquivo Nacional", "Senado Federal"],
-    "regime-militar": ["FGV CPDOC", "Arquivo Nacional"],
-    "nova-republica": ["FGV CPDOC", "Senado Federal", "USP — Departamento de História"]
+  const references = {
+    cpdoc: { label: "FGV CPDOC — Dicionário Histórico-Biográfico", href: "https://cpdoc.fgv.br/acervo/dicionarios/dhbb" },
+    archive: { label: "Arquivo Nacional", href: "https://www.gov.br/arquivonacional/pt-br" },
+    library: { label: "Biblioteca da Presidência — ex-presidentes", href: "https://biblioteca.presidencia.gov.br/presidencia/ex-presidentes" },
+    anPresidents: { label: "Arquivo Nacional — Acervos Presidenciais", href: "https://presidentes.an.gov.br/" },
+    tse: { label: "Tribunal Superior Eleitoral", href: "https://www.tse.jus.br/" },
+    senate: { label: "Senado Federal", href: "https://www12.senado.leg.br/" },
+    chamber: { label: "Câmara dos Deputados", href: "https://www.camara.leg.br/" },
+    planalto: { label: "Planalto — legislação", href: "https://www.gov.br/planalto/pt-br" }
   };
-  const names = sourceLinks[entry.period] || ["FGV CPDOC", "Arquivo Nacional"];
-  return '<div class="history-source-note"><strong>Fontes de referência:</strong> ' + names.map(escapeHtml).join(" · ") + '. A narrativa combina documentação institucional, acervos históricos e referências acadêmicas; interpretações controversas são apresentadas com contexto, sem tratá-las como fatos isolados.</div>';
+  const sourceIds = {
+    colonial: ["archive", "cpdoc"],
+    joanino: ["archive", "cpdoc"],
+    "primeiro-reinado": ["archive", "cpdoc", "planalto"],
+    regencias: ["archive", "cpdoc"],
+    "segundo-reinado": ["archive", "cpdoc"],
+    "primeira-republica": ["archive", "cpdoc"],
+    vargas: ["archive", "cpdoc", "planalto"],
+    "republica-1946": ["archive", "cpdoc", "senate", "planalto"],
+    "regime-militar": ["archive", "cpdoc", "planalto"],
+    "nova-republica": ["cpdoc", "library", "anPresidents", "tse", "senate", "chamber", "planalto"]
+  };
+  const names = (sourceIds[entry.period] || ["archive", "cpdoc"])
+    .map(id => references[id])
+    .map(reference => '<a href="' + escapeHtml(reference.href) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(reference.label) + '</a>')
+    .join(" · ");
+  return '<div class="history-source-note"><strong>Referências para consulta:</strong> ' + names + '. São acervos institucionais e uma obra de referência acadêmica; confira a cobertura de cada tema e a documentação correspondente.</div>';
 }
 
 
@@ -1616,6 +2002,9 @@ document.addEventListener("keydown", event => {
 
 
 search.addEventListener("input", renderTimeline);
+presidentsSearch.addEventListener("input", renderPresidents);
 updateTimelineViewButtons();
 renderFilters();
 renderTimeline();
+renderPresidents();
+updateBackToTop();
