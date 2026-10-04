@@ -77,10 +77,13 @@
           <p id="presidents-count"></p>
         </div>
         <p class="presidents-intro">Conheça as trajetórias, medidas de governo e controvérsias de quem exerceu a Presidência desde a Proclamação da República. Inclui interinatos decorrentes de vacância ou crise institucional; substituições breves não estão listadas. As juntas de 1930 e 1969 aparecem como governos colegiados, e Tancredo Neves não integra a lista porque não chegou a tomar posse. Os resumos distinguem atos de governo de acusações e processos, sem sugerir culpa quando não houve condenação.</p>
-        <label class="presidents-search">
-          <i class="fas fa-search" aria-hidden="true"></i>
-          <input id="presidents-search" type="search" placeholder="Buscar presidente ou período..." autocomplete="off">
-        </label>
+        <div class="presidents-controls">
+          <label class="presidents-search">
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <input id="presidents-search" type="search" placeholder="Buscar presidente ou período..." autocomplete="off">
+          </label>
+          <div class="presidents-filters" id="presidents-filters" role="group" aria-label="Filtrar presidentes por período"></div>
+        </div>
         <div class="presidents-grid" id="presidents-grid" aria-live="polite"></div>
       </section>
 

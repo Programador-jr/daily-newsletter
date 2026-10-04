@@ -202,6 +202,7 @@ periods.forEach(period => {
         achievements: [],
         controversies: [],
         periods: [],
+        periodIds: [],
         collective: leader.name.startsWith("Junta"),
         trajectory: leader.name === "Junta Militar"
           ? "Governo colegiado formado pelos ministros militares durante o impedimento de Costa e Silva; não corresponde a uma presidência individual."
@@ -217,6 +218,7 @@ periods.forEach(period => {
     });
     if (!president.roles.includes(leader.role)) president.roles.push(leader.role);
     if (!president.periods.includes(period.label)) president.periods.push(period.label);
+    if (!president.periodIds.includes(period.id)) president.periodIds.push(period.id);
     leader.achievements.forEach(item => {
       if (!president.achievements.includes(item)) president.achievements.push(item);
     });
@@ -1346,29 +1348,56 @@ const presidentFgvEntries = {
   "Jair Bolsonaro": "jair-messias-bolsonaro"
 };
 
+function buildPresidentBiography(president) {
+  if (president.collective) return president.trajectory;
+
+  const period = president.periodIds
+    .map(id => periods.find(item => item.id === id))
+    .find(Boolean);
+  const narrative = periodNarratives[period?.id]?.lead || "";
+  const role = president.roles.join(" e ");
+  const years = president.years.join(" e ");
+  const context = narrative ? " " + narrative : "";
+
+  return "Exerceu a Presidência como " + role + " em " + years + "." + context;
+}
+
 function renderPresidentCard(president) {
-  const biography = president.collective
-    ? president.trajectory
-    : (president.roles.length === 1 && president.roles[0] === "Presidente"
-      ? "Exerceu a Presidência em "
-      : "Exerceu a Presidência como " + president.roles.join(" e ") + " em ") + president.years.join(" e ") +
-      ". Sua trajetória está contextualizada nos períodos: " + president.periods.join("; ") + ".";
+  const isInterim = president.collective ||
+    president.roles.some(role => /interin|junta|regênc/i.test(role)) ||
+    president.name === "José Linhares" ||
+    president.name === "Ranieri Mazzilli" ||
+    president.name === "Carlos Luz" ||
+    president.name === "Nereu Ramos" ||
+    president.name === "Delfim Moreira";
+
+  const biography = buildPresidentBiography(president);
   const fgvSlug = presidentFgvEntries[president.name];
   const fgvUrl = fgvSlug
     ? "https://www18.fgv.br/CPDOC/acervo/dicionarios/verbete-biografico/" + fgvSlug
     : "https://www18.fgv.br/CPDOC/acervo/arquivo?busca=" + encodeURIComponent(president.name) + "&TipoUD=3&MacroTipoUD=2&nItens=30";
   const fgvLinkLabel = fgvSlug ? "Verbete biográfico — FGV CPDOC" : "Buscar no DHBB da FGV CPDOC";
-  return '<article class="president-card" data-president-name="' + escapeHtml(president.name) + '">' +
+  const periodLinks = president.periodIds.map(periodId => {
+    const period = periods.find(item => item.id === periodId);
+    if (!period) return "";
+    return '<button class="president-context-link" type="button" data-period-entry="chapter|' + escapeHtml(periodId) + '">' +
+      'Ver contexto: ' + escapeHtml(period.label) + '</button>';
+  }).filter(Boolean).join("");
+
+  return '<article class="president-card' + (isInterim ? " president-card-interim" : "") + '" data-president-name="' + escapeHtml(president.name) + '">' +
     '<figure class="president-portrait">' +
       '<div class="president-portrait-placeholder"><i class="fas fa-user-tie" aria-hidden="true"></i><span>Retrato de acervo não disponível</span></div>' +
       '<img class="president-portrait-image" alt="' + (president.collective ? "Fotografia histórica de " : "Retrato de ") + escapeHtml(president.name) + '" loading="lazy" hidden>' +
       '<figcaption class="president-image-credit" hidden></figcaption>' +
     '</figure>' +
     '<div class="president-card-content">' +
-      '<p class="president-years">' + escapeHtml(president.years.join(" · ")) + '</p>' +
-      '<h3>' + escapeHtml(president.name) + '</h3>' +
+      '<div class="president-heading">' +
+        '<div><p class="president-years">' + escapeHtml(president.years.join(" · ")) + '</p><h3>' + escapeHtml(president.name) + '</h3></div>' +
+        (isInterim ? '<span class="president-status">Interino / transição</span>' : '') +
+      '</div>' +
       '<p class="president-role">' + escapeHtml(president.roles.join(" · ")) + '</p>' +
       '<section class="president-trajectory"><h4>Trajetória</h4><p class="president-biography">' + escapeHtml(biography) + '</p>' +
+        '<div class="president-context-links">' + periodLinks + '</div>' +
         '<div class="president-source-list">' +
           '<a class="president-source" href="' + escapeHtml(fgvUrl) + '" target="_blank" rel="noopener noreferrer">' + fgvLinkLabel + '</a>' +
           '<a class="president-source" href="https://biblioteca.presidencia.gov.br/presidencia/ex-presidentes" target="_blank" rel="noopener noreferrer">Biblioteca da Presidência</a>' +
@@ -1559,16 +1588,50 @@ async function loadPresidentPortrait(card) {
     escapeHtml(portrait.creator) + '</a>' + sourceLabel + ' · ' + licenseLink;
 }
 
+const presidentFilterContainer = document.getElementById("presidents-filters");
+const presidentFilters = ["Todos", "Colônia", "Império", "República"];
+let activePresidentFilter = "Todos";
+
+function presidentMatchesFilter(president) {
+  if (activePresidentFilter === "Todos") return true;
+  return president.periodIds.some(periodId => {
+    const period = periods.find(item => item.id === periodId);
+    return period?.era === activePresidentFilter;
+  });
+}
+
+function renderPresidentFilters() {
+  presidentFilterContainer.innerHTML = presidentFilters.map(filter =>
+    '<button class="history-filter ' + (filter === activePresidentFilter ? "active" : "") + '" type="button" data-president-filter="' + escapeHtml(filter) + '">' +
+      escapeHtml(filter) +
+    '</button>'
+  ).join("");
+
+  presidentFilterContainer.querySelectorAll("[data-president-filter]").forEach(button => {
+    button.addEventListener("click", () => {
+      activePresidentFilter = button.dataset.presidentFilter;
+      renderPresidentFilters();
+      renderPresidents();
+    });
+  });
+}
+
 function renderPresidents() {
   presidentObserver?.disconnect();
-  const query = (presidentsSearch?.value || "").trim().toLocaleLowerCase("pt-BR");
-  const matching = presidents.filter(president =>
-    [president.name, president.years.join(" "), president.roles.join(" "), president.periods.join(" ")]
-      .join(" ").toLocaleLowerCase("pt-BR").includes(query)
-  );
+  const query = normalizedSearchText(presidentsSearch?.value || "");
+  const matching = presidents.filter(president => {
+    if (!presidentMatchesFilter(president)) return false;
+    return normalizedSearchText([
+      president.name,
+      president.years.join(" "),
+      president.roles.join(" "),
+      president.periods.join(" ")
+    ].join(" ")).includes(query);
+  });
+
   presidentsGrid.innerHTML = matching.length
     ? matching.map(renderPresidentCard).join("")
-    : '<p class="presidents-empty">Nenhum presidente corresponde à busca.</p>';
+    : '<p class="presidents-empty">Nenhum presidente corresponde aos filtros atuais.</p>';
   presidentsCount.textContent = matching.length + (matching.length === 1 ? " perfil" : " perfis");
 
   presidentsGrid.querySelectorAll(".president-facts").forEach(item => {
@@ -1578,6 +1641,10 @@ function renderPresidents() {
         if (other !== item) other.open = false;
       });
     });
+  });
+
+  presidentsGrid.querySelectorAll(".president-context-link").forEach(button => {
+    button.addEventListener("click", () => openEntry(button.dataset.periodEntry));
   });
 
   const cards = presidentsGrid.querySelectorAll(".president-card");
@@ -2006,5 +2073,6 @@ presidentsSearch.addEventListener("input", renderPresidents);
 updateTimelineViewButtons();
 renderFilters();
 renderTimeline();
+renderPresidentFilters();
 renderPresidents();
 updateBackToTop();
