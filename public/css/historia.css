@@ -1158,6 +1158,52 @@ body.history-modal-open {
   font-size: 0.73rem;
 }
 
+/* GUIA DA LINHA DO TEMPO */
+
+.history-guide-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  margin: 0 3rem 2.25rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 4px 14px rgb(25 31 40 / 4%);
+}
+
+.history-guide-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--primary) 9%, var(--bg-container));
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.history-guide-card .eyebrow {
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.history-guide-card h2 {
+  margin: 0 0 0.25rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.05rem;
+}
+
+.history-guide-card p {
+  max-width: 850px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
 /* FONTES */
 
 .history-sources {
@@ -1532,6 +1578,11 @@ body.history-modal-open {
 
   .timeline-view-button[data-timeline-view="grid"] {
     display: none;
+  }
+
+  .history-guide-card {
+    margin: 0 1.25rem 2rem;
+    padding: 1rem;
   }
 
   .history-hero {
