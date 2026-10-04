@@ -1743,6 +1743,8 @@ compactTimelineQuery.addEventListener("change", event => {
 });
 
 function renderTimeline() {
+  const previousScrollTop = timeline.scrollTop;
+  const previousScrollLeft = timeline.scrollLeft;
   timeline.className = "timeline mode-" + activeTimelineView;
   const visible = filteredEntries();
   count.textContent = visible.length + (visible.length === 1 ? " entrada" : " entradas");
@@ -1769,8 +1771,14 @@ function renderTimeline() {
   });
 
   if (activeTimelineView === "globe") {
-    centerActiveEntry();
+    if (activeEntry) {
+      centerActiveEntry();
+    } else {
+      timeline.scrollTop = previousScrollTop;
+      requestAnimationFrame(updateTimelineFocus);
+    }
   } else {
+    timeline.scrollLeft = previousScrollLeft;
     updateTimelineFocus();
   }
 }
@@ -2055,7 +2063,21 @@ function openEntry(key) {
     item.addEventListener("click", event => {
       if (!event.target.closest("summary")) return;
       requestAnimationFrame(() => {
-        if (item.open) item.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        if (!item.open) return;
+
+        const dialog = detail.querySelector(".history-detail-dialog");
+        const header = detail.querySelector(".history-accordion-header");
+        if (!dialog) return;
+
+        const dialogRect = dialog.getBoundingClientRect();
+        const itemRect = item.getBoundingClientRect();
+        const headerHeight = header ? header.getBoundingClientRect().height : 0;
+        const targetTop = dialog.scrollTop + itemRect.top - dialogRect.top - headerHeight - 12;
+
+        dialog.scrollTo({
+          top: Math.max(0, targetTop),
+          behavior: reducedMotionQuery.matches ? "auto" : "smooth"
+        });
       });
     });
   });
