@@ -13,7 +13,7 @@ Daily coverage of Brazil and the world, presented with concise summaries, curate
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-5-000000?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
-[![License](https://img.shields.io/badge/License-ISC-blue?style=flat-square)](./LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](./LICENSE)
 [![Tests](https://github.com/Programador-jr/daily-newsletter/actions/workflows/tests.yml/badge.svg)](https://github.com/Programador-jr/daily-newsletter/actions/workflows/tests.yml)
 [![GitHub stars](https://img.shields.io/github/stars/Programador-jr/daily-newsletter?style=flat-square)](https://github.com/Programador-jr/daily-newsletter/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/Programador-jr/daily-newsletter?style=flat-square)](https://github.com/Programador-jr/daily-newsletter/issues)
@@ -182,7 +182,7 @@ Bug reports, ideas, and improvements are welcome. Please [open an issue](https:/
 
 ## License
 
-This project is licensed under the [ISC License](./LICENSE).
+This project is licensed under the [MIT License](./LICENSE).
 
 ---
 
