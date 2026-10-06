@@ -6,8 +6,8 @@ const grid = document.querySelector("#news-grid"),
   historyList = document.getElementById('history-list'),
   searchInput = document.getElementById('search-input'),
   filterButtons = document.getElementById('filter-buttons'),
-  switchInput = document.getElementById('theme-switch'),
-  themeLabel = document.getElementById('theme-label');
+  themeToggle = document.getElementById('theme-toggle'),
+  themeIcon = document.getElementById('theme-icon');
 
 let currentStories = [];
 let isLoadingEdition = true;
