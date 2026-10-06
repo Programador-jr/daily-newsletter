@@ -1,26 +1,52 @@
 const themeToggle = document.getElementById("theme-toggle");
 const themeIcon = document.getElementById("theme-icon");
+const headerThemeToggle = document.getElementById("header-theme-toggle");
+const headerThemeIcon = document.getElementById("header-theme-icon");
 const savedTheme = localStorage.getItem("theme") || "light";
 
 document.documentElement.setAttribute("data-theme", savedTheme);
 
 const updateThemeControl = theme => {
-  if (!themeToggle || !themeIcon) return;
   const isDark = theme === "dark";
-  themeIcon.className = isDark ? "fas fa-sun" : "fas fa-moon";
-  themeToggle.setAttribute("aria-label", isDark ? "Ativar tema claro" : "Ativar tema escuro");
-  themeToggle.setAttribute("title", isDark ? "Ativar tema claro" : "Ativar tema escuro");
-  themeToggle.setAttribute("aria-pressed", String(isDark));
+  [[themeToggle, themeIcon], [headerThemeToggle, headerThemeIcon]].forEach(([button, icon]) => {
+    if (!button || !icon) return;
+    icon.className = isDark ? "fas fa-sun" : "fas fa-moon";
+    button.setAttribute("aria-label", isDark ? "Ativar tema claro" : "Ativar tema escuro");
+    button.setAttribute("title", isDark ? "Ativar tema claro" : "Ativar tema escuro");
+    button.setAttribute("aria-pressed", String(isDark));
+  });
+};
+
+const themeIconAnimations = new WeakMap();
+
+const animateThemeIcons = () => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  [themeIcon, headerThemeIcon].forEach(icon => {
+    if (!icon?.animate) return;
+    themeIconAnimations.get(icon)?.cancel();
+    const animation = icon.animate(
+      [{ rotate: "0deg" }, { rotate: "360deg" }],
+      { duration: 800, easing: "cubic-bezier(.4, 0, .2, 1)" }
+    );
+    themeIconAnimations.set(icon, animation);
+    animation.onfinish = () => {
+      if (themeIconAnimations.get(icon) === animation) themeIconAnimations.delete(icon);
+    };
+  });
 };
 
 updateThemeControl(savedTheme);
 
-themeToggle?.addEventListener("click", () => {
+const toggleTheme = () => {
+  animateThemeIcons();
   const theme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
   document.documentElement.setAttribute("data-theme", theme);
   localStorage.setItem("theme", theme);
   updateThemeControl(theme);
-});
+};
+
+themeToggle?.addEventListener("click", toggleTheme);
+headerThemeToggle?.addEventListener("click", toggleTheme);
 
 const periods = [
   {
@@ -1982,7 +2008,7 @@ function resetDetail() {
 }
 
 
-function buildLeaderCards(period, relevantYear) {
+function buildLeaderCards(period) {
   if (!period) return "";
   return '<section class="leaders"><div class="detail-section-title"><span>Quem estava no poder</span><small>' + period.leaders.length + ' registros</small></div>' +
     period.leaders.map(leader =>
@@ -2085,7 +2111,7 @@ function openEntry(key, { syncTimeline = true } = {}) {
       if (!item.open) return;
 
       detail.querySelectorAll("details[data-accordion-key][open]").forEach(other => {
-        if (other !== item) other.open = false;
+        if (other !== item) window.accordionMotion?.setOpen(other, false);
       });
 
       activeEntry = item.dataset.accordionKey;

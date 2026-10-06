@@ -26,6 +26,9 @@
           <a href="/historia" class="active" aria-current="page">História</a>
           <a href="/presidentes">Presidentes</a>
         </div>
+        <button class="theme-toggle header-theme-toggle" id="header-theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false">
+          <i class="fas fa-moon" id="header-theme-icon" aria-hidden="true"></i>
+        </button>
         <div class="header-nav-actions">
           <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu">
             <span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span>
@@ -153,7 +156,7 @@
             <summary><span class="constitution-year">1967–69</span><span class="constitution-summary"><strong>Regime militar</strong><small>Constitucionalização da ordem autoritária e poderes de exceção.</small></span><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
             <div class="constitution-content"><p>A Constituição de 1967 foi elaborada sob o regime militar. A Emenda Constitucional nº 1, de 1969, alterou profundamente o texto e é frequentemente tratada como uma nova carta constitucional.</p><ul><li>Fortaleceu o Executivo federal e restringiu a autonomia política e eleitoral.</li><li>O AI-5 e outros atos institucionais permitiram cassações, censura e suspensão de garantias, acima das proteções constitucionais.</li><li>A abertura política e a transição democrática ocorreram sob esse arranjo, até a redemocratização.</li></ul></div>
           </details>
-          <details class="constitution-accordion constitution-accordion-current" open>
+          <details class="constitution-accordion">
             <summary><span class="constitution-year">1988</span><span class="constitution-summary"><strong>Constituição Cidadã</strong><small>Redemocratização, direitos fundamentais e políticas sociais universais.</small></span><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
             <div class="constitution-content">
               <p>Promulgada em 5 de outubro de 1988, após a ditadura, consolidou a redemocratização e definiu o Brasil como Estado Democrático de Direito. Ampliou direitos civis, políticos e sociais e atribuiu ao Estado responsabilidades concretas na garantia desses direitos.</p>
@@ -229,7 +232,7 @@
       <section class="history-sources" id="fontes">
         <span class="eyebrow">Fontes e metodologia</span>
         <h2>Conteúdo baseado em documentação histórica</h2>
-        <p>As narrativas são sínteses para consulta, não substituem pesquisa historiográfica. Use os acervos e referências acadêmicas abaixo para conferir datas e contexto. O Dicionário Histórico-Biográfico Brasileiro da FGV informa que não inclui interinos e suplentes de curto exercício; portanto, nem todos os perfis terão verbete.</p>
+        <p>As narrativas são sínteses para consulta, não substituem pesquisa historiográfica. Use os acervos e referências acadêmicas abaixo para conferir datas e contexto.</p>
         <div class="source-list">
           <a href="https://cpdoc.fgv.br/acervo/dicionarios/dhbb" target="_blank" rel="noopener noreferrer">FGV CPDOC — Dicionário Histórico-Biográfico</a>
           <a href="https://biblioteca.presidencia.gov.br/presidencia/ex-presidentes" target="_blank" rel="noopener noreferrer">Biblioteca da Presidência — ex-presidentes</a>
@@ -251,6 +254,7 @@
 
   <script src="/js/sidebar.js"></script>
   <script src="/js/footer.js"></script>
+  <script src="/js/accordion-motion.js"></script>
   <script src="/js/historia.js"></script>
 </body>
 </html>

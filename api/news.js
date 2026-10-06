@@ -103,8 +103,10 @@ module.exports = async function handler(req, res) {
         if (!publishedA) return 1;
         if (!publishedB) return -1;
 
-        if (Boolean(b.headline) !== Boolean(a.headline)) {
-          return Boolean(a.headline) ? -1 : 1;
+        const headlineB = Boolean(b.headline);
+        const headlineA = Boolean(a.headline);
+        if (headlineB !== headlineA) {
+          return headlineA ? -1 : 1;
         }
 
         const difference = publishedB - publishedA;

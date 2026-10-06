@@ -177,10 +177,11 @@ const mandates=[...baseMandates(),...phaseOverrides,...additionalMandates].map(m
 const filterDefinitions=[["Todos",()=>true],["Primeira República",m=>m.periodId==="primeira-republica"],["Era Vargas",m=>m.periodId==="vargas"],["1946–1964",m=>m.periodId==="republica-1946"],["Regime Militar",m=>m.periodId==="regime-militar"],["Nova República",m=>m.periodId==="nova-republica"]];
 const positiveOpinion=m=>m.achievements.length?"Uma leitura favorável pode destacar "+m.achievements.slice(0,2).join("; ")+".":"Não há elementos suficientes nesta síntese para formular uma leitura favorável específica.";
 const criticalOpinion=m=>m.controversies.length?"Uma leitura crítica pode destacar "+m.controversies.slice(0,2).join("; ")+".":"Não há elementos suficientes nesta síntese para formular uma crítica específica.";
-const themeToggle=document.getElementById("theme-toggle"),themeIcon=document.getElementById("theme-icon"),savedTheme=localStorage.getItem("theme")||"light";
+const themeToggle=document.getElementById("theme-toggle"),themeIcon=document.getElementById("theme-icon"),headerThemeToggle=document.getElementById("header-theme-toggle"),headerThemeIcon=document.getElementById("header-theme-icon"),savedTheme=localStorage.getItem("theme")||"light";
 document.documentElement.setAttribute("data-theme",savedTheme);
-function updateThemeControl(theme){if(!themeToggle||!themeIcon)return;const dark=theme==="dark";themeIcon.className=dark?"fas fa-sun":"fas fa-moon";themeToggle.setAttribute("aria-label",dark?"Ativar tema claro":"Ativar tema escuro");themeToggle.setAttribute("title",dark?"Ativar tema claro":"Ativar tema escuro");themeToggle.setAttribute("aria-pressed",String(dark))}
-updateThemeControl(savedTheme);themeToggle?.addEventListener("click",()=>{const theme=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",theme);localStorage.setItem("theme",theme);updateThemeControl(theme)});
+function updateThemeControl(theme){const dark=theme==="dark";[[themeToggle,themeIcon],[headerThemeToggle,headerThemeIcon]].forEach(([button,icon])=>{if(!button||!icon)return;icon.className=dark?"fas fa-sun":"fas fa-moon";button.setAttribute("aria-label",dark?"Ativar tema claro":"Ativar tema escuro");button.setAttribute("title",dark?"Ativar tema claro":"Ativar tema escuro");button.setAttribute("aria-pressed",String(dark))})}
+const themeIconAnimations=new WeakMap();function animateThemeIcons(){if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;[themeIcon,headerThemeIcon].forEach(icon=>{if(!icon?.animate)return;themeIconAnimations.get(icon)?.cancel();const animation=icon.animate([{rotate:"0deg"},{rotate:"360deg"}],{duration:800,easing:"cubic-bezier(.4, 0, .2, 1)"});themeIconAnimations.set(icon,animation);animation.onfinish=()=>{if(themeIconAnimations.get(icon)===animation)themeIconAnimations.delete(icon)}})}
+updateThemeControl(savedTheme);const toggleTheme=()=>{animateThemeIcons();const theme=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",theme);localStorage.setItem("theme",theme);updateThemeControl(theme)};themeToggle?.addEventListener("click",toggleTheme);headerThemeToggle?.addEventListener("click",toggleTheme);
 const timeline=document.getElementById("mandates-timeline"),searchInput=document.getElementById("mandates-search"),filters=document.getElementById("mandates-filters"),count=document.getElementById("mandates-count");let activeFilter="Todos";
 function renderFilters(){filters.innerHTML=filterDefinitions.map(([label])=>'<button class="history-filter '+(label===activeFilter?"active":"")+'" type="button" data-filter="'+escapeHtml(label)+'">'+escapeHtml(label)+"</button>").join("");filters.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{activeFilter=b.dataset.filter;renderFilters();renderMandates()}))}
 const portraitCache=new Map();
@@ -271,10 +272,10 @@ function renderMandate(m){
 }
 let selectedMandateId="";
 function renderTimelineNavigator(visible){
-  const items=visible.map((m,index)=>'<button class="president-timeline-node'+(m.id===selectedMandateId?' active':'')+'" type="button" data-mandate-id="'+escapeHtml(m.id)+'" aria-label="Ver '+escapeHtml(m.name)+' — '+escapeHtml(m.years)+'"><span class="timeline-node-year">'+escapeHtml(m.years)+'</span><span class="timeline-node-dot"></span><strong>'+escapeHtml(m.name)+'</strong><small>'+escapeHtml(m.role)+'</small></button>').join("");
+  const items=visible.map(m=>'<button class="president-timeline-node'+(m.id===selectedMandateId?' active':'')+'" type="button" data-mandate-id="'+escapeHtml(m.id)+'" aria-label="Ver '+escapeHtml(m.name)+' — '+escapeHtml(m.years)+'"><span class="timeline-node-year">'+escapeHtml(m.years)+'</span><span class="timeline-node-dot"></span><strong>'+escapeHtml(m.name)+'</strong><small>'+escapeHtml(m.role)+'</small></button>').join("");
   return '<div class="president-timeline-wrap"><div class="president-timeline-header"><div><span class="eyebrow">Selecione um período</span><p>Clique em um ano para abrir o presidente e o mandato correspondente.</p></div><button class="timeline-collapse" type="button" aria-expanded="true"><i class="fas fa-chevron-up"></i><span>Recolher</span></button></div><div class="president-timeline-scroll"><div class="president-timeline-track">'+items+'</div></div></div>';
 }
-function bindTimeline(visible){
+function bindTimeline(){
   timeline.querySelectorAll(".president-timeline-node").forEach(node=>node.addEventListener("click",()=>{
     selectedMandateId=node.dataset.mandateId;
     renderMandates();
@@ -295,8 +296,7 @@ function renderMandates(){
   if(!visible.some(m=>m.id===selectedMandateId)) selectedMandateId=visible[0].id;
   const selected=visible.find(m=>m.id===selectedMandateId)||visible[0];
   timeline.innerHTML=renderTimelineNavigator(visible)+'<div class="mandate-detail" id="mandate-detail">'+renderMandate(selected)+'</div>';
-  bindTimeline(visible);
-  timeline.querySelectorAll(".mandate-accordion").forEach(item=>item.addEventListener("toggle",()=>{if(!item.open)return;item.closest(".mandate-accordions").querySelectorAll(".mandate-accordion[open]").forEach(other=>{if(other!==item)other.open=false})}));
+  bindTimeline();
   loadSelectedPortrait(selected);
   const activeNode=timeline.querySelector(".president-timeline-node.active");
   activeNode?.scrollIntoView({behavior:"auto",block:"nearest",inline:"center"});

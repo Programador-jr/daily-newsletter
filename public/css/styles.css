@@ -1553,6 +1553,29 @@ body.subscription-popup-open {
   border-left: 1px solid var(--border);
 }
 
+.header-theme-toggle {
+  flex: 0 0 auto;
+}
+
+.site-header .header-main-nav .header-theme-toggle,
+.site-header .header-main-nav .header-theme-toggle:hover,
+.site-header .header-main-nav .header-theme-toggle:focus,
+.site-header .header-main-nav .header-theme-toggle:focus-visible,
+.site-header .header-main-nav .header-theme-toggle:active {
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+  border-radius: 0;
+}
+
+.site-header .header-main-nav .header-theme-toggle:hover,
+.site-header .header-main-nav .header-theme-toggle:focus,
+.site-header .header-main-nav .header-theme-toggle:focus-visible,
+.site-header .header-main-nav .header-theme-toggle:active {
+  color: var(--text-main);
+}
+
 .site-header .sidebar-toggle,
 .site-header .theme-toggle {
   width: 38px;
@@ -1730,6 +1753,26 @@ body.subscription-popup-open {
 /* SWITCH DE TEMA ANIMADO NO MENU */
 .sidebar-theme-toggle{justify-content:flex-start;gap:.75rem}.theme-switch-track{position:relative;flex:0 0 auto;width:52px;height:28px;display:flex;align-items:center;padding:0 5px;border-radius:999px;background:var(--switch-bg);box-sizing:border-box;transition:background-color 800ms ease}.theme-switch-track::before{position:absolute;content:"";left:4px;top:3px;width:22px;height:22px;border-radius:50%;background:var(--switch-circle);box-shadow:0 1px 3px rgba(0,0,0,.22);transition:transform 800ms cubic-bezier(.4,0,.2,1),background-color 800ms ease}.theme-switch-track i{position:relative;z-index:1;width:22px;margin-left:0;color:var(--switch-sun);font-size:.68rem;line-height:22px;text-align:center;transition:transform 800ms cubic-bezier(.4,0,.2,1),color 800ms ease}.sidebar-theme-toggle[aria-pressed="true"] .theme-switch-track::before{transform:translateX(22px)}.sidebar-theme-toggle[aria-pressed="true"] .theme-switch-track i{transform:translateX(22px) rotate(180deg);color:#00bfff}.sidebar-theme-toggle:hover .theme-switch-track,.sidebar-theme-toggle:focus-visible .theme-switch-track{background:color-mix(in srgb,var(--switch-bg) 88%,var(--primary))}.sidebar-theme-toggle:focus-visible{outline:3px solid var(--switch-focus);outline-offset:2px}@media(prefers-reduced-motion:reduce){.theme-switch-track,.theme-switch-track::before,.theme-switch-track i{transition-duration:.01ms}}
 
+.sidebar-theme-toggle[aria-pressed="false"] .theme-switch-track i,
+.header-theme-toggle[aria-pressed="false"] #header-theme-icon {
+  color: #2685d8;
+}
+
+.sidebar-theme-toggle[aria-pressed="true"] .theme-switch-track i,
+.header-theme-toggle[aria-pressed="true"] #header-theme-icon {
+  color: #ffd43b;
+}
+
+.header-theme-toggle #header-theme-icon {
+  transition: color 800ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-theme-toggle #header-theme-icon {
+    transition-duration: .01ms;
+  }
+}
+
 .site-sidebar-nav a.active,
 .site-sidebar-nav a[aria-current="page"] {
   background: color-mix(in srgb, var(--primary) 7%, var(--card-bg));
@@ -1748,6 +1791,10 @@ body.subscription-popup-open {
 }
 
 @media (max-width: 820px) {
+  .header-theme-toggle {
+    display: none !important;
+  }
+
   .site-header {
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas: "logo nav";
