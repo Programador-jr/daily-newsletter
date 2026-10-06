@@ -1670,3 +1670,59 @@ body.subscription-popup-open {
     transition: none;
   }
 }
+
+
+/* TEMA DENTRO DO MENU DE NAVEGAÇÃO */
+.site-sidebar-preferences {
+  margin-top: auto;
+  padding: 1rem 0 0;
+  border-top: 1px solid var(--border);
+}
+
+.site-sidebar-preferences .site-sidebar-label {
+  display: block;
+  margin-bottom: .45rem;
+}
+
+.sidebar-theme-toggle {
+  width: 100%;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .68rem .7rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-main);
+  font: inherit;
+  font-size: .84rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.sidebar-theme-toggle i {
+  width: 18px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.sidebar-theme-toggle:hover,
+.sidebar-theme-toggle:focus-visible {
+  background: color-mix(in srgb, var(--primary) 7%, var(--card-bg));
+  color: var(--primary);
+  outline: none;
+}
+
+.sidebar-theme-toggle:hover i,
+.sidebar-theme-toggle:focus-visible i {
+  color: var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-theme-toggle {
+    transition: none;
+  }
+}
