@@ -183,6 +183,25 @@ function updateThemeControl(theme){if(!themeToggle||!themeIcon)return;const dark
 updateThemeControl(savedTheme);themeToggle?.addEventListener("click",()=>{const theme=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",theme);localStorage.setItem("theme",theme);updateThemeControl(theme)});
 const timeline=document.getElementById("mandates-timeline"),searchInput=document.getElementById("mandates-search"),filters=document.getElementById("mandates-filters"),count=document.getElementById("mandates-count");let activeFilter="Todos";
 function renderFilters(){filters.innerHTML=filterDefinitions.map(([label])=>'<button class="history-filter '+(label===activeFilter?"active":"")+'" type="button" data-filter="'+escapeHtml(label)+'">'+escapeHtml(label)+"</button>").join("");filters.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{activeFilter=b.dataset.filter;renderFilters();renderMandates()}))}
+const portraitCache=new Map();
+function portraitText(value){const parsed=new DOMParser().parseFromString(String(value||""),"text/html");return parsed.body.textContent.replace(/\\s+/g," ").trim()}
+function reusablePortrait(license){const value=portraitText(license).toLowerCase();return !/\\b(nc|nd)\\b/.test(value)&&(value.includes("public domain")||value.includes("cc0")||/\\bcc by(?:-sa)?\\b/.test(value))}
+async function fetchPresidentPortrait(m){
+  if(portraitCache.has(m.name)) return portraitCache.get(m.name);
+  const url=new URL("https://commons.wikimedia.org/w/api.php");
+  url.search=new URLSearchParams({action:"query",generator:"search",gsrsearch:'filetype:bitmap "'+m.name+'"',gsrnamespace:"6",gsrlimit:"15",prop:"imageinfo",iiprop:"url|extmetadata",iiurlwidth:"440",format:"json",origin:"*"});
+  const promise=fetch(url).then(r=>r.ok?r.json():null).then(data=>{
+    const candidates=Object.values(data?.query?.pages||{}).map(page=>{const image=page.imageinfo?.[0],meta=image?.extmetadata||{};if(!image)return null;const title=portraitText(page.title.replace(/^File:/,"")).toLowerCase();const desc=portraitText(meta.ImageDescription?.value).toLowerCase();const combined=title+" "+desc;const words=m.name.toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").split(/\\s+/).filter(w=>w.length>2);const normalizedCombined=combined.normalize("NFD").replace(/[\\u0300-\\u036f]/g,"");if(!words.every(w=>normalizedCombined.includes(w))||!/portrait|retrato|president|presidente|photograph|fotografia/.test(combined)||/signature|assinatura|logo|coat of arms|brasao/.test(title)||!reusablePortrait(meta.LicenseShortName?.value)||!/^https:\\/(\\/)(thumb\\.wikimedia\\.org|upload\\.wikimedia\\.org)/.test(image.thumburl||"")||!/^https:\\/\\/commons\\.wikimedia\\.org\\/wiki\\/File:/.test(image.descriptionurl||""))return null;return {url:image.thumburl,file:image.descriptionurl,creator:portraitText(meta.Artist?.value)} }).filter(Boolean);return candidates[0]||null}).catch(()=>null);
+  portraitCache.set(m.name,promise);return promise;
+}
+async function loadSelectedPortrait(m){
+  const portrait=await fetchPresidentPortrait(m);if(!portrait)return;
+  const image=timeline.querySelector(".mandate-portrait-image"),placeholder=timeline.querySelector(".mandate-portrait-placeholder");
+  if(!image)return;
+  image.src=portrait.url;image.hidden=false;image.alt="Retrato de "+m.name;image.title="Fonte: Wikimedia Commons";placeholder?.remove();
+  image.closest(".mandate-portrait")?.setAttribute("data-source",portrait.file);
+}
+
 function renderMandate(m){
   const interim=/interin|junta|provisório|provisoria/i.test(m.role+" "+m.name);
   const photo=m.photo||"";
@@ -234,7 +253,7 @@ function renderMandates(){
   const selected=visible.find(m=>m.id===selectedMandateId)||visible[0];
   timeline.innerHTML=renderTimelineNavigator(visible)+'<div class="mandate-detail" id="mandate-detail">'+renderMandate(selected)+'</div>';
   bindTimeline(visible);
-  timeline.querySelectorAll(".mandate-accordion").forEach(item=>item.addEventListener("toggle",()=>{if(!item.open)return;item.closest(".mandate-accordions").querySelectorAll(".mandate-accordion[open]").forEach(other=>{if(other!==item)other.open=false})}));
+  timeline.querySelectorAll(".mandate-accordion").forEach(item=>item.addEventListener("toggle",()=>{if(!item.open)return;item.closest(".mandate-accordions").querySelectorAll(".mandate-accordion[open]").forEach(other=>{if(other!==item)other.open=false})}));\n  loadSelectedPortrait(selected);
   const activeNode=timeline.querySelector(".president-timeline-node.active");
   activeNode?.scrollIntoView({behavior:"auto",block:"nearest",inline:"center"});
 }
