@@ -1,17 +1,25 @@
-const switchInput = document.getElementById("theme-switch");
-const themeLabel = document.getElementById("theme-label");
+const themeToggle = document.getElementById("theme-toggle");
+const themeIcon = document.getElementById("theme-icon");
 const savedTheme = localStorage.getItem("theme") || "light";
 
 document.documentElement.setAttribute("data-theme", savedTheme);
-if (switchInput) switchInput.checked = savedTheme === "dark";
 
-if (switchInput) {
-  switchInput.addEventListener("change", event => {
-    const theme = event.target.checked ? "dark" : "light";
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  });
-}
+const updateThemeControl = theme => {
+  if (!themeToggle || !themeIcon) return;
+  const isDark = theme === "dark";
+  themeIcon.className = isDark ? "fas fa-sun" : "fas fa-moon";
+  themeToggle.setAttribute("aria-label", isDark ? "Ativar tema claro" : "Ativar tema escuro");
+  themeToggle.setAttribute("title", isDark ? "Ativar tema claro" : "Ativar tema escuro");
+};
+
+updateThemeControl(savedTheme);
+
+themeToggle?.addEventListener("click", () => {
+  const theme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("theme", theme);
+  updateThemeControl(theme);
+});
 
 const periods = [
   {

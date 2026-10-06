@@ -18,12 +18,26 @@
         <div class="logo-top"><i class="fas fa-crown"></i> KING'S</div>
         <div class="logo-bottom">Newsletter</div>
       </div>
-      <nav class="header-main-nav header-main-nav-editions" aria-label="Navegação do site">
-  <div class="nav-search"><input type="text" id="search-input" placeholder="Buscar notícias..."><i class="fas fa-search"></i></div>
-  <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span><span class="sidebar-toggle-text">Menu</span></button>
-  <div class="theme-toggle" aria-label="Alternar tema"><span class="theme-label" id="theme-label"></span><label class="switch"><input type="checkbox" id="theme-switch"><span class="slider"></span></label></div>
- </nav>
-</header>
+      <nav class="header-main-nav header-main-nav-editions" aria-label="Navegação principal">
+        <div class="header-primary-links">
+          <a href="/">Jornal Diário</a>
+          <a href="/editions" class="active" aria-current="page">Edições</a>
+          <a href="/historia">História</a>
+        </div>
+        <div class="nav-search">
+          <input type="text" id="search-input" placeholder="Buscar notícias..." aria-label="Buscar notícias">
+          <i class="fas fa-search" aria-hidden="true"></i>
+        </div>
+        <div class="header-nav-actions">
+          <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu">
+            <span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+          </button>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro">
+            <i class="fas fa-moon" id="theme-icon" aria-hidden="true"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
 
 <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
   <div class="site-sidebar-header">
