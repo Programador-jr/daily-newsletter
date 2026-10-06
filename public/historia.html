@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="pt-BR" class="history-document">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Linha do tempo da História do Brasil, do período colonial à República contemporânea.">
+  <title>King's Newsletter - História do Brasil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/historia.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="history-page">
+  <div class="container">
+    <header class="site-header">
+      <div class="logo">
+        <div class="logo-top"><i class="fas fa-crown"></i> KING'S</div>
+        <div class="logo-bottom">Newsletter</div>
+      </div>
+      <nav class="header-main-nav" aria-label="Navegação principal">
+        <div class="header-primary-links">
+          <a href="/">Jornal Diário</a>
+          <a href="/editions">Edições</a>
+          <a href="/historia" class="active" aria-current="page">História</a>
+          <a href="/presidentes">Presidentes</a>
+        </div>
+        <div class="header-nav-actions">
+          <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu">
+            <span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+          </button>
+          
+        </div>
+      </nav>
+    </header>
+
+<aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+  <div class="site-sidebar-header">
+    <div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div>
+    <button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button>
+  </div>
+  <nav class="site-sidebar-nav" aria-label="Páginas principais">
+    <div class="site-sidebar-group">
+      <span class="site-sidebar-label">Páginas principais</span>
+      <a href="/" data-sidebar-link="home"><i class="fas fa-newspaper" aria-hidden="true"></i><span>Jornal Diário</span></a>
+      <a href="/editions" data-sidebar-link="editions"><i class="fas fa-clock-rotate-left" aria-hidden="true"></i><span>Edições</span></a>
+      <a href="/historia" class="active" aria-current="page"><i class="fas fa-landmark" aria-hidden="true"></i><span>História</span></a>
+      <a href="/presidentes"><i class="fas fa-user-tie" aria-hidden="true"></i><span>Presidentes</span></a>
+    </div>
+  </nav>
+  <div class="site-sidebar-preferences">
+    <span class="site-sidebar-label">Preferências</span>
+    <button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false">
+      <span class="theme-switch-track" aria-hidden="true">
+        <i class="fas fa-moon" id="theme-icon"></i>
+      </span>
+      <span>Tema</span>
+    </button>
+  </div>
+</aside>
+<div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
+
+    <main>
+      <section class="history-hero">
+        <span class="eyebrow">História do Brasil</span>
+        <h1>Do período colonial à República contemporânea.</h1>
+        <p>Uma narrativa cronológica para entender como o Brasil foi formado, como seu Estado mudou e como diferentes governos, conflitos, leis e transformações sociais moldaram o país.</p>
+      </section>
+
+      
+      <section class="history-section history-overview" id="visao-geral" aria-labelledby="overview-title">
+        <div class="history-section-heading"><span class="eyebrow">Visão geral</span><h2 id="overview-title">Como ler a História do Brasil</h2><p>A história brasileira não é apenas uma sequência de presidentes. A formação do território, as instituições, as relações de trabalho, a escravidão, os conflitos, a economia, a cultura e as disputas sociais ajudam a explicar cada mudança de regime.</p></div>
+        <div class="history-overview-grid">
+          <article><span>01</span><h3>Estado e instituições</h3><p>Observe como monarquia, república, constituições e diferentes regimes reorganizaram o poder político.</p></article>
+          <article><span>02</span><h3>Sociedade</h3><p>Escravidão, abolição, imigração, urbanização, trabalho e desigualdade são partes centrais da trajetória nacional.</p></article>
+          <article><span>03</span><h3>Economia</h3><p>Açúcar, mineração, café, industrialização, desenvolvimentismo, inflação e estabilização ajudam a explicar as transformações do país.</p></article>
+        </div>
+      </section>
+
+      <section class="history-guide-card" aria-label="Como usar a linha do tempo">
+        <div class="history-guide-icon" aria-hidden="true">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <div>
+          <span class="eyebrow">Como navegar</span>
+          <h2>Escolha um período para conhecer a história</h2>
+          <p>Basta clicar em qualquer período da linha do tempo para abrir os detalhes e ler a história daquele momento do Brasil.</p>
+        </div>
+      </section>
+
+      <section class="history-controls" aria-label="Controles da linha do tempo">
+        <div class="history-filters" id="history-filters"></div>
+        <label class="history-search">
+          <i class="fas fa-search" aria-hidden="true"></i>
+          <input id="history-search" type="search" placeholder="Buscar período ou governante..." autocomplete="off">
+        </label>
+      </section>
+
+      <section class="timeline-section" id="linha-do-tempo" aria-labelledby="timeline-title">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Linha do tempo</span>
+            <h2 id="timeline-title">Linha do tempo da história do Brasil</h2>
+          </div>
+          <p id="timeline-count"></p>
+        </div>
+        <div class="timeline-view-options" role="group" aria-label="Modo de visualização da linha do tempo">
+          <button class="timeline-view-button active" type="button" data-timeline-view="globe" aria-pressed="true">Linha do tempo</button>
+          <button class="timeline-view-button" type="button" data-timeline-view="reel" aria-pressed="false">Rolo de filme</button>
+          <button class="timeline-view-button" type="button" data-timeline-view="list" aria-pressed="false">Lista</button>
+          <button class="timeline-view-button" type="button" data-timeline-view="grid" aria-pressed="false">Grade</button>
+        </div>
+        <div class="timeline" id="timeline"></div>
+      </section>
+
+      <section class="history-detail" id="history-detail" aria-live="polite"></section>
+
+      
+      <section class="history-section history-reference-grid" id="governos" aria-labelledby="governos-title">
+        <div class="history-section-heading"><span class="eyebrow">Governos e mandatos</span><h2 id="governos-title">O que observar em cada governo</h2><p>Os governos serão apresentados por contexto, duração, forma de chegada ao poder, principais medidas, resultados observáveis e limitações. A análise evita transformar a história em uma lista de avaliações pessoais.</p></div>
+        <div class="history-reference-cards"><article><i class="fas fa-calendar-days" aria-hidden="true"></i><h3>Mandato e contexto</h3><p>Período, sucessão, situação institucional, economia e conflitos que condicionaram as decisões.</p></article><article><i class="fas fa-list-check" aria-hidden="true"></i><h3>Medidas e projetos</h3><p>Políticas públicas, reformas, investimentos, programas e decisões relevantes do governo.</p></article><article><i class="fas fa-scale-balanced" aria-hidden="true"></i><h3>Resultados e limites</h3><p>Avanços, efeitos sociais e econômicos, custos, controvérsias e questões que permaneceram abertas.</p></article></div>
+      </section>
+      <section class="history-section" id="constituicoes" aria-labelledby="constituicoes-title">
+        <div class="history-section-heading"><span class="eyebrow">Constituições</span><h2 id="constituicoes-title">As constituições que reorganizaram o Estado</h2><p>Conheça o contexto de cada texto, como organizou o poder e quais direitos reconheceu — ou restringiu. Abra um período para ver seus principais marcos.</p></div>
+        <div class="constitution-highlight" aria-label="Destaques da Constituição de 1988">
+          <span class="eyebrow">Um marco para a vida cotidiana</span>
+          <p>A Constituição de 1988 reconheceu saúde e educação como direitos de todos e deveres do Estado. Também estabeleceu as bases do SUS e ampliou os direitos fundamentais e sociais.</p>
+          <div class="constitution-highlight-tags"><span><i class="fas fa-heart-pulse" aria-hidden="true"></i> SUS</span><span><i class="fas fa-graduation-cap" aria-hidden="true"></i> Educação</span><span><i class="fas fa-scale-balanced" aria-hidden="true"></i> Direitos fundamentais</span></div>
+        </div>
+        <div class="history-constitution-list">
+          <details class="constitution-accordion">
+            <summary><span class="constitution-year">1824</span><span class="constitution-summary"><strong>Constituição do Império</strong><small>Monarquia constitucional e Poder Moderador.</small></span><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+            <div class="constitution-content"><p>Outorgada por D. Pedro I após a dissolução da Assembleia Constituinte, organizou o Brasil como monarquia hereditária e constitucional.</p><ul><li>Previu quatro poderes: Executivo, Legislativo, Judiciário e Moderador, exercido pelo imperador.</li><li>Adotou o catolicismo como religião oficial, embora previsse tolerância limitada a outros cultos.</li><li>O voto era indireto e censitário: a participação política dependia de requisitos de renda e excluía grande parte da população.</li></ul></div>
+          </details>
+          <details class="constitution-accordion">
+            <summary><span class="constitution-year">1891</span><span class="constitution-summary"><strong>Primeira Constituição republicana</strong><small>República federativa, presidencialismo e Estado laico.</small></span><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+            <div class="constitution-content"><p>Promulgada após a Proclamação da República, substituiu a monarquia por uma federação presidencialista.</p><ul><li>Separou Igreja e Estado e estabeleceu o casamento civil.</li><li>Adotou três poderes e ampliou a autonomia dos estados.</li><li>Previu eleições diretas, mas manteve importantes exclusões: mulheres e pessoas analfabetas, por exemplo, não podiam votar.</li></ul></div>
+          </details>
+          <details class="constitution-accordion">
+            <summary><span class="constitution-year">1934</span><span class="constitution-summary"><strong>Constituição social</strong><small>Voto secreto, participação feminina e direitos trabalhistas.</small></span><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+            <div class="constitution-content"><p>Promulgada após a Revolução de 1930, refletiu mudanças na organização do Estado e as demandas por direitos sociais.</p><ul><li>Instituiu o voto secreto e reconheceu o voto feminino, já previsto no Código Eleitoral de 1932.</li><li>Incluiu direitos trabalhistas, como jornada limitada, descanso semanal e proteção ao trabalho.</li><li>Previu a Justiça Eleitoral e ampliou a atuação do Estado em áreas sociais e econômicas.</li></ul></div>
+          </details>
+          <details class="constitution-accordion">
+            <summary><span class="constitution-year">1937</span><span class="constitution-summary"><strong>Constituição do Estado Novo</strong><small>Concentração de poder e restrição das liberdades políticas.</small></span><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+            <div class="constitution-content"><p>Imposta por Getúlio Vargas no início do Estado Novo, legitimou um regime autoritário e centralizador.</p><ul><li>Concentrou poderes no Executivo e reduziu a autonomia dos estados.</li><li>O Congresso foi fechado, partidos foram extintos e eleições presidenciais foram suspensas.</li><li>A censura e a repressão limitaram a liberdade de expressão e a oposição política.</li></ul></div>
+          </details>
+          <details class="constitution-accordion">
+            <summary><span class="constitution-year">1946</span><span class="constitution-summary"><strong>Redemocratização</strong><small>Retomada das eleições e das liberdades civis.</small></span><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+            <div class="constitution-content"><p>Promulgada após o fim do Estado Novo, restabeleceu instituições representativas e garantias individuais.</p><ul><li>Restaurou eleições diretas para presidente, governos estaduais e Congresso.</li><li>Reafirmou a separação entre os poderes, o federalismo e direitos como liberdade de expressão e de associação.</li><li>Manteve direitos sociais e trabalhistas, em uma democracia que ainda tinha limites de participação e períodos de instabilidade.</li></ul></div>
+          </details>
+          <details class="constitution-accordion">
+            <summary><span class="constitution-year">1967–69</span><span class="constitution-summary"><strong>Regime militar</strong><small>Constitucionalização da ordem autoritária e poderes de exceção.</small></span><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+            <div class="constitution-content"><p>A Constituição de 1967 foi elaborada sob o regime militar. A Emenda Constitucional nº 1, de 1969, alterou profundamente o texto e é frequentemente tratada como uma nova carta constitucional.</p><ul><li>Fortaleceu o Executivo federal e restringiu a autonomia política e eleitoral.</li><li>O AI-5 e outros atos institucionais permitiram cassações, censura e suspensão de garantias, acima das proteções constitucionais.</li><li>A abertura política e a transição democrática ocorreram sob esse arranjo, até a redemocratização.</li></ul></div>
+          </details>
+          <details class="constitution-accordion constitution-accordion-current" open>
+            <summary><span class="constitution-year">1988</span><span class="constitution-summary"><strong>Constituição Cidadã</strong><small>Redemocratização, direitos fundamentais e políticas sociais universais.</small></span><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+            <div class="constitution-content">
+              <p>Promulgada em 5 de outubro de 1988, após a ditadura, consolidou a redemocratização e definiu o Brasil como Estado Democrático de Direito. Ampliou direitos civis, políticos e sociais e atribuiu ao Estado responsabilidades concretas na garantia desses direitos.</p>
+              <div class="constitution-rights-grid">
+                <article><i class="fas fa-heart-pulse" aria-hidden="true"></i><div><h3>Saúde e SUS</h3><p>A saúde é direito de todos e dever do Estado. Os artigos 196 a 200 estabeleceram as bases do Sistema Único de Saúde: acesso universal e igualitário, atendimento integral, descentralização e participação da comunidade.</p></div></article>
+                <article><i class="fas fa-graduation-cap" aria-hidden="true"></i><div><h3>Educação para todos</h3><p>O artigo 205 define a educação como direito de todos e dever do Estado e da família. A Constituição prevê igualdade de condições de acesso e permanência e ensino público gratuito em estabelecimentos oficiais. A obrigatoriedade da educação básica dos 4 aos 17 anos foi ampliada pela Emenda Constitucional nº 59, de 2009.</p></div></article>
+                <article><i class="fas fa-people-group" aria-hidden="true"></i><div><h3>Direitos sociais</h3><p>Reconheceu, entre outros, direitos à saúde, educação, alimentação, trabalho, moradia, transporte, lazer, segurança e previdência social, além da proteção à maternidade, à infância e à assistência.</p></div></article>
+                <article><i class="fas fa-scale-balanced" aria-hidden="true"></i><div><h3>Liberdades e participação</h3><p>Protege liberdades de expressão, consciência, associação e organização política, amplia garantias judiciais e fortalece eleições, partidos e participação social.</p></div></article>
+              </div>
+              <p class="constitution-note">A Constituição estabelece direitos e deveres; sua concretização depende de políticas públicas, financiamento, instituições e fiscalização da sociedade.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+      <section class="history-section" id="marcos-historicos" aria-labelledby="marcos-title">
+        <div class="history-section-heading"><span class="eyebrow">Marcos históricos</span><h2 id="marcos-title">Acontecimentos que mudaram o país</h2><p>Independência, Abolição, República, Revolução de 1930, Estado Novo, Brasília, golpe de 1964, redemocratização, Constituição de 1988 e Plano Real são alguns dos marcos que serão contextualizados ao longo da narrativa.</p></div>
+        <div class="history-chip-list">
+          <button type="button" data-history-event="1822|Independência do Brasil">Independência — 1822</button>
+          <button type="button" data-history-event="1831|Abdicação de D. Pedro I">Abdicação — 1831</button>
+          <button type="button" data-history-event="1864|Início da Guerra do Paraguai">Guerra do Paraguai — 1864–1870</button>
+          <button type="button" data-history-event="1888|Lei Áurea">Abolição — 1888</button>
+          <button type="button" data-history-event="1889|Proclamação da República">República — 1889</button>
+          <button type="button" data-history-event="1930|Revolução de 1930">Revolução de 1930</button>
+          <button type="button" data-history-event="1937|Estado Novo">Estado Novo — 1937</button>
+          <button type="button" data-history-event="1960|Inauguração de Brasília">Brasília — 1960</button>
+          <button type="button" data-history-event="1964|Ruptura institucional">1964 e regime militar</button>
+          <button type="button" data-history-event="1968|AI-5">AI-5 — 1968</button>
+          <button type="button" data-history-event="1979|Lei da Anistia">Anistia — 1979</button>
+          <button type="button" data-history-event="1983–1984|Diretas Já">Diretas Já</button>
+          <button type="button" data-history-event="1988|Constituição Federal">Constituição — 1988</button>
+          <button type="button" data-history-event="1994|Plano Real">Plano Real — 1994</button>
+        </div>
+      </section>
+      <section class="history-section history-reference-grid" id="guerras-conflitos" aria-labelledby="conflitos-title">
+        <div class="history-section-heading"><span class="eyebrow">Guerras e conflitos</span><h2 id="conflitos-title">Conflitos internos e externos</h2><p>Os conflitos serão analisados com causas, participantes, desenvolvimento, consequências e impactos sobre o Estado e a sociedade.</p></div>
+        <div class="history-reference-cards"><article><h3>Império</h3><p>Independência, Cisplatina, Revolução Farroupilha e Guerra do Paraguai.</p></article><article><h3>República</h3><p>Canudos, Contestado, Revolta da Armada, Revolução Federalista e movimentos tenentistas.</p></article><article><h3>Conflito político</h3><p>Crises institucionais, rupturas de regime e disputas que alteraram a ordem constitucional.</p></article></div>
+      </section>
+      <section class="history-section history-reference-grid" id="economia-sociedade" aria-labelledby="economia-title">
+        <div class="history-section-heading"><span class="eyebrow">Economia e sociedade</span><h2 id="economia-title">As transformações que formaram o Brasil</h2><p>Da economia colonial baseada na grande propriedade e no trabalho escravizado à industrialização e à urbanização, as mudanças econômicas caminharam junto com profundas transformações sociais.</p></div>
+        <div class="history-topic-list">
+          <details class="history-topic-accordion">
+            <summary><span class="history-topic-summary"><strong>Colônia e Império</strong><small>Açúcar, mineração, café e uma sociedade marcada pela escravidão.</small></span><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+            <div class="history-topic-content"><p>A economia colonial foi organizada para exportar produtos e concentrar terra e riqueza. Esse modelo mudou ao longo do tempo, mas preservou profundas desigualdades sociais.</p><ul><li>A produção açucareira se expandiu sobretudo no litoral nordestino, apoiada em grandes propriedades e no trabalho escravizado de africanos e seus descendentes.</li><li>A mineração, a partir do final do século XVII, estimulou a ocupação do interior, o crescimento de vilas e novas rotas de comércio.</li><li>No século XIX, o café tornou-se o principal produto de exportação e impulsionou a expansão de ferrovias e cidades, especialmente no Sudeste.</li><li>A abolição da escravidão, em 1888, não foi acompanhada por políticas amplas de acesso à terra, moradia e educação para a população liberta; a imigração também alterou as relações de trabalho.</li></ul></div>
+          </details>
+          <details class="history-topic-accordion">
+            <summary><span class="history-topic-summary"><strong>Industrialização e urbanização</strong><small>Expansão da indústria, migrações e novas relações de trabalho.</small></span><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+            <div class="history-topic-content"><p>Ao longo do século XX, o país deixou de ser predominantemente rural e ampliou sua produção industrial. A transformação foi acelerada por políticas estatais, investimentos privados e migrações internas.</p><ul><li>Nos governos de Getúlio Vargas, o Estado investiu em indústria de base e criou instituições trabalhistas; a CLT foi promulgada em 1943, embora a proteção não alcançasse todos os trabalhadores da mesma forma.</li><li>O Plano de Metas de Juscelino Kubitschek incentivou a indústria automobilística, a energia e os transportes, enquanto a construção de Brasília simbolizou a interiorização do desenvolvimento.</li><li>O crescimento das cidades foi acompanhado por migrações, formação de periferias e demandas por habitação, saneamento, transporte e serviços públicos.</li><li>O crescimento econômico não eliminou a concentração de renda nem as desigualdades regionais; esses contrastes também marcaram o período de expansão durante o regime militar.</li></ul></div>
+          </details>
+          <details class="history-topic-accordion">
+            <summary><span class="history-topic-summary"><strong>República recente</strong><small>Estabilização monetária, políticas sociais e desafios do trabalho.</small></span><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+            <div class="history-topic-content"><p>Desde a redemocratização, a economia brasileira alternou períodos de crise, estabilização e expansão. As mudanças na moeda e nas políticas públicas afetaram diretamente o cotidiano das famílias.</p><ul><li>A década de 1980 foi marcada por endividamento e inflação elevada, que reduzia rapidamente o poder de compra e levou a sucessivos planos econômicos.</li><li>O Plano Real, implantado em 1994, estabilizou a moeda e conteve a hiperinflação, sem resolver por si só problemas estruturais como pobreza e desigualdade.</li><li>A Constituição de 1988 ampliou direitos sociais e responsabilidades públicas; nas décadas seguintes, políticas de saúde, educação e transferência de renda tiveram efeitos importantes, com resultados e limites debatidos.</li><li>Informalidade, diferenças salariais, desemprego e transformações tecnológicas continuam a influenciar as condições de trabalho e a distribuição de oportunidades.</li></ul></div>
+          </details>
+        </div>
+      </section>
+      <section class="history-section history-reference-grid" id="cultura" aria-labelledby="cultura-title">
+        <div class="history-section-heading"><span class="eyebrow">Cultura</span><h2 id="cultura-title">Literatura, artes, música e identidade</h2><p>A cultura também registra as disputas e transformações do país: literatura, música, cinema, arquitetura, patrimônio e manifestações regionais ajudam a entender diferentes épocas.</p></div>
+        <div class="history-topic-list">
+          <details class="history-topic-accordion">
+            <summary><span class="history-topic-summary"><strong>Modernismo e artes</strong><small>Rupturas estéticas, debates sobre identidade e criação artística.</small></span><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+            <div class="history-topic-content"><p>A Semana de Arte Moderna de 1922 tornou-se um marco do modernismo brasileiro, mas a renovação artística foi um processo amplo, com antecedentes e diferentes caminhos pelo país.</p><ul><li>Artistas e escritores modernistas questionaram padrões acadêmicos e buscaram novas linguagens para representar a vida brasileira.</li><li>Na literatura, autores como Mário de Andrade e Oswald de Andrade experimentaram com a língua e com temas nacionais, em diálogo com movimentos internacionais.</li><li>O modernismo não foi homogêneo: suas propostas geraram debates sobre quem podia representar a nação e quais culturas eram reconhecidas como brasileiras.</li><li>Ao longo do século XX, literatura, artes visuais, teatro, cinema e música incorporaram novas vozes, meios de comunicação e experiências sociais.</li></ul></div>
+          </details>
+          <details class="history-topic-accordion">
+            <summary><span class="history-topic-summary"><strong>Arquitetura e patrimônio</strong><small>De centros coloniais à arquitetura moderna e às cidades atuais.</small></span><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+            <div class="history-topic-content"><p>A arquitetura brasileira reúne influências indígenas, africanas, europeias e modernas. Edifícios e cidades registram tanto projetos de poder quanto modos diversos de habitar e construir.</p><ul><li>Igrejas, conjuntos urbanos e construções coloniais revelam a organização política e religiosa da época, além do trabalho de pessoas escravizadas e artífices.</li><li>No século XX, arquitetos brasileiros desenvolveram projetos modernos; Brasília, inaugurada em 1960, tornou-se um de seus exemplos mais conhecidos.</li><li>O patrimônio inclui também paisagens, territórios e práticas culturais, cuja preservação envolve comunidades, instituições e escolhas sobre memória pública.</li><li>O crescimento urbano trouxe desafios de moradia, mobilidade e acesso a espaços culturais, que seguem presentes nas cidades contemporâneas.</li></ul></div>
+          </details>
+          <details class="history-topic-accordion">
+            <summary><span class="history-topic-summary"><strong>Cultura popular e diversidade</strong><small>Tradições, festas, música, religiosidades e identidades regionais.</small></span><i class="fas fa-chevron-down" aria-hidden="true"></i></summary>
+            <div class="history-topic-content"><p>As culturas brasileiras foram construídas por povos indígenas, africanos e europeus, entre outros grupos, em relações marcadas por trocas, conflitos, resistência e desigualdade.</p><ul><li>Festas populares, culinárias, narrativas e celebrações religiosas variam entre regiões e comunidades e continuam se transformando.</li><li>Samba, capoeira e diferentes gêneros musicais expressam criação coletiva e trajetórias afro-brasileiras, apesar de períodos de repressão e preconceito.</li><li>Línguas, conhecimentos e expressões indígenas permanecem vivos e diversos; não são apenas parte do passado, mas também da sociedade contemporânea.</li><li>Rádio, televisão, cinema e meios digitais ampliaram a circulação cultural e criaram novos espaços de produção, encontro e disputa por representação.</li></ul></div>
+          </details>
+        </div>
+      </section>
+
+      <section class="history-sources" id="fontes">
+        <span class="eyebrow">Fontes e metodologia</span>
+        <h2>Conteúdo baseado em documentação histórica</h2>
+        <p>As narrativas são sínteses para consulta, não substituem pesquisa historiográfica. Use os acervos e referências acadêmicas abaixo para conferir datas e contexto. O Dicionário Histórico-Biográfico Brasileiro da FGV informa que não inclui interinos e suplentes de curto exercício; portanto, nem todos os perfis terão verbete.</p>
+        <div class="source-list">
+          <a href="https://cpdoc.fgv.br/acervo/dicionarios/dhbb" target="_blank" rel="noopener noreferrer">FGV CPDOC — Dicionário Histórico-Biográfico</a>
+          <a href="https://biblioteca.presidencia.gov.br/presidencia/ex-presidentes" target="_blank" rel="noopener noreferrer">Biblioteca da Presidência — ex-presidentes</a>
+          <a href="https://presidentes.an.gov.br/" target="_blank" rel="noopener noreferrer">Arquivo Nacional — Acervos Presidenciais</a>
+          <a href="https://www.tse.jus.br/" target="_blank" rel="noopener noreferrer">Tribunal Superior Eleitoral</a>
+          <a href="https://www12.senado.leg.br/" target="_blank" rel="noopener noreferrer">Senado Federal</a>
+          <a href="https://www.camara.leg.br/" target="_blank" rel="noopener noreferrer">Câmara dos Deputados</a>
+          <a href="https://www.gov.br/planalto/pt-br" target="_blank" rel="noopener noreferrer">Planalto — legislação e Presidência</a>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer"></div>
+  </div>
+
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="Voltar ao topo" aria-hidden="true" tabindex="-1" title="Voltar ao topo">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </button>
+
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/footer.js"></script>
+  <script src="/js/historia.js"></script>
+</body>
+</html>

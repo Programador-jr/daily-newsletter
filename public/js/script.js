@@ -6,8 +6,8 @@ const grid = document.querySelector("#news-grid"),
   historyList = document.getElementById('history-list'),
   searchInput = document.getElementById('search-input'),
   filterButtons = document.getElementById('filter-buttons'),
-  switchInput = document.getElementById('theme-switch'),
-  themeLabel = document.getElementById('theme-label');
+  themeToggle = document.getElementById('theme-toggle'),
+  themeIcon = document.getElementById('theme-icon');
 
 let currentStories = [];
 let isLoadingEdition = true;
@@ -75,24 +75,22 @@ const isEditionsPage = currentPage === "/editions" || currentPage === "/editions
 const savedTheme = localStorage.getItem("theme") || "light";
 document.documentElement.setAttribute("data-theme", savedTheme);
 
-if (savedTheme === "dark") {
-  switchInput.checked = true;
-  themeLabel.textContent = "";
-} else {
-  switchInput.checked = false;
-  themeLabel.textContent = "";
-}
+const updateThemeControl = (theme) => {
+  if (!themeToggle || !themeIcon) return;
+  const isDark = theme === "dark";
+  themeIcon.className = isDark ? "fas fa-sun" : "fas fa-moon";
+  themeToggle.setAttribute("aria-label", isDark ? "Ativar tema claro" : "Ativar tema escuro");
+  themeToggle.setAttribute("title", isDark ? "Ativar tema claro" : "Ativar tema escuro");
+  themeToggle.setAttribute("aria-pressed", String(isDark));
+};
 
-switchInput.addEventListener('change', (e) => {
-  if(e.target.checked) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    themeLabel.textContent = '';
-    localStorage.setItem('theme', 'dark');
-  } else {
-    document.documentElement.setAttribute('data-theme', 'light');
-    themeLabel.textContent = '';
-    localStorage.setItem('theme', 'light');
-  }
+updateThemeControl(savedTheme);
+
+themeToggle?.addEventListener("click", () => {
+  const theme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("theme", theme);
+  updateThemeControl(theme);
 });
 
 setLoadingState(true);
