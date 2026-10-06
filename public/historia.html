@@ -19,14 +19,8 @@
         <div class="logo-top"><i class="fas fa-crown"></i> KING'S</div>
         <div class="logo-bottom">Newsletter</div>
       </div>
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="editions">Edições</a></li>
-          <li><a href="historia" class="active">História</a></li>
-          <li><a href="about">Sobre</a></li>
-        </ul>
-      </nav>
+      <nav class="header-nav-placeholder" aria-hidden="true"></nav>
+      <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir navegação" aria-controls="site-sidebar" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i><span>Menu</span></button>
       <div class="theme-toggle">
         <span class="theme-label" id="theme-label"></span>
         <label class="switch">
@@ -36,11 +30,53 @@
       </div>
     </header>
 
+<aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+  <div class="site-sidebar-header">
+    <div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div>
+    <button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button>
+  </div>
+  <nav class="site-sidebar-nav">
+    <div class="site-sidebar-group">
+      <span class="site-sidebar-label">Jornal Diário</span>
+      <a href="/" data-sidebar-link="home"><i class="fas fa-newspaper" aria-hidden="true"></i><span>Jornal Diário</span></a>
+      <a href="/editions" data-sidebar-link="editions"><i class="fas fa-clock-rotate-left" aria-hidden="true"></i><span>Histórico</span></a>
+    </div>
+    <div class="site-sidebar-group">
+      <span class="site-sidebar-label">História do Brasil</span>
+      <a href="/historia#visao-geral"><i class="fas fa-landmark" aria-hidden="true"></i><span>Visão geral</span></a>
+      <a href="/historia#linha-do-tempo"><i class="fas fa-timeline" aria-hidden="true"></i><span>Linha do tempo</span></a>
+      <a href="/historia#presidentes"><i class="fas fa-user-tie" aria-hidden="true"></i><span>Presidentes</span></a>
+      <a href="/historia#governos"><i class="fas fa-building-columns" aria-hidden="true"></i><span>Governos e mandatos</span></a>
+      <a href="/historia#constituicoes"><i class="fas fa-scale-balanced" aria-hidden="true"></i><span>Constituições</span></a>
+      <a href="/historia#marcos-historicos"><i class="fas fa-flag" aria-hidden="true"></i><span>Marcos históricos</span></a>
+      <a href="/historia#guerras-conflitos"><i class="fas fa-shield-halved" aria-hidden="true"></i><span>Guerras e conflitos</span></a>
+      <a href="/historia#economia-sociedade"><i class="fas fa-chart-line" aria-hidden="true"></i><span>Economia e sociedade</span></a>
+      <a href="/historia#cultura"><i class="fas fa-book-open" aria-hidden="true"></i><span>Cultura</span></a>
+      <a href="/historia#fontes"><i class="fas fa-book" aria-hidden="true"></i><span>Fontes</span></a>
+    </div>
+    <div class="site-sidebar-group site-sidebar-secondary">
+      <span class="site-sidebar-label">Projeto</span>
+      <a href="/about"><i class="fas fa-circle-info" aria-hidden="true"></i><span>Sobre</span></a>
+    </div>
+  </nav>
+</aside>
+<div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
+
     <main>
       <section class="history-hero">
         <span class="eyebrow">História do Brasil</span>
         <h1>Do período colonial à República contemporânea.</h1>
         <p>Uma narrativa cronológica para entender como o Brasil foi formado, como seu Estado mudou e como diferentes governos, conflitos, leis e transformações sociais moldaram o país.</p>
+      </section>
+
+      
+      <section class="history-section history-overview" id="visao-geral" aria-labelledby="overview-title">
+        <div class="history-section-heading"><span class="eyebrow">Visão geral</span><h2 id="overview-title">Como ler a História do Brasil</h2><p>A história brasileira não é apenas uma sequência de presidentes. A formação do território, as instituições, as relações de trabalho, a escravidão, os conflitos, a economia, a cultura e as disputas sociais ajudam a explicar cada mudança de regime.</p></div>
+        <div class="history-overview-grid">
+          <article><span>01</span><h3>Estado e instituições</h3><p>Observe como monarquia, república, constituições e diferentes regimes reorganizaram o poder político.</p></article>
+          <article><span>02</span><h3>Sociedade</h3><p>Escravidão, abolição, imigração, urbanização, trabalho e desigualdade são partes centrais da trajetória nacional.</p></article>
+          <article><span>03</span><h3>Economia</h3><p>Açúcar, mineração, café, industrialização, desenvolvimentismo, inflação e estabilização ajudam a explicar as transformações do país.</p></article>
+        </div>
       </section>
 
       <section class="history-guide-card" aria-label="Como usar a linha do tempo">
@@ -62,7 +98,7 @@
         </label>
       </section>
 
-      <section class="timeline-section" aria-labelledby="timeline-title">
+      <section class="timeline-section" id="linha-do-tempo" aria-labelledby="timeline-title">
         <div class="section-heading">
           <div>
             <span class="eyebrow">Linha do tempo</span>
@@ -79,7 +115,7 @@
         <div class="timeline" id="timeline"></div>
       </section>
 
-      <section class="presidents-section" aria-labelledby="presidents-title">
+      <section class="history-section presidents-section" id="presidentes" aria-labelledby="presidents-title">
         <div class="section-heading">
           <div>
             <span class="eyebrow">República brasileira</span>
@@ -100,7 +136,33 @@
 
       <section class="history-detail" id="history-detail" aria-live="polite"></section>
 
-      <section class="history-sources">
+      
+      <section class="history-section history-reference-grid" id="governos" aria-labelledby="governos-title">
+        <div class="history-section-heading"><span class="eyebrow">Governos e mandatos</span><h2 id="governos-title">O que observar em cada governo</h2><p>Os governos serão apresentados por contexto, duração, forma de chegada ao poder, principais medidas, resultados observáveis e limitações. A análise evita transformar a história em uma lista de avaliações pessoais.</p></div>
+        <div class="history-reference-cards"><article><i class="fas fa-calendar-days" aria-hidden="true"></i><h3>Mandato e contexto</h3><p>Período, sucessão, situação institucional, economia e conflitos que condicionaram as decisões.</p></article><article><i class="fas fa-list-check" aria-hidden="true"></i><h3>Medidas e projetos</h3><p>Políticas públicas, reformas, investimentos, programas e decisões relevantes do governo.</p></article><article><i class="fas fa-scale-balanced" aria-hidden="true"></i><h3>Resultados e limites</h3><p>Avanços, efeitos sociais e econômicos, custos, controvérsias e questões que permaneceram abertas.</p></article></div>
+      </section>
+      <section class="history-section" id="constituicoes" aria-labelledby="constituicoes-title">
+        <div class="history-section-heading"><span class="eyebrow">Constituições</span><h2 id="constituicoes-title">As constituições que reorganizaram o Estado</h2><p>Cada texto constitucional será estudado pelo contexto de sua criação, organização dos poderes, direitos previstos e relação com o regime político vigente.</p></div>
+        <div class="history-constitution-list"><article><strong>1824</strong><span>Primeira Constituição brasileira; monarquia constitucional e Poder Moderador.</span></article><article><strong>1891</strong><span>República presidencialista, federalismo, separação entre Igreja e Estado e novos direitos políticos.</span></article><article><strong>1934</strong><span>Constituição após a Revolução de 1930, com novos direitos sociais e trabalhistas.</span></article><article><strong>1937</strong><span>Constituição do Estado Novo, com forte concentração de poder no Executivo.</span></article><article><strong>1946</strong><span>Retomada democrática após o Estado Novo e reconstrução das instituições representativas.</span></article><article><strong>1967 / 1969</strong><span>Reorganização constitucional durante o regime militar e ampliação dos mecanismos de exceção.</span></article><article><strong>1988</strong><span>Constituição Cidadã, marco da redemocratização e ampliação dos direitos fundamentais e sociais.</span></article></div>
+      </section>
+      <section class="history-section" id="marcos-historicos" aria-labelledby="marcos-title">
+        <div class="history-section-heading"><span class="eyebrow">Marcos históricos</span><h2 id="marcos-title">Acontecimentos que mudaram o país</h2><p>Independência, Abolição, República, Revolução de 1930, Estado Novo, Brasília, golpe de 1964, redemocratização, Constituição de 1988 e Plano Real são alguns dos marcos que serão contextualizados ao longo da narrativa.</p></div>
+        <div class="history-chip-list"><span>Independência — 1822</span><span>Abdicação — 1831</span><span>Guerra do Paraguai — 1864–1870</span><span>Abolição — 1888</span><span>República — 1889</span><span>Revolução de 1930</span><span>Estado Novo — 1937</span><span>Brasília — 1960</span><span>1964 e regime militar</span><span>AI-5 — 1968</span><span>Anistia — 1979</span><span>Diretas Já</span><span>Constituição — 1988</span><span>Plano Real — 1994</span></div>
+      </section>
+      <section class="history-section history-reference-grid" id="guerras-conflitos" aria-labelledby="conflitos-title">
+        <div class="history-section-heading"><span class="eyebrow">Guerras e conflitos</span><h2 id="conflitos-title">Conflitos internos e externos</h2><p>Os conflitos serão analisados com causas, participantes, desenvolvimento, consequências e impactos sobre o Estado e a sociedade.</p></div>
+        <div class="history-reference-cards"><article><h3>Império</h3><p>Independência, Cisplatina, Revolução Farroupilha e Guerra do Paraguai.</p></article><article><h3>República</h3><p>Canudos, Contestado, Revolta da Armada, Revolução Federalista e movimentos tenentistas.</p></article><article><h3>Conflito político</h3><p>Crises institucionais, rupturas de regime e disputas que alteraram a ordem constitucional.</p></article></div>
+      </section>
+      <section class="history-section history-reference-grid" id="economia-sociedade" aria-labelledby="economia-title">
+        <div class="history-section-heading"><span class="eyebrow">Economia e sociedade</span><h2 id="economia-title">As transformações que formaram o Brasil</h2><p>Da economia colonial baseada na grande propriedade e no trabalho escravizado à industrialização e à urbanização, as mudanças econômicas caminharam junto com profundas transformações sociais.</p></div>
+        <div class="history-reference-cards"><article><h3>Colônia e Império</h3><p>Açúcar, mineração, café, escravidão, abolição e imigração.</p></article><article><h3>Industrialização</h3><p>Vargas, urbanização, legislação trabalhista, indústria de base e desenvolvimentismo.</p></article><article><h3>República recente</h3><p>Inflação, abertura econômica, Plano Real, políticas sociais e mudanças no mercado de trabalho.</p></article></div>
+      </section>
+      <section class="history-section history-reference-grid" id="cultura" aria-labelledby="cultura-title">
+        <div class="history-section-heading"><span class="eyebrow">Cultura</span><h2 id="cultura-title">Literatura, artes, música e identidade</h2><p>A cultura também registra as disputas e transformações do país: literatura, música, cinema, arquitetura, patrimônio e manifestações regionais ajudam a entender diferentes épocas.</p></div>
+        <div class="history-reference-cards"><article><h3>Modernismo</h3><p>A Semana de Arte Moderna de 1922 e seus desdobramentos na literatura e nas artes.</p></article><article><h3>Arquitetura</h3><p>Do patrimônio colonial à arquitetura moderna de Brasília e às expressões urbanas contemporâneas.</p></article><article><h3>Cultura popular</h3><p>Festas, música, religiosidade, tradições regionais e manifestações que atravessam a formação brasileira.</p></article></div>
+      </section>
+
+      <section class="history-sources" id="fontes">
         <span class="eyebrow">Fontes e metodologia</span>
         <h2>Conteúdo baseado em documentação histórica</h2>
         <p>As narrativas são sínteses para consulta, não substituem pesquisa historiográfica. Use os acervos e referências acadêmicas abaixo para conferir datas e contexto. O Dicionário Histórico-Biográfico Brasileiro da FGV informa que não inclui interinos e suplentes de curto exercício; portanto, nem todos os perfis terão verbete.</p>
