@@ -1726,3 +1726,7 @@ body.subscription-popup-open {
     transition: none;
   }
 }
+
+
+/* SWITCH DE TEMA ANIMADO NO MENU */
+.sidebar-theme-toggle{justify-content:flex-start;gap:.75rem}.theme-switch-track{position:relative;flex:0 0 auto;width:52px;height:28px;display:flex;align-items:center;padding:0 5px;border-radius:999px;background:var(--switch-bg);box-sizing:border-box;transition:background-color 800ms ease}.theme-switch-track::before{position:absolute;content:"";left:4px;top:3px;width:22px;height:22px;border-radius:50%;background:var(--switch-circle);box-shadow:0 1px 3px rgba(0,0,0,.22);transition:transform 800ms cubic-bezier(.4,0,.2,1),background-color 800ms ease}.theme-switch-track i{position:relative;z-index:1;width:22px;margin-left:0;color:var(--switch-sun);font-size:.68rem;line-height:22px;text-align:center;transition:transform 800ms cubic-bezier(.4,0,.2,1),color 800ms ease}.sidebar-theme-toggle[aria-pressed="true"] .theme-switch-track::before{transform:translateX(22px)}.sidebar-theme-toggle[aria-pressed="true"] .theme-switch-track i{transform:translateX(22px) rotate(180deg);color:#00bfff}.sidebar-theme-toggle:hover .theme-switch-track,.sidebar-theme-toggle:focus-visible .theme-switch-track{background:color-mix(in srgb,var(--switch-bg) 88%,var(--primary))}.sidebar-theme-toggle:focus-visible{outline:3px solid var(--switch-focus);outline-offset:2px}@media(prefers-reduced-motion:reduce){.theme-switch-track,.theme-switch-track::before,.theme-switch-track i{transition-duration:.01ms}}

@@ -81,6 +81,7 @@ const updateThemeControl = (theme) => {
   themeIcon.className = isDark ? "fas fa-sun" : "fas fa-moon";
   themeToggle.setAttribute("aria-label", isDark ? "Ativar tema claro" : "Ativar tema escuro");
   themeToggle.setAttribute("title", isDark ? "Ativar tema claro" : "Ativar tema escuro");
+  themeToggle.setAttribute("aria-pressed", String(isDark));
 };
 
 updateThemeControl(savedTheme);
