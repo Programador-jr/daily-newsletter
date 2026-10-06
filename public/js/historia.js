@@ -1630,6 +1630,7 @@ function renderPresidentFilters() {
 }
 
 function renderPresidents() {
+  if (!presidentsGrid) return;
   presidentObserver?.disconnect();
   const query = normalizedSearchText(presidentsSearch?.value || "");
   const matching = presidents.filter(president => {
@@ -2108,6 +2109,6 @@ presidentsSearch.addEventListener("input", renderPresidents);
 updateTimelineViewButtons();
 renderFilters();
 renderTimeline();
-renderPresidentFilters();
+if (presidentFilterContainer) renderPresidentFilters();
 renderPresidents();
 updateBackToTop();
