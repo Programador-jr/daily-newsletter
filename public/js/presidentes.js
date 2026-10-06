@@ -207,6 +207,36 @@ function renderMandate(m){
       '<footer class="mandate-card-footer"><span><i class="fas fa-clock"></i> '+escapeHtml(m.years)+'</span><a href="/historia#linha-do-tempo">Ver contexto histórico geral</a></footer>'+
     '</div></article>';
 }
-function renderMandates(){const q=normalized(searchInput.value),pred=filterDefinitions.find(([l])=>l===activeFilter)?.[1]||(()=>true),visible=mandates.filter(m=>pred(m)&&normalized([m.name,m.years,m.role,m.era,m.context,m.achievements.join(" "),m.controversies.join(" ")].join(" ")).includes(q));count.textContent=visible.length+(visible.length===1?" mandato":" mandatos");timeline.innerHTML=visible.length?visible.map(renderMandate).join(""):'<div class="history-no-results"><h3>Nenhum mandato encontrado</h3><p>Tente outro termo ou filtro.</p></div>';timeline.querySelectorAll(".mandate-accordion").forEach(item=>item.addEventListener("toggle",()=>{if(!item.open)return;item.closest(".mandate-accordions").querySelectorAll(".mandate-accordion[open]").forEach(other=>{if(other!==item)other.open=false})}))}
+let selectedMandateId="";
+function renderTimelineNavigator(visible){
+  const items=visible.map((m,index)=>'<button class="president-timeline-node'+(m.id===selectedMandateId?' active':'')+'" type="button" data-mandate-id="'+escapeHtml(m.id)+'" aria-label="Ver '+escapeHtml(m.name)+' — '+escapeHtml(m.years)+'"><span class="timeline-node-year">'+escapeHtml(m.years)+'</span><span class="timeline-node-dot"></span><strong>'+escapeHtml(m.name)+'</strong><small>'+escapeHtml(m.role)+'</small></button>').join("");
+  return '<div class="president-timeline-wrap"><div class="president-timeline-header"><div><span class="eyebrow">Selecione um período</span><p>Clique em um ano para abrir o presidente e o mandato correspondente.</p></div><button class="timeline-collapse" type="button" aria-expanded="true"><i class="fas fa-chevron-up"></i><span>Recolher</span></button></div><div class="president-timeline-scroll"><div class="president-timeline-track">'+items+'</div></div></div>';
+}
+function bindTimeline(visible){
+  timeline.querySelectorAll(".president-timeline-node").forEach(node=>node.addEventListener("click",()=>{
+    selectedMandateId=node.dataset.mandateId;
+    renderMandates();
+    requestAnimationFrame(()=>document.getElementById("mandate-detail")?.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"nearest"}));
+  }));
+  const wrap=timeline.querySelector(".president-timeline-wrap"),collapse=timeline.querySelector(".timeline-collapse");
+  collapse?.addEventListener("click",()=>{
+    const collapsed=wrap.classList.toggle("is-collapsed");
+    collapse.setAttribute("aria-expanded",String(!collapsed));
+    collapse.querySelector("span").textContent=collapsed?"Expandir":"Recolher";
+    collapse.querySelector("i").className=collapsed?"fas fa-chevron-down":"fas fa-chevron-up";
+  });
+}
+function renderMandates(){
+  const q=normalized(searchInput.value),pred=filterDefinitions.find(([l])=>l===activeFilter)?.[1]||(()=>true),visible=mandates.filter(m=>pred(m)&&normalized([m.name,m.years,m.role,m.era,m.context,m.achievements.join(" "),m.controversies.join(" ")].join(" ")).includes(q));
+  count.textContent=visible.length+(visible.length===1?" mandato":" mandatos");
+  if(!visible.length){timeline.innerHTML='<div class="history-no-results"><h3>Nenhum mandato encontrado</h3><p>Tente outro termo ou filtro.</p></div>';return;}
+  if(!visible.some(m=>m.id===selectedMandateId)) selectedMandateId=visible[0].id;
+  const selected=visible.find(m=>m.id===selectedMandateId)||visible[0];
+  timeline.innerHTML=renderTimelineNavigator(visible)+'<div class="mandate-detail" id="mandate-detail">'+renderMandate(selected)+'</div>';
+  bindTimeline(visible);
+  timeline.querySelectorAll(".mandate-accordion").forEach(item=>item.addEventListener("toggle",()=>{if(!item.open)return;item.closest(".mandate-accordions").querySelectorAll(".mandate-accordion[open]").forEach(other=>{if(other!==item)other.open=false})}));
+  const activeNode=timeline.querySelector(".president-timeline-node.active");
+  activeNode?.scrollIntoView({behavior:"auto",block:"nearest",inline:"center"});
+}
 searchInput.addEventListener("input",renderMandates);renderFilters();renderMandates();
 const backToTop=document.getElementById("back-to-top");function updateBackToTop(){const visible=window.scrollY>600;backToTop.classList.toggle("is-visible",visible);backToTop.setAttribute("aria-hidden",String(!visible));backToTop.tabIndex=visible?0:-1}window.addEventListener("scroll",updateBackToTop,{passive:true});backToTop.addEventListener("click",()=>window.scrollTo({top:0,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}));
