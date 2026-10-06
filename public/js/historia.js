@@ -1290,6 +1290,8 @@ if (compactTimelineQuery.matches && activeTimelineView === "grid") {
   localStorage.setItem("history-timeline-view", activeTimelineView);
 }
 let activeEntry = null;
+let detailSyncTimeline = true;
+let previousTimelineEntry = null;
 let lockedScrollY = 0;
 let reelDrag = null;
 let suppressReelClick = false;
@@ -1833,6 +1835,11 @@ function updateTimelineFocus() {
 
 timeline.addEventListener("scroll", updateTimelineFocus, { passive: true });
 
+const restoreTimelineSnap = () => timeline.classList.remove("is-programmatically-centered");
+["wheel", "touchstart", "pointerdown", "keydown"].forEach(eventName => {
+  timeline.addEventListener(eventName, restoreTimelineSnap, { passive: true });
+});
+
 function animateReelWheel() {
   const distance = reelWheelTarget - timeline.scrollLeft;
 
@@ -1929,7 +1936,10 @@ timeline.addEventListener("click", event => {
 
 function centerTimelineItem(item, behavior = "smooth") {
   if (!item) return;
-  const target = item.offsetTop - (timeline.clientHeight - item.offsetHeight) / 2;
+  const timelineRect = timeline.getBoundingClientRect();
+  const itemRect = item.getBoundingClientRect();
+  const itemTop = timeline.scrollTop + itemRect.top - timelineRect.top - timeline.clientTop;
+  const target = itemTop - (timeline.clientHeight - item.clientHeight) / 2;
   timeline.scrollTo({ top: Math.max(0, target), behavior });
 }
 
@@ -1952,11 +1962,23 @@ function unlockPageScroll() {
 }
 
 function resetDetail() {
-  activeEntry = null;
+  const shouldRenderTimeline = detailSyncTimeline;
+  const entryToCenter = shouldRenderTimeline ? activeEntry : null;
+  activeEntry = shouldRenderTimeline ? null : previousTimelineEntry;
+  detailSyncTimeline = true;
+  previousTimelineEntry = null;
   detail.classList.remove("open");
   unlockPageScroll();
   detail.innerHTML = "";
-  renderTimeline();
+  if (shouldRenderTimeline) renderTimeline();
+
+  if (activeTimelineView === "globe" && entryToCenter) {
+    const item = [...timeline.querySelectorAll(".timeline-item")]
+      .find(timelineItem => timelineItem.dataset.entry === entryToCenter);
+    timeline.classList.add("is-programmatically-centered");
+    centerTimelineItem(item, "auto");
+    requestAnimationFrame(updateTimelineFocus);
+  }
 }
 
 
@@ -2021,11 +2043,13 @@ function buildMilestoneAccordion(entries) {
   '</div></section>';
 }
 
-function openEntry(key) {
+function openEntry(key, { syncTimeline = true } = {}) {
   const entry = timelineEntries.find(item => item.key === key);
   if (!entry) return;
 
-  activeEntry = key;
+  detailSyncTimeline = syncTimeline;
+  previousTimelineEntry = activeEntry;
+  if (syncTimeline) activeEntry = key;
   const period = periodFor(entry);
   const milestoneEntriesForPeriod = periodMilestoneMap[entry.period] || [];
 
@@ -2034,7 +2058,7 @@ function openEntry(key) {
     '<div class="history-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="history-detail-title">' +
     '<div class="history-accordion-header">' +
       '<div><span class="detail-kicker">' + escapeHtml(period.era) + '</span>' +
-      '<h2>' + escapeHtml(entry.title) + '</h2><span class="detail-years">' + escapeHtml(entry.year) + '</span></div>' +
+      '<h2 id="history-detail-title">' + escapeHtml(entry.title) + '</h2><span class="detail-years">' + escapeHtml(entry.year) + '</span></div>' +
       '<button class="accordion-close" type="button" aria-label="Fechar história"><i class="fas fa-times"></i></button>' +
     '</div>' +
     '<div class="history-accordion-lead"><p>' + escapeHtml(entry.type === "event" ? entry.summary : entry.lead) + '</p></div>' +
@@ -2066,13 +2090,8 @@ function openEntry(key) {
 
       activeEntry = item.dataset.accordionKey;
       renderTimeline();
-    });
-  });
 
-  detail.querySelectorAll(".history-accordion-item").forEach(item => {
-    item.addEventListener("click", event => {
-      if (!event.target.closest("summary")) return;
-      requestAnimationFrame(() => {
+      requestAnimationFrame(() => requestAnimationFrame(() => {
         if (!item.open) return;
 
         const dialog = detail.querySelector(".history-detail-dialog");
@@ -2080,21 +2099,34 @@ function openEntry(key) {
         if (!dialog) return;
 
         const dialogRect = dialog.getBoundingClientRect();
-        const itemRect = item.getBoundingClientRect();
-        const headerHeight = header ? header.getBoundingClientRect().height : 0;
-        const targetTop = dialog.scrollTop + itemRect.top - dialogRect.top - headerHeight - 12;
+        const headerBottom = header ? header.getBoundingClientRect().bottom : dialogRect.top;
+        const itemTop = item.getBoundingClientRect().top;
+        const targetTop = dialog.scrollTop + itemTop - headerBottom - 12;
 
         dialog.scrollTo({
           top: Math.max(0, targetTop),
           behavior: reducedMotionQuery.matches ? "auto" : "smooth"
         });
-      });
+      }));
     });
   });
 
-  renderTimeline();
+  if (syncTimeline) renderTimeline();
   requestAnimationFrame(() => detail.querySelector(".accordion-close")?.focus());
 }
+
+document.querySelectorAll("[data-history-event]").forEach(button => {
+  button.addEventListener("click", () => {
+    const eventKey = button.dataset.historyEvent;
+    const entry = milestoneEntries.find(item => item.year + "|" + item.title === eventKey);
+    if (!entry) {
+      console.error("No timeline entry is configured for historical event:", eventKey);
+      return;
+    }
+
+    openEntry(entry.key, { syncTimeline: false });
+  });
+});
 
 document.addEventListener("keydown", event => {
   if (event.key === "Escape" && detail.classList.contains("open")) {
@@ -2105,7 +2137,7 @@ document.addEventListener("keydown", event => {
 
 
 search.addEventListener("input", renderTimeline);
-presidentsSearch.addEventListener("input", renderPresidents);
+presidentsSearch?.addEventListener("input", renderPresidents);
 updateTimelineViewButtons();
 renderFilters();
 renderTimeline();

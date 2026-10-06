@@ -190,30 +190,73 @@ async function fetchPresidentPortrait(m){
   if(portraitCache.has(m.name)) return portraitCache.get(m.name);
   const url=new URL("https://commons.wikimedia.org/w/api.php");
   url.search=new URLSearchParams({action:"query",generator:"search",gsrsearch:'filetype:bitmap "'+m.name+'"',gsrnamespace:"6",gsrlimit:"15",prop:"imageinfo",iiprop:"url|extmetadata",iiurlwidth:"440",format:"json",origin:"*"});
-  const promise=fetch(url).then(r=>r.ok?r.json():null).then(data=>{
-    const candidates=Object.values(data?.query?.pages||{}).map(page=>{const image=page.imageinfo?.[0],meta=image?.extmetadata||{};if(!image)return null;const title=portraitText(page.title.replace(/^File:/,"")).toLowerCase();const desc=portraitText(meta.ImageDescription?.value).toLowerCase();const combined=title+" "+desc;const words=m.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").split(/\s+/).filter(w=>w.length>2);const normalizedCombined=combined.normalize("NFD").replace(/[\u0300-\u036f]/g,"");if(!words.every(w=>normalizedCombined.includes(w))||!/portrait|retrato|president|presidente|photograph|fotografia/.test(combined)||/signature|assinatura|logo|coat of arms|brasao/.test(title)||!reusablePortrait(meta.LicenseShortName?.value)||!/^https:\/\/(thumb\.wikimedia\.org|upload\.wikimedia\.org)/.test(image.thumburl||"")||!/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(image.descriptionurl||""))return null;return {url:image.thumburl,file:image.descriptionurl,creator:portraitText(meta.Artist?.value)} }).filter(Boolean);return candidates[0]||null}).catch(()=>null);
+  const promise=fetch(url).then(r=>{if(!r.ok)throw new Error("Commons respondeu com HTTP "+r.status);return r.json()}).then(data=>{
+    const candidates=Object.values(data?.query?.pages||{}).map(page=>{const image=page.imageinfo?.[0],meta=image?.extmetadata||{};if(!image)return null;const title=portraitText(page.title.replace(/^File:/,"")).toLowerCase();const desc=portraitText(meta.ImageDescription?.value).toLowerCase();const combined=title+" "+desc;const words=m.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").split(/\s+/).filter(w=>w.length>2);const normalizedCombined=combined.normalize("NFD").replace(/[\u0300-\u036f]/g,"");if(!words.every(w=>normalizedCombined.includes(w))||!/portrait|retrato|president|presidente|photograph|fotografia/.test(combined)||/signature|assinatura|logo|coat of arms|brasao/.test(title)||!reusablePortrait(meta.LicenseShortName?.value)||!/^https:\/\/(thumb\.wikimedia\.org|upload\.wikimedia\.org)/.test(image.thumburl||"")||!/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(image.descriptionurl||""))return null;return {url:image.thumburl,file:image.descriptionurl,creator:portraitText(meta.Artist?.value).replace(/(Unknown author)\1/i,"$1"),license:portraitText(meta.LicenseShortName?.value),licenseUrl:/^https:\/\/creativecommons\.org\/(licenses|publicdomain)\//.test(meta.LicenseUrl?.value||"")?meta.LicenseUrl.value:""} }).filter(Boolean);return candidates[0]||null});
   portraitCache.set(m.name,promise);return promise;
 }
 async function loadSelectedPortrait(m){
-  const portrait=await fetchPresidentPortrait(m);if(!portrait)return;
-  const image=timeline.querySelector(".mandate-portrait-image"),placeholder=timeline.querySelector(".mandate-portrait-placeholder");
-  if(!image)return;
-  image.src=portrait.url;image.hidden=false;image.alt="Retrato de "+m.name;image.title="Fonte: Wikimedia Commons";placeholder?.remove();
-  image.closest(".mandate-portrait")?.setAttribute("data-source",portrait.file);
+  const figure=timeline.querySelector(".mandate-portrait");
+  if(!figure||figure.dataset.presidentName!==m.name)return;
+  const image=figure.querySelector(".mandate-portrait-image");
+  const placeholder=figure.querySelector(".mandate-portrait-placeholder");
+  const credit=figure.querySelector(".mandate-portrait-credit");
+  if(!image||!placeholder||!credit)return;
+
+  let portrait;
+  try{
+    portrait=await fetchPresidentPortrait(m);
+  }catch(error){
+    portraitCache.delete(m.name);
+    console.error("Não foi possível consultar o retrato de "+m.name+" no Wikimedia Commons.",error);
+    if(figure.isConnected)placeholder.querySelector("span").textContent="Não foi possível carregar o retrato agora";
+    return;
+  }
+  if(!figure.isConnected||figure.dataset.presidentName!==m.name)return;
+  if(!portrait){
+    placeholder.querySelector("span").textContent="Retrato com licença reutilizável não localizado";
+    return;
+  }
+
+  image.addEventListener("load",()=>{
+    image.hidden=false;
+    placeholder.hidden=true;
+  },{once:true});
+  image.addEventListener("error",()=>{
+    image.hidden=true;
+    placeholder.hidden=false;
+    placeholder.querySelector("span").textContent="Retrato indisponível";
+    console.error("O arquivo de retrato do Wikimedia Commons não pôde ser carregado para "+m.name+".",portrait.file);
+  },{once:true});
+
+  const licenseLink=portrait.license
+    ? '<a href="'+escapeHtml(portrait.licenseUrl||portrait.file)+'" target="_blank" rel="noopener noreferrer">'+escapeHtml(portrait.license)+'</a>'
+    : "";
+  credit.innerHTML='<a href="'+escapeHtml(portrait.file)+'" target="_blank" rel="noopener noreferrer">Foto: '+escapeHtml(portrait.creator||"Wikimedia Commons")+'</a>'+(licenseLink?" · "+licenseLink:"");
+  credit.hidden=false;
+  figure.dataset.source=portrait.file;
+  image.alt="Retrato de "+m.name;
+  image.title="Fonte: Wikimedia Commons";
+  image.loading="eager";
+  image.hidden=false;
+  image.src=portrait.url;
+  if(image.complete&&image.naturalWidth>0){
+    image.hidden=false;
+    placeholder.hidden=true;
+  }
 }
 
 function renderMandate(m){
   const interim=/interin|junta|provisório|provisoria/i.test(m.role+" "+m.name);
   const photo=m.photo||"";
-  const photoHtml=photo
-    ? '<img class="mandate-portrait-image" src="'+escapeHtml(photo)+'" alt="Retrato de '+escapeHtml(m.name)+'" loading="lazy">'
-    : '<div class="mandate-portrait-placeholder"><i class="fas fa-user-tie" aria-hidden="true"></i></div>';
+  const photoHtml='<img class="mandate-portrait-image"'+(photo?' src="'+escapeHtml(photo)+'"':'')+' alt="Retrato de '+escapeHtml(m.name)+'" loading="lazy"'+(photo?'':' hidden')+'>'+
+    '<div class="mandate-portrait-placeholder"'+(photo?' hidden':'')+'><i class="fas fa-user-tie" aria-hidden="true"></i><span>Buscando retrato...</span></div>'+
+    '<figcaption class="mandate-portrait-credit" hidden></figcaption>';
   const list=(items)=>items.length?'<ul>'+items.map(x=>"<li>"+escapeHtml(x)+"</li>").join("")+"</ul>":'<p class="mandate-empty">Não há itens específicos registrados nesta síntese.</p>';
   return '<article class="mandate-entry'+(interim?" mandate-interim":"")+'">'+
     '<div class="mandate-marker"><span>'+escapeHtml(m.years)+'</span><i></i></div>'+
     '<div class="mandate-card">'+
       '<div class="mandate-card-top">'+
-        '<figure class="mandate-portrait">'+photoHtml+'</figure>'+
+        '<figure class="mandate-portrait" data-president-name="'+escapeHtml(m.name)+'">'+photoHtml+'</figure>'+
         '<header class="mandate-card-header"><div><span class="mandate-era">'+escapeHtml(m.era)+'</span><h3>'+escapeHtml(m.name)+'</h3><p>'+escapeHtml(m.role)+'</p></div>'+(interim?'<span class="mandate-badge">Interino / transição</span>':"")+'</header>'+
       '</div>'+
       '<div class="mandate-context"><strong>Contexto</strong><p>'+escapeHtml(m.context)+'</p></div>'+
