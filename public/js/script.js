@@ -7,10 +7,11 @@ const grid = document.querySelector("#news-grid"),
   searchInput = document.getElementById('search-input'),
   filterButtons = document.getElementById('filter-buttons'),
   themeToggle = document.getElementById('theme-toggle'),
-  themeIcon = document.getElementById('theme-icon');
+  themeIcon = document.getElementById('theme-icon'),
+  headerThemeToggle = document.getElementById('header-theme-toggle'),
+  headerThemeIcon = document.getElementById('header-theme-icon');
 
 let currentStories = [];
-let isLoadingEdition = true;
 let currentFilter = 'all';
 let currentSearch = '';
 let currentEditionDate = null;
@@ -44,8 +45,6 @@ const checkPendingEmailNotifications = async () => {
 };
 
 const setLoadingState = (loading) => {
-  isLoadingEdition = loading;
-
   if (dateEl && loading) {
     dateEl.textContent = "CARREGANDO...";
   }
@@ -76,22 +75,46 @@ const savedTheme = localStorage.getItem("theme") || "light";
 document.documentElement.setAttribute("data-theme", savedTheme);
 
 const updateThemeControl = (theme) => {
-  if (!themeToggle || !themeIcon) return;
   const isDark = theme === "dark";
-  themeIcon.className = isDark ? "fas fa-sun" : "fas fa-moon";
-  themeToggle.setAttribute("aria-label", isDark ? "Ativar tema claro" : "Ativar tema escuro");
-  themeToggle.setAttribute("title", isDark ? "Ativar tema claro" : "Ativar tema escuro");
-  themeToggle.setAttribute("aria-pressed", String(isDark));
+  [[themeToggle, themeIcon], [headerThemeToggle, headerThemeIcon]].forEach(([button, icon]) => {
+    if (!button || !icon) return;
+    icon.className = isDark ? "fas fa-sun" : "fas fa-moon";
+    button.setAttribute("aria-label", isDark ? "Ativar tema claro" : "Ativar tema escuro");
+    button.setAttribute("title", isDark ? "Ativar tema claro" : "Ativar tema escuro");
+    button.setAttribute("aria-pressed", String(isDark));
+  });
+};
+
+const themeIconAnimations = new WeakMap();
+
+const animateThemeIcons = () => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  [themeIcon, headerThemeIcon].forEach(icon => {
+    if (!icon?.animate) return;
+    themeIconAnimations.get(icon)?.cancel();
+    const animation = icon.animate(
+      [{ rotate: "0deg" }, { rotate: "360deg" }],
+      { duration: 800, easing: "cubic-bezier(.4, 0, .2, 1)" }
+    );
+    themeIconAnimations.set(icon, animation);
+    animation.onfinish = () => {
+      if (themeIconAnimations.get(icon) === animation) themeIconAnimations.delete(icon);
+    };
+  });
 };
 
 updateThemeControl(savedTheme);
 
-themeToggle?.addEventListener("click", () => {
+const toggleTheme = () => {
+  animateThemeIcons();
   const theme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
   document.documentElement.setAttribute("data-theme", theme);
   localStorage.setItem("theme", theme);
   updateThemeControl(theme);
-});
+};
+
+themeToggle?.addEventListener("click", toggleTheme);
+headerThemeToggle?.addEventListener("click", toggleTheme);
 
 setLoadingState(true);
 
@@ -222,7 +245,7 @@ async function loadHistoryList() {
         </div>
       `)
       .join("");
-  } catch (error) {
+  } catch {
     historyList.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 1rem;">Nenhum histórico disponível.</p>`;
   }
 }
@@ -276,7 +299,7 @@ window.loadArchiveEdition = function(date) {
         grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     })
-    .catch((error) => {
+    .catch(() => {
       if (grid) {
         grid.innerHTML = `<article class="story featured"><h2>Edição não encontrada</h2><p>O arquivo da edição ${formatDate(date)} não existe no servidor. Selecione outra data do histórico.</p></article>`;
       }

@@ -2,6 +2,10 @@ require('dotenv').config();
 
 const express = require('express');
 const path = require('path');
+const { validateRuntimeEnvironment } = require('./lib/config');
+
+const { warnings } = validateRuntimeEnvironment();
+warnings.forEach(message => console.warn(`[config] ${message}`));
 
 const app = express();
 const PORT = process.env.PORT || 3000;
