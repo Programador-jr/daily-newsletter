@@ -1,5 +1,4 @@
 const CAMARA_DEPUTADOS_API='/api/camara-deputados';
-const CAMARA_DESPESAS_API='/api/camara-despesas';
 
 const deputyPicker=document.getElementById('deputy-picker');
 const deputySearch=document.getElementById('deputy-search');
@@ -15,6 +14,14 @@ const statusEl=document.getElementById('expense-status');
 const summaryEl=document.getElementById('expense-summary');
 const tableWrap=document.getElementById('expense-table-wrap');
 const tbody=document.getElementById('expense-table-body');
+
+const annualYear=document.getElementById('annual-year');
+const annualUf=document.getElementById('annual-uf');
+const annualSearch=document.getElementById('annual-search');
+const annualStatus=document.getElementById('annual-status');
+const annualSummary=document.getElementById('annual-summary');
+const annualTableWrap=document.getElementById('annual-table-wrap');
+const annualTableBody=document.getElementById('annual-table-body');
 
 const money=new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'});
 let expenseCache=[];
@@ -32,8 +39,6 @@ async function getJson(url){
   return data;
 }
 
-function setStatus(text){statusEl.textContent=text;}
-
 function escapeHtml(value){
   return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 }
@@ -43,6 +48,9 @@ function formatDate(value){
   return /^\d{4}-\d{2}-\d{2}$/.test(raw)?raw.split('-').reverse().join('/'): '—';
 }
 
+function setStatus(text){statusEl.textContent=text;}
+function setAnnualStatus(text){annualStatus.textContent=text;}
+
 function deputyLabel(deputy){
   return deputy.nome+' — '+(deputy.siglaPartido||'Sem partido')+'/'+(deputy.siglaUf||'—');
 }
@@ -51,40 +59,7 @@ function openDeputyOptions(){
   deputyOptions.hidden=false;
   deputyToggle.setAttribute('aria-expanded','true');
   deputySearch.focus();
-  if(!deputies.length) 
-const annualYear=document.getElementById('annual-year');
-const annualUf=document.getElementById('annual-uf');
-const annualSearch=document.getElementById('annual-search');
-const annualStatus=document.getElementById('annual-status');
-const annualSummary=document.getElementById('annual-summary');
-const annualTableWrap=document.getElementById('annual-table-wrap');
-const annualTableBody=document.getElementById('annual-table-body');
-
-function setAnnualStatus(text){annualStatus.textContent=text;}
-
-function renderAnnualRows(rows){
-  annualTableBody.innerHTML=rows.length?rows.map(row=>'<tr><td>'+escapeHtml(row.nome)+'</td><td>'+escapeHtml(row.partido||'—')+'</td><td>'+escapeHtml(row.uf||'—')+'</td><td>'+money.format(Number(row.total)||0)+'</td></tr>').join(''):'<tr><td colspan="4">Nenhum registro encontrado para os filtros selecionados.</td></tr>';
-  annualTableWrap.hidden=false;
-}
-
-async function loadAnnualData(){
-  annualSearch.disabled=true;annualTableWrap.hidden=true;annualSummary.hidden=true;
-  setAnnualStatus('Carregando os dados anuais oficiais da Câmara...');
-  try{
-    const params=new URLSearchParams({ano:annualYear.value});
-    if(annualUf.value)params.set('uf',annualUf.value);
-    const data=await getJson('/api/camara-ceap?'+params);
-    const rows=Array.isArray(data.deputados)?data.deputados:[];
-    annualSummary.hidden=false;
-    annualSummary.innerHTML='<div><span>Parlamentares com registros</span><strong>'+rows.length+'</strong></div><div><span>Total CEAP filtrado</span><strong>'+money.format(Number(data.total)||0)+'</strong></div><div><span>Período</span><strong>'+annualYear.value+'</strong></div>';
-    renderAnnualRows(rows);
-    setAnnualStatus(rows.length+' parlamentares encontrados no período anual selecionado.');
-  }catch(error){setAnnualStatus(error.message);}
-  finally{annualSearch.disabled=false;}
-}
-annualSearch?.addEventListener('click',loadAnnualData);
-
-searchDeputies('');
+  if(!deputies.length) searchDeputies('');
 }
 
 function closeDeputyOptions(){
@@ -161,41 +136,92 @@ function renderExpenses(items){
     '<div><span>Total líquido</span><strong>'+money.format(total)+'</strong></div>'+
     '<div><span>Ano</span><strong>'+yearSelect.value+'</strong></div>';
 
-  if(!filtered.length){
-    tbody.innerHTML='<tr><td colspan="5">Nenhuma despesa encontrada para os filtros selecionados.</td></tr>';
-  }else{
-    tbody.innerHTML=filtered.map(item=>
-      '<tr>'+
-      '<td>'+formatDate(item.dataDocumento)+'</td>'+
-      '<td>'+escapeHtml(item.tipoDespesa||'Não informado')+'</td>'+
-      '<td>'+escapeHtml(item.nomeFornecedor||'Não informado')+'</td>'+
-      '<td>'+escapeHtml(item.numDocumento||'—')+'</td>'+
-      '<td>'+money.format(Number(item.vlrLiquido)||0)+'</td>'+
-      '</tr>'
-    ).join('');
-  }
+  tbody.innerHTML=filtered.length?filtered.map(item=>
+    '<tr><td>'+formatDate(item.dataDocumento)+'</td>'+
+    '<td>'+escapeHtml(item.tipoDespesa||'Não informado')+'</td>'+
+    '<td>'+escapeHtml(item.nomeFornecedor||'Não informado')+'</td>'+
+    '<td>'+escapeHtml(item.numDocumento||'—')+'</td>'+
+    '<td>'+money.format(Number(item.vlrLiquido)||0)+'</td></tr>'
+  ).join(''):'<tr><td colspan="5">Nenhuma despesa encontrada para os filtros selecionados.</td></tr>';
 
   tableWrap.hidden=false;
 }
 
 async function loadExpenses(){
   const id=deputyHidden.value;
-  if(!id){setStatus('Selecione um deputado antes de consultar.');openDeputyOptions();return;}
-  searchButton.disabled=true;summaryEl.hidden=true;tableWrap.hidden=true;
+  if(!id){
+    setStatus('Selecione um deputado antes de consultar.');
+    openDeputyOptions();
+    return;
+  }
+
+  searchButton.disabled=true;
+  summaryEl.hidden=true;
+  tableWrap.hidden=true;
   typeSelect.innerHTML='<option value="">Todas as categorias</option>';
   setStatus('Consultando os registros anuais oficiais de '+yearSelect.value+'...');
+
   try{
-    const data=await getJson('/api/camara-ceap?'+new URLSearchParams({ano:yearSelect.value,id}));
+    const params=new URLSearchParams({ano:yearSelect.value,id});
+    const data=await getJson('/api/camara-ceap?'+params);
     expenseCache=Array.isArray(data.despesas)?data.despesas:[];
-    fillTypes(expenseCache);renderExpenses(expenseCache);
-    setStatus(expenseCache.length?expenseCache.length+' registros carregados da CEAP em '+yearSelect.value+'.':'Nenhuma despesa registrada para este parlamentar em '+yearSelect.value+'.');
+    fillTypes(expenseCache);
+    renderExpenses(expenseCache);
+    setStatus(expenseCache.length?
+      expenseCache.length+' registros carregados da CEAP em '+yearSelect.value+'.':
+      'Nenhuma despesa registrada para este parlamentar em '+yearSelect.value+'.');
   }catch(error){
-    expenseCache=[];summaryEl.hidden=true;tableWrap.hidden=true;setStatus(error.message);
-  }finally{searchButton.disabled=false;}
+    expenseCache=[];
+    summaryEl.hidden=true;
+    tableWrap.hidden=true;
+    setStatus(error.message);
+  }finally{
+    searchButton.disabled=false;
+  }
+}
+
+function renderAnnualRows(rows){
+  annualTableBody.innerHTML=rows.length?rows.map(row=>
+    '<tr><td>'+escapeHtml(row.nome)+'</td>'+
+    '<td>'+escapeHtml(row.partido||'—')+'</td>'+
+    '<td>'+escapeHtml(row.uf||'—')+'</td>'+
+    '<td>'+money.format(Number(row.total)||0)+'</td></tr>'
+  ).join(''):'<tr><td colspan="4">Nenhum registro encontrado para os filtros selecionados.</td></tr>';
+
+  annualTableWrap.hidden=false;
+}
+
+async function loadAnnualData(){
+  annualSearch.disabled=true;
+  annualTableWrap.hidden=true;
+  annualSummary.hidden=true;
+  setAnnualStatus('Carregando os dados anuais oficiais da Câmara...');
+
+  try{
+    const params=new URLSearchParams({ano:annualYear.value});
+    if(annualUf.value) params.set('uf',annualUf.value);
+
+    const data=await getJson('/api/camara-ceap?'+params);
+    const rows=Array.isArray(data.deputados)?data.deputados:[];
+    const total=Number(data.total)||0;
+
+    annualSummary.hidden=false;
+    annualSummary.innerHTML=
+      '<div><span>Parlamentares com registros</span><strong>'+rows.length+'</strong></div>'+
+      '<div><span>Total CEAP filtrado</span><strong>'+money.format(total)+'</strong></div>'+
+      '<div><span>Período</span><strong>'+annualYear.value+'</strong></div>';
+
+    renderAnnualRows(rows);
+    setAnnualStatus(rows.length+' parlamentares encontrados no período anual selecionado.');
+  }catch(error){
+    setAnnualStatus(error.message);
+  }finally{
+    annualSearch.disabled=false;
+  }
 }
 
 deputyToggle.addEventListener('click',()=>{
-  if(deputyOptions.hidden)openDeputyOptions();
+  if(deputyOptions.hidden) openDeputyOptions();
   else closeDeputyOptions();
 });
 
@@ -205,21 +231,22 @@ deputySearch.addEventListener('input',()=>{
 });
 
 deputySearch.addEventListener('keydown',event=>{
-  if(event.key==='Escape')closeDeputyOptions();
+  if(event.key==='Escape') closeDeputyOptions();
 });
 
 deputyOptionsList.addEventListener('click',event=>{
   const option=event.target.closest('.deputy-option');
   if(!option)return;
   const deputy=deputies.find(item=>String(item.id)===option.dataset.id);
-  if(deputy)selectDeputy(deputy);
+  if(deputy) selectDeputy(deputy);
 });
 
 document.addEventListener('click',event=>{
-  if(!deputyPicker.contains(event.target))closeDeputyOptions();
+  if(!deputyPicker.contains(event.target)) closeDeputyOptions();
 });
 
 typeSelect.addEventListener('change',()=>renderExpenses(expenseCache));
 searchButton.addEventListener('click',loadExpenses);
+annualSearch?.addEventListener('click',loadAnnualData);
 
 searchDeputies('');
