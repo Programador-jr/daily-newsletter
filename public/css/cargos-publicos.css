@@ -341,3 +341,71 @@
     transition: none;
   }
 }
+
+
+/* Extensão visual — padrão História */
+body.history-page main { padding-bottom: 2rem; }
+.history-page .history-hero { max-width: 860px; padding: 4rem 3rem 2.5rem; }
+.history-page .history-hero h1 { margin: .35rem 0 1rem; }
+.history-page .history-hero > p:not(.eyebrow) { max-width: 720px; margin: 0; color: var(--text-muted); font-size: 1rem; line-height: 1.75; }
+.history-page .section-heading h2,
+.history-page [class$="-section"] h2,
+.history-page [class*="-section"] h2 { font-family: "Playfair Display", serif; }
+.history-page [class$="-method"],
+.history-page [class*="-method"] {
+  margin: 0 3rem 3.5rem;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: none;
+}
+.history-page [class$="-method"] h2,
+.history-page [class*="-method"] h2 { margin: .35rem 0 .55rem; font-size: 1.8rem; line-height: 1.2; }
+.history-page [class$="-method"] .method-icon,
+.history-page [class*="-method"] [class$="-icon"] {
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+}
+.history-page [class$="-section"],
+.history-page [class*="-section"] { scroll-margin-top: 1.5rem; }
+.history-page [class$="-section"] .section-heading,
+.history-page [class*="-section"] .section-heading { margin-bottom: 1.5rem; }
+.history-page [class$="-section"] h2,
+.history-page [class*="-section"] h2 { margin: .35rem 0 0; font-size: 1.8rem; line-height: 1.2; }
+.history-page [class$="-grid"] article,
+.history-page [class*="-grid"] article {
+  box-shadow: none;
+  border-radius: 10px;
+}
+.history-page [class$="-grid"] article:hover,
+.history-page [class*="-grid"] article:hover {
+  box-shadow: none;
+  transform: none;
+}
+.history-page [class$="-accordion"],
+.history-page [class*="-accordion"] {
+  box-shadow: none;
+}
+.history-page [class$="-accordion"][open],
+.history-page [class*="-accordion"][open] {
+  box-shadow: 0 7px 20px rgba(16,36,32,.07);
+}
+.history-page [class$="-sources"],
+.history-page [class*="-sources"] {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+}
+@media (max-width: 768px) {
+  .history-page [class$="-method"],
+  .history-page [class*="-method"],
+  .history-page [class$="-section"],
+  .history-page [class*="-section"] { margin-inline: 1.25rem; }
+}
+@media (max-width: 480px) {
+  .history-page [class$="-method"],
+  .history-page [class*="-method"],
+  .history-page [class$="-section"],
+  .history-page [class*="-section"] { margin-inline: 1rem; }
+}
