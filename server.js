@@ -39,6 +39,10 @@ app.get('/presidentes', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/presidentes.html'));
 });
 
+app.get('/politicas-publicas', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/politicas-publicas.html'));
+});
+
 app.get('/about', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/about.html'));
 });
