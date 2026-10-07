@@ -1,0 +1,1 @@
+document.querySelectorAll('.state-page .state-section').forEach(section=>{section.querySelectorAll('details').forEach(item=>{item.addEventListener('toggle',()=>{if(!item.open)return;section.querySelectorAll('details[open]').forEach(other=>{if(other!==item)other.open=false})})})});
