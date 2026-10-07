@@ -44,3 +44,19 @@
 .deputy-option:hover,.deputy-option[aria-selected="true"]{background:color-mix(in srgb,var(--primary) 8%,var(--card-bg))}
 .deputy-empty{padding:.75rem;color:var(--text-muted);font-size:.76rem;line-height:1.5}
 @media(max-width:768px){.deputy-options-list{max-height:260px}}
+
+.annual-explorer{padding:1.25rem;border:1px solid var(--border);border-radius:10px;background:var(--card-bg)}
+.annual-filters{display:grid;grid-template-columns:minmax(180px,1fr) minmax(180px,1fr) auto;gap:.8rem;align-items:end}
+.annual-filters label{display:grid;gap:.4rem;color:var(--text-main);font-size:.76rem;font-weight:700}
+.annual-filters select,.annual-filters button{min-height:42px;border:1px solid var(--border);border-radius:8px;background:var(--bg-container);color:var(--text-main);padding:0 .75rem;font:inherit}
+.annual-filters button{cursor:pointer;background:var(--primary);border-color:var(--primary);color:#fff;font-weight:700}
+.annual-status{margin:1rem 0 0;color:var(--text-muted);font-size:.82rem}
+.annual-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:1rem}
+.annual-summary div{padding:.9rem;border:1px solid var(--border);border-radius:8px}
+.annual-summary span{display:block;color:var(--text-muted);font-size:.7rem}
+.annual-summary strong{display:block;margin-top:.2rem;color:var(--text-main);font-size:1rem}
+.annual-table-wrap{overflow-x:auto;margin-top:1rem}
+.annual-table{width:100%;min-width:680px;border-collapse:collapse}
+.annual-table th,.annual-table td{padding:.8rem;border-bottom:1px solid var(--border);text-align:left;font-size:.78rem}
+.annual-table th{color:var(--text-main)}.annual-table td{color:var(--text-muted)}.annual-table td:last-child{text-align:right;color:var(--text-main);font-weight:700}
+@media(max-width:768px){.annual-filters,.annual-summary{grid-template-columns:1fr}}
