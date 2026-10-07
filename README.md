@@ -191,3 +191,4 @@ This project is licensed under the [MIT License](./LICENSE).
 Made with coffee and JavaScript by **Daniel Melo**.
 
 </div>
+\n\n## Civic education\n\nThe project includes reference pages covering political ideologies and public policies, with an emphasis on concepts, institutional context, public spending, implementation and evidence-based evaluation.\n
