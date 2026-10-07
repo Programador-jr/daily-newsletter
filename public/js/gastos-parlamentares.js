@@ -1,5 +1,5 @@
-const CAMARA_DEPUTADOS_API='/api/camara/deputados';
-const CAMARA_DESPESAS_API='/api/camara/despesas';
+const CAMARA_DEPUTADOS_API='/api/camara-deputados';
+const CAMARA_DESPESAS_API='/api/camara-despesas';
 
 const deputyPicker=document.getElementById('deputy-picker');
 const deputySearch=document.getElementById('deputy-search');
@@ -120,7 +120,7 @@ function fillTypes(items){
 function renderExpenses(items){
   const selected=typeSelect.value;
   const filtered=selected?items.filter(item=>item.tipoDespesa===selected):items;
-  const total=filtered.reduce((sum,item)=>sum+(Number(item.valorLiquido)||0),0);
+  const total=filtered.reduce((sum,item)=>sum+(Number(item.vlrLiquido)||0),0);
 
   summaryEl.hidden=false;
   summaryEl.innerHTML=
