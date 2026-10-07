@@ -51,6 +51,10 @@ app.get('/cargos-publicos', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/cargos-publicos.html'));
 });
 
+app.get('/arrecadacao', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/arrecadacao.html'));
+});
+
 app.get('/about', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/about.html'));
 });
