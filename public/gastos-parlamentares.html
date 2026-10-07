@@ -34,7 +34,15 @@
 </div><div class="expenses-note"><strong>Importante:</strong> valor do documento e valor líquido podem ser diferentes. Para comparar, o conceito utilizado precisa ser explicitado.</div></div></section>
 <section class="expenses-section" id="consulta"><div class="section-heading"><div><span class="eyebrow">03 · Consulta individual</span><h2>Consulte as despesas de um deputado</h2></div></div>
 <div class="expense-explorer"><div class="expense-filters">
-<label>Deputado<select id="deputy-select"><option value="">Carregando deputados...</option></select></label>
+<div class="deputy-combobox" id="deputy-combobox">
+<label for="deputy-search">Deputado</label>
+<div class="deputy-combobox-control">
+<input id="deputy-search" type="search" autocomplete="off" placeholder="Pesquisar deputado..." aria-controls="deputy-options" aria-expanded="false">
+<button id="deputy-toggle" type="button" aria-label="Abrir lista de deputados" aria-expanded="false"><i class="fas fa-chevron-down"></i></button>
+<input id="deputy-select" type="hidden" value="">
+</div>
+<div class="deputy-options" id="deputy-options" role="listbox" hidden></div>
+</div>
 <label>Ano<select id="expense-year"><option>2026</option><option>2025</option><option>2024</option><option>2023</option></select></label>
 <label>Tipo de despesa<select id="expense-type"><option value="">Todas as categorias</option></select></label>
 <button id="expense-search" type="button">Consultar</button></div>
