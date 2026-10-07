@@ -34,14 +34,20 @@
 </div><div class="expenses-note"><strong>Importante:</strong> valor do documento e valor líquido podem ser diferentes. Para comparar, o conceito utilizado precisa ser explicitado.</div></div></section>
 <section class="expenses-section" id="consulta"><div class="section-heading"><div><span class="eyebrow">03 · Consulta individual</span><h2>Consulte as despesas de um deputado</h2></div></div>
 <div class="expense-explorer"><div class="expense-filters">
-<div class="deputy-combobox" id="deputy-combobox">
-<label for="deputy-search">Deputado</label>
-<div class="deputy-combobox-control">
-<input id="deputy-search" type="search" autocomplete="off" placeholder="Pesquisar deputado..." aria-controls="deputy-options" aria-expanded="false">
-<button id="deputy-toggle" type="button" aria-label="Abrir lista de deputados" aria-expanded="false"><i class="fas fa-chevron-down"></i></button>
+<div class="deputy-picker" id="deputy-picker">
+<label for="deputy-toggle">Deputado</label>
+<button class="deputy-picker-control" id="deputy-toggle" type="button" aria-haspopup="listbox" aria-expanded="false">
+<span id="deputy-selected">Selecione um deputado</span>
+<i class="fas fa-chevron-down" aria-hidden="true"></i>
+</button>
 <input id="deputy-select" type="hidden" value="">
+<div class="deputy-options" id="deputy-options" hidden>
+<div class="deputy-search-box">
+<i class="fas fa-search" aria-hidden="true"></i>
+<input id="deputy-search" type="search" autocomplete="off" placeholder="Pesquisar por nome, partido ou UF..." aria-controls="deputy-options-list">
 </div>
-<div class="deputy-options" id="deputy-options" role="listbox" hidden></div>
+<div class="deputy-options-list" id="deputy-options-list" role="listbox" aria-label="Deputados"></div>
+</div>
 </div>
 <label>Ano<select id="expense-year"><option>2026</option><option>2025</option><option>2024</option><option>2023</option></select></label>
 <label>Tipo de despesa<select id="expense-type"><option value="">Todas as categorias</option></select></label>
