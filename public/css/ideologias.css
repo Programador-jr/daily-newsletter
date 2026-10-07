@@ -1,60 +1,506 @@
-.ideologies-page main{padding-bottom:2rem}
-.ideology-hero{max-width:900px;padding-bottom:2.5rem}
-.ideology-method{margin:0 3rem 3rem;padding:1.35rem 1.5rem;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:10px;background:var(--card-bg)}
-.ideology-method-icon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--primary) 10%,var(--card-bg));color:var(--primary)}
-.ideology-method h2{margin:.2rem 0 .5rem;font-family:"Playfair Display",serif;font-size:1.35rem}
-.ideology-method p{margin:0;color:var(--text-muted);line-height:1.7;font-size:.86rem}
-.ideology-section{margin:0 3rem 4rem}
-.ideology-section .section-heading{margin-bottom:1.35rem}
-.ideology-section h2{font-family:"Playfair Display",serif;font-size:2rem;line-height:1.2;margin:.35rem 0 0}
-.ideology-prose{max-width:900px}
-.ideology-prose>p{color:var(--text-muted);line-height:1.75;margin:0 0 1rem}
-.axis-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem;margin-top:1.5rem}
-.axis-grid article{padding:1rem;border:1px solid var(--border);border-radius:10px;background:var(--card-bg)}
-.axis-grid span{display:block;color:var(--primary);font-size:.67rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
-.axis-grid strong{display:block;font-size:.9rem;margin-bottom:.4rem}
-.axis-grid p{margin:0;color:var(--text-muted);font-size:.78rem;line-height:1.5}
-.ideology-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
-.ideology-card{display:flex;flex-direction:column;padding:1.25rem;border:1px solid var(--border);border-radius:11px;background:var(--card-bg);min-width:0}
-.ideology-card:hover{border-color:color-mix(in srgb,var(--primary) 45%,var(--border))}
-.ideology-tag{color:var(--primary);font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
-.ideology-card h3{margin:.45rem 0 .55rem;font-family:"Playfair Display",serif;font-size:1.18rem;line-height:1.25}
-.ideology-card p{margin:0;color:var(--text-muted);font-size:.82rem;line-height:1.65}
-.ideology-card a{margin-top:auto;padding-top:.9rem;color:var(--primary);font-size:.76rem;font-weight:700;text-decoration:none}
-.ideology-card-emphasis{border-top:3px solid var(--primary)}
-.comparison-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
-.comparison-grid article{padding:1.4rem;border:1px solid var(--border);border-radius:11px;background:var(--card-bg)}
-.comparison-grid h3{margin:0 0 .7rem;font-family:"Playfair Display",serif;font-size:1.35rem}
-.comparison-grid p,.comparison-grid li{color:var(--text-muted);font-size:.84rem;line-height:1.7}
-.comparison-grid ul{margin:.8rem 0 0;padding-left:1.1rem}
-.callout{margin-top:1rem;padding:1rem 1.2rem;border:1px dashed var(--primary);border-radius:10px;background:color-mix(in srgb,var(--primary) 5%,var(--card-bg));color:var(--text-main);font-size:.84rem;line-height:1.65}
-.history-warning{display:grid;grid-template-columns:auto 1fr;gap:.8rem;margin:1.4rem 0;padding:1rem 1.15rem;border:1px solid color-mix(in srgb,var(--primary) 30%,var(--border));border-left:4px solid var(--primary);border-radius:9px;background:color-mix(in srgb,var(--primary) 5%,var(--card-bg))}
-.history-warning>i{color:var(--primary);padding-top:.15rem}
-.history-warning p{margin:.3rem 0 0;color:var(--text-muted);font-size:.82rem;line-height:1.6}
-.history-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin:1.25rem 0}
-.history-columns article{padding:1.2rem;border:1px solid var(--border);border-radius:10px;background:var(--card-bg)}
-.history-columns span{color:var(--primary);font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
-.history-columns h3{margin:.4rem 0 .5rem;font-family:"Playfair Display",serif;font-size:1.25rem}
-.history-columns p{margin:0;color:var(--text-muted);font-size:.82rem;line-height:1.65}
-.ideology-accordion{border:1px solid var(--border);border-radius:10px;background:var(--card-bg);overflow:hidden}
-.ideology-accordion summary{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem;cursor:pointer;font-size:.84rem;font-weight:700;list-style:none}
-.ideology-accordion summary::-webkit-details-marker{display:none}
-.ideology-accordion summary i{color:var(--primary);transition:transform .2s ease}
-.ideology-accordion[open] summary i{transform:rotate(180deg)}
-.ideology-accordion>div{padding:0 1rem 1rem;border-top:1px solid var(--border)}
-.ideology-accordion ul{margin:.9rem 0 0;padding-left:1.15rem}
-.ideology-accordion li{color:var(--text-muted);font-size:.82rem;line-height:1.7;margin-top:.4rem}
-.term-table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px}
-.term-table{width:100%;border-collapse:collapse;min-width:720px;background:var(--card-bg)}
-.term-table th,.term-table td{padding:.85rem 1rem;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
-.term-table th{color:var(--primary);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;background:color-mix(in srgb,var(--primary) 4%,var(--card-bg))}
-.term-table td{color:var(--text-muted);font-size:.78rem;line-height:1.55}
-.term-table td:first-child{font-weight:800;color:var(--text-main);white-space:nowrap}
-.term-table tr:last-child td{border-bottom:0}
-.ideology-sources p{max-width:800px;color:var(--text-muted);line-height:1.7;font-size:.84rem}
-.ideology-sources .source-list{display:flex;flex-wrap:wrap;gap:.65rem 1rem}
-.ideology-sources .source-list a{color:var(--primary);font-size:.78rem}
-@media(max-width:900px){.axis-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ideology-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:768px){.ideology-method,.ideology-section{margin-inline:1.25rem}.ideology-method{grid-template-columns:1fr;padding:1.15rem}.ideology-section{margin-bottom:3rem}.ideology-section h2{font-size:1.65rem}.axis-grid,.ideology-grid,.comparison-grid,.history-columns{grid-template-columns:1fr}.history-warning{grid-template-columns:1fr}.ideology-card h3{font-size:1.12rem}}
-@media(max-width:480px){.ideology-method,.ideology-section{margin-inline:1rem}.ideology-method{padding:1rem}.term-table{min-width:680px}}
-@media(prefers-reduced-motion:reduce){.ideology-accordion summary i{transition:none}}
+.ideologies-page main {
+  padding-bottom: 2rem;
+}
+
+/* HERO — mesmo padrão da seção História */
+
+.ideology-hero {
+  max-width: 860px;
+}
+
+/* BLOCO INTRODUTÓRIO */
+
+.ideology-method {
+  margin: 0 3rem 3rem;
+  padding: 1.25rem 1.4rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  border: 1px solid color-mix(in srgb, var(--primary) 35%, var(--border));
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+}
+
+.ideology-method-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--primary) 10%, var(--card-bg));
+  color: var(--primary);
+}
+
+.ideology-method h2 {
+  margin: 0.2rem 0 0.5rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+.ideology-method p {
+  max-width: 850px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+
+/* SEÇÕES — mesma escala e espaçamento da História */
+
+.ideology-section {
+  margin: 0 3rem 3.5rem;
+  scroll-margin-top: 1.5rem;
+}
+
+.ideology-section .section-heading {
+  margin-bottom: 1.5rem;
+}
+
+.ideology-section h2 {
+  margin: 0.35rem 0 0;
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.ideology-prose {
+  max-width: 860px;
+}
+
+.ideology-prose > p {
+  margin: 0 0 1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* EIXOS */
+
+.axis-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+}
+
+.axis-grid article {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.axis-grid article:hover {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+  box-shadow: 0 7px 20px rgb(25 31 40 / 7%);
+}
+
+.axis-grid span {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--primary);
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.axis-grid strong {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+.axis-grid p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+/* CARDS — mesmo padrão dos cards históricos */
+
+.ideology-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.ideology-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.ideology-card:hover {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+  box-shadow: 0 7px 20px rgb(25 31 40 / 7%);
+  transform: translateY(-1px);
+}
+
+.ideology-tag {
+  color: var(--primary);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ideology-card h3 {
+  margin: 0.45rem 0 0.55rem;
+  color: var(--text-main);
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.ideology-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.ideology-card a {
+  margin-top: auto;
+  padding-top: 0.9rem;
+  color: var(--primary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ideology-card a:hover {
+  text-decoration: underline;
+}
+
+.ideology-card-emphasis {
+  border-top: 3px solid var(--primary);
+}
+
+/* COMPARAÇÃO */
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.comparison-grid article {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
+}
+
+.comparison-grid h3 {
+  margin: 0 0 0.7rem;
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+.comparison-grid p,
+.comparison-grid li {
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+
+.comparison-grid ul {
+  margin: 0.8rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.callout {
+  margin-top: 0.8rem;
+  padding: 1rem 1.2rem;
+  border: 1px dashed var(--primary);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+  color: var(--text-main);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+/* FASCISMO E NAZISMO */
+
+.history-warning {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.8rem;
+  margin: 1.4rem 0;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 35%, var(--border));
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+}
+
+.history-warning > i {
+  padding-top: 0.15rem;
+  color: var(--primary);
+}
+
+.history-warning p {
+  margin: 0.3rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.history-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+
+.history-columns article {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
+}
+
+.history-columns span {
+  color: var(--primary);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.history-columns h3 {
+  margin: 0.4rem 0 0.5rem;
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+.history-columns p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+/* ACCORDION — mesma linguagem dos accordions históricos */
+
+.ideology-accordion {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.ideology-accordion:hover,
+.ideology-accordion[open] {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+}
+
+.ideology-accordion[open] {
+  box-shadow: 0 7px 20px rgb(25 31 40 / 7%);
+}
+
+.ideology-accordion summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 68px;
+  padding: 0.85rem 1rem;
+  list-style: none;
+  cursor: pointer;
+}
+
+.ideology-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.ideology-accordion summary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -3px;
+}
+
+.ideology-accordion summary i {
+  color: var(--text-muted);
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.ideology-accordion[open] summary {
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+}
+
+.ideology-accordion[open] summary i {
+  color: var(--primary);
+  transform: rotate(180deg);
+}
+
+.ideology-accordion > div {
+  padding: 1rem 1.25rem 1.2rem;
+}
+
+.ideology-accordion ul {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.ideology-accordion li {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.7;
+}
+
+/* TABELA */
+
+.term-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
+}
+
+.term-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  background: var(--card-bg);
+}
+
+.term-table th,
+.term-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.term-table th {
+  color: var(--primary);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: color-mix(in srgb, var(--primary) 4%, var(--card-bg));
+}
+
+.term-table td {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.term-table td:first-child {
+  color: var(--text-main);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.term-table tr:last-child td {
+  border-bottom: 0;
+}
+
+/* FONTES */
+
+.ideology-sources {
+  padding-top: 0.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.ideology-sources p {
+  max-width: 800px;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+
+.ideology-sources .source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+}
+
+.ideology-sources .source-list a {
+  color: var(--primary);
+  font-size: 0.78rem;
+}
+
+@media (max-width: 900px) {
+  .axis-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ideology-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .ideology-method,
+  .ideology-section {
+    margin-inline: 1.25rem;
+  }
+
+  .ideology-method {
+    grid-template-columns: 1fr;
+    padding: 1.15rem;
+  }
+
+  .ideology-section {
+    margin-bottom: 2.75rem;
+  }
+
+  .ideology-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .axis-grid,
+  .ideology-grid,
+  .comparison-grid,
+  .history-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .history-warning {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .ideology-method,
+  .ideology-section {
+    margin-inline: 1rem;
+  }
+
+  .ideology-method {
+    padding: 1rem;
+  }
+
+  .term-table {
+    min-width: 680px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .axis-grid article,
+  .ideology-card,
+  .ideology-accordion,
+  .ideology-accordion summary i {
+    transition: none;
+  }
+}
