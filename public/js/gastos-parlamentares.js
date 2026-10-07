@@ -137,7 +137,7 @@ function renderExpenses(items){
       '<td>'+escapeHtml(item.tipoDespesa||'Não informado')+'</td>'+
       '<td>'+escapeHtml(item.nomeFornecedor||'Não informado')+'</td>'+
       '<td>'+escapeHtml(item.numDocumento||'—')+'</td>'+
-      '<td>'+money.format(Number(item.valorLiquido)||0)+'</td>'+
+      '<td>'+money.format(Number(item.vlrLiquido)||0)+'</td>'+
       '</tr>'
     ).join('');
   }
@@ -163,7 +163,6 @@ async function loadExpenses(){
     const all=[];
     for(let page=1;page<=100;page++){
       const params=new URLSearchParams({
-        id,
         ano:yearSelect.value,
         itens:'100',
         pagina:String(page),
