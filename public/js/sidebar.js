@@ -8,6 +8,9 @@ const sitePages = [
   { href: "/tres-poderes", label: "Três Poderes", icon: "fa-building-columns" },
   { href: "/cargos-publicos", label: "Cargos Públicos", icon: "fa-id-card" },
   { href: "/arrecadacao", label: "Dinheiro Público", icon: "fa-coins" },
+  { href: "/gastos-parlamentares", label: "Gastos Parlamentares", icon: "fa-receipt" },
+  { href: "/como-funciona-estado", label: "Como funciona o Estado", icon: "fa-sitemap" },
+  { href: "/como-fiscalizar", label: "Como fiscalizar o poder público", icon: "fa-magnifying-glass" },
   { href: "/about", label: "Sobre", icon: "fa-circle-info" }
 ];
 
