@@ -1,190 +1,135 @@
 const CAMARA_DEPUTADOS_API='https://dadosabertos.camara.leg.br/api/v2/deputados';
 const CAMARA_DESPESAS_API='https://dadosabertos.camara.leg.br/api/v2/deputados';
 
-const deputyPicker=document.getElementById('deputy-picker');
-const deputySearch=document.getElementById('deputy-search');
-const deputyToggle=document.getElementById('deputy-toggle');
-const deputyHidden=document.getElementById('deputy-select');
-const deputySelected=document.getElementById('deputy-selected');
-const deputyOptions=document.getElementById('deputy-options');
-const deputyOptionsList=document.getElementById('deputy-options-list');
 const yearSelect=document.getElementById('expense-year');
-const typeSelect=document.getElementById('expense-type');
+const stateSelect=document.getElementById('expense-state');
+const orderSelect=document.getElementById('expense-order');
 const searchButton=document.getElementById('expense-search');
 const statusEl=document.getElementById('expense-status');
-const summaryEl=document.getElementById('expense-summary');
-const tableWrap=document.getElementById('expense-table-wrap');
-const tbody=document.getElementById('expense-table-body');
+const tableWrap=document.getElementById('ranking-table-wrap');
+const tbody=document.getElementById('ranking-table-body');
 
 const money=new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'});
-let expenseCache=[];
-let deputies=[];
-let searchTimer=null;
-let searchRequest=0;
+const CACHE_PREFIX='kings-newsletter-parliamentary-ranking-';
+const CONCURRENCY=8;
 
 async function getJson(url){
   const response=await fetch(url,{headers:{Accept:'application/json'}});
   let data=null;
   try{data=await response.json();}catch{}
-  if(!response.ok){
-    throw new Error(data?.erro||data?.message||'Não foi possível consultar os dados oficiais da Câmara.');
-  }
+  if(!response.ok)throw new Error(data?.erro||data?.message||'Não foi possível consultar os dados oficiais da Câmara.');
   return data;
 }
 
 function setStatus(text){statusEl.textContent=text;}
 
+function cacheKey(){
+  return CACHE_PREFIX+yearSelect.value+'-'+(stateSelect.value||'TODOS');
+}
+
+function renderRanking(rows){
+  const sorted=[...rows].sort((a,b)=>{
+    const difference=b.total-a.total;
+    return orderSelect.value==='desc'?difference:-difference;
+  });
+
+  if(!sorted.length){
+    tbody.innerHTML='<tr><td class="ranking-empty" colspan="5">Nenhum deputado encontrado para os filtros selecionados.</td></tr>';
+    tableWrap.hidden=false;
+    return;
+  }
+
+  tbody.innerHTML=sorted.map((row,index)=>
+    '<tr><td>'+String(index+1)+'</td>'+
+    '<td>'+escapeHtml(row.nome)+'</td>'+
+    '<td>'+escapeHtml(row.uf)+'</td>'+
+    '<td>'+escapeHtml(row.partido||'—')+'</td>'+
+    '<td>'+money.format(row.total)+'</td></tr>'
+  ).join('');
+  tableWrap.hidden=false;
+}
+
 function escapeHtml(value){
   return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 }
 
-function formatDate(value){
-  const raw=String(value||'').split('T')[0];
-  return /^\d{4}-\d{2}-\d{2}$/.test(raw)?raw.split('-').reverse().join('/'): '—';
-}
-
-function deputyLabel(deputy){
-  return deputy.nome+' — '+(deputy.siglaPartido||'Sem partido')+'/'+(deputy.siglaUf||'—');
-}
-
-function openDeputyOptions(){
-  deputyOptions.hidden=false;
-  deputyToggle.setAttribute('aria-expanded','true');
-  deputySearch.focus();
-  if(!deputies.length) searchDeputies('');
-}
-
-function closeDeputyOptions(){
-  deputyOptions.hidden=true;
-  deputyToggle.setAttribute('aria-expanded','false');
-}
-
-function renderDeputyOptions(items){
-  deputyOptionsList.innerHTML='';
-  if(!items.length){
-    deputyOptionsList.innerHTML='<div class="deputy-empty">Nenhum deputado encontrado.</div>';
-    return;
-  }
-
-  items.forEach(deputy=>{
-    const button=document.createElement('button');
-    button.type='button';
-    button.className='deputy-option';
-    button.setAttribute('role','option');
-    button.setAttribute('aria-selected',String(String(deputy.id)===deputyHidden.value));
-    button.dataset.id=deputy.id;
-    button.innerHTML='<strong>'+escapeHtml(deputy.nome)+'</strong><span>'+escapeHtml((deputy.siglaPartido||'Sem partido')+'/'+(deputy.siglaUf||'—'))+'</span>';
-    deputyOptionsList.appendChild(button);
-  });
-}
-
-async function searchDeputies(query){
-  const requestId=++searchRequest;
-  const params=new URLSearchParams({
-    itens:'100',
-    pagina:'1',
-    ordem:'ASC',
-    ordenarPor:'nome'
-  });
-  if(query.trim()) params.set('nome',query.trim());
-
-  deputyOptionsList.innerHTML='<div class="deputy-empty">Buscando deputados...</div>';
-
-  try{
+async function loadDeputies(){
+  const params=new URLSearchParams({itens:'100',pagina:'1',ordem:'ASC',ordenarPor:'nome'});
+  if(stateSelect.value)params.set('siglaUf',stateSelect.value);
+  const rows=[];
+  for(let page=1;page<=10;page++){
+    params.set('pagina',String(page));
     const data=await getJson(CAMARA_DEPUTADOS_API+'?'+params);
-    if(requestId!==searchRequest)return;
-    deputies=data.dados||[];
-    renderDeputyOptions(deputies);
-  }catch(error){
-    if(requestId!==searchRequest)return;
-    deputyOptionsList.innerHTML='<div class="deputy-empty">'+escapeHtml(error.message)+'</div>';
+    const pageRows=data.dados||[];
+    rows.push(...pageRows);
+    if(pageRows.length<100)break;
   }
+  return rows;
 }
 
-function selectDeputy(deputy){
-  deputyHidden.value=String(deputy.id);
-  deputySelected.textContent=deputyLabel(deputy);
-  deputySearch.value='';
-  closeDeputyOptions();
-  setStatus('Deputado selecionado. Clique em Consultar.');
-}
+async function loadDeputyTotal(deputy,year){
+  const key=cacheKey();
+  const stored=localStorage.getItem(key);
+  const cache=stored?JSON.parse(stored):{};
+  if(cache[deputy.id]!==undefined)return Number(cache[deputy.id])||0;
 
-function fillTypes(items){
-  const types=[...new Set(items.map(item=>item.tipoDespesa).filter(Boolean))]
-    .sort((a,b)=>a.localeCompare(b,'pt-BR'));
-
-  typeSelect.innerHTML='<option value="">Todas as categorias</option>'+
-    types.map(type=>'<option value="'+escapeHtml(type)+'">'+escapeHtml(type)+'</option>').join('');
-}
-
-function renderExpenses(items){
-  const selected=typeSelect.value;
-  const filtered=selected?items.filter(item=>item.tipoDespesa===selected):items;
-  const total=filtered.reduce((sum,item)=>sum+(Number(item.vlrLiquido)||0),0);
-
-  summaryEl.hidden=false;
-  summaryEl.innerHTML=
-    '<div><span>Registros</span><strong>'+filtered.length+'</strong></div>'+
-    '<div><span>Total líquido</span><strong>'+money.format(total)+'</strong></div>'+
-    '<div><span>Ano</span><strong>'+yearSelect.value+'</strong></div>';
-
-  if(!filtered.length){
-    tbody.innerHTML='<tr><td colspan="5">Nenhuma despesa encontrada para os filtros selecionados.</td></tr>';
-  }else{
-    tbody.innerHTML=filtered.map(item=>
-      '<tr>'+
-      '<td>'+formatDate(item.dataDocumento)+'</td>'+
-      '<td>'+escapeHtml(item.tipoDespesa||'Não informado')+'</td>'+
-      '<td>'+escapeHtml(item.nomeFornecedor||'Não informado')+'</td>'+
-      '<td>'+escapeHtml(item.numDocumento||'—')+'</td>'+
-      '<td>'+money.format(Number(item.vlrLiquido)||0)+'</td>'+
-      '</tr>'
-    ).join('');
+  let total=0;
+  for(let page=1;page<=100;page++){
+    const params=new URLSearchParams({
+      ano:year,itens:'100',pagina:String(page),ordem:'DESC',ordenarPor:'dataDocumento'
+    });
+    const data=await getJson(CAMARA_DESPESAS_API+'/'+deputy.id+'/despesas?'+params);
+    const rows=data.dados||[];
+    total+=rows.reduce((sum,item)=>sum+(Number(item.vlrLiquido)||0),0);
+    if(rows.length<100)break;
   }
-
-  tableWrap.hidden=false;
+  cache[deputy.id]=total;
+  localStorage.setItem(key,JSON.stringify(cache));
+  return total;
 }
 
-async function loadExpenses(){
-  const id=deputyHidden.value;
-  if(!id){
-    setStatus('Selecione um deputado antes de consultar.');
-    openDeputyOptions();
-    return;
-  }
-
+async function loadRanking(){
   searchButton.disabled=true;
-  summaryEl.hidden=true;
   tableWrap.hidden=true;
-  typeSelect.innerHTML='<option value="">Todas as categorias</option>';
-  setStatus('Consultando as despesas oficiais de '+yearSelect.value+'...');
+  const year=yearSelect.value;
+  const state=stateSelect.value||'todos';
+  const label=stateSelect.options[stateSelect.selectedIndex].text;
+  setStatus('Consultando deputados de '+year+' para '+label+'...');
 
   try{
-    const all=[];
-    for(let page=1;page<=100;page++){
-      const params=new URLSearchParams({
-        ano:yearSelect.value,
-        itens:'100',
-        pagina:String(page),
-        ordem:'DESC',
-        ordenarPor:'dataDocumento'
-      });
-      const data=await getJson(CAMARA_DESPESAS_API+'/'+id+'/despesas?'+params);
-      const rows=data.dados||[];
-      all.push(...rows);
-      if(rows.length<100)break;
-      setStatus('Consultando despesas oficiais... página '+page);
+    const deputies=await loadDeputies();
+    if(!deputies.length){
+      renderRanking([]);
+      setStatus('Nenhum deputado encontrado para o estado selecionado.');
+      return;
     }
 
-    expenseCache=all;
-    fillTypes(expenseCache);
-    renderExpenses(expenseCache);
-    setStatus(expenseCache.length
-      ? expenseCache.length+' registros carregados da Cota Parlamentar para '+yearSelect.value+'.'
-      : 'Nenhuma despesa registrada para este parlamentar em '+yearSelect.value+'.');
+    const rows=[];
+    let completed=0;
+    let cursor=0;
+
+    async function worker(){
+      while(true){
+        const index=cursor++;
+        if(index>=deputies.length)return;
+        const deputy=deputies[index];
+        const total=await loadDeputyTotal(deputy,year);
+        rows.push({
+          id:deputy.id,
+          nome:deputy.nome,
+          uf:deputy.siglaUf||'—',
+          partido:deputy.siglaPartido||'—',
+          total
+        });
+        completed++;
+        setStatus('Consultando despesas: '+completed+' de '+deputies.length+' deputados...');
+      }
+    }
+
+    await Promise.all(Array.from({length:Math.min(CONCURRENCY,deputies.length)},worker));
+    renderRanking(rows);
+    setStatus(rows.length+' deputados consultados em '+year+'.');
   }catch(error){
-    expenseCache=[];
-    summaryEl.hidden=true;
     tableWrap.hidden=true;
     setStatus(error.message);
   }finally{
@@ -192,32 +137,24 @@ async function loadExpenses(){
   }
 }
 
-deputyToggle.addEventListener('click',()=>{
-  if(deputyOptions.hidden)openDeputyOptions();
-  else closeDeputyOptions();
+stateSelect.addEventListener('change',()=>{
+  tableWrap.hidden=true;
+  setStatus('Filtros alterados. Clique em Consultar.');
 });
 
-deputySearch.addEventListener('input',()=>{
-  clearTimeout(searchTimer);
-  searchTimer=setTimeout(()=>searchDeputies(deputySearch.value),250);
+yearSelect.addEventListener('change',()=>{
+  tableWrap.hidden=true;
+  setStatus('Filtros alterados. Clique em Consultar.');
 });
 
-deputySearch.addEventListener('keydown',event=>{
-  if(event.key==='Escape')closeDeputyOptions();
+orderSelect.addEventListener('change',()=>{
+  const rows=[...tbody.querySelectorAll('tr')].map(row=>({
+    nome:row.children[1]?.textContent||'',
+    uf:row.children[2]?.textContent||'',
+    partido:row.children[3]?.textContent||'',
+    total:Number((row.children[4]?.textContent||'').replace(/[^0-9,-]/g,'').replace(/\./g,'').replace(',','.'))||0
+  }));
+  if(rows.length)renderRanking(rows);
 });
 
-deputyOptionsList.addEventListener('click',event=>{
-  const option=event.target.closest('.deputy-option');
-  if(!option)return;
-  const deputy=deputies.find(item=>String(item.id)===option.dataset.id);
-  if(deputy)selectDeputy(deputy);
-});
-
-document.addEventListener('click',event=>{
-  if(!deputyPicker.contains(event.target))closeDeputyOptions();
-});
-
-typeSelect.addEventListener('change',()=>renderExpenses(expenseCache));
-searchButton.addEventListener('click',loadExpenses);
-
-searchDeputies('');
+searchButton.addEventListener('click',loadRanking);
