@@ -1,45 +1,5 @@
 /* HISTÓRIA — estrutura visual limpa e consistente */
 
-.back-to-top {
-  position: fixed;
-  right: max(1.25rem, calc((100vw - 1100px) / 2 + 1.25rem));
-  bottom: 1.25rem;
-  z-index: 30;
-  display: grid;
-  width: 48px;
-  height: 48px;
-  place-items: center;
-  border: 1px solid color-mix(in srgb, var(--primary) 45%, var(--border));
-  border-radius: 50%;
-  background: var(--primary);
-  color: #fff;
-  box-shadow: 0 6px 20px rgb(20 35 32 / 22%);
-  cursor: pointer;
-  visibility: hidden;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateY(12px) scale(0.86);
-  transition: opacity 180ms ease, transform 220ms ease, visibility 0s linear 220ms, background-color 180ms ease;
-}
-
-.back-to-top.is-visible {
-  visibility: visible;
-  pointer-events: auto;
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  transition-delay: 0s;
-}
-
-.back-to-top:hover {
-  background: color-mix(in srgb, var(--primary) 82%, #000);
-  transform: translateY(-3px) scale(1.04);
-}
-
-.back-to-top:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--primary) 42%, transparent);
-  outline-offset: 3px;
-}
-
 .history-hero {
   max-width: 860px;
   padding: 4rem 3rem 2.5rem;
@@ -1724,13 +1684,6 @@ body.history-modal-open {
     display: block;
   }
 
-  .back-to-top {
-    right: 1rem;
-    bottom: 1rem;
-    width: 44px;
-    height: 44px;
-  }
-
   .presidents-grid {
     gap: 0.85rem;
   }
@@ -1978,9 +1931,6 @@ body.history-modal-open {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .back-to-top {
-    transition: none !important;
-  }
   .history-filter,
   .history-search input,
   .timeline-item,
@@ -2387,5 +2337,34 @@ body.history-modal-open {
 
   .history-topic-content {
     padding: .85rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  body {
+    padding-left: calc(250px + 3rem);
+  }
+
+  .site-sidebar {
+    inset: 2rem auto 2rem 1rem;
+    width: 250px;
+    transform: none;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+  }
+
+  .site-sidebar-close,
+  .site-sidebar-backdrop {
+    display: none;
+  }
+
+  .site-header .header-nav-actions {
+    display: none;
+  }
+}
+
+@media (max-width: 1099px) {
+  .site-header .header-nav-actions {
+    display: flex;
   }
 }

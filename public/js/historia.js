@@ -1,53 +1,3 @@
-const themeToggle = document.getElementById("theme-toggle");
-const themeIcon = document.getElementById("theme-icon");
-const headerThemeToggle = document.getElementById("header-theme-toggle");
-const headerThemeIcon = document.getElementById("header-theme-icon");
-const savedTheme = localStorage.getItem("theme") || "light";
-
-document.documentElement.setAttribute("data-theme", savedTheme);
-
-const updateThemeControl = theme => {
-  const isDark = theme === "dark";
-  [[themeToggle, themeIcon], [headerThemeToggle, headerThemeIcon]].forEach(([button, icon]) => {
-    if (!button || !icon) return;
-    icon.className = isDark ? "fas fa-sun" : "fas fa-moon";
-    button.setAttribute("aria-label", isDark ? "Ativar tema claro" : "Ativar tema escuro");
-    button.setAttribute("title", isDark ? "Ativar tema claro" : "Ativar tema escuro");
-    button.setAttribute("aria-pressed", String(isDark));
-  });
-};
-
-const themeIconAnimations = new WeakMap();
-
-const animateThemeIcons = () => {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  [themeIcon, headerThemeIcon].forEach(icon => {
-    if (!icon?.animate) return;
-    themeIconAnimations.get(icon)?.cancel();
-    const animation = icon.animate(
-      [{ rotate: "0deg" }, { rotate: "360deg" }],
-      { duration: 800, easing: "cubic-bezier(.4, 0, .2, 1)" }
-    );
-    themeIconAnimations.set(icon, animation);
-    animation.onfinish = () => {
-      if (themeIconAnimations.get(icon) === animation) themeIconAnimations.delete(icon);
-    };
-  });
-};
-
-updateThemeControl(savedTheme);
-
-const toggleTheme = () => {
-  animateThemeIcons();
-  const theme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-  document.documentElement.setAttribute("data-theme", theme);
-  localStorage.setItem("theme", theme);
-  updateThemeControl(theme);
-};
-
-themeToggle?.addEventListener("click", toggleTheme);
-headerThemeToggle?.addEventListener("click", toggleTheme);
-
 const periods = [
   {
     id: "colonial",
@@ -1705,23 +1655,6 @@ function renderPresidents() {
   }
 }
 
-const backToTop = document.getElementById("back-to-top");
-
-function updateBackToTop() {
-  const shouldShow = window.scrollY > 600;
-  backToTop.classList.toggle("is-visible", shouldShow);
-  backToTop.setAttribute("aria-hidden", String(!shouldShow));
-  backToTop.tabIndex = shouldShow ? 0 : -1;
-}
-
-window.addEventListener("scroll", updateBackToTop, { passive: true });
-backToTop.addEventListener("click", () => {
-  window.scrollTo({
-    top: 0,
-    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
-  });
-});
-
 function matchesFilter(entry) {
   const period = periodFor(entry);
   return period && (activeFilter === "Todos" || period.era === activeFilter);
@@ -2169,4 +2102,3 @@ renderFilters();
 renderTimeline();
 if (presidentFilterContainer) renderPresidentFilters();
 renderPresidents();
-updateBackToTop();
