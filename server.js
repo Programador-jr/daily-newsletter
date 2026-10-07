@@ -43,6 +43,10 @@ app.get('/politicas-publicas', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/politicas-publicas.html'));
 });
 
+app.get('/tres-poderes', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/tres-poderes.html'));
+});
+
 app.get('/about', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/about.html'));
 });
