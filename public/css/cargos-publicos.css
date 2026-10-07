@@ -90,7 +90,7 @@
 }
 
 .office-prose {
-  max-width: 900px;
+  max-width: none;
 }
 
 /* GRIDS */
@@ -133,12 +133,10 @@
 .access-grid article,
 .checks-grid article,
 .benefits-grid article {
-  padding: 1.15rem;
+  padding: 1.25rem;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--card-bg);
-  box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
-  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
 .concept-grid article:hover,
@@ -147,8 +145,6 @@
 .checks-grid article:hover,
 .benefits-grid article:hover {
   border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
-  box-shadow: 0 7px 20px rgb(25 31 40 / 7%);
-  transform: translateY(-1px);
 }
 
 .concept-grid span,
