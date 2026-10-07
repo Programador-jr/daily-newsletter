@@ -23,14 +23,23 @@
 @media(max-width:768px){.expenses-method,.expenses-section,.expenses-sources{margin-inline:1.25rem}.expenses-method{grid-template-columns:1fr;padding:1.15rem}.expenses-section{margin-bottom:2.75rem}.expenses-section h2{font-size:1.8rem}.expenses-grid,.expenses-grid.three,.expense-summary{grid-template-columns:1fr}.expense-filters{grid-template-columns:1fr}}
 @media(max-width:480px){.expenses-method,.expenses-section,.expenses-sources{margin-inline:1rem}.expenses-method{padding:1rem}}
 
-.deputy-combobox{position:relative;min-width:0}
-.deputy-combobox>label{display:grid;gap:.4rem;color:var(--text-main);font-size:.76rem;font-weight:700}
-.deputy-combobox-control{display:grid;grid-template-columns:minmax(0,1fr) 42px;min-height:42px;border:1px solid var(--border);border-radius:8px;background:var(--bg-container);overflow:hidden}
-.deputy-combobox-control input[type="search"]{width:100%;min-width:0;border:0;outline:0;background:transparent;color:var(--text-main);padding:0 .75rem;font:inherit}
-.deputy-combobox-control button{border:0;border-left:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer}
-.deputy-combobox-control button:focus-visible,.deputy-combobox-control input:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
-.deputy-options{position:absolute;z-index:20;top:calc(100% + .4rem);left:0;right:0;max-height:320px;overflow:auto;padding:.35rem;border:1px solid var(--border);border-radius:9px;background:var(--card-bg);box-shadow:0 8px 24px rgb(25 31 40 / 10%)}
-.deputy-option{display:block;width:100%;padding:.65rem .7rem;border:0;border-radius:6px;background:transparent;color:var(--text-main);text-align:left;font:inherit;font-size:.78rem;cursor:pointer}
-.deputy-option:hover,.deputy-option[aria-selected="true"]{background:color-mix(in srgb,var(--primary) 9%,var(--card-bg))}
-.deputy-empty{padding:.75rem;color:var(--text-muted);font-size:.78rem}
-@media(max-width:768px){.deputy-options{max-height:260px}}
+.deputy-picker{position:relative;min-width:0}
+.deputy-picker>label{display:block;margin-bottom:.4rem;color:var(--text-main);font-size:.76rem;font-weight:700}
+.deputy-picker-control{display:flex;align-items:center;justify-content:space-between;gap:.75rem;width:100%;min-height:42px;padding:0 .75rem;border:1px solid var(--border);border-radius:8px;background:var(--bg-container);color:var(--text-main);font:inherit;font-size:.8rem;text-align:left;cursor:pointer}
+.deputy-picker-control:hover,.deputy-picker-control:focus-visible{border-color:var(--primary);outline:none}
+.deputy-picker-control>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.deputy-picker-control>i{flex:0 0 auto;color:var(--text-muted);transition:transform 180ms ease,color 180ms ease}
+.deputy-picker-control[aria-expanded="true"]{border-color:var(--primary)}
+.deputy-picker-control[aria-expanded="true"]>i{color:var(--primary);transform:rotate(180deg)}
+.deputy-options{position:absolute;z-index:30;top:calc(100% + .45rem);left:0;right:0;display:grid;gap:.5rem;padding:.6rem;border:1px solid var(--border);border-radius:10px;background:var(--card-bg);box-shadow:0 12px 30px rgb(25 31 40 / 12%)}
+.deputy-search-box{position:relative}
+.deputy-search-box>i{position:absolute;top:50%;left:.75rem;color:var(--text-muted);transform:translateY(-50%);pointer-events:none}
+.deputy-search-box input{width:100%;min-height:38px;padding:.55rem .7rem .55rem 2.15rem;border:1px solid var(--border);border-radius:7px;outline:none;background:var(--bg-container);color:var(--text-main);font:inherit;font-size:.78rem;box-sizing:border-box}
+.deputy-search-box input:focus{border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 10%,transparent)}
+.deputy-options-list{display:grid;max-height:300px;overflow:auto}
+.deputy-option{display:grid;gap:.15rem;width:100%;padding:.62rem .7rem;border:0;border-radius:7px;background:transparent;color:var(--text-main);text-align:left;font:inherit;cursor:pointer}
+.deputy-option strong{font-size:.78rem;font-weight:700}
+.deputy-option span{color:var(--text-muted);font-size:.7rem}
+.deputy-option:hover,.deputy-option[aria-selected="true"]{background:color-mix(in srgb,var(--primary) 8%,var(--card-bg))}
+.deputy-empty{padding:.75rem;color:var(--text-muted);font-size:.76rem;line-height:1.5}
+@media(max-width:768px){.deputy-options-list{max-height:260px}}
