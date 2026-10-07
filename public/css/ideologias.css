@@ -1,11 +1,30 @@
+/* IDEOLOGIAS — padrão visual das páginas institucionais */
+
 .ideologies-page main {
   padding-bottom: 2rem;
 }
 
-/* HERO — mesmo padrão da seção História */
+/* HERO */
 
 .ideology-hero {
   max-width: 860px;
+  padding: 4rem 3rem 2.5rem;
+}
+
+.ideology-hero h1 {
+  margin: 0.35rem 0 1rem;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2.25rem, 5vw, 3.7rem);
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+}
+
+.ideology-hero > p:not(.eyebrow) {
+  max-width: 720px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.75;
 }
 
 /* BLOCO INTRODUTÓRIO */
@@ -33,9 +52,13 @@
   color: var(--primary);
 }
 
+.ideology-method h2,
+.ideology-section h2 {
+  font-family: "Playfair Display", serif;
+}
+
 .ideology-method h2 {
   margin: 0.2rem 0 0.5rem;
-  font-family: "Playfair Display", serif;
   font-size: 1.35rem;
   line-height: 1.25;
 }
@@ -48,7 +71,7 @@
   line-height: 1.7;
 }
 
-/* SEÇÕES — mesma escala e espaçamento da História */
+/* SEÇÕES */
 
 .ideology-section {
   margin: 0 3rem 3.5rem;
@@ -61,13 +84,12 @@
 
 .ideology-section h2 {
   margin: 0.35rem 0 0;
-  font-family: "Playfair Display", serif;
   font-size: 2rem;
   line-height: 1.2;
 }
 
 .ideology-prose {
-  max-width: 860px;
+  max-width: 900px;
 }
 
 .ideology-prose > p {
@@ -81,37 +103,43 @@
 .axis-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.7rem;
+  gap: 1rem;
   margin-top: 1.5rem;
 }
 
 .axis-grid article {
-  padding: 1rem 1.1rem;
+  padding: 1.15rem;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--card-bg);
   box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
-  transition: border-color 180ms ease, box-shadow 180ms ease;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
 .axis-grid article:hover {
   border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
   box-shadow: 0 7px 20px rgb(25 31 40 / 7%);
+  transform: translateY(-1px);
 }
 
-.axis-grid span {
-  display: block;
-  margin-bottom: 0.4rem;
+.axis-grid span,
+.ideology-tag,
+.history-columns span {
   color: var(--primary);
-  font-size: 0.67rem;
+  font-size: 0.66rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
+.axis-grid span,
+.history-columns span {
+  display: block;
+}
+
 .axis-grid strong {
   display: block;
-  margin-bottom: 0.4rem;
+  margin: 0.45rem 0;
   color: var(--text-main);
   font-size: 0.9rem;
 }
@@ -119,11 +147,11 @@
 .axis-grid p {
   margin: 0;
   color: var(--text-muted);
-  font-size: 0.78rem;
-  line-height: 1.5;
+  font-size: 0.82rem;
+  line-height: 1.65;
 }
 
-/* CARDS — mesmo padrão dos cards históricos */
+/* CARDS */
 
 .ideology-grid {
   display: grid;
@@ -131,15 +159,20 @@
   gap: 1rem;
 }
 
-.ideology-card {
-  display: flex;
-  flex-direction: column;
+.ideology-card,
+.comparison-grid article,
+.history-columns article {
   min-width: 0;
-  padding: 1.25rem;
+  padding: 1.15rem;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--card-bg);
   box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
+}
+
+.ideology-card {
+  display: flex;
+  flex-direction: column;
   transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
@@ -150,11 +183,7 @@
 }
 
 .ideology-tag {
-  color: var(--primary);
-  font-size: 0.66rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  display: block;
 }
 
 .ideology-card h3 {
@@ -197,14 +226,17 @@
 }
 
 .comparison-grid article {
-  padding: 1.25rem;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--card-bg);
-  box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
-.comparison-grid h3 {
+.comparison-grid article:hover,
+.history-columns article:hover {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+  box-shadow: 0 7px 20px rgb(25 31 40 / 7%);
+}
+
+.comparison-grid h3,
+.history-columns h3 {
   margin: 0 0 0.7rem;
   color: var(--text-main);
   font-size: 1rem;
@@ -223,7 +255,7 @@
 }
 
 .callout {
-  margin-top: 0.8rem;
+  margin-top: 1rem;
   padding: 1rem 1.2rem;
   border: 1px dashed var(--primary);
   border-radius: 10px;
@@ -252,11 +284,12 @@
   color: var(--primary);
 }
 
-.history-warning p {
+.history-warning p,
+.history-columns p {
   margin: 0.3rem 0 0;
   color: var(--text-muted);
   font-size: 0.82rem;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .history-columns {
@@ -267,35 +300,10 @@
 }
 
 .history-columns article {
-  padding: 1.25rem;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--card-bg);
-  box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
-.history-columns span {
-  color: var(--primary);
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.history-columns h3 {
-  margin: 0.4rem 0 0.5rem;
-  color: var(--text-main);
-  font-size: 1rem;
-}
-
-.history-columns p {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 0.82rem;
-  line-height: 1.65;
-}
-
-/* ACCORDION — mesma linguagem dos accordions históricos */
+/* ACCORDION */
 
 .ideology-accordion {
   overflow: hidden;
@@ -324,6 +332,8 @@
   padding: 0.85rem 1rem;
   list-style: none;
   cursor: pointer;
+  color: var(--text-main);
+  font-weight: 700;
 }
 
 .ideology-accordion summary::-webkit-details-marker {
@@ -422,6 +432,10 @@
   border-top: 1px solid var(--border);
 }
 
+.ideology-sources h2 {
+  margin: 0.35rem 0 0;
+}
+
 .ideology-sources p {
   max-width: 800px;
   color: var(--text-muted);
@@ -440,12 +454,16 @@
   font-size: 0.78rem;
 }
 
-@media (max-width: 900px) {
-  .axis-grid {
+/* RESPONSIVO */
+
+@media (max-width: 1100px) {
+  .ideology-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
 
-  .ideology-grid {
+@media (max-width: 900px) {
+  .axis-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -499,6 +517,8 @@
 @media (prefers-reduced-motion: reduce) {
   .axis-grid article,
   .ideology-card,
+  .comparison-grid article,
+  .history-columns article,
   .ideology-accordion,
   .ideology-accordion summary i {
     transition: none;
