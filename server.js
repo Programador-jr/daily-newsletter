@@ -63,6 +63,10 @@ app.get('/gastos-parlamentares', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/gastos-parlamentares.html'));
 });
 
+app.get('/como-funciona-estado', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/estado-brasileiro.html'));
+});
+
 app.get('/about', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/about.html'));
 });
