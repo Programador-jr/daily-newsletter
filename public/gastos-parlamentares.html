@@ -55,7 +55,19 @@
 <p class="expense-status" id="expense-status" aria-live="polite">Selecione um deputado para consultar os registros.</p>
 <div class="expense-summary" id="expense-summary" hidden></div>
 <div class="expense-table-wrap" id="expense-table-wrap" hidden><table class="expense-table"><thead><tr><th>Data</th><th>Despesa</th><th>Fornecedor</th><th>Documento</th><th>Valor líquido</th></tr></thead><tbody id="expense-table-body"></tbody></table></div></div></section>
-<section class="expenses-section" id="comparar"><div class="section-heading"><div><span class="eyebrow">04 · Comparação</span><h2>Como comparar parlamentares?</h2></div></div><div class="expenses-grid three">
+<section class="expenses-section" id="dados-anuais"><div class="section-heading"><div><span class="eyebrow">04 · Dados anuais</span><h2>Consulta anual de gastos</h2></div></div>
+<div class="annual-explorer">
+<div class="annual-filters">
+<label>Ano<select id="annual-year"><option>2026</option><option>2025</option><option>2024</option><option>2023</option></select></label>
+<label>UF<select id="annual-uf"><option value="">Todas as UFs</option><option>AC</option><option>AL</option><option>AM</option><option>AP</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MG</option><option>MS</option><option>MT</option><option>PA</option><option>PB</option><option>PE</option><option>PI</option><option>PR</option><option>RJ</option><option>RN</option><option>RO</option><option>RR</option><option>RS</option><option>SC</option><option>SE</option><option>SP</option><option>TO</option></select></label>
+<button id="annual-search" type="button">Consultar ano</button>
+</div>
+<p class="annual-status" id="annual-status" aria-live="polite">Selecione o ano e, opcionalmente, uma UF.</p>
+<div class="annual-summary" id="annual-summary" hidden></div>
+<div class="annual-table-wrap" id="annual-table-wrap" hidden><table class="annual-table"><thead><tr><th>Deputado</th><th>Partido</th><th>UF</th><th>Total CEAP no ano</th></tr></thead><tbody id="annual-table-body"></tbody></table></div>
+</div>
+<div class="comparison-note"><strong>Como ler a tabela</strong><p>Os valores são a soma anual do campo <em>vlrLiquido</em> da CEAP. A tabela apresenta os registros de forma neutra; o valor de gasto, isoladamente, não determina regularidade, qualidade ou desempenho parlamentar.</p></div>
+</section><section class="expenses-section" id="comparar"><div class="section-heading"><div><span class="eyebrow">04 · Comparação</span><h2>Como comparar parlamentares?</h2></div></div><div class="expenses-grid three">
 <article><span>Período</span><h3>Compare o mesmo intervalo</h3><p>Quem exerceu o mandato durante todo o ano não deve ser comparado diretamente com quem iniciou ou encerrou o mandato no meio do período.</p></article>
 <article><span>Categoria</span><h3>Compare despesas equivalentes</h3><p>Somar categorias diferentes pode esconder diferenças importantes na finalidade dos gastos.</p></article>
 <article><span>Contexto</span><h3>Procure a documentação</h3><p>Fornecedor, documento, data, valor líquido e regra da verba ajudam a transformar um número em análise verificável.</p></article>
