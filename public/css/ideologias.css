@@ -1,4 +1,4 @@
-/* IDEOLOGIAS — padrão visual das páginas institucionais */
+/* IDEOLOGIAS — extensão visual da página História */
 
 .ideologies-page main {
   padding-bottom: 2rem;
@@ -11,35 +11,19 @@
   padding: 4rem 3rem 2.5rem;
 }
 
-.ideology-hero h1 {
-  margin: 0.35rem 0 1rem;
-  font-family: "Playfair Display", serif;
-  font-size: clamp(2.25rem, 5vw, 3.7rem);
-  line-height: 1.08;
-  letter-spacing: -1.5px;
-}
-
-.ideology-hero > p:not(.eyebrow) {
-  max-width: 720px;
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 1rem;
-  line-height: 1.75;
-}
-
-/* BLOCO INTRODUTÓRIO */
+/* MÉTODO */
 
 .ideology-method {
-  margin: 0 3rem 3rem;
+  margin: 0 3rem 3.5rem;
   padding: 1.25rem 1.4rem;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 1rem;
   align-items: start;
-  border: 1px solid color-mix(in srgb, var(--primary) 35%, var(--border));
-  border-left: 4px solid var(--primary);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
   border-radius: 10px;
-  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+  background: var(--card-bg);
 }
 
 .ideology-method-icon {
@@ -47,27 +31,24 @@
   height: 42px;
   display: grid;
   place-items: center;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--primary) 10%, var(--card-bg));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
   color: var(--primary);
 }
 
-.ideology-method h2,
-.ideology-section h2 {
-  font-family: "Playfair Display", serif;
-}
-
 .ideology-method h2 {
-  margin: 0.2rem 0 0.5rem;
-  font-size: 1.35rem;
-  line-height: 1.25;
+  margin: .35rem 0 .55rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+  line-height: 1.2;
 }
 
 .ideology-method p {
   max-width: 850px;
   margin: 0;
   color: var(--text-muted);
-  font-size: 0.86rem;
+  font-size: .84rem;
   line-height: 1.7;
 }
 
@@ -82,9 +63,10 @@
   margin-bottom: 1.5rem;
 }
 
-.ideology-section h2 {
-  margin: 0.35rem 0 0;
-  font-size: 2rem;
+.ideology-section .section-heading h2 {
+  margin: .35rem 0 0;
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
   line-height: 1.2;
 }
 
@@ -103,91 +85,60 @@
 .axis-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
+  gap: .8rem;
+  margin-top: 1.25rem;
 }
 
 .axis-grid article {
-  padding: 1.15rem;
+  padding: 1.1rem;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--card-bg);
-  box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
-  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
-}
-
-.axis-grid article:hover {
-  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
-  box-shadow: 0 7px 20px rgb(25 31 40 / 7%);
-  transform: translateY(-1px);
 }
 
 .axis-grid span,
 .ideology-tag,
 .history-columns span {
-  color: var(--primary);
-  font-size: 0.66rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.axis-grid span,
-.history-columns span {
   display: block;
+  color: var(--primary);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
 }
 
 .axis-grid strong {
   display: block;
-  margin: 0.45rem 0;
+  margin: .45rem 0;
   color: var(--text-main);
-  font-size: 0.9rem;
+  font-size: .9rem;
 }
 
 .axis-grid p {
   margin: 0;
   color: var(--text-muted);
-  font-size: 0.82rem;
-  line-height: 1.65;
+  font-size: .82rem;
+  line-height: 1.6;
 }
 
-/* CARDS */
+/* CORRENTES */
 
 .ideology-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  gap: .8rem;
 }
 
-.ideology-card,
-.comparison-grid article,
-.history-columns article {
+.ideology-card {
   min-width: 0;
   padding: 1.15rem;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--card-bg);
-  box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
-}
-
-.ideology-card {
-  display: flex;
-  flex-direction: column;
-  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
-}
-
-.ideology-card:hover {
-  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
-  box-shadow: 0 7px 20px rgb(25 31 40 / 7%);
-  transform: translateY(-1px);
-}
-
-.ideology-tag {
-  display: block;
 }
 
 .ideology-card h3 {
-  margin: 0.45rem 0 0.55rem;
+  margin: .45rem 0 .55rem;
   color: var(--text-main);
   font-size: 1rem;
   line-height: 1.35;
@@ -196,15 +147,15 @@
 .ideology-card p {
   margin: 0;
   color: var(--text-muted);
-  font-size: 0.82rem;
+  font-size: .82rem;
   line-height: 1.65;
 }
 
 .ideology-card a {
-  margin-top: auto;
-  padding-top: 0.9rem;
+  display: inline-block;
+  margin-top: .8rem;
   color: var(--primary);
-  font-size: 0.76rem;
+  font-size: .76rem;
   font-weight: 700;
   text-decoration: none;
 }
@@ -214,7 +165,7 @@
 }
 
 .ideology-card-emphasis {
-  border-top: 3px solid var(--primary);
+  border-left: 3px solid var(--primary);
 }
 
 /* COMPARAÇÃO */
@@ -222,46 +173,46 @@
 .comparison-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  gap: .8rem;
 }
 
-.comparison-grid article {
-  transition: border-color 180ms ease, box-shadow 180ms ease;
-}
-
-.comparison-grid article:hover,
-.history-columns article:hover {
-  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
-  box-shadow: 0 7px 20px rgb(25 31 40 / 7%);
+.comparison-grid article,
+.history-columns article {
+  min-width: 0;
+  padding: 1.15rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
 }
 
 .comparison-grid h3,
 .history-columns h3 {
-  margin: 0 0 0.7rem;
-  color: var(--text-main);
+  margin: 0 0 .65rem;
   font-size: 1rem;
 }
 
 .comparison-grid p,
-.comparison-grid li {
+.comparison-grid li,
+.history-columns p {
   color: var(--text-muted);
-  font-size: 0.84rem;
+  font-size: .84rem;
   line-height: 1.7;
 }
 
 .comparison-grid ul {
-  margin: 0.8rem 0 0;
+  margin: .8rem 0 0;
   padding-left: 1.1rem;
 }
 
 .callout {
-  margin-top: 1rem;
+  margin-top: .8rem;
   padding: 1rem 1.2rem;
-  border: 1px dashed var(--primary);
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
-  color: var(--text-main);
-  font-size: 0.84rem;
+  border: 1px dashed var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  font-size: .84rem;
   line-height: 1.65;
 }
 
@@ -270,47 +221,41 @@
 .history-warning {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: 0.8rem;
-  margin: 1.4rem 0;
-  padding: 1.25rem 1.4rem;
-  border: 1px solid color-mix(in srgb, var(--primary) 35%, var(--border));
-  border-left: 4px solid var(--primary);
+  gap: .8rem;
+  margin: 1.25rem 0;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
   border-radius: 10px;
-  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+  background: var(--card-bg);
 }
 
 .history-warning > i {
-  padding-top: 0.15rem;
+  padding-top: .15rem;
   color: var(--primary);
 }
 
-.history-warning p,
-.history-columns p {
-  margin: 0.3rem 0 0;
+.history-warning p {
+  margin: .3rem 0 0;
   color: var(--text-muted);
-  font-size: 0.82rem;
+  font-size: .82rem;
   line-height: 1.65;
 }
 
 .history-columns {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  margin: 1.25rem 0;
+  gap: .8rem;
+  margin: 1.15rem 0;
 }
 
-.history-columns article {
-  transition: border-color 180ms ease, box-shadow 180ms ease;
-}
-
-/* ACCORDION */
+/* ACCORDION — mesma linguagem da História */
 
 .ideology-accordion {
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--card-bg);
-  box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
@@ -320,16 +265,16 @@
 }
 
 .ideology-accordion[open] {
-  box-shadow: 0 7px 20px rgb(25 31 40 / 7%);
+  box-shadow: 0 7px 20px rgba(16, 36, 32, .07);
 }
 
 .ideology-accordion summary {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 24px;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
-  min-height: 68px;
-  padding: 0.85rem 1rem;
+  min-height: 76px;
+  padding: .85rem 1rem;
   list-style: none;
   cursor: pointer;
   color: var(--text-main);
@@ -366,14 +311,14 @@
 
 .ideology-accordion ul {
   display: grid;
-  gap: 0.5rem;
+  gap: .5rem;
   margin: 0;
   padding-left: 1.2rem;
 }
 
 .ideology-accordion li {
   color: var(--text-muted);
-  font-size: 0.82rem;
+  font-size: .82rem;
   line-height: 1.7;
 }
 
@@ -383,7 +328,6 @@
   overflow-x: auto;
   border: 1px solid var(--border);
   border-radius: 10px;
-  box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
 }
 
 .term-table {
@@ -395,7 +339,7 @@
 
 .term-table th,
 .term-table td {
-  padding: 0.85rem 1rem;
+  padding: .85rem 1rem;
   border-bottom: 1px solid var(--border);
   text-align: left;
   vertical-align: top;
@@ -403,15 +347,15 @@
 
 .term-table th {
   color: var(--primary);
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
+  font-size: .68rem;
+  letter-spacing: .08em;
   text-transform: uppercase;
   background: color-mix(in srgb, var(--primary) 4%, var(--card-bg));
 }
 
 .term-table td {
   color: var(--text-muted);
-  font-size: 0.78rem;
+  font-size: .78rem;
   line-height: 1.55;
 }
 
@@ -428,30 +372,32 @@
 /* FONTES */
 
 .ideology-sources {
-  padding-top: 0.25rem;
+  padding-top: 1.5rem;
   border-top: 1px solid var(--border);
 }
 
 .ideology-sources h2 {
-  margin: 0.35rem 0 0;
+  margin: .35rem 0 .65rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
 }
 
 .ideology-sources p {
   max-width: 800px;
   color: var(--text-muted);
-  font-size: 0.84rem;
+  font-size: .84rem;
   line-height: 1.7;
 }
 
 .ideology-sources .source-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.65rem 1rem;
+  gap: .55rem 1rem;
 }
 
 .ideology-sources .source-list a {
   color: var(--primary);
-  font-size: 0.78rem;
+  font-size: .78rem;
 }
 
 /* RESPONSIVO */
@@ -483,8 +429,8 @@
     margin-bottom: 2.75rem;
   }
 
-  .ideology-section h2 {
-    font-size: 1.8rem;
+  .ideology-section .section-heading h2 {
+    font-size: 1.65rem;
   }
 
   .axis-grid,
