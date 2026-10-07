@@ -67,6 +67,10 @@ app.get('/como-funciona-estado', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/estado-brasileiro.html'));
 });
 
+app.get('/como-fiscalizar', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/como-fiscalizar.html'));
+});
+
 app.get('/about', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/about.html'));
 });
