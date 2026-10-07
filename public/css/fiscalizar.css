@@ -1,0 +1,237 @@
+/* COMO FISCALIZAR — padrão visual da História */
+
+.oversight-page main { padding-bottom: 2rem; }
+
+.oversight-hero {
+  max-width: 860px;
+  padding: 4rem 3rem 2.5rem;
+}
+
+.oversight-hero h1 {
+  margin: 0.35rem 0 1rem;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2.25rem, 5vw, 3.7rem);
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+}
+
+.oversight-hero > p:not(.eyebrow) {
+  max-width: 720px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.oversight-method {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  margin: 0 3rem 2.25rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 4px 14px rgb(25 31 40 / 4%);
+}
+
+.oversight-method-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--primary) 9%, var(--bg-container));
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.oversight-method h2,
+.oversight-section h2 {
+  font-family: "Playfair Display", serif;
+}
+
+.oversight-method h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.05rem;
+}
+
+.oversight-method p,
+.oversight-section > p,
+.oversight-note {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.oversight-method p { margin: 0; font-size: 0.86rem; }
+
+.oversight-section {
+  margin: 0 3rem 3.5rem;
+  scroll-margin-top: 1.5rem;
+}
+
+.oversight-section .section-heading { margin-bottom: 1.5rem; }
+
+.oversight-section h2 {
+  margin: 0.35rem 0 0;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.oversight-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.oversight-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.oversight-grid article {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+.oversight-grid article > span {
+  display: block;
+  color: var(--primary);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.oversight-grid h3 {
+  margin: 0.45rem 0 0.55rem;
+  font-size: 1rem;
+}
+
+.oversight-grid p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.oversight-grid a,
+.oversight-links a,
+.source-list a {
+  color: var(--primary);
+  font-size: 0.78rem;
+}
+
+.oversight-grid a {
+  display: inline-block;
+  margin-top: 0.85rem;
+  font-weight: 600;
+}
+
+.oversight-note {
+  margin-top: 1.25rem;
+  padding: 1rem 1.2rem;
+  border: 1px dashed var(--primary);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+  font-size: 0.86rem;
+}
+
+.oversight-note strong { color: var(--text-main); }
+
+.oversight-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.oversight-links a {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card-bg);
+  text-decoration: none;
+}
+
+.oversight-links i { color: var(--primary); }
+
+.oversight-steps {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.oversight-steps article {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+.oversight-steps article > span {
+  display: grid;
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.oversight-steps h3 { margin: 0 0 0.3rem; font-size: 0.95rem; }
+.oversight-steps p { margin: 0; color: var(--text-muted); font-size: 0.84rem; line-height: 1.6; }
+
+.oversight-sources {
+  padding-top: 0.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.oversight-sources h2 { margin: 0.35rem 0 1rem; }
+
+.source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+}
+
+.source-list a { text-decoration: none; }
+
+@media (max-width: 900px) {
+  .oversight-grid.three,
+  .oversight-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 768px) {
+  .oversight-method,
+  .oversight-section { margin-inline: 1.25rem; }
+
+  .oversight-method { grid-template-columns: 1fr; }
+
+  .oversight-grid,
+  .oversight-grid.three,
+  .oversight-links { grid-template-columns: 1fr; }
+
+  .oversight-section { margin-bottom: 2.75rem; }
+  .oversight-section h2 { font-size: 1.8rem; }
+}
+
+@media (max-width: 480px) {
+  .oversight-method,
+  .oversight-section { margin-inline: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oversight-grid article,
+  .oversight-method,
+  .oversight-links a { transition: none; }
+}
