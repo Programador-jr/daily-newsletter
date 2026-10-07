@@ -86,7 +86,14 @@
   margin-bottom: 1.5rem;
 }
 
+.office-section .section-heading > div {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .office-section h2 {
+  width: 100%;
+  max-width: none;
   margin: 0.35rem 0 0;
   font-size: 2rem;
   line-height: 1.2;
@@ -229,6 +236,38 @@
 }
 
 /* CALLOUTS */
+
+.comparison-note {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 4px 14px rgb(25 31 40 / 4%);
+}
+
+.comparison-note strong {
+  display: block;
+  margin-bottom: 0.7rem;
+  color: var(--text-main);
+  font-family: "Playfair Display", serif;
+  font-size: 1.05rem;
+}
+
+.comparison-note ul {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.comparison-note li {
+  padding-left: 0.15rem;
+}
 
 .limits-box {
   margin-top: 1.25rem;
