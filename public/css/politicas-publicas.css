@@ -1,0 +1,55 @@
+.public-policies-page main { padding-bottom: 2rem; }
+.policy-hero { max-width: 860px; }
+.policy-method { margin: 0 3rem 3rem; padding: 1.25rem 1.4rem; display:grid; grid-template-columns:auto minmax(0,1fr); gap:1rem; align-items:start; border:1px solid color-mix(in srgb,var(--primary) 35%,var(--border)); border-left:4px solid var(--primary); border-radius:10px; background:color-mix(in srgb,var(--primary) 5%,var(--card-bg)); }
+.policy-method-icon { width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:color-mix(in srgb,var(--primary) 10%,var(--card-bg));color:var(--primary); }
+.policy-method h2,.policy-section h2 { font-family:"Playfair Display",serif; }
+.policy-method h2 { margin:.2rem 0 .5rem;font-size:1.35rem;line-height:1.25; }
+.policy-method p,.policy-prose>p,.section-intro,.policy-sources>p { color:var(--text-muted);line-height:1.7; }
+.policy-method p { max-width:850px;margin:0;font-size:.86rem; }
+.policy-section { margin:0 3rem 3.5rem;scroll-margin-top:1.5rem; }
+.policy-section .section-heading { margin-bottom:1.5rem; }
+.policy-section h2 { margin:.35rem 0 0;font-size:2rem;line-height:1.2; }
+.policy-prose { max-width:900px; }
+.concept-grid,.policy-cycle,.federation-grid,.finance-grid,.evaluation-grid,.policy-grid { display:grid;gap:1rem; }
+.concept-grid { grid-template-columns:repeat(3,minmax(0,1fr));margin-top:1.5rem; }
+.concept-grid article,.federation-grid article,.finance-grid article,.evaluation-grid article,.policy-grid article { padding:1.15rem;border:1px solid var(--border);border-radius:10px;background:var(--card-bg);box-shadow:0 3px 12px rgb(25 31 40 / 4%);transition:border-color 180ms ease,box-shadow 180ms ease,transform 180ms ease; }
+.concept-grid article:hover,.federation-grid article:hover,.finance-grid article:hover,.evaluation-grid article:hover,.policy-grid article:hover { border-color:color-mix(in srgb,var(--primary) 48%,var(--border));box-shadow:0 7px 20px rgb(25 31 40 / 7%);transform:translateY(-1px); }
+.concept-grid span,.federation-grid span,.evaluation-grid span { color:var(--primary);font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase; }
+.concept-grid strong { display:block;margin:.45rem 0;color:var(--text-main);font-size:.9rem; }
+.concept-grid p,.policy-grid p,.federation-grid p,.finance-grid p,.evaluation-grid p,.policy-accordion p { margin:0;color:var(--text-muted);font-size:.82rem;line-height:1.65; }
+.policy-cycle { grid-template-columns:repeat(4,minmax(0,1fr));counter-reset:cycle; }
+.policy-cycle article { min-height:150px;padding:1.15rem;border:1px dotted var(--border);border-radius:10px;background:var(--card-bg); }
+.policy-cycle span { color:var(--primary);font-size:.7rem;font-weight:800;letter-spacing:.08em; }
+.policy-cycle h3,.policy-grid h3,.federation-grid h3,.evaluation-grid h3,.finance-grid h3 { margin:.45rem 0 .5rem;color:var(--text-main);font-size:1rem;line-height:1.35; }
+.policy-cycle p { margin:0;color:var(--text-muted);font-size:.8rem;line-height:1.6; }
+.policy-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.policy-grid article { min-height:150px; }
+.policy-grid i { color:var(--primary);font-size:1rem; }
+.federation-grid { grid-template-columns:repeat(4,minmax(0,1fr));margin-top:1.5rem; }
+.finance-grid { grid-template-columns:repeat(4,minmax(0,1fr));margin:1.5rem 0; }
+.evaluation-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.evaluation-grid article { min-height:155px; }
+.policy-callout { margin-top:1rem;padding:1rem 1.2rem;border:1px dashed var(--primary);border-radius:10px;background:color-mix(in srgb,var(--primary) 5%,var(--card-bg));color:var(--text-main);font-size:.84rem;line-height:1.65; }
+.policy-note { padding-left:1rem;border-left:3px solid var(--border); }
+.policy-accordions { display:grid;gap:.7rem; }
+.policy-accordion { overflow:hidden;border:1px solid var(--border);border-radius:10px;background:var(--card-bg);box-shadow:0 3px 12px rgb(25 31 40 / 4%);transition:border-color 180ms ease,box-shadow 180ms ease; }
+.policy-accordion:hover,.policy-accordion[open] { border-color:color-mix(in srgb,var(--primary) 48%,var(--border)); }
+.policy-accordion[open] { box-shadow:0 7px 20px rgb(25 31 40 / 7%); }
+.policy-accordion summary { display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:68px;padding:.85rem 1rem;list-style:none;cursor:pointer;font-weight:700;color:var(--text-main); }
+.policy-accordion summary::-webkit-details-marker { display:none; }
+.policy-accordion summary:focus-visible { outline:2px solid var(--primary);outline-offset:-3px; }
+.policy-accordion summary i { color:var(--text-muted);transition:color 180ms ease,transform 180ms ease; }
+.policy-accordion[open] summary { border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--primary) 5%,var(--card-bg)); }
+.policy-accordion[open] summary i { color:var(--primary);transform:rotate(180deg); }
+.policy-accordion>div { padding:1rem 1.25rem 1.2rem; }
+.policy-accordion>div p+p { margin-top:.8rem; }
+.policy-sources { padding-top:.25rem;border-top:1px solid var(--border); }
+.policy-sources h2 { margin:.35rem 0 0; }
+.policy-sources>p { max-width:800px;font-size:.84rem; }
+.source-list { display:flex;flex-wrap:wrap;gap:.65rem 1rem; }
+.source-list a { color:var(--primary);font-size:.78rem; }
+@media (max-width:1100px) { .policy-cycle{grid-template-columns:repeat(3,minmax(0,1fr));}.policy-grid{grid-template-columns:repeat(3,minmax(0,1fr));}.federation-grid,.finance-grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media (max-width:900px) { .concept-grid,.evaluation-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.policy-cycle{grid-template-columns:repeat(2,minmax(0,1fr));}.policy-grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media (max-width:768px) { .policy-method,.policy-section{margin-inline:1.25rem}.policy-method{grid-template-columns:1fr;padding:1.15rem}.policy-section{margin-bottom:2.75rem}.policy-section h2{font-size:1.8rem}.concept-grid,.policy-cycle,.policy-grid,.federation-grid,.finance-grid,.evaluation-grid{grid-template-columns:1fr} }
+@media (max-width:480px) { .policy-method,.policy-section{margin-inline:1rem}.policy-method{padding:1rem} }
+@media (prefers-reduced-motion:reduce) { .concept-grid article,.policy-cycle article,.policy-grid article,.federation-grid article,.finance-grid article,.evaluation-grid article,.policy-accordion{transition:none} }
