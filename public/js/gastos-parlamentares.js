@@ -1,5 +1,5 @@
-const CAMARA_DEPUTADOS_API='/api/camara-deputados';
-const CAMARA_DESPESAS_API='/api/camara-despesas';
+const CAMARA_DEPUTADOS_API='https://dadosabertos.camara.leg.br/api/v2/deputados';
+const CAMARA_DESPESAS_API='https://dadosabertos.camara.leg.br/api/v2/deputados';
 
 const deputyPicker=document.getElementById('deputy-picker');
 const deputySearch=document.getElementById('deputy-search');
@@ -170,7 +170,7 @@ async function loadExpenses(){
         ordem:'DESC',
         ordenarPor:'dataDocumento'
       });
-      const data=await getJson(CAMARA_DESPESAS_API+'?'+params);
+      const data=await getJson(CAMARA_DESPESAS_API+'/'+id+'/despesas?'+params);
       const rows=data.dados||[];
       all.push(...rows);
       if(rows.length<100)break;
