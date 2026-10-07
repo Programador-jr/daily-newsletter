@@ -1,101 +1,72 @@
 <!doctype html>
 <html lang="pt-BR" class="history-document">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Ranking de gastos parlamentares de deputados federais com dados da Câmara dos Deputados.">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Guia sobre gastos parlamentares e consulta de despesas de deputados federais com dados oficiais.">
 <title>King's Newsletter - Gastos Parlamentares</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/styles.css">
-<link rel="stylesheet" href="/css/historia.css">
-<link rel="stylesheet" href="/css/gastos-parlamentares.css">
+<link rel="stylesheet" href="/css/styles.css"><link rel="stylesheet" href="/css/historia.css"><link rel="stylesheet" href="/css/gastos-parlamentares.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="history-page parliamentary-expenses-page">
-<div class="container">
-<header class="site-header">
-  <div class="logo"><div class="logo-top"><i class="fas fa-crown"></i> KING'S</div><div class="logo-bottom">Newsletter</div></div>
-  <nav class="header-main-nav" aria-label="Navegação principal">
-    <div class="header-primary-links"></div>
-    <div class="header-nav-actions">
-      <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu">
-        <span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span>
-      </button>
-    </div>
-  </nav>
-</header>
-<aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
-  <div class="site-sidebar-header">
-    <div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div>
-    <button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark"></i></button>
-  </div>
-  <nav class="site-sidebar-nav" aria-label="Páginas principais">
-    <div class="site-sidebar-group"><span class="site-sidebar-label">Páginas principais</span></div>
-  </nav>
-  <div class="site-sidebar-preferences">
-    <span class="site-sidebar-label">Preferências</span>
-    <button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false">
-      <span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span>
-    </button>
-  </div>
-</aside>
-<div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
-
+<body class="history-page parliamentary-expenses-page"><div class="container">
+<header class="site-header"><div class="logo"><div class="logo-top"><i class="fas fa-crown"></i> KING'S</div><div class="logo-bottom">Newsletter</div></div>
+<nav class="header-main-nav"><div class="header-primary-links">
+<a href="/">Jornal Diário</a><a href="/editions">Edições</a><a href="/historia">História</a><a href="/presidentes">Presidentes</a><a href="/ideologias">Ideologias</a><a href="/politicas-publicas">Políticas Públicas</a><a href="/tres-poderes">Três Poderes</a><a href="/cargos-publicos">Cargos Públicos</a><a href="/arrecadacao">Dinheiro Público</a><a href="/gastos-parlamentares" class="active" aria-current="page">Gastos Parlamentares</a>
+</div><div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu"><span class="hamburger-icon"><span></span><span></span><span></span></span></button></div></nav></header>
+<aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true"><div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark"></i></button></div>
+<nav class="site-sidebar-nav"><div class="site-sidebar-group"><span class="site-sidebar-label">Páginas principais</span>
+<a href="/"><i class="fas fa-newspaper"></i><span>Jornal Diário</span></a><a href="/editions"><i class="fas fa-clock-rotate-left"></i><span>Edições</span></a><a href="/historia"><i class="fas fa-landmark"></i><span>História</span></a><a href="/presidentes"><i class="fas fa-user-tie"></i><span>Presidentes</span></a><a href="/ideologias"><i class="fas fa-scale-balanced"></i><span>Ideologias</span></a><a href="/politicas-publicas"><i class="fas fa-list-check"></i><span>Políticas Públicas</span></a><a href="/tres-poderes"><i class="fas fa-building-columns"></i><span>Três Poderes</span></a><a href="/cargos-publicos"><i class="fas fa-id-card"></i><span>Cargos Públicos</span></a><a href="/arrecadacao"><i class="fas fa-coins"></i><span>Dinheiro Público</span></a><a href="/gastos-parlamentares" class="active"><i class="fas fa-receipt"></i><span>Gastos Parlamentares</span></a>
+</div></nav><div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro"><span class="theme-switch-track"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div></aside><div class="site-sidebar-backdrop" id="site-sidebar-backdrop"></div>
 <main>
-<section class="history-hero expenses-hero">
-  <span class="eyebrow">Política · Transparência</span>
-  <h1>Gastos Parlamentares</h1>
-</section>
-
-<section class="expenses-section" id="ranking">
-  <div class="expense-explorer">
-    <div class="expense-filters">
-      <label>Ano
-        <select id="expense-year" aria-label="Ano">
-          <option value="2026">2026</option>
-          <option value="2025">2025</option>
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
-        </select>
-      </label>
-      <label>Estado
-        <select id="expense-state" aria-label="Estado">
-          <option value="">Todos os estados</option>
-          <option value="AC">Acre (AC)</option><option value="AL">Alagoas (AL)</option><option value="AP">Amapá (AP)</option>
-          <option value="AM">Amazonas (AM)</option><option value="BA">Bahia (BA)</option><option value="CE">Ceará (CE)</option>
-          <option value="DF">Distrito Federal (DF)</option><option value="ES">Espírito Santo (ES)</option><option value="GO">Goiás (GO)</option>
-          <option value="MA">Maranhão (MA)</option><option value="MT">Mato Grosso (MT)</option><option value="MS">Mato Grosso do Sul (MS)</option>
-          <option value="MG">Minas Gerais (MG)</option><option value="PA">Pará (PA)</option><option value="PB">Paraíba (PB)</option>
-          <option value="PR">Paraná (PR)</option><option value="PE">Pernambuco (PE)</option><option value="PI">Piauí (PI)</option>
-          <option value="RJ">Rio de Janeiro (RJ)</option><option value="RN">Rio Grande do Norte (RN)</option><option value="RS">Rio Grande do Sul (RS)</option>
-          <option value="RO">Rondônia (RO)</option><option value="RR">Roraima (RR)</option><option value="SC">Santa Catarina (SC)</option>
-          <option value="SP">São Paulo (SP)</option><option value="SE">Sergipe (SE)</option><option value="TO">Tocantins (TO)</option>
-        </select>
-      </label>
-      <label>Ordenar por
-        <select id="expense-order" aria-label="Ordenação">
-          <option value="desc">Maior para menor</option>
-          <option value="asc">Menor para maior</option>
-        </select>
-      </label>
-      <button id="expense-search" type="button">Consultar</button>
-    </div>
-
-    <p class="expense-status" id="expense-status" aria-live="polite">Selecione os filtros e clique em Consultar.</p>
-
-    <div class="ranking-table-wrap" id="ranking-table-wrap" hidden>
-      <table class="ranking-table">
-        <thead><tr><th>Posição</th><th>Deputado</th><th>UF</th><th>Partido</th><th>Total gasto</th></tr></thead>
-        <tbody id="ranking-table-body"></tbody>
-      </table>
-    </div>
-  </div>
-</section>
-</main>
+<section class="history-hero expenses-hero"><span class="eyebrow">Política · Transparência</span><h1>Quanto custa a atividade parlamentar?</h1><p>Entenda as principais despesas relacionadas ao mandato e consulte dados oficiais para analisar gastos por parlamentar, período e tipo de despesa.</p></section>
+<section class="expenses-method"><div class="expenses-method-icon"><i class="fas fa-scale-balanced"></i></div><div><span class="eyebrow">Como interpretar</span><h2>Gasto alto não é, sozinho, prova de irregularidade.</h2><p>Uma comparação responsável considera período, finalidade, regras da verba, documentação e valor efetivamente debitado. Ordenar por valor é uma operação de dados; concluir sobre adequação exige contexto.</p></div></section>
+<section class="expenses-section" id="estrutura"><div class="section-heading"><div><span class="eyebrow">01 · Estrutura</span><h2>O que pode aparecer como gasto parlamentar?</h2></div></div><div class="expenses-grid">
+<article><span>CEAP</span><h3>Cota parlamentar</h3><p>Despesas vinculadas ao exercício do mandato, como passagens, combustíveis, divulgação, manutenção de escritório e outras categorias previstas.</p></article>
+<article><span>Gabinete</span><h3>Verba de gabinete</h3><p>Recursos destinados à contratação de secretários parlamentares e à estrutura de apoio do mandato. Não é remuneração pessoal do deputado.</p></article>
+<article><span>Moradia</span><h3>Imóvel funcional e auxílio-moradia</h3><p>Existem imóveis funcionais e regras específicas para auxílio-moradia. Valores e condições devem ser analisados no período correspondente.</p></article>
+<article><span>Viagens</span><h3>Deslocamentos oficiais</h3><p>Viagens oficiais possuem regras e registros próprios e devem ser analisadas conforme finalidade, destino e período.</p></article>
+</div></section>
+<section class="expenses-section" id="ceap"><div class="section-heading"><div><span class="eyebrow">02 · Cota parlamentar</span><h2>Como funciona a CEAP?</h2></div></div><div class="expenses-prose"><p>A Cota para o Exercício da Atividade Parlamentar é destinada a despesas relacionadas ao exercício do mandato. O valor disponível varia conforme a unidade da Federação, entre outros critérios institucionais.</p><div class="expenses-grid three">
+<article><span>Documento</span><h3>Despesa registrada</h3><p>Os dados podem identificar parlamentar, categoria, fornecedor, documento, data e valores associados ao lançamento.</p></article>
+<article><span>Glosa</span><h3>Valor não coberto</h3><p>Parte do valor apresentado pode ser glosada por impedimento legal, insuficiência de comprovação ou outra razão.</p></article>
+<article><span>Valor líquido</span><h3>O que foi debitado</h3><p>Na base da Câmara, o valor líquido corresponde ao documento menos a glosa e representa o valor efetivamente debitado da cota.</p></article>
+</div><div class="expenses-note"><strong>Importante:</strong> valor do documento e valor líquido podem ser diferentes. Para comparar, o conceito utilizado precisa ser explicitado.</div></div></section>
+<section class="expenses-section" id="consulta"><div class="section-heading"><div><span class="eyebrow">03 · Consulta individual</span><h2>Consulte as despesas de um deputado</h2></div></div>
+<div class="expense-explorer"><div class="expense-filters">
+<div class="deputy-picker" id="deputy-picker">
+<label for="deputy-toggle">Deputado</label>
+<button class="deputy-picker-control" id="deputy-toggle" type="button" aria-haspopup="listbox" aria-expanded="false">
+<span id="deputy-selected">Selecione um deputado</span>
+<i class="fas fa-chevron-down" aria-hidden="true"></i>
+</button>
+<input id="deputy-select" type="hidden" value="">
+<div class="deputy-options" id="deputy-options" hidden>
+<div class="deputy-search-box">
+<i class="fas fa-search" aria-hidden="true"></i>
+<input id="deputy-search" type="search" autocomplete="off" placeholder="Pesquisar por nome, partido ou UF..." aria-controls="deputy-options-list">
 </div>
-<script src="/js/sidebar.js"></script>
-<script src="/js/gastos-parlamentares.js"></script>
-</body>
-</html>
+<div class="deputy-options-list" id="deputy-options-list" role="listbox" aria-label="Deputados"></div>
+</div>
+</div>
+<label>Ano<select id="expense-year"><option>2026</option><option>2025</option><option>2024</option><option>2023</option></select></label>
+<label>Tipo de despesa<select id="expense-type"><option value="">Todas as categorias</option></select></label>
+<button id="expense-search" type="button">Consultar</button></div>
+<p class="expense-status" id="expense-status" aria-live="polite">Selecione um deputado para consultar os registros.</p>
+<div class="expense-summary" id="expense-summary" hidden></div>
+<div class="expense-table-wrap" id="expense-table-wrap" hidden><table class="expense-table"><thead><tr><th>Data</th><th>Despesa</th><th>Fornecedor</th><th>Documento</th><th>Valor líquido</th></tr></thead><tbody id="expense-table-body"></tbody></table></div></div></section>
+<section class="expenses-section" id="comparar"><div class="section-heading"><div><span class="eyebrow">04 · Comparação</span><h2>Como comparar parlamentares?</h2></div></div><div class="expenses-grid three">
+<article><span>Período</span><h3>Compare o mesmo intervalo</h3><p>Quem exerceu o mandato durante todo o ano não deve ser comparado diretamente com quem iniciou ou encerrou o mandato no meio do período.</p></article>
+<article><span>Categoria</span><h3>Compare despesas equivalentes</h3><p>Somar categorias diferentes pode esconder diferenças importantes na finalidade dos gastos.</p></article>
+<article><span>Contexto</span><h3>Procure a documentação</h3><p>Fornecedor, documento, data, valor líquido e regra da verba ajudam a transformar um número em análise verificável.</p></article>
+</div><div class="comparison-note"><strong>Menor ou maior gasto não significa melhor ou pior parlamentar.</strong><p>O gasto mede uma dimensão financeira da atividade. Avaliar atuação exige também outras informações e as atribuições do cargo.</p></div></section>
+<section class="expenses-section" id="fontes-oficiais"><div class="section-heading"><div><span class="eyebrow">05 · Dados oficiais</span><h2>Onde encontrar os dados completos?</h2></div></div><div class="expenses-grid three">
+<article><i class="fas fa-database"></i><h3>Câmara · Dados Abertos</h3><p>A API e os arquivos permitem consultar despesas de deputados e baixar conjuntos históricos da Cota Parlamentar.</p><a href="https://dadosabertos.camara.leg.br/swagger/api.html" target="_blank" rel="noopener noreferrer">Consultar API</a></article>
+<article><i class="fas fa-chart-column"></i><h3>Portal de Gastos Parlamentares</h3><p>Permite pesquisar e comparar gastos por ano, mês, deputado, UF, partido e tipo de despesa.</p><a href="https://www.camara.leg.br/transparencia/gastos-parlamentares" target="_blank" rel="noopener noreferrer">Abrir painel</a></article>
+<article><i class="fas fa-building-columns"></i><h3>Senado Federal</h3><p>Despesas e informações de transparência dos senadores devem ser consultadas diretamente no portal oficial do Senado.</p><a href="https://www12.senado.leg.br/transparencia" target="_blank" rel="noopener noreferrer">Consultar Senado</a></article>
+</div></section>
+<section class="expenses-section" id="metodologia"><div class="section-heading"><div><span class="eyebrow">06 · Metodologia</span><h2>Uma boa análise pergunta</h2></div></div><div class="comparison-note methodology-card"><strong>Antes de concluir que um gasto é alto, baixo ou irregular:</strong><ul><li>Qual é o período exato?</li><li>Qual verba ou categoria está sendo analisada?</li><li>O valor é bruto, glosado, líquido ou efetivamente pago?</li><li>Qual é a finalidade da despesa?</li><li>Existe documento comprobatório?</li><li>Qual regra legal ou administrativa autoriza a despesa?</li><li>O mesmo critério foi aplicado a todos os parlamentares?</li></ul></div></section>
+<section class="expenses-sources"><div class="section-heading"><div><span class="eyebrow">Fontes</span><h2>Documentação</h2></div></div><p>A consulta individual utiliza a API de Dados Abertos da Câmara dos Deputados. Para comparações completas, use também os painéis e arquivos oficiais.</p><div class="source-list"><a href="https://dadosabertos.camara.leg.br/" target="_blank" rel="noopener">Câmara · Dados Abertos</a><a href="https://dadosabertos.camara.leg.br/howtouse/2023-12-26-dados-ceap.html" target="_blank" rel="noopener">Câmara · Campos da CEAP</a><a href="https://www.camara.leg.br/transparencia/gastos-parlamentares" target="_blank" rel="noopener">Câmara · Gastos Parlamentares</a><a href="https://www12.senado.leg.br/transparencia" target="_blank" rel="noopener">Senado · Transparência</a></div></section>
+</main></div>
+<script src="/js/accordion-motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/gastos-parlamentares.js"></script>
+</body></html>
