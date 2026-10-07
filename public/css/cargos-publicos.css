@@ -28,26 +28,28 @@
 /* MÉTODO/DESTAQUE */
 
 .offices-method {
-  margin: 0 3rem 3rem;
-  padding: 1.25rem 1.4rem;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
   gap: 1rem;
-  align-items: start;
-  border: 1px solid color-mix(in srgb, var(--primary) 35%, var(--border));
-  border-left: 4px solid var(--primary);
+  margin: 0 3rem 2.25rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
   border-radius: 10px;
-  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+  background: var(--card-bg);
+  box-shadow: 0 4px 14px rgb(25 31 40 / 4%);
 }
 
 .offices-method-icon {
+  display: grid;
   width: 42px;
   height: 42px;
-  display: grid;
   place-items: center;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--primary) 10%, var(--card-bg));
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--primary) 9%, var(--bg-container));
   color: var(--primary);
+  font-size: 1rem;
 }
 
 .offices-method h2,
@@ -56,8 +58,9 @@
 }
 
 .offices-method h2 {
-  margin: 0.2rem 0 0.5rem;
-  font-size: 1.35rem;
+  margin: 0 0 0.25rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.05rem;
 }
 
 .offices-method p,
