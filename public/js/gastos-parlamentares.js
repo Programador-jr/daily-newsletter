@@ -1,5 +1,5 @@
-const CAMARA_DEPUTADOS_API='https://dadosabertos.camara.leg.br/api/v2/deputados';
-const CAMARA_DESPESAS_API='https://dadosabertos.camara.leg.br/api/v2/deputados';
+const CAMARA_DEPUTADOS_API='/api/camara-deputados';
+const CAMARA_DESPESAS_API='/api/camara-despesas';
 
 const deputyPicker=document.getElementById('deputy-picker');
 const deputySearch=document.getElementById('deputy-search');
@@ -51,7 +51,40 @@ function openDeputyOptions(){
   deputyOptions.hidden=false;
   deputyToggle.setAttribute('aria-expanded','true');
   deputySearch.focus();
-  if(!deputies.length) searchDeputies('');
+  if(!deputies.length) 
+const annualYear=document.getElementById('annual-year');
+const annualUf=document.getElementById('annual-uf');
+const annualSearch=document.getElementById('annual-search');
+const annualStatus=document.getElementById('annual-status');
+const annualSummary=document.getElementById('annual-summary');
+const annualTableWrap=document.getElementById('annual-table-wrap');
+const annualTableBody=document.getElementById('annual-table-body');
+
+function setAnnualStatus(text){annualStatus.textContent=text;}
+
+function renderAnnualRows(rows){
+  annualTableBody.innerHTML=rows.length?rows.map(row=>'<tr><td>'+escapeHtml(row.nome)+'</td><td>'+escapeHtml(row.partido||'—')+'</td><td>'+escapeHtml(row.uf||'—')+'</td><td>'+money.format(Number(row.total)||0)+'</td></tr>').join(''):'<tr><td colspan="4">Nenhum registro encontrado para os filtros selecionados.</td></tr>';
+  annualTableWrap.hidden=false;
+}
+
+async function loadAnnualData(){
+  annualSearch.disabled=true;annualTableWrap.hidden=true;annualSummary.hidden=true;
+  setAnnualStatus('Carregando os dados anuais oficiais da Câmara...');
+  try{
+    const params=new URLSearchParams({ano:annualYear.value});
+    if(annualUf.value)params.set('uf',annualUf.value);
+    const data=await getJson('/api/camara-ceap?'+params);
+    const rows=Array.isArray(data.deputados)?data.deputados:[];
+    annualSummary.hidden=false;
+    annualSummary.innerHTML='<div><span>Parlamentares com registros</span><strong>'+rows.length+'</strong></div><div><span>Total CEAP filtrado</span><strong>'+money.format(Number(data.total)||0)+'</strong></div><div><span>Período</span><strong>'+annualYear.value+'</strong></div>';
+    renderAnnualRows(rows);
+    setAnnualStatus(rows.length+' parlamentares encontrados no período anual selecionado.');
+  }catch(error){setAnnualStatus(error.message);}
+  finally{annualSearch.disabled=false;}
+}
+annualSearch?.addEventListener('click',loadAnnualData);
+
+searchDeputies('');
 }
 
 function closeDeputyOptions(){
@@ -147,49 +180,18 @@ function renderExpenses(items){
 
 async function loadExpenses(){
   const id=deputyHidden.value;
-  if(!id){
-    setStatus('Selecione um deputado antes de consultar.');
-    openDeputyOptions();
-    return;
-  }
-
-  searchButton.disabled=true;
-  summaryEl.hidden=true;
-  tableWrap.hidden=true;
+  if(!id){setStatus('Selecione um deputado antes de consultar.');openDeputyOptions();return;}
+  searchButton.disabled=true;summaryEl.hidden=true;tableWrap.hidden=true;
   typeSelect.innerHTML='<option value="">Todas as categorias</option>';
-  setStatus('Consultando as despesas oficiais de '+yearSelect.value+'...');
-
+  setStatus('Consultando os registros anuais oficiais de '+yearSelect.value+'...');
   try{
-    const all=[];
-    for(let page=1;page<=100;page++){
-      const params=new URLSearchParams({
-        ano:yearSelect.value,
-        itens:'100',
-        pagina:String(page),
-        ordem:'DESC',
-        ordenarPor:'dataDocumento'
-      });
-      const data=await getJson(CAMARA_DESPESAS_API+'/'+id+'/despesas?'+params);
-      const rows=data.dados||[];
-      all.push(...rows);
-      if(rows.length<100)break;
-      setStatus('Consultando despesas oficiais... página '+page);
-    }
-
-    expenseCache=all;
-    fillTypes(expenseCache);
-    renderExpenses(expenseCache);
-    setStatus(expenseCache.length
-      ? expenseCache.length+' registros carregados da Cota Parlamentar para '+yearSelect.value+'.'
-      : 'Nenhuma despesa registrada para este parlamentar em '+yearSelect.value+'.');
+    const data=await getJson('/api/camara-ceap?'+new URLSearchParams({ano:yearSelect.value,id}));
+    expenseCache=Array.isArray(data.despesas)?data.despesas:[];
+    fillTypes(expenseCache);renderExpenses(expenseCache);
+    setStatus(expenseCache.length?expenseCache.length+' registros carregados da CEAP em '+yearSelect.value+'.':'Nenhuma despesa registrada para este parlamentar em '+yearSelect.value+'.');
   }catch(error){
-    expenseCache=[];
-    summaryEl.hidden=true;
-    tableWrap.hidden=true;
-    setStatus(error.message);
-  }finally{
-    searchButton.disabled=false;
-  }
+    expenseCache=[];summaryEl.hidden=true;tableWrap.hidden=true;setStatus(error.message);
+  }finally{searchButton.disabled=false;}
 }
 
 deputyToggle.addEventListener('click',()=>{
