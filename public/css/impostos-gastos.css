@@ -20,10 +20,6 @@
   gap: .9rem;
 }
 
-iframe {
- width: 100%;
-}
-
 .meter-icon {
   display: grid;
   flex: 0 0 46px;
@@ -65,10 +61,13 @@ iframe {
 .meter-widget-frame-scaled {
   position: relative;
   display: block;
-  width: min(100%, 728px);
+  width: 100%;
+  max-width: 728px;
   min-height: 0;
+  height: 228px;
   margin-inline: auto;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .meter-widget-frame-scaled iframe {
@@ -76,12 +75,13 @@ iframe {
   top: 0;
   left: 0;
   display: block;
-  width: auto;
+  width: 728px;
   max-width: none;
   height: 228px;
   border: 0;
   transform: scale(var(--meter-widget-scale, 1));
   transform-origin: top left;
+  will-change: transform;
 }
 
 .meter-value {
