@@ -1,20 +1,34 @@
 (() => {
-  const initializeScaledWidgets = () => {
+  const WIDGET_SIZES = [
+    { width: 320, height: 80 },
+    { width: 430, height: 157 },
+    { width: 590, height: 191 },
+    { width: 635, height: 211 },
+    { width: 728, height: 228 }
+  ];
+
+  const getNativeSize = availableWidth => {
+    return [...WIDGET_SIZES]
+      .reverse()
+      .find(size => availableWidth >= size.width) || WIDGET_SIZES[0];
+  };
+
+  const initializeWidgets = () => {
     document.querySelectorAll('.meter-widget-frame-scaled').forEach(frame => {
       const iframe = frame.querySelector('.scaled-meter-widget');
       if (!iframe) return;
 
-      const width = Number(iframe.dataset.widgetWidth) || 320;
-      const height = Number(iframe.dataset.widgetHeight) || 80;
+      const container = frame.parentElement;
+      if (!container) return;
 
       const fitWidget = () => {
-        const availableWidth = Math.max(frame.clientWidth, 1);
-        const scale = Math.min(1, availableWidth / width);
+        const availableWidth = Math.max(container.clientWidth, 1);
+        const { width, height } = getNativeSize(availableWidth);
 
-        frame.style.height = `${height * scale}px`;
+        frame.style.width = `${width}px`;
+        frame.style.height = `${height}px`;
         iframe.style.width = `${width}px`;
         iframe.style.height = `${height}px`;
-        iframe.style.setProperty('--meter-widget-scale', String(scale));
       };
 
       const scheduleFit = () => {
@@ -26,7 +40,7 @@
 
       if ('ResizeObserver' in window) {
         const observer = new ResizeObserver(scheduleFit);
-        observer.observe(frame);
+        observer.observe(container);
       } else {
         window.addEventListener('resize', scheduleFit, { passive: true });
       }
@@ -43,8 +57,8 @@
   };
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeScaledWidgets, { once: true });
+    document.addEventListener('DOMContentLoaded', initializeWidgets, { once: true });
   } else {
-    initializeScaledWidgets();
+    initializeWidgets();
   }
 })();
