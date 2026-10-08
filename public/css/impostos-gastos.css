@@ -20,6 +20,10 @@
   gap: .9rem;
 }
 
+iframe {
+ width: 100%;
+}
+
 .meter-icon {
   display: grid;
   flex: 0 0 46px;
