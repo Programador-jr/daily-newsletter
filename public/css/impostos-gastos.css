@@ -62,9 +62,9 @@
   position: relative;
   display: block;
   width: 100%;
-  max-width: 728px;
+  max-width: 320px;
   min-height: 0;
-  height: 228px;
+  height: 80px;
   margin-inline: auto;
   overflow: hidden;
   box-sizing: border-box;
@@ -75,9 +75,9 @@
   top: 0;
   left: 0;
   display: block;
-  width: 728px;
+  width: 320px;
   max-width: none;
-  height: 228px;
+  height: 80px;
   border: 0;
   transform: scale(var(--meter-widget-scale, 1));
   transform-origin: top left;
