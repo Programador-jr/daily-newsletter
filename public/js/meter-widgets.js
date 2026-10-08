@@ -4,8 +4,8 @@
       const iframe = frame.querySelector('.scaled-meter-widget');
       if (!iframe) return;
 
-      const width = Number(iframe.dataset.widgetWidth) || 728;
-      const height = Number(iframe.dataset.widgetHeight) || 228;
+      const width = Number(iframe.dataset.widgetWidth) || 320;
+      const height = Number(iframe.dataset.widgetHeight) || 80;
 
       const fitWidget = () => {
         const availableWidth = Math.max(frame.clientWidth, 1);
