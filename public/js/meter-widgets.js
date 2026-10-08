@@ -1,40 +1,20 @@
 (() => {
-  const WIDGET_SIZES = [
-    { width: 320, height: 80 },
-    { width: 430, height: 157 },
-    { width: 590, height: 191 },
-    { width: 635, height: 211 },
-    { width: 728, height: 228 }
-  ];
-
   const initializeScaledWidgets = () => {
-    document.querySelectorAll('.impostometro-responsive-widget').forEach(iframe => {
-      const frame = iframe.closest('.meter-widget-frame-scaled');
-      if (!frame) return;
+    document.querySelectorAll('.meter-widget-frame-scaled').forEach(frame => {
+      const iframe = frame.querySelector('.scaled-meter-widget');
+      if (!iframe) return;
+
+      const width = Number(iframe.dataset.widgetWidth) || 728;
+      const height = Number(iframe.dataset.widgetHeight) || 228;
 
       const fitWidget = () => {
         const availableWidth = Math.max(frame.clientWidth, 1);
-        const nativeSize = [...WIDGET_SIZES]
-          .reverse()
-          .find(size => size.width <= availableWidth) || WIDGET_SIZES[0];
+        const scale = Math.min(1, availableWidth / width);
 
-        iframe.width = String(nativeSize.width);
-        iframe.height = String(nativeSize.height);
-        iframe.style.width = `${nativeSize.width}px`;
-        iframe.style.height = `${nativeSize.height}px`;
-
-        if (availableWidth < WIDGET_SIZES[0].width) {
-          const scale = availableWidth / WIDGET_SIZES[0].width;
-          iframe.style.transform = `scale(${scale})`;
-          iframe.style.transformOrigin = 'top left';
-          frame.style.height = `${nativeSize.height * scale}px`;
-          frame.style.justifyContent = 'flex-start';
-        } else {
-          iframe.style.transform = 'none';
-          iframe.style.transformOrigin = 'top center';
-          frame.style.height = `${nativeSize.height}px`;
-          frame.style.justifyContent = 'center';
-        }
+        frame.style.height = `${height * scale}px`;
+        iframe.style.width = `${width}px`;
+        iframe.style.height = `${height}px`;
+        iframe.style.setProperty('--meter-widget-scale', String(scale));
       };
 
       fitWidget();
