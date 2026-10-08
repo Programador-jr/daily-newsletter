@@ -58,26 +58,23 @@
   margin: 1.35rem 0 .8rem;
 }
 
-.meter-widget-frame iframe {
-  display: block;
-  width: 100%;
-  max-width: 728px;
-  height: 228px;
-  border: 0;
-}
-
 .meter-widget-frame-scaled {
   position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
   min-height: 0;
+  overflow: hidden;
 }
 
 .meter-widget-frame-scaled iframe {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0 auto auto 0;
+  display: block;
   width: 728px;
   max-width: none;
   height: 228px;
+  border: 0;
   transform: scale(var(--meter-widget-scale, 1));
   transform-origin: top left;
 }
