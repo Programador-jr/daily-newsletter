@@ -76,7 +76,7 @@ iframe {
   top: 0;
   left: 0;
   display: block;
-  width: 728px;
+  width: auto;
   max-width: none;
   height: 228px;
   border: 0;
