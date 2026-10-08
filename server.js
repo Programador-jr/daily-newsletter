@@ -22,6 +22,10 @@ app.post('/api/subscribe', require('./api/subscribe'));
 app.get('/api/confirm', require('./api/confirm'));
 app.get('/api/unsubscribe', require('./api/unsubscribe'));
 app.post('/api/notify-news', require('./api/notify-news'));
+app.get('/api/camara-deputados', require('./api/camara-deputados'));
+app.get('/api/camara-despesas', require('./api/camara-despesas'));
+app.get('/api/camara-ceap', require('./api/camara-ceap'));
+app.get('/api/transferegov-emendas', require('./api/transferegov-emendas'));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
@@ -37,6 +41,54 @@ app.get('/historia', (req, res) => {
 
 app.get('/presidentes', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/presidentes.html'));
+});
+
+app.get('/ideologias', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/ideologias.html'));
+});
+
+app.get('/politica', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/politica.html'));
+});
+
+app.get('/fascismo-nazismo', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/fascismo-nazismo.html'));
+});
+
+app.get('/politicas-publicas', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/politicas-publicas.html'));
+});
+
+app.get('/tres-poderes', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/tres-poderes.html'));
+});
+
+app.get('/cargos-publicos', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/cargos-publicos.html'));
+});
+
+app.get('/arrecadacao', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/arrecadacao.html'));
+});
+
+app.get('/gastos-publicos', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/gastos-publicos.html'));
+});
+
+app.get('/impostos-gastos', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/impostos-gastos.html'));
+});
+
+app.get('/gastos-parlamentares', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/gastos-parlamentares.html'));
+});
+
+app.get('/como-funciona-estado', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/estado-brasileiro.html'));
+});
+
+app.get('/como-fiscalizar', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/como-fiscalizar.html'));
 });
 
 app.get('/about', (req, res) => {

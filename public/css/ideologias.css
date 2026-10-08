@@ -1,0 +1,742 @@
+/* IDEOLOGIAS — extensão visual da página História */
+
+.ideologies-page main {
+  padding-bottom: 2rem;
+}
+
+/* HERO */
+
+.ideology-hero {
+  max-width: 860px;
+}
+
+/* MÉTODO */
+
+.ideology-method {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  margin: 0 3rem 2.25rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 4px 14px rgb(25 31 40 / 4%);
+}
+
+.ideology-method-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--primary) 9%, var(--bg-container));
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.ideology-method h2 {
+  margin: 0 0 0.25rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.05rem;
+}
+
+.ideology-method p {
+  max-width: 850px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+
+/* SEÇÕES */
+
+.ideology-section {
+  margin: 0 3rem 3.5rem;
+  scroll-margin-top: 1.5rem;
+}
+
+.ideology-section .section-heading {
+  margin-bottom: 1.5rem;
+}
+
+.ideology-section .section-heading h2 {
+  margin: 0.35rem 0 0;
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.ideology-prose {
+  max-width: none;
+}
+
+.ideology-prose > p {
+  max-width: 850px;
+  margin: 0 0 1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* EIXOS */
+
+.axis-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-top: 1.25rem;
+}
+
+.axis-grid article {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+.axis-grid span,
+.ideology-tag,
+.history-columns span {
+  display: block;
+  color: var(--primary);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.axis-grid strong {
+  display: block;
+  margin: 0.45rem 0;
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+.axis-grid p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+/* CORRENTES */
+
+.ideology-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.ideology-card {
+  min-width: 0;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+.ideology-card h3 {
+  margin: 0.45rem 0 0.55rem;
+  color: var(--text-main);
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.ideology-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.ideology-card a {
+  display: inline-block;
+  margin-top: 0.8rem;
+  color: var(--primary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ideology-card a:hover {
+  text-decoration: underline;
+}
+
+.ideology-card-emphasis {
+  border-left: 3px solid var(--primary);
+}
+
+/* COMPARAÇÃO */
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.comparison-grid article,
+.history-columns article {
+  min-width: 0;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+.comparison-grid h3,
+.history-columns h3 {
+  margin: 0 0 0.65rem;
+  font-size: 1rem;
+}
+
+.comparison-grid p,
+.comparison-grid li,
+.history-columns p {
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+
+.comparison-grid ul {
+  margin: 0.8rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.callout {
+  margin-top: 0.8rem;
+  padding: 1rem 1.2rem;
+  border: 1px dashed var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+/* FASCISMO E NAZISMO */
+
+.history-warning {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.8rem;
+  margin: 1.25rem 0;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+.history-warning > i {
+  padding-top: 0.15rem;
+  color: var(--primary);
+}
+
+.history-warning p {
+  margin: 0.3rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.history-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1.15rem 0;
+}
+
+/* ACCORDION — mesma linguagem da História */
+
+.ideology-accordion {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.ideology-accordion:hover,
+.ideology-accordion[open] {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+}
+
+.ideology-accordion[open] {
+  box-shadow: 0 7px 20px rgba(16, 36, 32, 0.07);
+}
+
+.ideology-accordion summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 1rem;
+  min-height: 76px;
+  padding: 0.85rem 1rem;
+  list-style: none;
+  cursor: pointer;
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.ideology-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.ideology-accordion summary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -3px;
+}
+
+.ideology-accordion summary i {
+  color: var(--text-muted);
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.ideology-accordion[open] summary {
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+}
+
+.ideology-accordion[open] summary i {
+  color: var(--primary);
+  transform: rotate(180deg);
+}
+
+.ideology-accordion > div {
+  padding: 1rem 1.25rem 1.2rem;
+}
+
+.ideology-accordion ul {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.ideology-accordion li {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.7;
+}
+
+/* TABELA */
+
+.term-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.term-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  background: var(--card-bg);
+}
+
+.term-table th,
+.term-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.term-table th {
+  color: var(--primary);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: color-mix(in srgb, var(--primary) 4%, var(--card-bg));
+}
+
+.term-table td {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.term-table td:first-child {
+  color: var(--text-main);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.term-table tr:last-child td {
+  border-bottom: 0;
+}
+
+/* FONTES */
+
+.ideology-sources {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.ideology-sources h2 {
+  margin: 0.35rem 0 0.65rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+}
+
+.ideology-sources p {
+  max-width: 800px;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+
+.ideology-sources .source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1rem;
+}
+
+.ideology-sources .source-list a {
+  color: var(--primary);
+  font-size: 0.78rem;
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 1100px) {
+  .ideology-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .axis-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .ideology-method,
+  .ideology-section {
+    margin-inline: 1.25rem;
+  }
+
+  .ideology-method {
+    grid-template-columns: 1fr;
+    padding: 1.15rem;
+  }
+
+  .ideology-section {
+    margin-bottom: 2.75rem;
+  }
+
+  .ideology-section .section-heading h2 {
+    font-size: 1.65rem;
+  }
+
+  .axis-grid,
+  .ideology-grid,
+  .comparison-grid,
+  .history-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .history-warning {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .ideology-method,
+  .ideology-section {
+    margin-inline: 1rem;
+  }
+
+  .ideology-method {
+    padding: 1rem;
+  }
+
+  .term-table {
+    min-width: 680px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .axis-grid article,
+  .ideology-card,
+  .comparison-grid article,
+  .history-columns article,
+  .ideology-accordion,
+  .ideology-accordion summary i {
+    transition: none;
+  }
+}
+
+/* GEOMETRIA — alinhamento com a página História */
+.ideologies-page .ideology-hero,
+.public-policies-page .policy-hero,
+.powers-page .powers-hero,
+.public-offices-page .offices-hero,
+.finance-page .finance-hero {
+  max-width: 950px;
+}
+.ideologies-page .ideology-method,
+.public-policies-page .policy-method,
+.powers-page .powers-method,
+.public-offices-page .offices-method,
+.finance-page .finance-method {
+  margin: 0 3rem 2.25rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 4px 14px rgb(25 31 40 / 4%);
+}
+.ideologies-page .ideology-method h2,
+.public-policies-page .policy-method h2,
+.powers-page .powers-method h2,
+.public-offices-page .offices-method h2,
+.finance-page .finance-method h2 {
+  margin: 0 0 0.25rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+.ideologies-page .ideology-method p,
+.public-policies-page .policy-method p,
+.powers-page .powers-method p,
+.public-offices-page .offices-method p,
+.finance-page .finance-method p {
+  max-width: 850px;
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+.ideologies-page .ideology-section,
+.public-policies-page .policy-section,
+.powers-page .powers-section,
+.public-offices-page .office-section,
+.finance-page .finance-section {
+  margin: 0 3rem 3.5rem;
+  scroll-margin-top: 1.5rem;
+}
+.ideologies-page .ideology-section .section-heading,
+.public-policies-page .policy-section .section-heading,
+.powers-page .powers-section .section-heading,
+.public-offices-page .office-section .section-heading,
+.finance-page .finance-section .section-heading {
+  margin-bottom: 1.5rem;
+}
+.ideologies-page .ideology-section .section-heading h2,
+.public-policies-page .policy-section .section-heading h2,
+.powers-page .powers-section .section-heading h2,
+.public-offices-page .office-section .section-heading h2,
+.finance-page .finance-section .section-heading h2 {
+  margin: 0.35rem 0 0;
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+.ideologies-page .ideology-prose,
+.public-policies-page .policy-prose,
+.public-policies-page .section-intro,
+.powers-page .powers-prose,
+.powers-page .section-intro,
+.public-offices-page .office-prose,
+.finance-page .finance-prose {
+  max-width: none;
+}
+.ideologies-page .ideology-section > .ideology-prose > p,
+.public-policies-page .policy-prose > p,
+.powers-page .powers-prose > p,
+.public-offices-page .office-prose > p,
+.finance-page .finance-prose > p {
+  max-width: 900px;
+}
+.ideologies-page .axis-grid article,
+.ideologies-page .ideology-card,
+.ideologies-page .comparison-grid article,
+.ideologies-page .history-columns article,
+.public-policies-page .concept-grid article,
+.public-policies-page .policy-cycle article,
+.public-policies-page .policy-grid article,
+.public-policies-page .federation-grid article,
+.public-policies-page .finance-grid article,
+.public-policies-page .evaluation-grid article,
+.powers-page .power-overview article,
+.powers-page .role-grid article,
+.powers-page .court-grid article,
+.powers-page .checks-grid article,
+.powers-page .misconceptions article,
+.public-offices-page .concept-grid article,
+.public-offices-page .office-grid article,
+.public-offices-page .access-grid article,
+.public-offices-page .checks-grid article,
+.public-offices-page .benefits-grid article,
+.finance-page .finance-grid article {
+  box-shadow: none;
+}
+.ideologies-page .axis-grid article:hover,
+.ideologies-page .ideology-card:hover,
+.ideologies-page .comparison-grid article:hover,
+.ideologies-page .history-columns article:hover,
+.public-policies-page .concept-grid article:hover,
+.public-policies-page .policy-cycle article:hover,
+.public-policies-page .policy-grid article:hover,
+.public-policies-page .federation-grid article:hover,
+.public-policies-page .finance-grid article:hover,
+.public-policies-page .evaluation-grid article:hover,
+.powers-page .power-overview article:hover,
+.powers-page .role-grid article:hover,
+.powers-page .court-grid article:hover,
+.powers-page .checks-grid article:hover,
+.powers-page .misconceptions article:hover,
+.public-offices-page .concept-grid article:hover,
+.public-offices-page .office-grid article:hover,
+.public-offices-page .access-grid article:hover,
+.public-offices-page .checks-grid article:hover,
+.public-offices-page .benefits-grid article:hover,
+.finance-page .finance-grid article:hover {
+  box-shadow: none;
+  transform: none;
+}
+.ideologies-page .ideology-accordion,
+.public-policies-page .policy-accordion,
+.powers-page .powers-accordion {
+  box-shadow: none;
+}
+.ideologies-page .ideology-accordion[open],
+.public-policies-page .policy-accordion[open],
+.powers-page .powers-accordion[open] {
+  box-shadow: 0 7px 20px rgb(25 31 40 / 7%);
+}
+.ideologies-page .ideology-sources,
+.public-policies-page .policy-sources,
+.powers-page .powers-sources,
+.public-offices-page .offices-sources,
+.finance-page .finance-sources {
+  margin-top: 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+@media (max-width: 768px) {
+  .ideologies-page .ideology-method,
+  .ideologies-page .ideology-section,
+  .public-policies-page .policy-method,
+  .public-policies-page .policy-section,
+  .powers-page .powers-method,
+  .powers-page .powers-section,
+  .public-offices-page .offices-method,
+  .public-offices-page .office-section,
+  .finance-page .finance-method,
+  .finance-page .finance-section {
+    margin-inline: 1.25rem;
+  }
+}
+@media (max-width: 480px) {
+  .ideologies-page .ideology-method,
+  .ideologies-page .ideology-section,
+  .public-policies-page .policy-method,
+  .public-policies-page .policy-section,
+  .powers-page .powers-method,
+  .powers-page .powers-section,
+  .public-offices-page .offices-method,
+  .public-offices-page .office-section,
+  .finance-page .finance-method,
+  .finance-page .finance-section {
+    margin-inline: 1rem;
+  }
+}
+
+.idea-explorer {
+  margin-top: 1.2rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--primary) 3%, var(--card-bg));
+}
+.idea-explorer-heading h3 {
+  margin: 0.25rem 0 0.45rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.2rem;
+}
+.idea-explorer-heading p,
+.idea-explorer-note {
+  max-width: 820px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+.idea-explorer-controls {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.idea-axis-control {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card-bg);
+}
+.idea-axis-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.65rem;
+}
+.idea-axis-title label {
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+.idea-axis-title output {
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.idea-axis-scale {
+  display: grid;
+  grid-template-columns: minmax(90px, 1fr) minmax(120px, 2.5fr) minmax(
+      90px,
+      1fr
+    );
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+.idea-axis-scale span:last-child {
+  text-align: right;
+}
+.idea-axis-scale input {
+  width: 100%;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+.idea-axis-scale input:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--primary) 35%, transparent);
+  outline-offset: 4px;
+}
+.idea-explorer-note {
+  margin: 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--border);
+  font-style: italic;
+}
+@media (max-width: 520px) {
+  .idea-explorer {
+    padding: 0.9rem;
+  }
+  .idea-axis-scale {
+    grid-template-columns: 1fr 1.5fr 1fr;
+    gap: 0.4rem;
+    font-size: 0.64rem;
+  }
+  .idea-axis-control {
+    padding: 0.75rem;
+  }
+}

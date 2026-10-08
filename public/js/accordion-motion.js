@@ -1,11 +1,9 @@
 (() => {
-  const accordionSelector = "details.history-accordion-item, details.constitution-accordion, details.history-topic-accordion";
-  const contentSelector = ":scope > .accordion-content, :scope > .constitution-content, :scope > .history-topic-content";
   const states = new WeakMap();
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  function contentFor(details) {
-    return details.querySelector(contentSelector);
+  function contentFor(details, summary) {
+    return Array.from(details.children).find(child => child !== summary);
   }
 
   function clearAnimationStyles(content) {
@@ -18,7 +16,8 @@
   }
 
   function setOpen(details, open) {
-    const content = contentFor(details);
+    const summary = details.querySelector(":scope > summary");
+    const content = summary && contentFor(details, summary);
     if (!content) {
       details.open = open;
       return;
@@ -122,7 +121,7 @@
     if (!(event.target instanceof Element)) return;
     const summary = event.target.closest("summary");
     const details = summary?.parentElement;
-    if (!(details instanceof HTMLDetailsElement) || !details.matches(accordionSelector)) return;
+    if (!(details instanceof HTMLDetailsElement) || details.querySelector(":scope > summary") !== summary) return;
 
     event.preventDefault();
     const state = states.get(details);

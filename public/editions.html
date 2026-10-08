@@ -9,9 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="/css/historia.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="history-page">
   <div class="container">
     <header class="site-header">
       <div class="logo">
@@ -23,15 +24,12 @@
           <a href="/">Jornal Diário</a>
           <a href="/editions" class="active" aria-current="page">Edições</a>
           <a href="/historia">História</a>
-          <a href="/presidentes">Presidentes</a>
+          <a href="/presidentes">Presidentes</a><a href="/ideologias">Ideologias</a><a href="/politicas-publicas">Políticas Públicas</a><a href="/tres-poderes"><i class="fas fa-building-columns" aria-hidden="true"></i><span>Três Poderes</span></a><a href="/cargos-publicos"><i class="fas fa-id-card" aria-hidden="true"></i><span>Cargos Públicos</span></a><a href="/arrecadacao"><i class="fas fa-coins" aria-hidden="true"></i><span>Dinheiro Público</span></a>
         </div>
         <div class="nav-search">
           <input type="text" id="search-input" placeholder="Buscar notícias..." aria-label="Buscar notícias">
           <i class="fas fa-search" aria-hidden="true"></i>
         </div>
-        <button class="theme-toggle header-theme-toggle" id="header-theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false">
-          <i class="fas fa-moon" id="header-theme-icon" aria-hidden="true"></i>
-        </button>
         <div class="header-nav-actions">
           <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu">
             <span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span>
@@ -52,7 +50,7 @@
       <a href="/" data-sidebar-link="home"><i class="fas fa-newspaper" aria-hidden="true"></i><span>Jornal Diário</span></a>
       <a href="/editions" data-sidebar-link="editions" class="active" aria-current="page"><i class="fas fa-clock-rotate-left" aria-hidden="true"></i><span>Edições</span></a>
       <a href="/historia"><i class="fas fa-landmark" aria-hidden="true"></i><span>História</span></a>
-      <a href="/presidentes"><i class="fas fa-user-tie" aria-hidden="true"></i><span>Presidentes</span></a>
+      <a href="/presidentes"><i class="fas fa-user-tie" aria-hidden="true"></i><span>Presidentes</span></a><a href="/ideologias"><i class="fas fa-scale-balanced" aria-hidden="true"></i><span>Ideologias</span></a><a href="/politicas-publicas"><i class="fas fa-list-check" aria-hidden="true"></i><span>Políticas Públicas</span></a>
     </div>
   </nav>
   <div class="site-sidebar-preferences">
@@ -100,6 +98,7 @@
     
 
   </div>
+  <script src="/js/accordion-motion.js"></script>
   <script src="js/script.js"></script>
   <script src="js/sidebar.js"></script>
   <script src="js/footer.js"></script>

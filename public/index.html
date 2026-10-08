@@ -1,119 +1,253 @@
 <!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="King's Newsletter: política, economia, tecnologia, Brasil e mundo.">
-  <title>King's Newsletter - Home</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-  <div class="container">
-    <header class="site-header">
-      <div class="logo">
-        <div class="logo-top"><i class="fas fa-crown"></i> KING'S</div>
-        <div class="logo-bottom">Newsletter</div>
-      </div>
-      <nav class="header-main-nav" aria-label="Navegação principal">
-        <div class="header-primary-links">
-          <a href="/" class="active" aria-current="page">Jornal Diário</a>
-          <a href="/editions">Edições</a>
-          <a href="/historia">História</a>
-          <a href="/presidentes">Presidentes</a>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="King's Newsletter: política, economia, tecnologia, Brasil e mundo."
+    />
+    <title>King's Newsletter - Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="/css/historia.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body class="history-page">
+    <div class="container">
+      <header class="site-header">
+        <div class="logo">
+          <div class="logo-top"><i class="fas fa-crown"></i> KING'S</div>
+          <div class="logo-bottom">Newsletter</div>
         </div>
-        <button class="theme-toggle header-theme-toggle" id="header-theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false">
-          <i class="fas fa-moon" id="header-theme-icon" aria-hidden="true"></i>
-        </button>
-        <div class="header-nav-actions">
-          <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu">
-            <span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        <nav class="header-main-nav" aria-label="Navegação principal">
+          <div class="header-primary-links">
+            <a href="/" class="active" aria-current="page">Jornal Diário</a>
+            <a href="/editions">Edições</a>
+            <a href="/historia">História</a>
+            <a href="/presidentes">Presidentes</a
+            ><a href="/ideologias">Ideologias</a
+            ><a href="/politicas-publicas">Políticas Públicas</a
+            ><a href="/tres-poderes"
+              ><i class="fas fa-building-columns" aria-hidden="true"></i
+              ><span>Três Poderes</span></a
+            ><a href="/cargos-publicos"
+              ><i class="fas fa-id-card" aria-hidden="true"></i
+              ><span>Cargos Públicos</span></a
+            ><a href="/arrecadacao"
+              ><i class="fas fa-coins" aria-hidden="true"></i
+              ><span>Dinheiro Público</span></a
+            >
+          </div>
+          <div class="header-nav-actions">
+            <button
+              class="sidebar-toggle"
+              id="sidebar-toggle"
+              type="button"
+              aria-label="Abrir menu de navegação"
+              aria-controls="site-sidebar"
+              aria-expanded="false"
+              title="Abrir menu"
+            >
+              <span class="hamburger-icon" aria-hidden="true"
+                ><span></span><span></span><span></span
+              ></span>
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      <aside
+        class="site-sidebar"
+        id="site-sidebar"
+        aria-label="Navegação principal"
+        aria-hidden="true"
+      >
+        <div class="site-sidebar-header">
+          <div>
+            <span class="eyebrow">King's Newsletter</span
+            ><strong>Navegação</strong>
+          </div>
+          <button
+            class="site-sidebar-close"
+            id="site-sidebar-close"
+            type="button"
+            aria-label="Fechar navegação"
+          >
+            <i class="fas fa-xmark" aria-hidden="true"></i>
           </button>
-          
         </div>
-      </nav>
-    </header>
+        <nav class="site-sidebar-nav" aria-label="Páginas principais">
+          <div class="site-sidebar-group">
+            <span class="site-sidebar-label">Páginas principais</span>
+            <a
+              href="/"
+              data-sidebar-link="home"
+              class="active"
+              aria-current="page"
+              ><i class="fas fa-newspaper" aria-hidden="true"></i
+              ><span>Jornal Diário</span></a
+            >
+            <a href="/editions" data-sidebar-link="editions"
+              ><i class="fas fa-clock-rotate-left" aria-hidden="true"></i
+              ><span>Edições</span></a
+            >
+            <a href="/historia"
+              ><i class="fas fa-landmark" aria-hidden="true"></i
+              ><span>História</span></a
+            >
+            <a href="/presidentes"
+              ><i class="fas fa-user-tie" aria-hidden="true"></i
+              ><span>Presidentes</span></a
+            ><a href="/ideologias"
+              ><i class="fas fa-scale-balanced" aria-hidden="true"></i
+              ><span>Ideologias</span></a
+            ><a href="/politicas-publicas"
+              ><i class="fas fa-list-check" aria-hidden="true"></i
+              ><span>Políticas Públicas</span></a
+            >
+          </div>
+        </nav>
+        <div class="site-sidebar-preferences">
+          <span class="site-sidebar-label">Preferências</span>
+          <button
+            class="sidebar-theme-toggle"
+            id="theme-toggle"
+            type="button"
+            aria-label="Ativar tema escuro"
+            title="Ativar tema escuro"
+            aria-pressed="false"
+          >
+            <span class="theme-switch-track" aria-hidden="true">
+              <i class="fas fa-moon" id="theme-icon"></i>
+            </span>
+            <span>Tema</span>
+          </button>
+        </div>
+      </aside>
+      <div
+        class="site-sidebar-backdrop"
+        id="site-sidebar-backdrop"
+        aria-hidden="true"
+      ></div>
 
-<aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
-  <div class="site-sidebar-header">
-    <div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div>
-    <button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button>
-  </div>
-  <nav class="site-sidebar-nav" aria-label="Páginas principais">
-    <div class="site-sidebar-group">
-      <span class="site-sidebar-label">Páginas principais</span>
-      <a href="/" data-sidebar-link="home" class="active" aria-current="page"><i class="fas fa-newspaper" aria-hidden="true"></i><span>Jornal Diário</span></a>
-      <a href="/editions" data-sidebar-link="editions"><i class="fas fa-clock-rotate-left" aria-hidden="true"></i><span>Edições</span></a>
-      <a href="/historia"><i class="fas fa-landmark" aria-hidden="true"></i><span>História</span></a>
-      <a href="/presidentes"><i class="fas fa-user-tie" aria-hidden="true"></i><span>Presidentes</span></a>
+      <main>
+        <section class="hero">
+          <p class="eyebrow" id="edition-date">CARREGANDO...</p>
+          <h1>As notícias que importam,<br />sem enrolação.</h1>
+          <p class="lead">
+            Um briefing direto com resumo e contexto sobre política, economia,
+            tecnologia, Brasil e mundo.
+          </p>
+          <a href="/editions" class="cta-button">Ver Edição Atual</a>
+        </section>
+
+        <section class="home-civic-teaser" aria-labelledby="home-civic-title">
+          <div>
+            <span class="eyebrow">Política, Estado e dados</span>
+            <h2 id="home-civic-title">
+              Entenda como as decisões públicas afetam a vida cotidiana.
+            </h2>
+            <p>
+              Um guia cívico sobre ideias políticas, instituições, políticas
+              públicas e transparência, com fontes para você conferir cada
+              informação.
+            </p>
+          </div>
+          <a href="/politica" class="cta-button">Explorar o guia</a>
+        </section>
+
+        <section
+          class="home-history-teaser"
+          aria-labelledby="home-history-title"
+        >
+          <div>
+            <span class="eyebrow">História do Brasil</span>
+            <h2 id="home-history-title">
+              Além das notícias, entenda como o Brasil chegou até aqui.
+            </h2>
+            <p>
+              Uma área de referência com linha do tempo, presidentes, governos,
+              constituições, conflitos, economia, sociedade e cultura.
+            </p>
+          </div>
+          <a href="/historia" class="cta-button">Conhecer a História</a>
+        </section>
+
+        <section
+          class="subscription-section"
+          aria-labelledby="subscription-title"
+        >
+          <div class="subscription-content">
+            <p class="eyebrow">Receba as novidades</p>
+            <h2 id="subscription-title">
+              Novas atualizações direto no seu e-mail.
+            </h2>
+            <p>
+              Cadastre seu e-mail para receber as novas notícias do King's
+              Newsletter. Sem conta e sem senha.
+            </p>
+
+            <form id="subscription-form" class="subscription-form">
+              <label class="sr-only" for="subscriber-email">Seu e-mail</label>
+              <input
+                id="subscriber-email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                placeholder="seuemail@exemplo.com"
+                maxlength="254"
+                required
+              />
+              <button type="submit">Quero receber</button>
+            </form>
+
+            <p
+              id="subscription-message"
+              class="subscription-message"
+              role="status"
+              aria-live="polite"
+            ></p>
+            <small>Você receberá um e-mail para confirmar a inscrição.</small>
+          </div>
+        </section>
+
+        <section class="preview-section">
+          <h2>Destaque de Hoje</h2>
+          <div id="featured-news" class="featured-news"></div>
+        </section>
+      </main>
+
+      <div id="footer"></div>
     </div>
-  </nav>
-  <div class="site-sidebar-preferences">
-    <span class="site-sidebar-label">Preferências</span>
-    <button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false">
-      <span class="theme-switch-track" aria-hidden="true">
-        <i class="fas fa-moon" id="theme-icon"></i>
-      </span>
-      <span>Tema</span>
-    </button>
-  </div>
-</aside>
-<div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
-
-    <main>
-      <section class="hero">
-        <p class="eyebrow" id="edition-date">CARREGANDO...</p>
-        <h1>As notícias que importam,<br>sem enrolação.</h1>
-        <p class="lead">Um briefing direto com resumo e contexto sobre política, economia, tecnologia, Brasil e mundo.</p>
-        <a href="/editions" class="cta-button">Ver Edição Atual</a>
-      </section>
-
-      
-      <section class="home-history-teaser" aria-labelledby="home-history-title">
-        <div><span class="eyebrow">História do Brasil</span><h2 id="home-history-title">Além das notícias, entenda como o Brasil chegou até aqui.</h2><p>Uma área de referência com linha do tempo, presidentes, governos, constituições, conflitos, economia, sociedade e cultura.</p></div>
-        <a href="/historia" class="cta-button">Conhecer a História</a>
-      </section>
-
-      <section class="subscription-section" aria-labelledby="subscription-title">
-        <div class="subscription-content">
-          <p class="eyebrow">Receba as novidades</p>
-          <h2 id="subscription-title">Novas atualizações direto no seu e-mail.</h2>
-          <p>Cadastre seu e-mail para receber as novas notícias do King's Newsletter. Sem conta e sem senha.</p>
-
-          <form id="subscription-form" class="subscription-form">
-            <label class="sr-only" for="subscriber-email">Seu e-mail</label>
-            <input id="subscriber-email" name="email" type="email" autocomplete="email" placeholder="seuemail@exemplo.com" maxlength="254" required>
-            <button type="submit">Quero receber</button>
-          </form>
-
-          <p id="subscription-message" class="subscription-message" role="status" aria-live="polite"></p>
-          <small>Você receberá um e-mail para confirmar a inscrição.</small>
-        </div>
-      </section>
-
-      <section class="preview-section">
-        <h2>Destaque de Hoje</h2>
-        <div id="featured-news" class="featured-news"></div>
-      </section>
-    </main>
-
-    <div id="footer"></div>
-
-  </div>
-  <script src="js/sidebar.js"></script>
-  <script src="js/footer.js"></script>
-  <script src="js/script.js"></script>
-  <script src="js/subscribe.js"></script>
-  <script>
-    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/insights/script.js"></script>
-  <script>
-    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/speed-insights/script.js"></script>
-</body>
+    <script src="/js/accordion-motion.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/footer.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/subscribe.js"></script>
+    <script>
+      window.va =
+        window.va ||
+        function () {
+          (window.vaq = window.vaq || []).push(arguments);
+        };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script>
+      window.si =
+        window.si ||
+        function () {
+          (window.siq = window.siq || []).push(arguments);
+        };
+    </script>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
+  </body>
 </html>

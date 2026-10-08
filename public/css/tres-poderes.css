@@ -1,0 +1,442 @@
+/* TRÊS PODERES — estrutura visual limpa e consistente */
+
+.powers-page main {
+  padding-bottom: 2rem;
+}
+
+.powers-hero {
+  max-width: 860px;
+}
+
+.powers-hero h1 {
+  margin: 0.35rem 0 1rem;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2.25rem, 5vw, 3.7rem);
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+}
+
+.powers-hero > p:not(.eyebrow) {
+  max-width: 720px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+/* MÉTODO/DESTAQUE */
+
+.powers-method {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  margin: 0 3rem 2.25rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 4px 14px rgb(25 31 40 / 4%);
+}
+
+.powers-method-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--primary) 9%, var(--bg-container));
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.powers-method h2,
+.powers-section h2 {
+  font-family: "Playfair Display", serif;
+}
+
+.powers-method h2 {
+  margin: 0 0 0.25rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.05rem;
+}
+
+.powers-method p,
+.powers-prose > p,
+.section-intro,
+.powers-sources > p {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.powers-method p {
+  margin: 0;
+  font-size: 0.86rem;
+}
+
+/* SEÇÕES */
+
+.powers-section {
+  margin: 0 3rem 3.5rem;
+  scroll-margin-top: 1.5rem;
+}
+
+.powers-section .section-heading {
+  margin-bottom: 1.5rem;
+}
+
+.powers-section h2 {
+  margin: 0.35rem 0 0;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.powers-prose {
+  max-width: none;
+}
+
+.section-intro {
+  max-width: 850px;
+  font-size: 0.9rem;
+}
+
+/* GRIDS */
+
+.power-overview,
+.role-grid,
+.court-grid,
+.checks-grid,
+.misconceptions {
+  display: grid;
+  gap: 1rem;
+}
+
+.power-overview {
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 1.5rem;
+}
+
+.role-grid {
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 1.5rem;
+}
+
+.court-grid {
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 1.5rem;
+}
+
+.checks-grid {
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 1.5rem;
+}
+
+.misconceptions {
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 1.5rem;
+}
+
+.power-overview article,
+.role-grid article,
+.court-grid article,
+.checks-grid article,
+.misconceptions article {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+.power-overview article:hover,
+.role-grid article:hover,
+.court-grid article:hover,
+.checks-grid article:hover,
+.misconceptions article:hover {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+}
+
+.power-overview i {
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
+.power-overview span,
+.role-grid span,
+.court-grid span {
+  display: block;
+  margin-top: 0.8rem;
+  color: var(--primary);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.power-overview strong,
+.role-grid strong,
+.court-grid strong {
+  display: block;
+  margin: 0.45rem 0;
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+.power-overview p,
+.role-grid p,
+.court-grid p,
+.checks-grid p,
+.misconceptions p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.role-grid h3,
+.court-grid h3 {
+  margin: 0.45rem 0 0.5rem;
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+/* CHECKS GRID ESPECÍFICO */
+
+.checks-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.checks-title i {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.checks-title h3 {
+  margin: 0;
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+.checks-grid ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.checks-grid li {
+  margin-bottom: 0.35rem;
+}
+
+/* MISCONCEPTIONS */
+
+.misconceptions strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--text-main);
+  font-size: 0.88rem;
+}
+
+/* ACCORDION */
+
+.powers-accordion {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+  margin-top: 1.5rem;
+}
+
+.powers-accordion:hover,
+.powers-accordion[open] {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+}
+
+.powers-accordion[open] {
+  box-shadow: 0 7px 20px rgb(25 31 40 / 7%);
+}
+
+.powers-accordion summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 68px;
+  padding: 0.85rem 1rem;
+  list-style: none;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.powers-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.powers-accordion summary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -3px;
+}
+
+.powers-accordion summary i {
+  color: var(--text-muted);
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.powers-accordion[open] summary {
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+}
+
+.powers-accordion[open] summary i {
+  color: var(--primary);
+  transform: rotate(180deg);
+}
+
+.powers-accordion > div {
+  padding: 1rem 1.25rem 1.2rem;
+}
+
+.powers-accordion > div p + p {
+  margin-top: 0.8rem;
+}
+
+/* TABELA */
+
+.table-wrap {
+  overflow-x: auto;
+  margin-top: 1.5rem;
+}
+
+.powers-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
+
+.powers-table th,
+.powers-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+}
+
+.powers-table th {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+/* CALLOUT */
+
+.callout {
+  margin-top: 1.25rem;
+  padding: 1rem 1.2rem;
+  border: 1px dashed var(--primary);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+  color: var(--text-main);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.callout strong {
+  color: var(--text-main);
+}
+
+/* FONTES */
+
+.powers-sources {
+  padding-top: 0.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.powers-sources h2 {
+  margin: 0.35rem 0 0;
+}
+
+.powers-sources > p {
+  max-width: 800px;
+  font-size: 0.84rem;
+}
+
+.source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+}
+
+.source-list a {
+  color: var(--primary);
+  font-size: 0.78rem;
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 1100px) {
+  .power-overview,
+  .role-grid,
+  .court-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .checks-grid,
+  .misconceptions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .powers-method,
+  .powers-section {
+    margin-inline: 1.25rem;
+  }
+  .powers-method {
+    grid-template-columns: 1fr;
+    padding: 1.15rem;
+  }
+  .powers-section {
+    margin-bottom: 2.75rem;
+  }
+  .powers-section h2 {
+    font-size: 1.8rem;
+  }
+  .power-overview,
+  .role-grid,
+  .court-grid,
+  .checks-grid,
+  .misconceptions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .powers-method,
+  .powers-section {
+    margin-inline: 1rem;
+  }
+  .powers-method {
+    padding: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .power-overview article,
+  .role-grid article,
+  .court-grid article,
+  .checks-grid article,
+  .misconceptions article,
+  .powers-method,
+  .powers-accordion {
+    transition: none;
+  }
+}

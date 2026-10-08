@@ -1,0 +1,380 @@
+/* CARGOS PÚBLICOS — estrutura visual limpa e consistente */
+
+.public-offices-page main {
+  padding-bottom: 2rem;
+}
+
+.offices-hero {
+  max-width: 860px;
+}
+
+.offices-hero h1 {
+  margin: 0.35rem 0 1rem;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2.25rem, 5vw, 3.7rem);
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+}
+
+.offices-hero > p:not(.eyebrow) {
+  max-width: 720px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+/* MÉTODO/DESTAQUE */
+
+.offices-method {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  margin: 0 3rem 2.25rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 4px 14px rgb(25 31 40 / 4%);
+}
+
+.offices-method-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--primary) 9%, var(--bg-container));
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.offices-method h2,
+.office-section h2 {
+  font-family: "Playfair Display", serif;
+}
+
+.offices-method h2 {
+  margin: 0 0 0.25rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.05rem;
+}
+
+.offices-method p,
+.office-prose > p,
+.offices-sources > p {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.offices-method p {
+  margin: 0;
+  font-size: 0.86rem;
+}
+
+/* SEÇÕES */
+
+.office-section {
+  margin: 0 3rem 3.5rem;
+  scroll-margin-top: 1.5rem;
+}
+
+.office-section .section-heading {
+  margin-bottom: 1.5rem;
+}
+
+.office-section .section-heading > div {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.office-section h2 {
+  width: 100%;
+  max-width: none;
+  margin: 0.35rem 0 0;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.office-prose {
+  max-width: none;
+}
+
+/* GRIDS */
+
+.concept-grid,
+.office-grid,
+.access-grid,
+.checks-grid,
+.benefits-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.concept-grid {
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 1.5rem;
+}
+
+.office-grid {
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 1.5rem;
+}
+
+.compact-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.access-grid {
+  grid-template-columns: repeat(5, 1fr);
+  margin-top: 1.5rem;
+}
+
+.benefits-grid {
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 1.5rem;
+}
+
+.concept-grid article,
+.office-grid article,
+.access-grid article,
+.checks-grid article,
+.benefits-grid article {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+.concept-grid article:hover,
+.office-grid article:hover,
+.access-grid article:hover,
+.checks-grid article:hover,
+.benefits-grid article:hover {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+}
+
+.concept-grid span,
+.office-grid span,
+.benefits-grid span {
+  display: block;
+  color: var(--primary);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.concept-grid strong {
+  display: block;
+  margin: 0.45rem 0;
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+.concept-grid p,
+.office-grid p,
+.access-grid p,
+.checks-grid p,
+.benefits-grid p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.access-grid i {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.access-grid h3 {
+  margin: 0.45rem 0 0.5rem;
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+.checks-grid i {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.checks-grid h3 {
+  margin: 0.45rem 0 0.5rem;
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+/* TABELA */
+
+.table-wrap {
+  overflow-x: auto;
+  margin-top: 1.5rem;
+}
+
+.office-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
+
+.office-table th,
+.office-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+}
+
+.office-table th {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+/* CALLOUTS */
+
+.comparison-note {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 4px 14px rgb(25 31 40 / 4%);
+}
+
+.comparison-note strong {
+  display: block;
+  margin-bottom: 0.7rem;
+  color: var(--text-main);
+  font-family: "Playfair Display", serif;
+  font-size: 1.05rem;
+}
+
+.comparison-note ul {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.comparison-note li {
+  padding-left: 0.15rem;
+}
+
+.limits-box {
+  margin-top: 1.25rem;
+  padding: 1rem 1.2rem;
+  border: 1px dashed var(--primary);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+  color: var(--text-main);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.limits-box strong {
+  color: var(--text-main);
+}
+
+/* FONTES */
+
+.offices-sources {
+  padding-top: 0.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.offices-sources h2 {
+  margin: 0.35rem 0 0;
+}
+
+.offices-sources > p {
+  max-width: 800px;
+  font-size: 0.84rem;
+}
+
+.source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+}
+
+.source-list a {
+  color: var(--primary);
+  font-size: 0.78rem;
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 1100px) {
+  .concept-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .access-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .concept-grid,
+  .office-grid,
+  .compact-grid,
+  .benefits-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .access-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .offices-method,
+  .office-section {
+    margin-inline: 1.25rem;
+  }
+  .offices-method {
+    grid-template-columns: 1fr;
+    padding: 1.15rem;
+  }
+  .office-section {
+    margin-bottom: 2.75rem;
+  }
+  .office-section h2 {
+    font-size: 1.8rem;
+  }
+  .concept-grid,
+  .office-grid,
+  .compact-grid,
+  .access-grid,
+  .checks-grid,
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .offices-method,
+  .office-section {
+    margin-inline: 1rem;
+  }
+  .offices-method {
+    padding: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .concept-grid article,
+  .office-grid article,
+  .access-grid article,
+  .checks-grid article,
+  .benefits-grid article,
+  .offices-method {
+    transition: none;
+  }
+}

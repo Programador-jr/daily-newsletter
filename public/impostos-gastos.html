@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR" class="history-document">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Acompanhe os indicadores de arrecadação de impostos e gastos públicos, com suas fontes e metodologias.">
+  <title>Impostômetro e Gastômetro - King's Newsletter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/historia.css">
+  <link rel="stylesheet" href="/css/arrecadacao.css">
+  <link rel="stylesheet" href="/css/impostos-gastos.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="history-page finance-page meters-page">
+  <div class="container">
+    <header class="site-header">
+      <div class="logo"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></div>
+      <nav class="header-main-nav" aria-label="Navegação principal">
+        <div class="header-primary-links"></div>
+        <div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div>
+      </nav>
+    </header>
+    <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+      <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
+      <nav class="site-sidebar-nav" aria-label="Páginas principais"></nav>
+      <div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false"><span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div>
+    </aside>
+    <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
+
+    <main>
+      <section class="history-hero finance-hero meters-hero">
+        <span class="eyebrow">Dados públicos · Indicadores</span>
+        <h1>Impostos arrecadados e gastos públicos</h1>
+        <p>Acompanhe os contadores do Impostômetro e do Gasto Brasil. Cada card apresenta o indicador, sua fonte e o período de referência para facilitar a leitura.</p>
+      </section>
+
+      <section class="meter-stack" aria-label="Contadores públicos">
+        <article class="meter-card" aria-labelledby="tax-meter-title">
+          <div class="meter-card-heading"><span class="meter-icon" aria-hidden="true"><i class="fas fa-coins"></i></span><div><span class="eyebrow">Arrecadação de tributos</span><h2 id="tax-meter-title">Impostômetro</h2></div><span class="meter-status meter-status-live"><i aria-hidden="true"></i> Painel oficial</span></div>
+          <div class="meter-widget-frame meter-widget-frame-scaled"><iframe class="scaled-meter-widget" id="impostometro" src="https://impostometro.com.br/widget/contador/" title="Contador oficial do Impostômetro" width="728" height="228" data-widget-width="728" data-widget-height="228" loading="lazy" scrolling="no" frameborder="0"></iframe></div>
+          <p class="meter-description">O contador exibe a arrecadação de tributos segundo a metodologia do Impostômetro.</p>
+          <div class="meter-meta"><span><strong>Período:</strong> contador acumulado conforme metodologia da fonte</span><a href="https://impostometro.com.br/" target="_blank" rel="noopener noreferrer">Consultar fonte oficial <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+        </article>
+
+        <article class="meter-card" aria-labelledby="spending-meter-title">
+          <div class="meter-card-heading"><span class="meter-icon" aria-hidden="true"><i class="fas fa-chart-pie"></i></span><div><span class="eyebrow">Despesas públicas</span><h2 id="spending-meter-title">Gasto Brasil</h2></div><span class="meter-status meter-status-live"><i aria-hidden="true"></i> Painel oficial</span></div>
+          <div class="meter-widget-frame meter-widget-frame-scaled"><iframe class="scaled-meter-widget" id="gastometro" src="https://gastobrasil.com.br/widget-gastometro-728-228" title="Contador oficial de gastos públicos do Gasto Brasil" width="728" height="320" data-widget-width="728" data-widget-height="320" loading="lazy" scrolling="no" frameborder="0"></iframe></div>
+          <p class="meter-description">O contador estima os gastos públicos pagos no ano. A estimativa combina o histórico de gastos com os dados reportados no ano corrente; a atualização visual contínua não significa que cada novo gasto seja registrado instantaneamente.</p>
+          <div class="meter-meta"><span><strong>Período:</strong> estimativa acumulada do ano corrente</span><a href="https://gastobrasil.com.br/municipios" target="_blank" rel="noopener noreferrer">Consultar metodologia e fonte <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+        </article>
+      </section>
+
+      <section class="finance-section meter-method">
+        <div class="section-heading"><div><span class="eyebrow">Como ler os números</span><h2>Indicadores diferentes, conceitos diferentes</h2></div></div>
+        <div class="finance-callout"><strong>Arrecadação não é despesa.</strong> Os contadores usam bases, períodos e métodos próprios. Não subtraia os totais como se fossem um saldo fiscal. Consulte a fonte e as notas metodológicas antes de comparar valores.</div>
+        <div class="source-list"><a href="/arrecadacao">Entenda a arrecadação pública</a><a href="/gastos-publicos">Entenda os gastos públicos</a></div>
+      </section>
+    </main>
+    <div id="footer"></div>
+  </div>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/footer.js"></script>
+  <script src="/js/meter-widgets.js"></script>
+</body>
+</html>

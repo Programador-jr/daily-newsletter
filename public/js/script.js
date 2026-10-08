@@ -5,11 +5,7 @@ const grid = document.querySelector("#news-grid"),
   closeHistory = document.getElementById('close-history'),
   historyList = document.getElementById('history-list'),
   searchInput = document.getElementById('search-input'),
-  filterButtons = document.getElementById('filter-buttons'),
-  themeToggle = document.getElementById('theme-toggle'),
-  themeIcon = document.getElementById('theme-icon'),
-  headerThemeToggle = document.getElementById('header-theme-toggle'),
-  headerThemeIcon = document.getElementById('header-theme-icon');
+  filterButtons = document.getElementById('filter-buttons');
 
 let currentStories = [];
 let currentFilter = 'all';
@@ -70,51 +66,6 @@ const setLoadingState = (loading) => {
 
 const currentPage = window.location.pathname;
 const isEditionsPage = currentPage === "/editions" || currentPage === "/editions/" || currentPage === "/editions.html";
-
-const savedTheme = localStorage.getItem("theme") || "light";
-document.documentElement.setAttribute("data-theme", savedTheme);
-
-const updateThemeControl = (theme) => {
-  const isDark = theme === "dark";
-  [[themeToggle, themeIcon], [headerThemeToggle, headerThemeIcon]].forEach(([button, icon]) => {
-    if (!button || !icon) return;
-    icon.className = isDark ? "fas fa-sun" : "fas fa-moon";
-    button.setAttribute("aria-label", isDark ? "Ativar tema claro" : "Ativar tema escuro");
-    button.setAttribute("title", isDark ? "Ativar tema claro" : "Ativar tema escuro");
-    button.setAttribute("aria-pressed", String(isDark));
-  });
-};
-
-const themeIconAnimations = new WeakMap();
-
-const animateThemeIcons = () => {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  [themeIcon, headerThemeIcon].forEach(icon => {
-    if (!icon?.animate) return;
-    themeIconAnimations.get(icon)?.cancel();
-    const animation = icon.animate(
-      [{ rotate: "0deg" }, { rotate: "360deg" }],
-      { duration: 800, easing: "cubic-bezier(.4, 0, .2, 1)" }
-    );
-    themeIconAnimations.set(icon, animation);
-    animation.onfinish = () => {
-      if (themeIconAnimations.get(icon) === animation) themeIconAnimations.delete(icon);
-    };
-  });
-};
-
-updateThemeControl(savedTheme);
-
-const toggleTheme = () => {
-  animateThemeIcons();
-  const theme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-  document.documentElement.setAttribute("data-theme", theme);
-  localStorage.setItem("theme", theme);
-  updateThemeControl(theme);
-};
-
-themeToggle?.addEventListener("click", toggleTheme);
-headerThemeToggle?.addEventListener("click", toggleTheme);
 
 setLoadingState(true);
 
