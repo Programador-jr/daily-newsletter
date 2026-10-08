@@ -1,38 +1,57 @@
 (() => {
-  const initializeScaledWidgets = () => {
-    document.querySelectorAll('.meter-widget-frame-scaled').forEach(frame => {
-      const iframe = frame.querySelector('.scaled-meter-widget');
-      if (!iframe) return;
+  const IMPOSTOMETRO_SIZES = [
+    { width: 320, height: 80 },
+    { width: 430, height: 157 },
+    { width: 590, height: 191 },
+    { width: 635, height: 211 },
+    { width: 728, height: 228 }
+  ];
 
-      const width = Number(iframe.dataset.widgetWidth) || 728;
-      const height = Number(iframe.dataset.widgetHeight) || 228;
+  const initializeWidgets = () => {
+    document.querySelectorAll('.impostometro-widget').forEach(iframe => {
+      const frame = iframe.closest('.meter-widget-frame-scaled');
+      if (!frame) return;
 
-      const fitWidget = () => {
-        const availableWidth = Math.max(frame.clientWidth, 1);
-        const scale = Math.min(1, availableWidth / width);
+      const updateSize = () => {
+        const availableWidth = frame.getBoundingClientRect().width;
 
-        frame.style.height = `${height * scale}px`;
-        iframe.style.width = `${width}px`;
-        iframe.style.height = `${height}px`;
-        iframe.style.setProperty('--meter-widget-scale', String(scale));
+        let size = IMPOSTOMETRO_SIZES[0];
+
+        for (const candidate of IMPOSTOMETRO_SIZES) {
+          if (candidate.width <= availableWidth) {
+            size = candidate;
+          } else {
+            break;
+          }
+        }
+
+        iframe.width = String(size.width);
+        iframe.height = String(size.height);
+        iframe.style.width = `${size.width}px`;
+        iframe.style.height = `${size.height}px`;
+        iframe.style.transform = 'none';
+
+        if (availableWidth < size.width) {
+          const scale = availableWidth / size.width;
+          iframe.style.transform = `scale(${scale})`;
+          iframe.style.transformOrigin = 'top center';
+        }
       };
 
-      fitWidget();
+      updateSize();
 
       if ('ResizeObserver' in window) {
-        const observer = new ResizeObserver(fitWidget);
+        const observer = new ResizeObserver(updateSize);
         observer.observe(frame);
       } else {
-        window.addEventListener('resize', fitWidget, { passive: true });
+        window.addEventListener('resize', updateSize, { passive: true });
       }
-
-      window.addEventListener('load', fitWidget, { once: true });
     });
   };
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeScaledWidgets, { once: true });
+    document.addEventListener('DOMContentLoaded', initializeWidgets, { once: true });
   } else {
-    initializeScaledWidgets();
+    initializeWidgets();
   }
 })();
