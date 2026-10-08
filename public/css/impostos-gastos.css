@@ -59,25 +59,18 @@
 }
 
 .meter-widget-frame-scaled {
-  position: relative;
-  display: block;
-  width: min(100%, 728px);
-  min-height: 0;
-  margin-inline: auto;
+  display: flex;
+  justify-content: center;
   overflow: hidden;
 }
 
 .meter-widget-frame-scaled iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
   display: block;
+  flex: 0 0 auto;
   width: 728px;
-  max-width: none;
   height: 228px;
+  max-width: none;
   border: 0;
-  transform: scale(var(--meter-widget-scale, 1));
-  transform-origin: top left;
 }
 
 .meter-value {
