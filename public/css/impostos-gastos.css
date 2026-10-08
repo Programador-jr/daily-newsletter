@@ -61,8 +61,10 @@
 .meter-widget-frame-scaled {
   position: relative;
   display: block;
-  width: min(100%, 728px);
+  width: 100%;
+  max-width: 320px;
   min-height: 0;
+  height: 80px;
   margin-inline: auto;
   overflow: hidden;
   box-sizing: border-box;
@@ -73,32 +75,13 @@
   top: 0;
   left: 0;
   display: block;
-  width: 728px;
+  width: 320px;
   max-width: none;
-  height: 320px;
+  height: 80px;
   border: 0;
   transform: scale(var(--meter-widget-scale, 1));
   transform-origin: top left;
   will-change: transform;
-}
-
-.impostometro-widget-frame {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  min-height: 0;
-  margin-inline: auto;
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
-.impostometro-native-widget {
-  display: block;
-  flex: 0 0 auto;
-  width: 728px;
-  max-width: none;
-  height: 228px;
-  border: 0;
 }
 
 .meter-value {
