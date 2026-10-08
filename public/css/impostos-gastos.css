@@ -62,7 +62,6 @@
   position: relative;
   display: block;
   width: 100%;
-  height: auto;
   min-height: 0;
   overflow: hidden;
 }
@@ -71,11 +70,12 @@
   position: absolute;
   inset: 0 auto auto 0;
   display: block;
-  width: 728px;
+  width: var(--meter-widget-width, 728px);
   max-width: none;
-  height: 228px;
+  height: var(--meter-widget-height, 228px);
   border: 0;
-  transform: scale(var(--meter-widget-scale, 1));
+  zoom: var(--meter-widget-scale, 1);
+  transform: none;
   transform-origin: top left;
 }
 
