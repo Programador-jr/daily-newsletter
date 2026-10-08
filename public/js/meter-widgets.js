@@ -17,16 +17,28 @@
         iframe.style.setProperty('--meter-widget-scale', String(scale));
       };
 
+      const scheduleFit = () => {
+        window.requestAnimationFrame(fitWidget);
+      };
+
       fitWidget();
+      scheduleFit();
 
       if ('ResizeObserver' in window) {
-        const observer = new ResizeObserver(fitWidget);
+        const observer = new ResizeObserver(scheduleFit);
         observer.observe(frame);
       } else {
-        window.addEventListener('resize', fitWidget, { passive: true });
+        window.addEventListener('resize', scheduleFit, { passive: true });
       }
 
-      window.addEventListener('load', fitWidget, { once: true });
+      window.addEventListener('resize', scheduleFit, { passive: true });
+      window.addEventListener('orientationchange', scheduleFit, { passive: true });
+
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', scheduleFit, { passive: true });
+      }
+
+      window.addEventListener('load', scheduleFit, { once: true });
     });
   };
 
