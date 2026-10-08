@@ -6,7 +6,6 @@
 
 .finance-hero {
   max-width: 860px;
-  padding: 4rem 3rem 2.5rem;
 }
 
 .finance-hero h1 {
@@ -373,7 +372,9 @@
   color: var(--primary);
 }
 
-.live-panel-top i { font-size: 0.8rem; }
+.live-panel-top i {
+  font-size: 0.8rem;
+}
 
 .live-badge {
   padding: 0.25rem 0.45rem;
@@ -386,5 +387,7 @@
 }
 
 @media (max-width: 768px) {
-  .live-panels-grid { grid-template-columns: 1fr; }
+  .live-panels-grid {
+    grid-template-columns: 1fr;
+  }
 }

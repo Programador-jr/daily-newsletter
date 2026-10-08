@@ -23,7 +23,7 @@ module.exports = async function (req, res) {
 
     const body = await response.text();
     res.status(response.status).type('application/json').send(body);
-  } catch (error) {
+  } catch {
     res.status(502).json({ erro: 'Não foi possível consultar a API de Dados Abertos da Câmara.' });
   }
 };

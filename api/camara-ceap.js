@@ -65,28 +65,69 @@ function parseCsv(text){
   });
 }
 
-function unzipFirstFile(buffer){
-  const signature=0x04034b50;
-  let offset=0;
+function unzipCsv(buffer){
+  const eocdSignature=0x06054b50;
+  const centralSignature=0x02014b50;
+  const localSignature=0x04034b50;
+  const minEocdSize=22;
+  const maxCommentSize=0xffff;
+  let eocdOffset=-1;
 
-  while(offset+30<=buffer.length){
-    const sig=buffer.readUInt32LE(offset);
-    if(sig!==signature)break;
+  if(buffer.length<minEocdSize)throw new Error('A resposta da Câmara não é um ZIP válido da CEAP.');
+  for(let offset=buffer.length-minEocdSize;offset>=Math.max(0,buffer.length-minEocdSize-maxCommentSize);offset--){
+    if(buffer.readUInt32LE(offset)===eocdSignature&&offset+minEocdSize+buffer.readUInt16LE(offset+20)===buffer.length){
+      eocdOffset=offset;
+      break;
+    }
+  }
+  if(eocdOffset<0)throw new Error('A resposta da Câmara não é um ZIP válido da CEAP.');
 
-    const method=buffer.readUInt16LE(offset+8);
-    const compressedSize=buffer.readUInt32LE(offset+18);
-    const nameLength=buffer.readUInt16LE(offset+26);
-    const extraLength=buffer.readUInt16LE(offset+28);
-    const dataStart=offset+30+nameLength+extraLength;
+  const entryCount=buffer.readUInt16LE(eocdOffset+10);
+  const centralSize=buffer.readUInt32LE(eocdOffset+12);
+  const centralOffset=buffer.readUInt32LE(eocdOffset+16);
+  if(centralOffset+centralSize>eocdOffset)throw new Error('O índice do ZIP da CEAP está incompleto.');
+
+  let offset=centralOffset;
+  for(let entry=0;entry<entryCount&&offset+46<=buffer.length;entry++){
+    if(buffer.readUInt32LE(offset)!==centralSignature)throw new Error('O índice do ZIP da CEAP está corrompido.');
+    const flags=buffer.readUInt16LE(offset+8);
+    const method=buffer.readUInt16LE(offset+10);
+    const compressedSize=buffer.readUInt32LE(offset+20);
+    const uncompressedSize=buffer.readUInt32LE(offset+24);
+    const nameLength=buffer.readUInt16LE(offset+28);
+    const extraLength=buffer.readUInt16LE(offset+30);
+    const commentLength=buffer.readUInt16LE(offset+32);
+    const localOffset=buffer.readUInt32LE(offset+42);
+    const name=buffer.subarray(offset+46,offset+46+nameLength).toString('utf8');
+    offset+=46+nameLength+extraLength+commentLength;
+
+    if(!/\.csv$/i.test(name))continue;
+    if(flags&1)throw new Error('O arquivo ZIP da CEAP está criptografado e não pode ser lido.');
+    if(localOffset+30>buffer.length||buffer.readUInt32LE(localOffset)!==localSignature){
+      throw new Error('O arquivo CSV dentro do ZIP da CEAP está corrompido.');
+    }
+
+    const localNameLength=buffer.readUInt16LE(localOffset+26);
+    const localExtraLength=buffer.readUInt16LE(localOffset+28);
+    const dataStart=localOffset+30+localNameLength+localExtraLength;
     const dataEnd=dataStart+compressedSize;
-
-    if(dataEnd>buffer.length)throw new Error('Arquivo ZIP da CEAP está incompleto.');
+    if(dataEnd>buffer.length)throw new Error('O download do arquivo ZIP da CEAP terminou antes do fim do CSV.');
 
     const compressed=buffer.subarray(dataStart,dataEnd);
-    if(method===0)return compressed;
-    if(method===8)return zlib.inflateRawSync(compressed);
+    let csv;
+    try{
+      if(method===0)csv=compressed;
+      else if(method===8)csv=zlib.inflateRawSync(compressed);
+      else throw new Error('Método de compressão ZIP não suportado: '+method+'.');
+    }catch(error){
+      if(error.message.startsWith('Método de compressão'))throw error;
+      throw new Error('Não foi possível descompactar o CSV da CEAP; o arquivo recebido está incompleto ou corrompido.', { cause: error });
+    }
 
-    offset=dataEnd;
+    if(uncompressedSize!==0xffffffff&&csv.length!==uncompressedSize){
+      throw new Error('O CSV descompactado da CEAP tem tamanho diferente do informado no ZIP.');
+    }
+    return csv;
   }
 
   throw new Error('Não foi possível localizar o CSV dentro do arquivo anual da CEAP.');
@@ -105,7 +146,7 @@ async function loadYear(year){
   }
 
   const archive=Buffer.from(await response.arrayBuffer());
-  const csv=unzipFirstFile(archive).toString('utf8');
+  const csv=unzipCsv(archive).toString('utf8');
   const rows=parseCsv(csv);
 
   if(!rows.length)throw new Error('O arquivo anual da CEAP não contém registros.');
@@ -116,7 +157,8 @@ async function loadYear(year){
 
 function normalize(row){
   return {
-    id:String(row.nuDeputadoId||row.ideCadastro||'').trim(),
+    id:String(row.ideCadastro||row.nuDeputadoId||'').trim(),
+    ceapId:String(row.nuDeputadoId||'').trim(),
     nome:String(row.txNomeParlamentar||'Não informado').trim(),
     partido:String(row.sgPartido||'').trim(),
     uf:String(row.sgUF||'').trim().toUpperCase(),
@@ -147,7 +189,7 @@ module.exports=async function(req,res){
         ano:year,
         id,
         despesas:rows
-          .filter(row=>row.id===id)
+          .filter(row=>row.id===id||row.ceapId===id)
           .sort((a,b)=>String(b.dataDocumento).localeCompare(String(a.dataDocumento)))
       });
     }

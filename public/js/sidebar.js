@@ -1,17 +1,21 @@
 const sitePages = [
-  { href: "/", label: "Jornal Diário", icon: "fa-newspaper" },
-  { href: "/editions", label: "Edições", icon: "fa-clock-rotate-left" },
-  { href: "/historia", label: "História", icon: "fa-landmark" },
-  { href: "/presidentes", label: "Presidentes", icon: "fa-user-tie" },
-  { href: "/ideologias", label: "Ideologias", icon: "fa-scale-balanced" },
-  { href: "/politicas-publicas", label: "Políticas Públicas", icon: "fa-list-check" },
-  { href: "/tres-poderes", label: "Três Poderes", icon: "fa-building-columns" },
-  { href: "/cargos-publicos", label: "Cargos Públicos", icon: "fa-id-card" },
-  { href: "/arrecadacao", label: "Dinheiro Público", icon: "fa-coins" },
-  { href: "/gastos-parlamentares", label: "Gastos Parlamentares", icon: "fa-receipt" },
-  { href: "/como-funciona-estado", label: "Como funciona o Estado", icon: "fa-sitemap" },
-  { href: "/como-fiscalizar", label: "Como fiscalizar o poder público", icon: "fa-magnifying-glass" },
-  { href: "/about", label: "Sobre", icon: "fa-circle-info" }
+  { href: "/", label: "Jornal Diário", icon: "fa-newspaper", group: "King's Newsletter" },
+  { href: "/editions", label: "Edições", icon: "fa-clock-rotate-left", group: "King's Newsletter" },
+  { href: "/historia", label: "História", icon: "fa-landmark", group: "História" },
+  { href: "/presidentes", label: "Presidentes", icon: "fa-user-tie", group: "História" },
+  { href: "/politica", label: "Visão geral", icon: "fa-compass", group: "Política" },
+  { href: "/ideologias", label: "Ideologias", icon: "fa-scale-balanced", group: "Política" },
+  { href: "/fascismo-nazismo", label: "Fascismo e Nazismo", icon: "fa-book-skull", group: "Política" },
+  { href: "/politicas-publicas", label: "Políticas Públicas", icon: "fa-list-check", group: "Política" },
+  { href: "/tres-poderes", label: "Três Poderes", icon: "fa-building-columns", group: "Política" },
+  { href: "/cargos-publicos", label: "Cargos Públicos", icon: "fa-id-card", group: "Política" },
+  { href: "/como-funciona-estado", label: "Como funciona o Estado", icon: "fa-sitemap", group: "Política" },
+  { href: "/arrecadacao", label: "Arrecadação", icon: "fa-coins", group: "Dados públicos" },
+  { href: "/impostos-gastos", label: "Impostômetro e Gastômetro", icon: "fa-chart-line", group: "Dados públicos" },
+  { href: "/gastos-publicos", label: "Gastos públicos", icon: "fa-chart-pie", group: "Dados públicos" },
+  { href: "/gastos-parlamentares", label: "Gastos parlamentares", icon: "fa-receipt", group: "Dados públicos" },
+  { href: "/como-fiscalizar", label: "Como fiscalizar", icon: "fa-magnifying-glass", group: "Dados públicos" },
+  { href: "/about", label: "Sobre", icon: "fa-circle-info", group: "King's Newsletter" }
 ];
 
 const themeToggle = document.getElementById("theme-toggle");
@@ -113,17 +117,38 @@ const ensurePageLinks = (container, linkClass) => {
   });
 };
 
+const renderSidebarGroups = sidebarNav => {
+  if (!sidebarNav) return;
+  const groups = new Map();
+  sitePages.forEach(page => {
+    if (!groups.has(page.group)) groups.set(page.group, []);
+    groups.get(page.group).push(page);
+  });
+  sidebarNav.replaceChildren();
+  groups.forEach((pages, label) => {
+    const group = document.createElement("div");
+    group.className = "site-sidebar-group";
+    const heading = document.createElement("span");
+    heading.className = "site-sidebar-label";
+    heading.textContent = label;
+    group.append(heading);
+    pages.forEach(page => group.append(createPageLink(page)));
+    sidebarNav.append(group);
+  });
+};
 const initializeNavigation = () => {
   const sidebar = document.getElementById("site-sidebar");
   const backdrop = document.getElementById("site-sidebar-backdrop");
   const openButton = document.getElementById("sidebar-toggle");
   const closeButton = document.getElementById("site-sidebar-close");
-  const sidebarGroup = sidebar?.querySelector(".site-sidebar-group");
+  const sidebarNav = sidebar?.querySelector(".site-sidebar-nav");
   const header = document.querySelector(".site-header");
+  const sidebarPreferences = sidebar?.querySelector(".site-sidebar-preferences");
+  const preferencesLabel = sidebarPreferences?.querySelector(".site-sidebar-label");
   let headerLinks = header?.querySelector(".header-primary-links");
   const headerNav = header?.querySelector(".header-main-nav");
 
-  if (!sidebar || !backdrop || !openButton || !sidebarGroup || !headerNav) return;
+  if (!sidebar || !backdrop || !openButton || !sidebarNav || !headerNav) return;
 
   if (canonicalPath !== "/editions") initializeBackToTop();
 
@@ -134,40 +159,69 @@ const initializeNavigation = () => {
   }
   headerLinks.setAttribute("aria-label", "Páginas principais");
   ensurePageLinks(headerLinks);
-  ensurePageLinks(sidebarGroup);
+  renderSidebarGroups(sidebarNav);
 
-  header?.querySelectorAll("#header-theme-toggle, .header-switch-theme-toggle")
-    .forEach(control => control.remove());
+  const headerActions = header?.querySelector(".header-nav-actions");
+  const topPreferences = document.createElement("div");
+  topPreferences.className = "sidebar-top-preferences";
+  if (preferencesLabel) topPreferences.append(preferencesLabel);
+  if (themeToggle) {
+    Array.from(themeToggle.children)
+      .find(child => child.textContent.trim().toLowerCase() === "tema")
+      ?.remove();
+    topPreferences.append(themeToggle);
+  }
+  sidebar.insertBefore(topPreferences, sidebarNav);
+  sidebarPreferences?.remove();
 
   const desktopSidebar = window.matchMedia("(min-width: 1100px)");
+  let desktopSidebarOpen = true;
+  const syncThemeToggleLocation = () => {
+    if (!themeToggle || !headerActions) return;
+    if (desktopSidebar.matches) {
+      themeToggle.classList.add("header-theme-toggle");
+      headerActions.append(themeToggle);
+    } else {
+      themeToggle.classList.remove("header-theme-toggle");
+      topPreferences.append(themeToggle);
+    }
+  };
   const syncSidebarLayout = () => {
-    const isPersistent = desktopSidebar.matches;
-    sidebar.classList.toggle("is-open", isPersistent);
+    const isDesktop = desktopSidebar.matches;
+    const isOpen = isDesktop && desktopSidebarOpen;
+    sidebar.classList.toggle("is-open", isOpen);
     backdrop.classList.remove("is-open");
-    sidebar.setAttribute("aria-hidden", String(!isPersistent));
+    sidebar.setAttribute("aria-hidden", String(!isOpen));
     backdrop.setAttribute("aria-hidden", "true");
-    openButton.setAttribute("aria-expanded", "false");
+    openButton.setAttribute("aria-expanded", String(isOpen));
+    openButton.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
+    document.body.classList.toggle("sidebar-collapsed", isDesktop && !isOpen);
     document.body.classList.remove("sidebar-open");
   };
 
   const setOpen = open => {
-    const isPersistent = desktopSidebar.matches;
-    const isOpen = isPersistent || open;
+    const isDesktop = desktopSidebar.matches;
+    const isOpen = isDesktop || Boolean(open);
+    if (isDesktop) desktopSidebarOpen = true;
     sidebar.classList.toggle("is-open", isOpen);
-    backdrop.classList.toggle("is-open", open && !isPersistent);
+    backdrop.classList.toggle("is-open", isOpen && !isDesktop);
     sidebar.setAttribute("aria-hidden", String(!isOpen));
-    backdrop.setAttribute("aria-hidden", String(!open || isPersistent));
-    openButton.setAttribute("aria-expanded", String(open && !isPersistent));
-    document.body.classList.toggle("sidebar-open", open && !isPersistent);
-    if (!isPersistent) {
-      if (open) closeButton?.focus();
-      else openButton.focus();
-    }
+    backdrop.setAttribute("aria-hidden", String(!isOpen || isDesktop));
+    openButton.setAttribute("aria-expanded", String(isOpen));
+    openButton.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
+    document.body.classList.toggle("sidebar-collapsed", isDesktop && !isOpen);
+    document.body.classList.toggle("sidebar-open", isOpen && !isDesktop);
+    if (isOpen) closeButton?.focus();
+    else openButton.focus();
   };
 
+  syncThemeToggleLocation();
+  desktopSidebar.addEventListener("change", syncThemeToggleLocation);
   syncSidebarLayout();
   desktopSidebar.addEventListener("change", syncSidebarLayout);
-  openButton.addEventListener("click", () => setOpen(true));
+  openButton.addEventListener("click", () => {
+    setOpen(desktopSidebar.matches ? !sidebar.classList.contains("is-open") : true);
+  });
   closeButton?.addEventListener("click", () => setOpen(false));
   backdrop.addEventListener("click", () => setOpen(false));
   document.addEventListener("keydown", event => {

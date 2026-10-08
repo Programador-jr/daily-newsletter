@@ -6,7 +6,6 @@
 
 .policy-hero {
   max-width: 860px;
-  padding: 4rem 3rem 2.5rem;
 }
 
 .policy-hero h1 {
@@ -130,7 +129,10 @@
   border-radius: 10px;
   background: var(--card-bg);
   box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
-  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
 }
 
 .concept-grid article:hover,
@@ -287,7 +289,9 @@
   border-radius: 10px;
   background: var(--card-bg);
   box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
-  transition: border-color 180ms ease, box-shadow 180ms ease;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .policy-accordion:hover,
@@ -323,7 +327,9 @@
 
 .policy-accordion summary i {
   color: var(--text-muted);
-  transition: color 180ms ease, transform 180ms ease;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
 }
 
 .policy-accordion[open] summary {
@@ -444,5 +450,114 @@
   .policy-accordion,
   .policy-method {
     transition: none;
+  }
+}
+
+.policy-deep-dive .section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.policy-deep-dive .section-heading > p {
+  max-width: 410px;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+.policy-detail-content h3 {
+  margin: 1rem 0 0.35rem;
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+.policy-detail-content h3:first-child {
+  margin-top: 0;
+}
+.policy-detail-content p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.75;
+}
+.policy-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 1rem 0;
+}
+.policy-timeline article {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-container);
+}
+.policy-timeline b {
+  color: var(--primary);
+  font-size: 0.78rem;
+}
+.policy-timeline span {
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+.policy-source-links {
+  margin-top: 1rem !important;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+.policy-source-links a {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+.policy-source-links a:hover {
+  text-decoration: underline;
+}
+.policy-predecessor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.policy-predecessor-grid article {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg-container);
+}
+.policy-predecessor-grid article > span {
+  color: var(--primary);
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1.5;
+}
+.policy-predecessor-grid h4 {
+  color: var(--text-main);
+  font-size: 0.93rem;
+}
+.policy-predecessor-grid p {
+  color: var(--text-muted);
+  font-size: 0.79rem;
+  line-height: 1.65;
+}
+.policy-predecessor-grid a {
+  margin-top: auto;
+  color: var(--primary);
+  font-size: 0.73rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.policy-predecessor-grid a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 900px) {
+  .policy-predecessor-grid {
+    grid-template-columns: 1fr;
   }
 }

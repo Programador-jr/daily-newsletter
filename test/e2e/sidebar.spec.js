@@ -5,11 +5,18 @@ const routes = [
   '/editions',
   '/historia',
   '/presidentes',
+  '/politica',
   '/ideologias',
+  '/fascismo-nazismo',
   '/politicas-publicas',
   '/tres-poderes',
   '/cargos-publicos',
+  '/como-funciona-estado',
   '/arrecadacao',
+  '/impostos-gastos',
+  '/gastos-publicos',
+  '/gastos-parlamentares',
+  '/como-fiscalizar',
   '/about',
   '/subscription-status.html?status=confirmed',
   '/not-found'
@@ -21,21 +28,21 @@ test('sidebar is persistent and complete on every desktop screen', async ({ page
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto(route, { waitUntil: 'domcontentloaded' });
 
-    const openButton = page.getByRole('button', { name: 'Abrir menu de navegação' });
+    const openButton = page.locator('#sidebar-toggle');
     const sidebar = page.getByRole('complementary', { name: 'Navegação principal' });
     const headerLinks = page.locator('.header-primary-links a');
 
     await expect(sidebar, route).toBeVisible();
-    await expect(sidebar.locator('a')).toHaveCount(10);
-    await expect(headerLinks, route).toHaveCount(10);
-    await expect(page.locator('#header-theme-toggle')).toHaveCount(0);
-    await expect(sidebar.getByRole('button', { name: /tema/ })).toBeVisible();
+    await expect(sidebar.locator('a')).toHaveCount(17);
+    await expect(headerLinks, route).toHaveCount(17);
+    await expect(page.locator('.header-nav-actions #theme-toggle')).toBeVisible();
+    await expect(sidebar.locator('#theme-toggle')).toHaveCount(0);
     await expect(openButton).toBeHidden();
     await expect(sidebar).toHaveCSS('position', 'fixed');
   }
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const editionsLink = page.locator('.header-primary-links a[href="/editions"]');
+  const editionsLink = page.locator('#site-sidebar a[href="/editions"]');
   const normalBackground = await editionsLink.evaluate(link => getComputedStyle(link).backgroundColor);
   await editionsLink.hover();
   const hoverBackground = await editionsLink.evaluate(link => getComputedStyle(link).backgroundColor);
@@ -47,7 +54,7 @@ test('sidebar remains a drawer on small screens', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(route, { waitUntil: 'domcontentloaded' });
 
-    const openButton = page.getByRole('button', { name: 'Abrir menu de navegação' });
+    const openButton = page.locator('#sidebar-toggle');
     const sidebar = page.getByRole('complementary', { name: 'Navegação principal' });
 
     await expect(sidebar, route).toBeHidden();
@@ -62,7 +69,7 @@ test('sidebar remains a drawer on small screens', async ({ page }) => {
   }
 });
 
-test('theme choice is available in the sidebar and persists across pages', async ({ page }) => {
+test('theme choice is available in the desktop header and persists across pages', async ({ page }) => {
   await page.goto('/');
 
   const themeToggle = page.locator('#theme-toggle');
@@ -72,7 +79,7 @@ test('theme choice is available in the sidebar and persists across pages', async
 
   await page.goto('/about');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-  await expect(page.locator('#header-theme-toggle')).toHaveCount(0);
+  await expect(page.locator('.header-nav-actions #theme-toggle')).toBeVisible();
 
   await page.locator('#theme-toggle').click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
@@ -101,7 +108,10 @@ test('back-to-top button is shared by every page', async ({ page }) => {
 test('accordion animation is available wherever accordions appear', async ({ page }) => {
   for (const route of routes) {
     await page.goto(route, { waitUntil: 'domcontentloaded' });
-    expect(await page.evaluate(() => typeof window.accordionMotion?.setOpen)).toBe('function');
+    const pageHasAccordions = await page.locator('details').count() > 0;
+    if (pageHasAccordions) {
+      expect(await page.evaluate(() => typeof window.accordionMotion?.setOpen)).toBe('function');
+    }
   }
 
   for (const route of ['/historia', '/presidentes', '/ideologias', '/politicas-publicas', '/tres-poderes']) {
