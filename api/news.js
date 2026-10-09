@@ -6,7 +6,10 @@ function parseDate(value) {
   if (typeof value !== 'string') return null;
 
   const match = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-  if (!match) return null;
+  if (!match) {
+    const timestamp = Date.parse(value);
+    return Number.isNaN(timestamp) ? null : new Date(timestamp);
+  }
 
   const day = Number(match[1]);
   const month = Number(match[2]);
@@ -25,7 +28,7 @@ function parseDate(value) {
 }
 
 function isValidDate(value) {
-  return Boolean(parseDate(value));
+  return typeof value === 'string' && /^\d{2}\/\d{2}\/\d{4}$/.test(value) && Boolean(parseDate(value));
 }
 
 function normalizeStory(story, editionDate) {
@@ -135,7 +138,7 @@ module.exports = async function handler(req, res) {
 
     const operations = normalized.map(story => ({
       updateOne: {
-        filter: { url: story.url },
+        filter: { editionDate: story.editionDate, url: story.url },
         update: { $set: story },
         upsert: true
       }
