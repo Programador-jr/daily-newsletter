@@ -194,6 +194,7 @@ Made with coffee and JavaScript by **Daniel Melo**.
 
 </div>
 ## Civic education
+
 The project includes reference pages covering political ideologies and public policies, with an emphasis on concepts, institutional context, public spending, implementation and evidence-based evaluation.
 
 The civic education area also includes a reference guide to the three branches of government and their constitutional roles.
