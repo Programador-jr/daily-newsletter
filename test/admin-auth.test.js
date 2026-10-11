@@ -6,9 +6,9 @@ const {
   sessionCookie,
   verifyCredentials
 } = require('../lib/admin-auth');
-const login = require('../api/admin/login');
-const dashboard = require('../api/admin/dashboard');
-const dispatch = require('../api/admin/dispatch');
+const login = require('../lib/api-handlers/admin/login');
+const dashboard = require('../lib/api-handlers/admin/dashboard');
+const dispatch = require('../lib/api-handlers/admin/dispatch');
 
 const environment = {
   ADMIN_USERNAME: 'dashboard-admin',

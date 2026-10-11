@@ -1,8 +1,8 @@
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
 const { createSessionToken } = require('../lib/admin-auth');
-const adminUpdates = require('../api/admin/updates');
-const activeUpdate = require('../api/updates/active');
+const adminUpdates = require('../lib/api-handlers/admin/updates');
+const activeUpdate = require('../lib/api-handlers/updates/active');
 
 function mockResponse() {
   return {
