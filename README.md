@@ -127,9 +127,21 @@ Open [http://localhost:3000](http://localhost:3000).
 | `EMAIL_FROM` | Optional sender name and address; defaults to `EMAIL_USER`. |
 | `APP_URL` | Public base URL used to generate confirmation and unsubscribe links. |
 | `NOTIFY_SECRET` | Secret used to authorize protected news publishing and notification requests. |
+| `WORKER_CONTROL_SECRET` | Separate secret of at least 32 characters shared only by the site and worker control channel. |
+| `ADMIN_USERNAME` | Username for the private administration panel. |
+| `ADMIN_PASSWORD` | Strong password for the private administration panel. |
+| `ADMIN_SESSION_SECRET` | Random signing key of at least 32 characters for administrator sessions. |
 | `PORT` | Optional local server port; defaults to `3000`. |
 
 Keep `.env` private. Never publish credentials or commit them to the repository. For Gmail, use an app password rather than your account password.
+
+### Painel administrativo
+
+O painel fica em `/admin` e exige usuário e senha. Configure `ADMIN_USERNAME`, `ADMIN_PASSWORD` e `ADMIN_SESSION_SECRET` no ambiente local e na Vercel. A chave de sessão deve ter pelo menos 32 caracteres e ser aleatória. O painel utiliza a conexão `MONGODB_URI` já configurada pelo site; sem essa variável, não consegue carregar os dados.
+
+O painel mostra inscritos confirmados e pendentes, quantidade de notícias da edição mais recente, notícias já entregues ou aguardando envio, mensagens aceitas ou rejeitadas pelo SMTP, falhas e execuções do worker. O botão **Disparar notícias pendentes** solicita confirmação e envia somente notícias ainda não registradas como entregues. Os novos registros de envio e execução passam a ser gravados a partir desta implementação; os logs antigos do console não são importados. Horários são exibidos em `America/Rio_Branco`. “Aceito” indica que o servidor SMTP recebeu a mensagem para processamento, não que ela chegou à caixa de entrada.
+
+O painel também configura a frequência do worker (de 1 a 168 horas), permite pausar ou retomar o agendamento e mostra a contagem regressiva e o último estado informado pelo processo. Configure o mesmo `WORKER_CONTROL_SECRET` no ambiente do site e no `.env` do worker; mantenha-o separado de `NOTIFY_SECRET`. O worker busca a configuração e publica seu estado por HTTPS de saída, a cada 30 segundos. Nenhuma porta pública ou IP fixo do worker é necessário. Configure essa variável também no ambiente de produção da Vercel e publique uma nova implantação para habilitar o controle remoto em produção.
 
 On startup, the server warns when MongoDB, email, or protected publishing is not configured. A partial SMTP configuration, an invalid `PORT`, or a non-HTTP `APP_URL` stops startup with a message that identifies the setting without printing its value.
 
@@ -145,6 +157,13 @@ On startup, the server warns when MongoDB, email, or protected publishing is not
 | `GET` | `/api/confirm?token=...` | Confirm a subscription. |
 | `GET` | `/api/unsubscribe?token=...` | Unsubscribe from email updates. |
 | `POST` | `/api/notify-news` | Send notifications for newly published stories. Requires `NOTIFY_SECRET`. |
+| `POST` | `/api/admin/login` | Start an administrator session. |
+| `POST` | `/api/admin/logout` | End an administrator session. |
+| `GET` | `/api/admin/dashboard?days=7` | Read subscriber, email, and worker metrics. Requires an administrator session. |
+| `GET`, `PUT` | `/api/admin/schedule` | Read or update the worker interval and enabled state. Requires an administrator session. |
+| `POST` | `/api/admin/dispatch` | Immediately send pending news. Requires an administrator session. |
+| `GET` | `/api/worker/config` | Read worker scheduling configuration. Requires `WORKER_CONTROL_SECRET`. |
+| `POST` | `/api/worker/heartbeat` | Report the worker's status and next run time. Requires `WORKER_CONTROL_SECRET`. |
 
 Edition dates use the `dd/mm/yyyy` format. Protected endpoints expect the configured secret in the `Authorization` header.
 

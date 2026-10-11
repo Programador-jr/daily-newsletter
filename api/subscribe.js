@@ -57,6 +57,7 @@ module.exports = async function handler(req, res) {
     const confirmationUrl = `${getAppUrl(req)}/api/confirm?token=${token}`;
 
     await sendEmail({
+      kind: 'subscription_confirmation',
       to: email,
       subject: "Confirme sua inscrição — King's Newsletter",
       text: `Confirme sua inscrição no King's Newsletter: ${confirmationUrl}`,

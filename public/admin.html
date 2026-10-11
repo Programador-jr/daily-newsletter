@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#08110e">
+  <title>Painel administrativo — King's Newsletter</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <script src="/js/admin.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="King's Newsletter — página inicial">
+      <span class="brand-mark">K</span>
+      <span class="brand-copy"><strong>KING'S</strong><small>NEWSLETTER <i>·</i> ADMIN</small></span>
+    </a>
+    <div class="top-actions">
+      <span id="worker-top-status" class="system-indicator status-unknown"><span class="pulse-dot"></span><span id="worker-top-status-copy">Acesse para ver status</span></span>
+      <span class="timezone">RIO BRANCO · UTC−5</span>
+      <button id="logout-button" class="button button-quiet hidden" type="button">Sair <span aria-hidden="true">↗</span></button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section id="login-view" class="login-layout" aria-labelledby="login-title">
+      <div class="login-story">
+        <div class="eyebrow"><span class="eyebrow-line"></span> CENTRAL DE OPERAÇÕES</div>
+        <h1>Uma visão clara<br>de cada <span>envio.</span></h1>
+        <p>Monitore sua audiência, acompanhe a entrega das edições e mantenha a newsletter em movimento.</p>
+        <div class="preview-card" aria-hidden="true">
+          <div class="preview-head"><span><i class="preview-dot"></i> VISÃO DO PAINEL</span><span>PRÉVIA</span></div>
+          <div class="preview-chart"><div class="chart-grid"></div><svg viewBox="0 0 520 130" preserveAspectRatio="none"><defs><linearGradient id="chart-fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#66e3a1" stop-opacity=".3"/><stop offset="1" stop-color="#66e3a1" stop-opacity="0"/></linearGradient></defs><path d="M0 105 C35 95 45 104 76 78 S125 83 158 62 S207 76 245 51 S296 68 335 36 S389 59 422 30 S476 44 520 10 V130 H0Z" fill="url(#chart-fill)"/><path d="M0 105 C35 95 45 104 76 78 S125 83 158 62 S207 76 245 51 S296 68 335 36 S389 59 422 30 S476 44 520 10" fill="none" stroke="#66e3a1" stroke-width="3" vector-effect="non-scaling-stroke"/></svg></div>
+          <div class="preview-foot"><span>Monitoramento de envios</span><strong><b>DASHBOARD</b></strong></div>
+        </div>
+        <div class="login-trust"><span class="lock-icon" aria-hidden="true">▣</span> Acesso protegido · Horário de Rio Branco</div>
+      </div>
+      <div class="login-card">
+        <div class="login-card-mark" aria-hidden="true">↗</div>
+        <div class="eyebrow">BEM-VINDO DE VOLTA</div>
+        <h2 id="login-title">Acesse seu painel</h2>
+        <p>Entre com suas credenciais administrativas.</p>
+        <form id="login-form">
+          <label for="username">Usuário</label>
+          <div class="input-wrap"><span aria-hidden="true">◎</span><input id="username" name="username" autocomplete="username" placeholder="Seu usuário" required></div>
+          <label for="password">Senha</label>
+          <div class="input-wrap"><span aria-hidden="true">⌑</span><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Sua senha" required></div>
+          <button id="login-submit" class="button button-primary button-wide" type="submit"><span>Entrar no painel</span><span aria-hidden="true">→</span></button>
+        </form>
+        <div id="login-message" class="message" role="status" aria-live="polite"></div>
+        <div class="login-card-foot"><span class="pulse-dot"></span> CONEXÃO SEGURA</div>
+      </div>
+    </section>
+
+    <div id="dashboard-layout" class="dashboard-layout hidden">
+      <aside class="sidebar" aria-label="Navegação do painel">
+        <div class="sidebar-label">PAINEL</div>
+        <nav class="admin-page-nav" aria-label="Páginas administrativas">
+          <a class="nav-item active" href="#overview" data-admin-page-link="overview"><span class="nav-icon">▦</span> Visão geral <span class="nav-active-dot"></span></a>
+          <a class="nav-item" href="#operations" data-admin-page-link="operations"><span class="nav-icon">◷</span> Envios e worker</a>
+          <a class="nav-item" href="#audience" data-admin-page-link="audience"><span class="nav-icon">◎</span> Audiência</a>
+          <a class="nav-item" href="#activity" data-admin-page-link="activity"><span class="nav-icon">≡</span> Atividade e logs</a>
+          <a class="nav-item" href="#updates" data-admin-page-link="updates"><span class="nav-icon">✦</span> Atualizações</a>
+        </nav>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-label">AMBIENTE</div>
+        <div class="sidebar-environment"><span id="worker-sidebar-dot" class="pulse-dot offline-dot"></span><span><strong id="worker-sidebar-status">Worker offline</strong><small id="worker-sidebar-detail">Sem sinal recente</small></span></div>
+        <div class="sidebar-timezone">HORÁRIO LOCAL <strong>America/Rio_Branco</strong></div>
+      </aside>
+
+      <section id="dashboard-view" class="dashboard-main" aria-labelledby="dashboard-title">
+        <div class="page-heading">
+          <div><div id="page-eyebrow" class="eyebrow"><span class="eyebrow-line"></span> VISÃO GERAL</div><h1 id="dashboard-title">Operação da newsletter</h1><p id="updated-at" class="muted">Carregando dados…</p></div>
+          <div class="toolbar">
+            <label class="sr-only" for="period">Período dos envios e logs</label>
+            <select id="period"><option value="1">Últimas 24 horas</option><option value="7" selected>Últimos 7 dias</option><option value="30">Últimos 30 dias</option></select>
+            <button id="refresh-button" class="button button-secondary" type="button"><span class="refresh-icon" aria-hidden="true">↻</span> Atualizar</button>
+          </div>
+        </div>
+        <div id="dashboard-message" class="message" role="status" aria-live="polite"></div>
+        <section data-admin-page="overview" class="section-block overview-snapshot" aria-labelledby="overview-snapshot-title">
+          <div class="section-heading"><div><div class="eyebrow">RESUMO DA OPERAÇÃO</div><h2 id="overview-snapshot-title">Tudo em um olhar</h2></div><span class="section-caption">Dados atuais do painel</span></div>
+          <div class="overview-cards">
+            <article class="overview-card"><span class="overview-card-label">WORKER</span><div class="overview-card-main"><strong id="overview-worker-status">Carregando</strong><span id="overview-worker-indicator" class="status">—</span></div><p id="overview-worker-detail">Aguardando dados do worker</p><a href="#operations" data-admin-page-link="operations">Ver envios e frequência <span aria-hidden="true">→</span></a></article>
+            <article class="overview-card"><span class="overview-card-label">EDIÇÃO MAIS RECENTE</span><div class="overview-card-main"><strong id="overview-edition-date">—</strong><span id="overview-edition-indicator" class="status">—</span></div><p><b id="overview-news-count">0</b> notícias · <b id="overview-delivered-count">0</b> enviadas · <b id="overview-pending-count">0</b> pendentes</p><a href="#operations" data-admin-page-link="operations">Ver detalhes da edição <span aria-hidden="true">→</span></a></article>
+            <article class="overview-card"><span class="overview-card-label">AUDIÊNCIA</span><div class="overview-card-main"><strong id="overview-confirmed-count">0</strong><span class="overview-card-unit">assinantes confirmados</span></div><p><b id="overview-subscriber-total">0</b> inscrições no total</p><a href="#audience" data-admin-page-link="audience">Ver dados da audiência <span aria-hidden="true">→</span></a></article>
+            <article class="overview-card"><span class="overview-card-label">E-MAILS ACEITOS PELO SMTP</span><div class="overview-card-main"><strong id="overview-accepted-count">0</strong><span id="overview-email-period" class="overview-card-unit">no período</span></div><p><b id="overview-failed-count">0</b> falhas registradas</p><a href="#activity" data-admin-page-link="activity">Ver atividade e logs <span aria-hidden="true">→</span></a></article>
+          </div>
+        </section>
+        <section id="alerts-panel" data-admin-page="overview" class="alerts-panel hidden" aria-label="Alertas operacionais" aria-live="polite"></section>
+
+        <section data-admin-page="operations" class="section-block schedule-panel" aria-labelledby="schedule-title">
+          <div class="section-heading"><div><div class="eyebrow">AUTOMAÇÃO</div><h2 id="schedule-title">Agendamento do worker</h2></div><div class="schedule-heading-actions"><button id="schedule-refresh" class="button button-quiet" type="button" aria-label="Recarregar frequência e estado do worker"><span class="refresh-icon" aria-hidden="true">↻</span> Recarregar</button><span id="worker-status" class="status worker-offline">Worker offline</span></div></div>
+          <div class="schedule-layout">
+            <div class="schedule-clock">
+              <div class="clock-label"><span class="pulse-dot"></span> PRÓXIMA EXECUÇÃO</div>
+              <strong id="worker-countdown" class="countdown">--:--:--</strong>
+              <span id="worker-next-at" class="clock-date">Aguardando o worker informar o horário</span>
+              <p id="worker-last-run" class="worker-last-run">Última execução: ainda não informada</p>
+              <p id="worker-heartbeat" class="worker-last-run">Última sincronização: ainda não informada</p>
+              <button id="worker-check" class="button button-quiet" type="button">Verificar conexão</button>
+            </div>
+            <form id="schedule-form" class="schedule-controls">
+              <div class="schedule-control-heading"><div><strong>Frequência</strong><span>Intervalo entre as verificações</span></div></div>
+              <label for="interval-hours">Repetir a cada</label>
+              <div class="interval-input"><input id="interval-hours" name="intervalHours" type="number" min="1" max="168" step="1" value="3" required><span>horas</span></div>
+              <label class="toggle-row" for="schedule-enabled"><span><strong>Agendamento automático</strong><small>Permitir que o worker execute sozinho</small></span><input id="schedule-enabled" name="enabled" type="checkbox" checked><i aria-hidden="true"></i></label>
+              <button id="schedule-save" class="button button-primary schedule-save" type="submit">Salvar agendamento <span aria-hidden="true">→</span></button>
+              <div id="schedule-message" class="schedule-message" role="status" aria-live="polite"></div>
+            </form>
+          </div>
+        </section>
+
+        <section data-admin-page="operations" class="section-block delivery-overview" aria-labelledby="latest-edition-title">
+          <div class="section-heading"><div><div class="eyebrow">EDIÇÃO ATUAL</div><h2 id="latest-edition-title">Notícias e envio</h2></div><span id="latest-status" class="status">Carregando</span></div>
+          <div class="latest-layout">
+            <div class="latest-content"><div id="latest-edition-date" class="edition-date">—</div>
+              <div class="latest-metrics">
+                <div class="latest-metric"><span>Notícias na edição</span><strong id="latest-total-stories">0</strong><i class="metric-accent"></i></div>
+                <div class="latest-metric"><span>Já enviadas</span><strong id="latest-delivered-stories">0</strong><i class="metric-accent"></i></div>
+                <div class="latest-metric"><span>Aguardando envio</span><strong id="latest-pending-stories">0</strong><i class="metric-accent"></i></div>
+              </div>
+              <p id="latest-run-summary" class="latest-run-summary">Sem execuções registradas.</p>
+            </div>
+            <aside class="dispatch-box" aria-labelledby="dispatch-title"><div class="dispatch-icon" aria-hidden="true">↗</div><div class="eyebrow">AÇÃO MANUAL</div><h3 id="dispatch-title">Disparo imediato</h3><p>Envia as notícias pendentes aos assinantes com inscrição confirmada.</p><button id="dispatch-button" class="button button-dispatch" type="button">Enviar agora <span aria-hidden="true">→</span></button><div id="dispatch-message" class="dispatch-message" role="status" aria-live="polite"></div></aside>
+          </div>
+        </section>
+
+        <section data-admin-page="audience" class="section-block" aria-labelledby="subscriber-title"><div class="section-heading"><div><div class="eyebrow">AUDIÊNCIA</div><h2 id="subscriber-title">Inscrições</h2></div><span class="section-caption">Visão geral dos assinantes</span></div><div id="subscriber-cards" class="metric-grid"></div></section>
+        <section data-admin-page="audience" class="section-block" aria-labelledby="email-title"><div class="section-heading"><div><div class="eyebrow">ENTREGABILIDADE</div><h2 id="email-title">E-mails no período</h2></div><span class="section-caption">Dados registrados pelo SMTP</span></div><div id="email-cards" class="metric-grid"></div><div id="email-breakdown" class="breakdown"></div></section>
+        <div data-admin-page="activity" class="log-grid">
+          <section class="section-block panel" aria-labelledby="runs-title"><div class="section-heading"><div><div class="eyebrow">WORKER</div><h2 id="runs-title">Execuções recentes</h2></div><span class="panel-mark">01</span></div><div class="log-filters"><input id="runs-search" type="search" placeholder="Buscar execução…" aria-label="Buscar execução"><select id="runs-status" aria-label="Filtrar execuções por status"><option value="">Todos os status</option><option value="succeeded">Concluídas</option><option value="skipped">Sem envio</option><option value="failed">Falhas</option><option value="running">Em andamento</option></select></div><div id="runs-list" class="log-list"></div></section>
+          <section class="section-block panel" aria-labelledby="delivery-title"><div class="section-heading"><div><div class="eyebrow">ENTREGA</div><h2 id="delivery-title">Atividade de e-mail</h2></div><span class="panel-mark">02</span></div><div class="log-filters"><input id="emails-search" type="search" placeholder="Buscar e-mail…" aria-label="Buscar atividade de e-mail"><select id="emails-status" aria-label="Filtrar e-mails por status"><option value="">Todos os status</option><option value="accepted">Aceitos</option><option value="partially_accepted">Parciais</option><option value="failed">Falhas</option></select></div><div id="emails-list" class="log-list"></div></section>
+        </div>
+        <section data-admin-page="activity" class="section-block panel schedule-history-panel" aria-labelledby="schedule-history-title"><div class="section-heading"><div><div class="eyebrow">AUDITORIA</div><h2 id="schedule-history-title">Alterações de frequência</h2></div><button id="export-logs" class="button button-quiet" type="button" title="Exporta as atividades recentes carregadas, respeitando os filtros">Exportar logs recentes CSV</button></div><div id="schedule-history" class="log-list"></div></section>
+        <footer data-admin-page="activity" class="footnote"><span aria-hidden="true">ⓘ</span> “Aceito” significa que o servidor SMTP aceitou a mensagem para processamento; não confirma entrega na caixa de entrada.</footer>
+
+        <section data-admin-page="updates" class="admin-updates-page hidden" aria-labelledby="dashboard-title">
+          <div class="updates-page-header">
+            <div><div class="eyebrow">CENTRAL DE RELEASES</div><h2>Notas de atualização</h2><p>Escreva o que mudou, controle a publicação e acompanhe cada nota em um só lugar.</p></div>
+            <div class="updates-page-actions"><button id="updates-refresh" class="button button-secondary" type="button"><span aria-hidden="true">↻</span> Atualizar</button><button id="update-new" class="button button-primary" type="button"><span aria-hidden="true">＋</span> Nova nota</button></div>
+          </div>
+          <div class="update-stats" aria-label="Resumo das notas"><article><span>Publicadas</span><strong id="updates-count-active">0</strong></article><article><span>Programadas</span><strong id="updates-count-scheduled">0</strong></article><article><span>Pausadas ou encerradas</span><strong id="updates-count-inactive">0</strong></article></div>
+          <section class="section-block panel updates-list-panel" aria-labelledby="updates-list-title">
+            <div class="section-heading"><div><div class="eyebrow">HISTÓRICO</div><h2 id="updates-list-title">Suas notas</h2></div><span id="updates-list-count" class="section-caption">Carregando…</span></div>
+            <div class="updates-toolbar"><label class="updates-search"><span aria-hidden="true">⌕</span><input id="updates-search" type="search" placeholder="Buscar nas notas…" aria-label="Buscar nas notas"></label><div class="updates-filter-tabs" role="group" aria-label="Filtrar notas"><button type="button" data-update-filter="all" aria-pressed="true">Todas</button><button type="button" data-update-filter="Ativo" aria-pressed="false">Publicadas</button><button type="button" data-update-filter="Programado" aria-pressed="false">Programadas</button><button type="button" data-update-filter="inactive" aria-pressed="false">Pausadas e encerradas</button></div></div>
+            <div id="updates-list" class="updates-list"><p class="empty">Carregando notas…</p></div>
+          </section>
+          <p class="updates-guidance"><span aria-hidden="true">ⓘ</span> Uma nota pode ficar ativa por vez. Ao editar uma nota publicada ou reativá-la, a contagem de aparições começa novamente.</p>
+        </section>
+      </section>
+    </div>
+  </main>
+
+  <div id="loading-overlay" class="loading-overlay hidden" role="status" aria-live="polite"><div class="loading-card"><span class="loader-ring"></span><strong id="loading-title">Carregando painel</strong><span id="loading-detail">Buscando os dados mais recentes…</span></div></div>
+  <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <div id="update-editor-modal" class="modal-backdrop hidden update-modal" role="presentation"><section class="update-editor-dialog" role="dialog" aria-modal="true" aria-labelledby="update-form-title"><button id="update-editor-close" class="modal-close" type="button" aria-label="Fechar editor">×</button><div class="update-editor-intro"><span class="update-editor-icon" aria-hidden="true">✦</span><div><div class="eyebrow">EDITOR DE RELEASE</div><h2 id="update-form-title">Nova nota de atualização</h2><p>Monte a nota e confira a prévia antes de publicar.</p></div></div>
+    <form id="update-form" class="update-editor-form"><input id="update-id" name="id" type="hidden"><div class="update-editor-fields">
+      <label for="update-title">Título da nota</label><input id="update-title" name="title" maxlength="120" required placeholder="Ex.: Uma nova experiência na newsletter">
+      <label for="update-body">O que mudou <span class="field-hint">uma mudança por linha</span></label><textarea id="update-body" name="body" maxlength="4000" rows="5" required placeholder="Nova navegação compartilhada\nPainel com novas métricas\nCorreções de estabilidade"></textarea>
+      <div class="update-date-grid"><div><label for="update-starts">Começa em <small>horário de Rio Branco</small></label><input id="update-starts" name="startsAt" type="datetime-local" required></div><div><label for="update-ends">Termina em <small>horário de Rio Branco</small></label><input id="update-ends" name="endsAt" type="datetime-local" required></div></div>
+      <label for="update-max-displays">Limite de exibições</label><div class="interval-input update-display-limit"><input id="update-max-displays" name="maxDisplays" type="number" min="1" max="20" step="1" value="2" required aria-describedby="update-display-help"><span>vezes</span></div><small id="update-display-help" class="update-field-help">Para cada navegador</small>
+      <label class="toggle-row update-publish-control" for="update-active"><span><strong>Publicar nota</strong><small id="update-publish-state">A nota será exibida nas datas definidas</small></span><input id="update-active" name="active" type="checkbox" role="switch" aria-label="Publicar esta nota" aria-checked="true" checked><i aria-hidden="true"></i></label>
+    </div><aside class="update-preview-pane"><div class="update-preview-heading"><span>PRÉVIA</span><small>Como aparecerá na newsletter</small></div><div class="update-preview"><div class="site-update-brand"><span class="site-update-mark"><i class="fas fa-crown" aria-hidden="true"></i></span><span class="site-update-brand-copy"><strong>KING'S NEWSLETTER</strong><small>NOTA DE RELEASE</small></span></div><span class="site-update-eyebrow">MUDANÇAS INCLUÍDAS</span><strong id="update-preview-title">Título da atualização</strong><ul id="update-preview-changes"><li>As mudanças desta versão aparecerão aqui.</li></ul></div><p class="update-editor-note">Editar uma nota publicada ou reativá-la inicia uma nova contagem.</p></aside>
+      <div id="update-message" class="schedule-message update-message" role="status" aria-live="polite"></div><div class="update-editor-actions"><button id="update-cancel" class="button button-secondary" type="button">Cancelar</button><button id="update-save" class="button button-primary" type="submit">Salvar nota <span aria-hidden="true">→</span></button></div>
+    </form>
+  </section></div>
+  <div id="update-delete-modal" class="modal-backdrop hidden update-modal update-delete-layer" role="presentation"><section class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="update-delete-title" aria-describedby="update-delete-copy"><button id="update-delete-close" class="modal-close" type="button" aria-label="Fechar confirmação">×</button><div class="modal-symbol update-delete-symbol" aria-hidden="true">⌫</div><div class="eyebrow">EXCLUIR NOTA</div><h2 id="update-delete-title">Excluir esta nota?</h2><p id="update-delete-copy">Ela deixará de aparecer para os visitantes e será removida do histórico.</p><div class="modal-actions"><button id="update-delete-cancel" class="button button-secondary" type="button">Cancelar</button><button id="update-delete-confirm" class="button button-danger" type="button">Excluir nota</button></div></section></div>
+  <div id="dispatch-modal" class="modal-backdrop hidden" role="presentation"><section class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="dispatch-modal-title" aria-describedby="dispatch-modal-copy"><button id="close-dispatch-modal" class="modal-close" type="button" aria-label="Fechar">×</button><div class="modal-symbol" aria-hidden="true">↗</div><div class="eyebrow">CONFIRMAÇÃO DE AÇÃO</div><h2 id="dispatch-modal-title">Disparar esta edição?</h2><p id="dispatch-modal-copy">As notícias pendentes serão enviadas aos assinantes confirmados.</p><div class="confirm-summary"><div><span>Notícias pendentes</span><strong id="modal-pending-count">0</strong></div><div><span>Assinantes confirmados</span><strong id="modal-subscriber-count">0</strong></div></div><div class="modal-actions"><button id="cancel-dispatch" class="button button-secondary" type="button">Cancelar</button><button id="confirm-dispatch" class="button button-dispatch" type="button">Confirmar disparo <span aria-hidden="true">→</span></button></div></section></div>
+</body>
+</html>

@@ -29,7 +29,7 @@ async function notifyLatestNews(req) {
     const latest = await News.find().select('editionDate').lean();
 
     if (!latest.length) {
-      return { sent: false, newStories: 0, recipients: 0 };
+      return { sent: false, editionDate: null, newStories: 0, recipients: 0 };
     }
 
     const latestEditionDate = latest
@@ -62,13 +62,13 @@ async function notifyLatestNews(req) {
     const newStories = stories.filter(story => !deliveredKeys.has(getNewsKey(story)));
 
     if (!newStories.length) {
-      return { sent: false, newStories: 0, recipients: 0 };
+      return { sent: false, editionDate: latestEditionDate, newStories: 0, recipients: 0 };
     }
 
     const subscribers = await Subscriber.find({ confirmed: true }).lean();
 
     if (!subscribers.length) {
-      return { sent: false, newStories: newStories.length, recipients: 0 };
+      return { sent: false, editionDate: latestEditionDate, newStories: newStories.length, recipients: 0 };
     }
 
     const appUrl = getAppUrl(req);
@@ -100,7 +100,8 @@ async function notifyLatestNews(req) {
         `${story.title}\n${story.summary}\nContexto: ${story.context}\nFonte: ${story.url}`
       ).join('\n\n');
 
-      await sendEmail({
+      const emailResult = await sendEmail({
+        kind: 'newsletter',
         to: subscriber.email,
         subject: `Novas atualizações — ${latestEditionDate}`,
         text: `King's Newsletter\n\nNovas atualizações — ${latestEditionDate}\n\n${textItems}\n\nCancelar inscrição: ${unsubscribeUrl}`,
@@ -116,7 +117,13 @@ async function notifyLatestNews(req) {
         `
       });
 
-      recipients++;
+      const acceptedCount = emailResult?.accepted?.length || 0;
+      if (!acceptedCount) {
+        throw Object.assign(new Error('O servidor SMTP não aceitou o destinatário.'), {
+          code: 'SMTP_NO_ACCEPTED_RECIPIENTS'
+        });
+      }
+      recipients += acceptedCount;
     }
 
     await NewsDelivery.insertMany(
@@ -137,23 +144,82 @@ async function notifyLatestNews(req) {
 };
 
 
-module.exports = async function handler(req, res) {
-  if (!['GET', 'POST'].includes(req.method)) {
-    res.setHeader('Allow', 'GET, POST');
-    return res.status(405).json({ error: 'Método não permitido.' });
-  }
+async function runAndRecord(req, trigger = 'notify-news') {
+  const { connectDatabase } = require('../lib/db');
+  const NewsletterRun = require('../lib/newsletter-run');
+  const News = require('../lib/news');
+  await connectDatabase();
+  await NewsletterRun.createIndexes();
 
-  if (req.method === 'POST' && (!process.env.NOTIFY_SECRET || req.headers.authorization !== `Bearer ${process.env.NOTIFY_SECRET}`)) {
-    return res.status(401).json({ error: 'Não autorizado.' });
+  const staleBefore = new Date(Date.now() - 45 * 60 * 1000);
+  await NewsletterRun.updateMany({
+    status: 'running',
+    startedAt: { $lt: staleBefore }
+  }, {
+    $set: { status: 'failed', completedAt: new Date(), errorCode: 'RUN_TIMEOUT' }
+  });
+
+  const editionRows = await News.find().select('editionDate').lean();
+  const parseEditionDate = value => {
+    const match = String(value || '').match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    return match ? Date.UTC(Number(match[3]), Number(match[2]) - 1, Number(match[1])) : 0;
+  };
+  const editionDate = editionRows
+    .sort((a, b) => parseEditionDate(b.editionDate) - parseEditionDate(a.editionDate))[0]?.editionDate || null;
+
+  let run;
+  try {
+    run = await NewsletterRun.create({ status: 'running', trigger, editionDate, startedAt: new Date() });
+  } catch (error) {
+    if (error.code === 11000) {
+      throw Object.assign(new Error('Já existe um disparo em andamento.'), { code: 'NEWSLETTER_RUN_ACTIVE' });
+    }
+    throw error;
   }
 
   try {
     const result = await notifyLatestNews(req);
+    await NewsletterRun.updateOne({ _id: run._id }, {
+      $set: {
+        status: result.sent ? 'succeeded' : 'skipped',
+        completedAt: new Date(),
+        editionDate: result.editionDate || null,
+        newStories: result.newStories || 0,
+        recipients: result.recipients || 0
+      }
+    });
+    return result;
+  } catch (error) {
+    const rawCode = error?.code || error?.name || 'NEWSLETTER_RUN_FAILED';
+    const errorCode = /^[A-Z0-9_]+$/.test(rawCode) ? rawCode : 'NEWSLETTER_RUN_FAILED';
+    await NewsletterRun.updateOne({ _id: run._id }, {
+      $set: { status: 'failed', completedAt: new Date(), errorCode }
+    }).catch(() => {});
+    throw error;
+  }
+}
+
+module.exports = async function handler(req, res) {
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    return res.status(405).json({ error: 'Método não permitido.' });
+  }
+
+  if (!process.env.NOTIFY_SECRET || req.headers.authorization !== `Bearer ${process.env.NOTIFY_SECRET}`) {
+    return res.status(401).json({ error: 'Não autorizado.' });
+  }
+
+  try {
+    const result = await runAndRecord(req, 'notify-news');
     return res.status(200).json(result);
   } catch (error) {
+    if (error.code === 'NEWSLETTER_RUN_ACTIVE') {
+      return res.status(409).json({ error: 'Já existe um disparo em andamento.' });
+    }
     console.error('Erro ao enviar atualizações:', error);
     return res.status(500).json({ error: 'Não foi possível enviar as atualizações.' });
   }
 };
 
 module.exports.notifyLatestNews = notifyLatestNews;
+module.exports.runAndRecord = runAndRecord;

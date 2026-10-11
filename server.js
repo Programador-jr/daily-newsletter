@@ -22,6 +22,16 @@ app.post('/api/subscribe', require('./api/subscribe'));
 app.get('/api/confirm', require('./api/confirm'));
 app.get('/api/unsubscribe', require('./api/unsubscribe'));
 app.post('/api/notify-news', require('./api/notify-news'));
+app.post('/api/admin/login', require('./api/admin/login'));
+app.post('/api/admin/logout', require('./api/admin/logout'));
+app.get('/api/admin/dashboard', require('./api/admin/dashboard'));
+app.post('/api/admin/dispatch', require('./api/admin/dispatch'));
+app.get('/api/admin/schedule', require('./api/admin/schedule'));
+app.put('/api/admin/schedule', require('./api/admin/schedule'));
+app.all('/api/admin/updates', require('./api/admin/updates'));
+app.get('/api/updates/active', require('./api/updates/active'));
+app.get('/api/worker/config', require('./api/worker/config'));
+app.post('/api/worker/heartbeat', require('./api/worker/heartbeat'));
 app.get('/api/camara-deputados', require('./api/camara-deputados'));
 app.get('/api/camara-despesas', require('./api/camara-despesas'));
 app.get('/api/camara-ceap', require('./api/camara-ceap'));
@@ -93,6 +103,10 @@ app.get('/como-fiscalizar', (req, res) => {
 
 app.get('/about', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/about.html'));
+});
+
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/admin.html'));
 });
 
 app.use((req, res) => {
