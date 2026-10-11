@@ -4,13 +4,25 @@ const grid = document.querySelector("#news-grid"),
   historyPanel = document.getElementById('history-panel'),
   closeHistory = document.getElementById('close-history'),
   historyList = document.getElementById('history-list'),
-  searchInput = document.getElementById('search-input'),
   filterButtons = document.getElementById('filter-buttons');
 
 let currentStories = [];
 let currentFilter = 'all';
 let currentSearch = '';
 let currentEditionDate = null;
+let searchInput = null;
+let searchInputBound = false;
+
+const bindNavigationSearch = () => {
+  searchInput = document.getElementById('search-input');
+  if (!searchInput || searchInputBound) return;
+  searchInputBound = true;
+  searchInput.addEventListener('input', event => {
+    currentSearch = event.target.value.toLowerCase();
+    applyFiltersAndSearch();
+  });
+};
+window.addEventListener('site:navigation-ready', bindNavigationSearch);
 
 const formatDate = (value) => {
   if (!value) return "";
@@ -27,17 +39,6 @@ const formatDate = (value) => {
     month: "2-digit",
     year: "numeric",
   }).format(date);
-};
-
-const checkPendingEmailNotifications = async () => {
-  try {
-    await fetch('/api/notify-news', {
-      method: 'GET',
-      cache: 'no-store'
-    });
-  } catch (error) {
-    console.error('Não foi possível verificar notificações pendentes:', error);
-  }
 };
 
 const setLoadingState = (loading) => {
@@ -108,17 +109,11 @@ fetch("/api/news")
       currentStories = data.stories;
       setupCategoryFilters(currentStories);
 
-      if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-          currentSearch = e.target.value.toLowerCase();
-          applyFiltersAndSearch();
-        });
-      }
+      bindNavigationSearch();
 
       renderStories(currentStories);
     }
 
-    checkPendingEmailNotifications();
   })
   .catch((error) => {
     setLoadingState(false);

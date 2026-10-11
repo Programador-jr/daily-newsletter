@@ -1,6 +1,5 @@
 const { connectDatabase } = require('../lib/db');
 const News = require('../lib/news');
-const { notifyLatestNews } = require('./notify-news');
 
 function parseDate(value) {
   if (typeof value !== 'string') return null;
@@ -145,24 +144,11 @@ module.exports = async function handler(req, res) {
     }));
 
     const result = await News.bulkWrite(operations, { ordered: false });
-    let notification = null;
-
-    if (result.upsertedCount > 0) {
-      try {
-        notification = await notifyLatestNews(req);
-      } catch (notificationError) {
-        console.error('Notícias salvas, mas o disparo de e-mail falhou:', notificationError);
-        notification = {
-          sent: false,
-          error: 'As notícias foram salvas, mas não foi possível enviar as notificações.'
-        };
-      }
-    }
 
     return res.status(200).json({
       inserted: result.upsertedCount,
       updated: result.modifiedCount,
-      notification
+      notification: null
     });
   } catch (error) {
     console.error('Erro ao salvar notícias:', error);

@@ -1,25 +1,5 @@
-const sitePages = [
-  { href: "/", label: "Jornal Diário", icon: "fa-newspaper", group: "King's Newsletter" },
-  { href: "/editions", label: "Edições", icon: "fa-clock-rotate-left", group: "King's Newsletter" },
-  { href: "/historia", label: "História", icon: "fa-landmark", group: "História" },
-  { href: "/presidentes", label: "Presidentes", icon: "fa-user-tie", group: "História" },
-  { href: "/politica", label: "Visão geral", icon: "fa-compass", group: "Política" },
-  { href: "/ideologias", label: "Ideologias", icon: "fa-scale-balanced", group: "Política" },
-  { href: "/fascismo-nazismo", label: "Fascismo e Nazismo", icon: "fa-book-skull", group: "Política" },
-  { href: "/politicas-publicas", label: "Políticas Públicas", icon: "fa-list-check", group: "Política" },
-  { href: "/tres-poderes", label: "Três Poderes", icon: "fa-building-columns", group: "Política" },
-  { href: "/cargos-publicos", label: "Cargos Públicos", icon: "fa-id-card", group: "Política" },
-  { href: "/como-funciona-estado", label: "Como funciona o Estado", icon: "fa-sitemap", group: "Política" },
-  { href: "/arrecadacao", label: "Arrecadação", icon: "fa-coins", group: "Dados públicos" },
-  { href: "/impostos-gastos", label: "Impostômetro e Gastômetro", icon: "fa-chart-line", group: "Dados públicos" },
-  { href: "/gastos-publicos", label: "Gastos públicos", icon: "fa-chart-pie", group: "Dados públicos" },
-  { href: "/gastos-parlamentares", label: "Gastos parlamentares", icon: "fa-receipt", group: "Dados públicos" },
-  { href: "/como-fiscalizar", label: "Como fiscalizar", icon: "fa-magnifying-glass", group: "Dados públicos" },
-  { href: "/about", label: "Sobre", icon: "fa-circle-info", group: "King's Newsletter" }
-];
-
-const themeToggle = document.getElementById("theme-toggle");
-const themeIcon = document.getElementById("theme-icon");
+let themeToggle = null;
+let themeIcon = null;
 const setTheme = theme => {
   const normalizedTheme = theme === "dark" ? "dark" : "light";
   const isDark = normalizedTheme === "dark";
@@ -34,12 +14,6 @@ const setTheme = theme => {
 };
 
 setTheme(localStorage.getItem("theme"));
-themeToggle?.addEventListener("click", event => {
-  event.stopImmediatePropagation();
-  const theme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-  localStorage.setItem("theme", theme);
-  setTheme(theme);
-});
 window.addEventListener("storage", event => {
   if (event.key === "theme") setTheme(event.newValue);
 });
@@ -76,67 +50,112 @@ const initializeBackToTop = () => {
   updateVisibility();
 };
 
+const initializeUpdateNotice = async () => {
+  if (window.location.pathname === '/admin' || window.location.pathname === '/admin.html') return;
+  try {
+    const response = await fetch('/api/updates/active', { headers: { Accept: 'application/json' }, cache: 'no-store' });
+    if (!response.ok) return;
+    const { update } = await response.json();
+    if (!update?.activationId || !Number.isInteger(update.maxDisplays) || update.maxDisplays < 1) return;
+
+    const browserKey = 'kings-newsletter:notice-browser-id';
+    let browserId = localStorage.getItem(browserKey);
+    if (!browserId) {
+      browserId = globalThis.crypto?.randomUUID?.();
+      if (!browserId && globalThis.crypto?.getRandomValues) {
+        const bytes = globalThis.crypto.getRandomValues(new Uint8Array(16));
+        browserId = Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
+      }
+      if (!browserId) return;
+      localStorage.setItem(browserKey, browserId);
+    }
+
+    const countKey = `kings-newsletter:notice:${browserId}:${update.activationId}`;
+    const displayed = Number(localStorage.getItem(countKey) || 0);
+    if (!Number.isSafeInteger(displayed) || displayed >= update.maxDisplays) return;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'site-update-overlay';
+    overlay.setAttribute('role', 'presentation');
+    const dialog = document.createElement('section');
+    dialog.className = 'site-update-dialog';
+    dialog.setAttribute('role', 'dialog');
+    dialog.setAttribute('aria-modal', 'true');
+    dialog.setAttribute('aria-labelledby', 'site-update-title');
+    dialog.setAttribute('aria-describedby', 'site-update-copy');
+    const close = document.createElement('button');
+    close.className = 'site-update-close';
+    close.type = 'button';
+    close.setAttribute('aria-label', 'Fechar aviso');
+    close.textContent = '×';
+    const brand = document.createElement('div');
+    brand.className = 'site-update-brand';
+    const mark = document.createElement('span');
+    mark.className = 'site-update-mark';
+    mark.setAttribute('aria-hidden', 'true');
+    const crown = document.createElement('i');
+    crown.className = 'fas fa-crown';
+    mark.append(crown);
+    const brandCopy = document.createElement('span');
+    brandCopy.className = 'site-update-brand-copy';
+    const brandName = document.createElement('strong');
+    brandName.textContent = "KING'S NEWSLETTER";
+    const releaseLabel = document.createElement('small');
+    releaseLabel.textContent = 'NOTA DE RELEASE';
+    brandCopy.append(brandName, releaseLabel);
+    brand.append(mark, brandCopy);
+    const eyebrow = document.createElement('span');
+    eyebrow.className = 'site-update-eyebrow';
+    eyebrow.textContent = 'MUDANÇAS INCLUÍDAS';
+    const heading = document.createElement('h2');
+    heading.id = 'site-update-title';
+    heading.textContent = update.title;
+    const changes = document.createElement('ul');
+    changes.id = 'site-update-copy';
+    changes.className = 'site-update-changes';
+    const entries = String(update.body || '').split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+    for (const entry of entries) {
+      const item = document.createElement('li');
+      item.textContent = entry.replace(/^(?:[-*•]|\d+[.)])\s*/, '');
+      changes.append(item);
+    }
+    const acknowledge = document.createElement('button');
+    acknowledge.className = 'site-update-acknowledge';
+    acknowledge.type = 'button';
+    acknowledge.textContent = 'Entendi';
+    dialog.append(close, brand, eyebrow, heading, changes, acknowledge);
+    overlay.append(dialog);
+    document.body.append(overlay);
+    localStorage.setItem(countKey, String(displayed + 1));
+
+    const dismiss = () => overlay.remove();
+    close.addEventListener('click', dismiss);
+    acknowledge.addEventListener('click', dismiss);
+    overlay.addEventListener('click', event => { if (event.target === overlay) dismiss(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && overlay.isConnected) dismiss(); });
+    acknowledge.focus();
+  } catch {
+    // Avisos são opcionais; falha de rede ou armazenamento não deve afetar a página.
+  }
+};
+
+void initializeUpdateNotice();
+
 const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
 const canonicalPath = currentPath === "/index.html"
   ? "/"
   : currentPath.replace(/\.html$/, "");
 
-const createPageLink = ({ href, label, icon }) => {
-  const link = document.createElement("a");
-  link.href = href;
-  link.dataset.sidebarLink = href === "/" ? "home" : href.slice(1);
-
-  const iconElement = document.createElement("i");
-  iconElement.className = `fas ${icon}`;
-  iconElement.setAttribute("aria-hidden", "true");
-
-  const labelElement = document.createElement("span");
-  labelElement.textContent = label;
-  link.append(iconElement, labelElement);
-
-  const isCurrentPage = href === canonicalPath;
-  link.classList.toggle("active", isCurrentPage);
-  if (isCurrentPage) link.setAttribute("aria-current", "page");
-  return link;
-};
-
-const ensurePageLinks = (container, linkClass) => {
-  sitePages.forEach(page => {
-    let link = Array.from(container.querySelectorAll("a"))
-      .find(existingLink => existingLink.getAttribute("href") === page.href);
-
-    if (!link) {
-      link = createPageLink(page);
-      container.append(link);
-    } else {
-      link.classList.toggle("active", page.href === canonicalPath);
-      if (page.href === canonicalPath) link.setAttribute("aria-current", "page");
-      else link.removeAttribute("aria-current");
-    }
-    if (linkClass) link.classList.add(linkClass);
-  });
-};
-
-const renderSidebarGroups = sidebarNav => {
-  if (!sidebarNav) return;
-  const groups = new Map();
-  sitePages.forEach(page => {
-    if (!groups.has(page.group)) groups.set(page.group, []);
-    groups.get(page.group).push(page);
-  });
-  sidebarNav.replaceChildren();
-  groups.forEach((pages, label) => {
-    const group = document.createElement("div");
-    group.className = "site-sidebar-group";
-    const heading = document.createElement("span");
-    heading.className = "site-sidebar-label";
-    heading.textContent = label;
-    group.append(heading);
-    pages.forEach(page => group.append(createPageLink(page)));
-    sidebarNav.append(group);
-  });
-};
 const initializeNavigation = () => {
+  themeToggle = document.getElementById("theme-toggle");
+  themeIcon = document.getElementById("theme-icon");
+  setTheme(localStorage.getItem("theme"));
+  themeToggle?.addEventListener("click", event => {
+    event.stopImmediatePropagation();
+    const theme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    localStorage.setItem("theme", theme);
+    setTheme(theme);
+  });
   const sidebar = document.getElementById("site-sidebar");
   const backdrop = document.getElementById("site-sidebar-backdrop");
   const openButton = document.getElementById("sidebar-toggle");
@@ -145,21 +164,24 @@ const initializeNavigation = () => {
   const header = document.querySelector(".site-header");
   const sidebarPreferences = sidebar?.querySelector(".site-sidebar-preferences");
   const preferencesLabel = sidebarPreferences?.querySelector(".site-sidebar-label");
-  let headerLinks = header?.querySelector(".header-primary-links");
+  const headerLinks = header?.querySelector(".header-primary-links");
   const headerNav = header?.querySelector(".header-main-nav");
 
   if (!sidebar || !backdrop || !openButton || !sidebarNav || !headerNav) return;
 
   if (canonicalPath !== "/editions") initializeBackToTop();
+  document.getElementById("shared-nav-search")?.toggleAttribute("hidden", canonicalPath !== "/editions");
+  if (canonicalPath === "/editions") headerNav.classList.add("header-main-nav-editions");
 
-  if (!headerLinks) {
-    headerLinks = document.createElement("div");
-    headerLinks.className = "header-primary-links";
-    headerNav.prepend(headerLinks);
-  }
-  headerLinks.setAttribute("aria-label", "Páginas principais");
-  ensurePageLinks(headerLinks);
-  renderSidebarGroups(sidebarNav);
+  [headerLinks, sidebarNav].forEach(container => {
+    container?.querySelectorAll("a[href]").forEach(link => {
+      const href = link.getAttribute("href").replace(/\/+$/, "") || "/";
+      const isCurrentPage = href === canonicalPath;
+      link.classList.toggle("active", isCurrentPage);
+      if (isCurrentPage) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    });
+  });
 
   const headerActions = header?.querySelector(".header-nav-actions");
   const topPreferences = document.createElement("div");
@@ -232,8 +254,33 @@ const initializeNavigation = () => {
   sidebar.querySelectorAll("a").forEach(link => link.addEventListener("click", () => setOpen(false)));
 };
 
+const mountSharedNavigation = async () => {
+  try {
+    const response = await fetch("/navigation.html", { cache: "no-cache" });
+    if (!response.ok) throw new Error("Navegação compartilhada indisponível.");
+    const template = document.createElement("template");
+    template.innerHTML = await response.text();
+    const sharedHeader = template.content.querySelector(".site-header");
+    const sharedSidebar = template.content.querySelector("#site-sidebar");
+    const sharedBackdrop = template.content.querySelector("#site-sidebar-backdrop");
+    const currentHeader = document.querySelector(".site-header");
+    const currentSidebar = document.querySelector("#site-sidebar");
+    const currentBackdrop = document.querySelector("#site-sidebar-backdrop");
+    if (!sharedHeader || !sharedSidebar || !sharedBackdrop || !currentHeader || !currentSidebar) return;
+    currentHeader.replaceWith(sharedHeader);
+    currentSidebar.replaceWith(sharedSidebar);
+    if (currentBackdrop) currentBackdrop.replaceWith(sharedBackdrop);
+    else document.body.append(sharedBackdrop);
+    window.dispatchEvent(new CustomEvent("site:navigation-ready"));
+    initializeNavigation();
+  } catch (error) {
+    console.error("Não foi possível carregar a navegação compartilhada.", error);
+    initializeNavigation();
+  }
+};
+
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initializeNavigation, { once: true });
+  document.addEventListener("DOMContentLoaded", mountSharedNavigation, { once: true });
 } else {
-  initializeNavigation();
+  void mountSharedNavigation();
 }

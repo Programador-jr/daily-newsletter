@@ -244,7 +244,7 @@ test('news publishing rejects invalid dates and empty editions', async () => {
   }
 });
 
-test('news publishing normalizes valid stories and notifies after inserting new ones', async () => {
+test('news publishing normalizes valid stories without sending notifications', async () => {
   state.bulkWriteResult = { upsertedCount: 1, modifiedCount: 0 };
   const response = createResponse();
 
@@ -271,7 +271,8 @@ test('news publishing normalizes valid stories and notifies after inserting new 
   assert.equal(state.bulkWriteCalls.length, 1);
   assert.equal(state.bulkWriteCalls[0][0][0].updateOne.filter.url, 'https://example.com/story');
   assert.equal(state.bulkWriteCalls[0][0][0].updateOne.update.$set.title, 'Notícia');
-  assert.equal(state.notificationCalls, 1);
+  assert.equal(response.body.notification, null);
+  assert.equal(state.notificationCalls, 0);
 });
 
 test('subscription endpoint rejects unsupported methods and invalid email addresses', async () => {

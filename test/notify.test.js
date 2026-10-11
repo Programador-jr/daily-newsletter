@@ -7,7 +7,8 @@ const state = {
   deliveredKeys: new Set(),
   sentEmails: [],
   insertedKeys: [],
-  sendError: null
+  sendError: null,
+  emailResult: { accepted: ['reader@example.com'], rejected: [] }
 };
 
 const modules = {
@@ -42,6 +43,7 @@ const modules = {
     sendEmail: async message => {
       if (state.sendError) throw state.sendError;
       state.sentEmails.push(message);
+      return state.emailResult;
     }
   },
   '../lib/tokens': require('../lib/tokens')
@@ -84,6 +86,7 @@ beforeEach(() => {
   state.sentEmails = [];
   state.insertedKeys = [];
   state.sendError = null;
+  state.emailResult = { accepted: ['reader@example.com'], rejected: [] };
   process.env.APP_URL = 'http://localhost:3000';
   process.env.NOTIFY_SECRET = 'test-notify-secret';
 });
@@ -100,7 +103,12 @@ test('notification delivery records a story and does not resend it on retries', 
     newStories: 1,
     recipients: 1
   });
-  assert.deepEqual(retry, { sent: false, newStories: 0, recipients: 0 });
+  assert.deepEqual(retry, {
+    sent: false,
+    editionDate: '06/10/2026',
+    newStories: 0,
+    recipients: 0
+  });
   assert.equal(state.sentEmails.length, 1);
   assert.equal(state.insertedKeys.length, 1);
 });
@@ -115,6 +123,20 @@ test('notification failure propagates and does not mark stories delivered', asyn
   );
 
   assert.equal(state.sentEmails.length, 0);
+  assert.equal(state.insertedKeys.length, 0);
+  assert.equal(state.deliveredKeys.size, 0);
+});
+
+test('newsletter records only SMTP-accepted sends as recipients', async t => {
+  t.mock.method(console, 'error', () => {});
+  state.emailResult = { accepted: [], rejected: ['reader@example.com'] };
+
+  await assert.rejects(
+    notifyHandler.notifyLatestNews({ headers: { host: 'localhost:3000' } }),
+    error => error.code === 'SMTP_NO_ACCEPTED_RECIPIENTS'
+  );
+
+  assert.equal(state.sentEmails.length, 1);
   assert.equal(state.insertedKeys.length, 0);
   assert.equal(state.deliveredKeys.size, 0);
 });
