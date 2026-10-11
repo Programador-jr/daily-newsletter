@@ -18,8 +18,15 @@ const dashboard = {
 };
 
 test('painel navega entre páginas internas e mostra o editor de atualizações', async ({ page }) => {
-  await page.route('**/api/admin/login', route => route.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
-  await page.route('**/api/admin/dashboard**', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(dashboard) }));
+  let authenticated = false;
+  await page.route('**/api/admin/login', route => {
+    authenticated = true;
+    return route.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
+  });
+  await page.route('**/api/admin/dashboard**', route => route.fulfill({
+    status: authenticated ? 200 : 401, contentType: 'application/json',
+    body: JSON.stringify(authenticated ? dashboard : { error: 'Não autorizado.' })
+  }));
   await page.route('**/api/admin/schedule', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ workerSchedule }) }));
   await page.route('**/api/admin/updates', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ updates: [] }) }));
 
@@ -58,8 +65,15 @@ test('administrador pode excluir nota após confirmar', async ({ page }) => {
     startsAt: new Date(now - 60_000).toISOString(), endsAt: new Date(now + 86_400_000).toISOString(),
     maxDisplays: 2, active: true, activationId: 'campaign-test', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString()
   }];
-  await page.route('**/api/admin/login', route => route.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
-  await page.route('**/api/admin/dashboard**', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(dashboard) }));
+  let authenticated = false;
+  await page.route('**/api/admin/login', route => {
+    authenticated = true;
+    return route.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
+  });
+  await page.route('**/api/admin/dashboard**', route => route.fulfill({
+    status: authenticated ? 200 : 401, contentType: 'application/json',
+    body: JSON.stringify(authenticated ? dashboard : { error: 'Não autorizado.' })
+  }));
   await page.route('**/api/admin/schedule', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ workerSchedule }) }));
   await page.route('**/api/admin/updates', async route => {
     if (route.request().method() === 'DELETE') {
