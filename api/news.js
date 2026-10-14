@@ -76,7 +76,7 @@ module.exports = async function handler(req, res) {
           // A edição mais recente representa o boletim do próprio dia.
           // Registros de dias anteriores permanecem no banco e no histórico,
           // mas não inflacionam a contagem da edição atual.
-          if (story.editionDate === latestDate && story.publishedAt !== latestDate) {
+          if (story.editionDate === latestDate && story.publishedAt && story.publishedAt !== latestDate) {
             return;
           }
 
