@@ -30,6 +30,13 @@ function isValidDate(value) {
   return typeof value === 'string' && /^\d{2}\/\d{2}\/\d{4}$/.test(value) && Boolean(parseDate(value));
 }
 
+function getLatestEditionDate(stories) {
+  return stories
+    .map(story => story.editionDate)
+    .filter(isValidDate)
+    .sort((a, b) => parseDate(b) - parseDate(a))[0] || null;
+}
+
 function normalizeStory(story, editionDate) {
   return {
     editionDate,
@@ -59,11 +66,20 @@ module.exports = async function handler(req, res) {
     await connectDatabase();
 
     if (req.method === 'GET') {
+      const editionMetadata = await News.find().select('editionDate publishedAt').lean();
+      const latestDate = getLatestEditionDate(editionMetadata);
+
       if (req.query.history === 'true') {
-        const historyStories = await News.find().select('editionDate').lean();
         const historyMap = new Map();
 
-        historyStories.forEach(story => {
+        editionMetadata.forEach(story => {
+          // A edição mais recente representa o boletim do próprio dia.
+          // Registros de dias anteriores permanecem no banco e no histórico,
+          // mas não inflacionam a contagem da edição atual.
+          if (story.editionDate === latestDate && story.publishedAt && story.publishedAt !== latestDate) {
+            return;
+          }
+
           if (!historyMap.has(story.editionDate)) {
             historyMap.set(story.editionDate, 0);
           }
@@ -88,15 +104,18 @@ module.exports = async function handler(req, res) {
       }
 
       if (!date) {
-        const latest = await News.find().select('editionDate').lean();
-        if (!latest.length) return res.status(200).json({ date: null, stories: [] });
-
-        date = latest
-          .sort((a, b) => parseDate(b.editionDate) - parseDate(a.editionDate))[0]
-          .editionDate;
+        if (!latestDate) return res.status(200).json({ date: null, stories: [] });
+        date = latestDate;
       }
 
-      const stories = await News.find({ editionDate: date }).lean();
+      const editionStories = await News.find({ editionDate: date }).lean();
+      // A edição atual só deve mostrar notícias publicadas na data da edição.
+      // Edições antigas continuam usando editionDate para preservar o arquivo
+      // exatamente como foi publicado.
+      const stories = date === latestDate
+        ? editionStories.filter(story => story.publishedAt === date)
+        : editionStories;
+
       stories.sort((a, b) => {
         const publishedA = parseDate(a.publishedAt);
         const publishedB = parseDate(b.publishedAt);
