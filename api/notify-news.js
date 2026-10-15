@@ -2,6 +2,8 @@ const { connectDatabase } = require('../lib/db');
 const News = require('../lib/news');
 const Subscriber = require('../lib/subscriber');
 const NewsDelivery = require('../lib/news-delivery');
+const RecipientNewsDelivery = require('../lib/recipient-news-delivery');
+const crypto = require('node:crypto');
 const { sendEmail } = require('../lib/email');
 const { createToken, hashToken } = require('../lib/tokens');
 
@@ -69,8 +71,6 @@ async function notifyLatestNews(req) {
       return { sent: false, editionDate: latestEditionDate, newStories: eligibleStories.length, recipients: 0 };
     }
 
-    const RecipientNewsDelivery = require('../lib/recipient-news-delivery');
-    const crypto = require('node:crypto');
     const appUrl = getAppUrl(req);
     const sentStoryKeys = new Set();
     let recipients = 0;
