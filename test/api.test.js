@@ -536,6 +536,14 @@ test('unsubscribe endpoint asks for confirmation before changing a subscription'
   assert.equal(state.subscriberQueries[0].$or[0].unsubscribeTokenHash, hashToken(token));
 });
 
+test('unsubscribe GET preview never mutates a subscription', async () => {
+  state.findSubscriber = { confirmed: true, save: async () => assert.fail('GET must not mutate state') };
+  const response = createResponse();
+  await unsubscribeHandler(createRequest({ query: { token: 'unsubscribe-token', confirm: '1' } }), response);
+  assert.equal(response.redirectTo, '/subscription-status?status=unsubscribe-confirm&token=unsubscribe-token');
+  assert.equal(state.findSubscriber.confirmed, true);
+});
+
 test('unsubscribe endpoint deactivates a confirmed subscription after confirmation', async () => {
   state.findSubscriber = {
     confirmed: true,
@@ -547,7 +555,8 @@ test('unsubscribe endpoint deactivates a confirmed subscription after confirmati
   const response = createResponse();
 
   await unsubscribeHandler(createRequest({
-    query: { token: 'unsubscribe-token', confirm: '1' }
+    method: 'POST',
+    body: { token: 'unsubscribe-token' }
   }), response);
 
   assert.equal(response.redirectTo, '/subscription-status?status=unsubscribed');
