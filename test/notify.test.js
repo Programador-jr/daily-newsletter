@@ -25,7 +25,7 @@ const modules = {
   },
   '../lib/news': {
     find: query => query
-      ? { lean: async () => state.latestStories }
+      ? { lean: async () => state.latestStories.filter(story => story.editionDate === query.editionDate) }
       : { select: () => ({ lean: async () => state.latestStories.map(story => ({ editionDate: story.editionDate })) }) }
   },
   '../lib/subscriber': {
@@ -232,6 +232,23 @@ test('new stories added to the same edition do not resend stories already delive
   assert.equal(state.sentEmails.length, 2);
   assert.match(state.sentEmails[1].text, /Nova notícia/);
   assert.doesNotMatch(state.sentEmails[1].text, /Notícia teste/);
+});
+
+
+test('the same source can be delivered again in a different edition', async () => {
+  const request = { headers: { host: 'localhost:3000' } };
+  await notifyHandler.notifyLatestNews(request);
+  state.latestStories.push({
+    ...makeStory('Notícia teste'),
+    editionDate: '07/10/2026'
+  });
+
+  const result = await notifyHandler.notifyLatestNews(request);
+
+  assert.equal(result.sent, true);
+  assert.equal(result.editionDate, '07/10/2026');
+  assert.equal(state.sentEmails.length, 2);
+  assert.equal(state.deliveryRecords.size, 2);
 });
 
 test('legacy story-level records prevent redelivery of previously completed stories', async () => {
