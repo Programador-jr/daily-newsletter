@@ -222,3 +222,12 @@ Made with coffee and JavaScript by **Daniel Melo**.
 The project includes reference pages covering political ideologies and public policies, with an emphasis on concepts, institutional context, public spending, implementation and evidence-based evaluation.
 
 The civic education area also includes a reference guide to the three branches of government and their constitutional roles.
+
+
+### Segurança e operação em produção
+
+- Configure `APP_URL` como origem canônica, por exemplo `https://seudominio.com`, sem caminho, query ou fragmento. Links enviados por e-mail não devem depender do cabeçalho `Host` recebido.
+- Em produção, `APP_URL` e `MONGODB_URI` são obrigatórias; a inicialização local falha com mensagem clara quando a configuração obrigatória está ausente.
+- O cancelamento de inscrição usa GET somente para exibir a confirmação e POST para efetivar a ação. Cabeçalhos de segurança são configurados no Vercel.
+- As consultas da Câmara e do Transferegov têm limites de tempo/tamanho, cache com capacidade limitada e limites de paginação.
+- A busca no código da aplicação não encontrou uso direto de `url.parse()`. Como o aviso `DEP0169` precisa do stack trace do runtime/deploy para identificar sua dependência de origem, diagnostique com `NODE_OPTIONS=--trace-deprecation` no ambiente que reproduz o aviso; não atualize dependências às cegas sem identificar o emissor.

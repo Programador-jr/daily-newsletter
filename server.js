@@ -21,6 +21,7 @@ app.post('/api/news', require('./api/news'));
 app.post('/api/subscribe', require('./api/subscribe'));
 app.get('/api/confirm', require('./api/confirm'));
 app.get('/api/unsubscribe', require('./api/unsubscribe'));
+app.post('/api/unsubscribe', require('./api/unsubscribe'));
 app.post('/api/notify-news', require('./api/notify-news'));
 app.post('/api/admin/login', require('./lib/api-handlers/admin/login'));
 app.post('/api/admin/logout', require('./lib/api-handlers/admin/logout'));

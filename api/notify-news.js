@@ -6,13 +6,10 @@ const RecipientNewsDelivery = require('../lib/recipient-news-delivery');
 const crypto = require('node:crypto');
 const { sendEmail } = require('../lib/email');
 const { createToken, hashToken } = require('../lib/tokens');
+const { getAppUrl } = require('../lib/app-url');
 
 function getNewsKey(story) {
   return story.url || `${story.editionDate || ''}|${story.title || ''}`;
-}
-
-function getAppUrl(req) {
-  return (process.env.APP_URL || `${req.headers['x-forwarded-proto'] || 'https'}://${req.headers.host}`).replace(/\/$/, '');
 }
 
 function escapeHtml(value = '') {
@@ -71,7 +68,7 @@ async function notifyLatestNews(req) {
       return { sent: false, editionDate: latestEditionDate, newStories: eligibleStories.length, recipients: 0 };
     }
 
-    const appUrl = getAppUrl(req);
+    const appUrl = getAppUrl();
     const sentStoryKeys = new Set();
     let recipients = 0;
 
