@@ -14,18 +14,28 @@ const modules = {
   },
   '../lib/news': {
     find: (...args) => {
-      if (args.length === 0) {
-        return {
-          select: () => ({
-            lean: async () => state.records
-          })
-        };
-      }
-
       const editionDate = args[0]?.editionDate;
-      return {
-        lean: async () => state.records.filter(story => story.editionDate === editionDate)
+      return { lean: async () => state.records.filter(story => !editionDate || story.editionDate === editionDate) };
+    },
+    aggregate: async pipeline => {
+      const parse = value => {
+        const match = String(value || '').match(/^(\\d{2})\\/(\\d{2})\\/(\\d{4})$/);
+        return match ? Date.UTC(Number(match[3]), Number(match[2])-1, Number(match[1])) : 0;
       };
+      const latest = state.records.map(row => row.editionDate).sort((x,y)=>parse(y)-parse(x))[0] || null;
+      if (pipeline.some(stage => stage.$group)) {
+        const counts = new Map();
+        for (const row of state.records) {
+          if (row.editionDate === latest && row.publishedAt && row.publishedAt !== latest) continue;
+          counts.set(row.editionDate,(counts.get(row.editionDate)||0)+1);
+        }
+        return [...counts].map(([date,stories])=>({date,stories,title:'Edição de '+date})).sort((x,y)=>parse(y.date)-parse(x.date));
+      }
+      const match = pipeline.find(stage=>stage.$match&&stage.$match.editionDate);
+      if (match) return state.records.filter(row=>row.editionDate===match.$match.editionDate)
+        .filter(row=>!match.$match.publishedAt||row.publishedAt===match.$match.publishedAt)
+        .sort((x,y)=>Number(Boolean(y.headline))-Number(Boolean(x.headline)));
+      return latest ? [{editionDate:latest}] : [];
     }
   }
 };
