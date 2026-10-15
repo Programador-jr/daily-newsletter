@@ -19,7 +19,7 @@ const modules = {
     },
     aggregate: async pipeline => {
       const parse = value => {
-        const match = String(value || '').match(/^(\\d{2})\\/(\\d{2})\\/(\\d{4})$/);
+        const match = String(value || '').match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
         return match ? Date.UTC(Number(match[3]), Number(match[2])-1, Number(match[1])) : 0;
       };
       const latest = state.records.map(row => row.editionDate).sort((x,y)=>parse(y)-parse(x))[0] || null;
