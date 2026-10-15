@@ -61,7 +61,7 @@ const modules = {
       if (match) return state.latestNews.filter(row =>
         (row.editionDate === undefined || row.editionDate === match.$match.editionDate) &&
         (!match.$match.publishedAt || row.publishedAt === match.$match.publishedAt)
-      ).sort((x,y) => Number(Boolean(y.headline))-Number(Boolean(x.headline)));
+      ).sort((x,y) => Number(Boolean(y.headline))-Number(Boolean(x.headline)) || parse(y.publishedAt)-parse(x.publishedAt) || String(y._id).localeCompare(String(x._id)));
       return latest ? [{ editionDate: latest }] : [];
     },
     bulkWrite: async (...args) => {
