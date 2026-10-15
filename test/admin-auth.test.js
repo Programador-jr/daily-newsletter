@@ -6,6 +6,7 @@ const {
   sessionCookie,
   verifyCredentials
 } = require('../lib/admin-auth');
+let rateLimitBlocked = false;
 const rateLimiterPath = require.resolve('../lib/rate-limiter');
 const originalRateLimiterModule = require.cache[rateLimiterPath];
 require.cache[rateLimiterPath] = {
@@ -13,7 +14,13 @@ require.cache[rateLimiterPath] = {
   filename: rateLimiterPath,
   loaded: true,
   exports: {
-    enforceRateLimits: async () => true,
+    enforceRateLimits: async (req, res) => {
+      if (!rateLimitBlocked) return true;
+      res.setHeader('Retry-After', '60');
+      res.setHeader('Cache-Control', 'no-store');
+      res.status(429).json({ error: 'Muitas tentativas. Aguarde antes de tentar novamente.', retryAfterSeconds: 60 });
+      return false;
+    },
     getClientIp: req => req.headers?.['x-real-ip'] || req.ip || 'test-ip',
     getWindowConfig: () => ({
       windowMs: 900000,
@@ -85,6 +92,32 @@ test('admin API refuses login when credentials are not configured', async t => {
   await login({ method: 'POST', body: {} }, response);
   assert.equal(response.statusCode, 503);
   assert.equal(response.headers['Cache-Control'], 'no-store');
+});
+
+test('admin login stops credential checks when the distributed rate limit is exceeded', async t => {
+  const names = ['ADMIN_USERNAME', 'ADMIN_PASSWORD', 'ADMIN_SESSION_SECRET'];
+  const previous = Object.fromEntries(names.map(name => [name, process.env[name]]));
+  Object.assign(process.env, environment);
+  t.after(() => {
+    rateLimitBlocked = false;
+    names.forEach(name => {
+      if (previous[name] === undefined) delete process.env[name];
+      else process.env[name] = previous[name];
+    });
+  });
+
+  rateLimitBlocked = true;
+  const response = mockResponse();
+  await login({
+    method: 'POST',
+    headers: { 'x-real-ip': '203.0.113.11' },
+    body: { username: 'dashboard-admin', password: 'a-long-password-for-testing-only' }
+  }, response);
+
+  assert.equal(response.statusCode, 429);
+  assert.equal(response.headers['Retry-After'], '60');
+  assert.equal(response.headers['Cache-Control'], 'no-store');
+  assert.equal(response.headers['Set-Cookie'], undefined);
 });
 
 test('dashboard requires an administrator session and the site MongoDB URI', async t => {
