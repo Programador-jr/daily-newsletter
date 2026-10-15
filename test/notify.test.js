@@ -132,7 +132,7 @@ function getRecordFor(title, subscriberId) {
   const story = state.latestStories.find(item => item.title === title);
   const newsKey = story.url || story.editionDate + '|' + story.title;
   const deliveryKey = crypto.createHash('sha256')
-    .update(newsKey + '\u0000' + subscriberId)
+    .update(String(story.editionDate) + '\u0000' + newsKey + '\u0000' + subscriberId)
     .digest('hex');
   return state.deliveryRecords.get(deliveryKey);
 }
