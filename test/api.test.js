@@ -55,7 +55,7 @@ const modules = {
     }
 
     async save() {
-      state.savedSubscribers.push(this);
+      if (!state.savedSubscribers.includes(this)) state.savedSubscribers.push(this);
     }
   },
   '../lib/tokens': require('../lib/tokens'),
@@ -298,7 +298,8 @@ test('subscription endpoint reports when the address is already confirmed', asyn
     body: { email: 'reader@example.com' }
   }), response);
 
-  assert.equal(response.statusCode, 409);
+  assert.equal(response.statusCode, 200);
+  assert.match(response.body.message, /Se este endereço puder receber/);
   assert.equal(state.sentEmails.length, 0);
 });
 
@@ -312,9 +313,12 @@ test('subscription endpoint reports email delivery failures', async t => {
     body: { email: 'reader@example.com' }
   }), response);
 
-  assert.equal(response.statusCode, 500);
-  assert.equal(response.body.error, 'Não foi possível concluir a inscrição agora.');
+  assert.equal(response.statusCode, 200);
+  assert.match(response.body.message, /Se este endereço puder receber/);
   assert.equal(state.savedSubscribers.length, 1);
+  assert.equal(state.savedSubscribers[0].confirmationTokenHash, null);
+  assert.equal(state.savedSubscribers[0].confirmationTokenExpiresAt, null);
+  assert.equal(state.sentEmails.length, 0);
 });
 
 test('subscription endpoint normalizes address, stores hashed tokens, and sends confirmation', async () => {
@@ -334,6 +338,93 @@ test('subscription endpoint normalizes address, stores hashed tokens, and sends 
   assert.match(state.savedSubscribers[0].unsubscribeTokenHash, /^[a-f0-9]{64}$/);
   assert.equal(state.sentEmails[0].to, 'reader@example.com');
   assert.match(state.sentEmails[0].text, /^Confirme sua inscrição/);
+});
+
+test('subscription endpoint resends a fresh token for a pending subscription with an expired link', async () => {
+  const oldExpiry = new Date(Date.now() - 60_000);
+  const oldHash = hashToken('old-confirmation-token');
+  const subscriber = {
+    email: 'reader@example.com',
+    confirmed: false,
+    confirmationTokenHash: oldHash,
+    confirmationTokenExpiresAt: oldExpiry,
+    confirmationEmailSentAt: new Date(Date.now() - 120_000),
+    unsubscribeTokenHash: hashToken('unsubscribe-token'),
+    saveCalls: 0,
+    async save() { this.saveCalls += 1; }
+  };
+  state.findSubscriber = subscriber;
+  const response = createResponse();
+
+  await subscribeHandler(createRequest({
+    method: 'POST',
+    headers: { host: 'localhost:3000' },
+    body: { email: 'reader@example.com' }
+  }), response);
+
+  const tokenMatch = state.sentEmails[0].text.match(/token=([a-f0-9]{64})/);
+  assert.equal(response.statusCode, 200);
+  assert.ok(tokenMatch);
+  assert.notEqual(subscriber.confirmationTokenHash, oldHash);
+  assert.equal(subscriber.confirmationTokenHash, hashToken(tokenMatch[1]));
+  assert.ok(subscriber.confirmationTokenExpiresAt.getTime() > Date.now());
+  assert.equal(subscriber.saveCalls, 1);
+  assert.equal(state.sentEmails.length, 1);
+});
+
+test('subscription endpoint applies a persistent cooldown to confirmation emails', async () => {
+  const oldHash = hashToken('existing-token');
+  state.findSubscriber = {
+    email: 'reader@example.com',
+    confirmed: false,
+    confirmationTokenHash: oldHash,
+    confirmationTokenExpiresAt: new Date(Date.now() + 60_000),
+    confirmationEmailSentAt: new Date(),
+    save: async () => assert.fail('Cooldown should not mutate the subscriber')
+  };
+  const response = createResponse();
+
+  await subscribeHandler(createRequest({
+    method: 'POST',
+    body: { email: 'reader@example.com' }
+  }), response);
+
+  assert.equal(response.statusCode, 200);
+  assert.match(response.body.message, /Se este endereço puder receber/);
+  assert.equal(state.sentEmails.length, 0);
+  assert.equal(state.findSubscriber.confirmationTokenHash, oldHash);
+});
+
+test('subscription endpoint restores a previously valid token when resend delivery fails', async t => {
+  t.mock.method(console, 'error', () => {});
+  state.emailError = new Error('SMTP unavailable');
+  const oldExpiry = new Date(Date.now() + 60_000);
+  const oldSentAt = new Date(Date.now() - 120_000);
+  const oldHash = hashToken('previous-valid-token');
+  const subscriber = {
+    email: 'reader@example.com',
+    confirmed: false,
+    confirmationTokenHash: oldHash,
+    confirmationTokenExpiresAt: oldExpiry,
+    confirmationEmailSentAt: oldSentAt,
+    unsubscribeTokenHash: hashToken('unsubscribe-token'),
+    saveCalls: 0,
+    async save() { this.saveCalls += 1; }
+  };
+  state.findSubscriber = subscriber;
+  const response = createResponse();
+
+  await subscribeHandler(createRequest({
+    method: 'POST',
+    body: { email: 'reader@example.com' }
+  }), response);
+
+  assert.equal(response.statusCode, 200);
+  assert.equal(subscriber.confirmationTokenHash, oldHash);
+  assert.equal(subscriber.confirmationTokenExpiresAt, oldExpiry);
+  assert.equal(subscriber.confirmationEmailSentAt, oldSentAt);
+  assert.equal(subscriber.saveCalls, 2);
+  assert.equal(state.sentEmails.length, 0);
 });
 
 test('confirmation endpoint rejects a missing token without connecting to MongoDB', async () => {
