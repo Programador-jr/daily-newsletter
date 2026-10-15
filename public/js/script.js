@@ -326,9 +326,7 @@ function createStoryCard(story, featured = false, index = 0) {
     footer.append(unavailable);
   }
 
-  const body = document.createElement('div');
-  body.append(meta, title, summary, context, footer);
-  article.append(body);
+  article.append(meta, title, summary, context, footer);
   return article;
 }
 
