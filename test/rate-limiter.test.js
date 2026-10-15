@@ -164,10 +164,16 @@ test('enforcement returns HTTP 429, Retry-After and no-store when the limit is e
   assert.equal(blocked.body.retryAfterSeconds, 59);
 });
 
-test('client IP extraction prefers the trusted real-IP header and uses the last forwarded address', () => {
-  assert.equal(getClientIp({ headers: { 'x-real-ip': '203.0.113.1' }, ip: '127.0.0.1' }), '203.0.113.1');
+test('client IP extraction uses the last forwarded address and falls back to real-IP', () => {
   assert.equal(
-    getClientIp({ headers: { 'x-forwarded-for': '198.51.100.10, 203.0.113.2' } }),
+    getClientIp({
+      headers: {
+        'x-real-ip': '203.0.113.1',
+        'x-forwarded-for': '198.51.100.10, 203.0.113.2'
+      },
+      ip: '127.0.0.1'
+    }),
     '203.0.113.2'
   );
+  assert.equal(getClientIp({ headers: { 'x-real-ip': '203.0.113.1' }, ip: '127.0.0.1' }), '203.0.113.1');
 });
