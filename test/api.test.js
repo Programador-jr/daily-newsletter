@@ -65,6 +65,17 @@ const modules = {
       state.sentEmails.push(message);
     }
   },
+  '../lib/rate-limiter': {
+    enforceRateLimits: async () => true,
+    getClientIp: req => req.headers?.['x-real-ip'] || req.ip || 'test-ip',
+    getWindowConfig: () => ({
+      windowMs: 900000,
+      subscribeIpLimit: 10,
+      subscribeEmailLimit: 3,
+      adminIpLimit: 10,
+      adminUserLimit: 5
+    })
+  },
   '../api/notify-news': {
     notifyLatestNews: async () => {
       state.notificationCalls += 1;
