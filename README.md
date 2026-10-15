@@ -231,3 +231,27 @@ The civic education area also includes a reference guide to the three branches o
 - O cancelamento de inscrição usa GET somente para exibir a confirmação e POST para efetivar a ação. Cabeçalhos de segurança são configurados no Vercel.
 - As consultas da Câmara e do Transferegov têm limites de tempo/tamanho, cache com capacidade limitada e limites de paginação.
 - A busca no código da aplicação não encontrou uso direto de `url.parse()`. Como o aviso `DEP0169` precisa do stack trace do runtime/deploy para identificar sua dependência de origem, diagnostique com `NODE_OPTIONS=--trace-deprecation` no ambiente que reproduz o aviso; não atualize dependências às cegas sem identificar o emissor.
+
+
+## Runtime diagnostics and performance benchmarks
+
+### Trace Node.js deprecations
+
+The application code does not directly call `url.parse()`; the warning may originate in a transitive dependency or an unusual request path. CI now runs unit and browser tests with `NODE_OPTIONS=--trace-deprecation`, so any warning exercised by those tests includes its call stack. If the warning appears only in Vercel, temporarily set `NODE_OPTIONS=--trace-deprecation` in the Preview environment, redeploy, reproduce the affected request, and use the first non-Node.js frame in the log to identify the responsible package. Remove the temporary setting after collecting the trace.
+
+### Compare public API performance
+
+Set `BASE_URL_BEFORE` and `BASE_URL_AFTER` to the old and candidate deployments, then set `BENCHMARK_PATHS` to the same comma-separated GET endpoints on both deployments. Run:
+
+```sh
+BASE_URL_BEFORE=https://old-preview.example.com \
+BASE_URL_AFTER=https://new-preview.example.com \
+BENCHMARK_PATHS='/api/camara-deputados,/api/transferegov-emendas?ano=2025&limite=25' \
+BENCHMARK_RUNS=5 node scripts/benchmark-public-data.js
+```
+
+The script records HTTP status, response size, individual timings, and median latency. Run it against Preview deployments with the same data period; do not use it as a load test against production.
+
+### Compare MongoDB edition queries
+
+With a read-only-capable `MONGODB_URI` pointing to a representative `kings_newsletter` database, run `node scripts/benchmark-news-queries.js`. It verifies that the current aggregation results match the Node-side baseline, records median timings, and reports MongoDB execution statistics when available. It is an opt-in diagnostic and is not run by CI because it requires a real database.

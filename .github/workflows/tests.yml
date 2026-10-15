@@ -8,6 +8,8 @@ jobs:
   unit-tests:
     name: Unit tests (Node.js ${{ matrix.node-version }})
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --trace-deprecation
     strategy:
       fail-fast: false
       matrix:
@@ -15,10 +17,10 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
@@ -34,10 +36,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -51,12 +53,14 @@ jobs:
   browser-tests:
     name: Browser tests
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --trace-deprecation
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
