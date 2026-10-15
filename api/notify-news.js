@@ -162,12 +162,22 @@ async function notifyLatestNews(req) {
       if (!reservations.length) continue;
 
       let unsubscribeToken = subscriber.unsubscribeTokenHash;
-      if (!unsubscribeToken) {
-        unsubscribeToken = hashToken(createToken());
-        await Subscriber.updateOne(
-          { _id: subscriber._id },
-          { $set: { unsubscribeTokenHash: unsubscribeToken } }
-        );
+      try {
+        if (!unsubscribeToken) {
+          unsubscribeToken = hashToken(createToken());
+          await Subscriber.updateOne(
+            { _id: subscriber._id },
+            { $set: { unsubscribeTokenHash: unsubscribeToken } }
+          );
+        }
+      } catch (error) {
+        const rawCode = error && (error.code || error.name) || 'DELIVERY_PREPARATION_FAILED';
+        const errorCode = /^[A-Z0-9_]+$/.test(rawCode) ? rawCode : 'DELIVERY_PREPARATION_FAILED';
+        await RecipientNewsDelivery.updateMany(
+          { deliveryKey: { $in: reservations.map(item => item.deliveryKey) }, status: 'sending' },
+          { $set: { status: 'failed', errorCode } }
+        ).catch(() => {});
+        throw error;
       }
 
       const unsubscribeUrl = appUrl + '/api/unsubscribe?token=' + unsubscribeToken;
