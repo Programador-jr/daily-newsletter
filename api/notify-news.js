@@ -86,7 +86,7 @@ async function notifyLatestNews(req) {
     async function reserveDelivery(story, subscriber) {
       const newsKey = getNewsKey(story);
       const deliveryKey = crypto.createHash('sha256')
-        .update(String(latestEditionDate) + '\\u0000' + newsKey + '\\u0000' + String(subscriber._id))
+        .update(String(latestEditionDate) + '\u0000' + newsKey + '\u0000' + String(subscriber._id))
         .digest('hex');
       const details = {
         deliveryKey,
