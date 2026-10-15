@@ -129,6 +129,11 @@
       `;
     } else if (status === 'unsubscribe-confirm') {
       actions.innerHTML = '<a href="/" class="cta-button">Voltar para a Newsletter</a>';
+    } else if (status === 'invalid') {
+      actions.innerHTML = `
+        <a href="/?resend=1#subscription-title" class="cta-button">Reenviar confirmação</a>
+        <a href="/" class="subscription-secondary-button">Voltar para a Newsletter</a>
+      `;
     }
   </script>
 </body>

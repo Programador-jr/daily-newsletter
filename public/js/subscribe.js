@@ -58,6 +58,18 @@ function setLoading(button, loading) {
 }
 
 if (subscriptionForm && subscriptionMessage) {
+  const emailInput = document.getElementById('subscriber-email');
+  const submitButton = subscriptionForm.querySelector('button[type="submit"]') || subscriptionForm.querySelector('button');
+  const resendButton = document.createElement('button');
+  resendButton.type = 'button';
+  resendButton.className = 'subscription-secondary-button';
+  resendButton.textContent = 'Reenviar confirmação';
+  resendButton.hidden = true;
+
+  if (submitButton) {
+    submitButton.insertAdjacentElement('afterend', resendButton);
+  }
+
   const params = new URLSearchParams(window.location.search);
   const status = params.get('subscription');
 
@@ -71,13 +83,15 @@ if (subscriptionForm && subscriptionMessage) {
     subscriptionMessage.className = 'subscription-message success';
   }
 
-  subscriptionForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
+  if (params.get('resend') === '1') {
+    resendButton.hidden = false;
+    subscriptionMessage.textContent = 'Informe o e-mail usado na inscrição e solicite um novo link de confirmação.';
+  }
 
-    const button = subscriptionForm.querySelector('button');
-    const email = document.getElementById('subscriber-email').value.trim();
+  async function requestConfirmation(button) {
+    if (!emailInput || !emailInput.reportValidity()) return;
 
-    setLoading(button, true);
+    [submitButton, resendButton].filter(Boolean).forEach(item => setLoading(item, true));
     subscriptionMessage.textContent = '';
     subscriptionMessage.className = 'subscription-message';
 
@@ -85,7 +99,7 @@ if (subscriptionForm && subscriptionMessage) {
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email: emailInput.value.trim() })
       });
 
       let data = {};
@@ -96,28 +110,33 @@ if (subscriptionForm && subscriptionMessage) {
       }
 
       if (!response.ok) {
-        const error = new Error(data.error || 'Não foi possível concluir a inscrição.');
+        const error = new Error(data.error || 'Não foi possível processar a solicitação.');
         error.status = response.status;
         throw error;
       }
 
-      subscriptionMessage.textContent = data.message;
+      const message = data.message || 'Se este endereço puder receber uma confirmação, enviaremos um link por e-mail.';
+      subscriptionMessage.textContent = message;
       subscriptionMessage.className = 'subscription-message success';
-      subscriptionForm.reset();
-
-      showSubscriptionPopup('success', 'Inscrição enviada', data.message || 'Verifique seu e-mail para confirmar a inscrição.');
+      resendButton.hidden = false;
+      showSubscriptionPopup('success', 'Solicitação recebida', message);
     } catch (error) {
-      const message = error.message || 'Ocorreu um erro ao realizar a inscrição.';
+      const message = error.message || 'Ocorreu um erro ao processar a solicitação.';
       subscriptionMessage.textContent = message;
       subscriptionMessage.className = 'subscription-message error';
-
-      if (error.status === 409) {
-        showSubscriptionPopup('error', 'E-mail já cadastrado', message);
-      } else {
-        showSubscriptionPopup('error', 'Não foi possível concluir', message);
-      }
+      showSubscriptionPopup('error', 'Não foi possível concluir', message);
     } finally {
-      setLoading(button, false);
+      [submitButton, resendButton].filter(Boolean).forEach(item => setLoading(item, false));
+      if (button === resendButton) resendButton.hidden = false;
     }
+  }
+
+  subscriptionForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    await requestConfirmation(submitButton);
+  });
+
+  resendButton.addEventListener('click', async () => {
+    await requestConfirmation(resendButton);
   });
 }
