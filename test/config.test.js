@@ -72,3 +72,11 @@ test('required environment validation names missing variables but not their valu
     }
   );
 });
+
+const { getAppUrl } = require('../lib/app-url');
+
+test('canonical APP_URL ignores request headers and rejects non-origin URLs', () => {
+  assert.equal(getAppUrl({ APP_URL: 'https://newsletter.example.com' }), 'https://newsletter.example.com');
+  assert.throws(() => getAppUrl({ APP_URL: 'https://newsletter.example.com/path' }), /somente a origem/);
+  assert.throws(() => getAppUrl({ NODE_ENV: 'production' }), /APP_URL é obrigatória/);
+});

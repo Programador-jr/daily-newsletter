@@ -3,14 +3,11 @@ const Subscriber = require('../lib/subscriber');
 const { createToken, hashToken } = require('../lib/tokens');
 const { sendEmail } = require('../lib/email');
 const { enforceRateLimits, getClientIp, getWindowConfig } = require('../lib/rate-limiter');
+const { getAppUrl } = require('../lib/app-url');
 
 const CONFIRMATION_TOKEN_TTL_MS = 24 * 60 * 60 * 1000;
 const CONFIRMATION_EMAIL_COOLDOWN_MS = 60 * 1000;
 const GENERIC_MESSAGE = 'Se este endereço puder receber uma confirmação, enviaremos um link por e-mail. Verifique também a caixa de spam. Se você já solicitou um link recentemente, aguarde um minuto antes de tentar novamente.';
-
-function getAppUrl(req) {
-  return (process.env.APP_URL || `${req.headers['x-forwarded-proto'] || 'https'}://${req.headers.host}`).replace(/\/$/, '');
-}
 
 function isValidEmail(email) {
   return typeof email === 'string' &&
@@ -18,8 +15,8 @@ function isValidEmail(email) {
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function getConfirmationEmail(email, token, req) {
-  const confirmationUrl = `${getAppUrl(req)}/api/confirm?token=${token}`;
+function getConfirmationEmail(email, token, appUrl) {
+  const confirmationUrl = `${appUrl}/api/confirm?token=${encodeURIComponent(token)}`;
 
   return {
     kind: 'subscription_confirmation',
@@ -43,6 +40,12 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Método não permitido.' });
+  }
+
+  let appUrl;
+  try { appUrl = getAppUrl(); } catch {
+    res.setHeader('Cache-Control', 'no-store');
+    return res.status(503).json({ error: 'O serviço de inscrição está temporariamente indisponível.' });
   }
 
   const email = String(req.body?.email || '').trim().toLowerCase();
@@ -127,7 +130,7 @@ module.exports = async function handler(req, res) {
     await subscriber.save();
 
     try {
-      await sendEmail(getConfirmationEmail(email, token, req));
+      await sendEmail(getConfirmationEmail(email, token, appUrl));
     } catch (emailError) {
       // Roll back the new token and cooldown so a failed delivery does not
       // invalidate a previously sent link or block an immediate retry.

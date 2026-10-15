@@ -123,17 +123,29 @@
     const actions = document.getElementById('status-actions');
 
     if (status === 'unsubscribe-confirm' && token) {
-      actions.innerHTML = `
-        <a href="/api/unsubscribe?token=${encodeURIComponent(token)}&confirm=1" class="cta-button">Sim, cancelar inscrição</a>
-        <a href="/" class="subscription-secondary-button">Manter minha inscrição</a>
-      `;
+      actions.replaceChildren();
+      const form = document.createElement('form');
+      form.method = 'POST'; form.action = '/api/unsubscribe';
+      const hidden = document.createElement('input');
+      hidden.type = 'hidden'; hidden.name = 'token'; hidden.value = token;
+      const submit = document.createElement('button');
+      submit.type = 'submit'; submit.className = 'cta-button'; submit.textContent = 'Sim, cancelar inscrição';
+      form.append(hidden, submit);
+      const keep = document.createElement('a');
+      keep.href = '/'; keep.className = 'subscription-secondary-button'; keep.textContent = 'Manter minha inscrição';
+      actions.append(form, keep);
     } else if (status === 'unsubscribe-confirm') {
-      actions.innerHTML = '<a href="/" class="cta-button">Voltar para a Newsletter</a>';
+      actions.replaceChildren();
+      const back = document.createElement('a');
+      back.href = '/'; back.className = 'cta-button'; back.textContent = 'Voltar para a Newsletter';
+      actions.append(back);
     } else if (status === 'invalid') {
-      actions.innerHTML = `
-        <a href="/?resend=1#subscription-title" class="cta-button">Reenviar confirmação</a>
-        <a href="/" class="subscription-secondary-button">Voltar para a Newsletter</a>
-      `;
+      actions.replaceChildren();
+      const resend = document.createElement('a');
+      resend.href = '/?resend=1#subscription-title'; resend.className = 'cta-button'; resend.textContent = 'Reenviar confirmação';
+      const back = document.createElement('a');
+      back.href = '/'; back.className = 'subscription-secondary-button'; back.textContent = 'Voltar para a Newsletter';
+      actions.append(resend, back);
     }
   </script>
 </body>

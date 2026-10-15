@@ -41,6 +41,29 @@ const modules = {
 
       return { lean: async () => state.latestNews };
     },
+    aggregate: async pipeline => {
+      const all = [...state.historyNews, ...state.latestNews];
+      const parse = value => {
+        const match = String(value || '').match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+        return match ? Date.UTC(Number(match[3]), Number(match[2]) - 1, Number(match[1])) : 0;
+      };
+      const latest = all.map(row => row.editionDate).sort((x,y) => parse(y)-parse(x))[0] || null;
+      if (pipeline.some(stage => stage.$group)) {
+        const counts = new Map();
+        for (const row of state.historyNews) {
+          if (row.editionDate === latest && row.publishedAt && row.publishedAt !== latest) continue;
+          counts.set(row.editionDate, (counts.get(row.editionDate) || 0) + 1);
+        }
+        return [...counts].map(([date, stories]) => ({ date, stories, title: 'Edição de ' + date }))
+          .sort((x,y) => parse(y.date)-parse(x.date));
+      }
+      const match = pipeline.find(stage => stage.$match && stage.$match.editionDate);
+      if (match) return state.latestNews.filter(row =>
+        (row.editionDate === undefined || row.editionDate === match.$match.editionDate) &&
+        (!match.$match.publishedAt || row.publishedAt === match.$match.publishedAt)
+      ).sort((x,y) => Number(Boolean(y.headline))-Number(Boolean(x.headline)) || parse(y.publishedAt)-parse(x.publishedAt) || String(y._id).localeCompare(String(x._id)));
+      return latest ? [{ editionDate: latest }] : [];
+    },
     bulkWrite: async (...args) => {
       state.bulkWriteCalls.push(args);
       return state.bulkWriteResult;
@@ -536,6 +559,14 @@ test('unsubscribe endpoint asks for confirmation before changing a subscription'
   assert.equal(state.subscriberQueries[0].$or[0].unsubscribeTokenHash, hashToken(token));
 });
 
+test('unsubscribe GET preview never mutates a subscription', async () => {
+  state.findSubscriber = { confirmed: true, save: async () => assert.fail('GET must not mutate state') };
+  const response = createResponse();
+  await unsubscribeHandler(createRequest({ query: { token: 'unsubscribe-token', confirm: '1' } }), response);
+  assert.equal(response.redirectTo, '/subscription-status?status=unsubscribe-confirm&token=unsubscribe-token');
+  assert.equal(state.findSubscriber.confirmed, true);
+});
+
 test('unsubscribe endpoint deactivates a confirmed subscription after confirmation', async () => {
   state.findSubscriber = {
     confirmed: true,
@@ -547,7 +578,8 @@ test('unsubscribe endpoint deactivates a confirmed subscription after confirmati
   const response = createResponse();
 
   await unsubscribeHandler(createRequest({
-    query: { token: 'unsubscribe-token', confirm: '1' }
+    method: 'POST',
+    body: { token: 'unsubscribe-token' }
   }), response);
 
   assert.equal(response.redirectTo, '/subscription-status?status=unsubscribed');

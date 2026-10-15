@@ -30,13 +30,6 @@ function isValidDate(value) {
   return typeof value === 'string' && /^\d{2}\/\d{2}\/\d{4}$/.test(value) && Boolean(parseDate(value));
 }
 
-function getLatestEditionDate(stories) {
-  return stories
-    .map(story => story.editionDate)
-    .filter(isValidDate)
-    .sort((a, b) => parseDate(b) - parseDate(a))[0] || null;
-}
-
 function normalizeStory(story, editionDate) {
   return {
     editionDate,
@@ -66,36 +59,24 @@ module.exports = async function handler(req, res) {
     await connectDatabase();
 
     if (req.method === 'GET') {
-      const editionMetadata = await News.find().select('editionDate publishedAt').lean();
-      const latestDate = getLatestEditionDate(editionMetadata);
-
+      const latestRows = await News.aggregate([
+        { $addFields: { _editionSort: { $dateFromString: { dateString: '$editionDate', format: '%d/%m/%Y', onError: null, onNull: null } } } },
+        { $match: { _editionSort: { $ne: null } } }, { $sort: { _editionSort: -1 } }, { $limit: 1 },
+        { $project: { _id: 0, editionDate: 1 } }
+      ]);
+      const latestDate = latestRows[0]?.editionDate || null;
       if (req.query.history === 'true') {
-        const historyMap = new Map();
-
-        editionMetadata.forEach(story => {
-          // A edição mais recente representa o boletim do próprio dia.
-          // Registros de dias anteriores permanecem no banco e no histórico,
-          // mas não inflacionam a contagem da edição atual.
-          if (story.editionDate === latestDate && story.publishedAt && story.publishedAt !== latestDate) {
-            return;
-          }
-
-          if (!historyMap.has(story.editionDate)) {
-            historyMap.set(story.editionDate, 0);
-          }
-          historyMap.set(story.editionDate, historyMap.get(story.editionDate) + 1);
-        });
-
-        const history = [...historyMap.entries()]
-          .map(([date, stories]) => ({ date, stories }))
-          .sort((a, b) => parseDate(b.date) - parseDate(a.date));
-
-        return res.status(200).json(
-          history.map(archive => ({
-            ...archive,
-            title: 'Edição de ' + archive.date
-          }))
+        const pipeline = [
+          { $addFields: { _editionSort: { $dateFromString: { dateString: '$editionDate', format: '%d/%m/%Y', onError: null, onNull: null } } } },
+          { $match: { _editionSort: { $ne: null } } }
+        ];
+        if (latestDate) pipeline.push({ $match: { $or: [{ editionDate: { $ne: latestDate } }, { publishedAt: latestDate }] } });
+        pipeline.push(
+          { $group: { _id: '$editionDate', stories: { $sum: 1 }, _editionSort: { $max: '$_editionSort' } } },
+          { $sort: { _editionSort: -1 } },
+          { $project: { _id: 0, date: '$_id', stories: 1, title: { $concat: ['Edição de ', '$_id'] } } }
         );
+        return res.status(200).json(await News.aggregate(pipeline));
       }
 
       let date = req.query.date;
@@ -108,32 +89,14 @@ module.exports = async function handler(req, res) {
         date = latestDate;
       }
 
-      const editionStories = await News.find({ editionDate: date }).lean();
-      // A edição atual só deve mostrar notícias publicadas na data da edição.
-      // Edições antigas continuam usando editionDate para preservar o arquivo
-      // exatamente como foi publicado.
-      const stories = date === latestDate
-        ? editionStories.filter(story => story.publishedAt === date)
-        : editionStories;
-
-      stories.sort((a, b) => {
-        const publishedA = parseDate(a.publishedAt);
-        const publishedB = parseDate(b.publishedAt);
-
-        if (!publishedA && !publishedB) return String(a._id).localeCompare(String(b._id));
-        if (!publishedA) return 1;
-        if (!publishedB) return -1;
-
-        const headlineB = Boolean(b.headline);
-        const headlineA = Boolean(a.headline);
-        if (headlineB !== headlineA) {
-          return headlineA ? -1 : 1;
-        }
-
-        const difference = publishedB - publishedA;
-        return difference || String(b._id).localeCompare(String(a._id));
-      });
-
+      const filter = { editionDate: date };
+      if (date === latestDate) filter.publishedAt = date;
+      const stories = await News.aggregate([
+        { $match: filter },
+        { $addFields: { _publishedSort: { $dateFromString: { dateString: '$publishedAt', format: '%d/%m/%Y', onError: null, onNull: null } } } },
+        { $sort: { headline: -1, _publishedSort: -1, _id: -1 } },
+        { $project: { _publishedSort: 0 } }
+      ]);
       return res.status(200).json({ date, stories });
     }
 
