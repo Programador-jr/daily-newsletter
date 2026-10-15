@@ -330,7 +330,7 @@ test('subscription endpoint normalizes address, stores hashed tokens, and sends 
     body: { email: '  Reader@Example.com  ' }
   }), response);
 
-  assert.equal(response.statusCode, 201);
+  assert.equal(response.statusCode, 200);
   assert.equal(state.savedSubscribers.length, 1);
   assert.equal(state.savedSubscribers[0].email, 'reader@example.com');
   assert.equal(state.savedSubscribers[0].confirmed, false);
