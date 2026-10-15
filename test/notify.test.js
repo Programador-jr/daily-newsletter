@@ -4,12 +4,20 @@ const { beforeEach, test } = require('node:test');
 const state = {
   latestStories: [],
   subscribers: [],
-  deliveredKeys: new Set(),
+  legacyDeliveredKeys: new Set(),
+  deliveryRecords: new Map(),
   sentEmails: [],
-  insertedKeys: [],
-  sendError: null,
+  sendAttempts: [],
+  sendErrors: {},
   emailResult: { accepted: ['reader@example.com'], rejected: [] }
 };
+
+function applyUpdate(record, update) {
+  Object.assign(record, update.$set || {});
+  for (const [key, amount] of Object.entries(update.$inc || {})) {
+    record[key] = (record[key] || 0) + amount;
+  }
+}
 
 const modules = {
   '../lib/db': {
@@ -27,21 +35,52 @@ const modules = {
   '../lib/news-delivery': {
     find: query => ({
       select: () => ({
-        lean: async () => [...state.deliveredKeys]
+        lean: async () => [...state.legacyDeliveredKeys]
           .filter(newsKey => query.newsKey.$in.includes(newsKey))
           .map(newsKey => ({ newsKey }))
       })
-    }),
-    insertMany: async records => {
-      for (const record of records) {
-        state.deliveredKeys.add(record.newsKey);
-        state.insertedKeys.push(record.newsKey);
+    })
+  },
+  '../lib/recipient-news-delivery': {
+    create: async record => {
+      if (state.deliveryRecords.has(record.deliveryKey)) {
+        throw Object.assign(new Error('duplicate key'), { code: 11000 });
       }
+      state.deliveryRecords.set(record.deliveryKey, { ...record });
+      return record;
+    },
+    findOne: query => ({
+      lean: async () => {
+        const record = state.deliveryRecords.get(query.deliveryKey);
+        return record ? { ...record } : null;
+      }
+    }),
+    updateOne: async (query, update) => {
+      const record = state.deliveryRecords.get(query.deliveryKey);
+      if (!record || (query.status && record.status !== query.status)) {
+        return { modifiedCount: 0 };
+      }
+      if (query.startedAt && new Date(record.startedAt).getTime() !== new Date(query.startedAt).getTime()) {
+        return { modifiedCount: 0 };
+      }
+      applyUpdate(record, update);
+      return { modifiedCount: 1 };
+    },
+    updateMany: async (query, update) => {
+      let modifiedCount = 0;
+      for (const record of state.deliveryRecords.values()) {
+        if (query.deliveryKey && !query.deliveryKey.$in.includes(record.deliveryKey)) continue;
+        if (query.status && record.status !== query.status) continue;
+        applyUpdate(record, update);
+        modifiedCount += 1;
+      }
+      return { modifiedCount };
     }
   },
   '../lib/email': {
     sendEmail: async message => {
-      if (state.sendError) throw state.sendError;
+      state.sendAttempts.push(message.to);
+      if (state.sendErrors[message.to]) throw state.sendErrors[message.to];
       state.sentEmails.push(message);
       return state.emailResult;
     }
@@ -66,32 +105,52 @@ for (const [resolvedPath, originalModule] of originalModules) {
   }
 }
 
-beforeEach(() => {
-  state.latestStories = [{
+function makeStory(title, url = 'https://example.com/' + title.toLowerCase().replaceAll(' ', '-')) {
+  return {
+    _id: title,
     editionDate: '06/10/2026',
     category: 'Economia',
-    title: 'Notícia teste',
+    title,
     summary: 'Resumo',
     context: 'Contexto',
-    url: 'https://example.com/news',
+    url,
     publishedAt: '06/10/2026'
-  }];
-  state.subscribers = [{
-    _id: 'subscriber-1',
-    email: 'reader@example.com',
+  };
+}
+
+function makeSubscriber(id, email) {
+  return {
+    _id: id,
+    email,
     confirmed: true,
-    unsubscribeTokenHash: 'unsubscribe-hash'
-  }];
-  state.deliveredKeys = new Set();
+    unsubscribeTokenHash: 'unsubscribe-hash-' + id
+  };
+}
+
+function getRecordFor(title, subscriberId) {
+  const crypto = require('node:crypto');
+  const story = state.latestStories.find(item => item.title === title);
+  const newsKey = story.url || story.editionDate + '|' + story.title;
+  const deliveryKey = crypto.createHash('sha256')
+    .update(newsKey + '\u0000' + subscriberId)
+    .digest('hex');
+  return state.deliveryRecords.get(deliveryKey);
+}
+
+beforeEach(() => {
+  state.latestStories = [makeStory('Notícia teste')];
+  state.subscribers = [makeSubscriber('subscriber-1', 'reader@example.com')];
+  state.legacyDeliveredKeys = new Set();
+  state.deliveryRecords = new Map();
   state.sentEmails = [];
-  state.insertedKeys = [];
-  state.sendError = null;
+  state.sendAttempts = [];
+  state.sendErrors = {};
   state.emailResult = { accepted: ['reader@example.com'], rejected: [] };
   process.env.APP_URL = 'http://localhost:3000';
   process.env.NOTIFY_SECRET = 'test-notify-secret';
 });
 
-test('notification delivery records a story and does not resend it on retries', async () => {
+test('notification delivery records each recipient and does not resend on retries', async () => {
   const request = { headers: { host: 'localhost:3000' } };
 
   const first = await notifyHandler.notifyLatestNews(request);
@@ -110,21 +169,78 @@ test('notification delivery records a story and does not resend it on retries', 
     recipients: 0
   });
   assert.equal(state.sentEmails.length, 1);
-  assert.equal(state.insertedKeys.length, 1);
+  assert.equal(state.sendAttempts.length, 1);
+  assert.equal(getRecordFor('Notícia teste', 'subscriber-1').status, 'sent');
 });
 
-test('notification failure propagates and does not mark stories delivered', async t => {
+test('a partial batch failure retries only the recipient that failed', async t => {
   t.mock.method(console, 'error', () => {});
-  state.sendError = Object.assign(new Error('SMTP unavailable'), { code: 'ECONNECTION' });
+  state.subscribers = [
+    makeSubscriber('subscriber-1', 'first@example.com'),
+    makeSubscriber('subscriber-2', 'second@example.com')
+  ];
+  state.sendErrors['second@example.com'] = Object.assign(new Error('SMTP rejected'), { code: 'EAUTH' });
 
   await assert.rejects(
     notifyHandler.notifyLatestNews({ headers: { host: 'localhost:3000' } }),
-    error => error === state.sendError
+    error => error.code === 'EAUTH'
   );
 
-  assert.equal(state.sentEmails.length, 0);
-  assert.equal(state.insertedKeys.length, 0);
-  assert.equal(state.deliveredKeys.size, 0);
+  assert.equal(getRecordFor('Notícia teste', 'subscriber-1').status, 'sent');
+  assert.equal(getRecordFor('Notícia teste', 'subscriber-2').status, 'failed');
+  assert.equal(state.sentEmails.length, 1);
+
+  delete state.sendErrors['second@example.com'];
+  const retry = await notifyHandler.notifyLatestNews({ headers: { host: 'localhost:3000' } });
+
+  assert.equal(retry.sent, true);
+  assert.equal(state.sentEmails.length, 2);
+  assert.deepEqual(state.sendAttempts, [
+    'first@example.com',
+    'second@example.com',
+    'second@example.com'
+  ]);
+  assert.equal(getRecordFor('Notícia teste', 'subscriber-1').status, 'sent');
+  assert.equal(getRecordFor('Notícia teste', 'subscriber-2').status, 'sent');
+});
+
+test('ambiguous SMTP timeout is quarantined and is not resent automatically', async t => {
+  t.mock.method(console, 'error', () => {});
+  state.sendErrors['reader@example.com'] = Object.assign(new Error('SMTP timeout'), { code: 'ETIMEDOUT' });
+
+  await assert.rejects(
+    notifyHandler.notifyLatestNews({ headers: { host: 'localhost:3000' } }),
+    error => error.code === 'ETIMEDOUT'
+  );
+
+  assert.equal(getRecordFor('Notícia teste', 'subscriber-1').status, 'unknown');
+
+  const retry = await notifyHandler.notifyLatestNews({ headers: { host: 'localhost:3000' } });
+  assert.equal(retry.sent, false);
+  assert.equal(state.sendAttempts.length, 1);
+});
+
+test('new stories added to the same edition do not resend stories already delivered', async () => {
+  const request = { headers: { host: 'localhost:3000' } };
+  await notifyHandler.notifyLatestNews(request);
+  state.latestStories.push(makeStory('Nova notícia', 'https://example.com/new-story'));
+
+  const result = await notifyHandler.notifyLatestNews(request);
+
+  assert.equal(result.sent, true);
+  assert.equal(result.newStories, 1);
+  assert.equal(state.sentEmails.length, 2);
+  assert.match(state.sentEmails[1].text, /Nova notícia/);
+  assert.doesNotMatch(state.sentEmails[1].text, /Notícia teste/);
+});
+
+test('legacy story-level records prevent redelivery of previously completed stories', async () => {
+  state.legacyDeliveredKeys.add('https://example.com/notícia-teste');
+  const result = await notifyHandler.notifyLatestNews({ headers: { host: 'localhost:3000' } });
+
+  assert.equal(result.sent, false);
+  assert.equal(state.sendAttempts.length, 0);
+  assert.equal(state.deliveryRecords.size, 0);
 });
 
 test('newsletter records only SMTP-accepted sends as recipients', async t => {
@@ -137,14 +253,14 @@ test('newsletter records only SMTP-accepted sends as recipients', async t => {
   );
 
   assert.equal(state.sentEmails.length, 1);
-  assert.equal(state.insertedKeys.length, 0);
-  assert.equal(state.deliveredKeys.size, 0);
+  assert.equal(getRecordFor('Notícia teste', 'subscriber-1').status, 'failed');
 });
 
 test('notification endpoint requires authorization for POST requests', async () => {
   const response = {
     statusCode: null,
     body: null,
+    setHeader() {},
     status(code) {
       this.statusCode = code;
       return this;
