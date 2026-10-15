@@ -19,6 +19,7 @@ test('subscription form exposes a resend confirmation action after a request', a
 
   const resendButton = page.getByRole('button', { name: 'Reenviar confirmação' });
   await expect(resendButton).toBeVisible();
+  await page.getByRole('button', { name: 'Fechar' }).click();
   await resendButton.click();
 
   expect(requestCount).toBe(2);
@@ -26,7 +27,7 @@ test('subscription form exposes a resend confirmation action after a request', a
 });
 
 test('expired confirmation status links back to the resend flow', async ({ page }) => {
-  await page.goto('/subscription-status?status=invalid');
+  await page.goto('/subscription-status.html?status=invalid');
 
   await page.getByRole('link', { name: 'Reenviar confirmação' }).click();
   await expect(page).toHaveURL(/resend=1/);
