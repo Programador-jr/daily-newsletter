@@ -656,6 +656,10 @@ input:checked + .slider:before {
   cursor: wait;
 }
 
+.subscription-form button[hidden] {
+  display: none;
+}
+
 .subscription-form .subscription-secondary-button {
   border: 1px solid var(--border);
   background: var(--bg-container);
