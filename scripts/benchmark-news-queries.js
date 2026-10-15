@@ -81,7 +81,7 @@ async function main() {
     const counts = new Map();
     for (const row of rows) {
       if (!parseDate(row.editionDate)) continue;
-      if (latestDate && row.editionDate === latestDate && row.publishedAt && row.publishedAt !== latestDate) continue;
+      if (latestDate && row.editionDate === latestDate && row.publishedAt !== latestDate) continue;
       counts.set(row.editionDate, (counts.get(row.editionDate) || 0) + 1);
     }
     return [...counts].map(([date, stories]) => ({ date, stories, title: 'Edição de ' + date }))
@@ -132,6 +132,10 @@ async function main() {
 
 main().catch(async error => {
   console.error(error);
-  try { await require('mongoose').disconnect(); } catch {}
+  try {
+    await require('mongoose').disconnect();
+  } catch {
+    // Keep the original benchmark failure as the reported error.
+  }
   process.exitCode = 1;
 });
