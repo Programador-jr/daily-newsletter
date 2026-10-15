@@ -21,7 +21,7 @@ function escapeHtml(value = '') {
     .replaceAll("'", '&#039;');
 }
 
-async function notifyLatestNews(req) {
+async function notifyLatestNews() {
   try {
     await connectDatabase();
 
@@ -290,7 +290,7 @@ async function runAndRecord(req, trigger = 'notify-news') {
   }
 
   try {
-    const result = await notifyLatestNews(req);
+    const result = await notifyLatestNews();
     await NewsletterRun.updateOne({ _id: run._id }, {
       $set: {
         status: result.sent ? 'succeeded' : 'skipped',
