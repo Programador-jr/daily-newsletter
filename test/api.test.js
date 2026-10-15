@@ -15,7 +15,9 @@ const state = {
   notificationCalls: 0,
   bulkWriteResult: { upsertedCount: 0, modifiedCount: 0 },
   latestNews: [],
-  historyNews: []
+  historyNews: [],
+  rateLimitBlocked: false,
+  rateLimitCalls: []
 };
 
 const modules = {
@@ -64,6 +66,24 @@ const modules = {
       if (state.emailError) throw state.emailError;
       state.sentEmails.push(message);
     }
+  },
+  '../lib/rate-limiter': {
+    enforceRateLimits: async (req, res, checks) => {
+      state.rateLimitCalls.push(checks);
+      if (!state.rateLimitBlocked) return true;
+      res.setHeader('Retry-After', '60');
+      res.setHeader('Cache-Control', 'no-store');
+      res.status(429).json({ error: 'Muitas tentativas. Aguarde antes de tentar novamente.', retryAfterSeconds: 60 });
+      return false;
+    },
+    getClientIp: req => req.headers?.['x-real-ip'] || req.ip || 'test-ip',
+    getWindowConfig: () => ({
+      windowMs: 900000,
+      subscribeIpLimit: 10,
+      subscribeEmailLimit: 3,
+      adminIpLimit: 10,
+      adminUserLimit: 5
+    })
   },
   '../api/notify-news': {
     notifyLatestNews: async () => {
@@ -147,6 +167,8 @@ beforeEach(() => {
   state.bulkWriteResult = { upsertedCount: 0, modifiedCount: 0 };
   state.latestNews = [];
   state.historyNews = [];
+  state.rateLimitBlocked = false;
+  state.rateLimitCalls = [];
   process.env.NOTIFY_SECRET = 'test-notify-secret';
   process.env.APP_URL = 'http://localhost:3000';
 });
@@ -273,6 +295,25 @@ test('news publishing normalizes valid stories without sending notifications', a
   assert.equal(state.bulkWriteCalls[0][0][0].updateOne.update.$set.title, 'Notícia');
   assert.equal(response.body.notification, null);
   assert.equal(state.notificationCalls, 0);
+});
+
+test('subscription endpoint stops requests when the distributed rate limit is exceeded', async () => {
+  state.rateLimitBlocked = true;
+  const response = createResponse();
+
+  await subscribeHandler(createRequest({
+    method: 'POST',
+    headers: { 'x-real-ip': '203.0.113.10' },
+    body: { email: 'reader@example.com' }
+  }), response);
+
+  assert.equal(response.statusCode, 429);
+  assert.equal(response.headers['Retry-After'], '60');
+  assert.equal(response.headers['Cache-Control'], 'no-store');
+  assert.equal(state.databaseCalls, 0);
+  assert.equal(state.sentEmails.length, 0);
+  assert.equal(state.rateLimitCalls.length, 1);
+  assert.deepEqual(state.rateLimitCalls[0].map(check => check.scope), ['subscribe:ip', 'subscribe:email']);
 });
 
 test('subscription endpoint rejects unsupported methods and invalid email addresses', async () => {

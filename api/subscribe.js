@@ -2,6 +2,7 @@ const { connectDatabase } = require('../lib/db');
 const Subscriber = require('../lib/subscriber');
 const { createToken, hashToken } = require('../lib/tokens');
 const { sendEmail } = require('../lib/email');
+const { enforceRateLimits, getClientIp, getWindowConfig } = require('../lib/rate-limiter');
 
 const CONFIRMATION_TOKEN_TTL_MS = 24 * 60 * 60 * 1000;
 const CONFIRMATION_EMAIL_COOLDOWN_MS = 60 * 1000;
@@ -45,6 +46,29 @@ module.exports = async function handler(req, res) {
   }
 
   const email = String(req.body?.email || '').trim().toLowerCase();
+  const limits = getWindowConfig();
+  const rateLimitChecks = [{
+    scope: 'subscribe:ip',
+    identifier: getClientIp(req),
+    limit: limits.subscribeIpLimit,
+    windowMs: limits.windowMs
+  }];
+
+  if (isValidEmail(email)) {
+    rateLimitChecks.push({
+      scope: 'subscribe:email',
+      identifier: email,
+      limit: limits.subscribeEmailLimit,
+      windowMs: limits.windowMs
+    });
+  }
+
+  try {
+    if (!await enforceRateLimits(req, res, rateLimitChecks)) return;
+  } catch {
+    res.setHeader('Cache-Control', 'no-store');
+    return res.status(503).json({ error: 'A proteção contra tentativas excessivas está temporariamente indisponível.' });
+  }
 
   if (!isValidEmail(email)) {
     return res.status(400).json({ error: 'Informe um e-mail válido.' });

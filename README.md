@@ -122,6 +122,11 @@ Open [http://localhost:3000](http://localhost:3000).
 | Variable | Purpose |
 | --- | --- |
 | `MONGODB_URI` | MongoDB connection string. Required for news and subscription data. |
+| `RATE_LIMIT_WINDOW_MS` | Rate-limit window in milliseconds (default: 900000, 15 minutes). |
+| `RATE_LIMIT_SUBSCRIBE_IP_MAX` | Subscription requests per IP per window (default: 10). |
+| `RATE_LIMIT_SUBSCRIBE_EMAIL_MAX` | Attempts per normalized email per window (default: 3). |
+| `RATE_LIMIT_ADMIN_LOGIN_IP_MAX` | Admin login attempts per IP per window (default: 10). |
+| `RATE_LIMIT_ADMIN_LOGIN_USER_MAX` | Attempts per normalized username per window (default: 5). |
 | `EMAIL_USER` | SMTP account used by Nodemailer. |
 | `EMAIL_PASS` | SMTP password or provider-specific app password. |
 | `EMAIL_FROM` | Optional sender name and address; defaults to `EMAIL_USER`. |
