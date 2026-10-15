@@ -6,7 +6,27 @@ const {
   sessionCookie,
   verifyCredentials
 } = require('../lib/admin-auth');
+const rateLimiterPath = require.resolve('../lib/rate-limiter');
+const originalRateLimiterModule = require.cache[rateLimiterPath];
+require.cache[rateLimiterPath] = {
+  id: rateLimiterPath,
+  filename: rateLimiterPath,
+  loaded: true,
+  exports: {
+    enforceRateLimits: async () => true,
+    getClientIp: req => req.headers?.['x-real-ip'] || req.ip || 'test-ip',
+    getWindowConfig: () => ({
+      windowMs: 900000,
+      subscribeIpLimit: 10,
+      subscribeEmailLimit: 3,
+      adminIpLimit: 10,
+      adminUserLimit: 5
+    })
+  }
+};
 const login = require('../lib/api-handlers/admin/login');
+if (originalRateLimiterModule) require.cache[rateLimiterPath] = originalRateLimiterModule;
+else delete require.cache[rateLimiterPath];
 const dashboard = require('../lib/api-handlers/admin/dashboard');
 const dispatch = require('../lib/api-handlers/admin/dispatch');
 
