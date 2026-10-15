@@ -69,10 +69,14 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ message: GENERIC_MESSAGE });
     }
 
-    const isNewSubscriber = !subscriber;
-    if (isNewSubscriber) {
+    if (!subscriber) {
       subscriber = new Subscriber({
         email,
+        confirmed: false,
+        confirmationTokenHash: null,
+        confirmationTokenExpiresAt: null,
+        confirmationEmailSentAt: null,
+        unsubscribeTokenHash: null,
         subscribedAt: now
       });
     }
