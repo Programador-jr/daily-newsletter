@@ -2957,8 +2957,10 @@ body.sidebar-open {
 .site-update-panel {
   position: fixed;
   z-index: 1102;
-  top: calc(var(--site-header-height, 76px) + 1rem);
-  right: 1rem;
+  top: 50%;
+  left: calc(50% + 140px);
+  right: auto;
+  transform: translate(-50%, -50%);
   width: min(360px, calc(100vw - 2rem));
   height: auto;
   max-height: min(68vh, 520px);
@@ -3166,17 +3168,24 @@ body.site-update-active {
 @keyframes site-update-panel-in {
   from {
     opacity: 0;
-    transform: translateX(12px);
+    transform: translate(-50%, calc(-50% + 12px));
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate(-50%, -50%);
   }
 }
+@media (max-width: 1099px) {
+  .site-update-panel {
+    left: 50%;
+  }
+}
+
 @media (max-width: 600px) {
   .site-update-panel {
-    top: calc(var(--site-header-height, 76px) + 0.5rem);
-    right: 0.65rem;
+    top: 50%;
+    left: 50%;
+    right: auto;
     bottom: auto;
     width: calc(100vw - 1.3rem);
     max-height: min(64dvh, 440px);
