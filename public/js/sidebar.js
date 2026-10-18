@@ -50,6 +50,115 @@ const initializeBackToTop = () => {
   updateVisibility();
 };
 
+const appendMarkdownInline = (parent, source) => {
+  const tokenPattern = /(\[[^\]]+\]\(https?:\/\/[^)\s]+\)|\*\*[^*]+\*\*|__[^_]+__|~~[^~]+~~|\*[^*]+\*|_[^_]+_|\x60[^\x60]+\x60)/g;
+  let cursor = 0;
+  for (const match of source.matchAll(tokenPattern)) {
+    if (match.index > cursor) parent.append(document.createTextNode(source.slice(cursor, match.index)));
+    const token = match[0];
+    let element;
+    if (token.startsWith('[')) {
+      const link = token.match(/^\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)$/);
+      if (link) {
+        try {
+          const url = new URL(link[2]);
+          if (url.protocol === 'http:' || url.protocol === 'https:') {
+            element = document.createElement('a');
+            element.href = url.href;
+            element.target = '_blank';
+            element.rel = 'noopener noreferrer';
+            appendMarkdownInline(element, link[1]);
+          }
+        } catch { /* link inválido vira texto literal */ }
+      }
+    } else if (token.startsWith('**') || token.startsWith('__')) {
+      element = document.createElement('strong');
+      element.textContent = token.slice(2, -2);
+    } else if (token.startsWith('~~')) {
+      element = document.createElement('del');
+      element.textContent = token.slice(2, -2);
+    } else if (token.startsWith('\x60')) {
+      element = document.createElement('code');
+      element.textContent = token.slice(1, -1);
+    } else if (token.startsWith('*') || token.startsWith('_')) {
+      element = document.createElement('em');
+      element.textContent = token.slice(1, -1);
+    }
+    parent.append(element || document.createTextNode(token));
+    cursor = match.index + token.length;
+  }
+  if (cursor < source.length) parent.append(document.createTextNode(source.slice(cursor)));
+};
+
+const renderUpdateMarkdown = (container, markdown) => {
+  container.replaceChildren();
+  const lines = String(markdown || '').replace(/\r\n?/g, '\n').split('\n');
+  let index = 0;
+  const isBlockStart = line => /^(#{1,4}\s|[-*+]\s|\d+[.)]\s|>\s?|---+\s*$)/.test(line.trim()) || line.trim().startsWith('\x60\x60\x60');
+  while (index < lines.length) {
+    const line = lines[index].trim();
+    if (!line) { index += 1; continue; }
+    if (line.startsWith('\x60\x60\x60')) {
+      index += 1;
+      const codeLines = [];
+      while (index < lines.length && !lines[index].trim().startsWith('\x60\x60\x60')) codeLines.push(lines[index++]);
+      if (index < lines.length) index += 1;
+      const pre = document.createElement('pre');
+      const code = document.createElement('code');
+      code.textContent = codeLines.join('\n');
+      pre.append(code);
+      container.append(pre);
+      continue;
+    }
+    if (/^---+$/.test(line)) {
+      container.append(document.createElement('hr'));
+      index += 1;
+      continue;
+    }
+    const heading = line.match(/^(#{1,4})\s+(.+)$/);
+    if (heading) {
+      const element = document.createElement('h' + Math.min(4, heading[1].length + 2));
+      appendMarkdownInline(element, heading[2]);
+      container.append(element);
+      index += 1;
+      continue;
+    }
+    if (line.startsWith('>')) {
+      const quote = document.createElement('blockquote');
+      while (index < lines.length && lines[index].trim().startsWith('>')) {
+        const paragraph = document.createElement('p');
+        appendMarkdownInline(paragraph, lines[index++].trim().replace(/^>\s?/, ''));
+        quote.append(paragraph);
+      }
+      container.append(quote);
+      continue;
+    }
+    const listMatch = line.match(/^([-*+])\s+(.+)|^(\d+)[.)]\s+(.+)$/);
+    if (listMatch) {
+      const ordered = Boolean(listMatch[3]);
+      const list = document.createElement(ordered ? 'ol' : 'ul');
+      while (index < lines.length) {
+        const itemMatch = lines[index].trim().match(/^([-*+])\s+(.+)|^(\d+)[.)]\s+(.+)$/);
+        if (!itemMatch || Boolean(itemMatch[3]) !== ordered) break;
+        const item = document.createElement('li');
+        appendMarkdownInline(item, itemMatch[2] || itemMatch[4]);
+        list.append(item);
+        index += 1;
+      }
+      container.append(list);
+      continue;
+    }
+    const paragraphLines = [line];
+    index += 1;
+    while (index < lines.length && lines[index].trim() && !isBlockStart(lines[index].trim())) {
+      paragraphLines.push(lines[index++].trim());
+    }
+    const paragraph = document.createElement('p');
+    appendMarkdownInline(paragraph, paragraphLines.join(' '));
+    container.append(paragraph);
+  }
+};
+
 const initializeUpdateNotice = async () => {
   if (window.location.pathname === '/admin' || window.location.pathname === '/admin.html') return;
   try {
@@ -70,24 +179,16 @@ const initializeUpdateNotice = async () => {
       localStorage.setItem(browserKey, browserId);
     }
 
-    const countKey = `kings-newsletter:notice:${browserId}:${update.activationId}`;
+    const countKey = 'kings-newsletter:notice:' + browserId + ':' + update.activationId;
     const displayed = Number(localStorage.getItem(countKey) || 0);
     if (!Number.isSafeInteger(displayed) || displayed >= update.maxDisplays) return;
 
-    const overlay = document.createElement('div');
-    overlay.className = 'site-update-overlay';
-    overlay.setAttribute('role', 'presentation');
-    const dialog = document.createElement('section');
-    dialog.className = 'site-update-dialog';
-    dialog.setAttribute('role', 'dialog');
-    dialog.setAttribute('aria-modal', 'true');
-    dialog.setAttribute('aria-labelledby', 'site-update-title');
-    dialog.setAttribute('aria-describedby', 'site-update-copy');
-    const close = document.createElement('button');
-    close.className = 'site-update-close';
-    close.type = 'button';
-    close.setAttribute('aria-label', 'Fechar aviso');
-    close.textContent = '×';
+    const panel = document.createElement('aside');
+    panel.className = 'site-update-panel';
+    panel.setAttribute('role', 'region');
+    panel.setAttribute('aria-labelledby', 'site-update-title');
+    const header = document.createElement('div');
+    header.className = 'site-update-panel-header';
     const brand = document.createElement('div');
     brand.className = 'site-update-brand';
     const mark = document.createElement('span');
@@ -104,36 +205,36 @@ const initializeUpdateNotice = async () => {
     releaseLabel.textContent = 'NOTA DE RELEASE';
     brandCopy.append(brandName, releaseLabel);
     brand.append(mark, brandCopy);
+    const close = document.createElement('button');
+    close.className = 'site-update-close';
+    close.type = 'button';
+    close.setAttribute('aria-label', 'Fechar atualizações');
+    close.textContent = '×';
+    header.append(brand, close);
     const eyebrow = document.createElement('span');
     eyebrow.className = 'site-update-eyebrow';
     eyebrow.textContent = 'MUDANÇAS INCLUÍDAS';
     const heading = document.createElement('h2');
     heading.id = 'site-update-title';
     heading.textContent = update.title;
-    const changes = document.createElement('ul');
-    changes.id = 'site-update-copy';
-    changes.className = 'site-update-changes';
-    const entries = String(update.body || '').split(/\r?\n/).map(line => line.trim()).filter(Boolean);
-    for (const entry of entries) {
-      const item = document.createElement('li');
-      item.textContent = entry.replace(/^(?:[-*•]|\d+[.)])\s*/, '');
-      changes.append(item);
-    }
+    const body = document.createElement('div');
+    body.id = 'site-update-copy';
+    body.className = 'site-update-markdown';
+    renderUpdateMarkdown(body, update.body);
+    const footer = document.createElement('div');
+    footer.className = 'site-update-panel-footer';
     const acknowledge = document.createElement('button');
     acknowledge.className = 'site-update-acknowledge';
     acknowledge.type = 'button';
-    acknowledge.textContent = 'Entendi';
-    dialog.append(close, brand, eyebrow, heading, changes, acknowledge);
-    overlay.append(dialog);
-    document.body.append(overlay);
+    acknowledge.textContent = 'Fechar';
+    footer.append(acknowledge);
+    panel.append(header, eyebrow, heading, body, footer);
+    document.body.append(panel);
     localStorage.setItem(countKey, String(displayed + 1));
 
-    const dismiss = () => overlay.remove();
+    const dismiss = () => panel.remove();
     close.addEventListener('click', dismiss);
     acknowledge.addEventListener('click', dismiss);
-    overlay.addEventListener('click', event => { if (event.target === overlay) dismiss(); });
-    document.addEventListener('keydown', event => { if (event.key === 'Escape' && overlay.isConnected) dismiss(); });
-    acknowledge.focus();
   } catch {
     // Avisos são opcionais; falha de rede ou armazenamento não deve afetar a página.
   }
