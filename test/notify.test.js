@@ -160,7 +160,8 @@ test('notification delivery records each recipient and does not resend on retrie
     sent: true,
     editionDate: '06/10/2026',
     newStories: 1,
-    recipients: 1
+    recipients: 1,
+    failedRecipients: 0
   });
   assert.deepEqual(retry, {
     sent: false,
@@ -181,10 +182,10 @@ test('a partial batch failure retries only the recipient that failed', async t =
   ];
   state.sendErrors['second@example.com'] = Object.assign(new Error('SMTP rejected'), { code: 'EAUTH' });
 
-  await assert.rejects(
-    notifyHandler.notifyLatestNews({ headers: { host: 'localhost:3000' } }),
-    error => error.code === 'EAUTH'
-  );
+  const first = await notifyHandler.notifyLatestNews({ headers: { host: 'localhost:3000' } });
+  assert.equal(first.sent, true);
+  assert.equal(first.failedRecipients, 1);
+  assert.equal(first.recipients, 1);
 
   assert.equal(getRecordFor('Notícia teste', 'subscriber-1').status, 'sent');
   assert.equal(getRecordFor('Notícia teste', 'subscriber-2').status, 'failed');
@@ -208,10 +209,9 @@ test('ambiguous SMTP timeout is quarantined and is not resent automatically', as
   t.mock.method(console, 'error', () => {});
   state.sendErrors['reader@example.com'] = Object.assign(new Error('SMTP timeout'), { code: 'ETIMEDOUT' });
 
-  await assert.rejects(
-    notifyHandler.notifyLatestNews({ headers: { host: 'localhost:3000' } }),
-    error => error.code === 'ETIMEDOUT'
-  );
+  const first = await notifyHandler.notifyLatestNews({ headers: { host: 'localhost:3000' } });
+  assert.equal(first.sent, false);
+  assert.equal(first.failedRecipients, 1);
 
   assert.equal(getRecordFor('Notícia teste', 'subscriber-1').status, 'unknown');
 
@@ -264,10 +264,9 @@ test('newsletter records only SMTP-accepted sends as recipients', async t => {
   t.mock.method(console, 'error', () => {});
   state.emailResult = { accepted: [], rejected: ['reader@example.com'] };
 
-  await assert.rejects(
-    notifyHandler.notifyLatestNews({ headers: { host: 'localhost:3000' } }),
-    error => error.code === 'SMTP_NO_ACCEPTED_RECIPIENTS'
-  );
+  const result = await notifyHandler.notifyLatestNews({ headers: { host: 'localhost:3000' } });
+  assert.equal(result.sent, false);
+  assert.equal(result.failedRecipients, 1);
 
   assert.equal(state.sentEmails.length, 1);
   assert.equal(getRecordFor('Notícia teste', 'subscriber-1').status, 'failed');

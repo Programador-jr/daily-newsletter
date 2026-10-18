@@ -1065,13 +1065,16 @@ confirmDispatchButton.addEventListener('click', async () => {
     if (!response.ok) throw new Error(payload.error || 'Não foi possível iniciar o disparo.');
     setLoading(true, 'Atualizando resultados', 'Carregando o status final do envio…');
     await loadDashboard({ showLoader: false });
-    const message = payload.sent
-      ? `Concluído: ${payload.newStories} notícia(s); o SMTP aceitou ${payload.recipients} destinatário(s).`
-      : payload.newStories > 0
-        ? 'Nenhum e-mail foi enviado. Verifique se há assinantes confirmados.'
-        : 'Não havia notícias novas para enviar.';
+    const failedRecipients = Number(payload.failedRecipients || 0);
+    const message = failedRecipients > 0
+      ? `${payload.sent ? 'Envio parcial' : 'Envio não concluído'}: o SMTP aceitou ${Number(payload.recipients || 0)} destinatário(s); ${failedRecipients} destinatário(s) falharam. Consulte os registros de entrega antes de tentar novamente.`
+      : payload.sent
+        ? `Concluído: ${payload.newStories} notícia(s); o SMTP aceitou ${payload.recipients} destinatário(s).`
+        : payload.newStories > 0
+          ? 'Nenhum e-mail foi enviado. Verifique se há assinantes confirmados.'
+          : 'Não havia notícias novas para enviar.';
     dispatchMessage.textContent = message;
-    showToast(payload.sent ? 'Disparo concluído' : 'Disparo finalizado', message, payload.sent ? 'success' : 'warning', 6500);
+    showToast(failedRecipients > 0 ? 'Disparo com falhas' : payload.sent ? 'Disparo concluído' : 'Disparo finalizado', message, failedRecipients > 0 ? 'warning' : payload.sent ? 'success' : 'warning', 6500);
   } catch (error) {
     dispatchMessage.textContent = error.message;
     showToast('Falha no disparo', error.message, 'error', 6500);
