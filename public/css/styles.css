@@ -3413,4 +3413,5 @@ body.site-update-active {
   .site-palette-toggle,
   .site-palette-chevron,
   .site-palette-option { transition: none; }
+  .site-palette-options { animation: none; }
 }
