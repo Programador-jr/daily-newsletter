@@ -77,7 +77,7 @@
             paddingBottom: targetPaddingBottom
           }
         ],
-        { duration: 800, easing: "cubic-bezier(.4, 0, .2, 1)" }
+        { duration: 500, easing: "cubic-bezier(.4, 0, .2, 1)" }
       );
     } else {
       content.inert = true;
@@ -97,7 +97,7 @@
           },
           { height: "0px", opacity: 0, paddingTop: "0px", paddingBottom: "0px" }
         ],
-        { duration: 800, easing: "cubic-bezier(.4, 0, .2, 1)" }
+        { duration: 500, easing: "cubic-bezier(.4, 0, .2, 1)" }
       );
       state.animation.onfinish = () => {
         if (states.get(details) !== state) return;
