@@ -1,14 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="500" height="180" viewBox="0 0 500 180" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="92" viewBox="0 0 360 92" role="img" aria-labelledby="title desc">
   <title id="title">King's Newsletter</title>
-  <desc id="desc">A teal crown beside KING'S, with NEWSLETTER in spaced capitals below.</desc>
-  <rect width="500" height="180" fill="#ffffff"/>
-  <g fill="#087f70">
-    <path d="M39 48 L49 71 L61 44 L73 71 L84 48 L77 83 L46 83 Z"/>
-    <circle cx="39" cy="43" r="4.2"/>
-    <circle cx="61" cy="37" r="4.2"/>
-    <circle cx="84" cy="43" r="4.2"/>
-    <path d="M45 88 Q61 92 79 88 L77 94 Q61 98 47 94 Z"/>
+  <desc id="desc">The same teal crown used in the website header, with King's in Playfair Display and Newsletter below.</desc>
+  <g transform="translate(8 14) scale(1.05)">
+    <path d="M4 10 L13 18 L20 4 L28 18 L40 9 L36 31 L8 31 Z" fill="#0b766b"/>
+    <path d="M9 34 H36" stroke="#0b766b" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="4" cy="8" r="3" fill="#0b766b"/>
+    <circle cx="20" cy="3" r="3" fill="#0b766b"/>
+    <circle cx="41" cy="7" r="3" fill="#0b766b"/>
   </g>
-  <text x="105" y="76" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="500" letter-spacing="-1.5" fill="#123c3a">KING'S</text>
-  <text x="250" y="133" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="500" letter-spacing="6.5" fill="#123c3a">NEWSLETTER</text>
+  <text x="64" y="43" font-family="'Playfair Display', Georgia, serif" font-size="32" font-weight="700" letter-spacing="1" fill="#1c2d2a">KING'S</text>
+  <text x="65" y="69" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="600" letter-spacing="4" fill="#536762">NEWSLETTER</text>
 </svg>
