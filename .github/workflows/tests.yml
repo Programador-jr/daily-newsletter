@@ -1,8 +1,12 @@
 name: Tests
 
 on:
-  push:
   pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+
+permissions:
+  contents: read
 
 jobs:
   unit-tests:
