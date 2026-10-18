@@ -305,6 +305,7 @@ const initializeNavigation = () => {
   const header = document.querySelector(".site-header");
   const sidebarPreferences = sidebar?.querySelector(".site-sidebar-preferences");
   const preferencesLabel = sidebarPreferences?.querySelector(".site-sidebar-label");
+  const palettePicker = sidebarPreferences?.querySelector(".site-palette-picker");
   const headerLinks = header?.querySelector(".header-primary-links");
   const headerNav = header?.querySelector(".header-main-nav");
 
@@ -334,6 +335,8 @@ const initializeNavigation = () => {
       ?.remove();
     topPreferences.append(themeToggle);
   }
+  // Preserve the palette picker when the original preferences wrapper is removed.
+  if (palettePicker) topPreferences.append(palettePicker);
   sidebar.insertBefore(topPreferences, sidebarNav);
   sidebarPreferences?.remove();
 
