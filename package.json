@@ -4,7 +4,7 @@
   "description": "Daily newsletter featuring relevant news on politics, the economy, investments, technology, Brazil, and the world.",
   "main": "script.js",
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "node --watch server.js",
     "start": "node server.js",
     "test": "node --test test/api.test.js test/news-edition.test.js test/admin-auth.test.js test/admin-metrics.test.js test/admin-updates.test.js test/config.test.js test/email.test.js test/lib.test.js test/notify.test.js test/rate-limiter.test.js test/read-response-limited.test.js test/public-cache.test.js",
     "test:e2e": "playwright test",
@@ -32,8 +32,7 @@
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.63.0",
     "eslint": "^10.12.0",
-    "globals": "^17.13.0",
-    "nodemon": "^3.1.14"
+    "globals": "^17.13.0"
   },
   "engines": {
     "node": ">=20"
