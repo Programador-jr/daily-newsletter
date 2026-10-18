@@ -267,7 +267,7 @@ main
   align-items: center;
   justify-content: space-between;
   padding: 0 10px;
-  transition: background-color 800ms ease;
+  transition: background-color 500ms ease;
 }
 
 .slider:before {
@@ -288,9 +288,9 @@ main
   border-radius: 50%;
   z-index: 2;
   transition:
-    transform 800ms cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 800ms ease,
-    color 800ms ease;
+    transform 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 500ms ease,
+    color 500ms ease;
 }
 
 input:checked + .slider:before {
@@ -2222,7 +2222,7 @@ body.sidebar-open {
   border-radius: 999px;
   background: var(--switch-bg);
   box-sizing: border-box;
-  transition: background-color 800ms ease;
+  transition: background-color 500ms ease;
 }
 .theme-switch-track::before {
   position: absolute;
@@ -2235,8 +2235,8 @@ body.sidebar-open {
   background: var(--switch-circle);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
   transition:
-    transform 800ms cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 800ms ease;
+    transform 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 500ms ease;
 }
 .theme-switch-track i {
   position: relative;
@@ -2248,8 +2248,8 @@ body.sidebar-open {
   line-height: 22px;
   text-align: center;
   transition:
-    transform 800ms cubic-bezier(0.4, 0, 0.2, 1),
-    color 800ms ease;
+    transform 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 500ms ease;
 }
 .sidebar-theme-toggle[aria-pressed="true"] .theme-switch-track::before {
   transform: translateX(22px);
@@ -2285,7 +2285,7 @@ body.sidebar-open {
 }
 
 .header-theme-toggle #header-theme-icon {
-  transition: color 800ms ease;
+  transition: color 500ms ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
