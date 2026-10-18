@@ -14,13 +14,26 @@ const setTheme = theme => {
 };
 
 const allowedPalettes = new Set(["green", "blue", "purple", "red", "orange", "gray"]);
+const paletteDetails = {
+  green: { name: "King's Green", color: "#064e46" },
+  blue: { name: "Ocean Blue", color: "#2563eb" },
+  purple: { name: "Royal Purple", color: "#7c3aed" },
+  red: { name: "Crimson", color: "#b91c1c" },
+  orange: { name: "Amber", color: "#c65d16" },
+  gray: { name: "Graphite", color: "#52525b" }
+};
 const setPalette = palette => {
   const normalizedPalette = allowedPalettes.has(palette) ? palette : "green";
+  const details = paletteDetails[normalizedPalette];
   document.documentElement.setAttribute("data-palette", normalizedPalette);
   document.querySelectorAll("[data-palette-choice]").forEach(button => {
     const selected = button.dataset.paletteChoice === normalizedPalette;
     button.setAttribute("aria-pressed", String(selected));
   });
+  const currentName = document.getElementById("site-palette-current-name");
+  const currentSwatch = document.getElementById("site-palette-current-swatch");
+  if (currentName) currentName.textContent = details.name;
+  if (currentSwatch) currentSwatch.style.setProperty("--swatch", details.color);
 };
 
 setTheme(localStorage.getItem("theme"));
@@ -283,13 +296,30 @@ const initializeNavigation = () => {
   themeIcon = document.getElementById("theme-icon");
   setTheme(localStorage.getItem("theme"));
   setPalette(localStorage.getItem("site-palette"));
+  const paletteToggle = document.getElementById("site-palette-toggle");
+  const paletteOptions = document.getElementById("site-palette-options");
+  const setPalettePickerExpanded = expanded => {
+    if (!paletteToggle || !paletteOptions) return;
+    paletteToggle.setAttribute("aria-expanded", String(expanded));
+    paletteOptions.hidden = !expanded;
+  };
+  paletteToggle?.addEventListener("click", () => {
+    setPalettePickerExpanded(paletteToggle.getAttribute("aria-expanded") !== "true");
+  });
   document.querySelectorAll("[data-palette-choice]").forEach(button => {
     button.addEventListener("click", () => {
       const palette = button.dataset.paletteChoice;
       if (!allowedPalettes.has(palette)) return;
       localStorage.setItem("site-palette", palette);
       setPalette(palette);
+      setPalettePickerExpanded(false);
     });
+  });
+  paletteOptions?.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      setPalettePickerExpanded(false);
+      paletteToggle?.focus();
+    }
   });
   themeToggle?.addEventListener("click", event => {
     event.stopImmediatePropagation();
