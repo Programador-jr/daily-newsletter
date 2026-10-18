@@ -112,7 +112,7 @@ Crie um arquivo de ambiente local a partir do exemplo:
 cp .env.example .env
 ```
 
-Preencha as variáveis necessárias em `.env` (consulte [Variáveis de ambiente](#variáveis-de-ambiente) e inicie a aplicação:
+Preencha as variáveis necessárias em `.env` (consulte [Variáveis de ambiente](#variáveis-de-ambiente)) e inicie a aplicação:
 
 ```bash
 # Servidor de desenvolvimento com reinicialização automática
