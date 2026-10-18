@@ -167,6 +167,11 @@ const initializeUpdateNotice = async () => {
     const { update } = await response.json();
     if (!update?.activationId || !Number.isInteger(update.maxDisplays) || update.maxDisplays < 1) return;
 
+    // Keep this activation dismissed while the current tab session remains open.
+    // A new activationId can still display its own release note in the same session.
+    const sessionKey = 'kings-newsletter:notice-session:' + update.activationId;
+    if (sessionStorage.getItem(sessionKey) === 'dismissed') return;
+
     const browserKey = 'kings-newsletter:notice-browser-id';
     let browserId = localStorage.getItem(browserKey);
     if (!browserId) {
@@ -232,6 +237,7 @@ const initializeUpdateNotice = async () => {
     localStorage.setItem(countKey, String(displayed + 1));
 
     const dismiss = () => {
+      sessionStorage.setItem(sessionKey, 'dismissed');
       panel.remove();
       document.body.classList.remove('site-update-active');
       document.documentElement.classList.remove('site-update-active');
