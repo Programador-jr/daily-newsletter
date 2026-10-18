@@ -68,7 +68,9 @@ test('email delivery uses configured sender and logs a safe success event', asyn
   state.sendMail = async sentMessage => {
     assert.deepEqual(sentMessage, {
       from: 'Newsletter <sender@example.com>',
-      ...message
+      ...message,
+      disableFileAccess: true,
+      disableUrlAccess: true
     });
     return { messageId: 'message-123', accepted: ['reader@example.com'] };
   };
