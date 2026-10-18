@@ -221,20 +221,30 @@ const initializeUpdateNotice = async () => {
     body.id = 'site-update-copy';
     body.className = 'site-update-markdown';
     renderUpdateMarkdown(body, update.body);
-    const footer = document.createElement('div');
-    footer.className = 'site-update-panel-footer';
-    const acknowledge = document.createElement('button');
-    acknowledge.className = 'site-update-acknowledge';
-    acknowledge.type = 'button';
-    acknowledge.textContent = 'Fechar';
-    footer.append(acknowledge);
-    panel.append(header, eyebrow, heading, body, footer);
+    panel.append(header, eyebrow, heading, body);
     document.body.append(panel);
+    document.body.classList.add('site-update-active');
+    document.documentElement.classList.add('site-update-active');
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
     localStorage.setItem(countKey, String(displayed + 1));
 
-    const dismiss = () => panel.remove();
+    const dismiss = () => {
+      panel.remove();
+      document.body.classList.remove('site-update-active');
+      document.documentElement.classList.remove('site-update-active');
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      close.removeEventListener('click', dismiss);
+      document.removeEventListener('keydown', onKeydown);
+    };
+    const onKeydown = event => {
+      if (event.key === 'Escape') dismiss();
+    };
     close.addEventListener('click', dismiss);
-    acknowledge.addEventListener('click', dismiss);
+    document.addEventListener('keydown', onKeydown);
   } catch {
     // Avisos são opcionais; falha de rede ou armazenamento não deve afetar a página.
   }
