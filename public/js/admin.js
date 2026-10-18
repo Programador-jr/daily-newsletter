@@ -106,18 +106,111 @@ function updateState(update) {
   return 'Ativo';
 }
 
+function renderMarkdownPreview(container, markdown) {
+  container.replaceChildren();
+  const inline = (parent, text) => {
+    const pattern = /(\[[^\]]+\]\(https?:\/\/[^)\s]+\)|\*\*[^*]+\*\*|__[^_]+__|~~[^~]+~~|\*[^*]+\*|_[^_]+_|\x60[^\x60]+\x60)/g;
+    let cursor = 0;
+    for (const match of text.matchAll(pattern)) {
+      if (match.index > cursor) parent.append(document.createTextNode(text.slice(cursor, match.index)));
+      const token = match[0];
+      let node;
+      const link = token.match(/^\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)$/);
+      if (link) {
+        try {
+          const url = new URL(link[2]);
+          if (['http:', 'https:'].includes(url.protocol)) {
+            node = document.createElement('a');
+            node.href = url.href;
+            node.target = '_blank';
+            node.rel = 'noopener noreferrer';
+            node.textContent = link[1];
+          }
+        } catch { /* link inválido permanece como texto */ }
+      } else if (token.startsWith('**') || token.startsWith('__')) {
+        node = document.createElement('strong');
+        node.textContent = token.slice(2, -2);
+      } else if (token.startsWith('~~')) {
+        node = document.createElement('del');
+        node.textContent = token.slice(2, -2);
+      } else if (token.startsWith('\x60')) {
+        node = document.createElement('code');
+        node.textContent = token.slice(1, -1);
+      } else {
+        node = document.createElement('em');
+        node.textContent = token.slice(1, -1);
+      }
+      parent.append(node || document.createTextNode(token));
+      cursor = match.index + token.length;
+    }
+    if (cursor < text.length) parent.append(document.createTextNode(text.slice(cursor)));
+  };
+  const lines = String(markdown || '').replace(/\r\n?/g, '\n').split('\n');
+  let index = 0;
+  const isBlockStart = line => /^(#{1,4}\s|[-*+]\s|\d+[.)]\s|>\s?|---+\s*$)/.test(line.trim()) || line.trim().startsWith('\x60\x60\x60');
+  while (index < lines.length) {
+    const line = lines[index].trim();
+    if (!line) { index += 1; continue; }
+    if (line.startsWith('\x60\x60\x60')) {
+      index += 1;
+      const codeLines = [];
+      while (index < lines.length && !lines[index].trim().startsWith('\x60\x60\x60')) codeLines.push(lines[index++]);
+      if (index < lines.length) index += 1;
+      const pre = document.createElement('pre');
+      const code = document.createElement('code');
+      code.textContent = codeLines.join('\n');
+      pre.append(code);
+      container.append(pre);
+      continue;
+    }
+    if (/^---+$/.test(line)) { container.append(document.createElement('hr')); index += 1; continue; }
+    const heading = line.match(/^(#{1,4})\s+(.+)$/);
+    if (heading) {
+      const node = document.createElement('h' + Math.min(4, heading[1].length + 2));
+      inline(node, heading[2]);
+      container.append(node);
+      index += 1;
+      continue;
+    }
+    if (line.startsWith('>')) {
+      const quote = document.createElement('blockquote');
+      while (index < lines.length && lines[index].trim().startsWith('>')) {
+        const p = document.createElement('p');
+        inline(p, lines[index++].trim().replace(/^>\s?/, ''));
+        quote.append(p);
+      }
+      container.append(quote);
+      continue;
+    }
+    const listMatch = line.match(/^([-*+])\s+(.+)|^(\d+)[.)]\s+(.+)$/);
+    if (listMatch) {
+      const ordered = Boolean(listMatch[3]);
+      const list = document.createElement(ordered ? 'ol' : 'ul');
+      while (index < lines.length) {
+        const itemMatch = lines[index].trim().match(/^([-*+])\s+(.+)|^(\d+)[.)]\s+(.+)$/);
+        if (!itemMatch || Boolean(itemMatch[3]) !== ordered) break;
+        const item = document.createElement('li');
+        inline(item, itemMatch[2] || itemMatch[4]);
+        list.append(item);
+        index += 1;
+      }
+      container.append(list);
+      continue;
+    }
+    const paragraphLines = [line];
+    index += 1;
+    while (index < lines.length && lines[index].trim() && !isBlockStart(lines[index].trim())) paragraphLines.push(lines[index++].trim());
+    const p = document.createElement('p');
+    inline(p, paragraphLines.join(' '));
+    container.append(p);
+  }
+}
+
 function previewUpdate() {
   const title = document.querySelector('#update-title').value.trim();
   const body = document.querySelector('#update-body').value;
   document.querySelector('#update-preview-title').textContent = title || 'Título da atualização';
-  const list = document.querySelector('#update-preview-changes');
-  list.replaceChildren();
-  const entries = body.split(/\r?\n/).map(line => line.trim().replace(/^(?:[-*•]|\d+[.)])\s*/, '')).filter(Boolean);
-  for (const entry of entries.length ? entries : ['As mudanças desta versão aparecerão aqui.']) {
-    const item = document.createElement('li');
-    item.textContent = entry;
-    list.append(item);
-  }
+  renderMarkdownPreview(document.querySelector('#update-preview-changes'), body || 'As mudanças desta versão aparecerão aqui.');
 }
 
 function syncUpdatePublishControl() {
