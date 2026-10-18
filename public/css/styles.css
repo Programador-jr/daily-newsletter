@@ -2267,3 +2267,69 @@ body.subscription-popup-open {
 @keyframes site-update-fade{from{opacity:0}to{opacity:1}}@keyframes site-update-rise{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:480px){.site-update-dialog{padding:23px 19px}.site-update-brand{margin-bottom:18px}.site-update-changes{gap:9px}.site-update-acknowledge{width:100%}}
 @media(prefers-reduced-motion:reduce){.site-update-overlay,.site-update-dialog{animation:none}}
+
+
+/* AVISOS DE ATUALIZAÇÃO — painel lateral compacto */
+.site-update-panel {
+  position: fixed;
+  z-index: 1100;
+  top: 1rem;
+  right: 1rem;
+  width: min(360px, calc(100vw - 2rem));
+  max-height: min(72vh, 620px);
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  overflow: auto;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-right: 3px solid var(--primary);
+  border-radius: 12px;
+  background: var(--bg-container);
+  color: var(--text-main);
+  box-shadow: 0 14px 42px rgba(0, 0, 0, .2);
+  animation: site-update-panel-in .22s ease-out;
+}
+.site-update-panel-header,
+.site-update-panel-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+}
+.site-update-brand { display: flex; align-items: center; gap: .65rem; min-width: 0; }
+.site-update-mark { width: 34px; height: 34px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 9px; background: color-mix(in srgb, var(--primary) 12%, var(--card-bg)); color: var(--primary); }
+.site-update-brand-copy { display: grid; gap: .12rem; min-width: 0; }
+.site-update-brand-copy strong { font-size: .68rem; letter-spacing: .07em; }
+.site-update-brand-copy small { color: var(--text-muted); font-size: .58rem; font-weight: 800; letter-spacing: .12em; }
+.site-update-close { width: 30px; height: 30px; flex: 0 0 auto; border: 1px solid var(--border); border-radius: 7px; background: transparent; color: var(--text-muted); font-size: 1.25rem; line-height: 1; cursor: pointer; }
+.site-update-close:hover { border-color: var(--primary); color: var(--primary); }
+.site-update-eyebrow { display: block; color: var(--primary); font-size: .61rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.site-update-panel h2 { margin: -.35rem 0 0; font: 700 1.2rem/1.25 'Playfair Display', serif; overflow-wrap: anywhere; }
+.site-update-markdown { min-height: 0; overflow-wrap: anywhere; color: var(--text-muted); font-size: .82rem; line-height: 1.6; }
+.site-update-markdown > :first-child { margin-top: 0; }
+.site-update-markdown > :last-child { margin-bottom: 0; }
+.site-update-markdown p { margin: .45rem 0; }
+.site-update-markdown h3,
+.site-update-markdown h4,
+.site-update-markdown h5,
+.site-update-markdown h6 { margin: .7rem 0 .35rem; color: var(--text-main); font-size: .9rem; line-height: 1.35; }
+.site-update-markdown strong { color: var(--text-main); }
+.site-update-markdown ul,
+.site-update-markdown ol { display: grid; gap: .3rem; margin: .45rem 0; padding-left: 1.2rem; }
+.site-update-markdown li::marker { color: var(--primary); }
+.site-update-markdown a { color: var(--primary); text-decoration: underline; text-underline-offset: 2px; }
+.site-update-markdown blockquote { margin: .5rem 0; padding: .25rem .7rem; border-left: 2px solid var(--primary); color: var(--text-muted); }
+.site-update-markdown pre { max-width: 100%; overflow: auto; padding: .6rem; border: 1px solid var(--border); border-radius: 7px; background: var(--card-bg); font-size: .72rem; }
+.site-update-markdown code { padding: .08rem .25rem; border-radius: 4px; background: var(--card-bg); font-size: .92em; }
+.site-update-markdown pre code { padding: 0; background: transparent; }
+.site-update-markdown hr { border: 0; border-top: 1px solid var(--border); }
+.site-update-acknowledge { min-height: 34px; padding: .45rem .8rem; border: 1px solid var(--border); border-radius: 7px; background: var(--card-bg); color: var(--text-main); font: inherit; font-size: .75rem; font-weight: 700; cursor: pointer; }
+.site-update-acknowledge:hover { border-color: var(--primary); color: var(--primary); }
+@keyframes site-update-panel-in { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: translateX(0); } }
+@media (max-width: 600px) {
+  .site-update-panel { top: auto; right: .65rem; bottom: .65rem; width: calc(100vw - 1.3rem); max-height: min(62vh, 520px); padding: .9rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-update-panel { animation: none; }
+}

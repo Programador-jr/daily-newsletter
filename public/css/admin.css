@@ -94,3 +94,21 @@
 .update-editor-fields .update-publish-control i:after{top:3px;left:3px;width:13px;height:13px}
 .update-editor-fields .update-publish-control input:checked+i:after{transform:translateX(17px)}
 .update-editor-fields .update-publish-control input:focus-visible+i{outline:2px solid var(--green);outline-offset:4px}
+
+
+/* Prévia Markdown das notas de atualização */
+.update-preview-markdown { margin-top: .7rem; color: var(--muted, #a5b5af); font-size: .82rem; line-height: 1.6; overflow-wrap: anywhere; }
+.update-preview-markdown > :first-child { margin-top: 0; }
+.update-preview-markdown > :last-child { margin-bottom: 0; }
+.update-preview-markdown p { margin: .45rem 0; }
+.update-preview-markdown h3,
+.update-preview-markdown h4,
+.update-preview-markdown h5,
+.update-preview-markdown h6 { margin: .7rem 0 .35rem; color: var(--text, #edf4f0); font-size: .9rem; line-height: 1.35; }
+.update-preview-markdown ul,
+.update-preview-markdown ol { display: grid; gap: .3rem; margin: .45rem 0; padding-left: 1.2rem; }
+.update-preview-markdown li::marker { color: var(--accent, #66e3a1); }
+.update-preview-markdown a { color: var(--accent, #66e3a1); text-decoration: underline; overflow-wrap: anywhere; }
+.update-preview-markdown blockquote { margin: .5rem 0; padding: .25rem .7rem; border-left: 2px solid var(--accent, #66e3a1); }
+.update-preview-markdown pre { max-width: 100%; overflow: auto; padding: .6rem; border: 1px solid var(--line, #2c3d36); border-radius: 7px; }
+.update-preview-markdown code { padding: .08rem .25rem; border-radius: 4px; background: rgba(255,255,255,.06); font-size: .92em; }
