@@ -27,7 +27,7 @@ async function notifyLatestNews() {
 
     const latest = await News.find().select('editionDate').lean();
     if (!latest.length) {
-      return { sent: false, editionDate: null, newStories: 0, recipients: 0 };
+      return { sent: false, editionDate: null, newStories: 0, recipients: 0, failedRecipients: 0 };
     }
 
     const parseDate = value => {
@@ -60,12 +60,12 @@ async function notifyLatestNews() {
     const eligibleStories = stories.filter(story => !legacyDeliveredKeys.has(getNewsKey(story)));
 
     if (!eligibleStories.length) {
-      return { sent: false, editionDate: latestEditionDate, newStories: 0, recipients: 0 };
+      return { sent: false, editionDate: latestEditionDate, newStories: 0, recipients: 0, failedRecipients: 0 };
     }
 
     const subscribers = await Subscriber.find({ confirmed: true }).lean();
     if (!subscribers.length) {
-      return { sent: false, editionDate: latestEditionDate, newStories: eligibleStories.length, recipients: 0 };
+      return { sent: false, editionDate: latestEditionDate, newStories: eligibleStories.length, recipients: 0, failedRecipients: 0 };
     }
 
     const appUrl = getAppUrl();
@@ -293,11 +293,12 @@ async function runAndRecord(req, trigger = 'notify-news') {
     const result = await notifyLatestNews();
     await NewsletterRun.updateOne({ _id: run._id }, {
       $set: {
-        status: result.sent ? 'succeeded' : 'skipped',
+        status: result.failedRecipients > 0 ? 'failed' : result.sent ? 'succeeded' : 'skipped',
         completedAt: new Date(),
         editionDate: result.editionDate || null,
         newStories: result.newStories || 0,
-        recipients: result.recipients || 0
+        recipients: result.recipients || 0,
+        failedRecipients: result.failedRecipients || 0
       }
     });
     return result;
