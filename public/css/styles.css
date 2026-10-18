@@ -2669,9 +2669,14 @@ body.sidebar-open {
   .site-sidebar-header {
     border-bottom-color: var(--sidebar-border);
   }
-  .site-sidebar-preferences,
-  .sidebar-top-preferences {
+  .site-sidebar-preferences {
     display: none;
+  }
+  .sidebar-top-preferences {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
   }
   .site-sidebar-group,
   .site-sidebar-preferences {
