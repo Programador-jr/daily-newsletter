@@ -740,3 +740,55 @@
     padding: 0.75rem;
   }
 }
+
+
+/* CONTEXTO DINÂMICO — ferramenta visual de ideologias */
+.idea-axis-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.idea-axis-name > i {
+  color: var(--primary);
+  font-size: 0.95rem;
+}
+.idea-axis-context {
+  margin-top: 0.9rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+}
+.idea-context-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--text-main);
+  font-size: 0.82rem;
+}
+.idea-context-heading > i {
+  color: var(--primary);
+}
+.idea-axis-context > p {
+  margin: 0.45rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.65;
+}
+.idea-context-example {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 0.55rem;
+  margin-top: 0.75rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--border);
+}
+.idea-context-example > i {
+  padding-top: 0.2rem;
+  color: var(--primary);
+}
+.idea-context-example p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  line-height: 1.6;
+}
