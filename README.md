@@ -4,7 +4,9 @@
 
 ### The news that matters, with the context behind it.
 
-Daily coverage of Brazil and the world, presented with concise summaries, curated sources, and a growing guide to Brazilian history.
+Daily coverage of Brazil and the world, with concise summaries, curated sources, and guides to Brazilian history and civic education.
+
+[**English**](./README.md) · [Português (Brasil)](./README.pt-BR.md)
 
 <br>
 
@@ -22,38 +24,43 @@ Daily coverage of Brazil and the world, presented with concise summaries, curate
 
 ---
 
-The project also includes educational guides covering political ideologies, public policy, the three branches of government, and public offices.
-
 ## Contents
 
 - [About](#about)
 - [Features](#features)
-- [Built with](#built-with)
+- [Civic education](#civic-education)
+- [Technology stack](#technology-stack)
 - [Project structure](#project-structure)
 - [Getting started](#getting-started)
 - [Environment variables](#environment-variables)
-- [API](#api)
-- [Tests](#tests)
+- [Administration panel](#administration-panel)
+- [API reference](#api-reference)
+- [Testing](#testing)
+- [Email operations](#email-operations)
+- [Security and production operations](#security-and-production-operations)
+- [Runtime diagnostics and performance benchmarks](#runtime-diagnostics-and-performance-benchmarks)
 - [Deployment](#deployment)
 - [Contributing](#contributing)
 - [License](#license)
 
 ## About
 
-King's Newsletter is a responsive news platform for following current events and exploring the history behind them. It brings daily editions, searchable archives, and a Brazilian History section together with an email subscription flow.
+King's Newsletter is a responsive news platform for following current events and exploring the history and context behind them. It brings daily editions, searchable archives, email subscriptions, and a Brazilian History section together in one place.
 
 **Explore:** [Live website](https://dailynewsletter.vercel.app) · [Source code](https://github.com/Programador-jr/daily-newsletter) · [Report an issue](https://github.com/Programador-jr/daily-newsletter/issues)
 
 ## Features
 
-- **Daily editions** — current stories with summaries, context, publication dates, and source links.
+- **Daily editions** — stories with summaries, context, publication dates, and source links.
 - **Searchable archive** — browse previous editions and filter stories.
 - **Brazilian History** — an interactive timeline, historical milestones, presidents, governments, constitutions, and topic guides.
-- **Responsive interface** — works across desktop and mobile layouts, with light and dark themes.
-- **Email subscriptions** — double opt-in confirmation, unsubscribe links, and notifications when new editions are published.
-- **Delivery tracking** — records sent stories to avoid duplicate notifications.
+- **Civic education** — reference guides to political ideologies, public policy, public spending, and the constitutional roles of the three branches of government.
+- **Responsive interface** — desktop and mobile layouts, with light and dark themes.
+- **Email subscriptions** — confirmation flow, unsubscribe links, and notifications when new editions are published.
+- **Delivery tracking** — records sent stories to help prevent duplicate notifications.
+- **Administration panel** — subscriber, email delivery, news edition, and worker metrics, with controls for pending deliveries and worker scheduling.
 
-## Built with
+## Technology stack
 
 | Area | Technologies |
 | --- | --- |
@@ -62,6 +69,7 @@ King's Newsletter is a responsive news platform for following current events and
 | Data | MongoDB, Mongoose |
 | Email | Nodemailer |
 | Hosting | Vercel |
+| Testing | Node.js test runner, ESLint, Playwright |
 
 ## Project structure
 
@@ -70,13 +78,14 @@ King's Newsletter is a responsive news platform for following current events and
 ├── api/                  # News, subscription, confirmation, and notification handlers
 ├── data/                 # Example news data and schema
 ├── lib/                  # Database connection, models, email, and token helpers
-├── test/                 # API and utility tests (node:test)
+├── test/                 # API and utility tests
 ├── public/
 │   ├── css/              # Site and page styles
 │   ├── js/               # Browser-side behavior
-│   └── *.html            # Newsletter, editions, history, and president pages
-├── server.js             # Local Express server and routes
+│   └── *.html             # Newsletter, editions, history, and president pages
+├── scripts/              # Diagnostic and benchmark scripts
 ├── .github/workflows/    # Automated checks on pushes and pull requests
+├── server.js             # Local Express server and routes
 ├── vercel.json           # Vercel configuration
 └── package.json
 ```
@@ -89,7 +98,7 @@ King's Newsletter is a responsive news platform for following current events and
 - A MongoDB connection string for database-backed features
 - SMTP credentials for sending subscription and edition emails
 
-### Install
+### Installation
 
 ```bash
 git clone https://github.com/Programador-jr/daily-newsletter.git
@@ -103,7 +112,7 @@ Create a local environment file from the example:
 cp .env.example .env
 ```
 
-Add the required values to `.env` (see [Environment variables](#environment-variables)), then start the app:
+Add the required values to `.env` (see [Environment variables](#environment-variables)), then start the application:
 
 ```bash
 # Development server with automatic restart
@@ -130,9 +139,9 @@ Open [http://localhost:3000](http://localhost:3000).
 | `EMAIL_USER` | SMTP account used by Nodemailer. |
 | `EMAIL_PASS` | SMTP password or provider-specific app password. |
 | `EMAIL_FROM` | Optional sender name and address; defaults to `EMAIL_USER`. |
-| `APP_URL` | Public base URL used to generate confirmation and unsubscribe links. |
+| `APP_URL` | Canonical public base URL used to generate confirmation and unsubscribe links. |
 | `NOTIFY_SECRET` | Secret used to authorize protected news publishing and notification requests. |
-| `WORKER_CONTROL_SECRET` | Separate secret of at least 32 characters shared only by the site and worker control channel. |
+| `WORKER_CONTROL_SECRET` | Separate secret of at least 32 characters shared by the site and worker control channel. |
 | `ADMIN_USERNAME` | Username for the private administration panel. |
 | `ADMIN_PASSWORD` | Strong password for the private administration panel. |
 | `ADMIN_SESSION_SECRET` | Random signing key of at least 32 characters for administrator sessions. |
@@ -140,17 +149,17 @@ Open [http://localhost:3000](http://localhost:3000).
 
 Keep `.env` private. Never publish credentials or commit them to the repository. For Gmail, use an app password rather than your account password.
 
-### Painel administrativo
+## Administration panel
 
-O painel fica em `/admin` e exige usuário e senha. Configure `ADMIN_USERNAME`, `ADMIN_PASSWORD` e `ADMIN_SESSION_SECRET` no ambiente local e na Vercel. A chave de sessão deve ter pelo menos 32 caracteres e ser aleatória. O painel utiliza a conexão `MONGODB_URI` já configurada pelo site; sem essa variável, não consegue carregar os dados.
+The administration panel is available at `/admin` and requires a username and password. Configure `ADMIN_USERNAME`, `ADMIN_PASSWORD`, and `ADMIN_SESSION_SECRET` in your local environment and in Vercel. The session signing key must be random and at least 32 characters long. The panel uses the site's `MONGODB_URI`; without it, the panel cannot load data.
 
-O painel mostra inscritos confirmados e pendentes, quantidade de notícias da edição mais recente, notícias já entregues ou aguardando envio, mensagens aceitas ou rejeitadas pelo SMTP, falhas e execuções do worker. O botão **Disparar notícias pendentes** solicita confirmação e envia somente notícias ainda não registradas como entregues. Os novos registros de envio e execução passam a ser gravados a partir desta implementação; os logs antigos do console não são importados. Horários são exibidos em `America/Rio_Branco`. “Aceito” indica que o servidor SMTP recebeu a mensagem para processamento, não que ela chegou à caixa de entrada.
+The panel displays confirmed and pending subscribers, the latest edition's story count, delivered and pending stories, SMTP-accepted or rejected messages, failures, and worker executions. **Dispatch pending news** asks for confirmation and sends only stories not already recorded as delivered. Delivery and worker execution records are stored from the implementation that introduced these metrics; older console logs are not imported. Times are shown in `America/Rio_Branco`. “Accepted” means the SMTP server accepted the message for processing, not that it reached the recipient's inbox.
 
-O painel também configura a frequência do worker (de 1 a 168 horas), permite pausar ou retomar o agendamento e mostra a contagem regressiva e o último estado informado pelo processo. Configure o mesmo `WORKER_CONTROL_SECRET` no ambiente do site e no `.env` do worker; mantenha-o separado de `NOTIFY_SECRET`. O worker busca a configuração e publica seu estado por HTTPS de saída, a cada 30 segundos. Nenhuma porta pública ou IP fixo do worker é necessário. Configure essa variável também no ambiente de produção da Vercel e publique uma nova implantação para habilitar o controle remoto em produção.
+The panel also configures the worker interval (1–168 hours), lets administrators pause or resume scheduling, and shows a countdown and the latest status reported by the worker. Configure the same `WORKER_CONTROL_SECRET` in the site's environment and the worker's `.env`, and keep it separate from `NOTIFY_SECRET`. The worker fetches configuration and reports its status over outbound HTTPS every 30 seconds. It does not require a public port or fixed IP address. Set this variable in Vercel's production environment and redeploy to enable remote control in production.
 
-On startup, the server warns when MongoDB, email, or protected publishing is not configured. A partial SMTP configuration, an invalid `PORT`, or a non-HTTP `APP_URL` stops startup with a message that identifies the setting without printing its value.
+On startup, the server warns when MongoDB, email, or protected publishing is not configured. Partial SMTP configuration, an invalid `PORT`, or a non-HTTP `APP_URL` stops startup with a message identifying the setting without printing its value.
 
-## API
+## API reference
 
 | Method | Endpoint | Description |
 | --- | --- | --- |
@@ -172,7 +181,7 @@ On startup, the server warns when MongoDB, email, or protected publishing is not
 
 Edition dates use the `dd/mm/yyyy` format. Protected endpoints expect the configured secret in the `Authorization` header.
 
-## Tests
+## Testing
 
 Run the test suite with Node.js's built-in test runner:
 
@@ -181,7 +190,7 @@ npm test
 npm run lint
 ```
 
-Unit tests use stubs for MongoDB and email delivery, so they do not require external services or production credentials. The browser suite uses Playwright and Chromium. GitHub Actions runs unit tests on Node.js 18, 20, and 22, and runs lint and browser checks on Node.js 22 for every push and pull request. Browser traces and reports are uploaded when those checks fail.
+Unit tests use stubs for MongoDB and email delivery, so they do not require external services or production credentials. The browser suite uses Playwright and Chromium. GitHub Actions runs unit tests on Node.js 20 and 22 and runs lint and browser checks for pushes and pull requests. Browser traces and reports are uploaded when browser checks fail.
 
 Run browser tests locally after installing Chromium:
 
@@ -194,50 +203,23 @@ npm run test:e2e
 
 Email is sent through Gmail SMTP using Nodemailer. For local or production use, configure `EMAIL_USER` and `EMAIL_PASS`; Gmail accounts should use a Google app password, not the account password. `EMAIL_FROM` is optional and changes the displayed sender.
 
-The server emits structured `email.delivery.succeeded` and `email.delivery.failed` log events. Success logs include the SMTP message ID and accepted-recipient count; failure logs include a safe error code. Recipient addresses, message bodies, and credential values are intentionally excluded. In Vercel, inspect the project and function logs around the time an email was requested, then use the mail provider's delivery or security logs to investigate SMTP rejection, bounce, or spam-folder issues. SMTP acceptance confirms the provider accepted a message for processing; it does not guarantee inbox delivery.
+The server emits structured `email.delivery.succeeded` and `email.delivery.failed` log events. Success logs include the SMTP message ID and accepted-recipient count; failure logs include a safe error code. Recipient addresses, message bodies, and credential values are intentionally excluded. In Vercel, inspect project and function logs around the time an email was requested, then use the mail provider's delivery or security logs to investigate SMTP rejection, bounce, or spam-folder issues. SMTP acceptance confirms the provider accepted a message for processing; it does not guarantee inbox delivery.
 
-If email delivery fails, verify that both SMTP variables are configured, that the account permits SMTP/app-password access, and that the deployment is using the expected `APP_URL`. Do not paste credentials or full email payloads into issue reports.
+If email delivery fails, verify that both SMTP variables are configured, that the account permits SMTP/app-password access, and that the deployment uses the expected `APP_URL`. Do not paste credentials or full email payloads into issue reports.
 
-## Deployment
+## Security and production operations
 
-The project is configured for [Vercel](https://vercel.com/) and uses MongoDB for persistent data. Before deploying, add the required environment variables in the Vercel project settings. Set `APP_URL` to the public production URL so email links point to the correct site.
-
-## Contributing
-
-Bug reports, ideas, and improvements are welcome. Please [open an issue](https://github.com/Programador-jr/daily-newsletter/issues) to discuss larger changes before submitting a pull request. Run `npm test` before opening a pull request.
-
-## License
-
-This project is licensed under the [MIT License](./LICENSE).
-
----
-
-<div align="center">
-
-Made with coffee and JavaScript by **Daniel Melo**.
-
-</div>
-## Civic education
-
-The project includes reference pages covering political ideologies and public policies, with an emphasis on concepts, institutional context, public spending, implementation and evidence-based evaluation.
-
-The civic education area also includes a reference guide to the three branches of government and their constitutional roles.
-
-
-### Segurança e operação em produção
-
-- Configure `APP_URL` como origem canônica, por exemplo `https://seudominio.com`, sem caminho, query ou fragmento. Links enviados por e-mail não devem depender do cabeçalho `Host` recebido.
-- Em produção, `APP_URL` e `MONGODB_URI` são obrigatórias; a inicialização local falha com mensagem clara quando a configuração obrigatória está ausente.
-- O cancelamento de inscrição usa GET somente para exibir a confirmação e POST para efetivar a ação. Cabeçalhos de segurança são configurados no Vercel.
-- As consultas da Câmara e do Transferegov têm limites de tempo/tamanho, cache local com capacidade limitada e cache compartilhado no CDN para respostas públicas bem-sucedidas. A listagem de deputados e despesas usa `s-maxage=300` (5 min), a CEAP usa `s-maxage=1800` (30 min) e as emendas do Transferegov usam `s-maxage=600` (10 min); `stale-while-revalidate` permite servir dados temporariamente antigos enquanto o CDN atualiza o cache. Respostas de erro não recebem esses cabeçalhos, e a API de notícias não é colocada no cache compartilhado para evitar atrasos após a publicação de uma edição.
-- A busca no código da aplicação não encontrou uso direto de `url.parse()`. Como o aviso `DEP0169` precisa do stack trace do runtime/deploy para identificar sua dependência de origem, diagnostique com `NODE_OPTIONS=--trace-deprecation` no ambiente que reproduz o aviso; não atualize dependências às cegas sem identificar o emissor.
-
+- Set `APP_URL` to the canonical site origin (for example, `https://your-domain.com`), without a path, query string, or fragment. Email links must not depend on the incoming `Host` header.
+- In production, `APP_URL` and `MONGODB_URI` are required; startup reports missing required configuration clearly.
+- Unsubscribe uses GET only to display the confirmation page and POST to complete the action. Security headers are configured in Vercel.
+- Câmara dos Deputados and Transferegov queries use time and size limits, bounded local caching, and shared CDN caching for successful public responses. Deputy and spending lists use `s-maxage=300` (5 minutes), CEAP uses `s-maxage=1800` (30 minutes), and Transferegov amendments use `s-maxage=600` (10 minutes). `stale-while-revalidate` allows temporarily stale data while the CDN refreshes it. Error responses do not receive these cache headers, and the news API is not placed in shared CDN cache to avoid delaying newly published editions.
+- The application code does not directly call `url.parse()`. To identify the source of a `DEP0169` warning, reproduce it with `NODE_OPTIONS=--trace-deprecation` and inspect the runtime/deployment stack trace rather than updating dependencies blindly.
 
 ## Runtime diagnostics and performance benchmarks
 
 ### Trace Node.js deprecations
 
-The application code does not directly call `url.parse()`; the warning may originate in a transitive dependency or an unusual request path. CI now runs unit and browser tests with `NODE_OPTIONS=--trace-deprecation`, so any warning exercised by those tests includes its call stack. If the warning appears only in Vercel, temporarily set `NODE_OPTIONS=--trace-deprecation` in the Preview environment, redeploy, reproduce the affected request, and use the first non-Node.js frame in the log to identify the responsible package. Remove the temporary setting after collecting the trace.
+The application code does not directly call `url.parse()`; the warning may originate in a transitive dependency or an unusual request path. CI runs unit and browser tests with `NODE_OPTIONS=--trace-deprecation`, so warnings exercised by those tests include their call stack. If the warning appears only in Vercel, temporarily set `NODE_OPTIONS=--trace-deprecation` in the Preview environment, redeploy, reproduce the affected request, and use the first non-Node.js frame in the log to identify the responsible package. Remove the temporary setting after collecting the trace.
 
 ### Compare public API performance
 
@@ -254,4 +236,30 @@ The script records HTTP status, response size, individual timings, and median la
 
 ### Compare MongoDB edition queries
 
-With a read-only-capable `MONGODB_URI` pointing to a representative `kings_newsletter` database, run `node scripts/benchmark-news-queries.js`. It verifies that the current aggregation results match the Node-side baseline, records median timings, and reports MongoDB execution statistics when available. It is an opt-in diagnostic and is not run by CI because it requires a real database.
+With a read-only-capable `MONGODB_URI` pointing to a representative `kings_newsletter` database, run:
+
+```bash
+node scripts/benchmark-news-queries.js
+```
+
+The script verifies that current aggregation results match the Node-side baseline, records median timings, and reports MongoDB execution statistics when available. It is an opt-in diagnostic and is not run by CI because it requires a real database.
+
+## Deployment
+
+The project is configured for [Vercel](https://vercel.com/) and uses MongoDB for persistent data. Before deploying, add the required environment variables in the Vercel project settings. Set `APP_URL` to the public production URL so email links point to the correct site.
+
+## Contributing
+
+Bug reports, ideas, and improvements are welcome. Please [open an issue](https://github.com/Programador-jr/daily-newsletter/issues) to discuss larger changes before submitting a pull request. Run `npm test` and `npm run lint` before submitting changes.
+
+## License
+
+This project is licensed under the [MIT License](./LICENSE).
+
+---
+
+<div align="center">
+
+Made with coffee and JavaScript by **Daniel Melo**.
+
+</div>
