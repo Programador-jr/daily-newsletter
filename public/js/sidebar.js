@@ -295,7 +295,7 @@ const initializeNavigation = () => {
   const paletteToggle = document.getElementById("site-palette-toggle");
   const paletteOptions = document.getElementById("site-palette-options");
   let paletteOptionsAnimation = null;
-  const paletteMotionDuration = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 800;
+  const paletteMotionDuration = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 500;
   const clearPaletteAnimationStyles = () => {
     ["height", "opacity", "padding-top", "padding-bottom", "margin-top", "overflow"].forEach(property => {
       paletteOptions.style.removeProperty(property);
