@@ -85,7 +85,7 @@ King's Newsletter is a responsive news platform for following current events and
 │   ├── js/               # Browser-side behavior
 │   └── *.html             # Newsletter, editions, history, and president pages
 ├── scripts/              # Diagnostic and benchmark scripts
-├── .github/workflows/    # Automated checks on pushes and pull requests
+├── .github/workflows/    # Automated checks for pull requests targeting main
 ├── server.js             # Local Express server and routes
 ├── vercel.json           # Vercel configuration
 └── package.json
@@ -191,7 +191,7 @@ npm test
 npm run lint
 ```
 
-Unit tests use stubs for MongoDB and email delivery, so they do not require external services or production credentials. The browser suite uses Playwright and Chromium. GitHub Actions runs unit tests on Node.js 20 and 22 and runs lint and browser checks for pushes and pull requests. Browser traces and reports are uploaded when browser checks fail.
+Unit tests use stubs for MongoDB and email delivery, so they do not require external services or production credentials. The browser suite uses Playwright and Chromium. The workflow is configured to run unit tests on Node.js 20 and 22, lint, and browser checks for pull requests targeting `main`. Browser traces and reports are uploaded when browser checks fail.
 
 Run browser tests locally after installing Chromium:
 
