@@ -52,9 +52,10 @@ test('painel navega entre páginas internas e mostra o editor de atualizações'
   await expect(page.locator('#update-form')).toBeVisible();
   await expect(page.locator('#update-starts')).toHaveAttribute('type', 'datetime-local');
   await page.locator('#update-title').fill('Versão 2');
-  await page.locator('#update-body').fill('Nova navegação\nCorreção de avisos');
+  await page.locator('#update-body').fill('- **Nova navegação**\n- Correção de avisos');
   await expect(page.locator('#update-preview-title')).toHaveText('Versão 2');
   await expect(page.locator('#update-preview-changes li')).toHaveCount(2);
+  await expect(page.locator('#update-preview-changes strong')).toHaveText('Nova navegação');
 });
 
 test('administrador pode excluir nota após confirmar', async ({ page }) => {
