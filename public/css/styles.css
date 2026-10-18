@@ -3322,7 +3322,7 @@ body.site-update-active {
   display: none !important;
 }
 .site-palette-options:not([hidden]) {
-  animation: palette-options-enter 220ms cubic-bezier(.4, 0, .2, 1) both;
+  animation: palette-options-enter 800ms cubic-bezier(.4, 0, .2, 1) both;
 }
 @keyframes palette-options-enter {
   from {
