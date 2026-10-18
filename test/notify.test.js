@@ -167,7 +167,8 @@ test('notification delivery records each recipient and does not resend on retrie
     sent: false,
     editionDate: '06/10/2026',
     newStories: 0,
-    recipients: 0
+    recipients: 0,
+    failedRecipients: 0
   });
   assert.equal(state.sentEmails.length, 1);
   assert.equal(state.sendAttempts.length, 1);
