@@ -3128,7 +3128,6 @@ body.sidebar-open {
 }
 .site-update-acknowledge:hover {
   border-color: var(--primary);
-  color: var(--primary);
 }
 @keyframes site-update-panel-in {
   from {
