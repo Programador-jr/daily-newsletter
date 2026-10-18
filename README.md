@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./docs/assets/kings-newsletter-logo.svg" alt="King's Newsletter" width="320">
+<img src="https://cdn.shardcloud.app/4d7d8031-4b99-4759-afbc-1e01575b29d6/kingsNewsletter.png" alt="King's Newsletter" width="320">
 
 
 ### The news that matters, with the context behind it.
