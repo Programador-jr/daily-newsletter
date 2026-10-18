@@ -71,6 +71,7 @@ async function notifyLatestNews() {
     const appUrl = getAppUrl();
     const sentStoryKeys = new Set();
     let recipients = 0;
+    let failedRecipients = 0;
 
     const isAmbiguousDeliveryError = error => {
       const code = String(error && error.code || '').toUpperCase();
@@ -79,6 +80,12 @@ async function notifyLatestNews() {
         'ECONNABORTED', 'EPIPE', 'EAI_AGAIN', 'ESERVERTIMEOUT'
       ].includes(code);
     };
+
+    function logRecipientFailure(error) {
+      const rawCode = error && (error.code || error.name) || 'RECIPIENT_DELIVERY_FAILED';
+      const errorCode = /^[A-Z0-9_]+$/.test(rawCode) ? rawCode : 'RECIPIENT_DELIVERY_FAILED';
+      console.error(JSON.stringify({ event: 'newsletter.recipient.failed', code: errorCode }));
+    }
 
     async function reserveDelivery(story, subscriber) {
       const newsKey = getNewsKey(story);
@@ -153,7 +160,9 @@ async function notifyLatestNews() {
           },
           { $set: { status: 'failed', errorCode: 'DELIVERY_RESERVATION_FAILED' } }
         ).catch(() => {});
-        throw error;
+        failedRecipients += 1;
+        logRecipientFailure(error);
+        continue;
       }
 
       if (!reservations.length) continue;
@@ -174,7 +183,9 @@ async function notifyLatestNews() {
           { deliveryKey: { $in: reservations.map(item => item.deliveryKey) }, status: 'sending' },
           { $set: { status: 'failed', errorCode } }
         ).catch(() => {});
-        throw error;
+        failedRecipients += 1;
+        logRecipientFailure(error);
+        continue;
       }
 
       const unsubscribeUrl = appUrl + '/api/unsubscribe?token=' + unsubscribeToken;
@@ -219,7 +230,9 @@ async function notifyLatestNews() {
           { deliveryKey: { $in: reservations.map(item => item.deliveryKey) }, status: 'sending' },
           { $set: { status, errorCode } }
         ).catch(() => {});
-        throw error;
+        failedRecipients += 1;
+        logRecipientFailure(error);
+        continue;
       }
 
       const acceptedCount = emailResult && emailResult.accepted && emailResult.accepted.length || 0;
@@ -228,9 +241,9 @@ async function notifyLatestNews() {
           { deliveryKey: { $in: reservations.map(item => item.deliveryKey) }, status: 'sending' },
           { $set: { status: 'failed', errorCode: 'SMTP_NO_ACCEPTED_RECIPIENTS' } }
         );
-        throw Object.assign(new Error('O servidor SMTP não aceitou o destinatário.'), {
-          code: 'SMTP_NO_ACCEPTED_RECIPIENTS'
-        });
+        failedRecipients += 1;
+        logRecipientFailure({ code: 'SMTP_NO_ACCEPTED_RECIPIENTS' });
+        continue;
       }
 
       // If this persistence step fails after SMTP accepted the email, leave records
@@ -248,7 +261,8 @@ async function notifyLatestNews() {
       sent: sentStoryKeys.size > 0,
       editionDate: latestEditionDate,
       newStories: sentStoryKeys.size,
-      recipients
+      recipients,
+      failedRecipients
     };
   } catch (error) {
     console.error('Erro ao enviar atualizações:', error);
