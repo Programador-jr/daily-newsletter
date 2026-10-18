@@ -7,7 +7,7 @@
 
 Daily coverage of Brazil and the world, with concise summaries, curated sources, and guides to Brazilian history and civic education.
 
-[**English**](./README.md) · [Português (Brasil)](./README.pt-BR.md)
+**English** · [Português (Brasil)](./README.pt-BR.md)
 
 <br>
 
