@@ -294,10 +294,77 @@ const initializeNavigation = () => {
   setPalette(localStorage.getItem("site-palette"));
   const paletteToggle = document.getElementById("site-palette-toggle");
   const paletteOptions = document.getElementById("site-palette-options");
+  let paletteOptionsAnimation = null;
+  const paletteMotionDuration = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 800;
+  const clearPaletteAnimationStyles = () => {
+    ["height", "opacity", "padding-top", "padding-bottom", "margin-top", "overflow"].forEach(property => {
+      paletteOptions.style.removeProperty(property);
+    });
+  };
   const setPalettePickerExpanded = expanded => {
     if (!paletteToggle || !paletteOptions) return;
+    const wasExpanded = paletteToggle.getAttribute("aria-expanded") === "true";
+    if (wasExpanded === expanded && !paletteOptionsAnimation) return;
+
+    const currentStyles = getComputedStyle(paletteOptions);
+    const currentHeight = paletteOptions.hidden ? 0 : paletteOptions.getBoundingClientRect().height;
+    const currentOpacity = paletteOptions.hidden ? 0 : Number.parseFloat(currentStyles.opacity) || 1;
+    const currentPaddingTop = paletteOptions.hidden ? "0px" : currentStyles.paddingTop;
+    const currentPaddingBottom = paletteOptions.hidden ? "0px" : currentStyles.paddingBottom;
+    const currentMarginTop = paletteOptions.hidden ? "0px" : currentStyles.marginTop;
+
+    if (paletteOptionsAnimation) {
+      paletteOptionsAnimation.cancel();
+      paletteOptionsAnimation = null;
+    }
     paletteToggle.setAttribute("aria-expanded", String(expanded));
-    paletteOptions.hidden = !expanded;
+
+    if (paletteMotionDuration === 0) {
+      paletteOptions.hidden = !expanded;
+      clearPaletteAnimationStyles();
+      return;
+    }
+
+    if (expanded) paletteOptions.hidden = false;
+    const targetStyles = getComputedStyle(paletteOptions);
+    const targetHeight = expanded ? paletteOptions.scrollHeight : 0;
+    const targetPaddingTop = expanded ? targetStyles.paddingTop : "0px";
+    const targetPaddingBottom = expanded ? targetStyles.paddingBottom : "0px";
+    const targetMarginTop = expanded ? targetStyles.marginTop : "0px";
+
+    paletteOptions.style.overflow = "hidden";
+    paletteOptions.style.height = `${currentHeight}px`;
+    paletteOptions.style.opacity = String(currentOpacity);
+    paletteOptions.style.paddingTop = currentPaddingTop;
+    paletteOptions.style.paddingBottom = currentPaddingBottom;
+    paletteOptions.style.marginTop = currentMarginTop;
+    void paletteOptions.offsetHeight;
+
+    paletteOptionsAnimation = paletteOptions.animate([
+      {
+        height: `${currentHeight}px`,
+        opacity: currentOpacity,
+        paddingTop: currentPaddingTop,
+        paddingBottom: currentPaddingBottom,
+        marginTop: currentMarginTop,
+        transform: expanded ? "translateY(-5px)" : "translateY(0)"
+      },
+      {
+        height: `${targetHeight}px`,
+        opacity: expanded ? 1 : 0,
+        paddingTop: targetPaddingTop,
+        paddingBottom: targetPaddingBottom,
+        marginTop: targetMarginTop,
+        transform: expanded ? "translateY(0)" : "translateY(-5px)"
+      }
+    ], { duration: paletteMotionDuration, easing: "cubic-bezier(.4, 0, .2, 1)" });
+    const activeAnimation = paletteOptionsAnimation;
+    activeAnimation.onfinish = () => {
+      if (paletteOptionsAnimation !== activeAnimation) return;
+      paletteOptions.hidden = !expanded;
+      clearPaletteAnimationStyles();
+      paletteOptionsAnimation = null;
+    };
   };
   paletteToggle?.addEventListener("click", () => {
     setPalettePickerExpanded(paletteToggle.getAttribute("aria-expanded") !== "true");
