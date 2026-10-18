@@ -10,7 +10,7 @@ Daily coverage of Brazil and the world, presented with concise summaries, curate
 
 [![Visit the website](https://img.shields.io/badge/Visit_the_website-dailynewsletter.vercel.app-0B766B?style=for-the-badge&logo=vercel&logoColor=white)](https://dailynewsletter.vercel.app)
 
-[![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-5-000000?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](./LICENSE)
@@ -58,7 +58,7 @@ King's Newsletter is a responsive news platform for following current events and
 | Area | Technologies |
 | --- | --- |
 | Frontend | HTML, CSS, vanilla JavaScript |
-| Server | Node.js 18+, Express 5 |
+| Server | Node.js 20+, Express 5 |
 | Data | MongoDB, Mongoose |
 | Email | Nodemailer |
 | Hosting | Vercel |
@@ -85,7 +85,7 @@ King's Newsletter is a responsive news platform for following current events and
 
 ### Prerequisites
 
-- [Node.js 18 or newer](https://nodejs.org/)
+- [Node.js 20 or newer](https://nodejs.org/)
 - A MongoDB connection string for database-backed features
 - SMTP credentials for sending subscription and edition emails
 
