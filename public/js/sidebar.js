@@ -13,7 +13,22 @@ const setTheme = theme => {
   if (themeIcon) themeIcon.className = isDark ? "fas fa-sun" : "fas fa-moon";
 };
 
+const allowedPalettes = new Set(["green", "blue", "purple", "red", "orange", "gray"]);
+const setPalette = palette => {
+  const normalizedPalette = allowedPalettes.has(palette) ? palette : "green";
+  document.documentElement.setAttribute("data-palette", normalizedPalette);
+  document.querySelectorAll("[data-palette-choice]").forEach(button => {
+    const selected = button.dataset.paletteChoice === normalizedPalette;
+    button.setAttribute("aria-pressed", String(selected));
+  });
+};
+
 setTheme(localStorage.getItem("theme"));
+setPalette(localStorage.getItem("site-palette"));
+window.addEventListener("storage", event => {
+  if (event.key === "theme") setTheme(event.newValue);
+  if (event.key === "site-palette") setPalette(event.newValue);
+});
 window.addEventListener("storage", event => {
   if (event.key === "theme") setTheme(event.newValue);
 });
@@ -267,6 +282,15 @@ const initializeNavigation = () => {
   themeToggle = document.getElementById("theme-toggle");
   themeIcon = document.getElementById("theme-icon");
   setTheme(localStorage.getItem("theme"));
+  setPalette(localStorage.getItem("site-palette"));
+  document.querySelectorAll("[data-palette-choice]").forEach(button => {
+    button.addEventListener("click", () => {
+      const palette = button.dataset.paletteChoice;
+      if (!allowedPalettes.has(palette)) return;
+      localStorage.setItem("site-palette", palette);
+      setPalette(palette);
+    });
+  });
   themeToggle?.addEventListener("click", event => {
     event.stopImmediatePropagation();
     const theme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
