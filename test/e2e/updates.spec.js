@@ -23,7 +23,7 @@ test('aviso público respeita o limite de aparições por navegador e versão', 
   await expect(panel.locator('.site-update-markdown a')).toHaveAttribute('href', 'https://example.com/');
   await expect(panel).not.toContainText('disponível até');
   await expect(page.locator('.site-update-overlay')).toHaveCount(0);
-  await panel.getByRole('button', { name: 'Fechar' }).click();
+  await panel.getByRole('button', { name: 'Fechar' }).first().click();
 
   await page.reload();
   await expect(page.getByRole('region', { name: 'Novidades da newsletter' })).toBeVisible();
