@@ -3026,7 +3026,6 @@ body.sidebar-open {
 }
 .site-update-close:hover {
   border-color: var(--primary);
-  color: var(--primary);
 }
 .site-update-eyebrow {
   display: block;
