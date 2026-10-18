@@ -1,6 +1,7 @@
 <div align="center">
 
-# King's Newsletter
+<img src="./docs/assets/kings-newsletter-logo.svg" alt="King's Newsletter" width="320">
+
 
 ### The news that matters, with the context behind it.
 
