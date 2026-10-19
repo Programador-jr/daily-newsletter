@@ -461,6 +461,11 @@ input:checked + .slider:before {
   background: color-mix(in srgb, var(--primary) 12%, var(--card-bg));
 }
 
+#featured-news .spotlight-card h2,
+.news-grid .story h2 {
+  color: var(--primary);
+}
+
 #featured-news .spotlight-card h2 {
   max-width: 30ch;
   margin-bottom: 0.85rem;
