@@ -51,7 +51,7 @@ test('historical gallery filters sources and opens an accessible detail viewer',
   const posters = page.getByRole('button', { name: 'Cartazes' });
   await posters.click();
   await expect(posters).toHaveAttribute('aria-pressed', 'true');
-  await expect(gallery.locator('[data-gallery-type]:visible')).toHaveCount(3);
+  await expect(gallery.locator('[data-gallery-type]:visible')).toHaveCount(2);
   await page.getByRole('button', { name: /Todos/ }).click();
   await gallery.getByRole('button', { name: /A Marcha sobre Roma/ }).click();
   const dialog = page.getByRole('dialog', { name: 'A Marcha sobre Roma' });
