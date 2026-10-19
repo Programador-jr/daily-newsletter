@@ -16,3 +16,39 @@
 .timeline-note { margin-top: 1.25rem; padding: 1rem 1.15rem; border-left: 3px solid var(--primary); border-radius: 0 8px 8px 0; background: var(--card-bg); color: var(--text-muted); font-size: .84rem; line-height: 1.7; }
 .timeline-note strong { color: var(--text-main); }
 @media (max-width: 600px) { .history-timeline { gap: .75rem; } .history-timeline::before { left: .35rem; } .timeline-event { grid-template-columns: 1fr; gap: .35rem; padding-left: 1.25rem; } .timeline-date { padding: 0; text-align: left; } .timeline-event > div { padding: 1rem; } .timeline-event > div::before { top: -.95rem; left: -1.33rem; width: .55rem; height: .55rem; } }
+
+/* Linha do tempo interativa de fascismo e nazismo: reutiliza os modos da História do Brasil. */
+.civic-timeline-controls { margin: 0 0 1.1rem; }
+.historical-context .timeline-view-options { margin: 0 0 .85rem; }
+.historical-context .timeline { margin-bottom: 1.25rem; }
+.historical-context .timeline-card { text-align: left; }
+.historical-context .timeline-card span:last-child { font-weight: 400; }
+.fascism-timeline-detail.open { position: fixed; z-index: 1200; inset: 0; display: grid; place-items: center; padding: 1rem; }
+.fascism-timeline-detail .history-detail-backdrop { position: absolute; inset: 0; background: rgba(12, 18, 28, .62); backdrop-filter: blur(3px); }
+.fascism-timeline-detail .history-detail-dialog { position: relative; z-index: 1; width: min(760px, 100%); max-height: min(82vh, 850px); overflow-y: auto; padding: 1.5rem; border: 1px solid var(--border); border-radius: 16px; background: var(--bg-container); color: var(--text-main); box-shadow: 0 24px 80px rgba(0,0,0,.25); }
+.fascism-timeline-detail .history-accordion-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.fascism-timeline-detail .history-accordion-header h2 { margin: .4rem 0; font-family: "Playfair Display", serif; font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.25; }
+.fascism-timeline-detail .detail-kicker, .fascism-timeline-detail .detail-years { color: var(--primary); font-size: .78rem; font-weight: 700; }
+.fascism-timeline-detail .accordion-close { flex: 0 0 auto; width: 40px; height: 40px; border: 1px solid var(--border); border-radius: 8px; background: var(--card-bg); color: var(--text-main); cursor: pointer; }
+.fascism-timeline-detail .history-accordion-lead { margin: 1.2rem 0; padding: .9rem 1rem; border-left: 3px solid var(--primary); background: var(--card-bg); color: var(--text-main); }
+.fascism-event-content p { color: var(--text-muted); font-size: .95rem; line-height: 1.8; }
+body.history-detail-open { overflow: hidden; }
+@media (max-width: 768px) {
+  .civic-timeline-controls { margin: 0 0 1rem; padding: .75rem; align-items: stretch; flex-direction: column; }
+  .civic-timeline-controls .history-search { width: 100%; flex: 1 1 auto; }
+  .historical-context .timeline-view-options { justify-content: flex-start; }
+  .historical-context .timeline.mode-globe { padding-right: .4rem; padding-left: .4rem; }
+  .historical-context .timeline.mode-globe::before { left: 72px; }
+  .historical-context .timeline.mode-globe .timeline-item { grid-template-columns: 55px 26px minmax(0, 1fr); }
+  .historical-context .timeline.mode-globe .timeline-year { font-size: .62rem; white-space: normal; overflow-wrap: anywhere; }
+  .historical-context .timeline.mode-globe .timeline-card { padding: .8rem; }
+  .historical-context .timeline.mode-globe .timeline-card strong { font-size: 1rem; }
+  .historical-context .timeline.mode-globe .timeline-card span:last-child { font-size: .76rem; }
+  .fascism-timeline-detail .history-detail-dialog { padding: 1.1rem; }
+}
+@media (max-width: 520px) {
+  .historical-context .timeline.mode-grid { grid-template-columns: 1fr; }
+  .historical-context .timeline.mode-list .timeline-item { grid-template-columns: 76px minmax(0, 1fr); gap: .55rem; }
+  .historical-context .timeline.mode-list .timeline-year { font-size: .65rem; }
+  .historical-context .timeline.mode-globe { height: 250px; min-height: 250px; }
+}
