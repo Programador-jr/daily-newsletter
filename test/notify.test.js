@@ -241,7 +241,8 @@ test('the same source can be delivered again in a different edition', async () =
   await notifyHandler.notifyLatestNews(request);
   state.latestStories.push({
     ...makeStory('Notícia teste'),
-    editionDate: '07/10/2026'
+    editionDate: '07/10/2026',
+    publishedAt: '07/10/2026'
   });
 
   const result = await notifyHandler.notifyLatestNews(request);
