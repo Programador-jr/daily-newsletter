@@ -61,3 +61,29 @@ body.history-detail-open { overflow: hidden; }
 .historical-context .timeline-more i { font-size: .65rem; transition: transform 160ms ease; }
 .historical-context .timeline-item:hover .timeline-more i, .historical-context .timeline-item:focus-visible .timeline-more i { transform: translateX(3px); }
 .fascism-event-content p + p { margin-top: 1rem; }
+
+
+/* Comparação interativa entre fascismo italiano e nazismo alemão. */
+.fascism-comparison .section-heading { align-items: end; }
+.comparison-tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1rem; }
+.comparison-tabs [role="tab"] { min-height: 42px; padding: .65rem .9rem; border: 1px solid var(--border); border-radius: 8px; background: var(--card-bg); color: var(--text-main); font: inherit; font-size: .8rem; font-weight: 700; cursor: pointer; }
+.comparison-tabs [role="tab"][aria-selected="true"] { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 10%, var(--card-bg)); color: var(--primary); }
+.comparison-tabs [role="tab"]:focus-visible, .comparison-panel:focus-visible { outline: 3px solid color-mix(in srgb, var(--primary) 48%, transparent); outline-offset: 3px; }
+.comparison-panel { padding: 1rem; border: 1px solid var(--border); border-radius: 12px; background: color-mix(in srgb, var(--primary) 3%, var(--card-bg)); }
+.comparison-regimes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; }
+.comparison-regime { min-width: 0; padding: 1.1rem; border: 1px solid var(--border); border-radius: 10px; background: var(--card-bg); }
+.comparison-regime .eyebrow { display: inline-flex; align-items: center; gap: .45rem; }
+.comparison-regime h3 { margin: .35rem 0 .55rem; font-family: "Playfair Display", serif; font-size: 1.2rem; }
+.comparison-regime p, .comparison-takeaway { color: var(--text-muted); font-size: .86rem; line-height: 1.7; }
+.comparison-takeaway { margin: .9rem 0 0; padding: .8rem .9rem; border-left: 3px solid var(--primary); border-radius: 0 7px 7px 0; background: var(--card-bg); }
+.comparison-takeaway strong { color: var(--text-main); }
+.comparison-sources { display: flex; flex-wrap: wrap; align-items: baseline; gap: .45rem .9rem; margin-top: .9rem; font-size: .76rem; }
+.comparison-sources > span { color: var(--text-muted); font-weight: 700; }
+.comparison-sources a { color: var(--primary); text-underline-offset: 3px; }
+@media (max-width: 600px) {
+  .comparison-tabs { display: grid; grid-template-columns: 1fr; }
+  .comparison-tabs [role="tab"] { width: 100%; text-align: left; }
+  .comparison-panel { padding: .75rem; }
+  .comparison-regimes { grid-template-columns: 1fr; }
+  .comparison-regime { padding: .95rem; }
+}
