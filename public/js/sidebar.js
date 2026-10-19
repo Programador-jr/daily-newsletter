@@ -18,9 +18,9 @@ const paletteDetails = {
   green: { name: "King's Green", color: "#064e46" },
   blue: { name: "Ocean Blue", color: "#2563eb" },
   purple: { name: "Royal Purple", color: "#7c3aed" },
-  red: { name: "Crimson", color: "#b91c1c" },
+  red: { name: "Imperial Red", color: "#D50032" },
   orange: { name: "Amber", color: "#c65d16" },
-  gray: { name: "Graphite", color: "#52525b" }
+  gray: { name: "Mission Gold", color: "#f5c518" }
 };
 const setPalette = palette => {
   const normalizedPalette = allowedPalettes.has(palette) ? palette : "green";
