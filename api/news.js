@@ -70,7 +70,6 @@ module.exports = async function handler(req, res) {
           { $addFields: { _editionSort: { $dateFromString: { dateString: '$editionDate', format: '%d/%m/%Y', onError: null, onNull: null } } } },
           { $match: { _editionSort: { $ne: null } } }
         ];
-        if (latestDate) pipeline.push({ $match: { $or: [{ editionDate: { $ne: latestDate } }, { publishedAt: latestDate }] } });
         pipeline.push(
           { $group: { _id: '$editionDate', stories: { $sum: 1 }, _editionSort: { $max: '$_editionSort' } } },
           { $sort: { _editionSort: -1 } },
@@ -90,7 +89,6 @@ module.exports = async function handler(req, res) {
       }
 
       const filter = { editionDate: date };
-      if (date === latestDate) filter.publishedAt = date;
       const stories = await News.aggregate([
         { $match: filter },
         { $addFields: { _publishedSort: { $dateFromString: { dateString: '$publishedAt', format: '%d/%m/%Y', onError: null, onNull: null } } } },
