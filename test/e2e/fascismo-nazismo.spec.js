@@ -45,6 +45,11 @@ test('comparison fits mobile viewport without horizontal overflow', async ({ pag
 
 
 test('historical gallery filters sources and opens an accessible detail viewer', async ({ page }) => {
+  await page.route('**/api/updates/active', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ update: null })
+  }));
   await page.goto('/fascismo-nazismo');
   const gallery = page.locator('[data-historical-gallery]');
   await expect(gallery.locator('[data-gallery-type]:visible')).toHaveCount(44);
@@ -56,7 +61,7 @@ test('historical gallery filters sources and opens an accessible detail viewer',
   await expect(posters).toHaveAttribute('aria-pressed', 'true');
   await expect(gallery.locator('[data-gallery-type]:visible')).toHaveCount(15);
   await expect(page.locator('[data-gallery-count="cartaz"]')).toHaveText('15');
-  await page.getByRole('button', { name: /Todos/ }).click();
+  await page.locator('[data-gallery-filter="todos"]').click();
   await gallery.getByRole('button', { name: /A Marcha sobre Roma/ }).click();
   const dialog = page.getByRole('dialog', { name: 'A Marcha sobre Roma' });
   await expect(dialog).toBeVisible();
