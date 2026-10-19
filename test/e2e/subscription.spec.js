@@ -1,6 +1,11 @@
 const { expect, test } = require('@playwright/test');
 
 test('subscription form exposes a resend confirmation action after a request', async ({ page }) => {
+  await page.route('**/api/updates/active', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ update: null })
+  }));
   let requestCount = 0;
   await page.route('**/api/subscribe', async route => {
     requestCount += 1;
@@ -19,7 +24,7 @@ test('subscription form exposes a resend confirmation action after a request', a
 
   const resendButton = page.getByRole('button', { name: 'Reenviar confirmação' });
   await expect(resendButton).toBeVisible();
-  await page.getByRole('button', { name: 'Fechar' }).click();
+  await page.getByRole('button', { name: 'Fechar', exact: true }).click();
   await resendButton.click();
 
   expect(requestCount).toBe(2);
@@ -27,6 +32,11 @@ test('subscription form exposes a resend confirmation action after a request', a
 });
 
 test('expired confirmation status links back to the resend flow', async ({ page }) => {
+  await page.route('**/api/updates/active', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ update: null })
+  }));
   await page.goto('/subscription-status.html?status=invalid');
 
   await page.getByRole('link', { name: 'Reenviar confirmação' }).click();

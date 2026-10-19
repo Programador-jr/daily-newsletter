@@ -1,200 +1,1112 @@
 <!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Contexto histórico, características e diferenças entre fascismo italiano e nazismo alemão.">
-  <title>King's Newsletter - Fascismo e Nazismo</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/styles.css"><link rel="stylesheet" href="/css/historia.css"><link rel="stylesheet" href="/css/politica.css"><link rel="stylesheet" href="/css/fascismo-nazismo.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="history-page civic-page">
-  <div class="container">
-    <header class="site-header"><a class="logo" href="/" aria-label="Página inicial"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></a><nav class="header-main-nav" aria-label="Navegação principal"><div class="header-primary-links"></div><div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div></nav></header>
-    <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true"><div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div><nav class="site-sidebar-nav" aria-label="Páginas principais"><div class="site-sidebar-group"></div></nav><div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false"><span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div></aside>
-    <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
-    <main>
-      <section class="history-hero civic-hero"><span class="eyebrow">Política · História</span><h1>Fascismo e Nazismo: conceitos com contexto histórico.</h1><p>Dois movimentos autoritários que transformaram regimes, sociedades e a história do século XX. Estudá-los com precisão ajuda a compreender seus crimes e evita que os nomes percam significado quando usados como insultos genéricos.</p></section>
-      <section class="civic-principle"><span class="civic-principle-mark"><i class="fas fa-circle-exclamation" aria-hidden="true"></i></span><div><span class="eyebrow">Precisão conceitual</span><h2>O que fascismo significa — e o que não significa</h2><p>Fascismo designa uma família histórica de movimentos e regimes ultranacionalistas, antiliberais e autoritários, surgida na Europa no início do século XX. O termo não é sinônimo automático de conservadorismo, direita, ditadura ou de uma pessoa autoritária. O uso analítico depende de características, período e contexto.</p></div></section>
-      <section class="civic-section fascism-comparison-section" id="comparacao">
-  <div class="section-heading"><div><span class="eyebrow">Comparação interativa</span><h2>Dois regimes, semelhanças e diferenças</h2></div><p>Selecione um tema para comparar os regimes em seu contexto histórico. As semelhanças não apagam diferenças fundamentais.</p></div>
-  <div class="comparison-widget" data-comparison>
-    <div class="comparison-tabs" role="tablist" aria-label="Dimensões da comparação">
-      <button type="button" role="tab" id="compare-tab-origem" aria-controls="compare-panel" aria-selected="false" tabindex="-1" data-topic="origem">Origem histórica</button>
-      <button type="button" role="tab" id="compare-tab-ideologia" aria-controls="compare-panel" aria-selected="true" tabindex="0" data-topic="ideologia">Ideologia</button>
-      <button type="button" role="tab" id="compare-tab-politica" aria-controls="compare-panel" aria-selected="false" tabindex="-1" data-topic="politica">Organização política</button>
-      <button type="button" role="tab" id="compare-tab-propaganda" aria-controls="compare-panel" aria-selected="false" tabindex="-1" data-topic="propaganda">Propaganda</button>
-      <button type="button" role="tab" id="compare-tab-repressao" aria-controls="compare-panel" aria-selected="false" tabindex="-1" data-topic="repressao">Repressão</button>
-      <button type="button" role="tab" id="compare-tab-racismo" aria-controls="compare-panel" aria-selected="false" tabindex="-1" data-topic="racismo">Racismo e antissemitismo</button>
-      <button type="button" role="tab" id="compare-tab-expansao" aria-controls="compare-panel" aria-selected="false" tabindex="-1" data-topic="expansao">Expansionismo</button>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Contexto histórico, características e diferenças entre fascismo italiano e nazismo alemão."
+    />
+    <title>King's Newsletter - Fascismo e Nazismo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/historia.css" />
+    <link rel="stylesheet" href="/css/politica.css" />
+    <link rel="stylesheet" href="/css/fascismo-nazismo.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body class="history-page civic-page">
+    <div class="container">
+      <header class="site-header">
+        <a class="logo" href="/" aria-label="Página inicial"
+          ><div class="logo-top">
+            <i class="fas fa-crown" aria-hidden="true"></i> KING'S
+          </div>
+          <div class="logo-bottom">Newsletter</div></a
+        >
+        <nav class="header-main-nav" aria-label="Navegação principal">
+          <div class="header-primary-links"></div>
+          <div class="header-nav-actions">
+            <button
+              class="sidebar-toggle"
+              id="sidebar-toggle"
+              type="button"
+              aria-label="Abrir menu de navegação"
+              aria-controls="site-sidebar"
+              aria-expanded="false"
+              title="Abrir menu"
+            >
+              <span class="hamburger-icon" aria-hidden="true"
+                ><span></span><span></span><span></span
+              ></span>
+            </button>
+          </div>
+        </nav>
+      </header>
+      <aside
+        class="site-sidebar"
+        id="site-sidebar"
+        aria-label="Navegação principal"
+        aria-hidden="true"
+      >
+        <div class="site-sidebar-header">
+          <div>
+            <span class="eyebrow">King's Newsletter</span
+            ><strong>Navegação</strong>
+          </div>
+          <button
+            class="site-sidebar-close"
+            id="site-sidebar-close"
+            type="button"
+            aria-label="Fechar navegação"
+          >
+            <i class="fas fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+        <nav class="site-sidebar-nav" aria-label="Páginas principais">
+          <div class="site-sidebar-group"></div>
+        </nav>
+        <div class="site-sidebar-preferences">
+          <span class="site-sidebar-label">Preferências</span
+          ><button
+            class="sidebar-theme-toggle"
+            id="theme-toggle"
+            type="button"
+            aria-label="Ativar tema escuro"
+            title="Ativar tema escuro"
+            aria-pressed="false"
+          >
+            <span class="theme-switch-track" aria-hidden="true"
+              ><i class="fas fa-moon" id="theme-icon"></i></span
+            ><span>Tema</span>
+          </button>
+        </div>
+      </aside>
+      <div
+        class="site-sidebar-backdrop"
+        id="site-sidebar-backdrop"
+        aria-hidden="true"
+      ></div>
+      <main>
+        <section class="history-hero civic-hero">
+          <span class="eyebrow">Política · História</span>
+          <h1>Fascismo e Nazismo: conceitos com contexto histórico.</h1>
+          <p>
+            Dois movimentos autoritários que transformaram regimes, sociedades e
+            a história do século XX. Estudá-los com precisão ajuda a compreender
+            seus crimes e evita que os nomes percam significado quando usados
+            como insultos genéricos.
+          </p>
+        </section>
+        <section class="civic-principle">
+          <span class="civic-principle-mark"
+            ><i class="fas fa-circle-exclamation" aria-hidden="true"></i
+          ></span>
+          <div>
+            <span class="eyebrow">Precisão conceitual</span>
+            <h2>O que fascismo significa — e o que não significa</h2>
+            <p>
+              Fascismo designa uma família histórica de movimentos e regimes
+              ultranacionalistas, antiliberais e autoritários, surgida na Europa
+              no início do século XX. O termo não é sinônimo automático de
+              conservadorismo, direita, ditadura ou de uma pessoa autoritária. O
+              uso analítico depende de características, período e contexto.
+            </p>
+          </div>
+        </section>
+        <section
+          class="civic-section fascism-comparison-section"
+          id="comparacao"
+        >
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Comparação interativa</span>
+              <h2>Dois regimes, semelhanças e diferenças</h2>
+            </div>
+            <p>
+              Selecione um tema para comparar os regimes em seu contexto
+              histórico. As semelhanças não apagam diferenças fundamentais.
+            </p>
+          </div>
+          <div class="comparison-widget" data-comparison>
+            <div
+              class="comparison-tabs"
+              role="tablist"
+              aria-label="Dimensões da comparação"
+            >
+              <button
+                type="button"
+                role="tab"
+                id="compare-tab-origem"
+                aria-controls="compare-panel"
+                aria-selected="false"
+                tabindex="-1"
+                data-topic="origem"
+              >
+                Origem histórica
+              </button>
+              <button
+                type="button"
+                role="tab"
+                id="compare-tab-ideologia"
+                aria-controls="compare-panel"
+                aria-selected="true"
+                tabindex="0"
+                data-topic="ideologia"
+              >
+                Ideologia
+              </button>
+              <button
+                type="button"
+                role="tab"
+                id="compare-tab-politica"
+                aria-controls="compare-panel"
+                aria-selected="false"
+                tabindex="-1"
+                data-topic="politica"
+              >
+                Organização política
+              </button>
+              <button
+                type="button"
+                role="tab"
+                id="compare-tab-propaganda"
+                aria-controls="compare-panel"
+                aria-selected="false"
+                tabindex="-1"
+                data-topic="propaganda"
+              >
+                Propaganda
+              </button>
+              <button
+                type="button"
+                role="tab"
+                id="compare-tab-repressao"
+                aria-controls="compare-panel"
+                aria-selected="false"
+                tabindex="-1"
+                data-topic="repressao"
+              >
+                Repressão
+              </button>
+              <button
+                type="button"
+                role="tab"
+                id="compare-tab-racismo"
+                aria-controls="compare-panel"
+                aria-selected="false"
+                tabindex="-1"
+                data-topic="racismo"
+              >
+                Racismo e antissemitismo
+              </button>
+              <button
+                type="button"
+                role="tab"
+                id="compare-tab-expansao"
+                aria-controls="compare-panel"
+                aria-selected="false"
+                tabindex="-1"
+                data-topic="expansao"
+              >
+                Expansionismo
+              </button>
+            </div>
+            <div
+              class="comparison-panel"
+              id="compare-panel"
+              role="tabpanel"
+              aria-labelledby="compare-tab-ideologia"
+              tabindex="0"
+            >
+              <div class="comparison-regimes">
+                <article class="comparison-regime comparison-italy">
+                  <span class="comparison-country">Itália · 1922–1943</span>
+                  <h3>Fascismo italiano</h3>
+                  <p data-italy>
+                    Ultranacionalismo, Estado autoritário, culto ao líder e
+                    mobilização política de massas. O regime também incorporou
+                    imperialismo e, a partir de 1938, legislação racial
+                    antissemita.
+                  </p>
+                </article>
+                <article class="comparison-regime comparison-germany">
+                  <span class="comparison-country">Alemanha · 1933–1945</span>
+                  <h3>Nazismo</h3>
+                  <p data-germany>
+                    Projeto totalitário baseado no culto ao Führer, no racismo
+                    biológico, no antissemitismo radical e na conquista
+                    territorial. A ideologia racial orientou a exclusão, a
+                    perseguição e o genocídio.
+                  </p>
+                </article>
+              </div>
+              <aside class="comparison-insight">
+                <i class="fas fa-scale-balanced" aria-hidden="true"></i>
+                <div>
+                  <strong>O que comparar</strong>
+                  <p data-insight>
+                    Ambos rejeitaram a democracia liberal e perseguiram
+                    adversários. No nazismo, o racismo biológico e o
+                    antissemitismo tiveram centralidade ideológica e conduziram
+                    ao Holocausto.
+                  </p>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+        <section class="civic-section">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Como o poder foi consolidado</span>
+              <h2>Etapas e mecanismos</h2>
+            </div>
+          </div>
+          <div class="history-process-grid">
+            <article>
+              <span>01</span>
+              <h3>Crise e mobilização</h3>
+              <p>
+                Instabilidade do pós-guerra, conflitos sociais, nacionalismo e
+                violência política criaram condições exploradas por movimentos
+                fascistas. Esses fatores ajudam a explicar o contexto, mas não
+                tornam a ascensão inevitável.
+              </p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Tomada e concentração do poder</h3>
+              <p>
+                Na Alemanha, a nomeação de Hitler como chanceler em 1933 foi
+                seguida pela eliminação de direitos, perseguição a opositores,
+                dissolução de partidos e controle das instituições.
+              </p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Propaganda e culto ao líder</h3>
+              <p>
+                O regime nazista coordenou propaganda e censura em meios de
+                comunicação, educação e cultura para difundir sua ideologia,
+                glorificar Hitler e normalizar a exclusão e a perseguição.
+              </p>
+            </article>
+            <article>
+              <span>04</span>
+              <h3>Racismo, guerra e genocídio</h3>
+              <p>
+                A perseguição aos judeus se radicalizou durante a Segunda Guerra
+                Mundial. O Holocausto foi o assassinato sistemático de seis
+                milhões de judeus europeus pela Alemanha nazista e seus
+                colaboradores. Outros milhões também foram perseguidos e mortos
+                pelo regime.
+              </p>
+            </article>
+          </div>
+        </section>
+        <section class="civic-section">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Distinções úteis</span>
+              <h2>Termos relacionados não são equivalentes</h2>
+            </div>
+          </div>
+          <div class="history-terms-grid">
+            <article>
+              <h3>Autoritarismo</h3>
+              <p>
+                Concentração do poder e restrição da competição política.
+                Regimes autoritários não são todos fascistas.
+              </p>
+            </article>
+            <article>
+              <h3>Totalitarismo</h3>
+              <p>
+                Conceito para regimes que buscam controle abrangente da
+                sociedade. Seu uso e seus limites são debatidos por
+                historiadores e cientistas políticos.
+              </p>
+            </article>
+            <article>
+              <h3>Ditadura</h3>
+              <p>
+                Regime sem garantias efetivas de alternância e competição
+                política. Pode ter origens e ideologias diferentes.
+              </p>
+            </article>
+            <article>
+              <h3>Nacionalismo</h3>
+              <p>
+                Ideia que atribui centralidade à nação e à soberania. Pode
+                assumir formas políticas distintas; não é automaticamente
+                fascista.
+              </p>
+            </article>
+          </div>
+        </section>
+        <section class="civic-section human-consequences" id="consequencias">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Pessoas e memória histórica</span>
+              <h2>As consequências humanas</h2>
+            </div>
+            <p>
+              As políticas dos regimes produziram perseguição, violência,
+              deslocamentos e mortes em grande escala.
+            </p>
+          </div>
+          <div class="human-consequences-grid">
+            <article>
+              <span class="consequence-icon"
+                ><i class="fas fa-ban" aria-hidden="true"></i
+              ></span>
+              <h3>Perseguição e perda de direitos</h3>
+              <p>
+                Oposição política, sindicatos livres, imprensa independente e
+                organizações autônomas foram reprimidos. Judeus e outros grupos
+                foram excluídos por leis e políticas discriminatórias.
+              </p>
+            </article>
+            <article>
+              <span class="consequence-icon"
+                ><i class="fas fa-users" aria-hidden="true"></i
+              ></span>
+              <h3>Grupos perseguidos</h3>
+              <p>
+                O regime nazista perseguiu e assassinou judeus, Roma e Sinti,
+                pessoas com deficiência, prisioneiros de guerra soviéticos,
+                poloneses e outros povos eslavos, pessoas LGBTQ+ e outros
+                grupos. As experiências e políticas variaram conforme o grupo e
+                o período.
+              </p>
+            </article>
+            <article>
+              <span class="consequence-icon"
+                ><i class="fas fa-landmark" aria-hidden="true"></i
+              ></span>
+              <h3>Guerra, ocupação e império</h3>
+              <p>
+                A expansão militar levou à ocupação, ao trabalho forçado, à
+                violência contra civis e a deslocamentos em massa. O fascismo
+                italiano também promoveu guerras coloniais e repressão brutal em
+                territórios ocupados.
+              </p>
+            </article>
+            <article>
+              <span class="consequence-icon"
+                ><i class="fas fa-book-open" aria-hidden="true"></i
+              ></span>
+              <h3>Sobreviventes e memória</h3>
+              <p>
+                Testemunhos, arquivos, memoriais e pesquisas documentam as
+                vítimas e ajudam a combater o negacionismo. A memória histórica
+                exige distinguir evidências, propaganda produzida pelos regimes
+                e interpretações posteriores.
+              </p>
+            </article>
+          </div>
+          <p class="human-consequences-note">
+            <strong>Precisão histórica:</strong> o Holocausto foi o assassinato
+            sistemático de seis milhões de judeus europeus pela Alemanha nazista
+            e seus colaboradores. Outros grupos também foram vítimas de
+            perseguição e assassinato em massa; suas histórias não devem ser
+            apagadas nem confundidas com a definição específica do Holocausto.
+          </p>
+        </section>
+        <section
+          class="civic-section primary-sources-section"
+          id="fontes-primarias"
+        >
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Documentos de época</span>
+              <h2>Fontes primárias em contexto</h2>
+            </div>
+            <p>
+              Documentos mostram como os regimes justificavam suas políticas —
+              não são relatos neutros nem prova automática de que a propaganda
+              fosse verdadeira.
+            </p>
+          </div>
+          <div class="primary-source-list">
+            <article>
+              <span class="source-date">1935 · Alemanha</span>
+              <h3>Leis de Nuremberg</h3>
+              <p>
+                Leis que institucionalizaram a exclusão racial dos judeus,
+                retirando direitos e definindo categorias raciais impostas pelo
+                Estado. Leia o documento junto ao contexto da perseguição
+                crescente.
+              </p>
+              <a
+                href="https://encyclopedia.ushmm.org/content/en/article/the-nuremberg-race-laws"
+                target="_blank"
+                rel="noopener noreferrer"
+                >USHMM · Contexto e explicação das leis
+                <i
+                  class="fas fa-arrow-up-right-from-square"
+                  aria-hidden="true"
+                ></i
+              ></a>
+            </article>
+            <article>
+              <span class="source-date">1938 · Itália</span>
+              <h3>Legislação racial fascista</h3>
+              <p>
+                O regime de Mussolini adotou leis antissemitas que restringiram
+                direitos e expulsaram judeus de instituições e profissões. A
+                política racial italiana precisa ser analisada em seu contexto,
+                sem ser tratada como idêntica à política nazista.
+              </p>
+              <a
+                href="https://encyclopedia.ushmm.org/content/en/article/italy"
+                target="_blank"
+                rel="noopener noreferrer"
+                >USHMM · Itália, leis raciais e perseguição
+                <i
+                  class="fas fa-arrow-up-right-from-square"
+                  aria-hidden="true"
+                ></i
+              ></a>
+            </article>
+            <article>
+              <span class="source-date">1933–1945 · Alemanha</span>
+              <h3>Propaganda e documentos nazistas</h3>
+              <p>
+                Cartazes, discursos, fotografias e documentos oficiais ajudam a
+                estudar o culto ao líder, o nacionalismo e a desumanização de
+                grupos. Analise quem produziu cada peça, a quem se dirigia e
+                qual objetivo político perseguia.
+              </p>
+              <a
+                href="https://ghdi.ghi-dc.org/sub_document.cfm?document_id=1520"
+                target="_blank"
+                rel="noopener noreferrer"
+                >German History in Documents and Images · Fonte histórica
+                <i
+                  class="fas fa-arrow-up-right-from-square"
+                  aria-hidden="true"
+                ></i></a
+              ><a
+                href="https://encyclopedia.ushmm.org/content/en/article/nazi-propaganda"
+                target="_blank"
+                rel="noopener noreferrer"
+                >USHMM · Como funcionava a propaganda nazista
+                <i
+                  class="fas fa-arrow-up-right-from-square"
+                  aria-hidden="true"
+                ></i
+              ></a>
+            </article>
+          </div>
+          <p class="primary-source-method">
+            <strong>Como analisar:</strong> identifique autoria e data;
+            verifique o público-alvo e a finalidade; compare o documento com
+            outras fontes independentes; diferencie o que a fonte afirma, o que
+            ela demonstra e o que historiadores interpretam.
+          </p>
+        </section>
+
+        <section
+          class="civic-section historical-gallery-section"
+          id="galeria-historica"
+        >
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Arquivo visual</span>
+              <h2>Imagens, cartazes e documentos de época</h2>
+            </div>
+            <p>
+              Fontes visuais ajudam a observar como os regimes se apresentavam,
+              como a perseguição foi documentada e quais evidências permanecem.
+              Cada item vem acompanhado de contexto e de um link para o registro
+              original.
+            </p>
+          </div>
+          <p class="gallery-content-warning">
+            <i class="fas fa-eye" aria-hidden="true"></i>
+            <strong>Aviso de conteúdo:</strong> a galeria inclui propaganda
+            antissemita e uma fotografia de sobreviventes durante a libertação
+            de Auschwitz. O material é exibido para estudo histórico, sem
+            endosso às mensagens dos regimes.
+          </p>
+          <div
+            class="gallery-filters"
+            role="group"
+            aria-label="Filtrar itens da galeria"
+          >
+            <button
+              type="button"
+              data-gallery-filter="todos"
+              aria-pressed="true"
+            >
+              Todos <span data-gallery-count="todos">0</span>
+            </button>
+            <button
+              type="button"
+              data-gallery-filter="fotografia"
+              aria-pressed="false"
+            >
+              Fotografias <span data-gallery-count="fotografia">0</span>
+            </button>
+            <button
+              type="button"
+              data-gallery-filter="cartaz"
+              aria-pressed="false"
+            >
+              Cartazes <span data-gallery-count="cartaz">0</span>
+            </button>
+            <button
+              type="button"
+              data-gallery-filter="documento"
+              aria-pressed="false"
+            >
+              Documentos <span data-gallery-count="documento">0</span>
+            </button>
+          </div>
+          <div class="historical-gallery-grid" data-historical-gallery>
+            <article class="historical-gallery-card" data-gallery-type="cartaz">
+              <button
+                type="button"
+                class="gallery-item-open"
+                data-gallery-open
+                data-title="A organização corporativa do Estado fascista"
+                data-date="Década de 1930 · Itália"
+                data-context="O cartaz apresenta a estrutura corporativa promovida pelo regime de Mussolini. A representação visual de uma ordem organizada e hierárquica ajudava a legitimar a concentração de poder e o controle estatal das relações de trabalho. A peça deve ser lida como propaganda institucional, não como retrato neutro do funcionamento do Estado."
+                data-credit="Autor não identificado; cartaz de propaganda corporativa. Registro digital via Wikimedia Commons; indicado como domínio público no registro."
+                data-source="https://commons.wikimedia.org/wiki/File:Ordinamento_Corporativo_dello_Stato_Fascista._Padua,_Edizione_di_propaganda_corporative_1930s_Fascist_corporations_Italian_propaganda_poster_Lithograph_139x100cm_Unknown_designer_No_known_copyright_catalogo.beniculturali.it_ICCD11587005.jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Ordinamento_Corporativo_dello_Stato_Fascista._Padua,_Edizione_di_propaganda_corporative_1930s_Fascist_corporations_Italian_propaganda_poster_Lithograph_139x100cm_Unknown_designer_No_known_copyright_catalogo.beniculturali.it_ICCD11587005.jpg"
+              >
+                <span class="gallery-image-wrap"
+                  ><img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Ordinamento_Corporativo_dello_Stato_Fascista._Padua,_Edizione_di_propaganda_corporative_1930s_Fascist_corporations_Italian_propaganda_poster_Lithograph_139x100cm_Unknown_designer_No_known_copyright_catalogo.beniculturali.it_ICCD11587005.jpg"
+                    alt="Cartaz histórico que representa a organização corporativa do Estado fascista italiano"
+                    loading="lazy"
+                  /><span class="gallery-zoom"
+                    ><i class="fas fa-expand" aria-hidden="true"></i>
+                    Ampliar</span
+                  ></span
+                >
+                <span class="gallery-card-body"
+                  ><span class="gallery-card-meta"
+                    >Cartaz · Itália · década de 1930</span
+                  ><strong>A organização corporativa do Estado</strong
+                  ><span
+                    >Propaganda institucional e hierarquia política.</span
+                  ></span
+                >
+              </button>
+            </article>
+
+            <article
+              class="historical-gallery-card"
+              data-gallery-type="documento"
+            >
+              <button
+                type="button"
+                class="gallery-item-open"
+                data-gallery-open
+                data-title="Leis raciais fascistas: o documento assinado em 1938"
+                data-date="17 de novembro de 1938 · Itália"
+                data-context="O documento registra a promulgação das leis raciais italianas, que restringiram direitos de judeus e institucionalizaram a discriminação sob o regime de Mussolini. A comparação com a legislação nazista permite observar semelhanças e diferenças entre os regimes sem minimizar a responsabilidade do fascismo italiano por sua própria política antissemita."
+                data-credit="Fotografia do documento por Bartleby08, Wikimedia Commons, licença Creative Commons Atribuição-CompartilhaIgual 4.0 (CC BY-SA 4.0)."
+                data-source="https://commons.wikimedia.org/wiki/File:Faschist_Rassengesetze_17_Nov_1938.jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Faschist_Rassengesetze_17_Nov_1938.jpg"
+              >
+                <span class="gallery-image-wrap"
+                  ><img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Faschist_Rassengesetze_17_Nov_1938.jpg"
+                    alt="Documento das leis raciais italianas de 1938, com assinaturas de Mussolini e autoridades do regime"
+                    loading="lazy"
+                  /><span class="gallery-zoom"
+                    ><i class="fas fa-expand" aria-hidden="true"></i>
+                    Ampliar</span
+                  ></span
+                >
+                <span class="gallery-card-body"
+                  ><span class="gallery-card-meta"
+                    >Documento · Itália · 1938</span
+                  ><strong>Leis raciais do fascismo italiano</strong
+                  ><span
+                    >Discriminação legal sob o regime de Mussolini.</span
+                  ></span
+                >
+              </button>
+            </article>
+            <article
+              class="historical-gallery-card"
+              data-gallery-type="fotografia"
+            >
+              <button
+                type="button"
+                class="gallery-item-open"
+                data-gallery-open
+                data-title="A Marcha sobre Roma"
+                data-date="28 de outubro de 1922 · Itália"
+                data-context="A imagem registra uma manifestação fascista associada à Marcha sobre Roma, episódio que pressionou a monarquia italiana e antecedeu a nomeação de Mussolini como primeiro-ministro. A fotografia documenta a mobilização pública; sozinha, não explica a variedade de fatores políticos e institucionais que permitiram a ascensão do fascismo."
+                data-credit="Fotógrafo não identificado; publicada em Illustrazione Italiana, 1922. Registro indicado como domínio público no Wikimedia Commons."
+                data-source="https://commons.wikimedia.org/wiki/File:March_on_Rome_1922_-_Quirinale.jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/March_on_Rome_1922_-_Quirinale.jpg"
+              >
+                <span class="gallery-image-wrap"
+                  ><img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/March_on_Rome_1922_-_Quirinale.jpg"
+                    alt="Fotografia histórica de uma parada fascista diante do Palácio do Quirinal em Roma, em outubro de 1922"
+                    loading="lazy"
+                  /><span class="gallery-zoom"
+                    ><i class="fas fa-expand" aria-hidden="true"></i>
+                    Ampliar</span
+                  ></span
+                >
+                <span class="gallery-card-body"
+                  ><span class="gallery-card-meta"
+                    >Fotografia · Itália · 1922</span
+                  ><strong>A Marcha sobre Roma</strong
+                  ><span>Mobilização política e chegada ao poder.</span></span
+                >
+              </button>
+            </article>
+            <article class="historical-gallery-card" data-gallery-type="cartaz">
+              <button
+                type="button"
+                class="gallery-item-open"
+                data-gallery-open
+                data-title="Hitlerjunge Quex: propaganda juvenil"
+                data-date="1933 · Alemanha"
+                data-context="O cartaz do filme Hitlerjunge Quex associa juventude, sacrifício e pertencimento ao movimento nazista. O cinema e outras formas de cultura popular foram usados para difundir valores do regime e incentivar a identificação com a organização juvenil nazista. A obra é propaganda e deve ser analisada criticamente."
+                data-credit="Cartaz histórico; fotografia do exemplar exposto no NS-Dokumentationszentrum Köln, publicada no Wikimedia Commons sob CC0."
+                data-source="https://commons.wikimedia.org/wiki/File:Nazi_propaganda_film_poster_of_%22Hitlerjunge_Quex%22_(1933).jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Nazi_propaganda_film_poster_of_%22Hitlerjunge_Quex%22_(1933).jpg"
+              >
+                <span class="gallery-image-wrap"
+                  ><img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Nazi_propaganda_film_poster_of_%22Hitlerjunge_Quex%22_(1933).jpg"
+                    alt="Cartaz de época do filme nazista Hitlerjunge Quex, de 1933"
+                    loading="lazy"
+                  /><span class="gallery-zoom"
+                    ><i class="fas fa-expand" aria-hidden="true"></i>
+                    Ampliar</span
+                  ></span
+                >
+                <span class="gallery-card-body"
+                  ><span class="gallery-card-meta"
+                    >Cartaz · Alemanha · 1933</span
+                  ><strong>Propaganda dirigida à juventude</strong
+                  ><span>Cinema, identidade coletiva e mobilização.</span></span
+                >
+              </button>
+            </article>
+            <article
+              class="historical-gallery-card"
+              data-gallery-type="fotografia"
+            >
+              <button
+                type="button"
+                class="gallery-item-open"
+                data-gallery-open
+                data-title="Parada das SA em Nuremberg"
+                data-date="Setembro de 1935 · Alemanha"
+                data-context="A fotografia mostra integrantes das SA desfilando diante de Hitler durante o congresso do Partido Nazista em Nuremberg. Grandes cerimônias, uniformes, coreografia e arquitetura de massa ajudavam a encenar unidade e poder. A imagem mostra a encenação pública do regime, não o consenso de toda a população alemã."
+                data-credit="Autor não identificado; Charles Russell Collection, U.S. National Archives and Records Administration (NARA). Registro indicado como domínio público no Wikimedia Commons."
+                data-source="https://commons.wikimedia.org/wiki/File:Hitler_N%C3%BCrnberg_1935.jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Hitler_N%C3%BCrnberg_1935.jpg"
+              >
+                <span class="gallery-image-wrap"
+                  ><img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Hitler_N%C3%BCrnberg_1935.jpg"
+                    alt="Parada de integrantes das SA diante de Hitler em Nuremberg, em setembro de 1935"
+                    loading="lazy"
+                  /><span class="gallery-zoom"
+                    ><i class="fas fa-expand" aria-hidden="true"></i>
+                    Ampliar</span
+                  ></span
+                >
+                <span class="gallery-card-body"
+                  ><span class="gallery-card-meta"
+                    >Fotografia · Alemanha · 1935</span
+                  ><strong>O espetáculo do poder</strong
+                  ><span
+                    >Rituais públicos, uniformes e culto ao líder.</span
+                  ></span
+                >
+              </button>
+            </article>
+            <article
+              class="historical-gallery-card"
+              data-gallery-type="fotografia"
+            >
+              <button
+                type="button"
+                class="gallery-item-open"
+                data-gallery-open
+                data-title="Boicote antissemita a lojas judaicas"
+                data-date="1º de abril de 1933 · Alemanha"
+                data-context="A imagem registra a campanha nazista de boicote a estabelecimentos judaicos em Berlim. Cartazes e intimidação pública transformaram o antissemitismo em prática cotidiana e ajudaram a preparar o terreno para medidas legais de exclusão. A mensagem antissemita reproduzida é apresentada exclusivamente como evidência histórica de perseguição."
+                data-credit="Fotógrafo não identificado; registro arquivístico reproduzido no Wikimedia Commons e indicado como sem restrições conhecidas de direitos autorais."
+                data-source="https://commons.wikimedia.org/wiki/File:Judenboykott_1933-04-01_Berlin._Anti-Semitic_Anti-Jewish_Nazi_boycott_of_Jewish_businesses_shops_Germany_Anti-Jewish_poster_advertising_column_Litfasssaule_Plakat_31.3.1933_Photo_18X24cm_(Stade_Auktionen_philasearch.com)_No_copyright.jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Judenboykott_1933-04-01_Berlin._Anti-Semitic_Anti-Jewish_Nazi_boycott_of_Jewish_businesses_shops_Germany_Anti-Jewish_poster_advertising_column_Litfasssaule_Plakat_31.3.1933_Photo_18X24cm_(Stade_Auktionen_philasearch.com)_No_copyright.jpg"
+              >
+                <span class="gallery-image-wrap"
+                  ><img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Judenboykott_1933-04-01_Berlin._Anti-Semitic_Anti-Jewish_Nazi_boycott_of_Jewish_businesses_shops_Germany_Anti-Jewish_poster_advertising_column_Litfasssaule_Plakat_31.3.1933_Photo_18X24cm_(Stade_Auktionen_philasearch.com)_No_copyright.jpg"
+                    alt="Registro histórico de cartaz antissemita durante o boicote nazista a lojas judaicas em Berlim, em abril de 1933"
+                    loading="lazy"
+                  /><span class="gallery-zoom"
+                    ><i class="fas fa-expand" aria-hidden="true"></i>
+                    Ampliar</span
+                  ></span
+                >
+                <span class="gallery-card-body"
+                  ><span class="gallery-card-meta"
+                    >Fotografia de propaganda · Alemanha · 1933</span
+                  ><strong>O boicote a lojas judaicas</strong
+                  ><span
+                    >Discriminação pública e perseguição antissemita.</span
+                  ></span
+                >
+              </button>
+            </article>
+            <article
+              class="historical-gallery-card"
+              data-gallery-type="documento"
+            >
+              <button
+                type="button"
+                class="gallery-item-open"
+                data-gallery-open
+                data-title="Lei para a proteção do sangue alemão"
+                data-date="15 de setembro de 1935 · Alemanha"
+                data-context="Esta publicação oficial integra as Leis de Nuremberg. A legislação proibiu casamentos e relações entre judeus e pessoas classificadas como de 'sangue alemão', institucionalizando a discriminação racial. As categorias impostas pelo regime não tinham base científica válida: eram instrumentos políticos de exclusão e perseguição."
+                data-credit="Deutsches Reich, Reichsgesetzblatt I (1935), p. 1146. Texto legislativo oficial indicado como domínio público no Wikimedia Commons."
+                data-source="https://commons.wikimedia.org/wiki/File:Blutschutzgesetz_v.15.9.1935_-_RGBl_I_1146gesamt.jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Blutschutzgesetz_v.15.9.1935_-_RGBl_I_1146gesamt.jpg"
+              >
+                <span class="gallery-image-wrap"
+                  ><img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Blutschutzgesetz_v.15.9.1935_-_RGBl_I_1146gesamt.jpg"
+                    alt="Digitalização da publicação oficial da Lei para a proteção do sangue alemão, de setembro de 1935"
+                    loading="lazy"
+                  /><span class="gallery-zoom"
+                    ><i class="fas fa-expand" aria-hidden="true"></i>
+                    Ampliar</span
+                  ></span
+                >
+                <span class="gallery-card-body"
+                  ><span class="gallery-card-meta"
+                    >Documento legal · Alemanha · 1935</span
+                  ><strong>Leis de Nuremberg</strong
+                  ><span
+                    >Como a discriminação racial foi institucionalizada.</span
+                  ></span
+                >
+              </button>
+            </article>
+            <article
+              class="historical-gallery-card"
+              data-gallery-type="fotografia"
+            >
+              <button
+                type="button"
+                class="gallery-item-open"
+                data-gallery-open
+                data-title="A libertação de Auschwitz"
+                data-date="Janeiro de 1945 · Polônia ocupada"
+                data-context="A fotografia documenta prisioneiros sobreviventes no complexo de Auschwitz durante sua libertação pelo Exército Vermelho. O registro deve ser visto com respeito às vítimas e sobreviventes: ele evidencia consequências humanas do sistema de campos nazista, mas não representa sozinho a diversidade das experiências do Holocausto nem o conjunto de suas vítimas."
+                data-credit="Fotógrafo não identificado, presumivelmente integrante do Exército Vermelho; fonte histórica associada ao Auschwitz Memorial and Museum. O registro no Wikimedia Commons indica domínio público."
+                data-source="https://commons.wikimedia.org/wiki/File:Auschwitz_Liberated_January_1945.jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Auschwitz_Liberated_January_1945.jpg"
+              >
+                <span class="gallery-image-wrap"
+                  ><img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Auschwitz_Liberated_January_1945.jpg"
+                    alt="Sobreviventes de Auschwitz fotografados durante a libertação do campo, em janeiro de 1945"
+                    loading="lazy"
+                  /><span class="gallery-zoom"
+                    ><i class="fas fa-expand" aria-hidden="true"></i>
+                    Ampliar</span
+                  ></span
+                >
+                <span class="gallery-card-body"
+                  ><span class="gallery-card-meta"
+                    >Fotografia · Polônia · 1945</span
+                  ><strong>Sobreviventes na libertação</strong
+                  ><span>Evidência histórica e memória das vítimas.</span></span
+                >
+              </button>
+            </article>
+            <article
+              class="historical-gallery-card"
+              data-gallery-type="documento"
+            >
+              <button
+                type="button"
+                class="gallery-item-open"
+                data-gallery-open
+                data-title="As Leis de Nuremberg no Reichsgesetzblatt"
+                data-date="1935 · Alemanha"
+                data-context="A publicação das leis no diário oficial mostra como o regime converteu a ideologia racial em normas estatais. Documentos legais devem ser lidos em conjunto com a aplicação concreta das medidas, testemunhos das vítimas e outras evidências independentes."
+                data-credit="Deutsches Reich, Reichsgesetzblatt I (1935). Documento legislativo oficial indicado como domínio público no Wikimedia Commons."
+                data-source="https://commons.wikimedia.org/wiki/File:Nuremberg_Laws,_N%C3%BCrnberger_Gesetze,_1935.djvu"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Blutschutzgesetz_v.15.9.1935_-_RGBl_I_1146gesamt.jpg"
+              >
+                <span class="gallery-image-wrap"
+                  ><img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Blutschutzgesetz_v.15.9.1935_-_RGBl_I_1146gesamt.jpg"
+                    alt="Página de legislação alemã de 1935 que integrou as Leis de Nuremberg"
+                    loading="lazy"
+                  /><span class="gallery-zoom"
+                    ><i class="fas fa-expand" aria-hidden="true"></i>
+                    Ampliar</span
+                  ></span
+                >
+                <span class="gallery-card-body"
+                  ><span class="gallery-card-meta"
+                    >Documento · Alemanha · 1935</span
+                  ><strong>A lei como instrumento de exclusão</strong
+                  ><span
+                    >Legislação, burocracia e perseguição racial.</span
+                  ></span
+                >
+              </button>
+            </article>
+            <article class="historical-gallery-card" data-gallery-type="cartaz">
+              <button type="button" class="gallery-item-open" data-gallery-open
+                data-title="Cartaz eleitoral do Partido Nazista"
+                data-date="1930 · Alemanha"
+                data-context="O cartaz foi publicado pelo Partido Nazista durante a eleição federal alemã de 1930. A peça permite observar como o partido apresentava sua mensagem ao eleitorado em meio à crise da República de Weimar. Como propaganda política, expressa os objetivos de seus produtores, não uma descrição neutra da realidade."
+                data-credit="Partido Nazista; autor não identificado. Wikimedia Commons, domínio público (Copyright expired in Germany and the United States)."
+                data-source="https://commons.wikimedia.org/wiki/File:1930_Nazi_Party_federal_election_poster.jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/1930_Nazi_Party_federal_election_poster.jpg">
+                <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/1930_Nazi_Party_federal_election_poster.jpg" alt="Cartaz eleitoral do Partido Nazista publicado durante a eleição federal alemã de 1930" loading="lazy" /><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
+                <span class="gallery-card-body"><span class="gallery-card-meta">Cartaz · Alemanha · 1930</span><strong>Propaganda eleitoral nazista</strong><span>Imagem e mensagem em campanha política.</span></span>
+              </button>
+            </article>
+            <article class="historical-gallery-card" data-gallery-type="cartaz">
+              <button type="button" class="gallery-item-open" data-gallery-open
+                data-title="Cartaz do SPD contra o projeto do Terceiro Reich"
+                data-date="1932 · Alemanha"
+                data-context="Publicado pelo Partido Social-Democrata da Alemanha (SPD), o cartaz advertia contra o projeto nazista antes da tomada do poder. A imagem, que representa a Alemanha coberta por cruzes funerárias, registra também a oposição política ao nazismo e as disputas da campanha eleitoral."
+                data-credit="SPD; artista não identificado. Publicado por Richard Hauschildt e impresso pela Vorwärts Druckerei. Wikimedia Commons, registro indicado como domínio público."
+                data-source="https://commons.wikimedia.org/wiki/File:Das_Dritte_Reich!_1932_SPD_Wahlplakat._German_propaganda_Anti-Nazi_election_poster_Social_Democrats_Party_Richard_Hauschildt_Berlin_No_known_copyright_Public_domain.jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Das_Dritte_Reich!_1932_SPD_Wahlplakat._German_propaganda_Anti-Nazi_election_poster_Social_Democrats_Party_Richard_Hauschildt_Berlin_No_known_copyright_Public_domain.jpg">
+                <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Das_Dritte_Reich!_1932_SPD_Wahlplakat._German_propaganda_Anti-Nazi_election_poster_Social_Democrats_Party_Richard_Hauschildt_Berlin_No_known_copyright_Public_domain.jpg" alt="Cartaz eleitoral do SPD de 1932 que alerta contra o projeto do Terceiro Reich" loading="lazy" /><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
+                <span class="gallery-card-body"><span class="gallery-card-meta">Cartaz de oposição · Alemanha · 1932</span><strong>Um alerta contra o nazismo</strong><span>Oposição política durante a campanha eleitoral.</span></span>
+              </button>
+            </article>
+            <article class="historical-gallery-card" data-gallery-type="fotografia">
+              <button type="button" class="gallery-item-open" data-gallery-open
+                data-title="Comício nazista em Nuremberg"
+                data-date="14 de setembro de 1934 · Alemanha"
+                data-context="A fotografia mostra Adolf Hitler discursando a dezenas de milhares de integrantes do Serviço de Trabalho do Reich no campo Zeppelin, em Nuremberg. O enquadramento registra a escala e a encenação coletiva dos comícios do regime; não deve ser tomado como prova de apoio unânime da população."
+                data-credit="ACME / La Presse; imagem preservada pela Bibliothèque et Archives nationales du Québec (BAnQ), referência 4175907. Wikimedia Commons; registro de domínio público."
+                data-source="https://commons.wikimedia.org/wiki/File:1934_Nuremberg_rally_(cropped).jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/1934_Nuremberg_rally_(cropped).jpg">
+                <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/1934_Nuremberg_rally_(cropped).jpg" alt="Hitler discursa a uma grande formação do Serviço de Trabalho do Reich no comício de Nuremberg de 1934" loading="lazy" /><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
+                <span class="gallery-card-body"><span class="gallery-card-meta">Fotografia · Alemanha · 1934</span><strong>O comício como espetáculo de poder</strong><span>Mobilização de massa e encenação política.</span></span>
+              </button>
+            </article>
+            <article class="historical-gallery-card" data-gallery-type="fotografia">
+              <button type="button" class="gallery-item-open" data-gallery-open
+                data-title="Cerimônia das SA e SS em Nuremberg"
+                data-date="Setembro de 1934 · Alemanha"
+                data-context="O registro de Georg Pahl mostra uma cerimônia do congresso do Partido Nazista em Nuremberg, com Hitler, Viktor Lutze e Heinrich Himmler. O fotógrafo documentou um ritual público do regime. A descrição original do arquivo pode refletir a linguagem e a perspectiva política de sua época."
+                data-credit="Bundesarchiv, Bild 102-04062A / Georg Pahl / CC BY-SA 3.0 Alemanha."
+                data-source="https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_102-04062A,_N%C3%BCrnberg,_Reichsparteitag,_SA-_und_SS-Appell.jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Bundesarchiv_Bild_102-04062A,_N%C3%BCrnberg,_Reichsparteitag,_SA-_und_SS-Appell.jpg">
+                <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bundesarchiv_Bild_102-04062A,_N%C3%BCrnberg,_Reichsparteitag,_SA-_und_SS-Appell.jpg" alt="Cerimônia das SA e SS no congresso nazista de Nuremberg, em setembro de 1934" loading="lazy" /><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
+                <span class="gallery-card-body"><span class="gallery-card-meta">Fotografia · Alemanha · 1934</span><strong>Rituais e hierarquia do regime</strong><span>Cerimônia nazista registrada por Georg Pahl.</span></span>
+              </button>
+            </article>
+            <article class="historical-gallery-card" data-gallery-type="cartaz">
+              <button type="button" class="gallery-item-open" data-gallery-open
+                data-title="Trabalho e pão: cartaz eleitoral nazista"
+                data-date="1932 · Alemanha"
+                data-context="Criado por Ludwig Hohlwein para uma campanha eleitoral da NSDAP em 1932, o cartaz associa trabalho e pão à imagem de um integrante da SA. É uma peça de propaganda partidária: seu slogan promete soluções, mas não constitui evidência de que o regime tenha cumprido essas promessas."
+                data-credit="Arte e design: Ludwig Hohlwein. Wikimedia Commons; registro indicado como domínio público."
+                data-source="https://commons.wikimedia.org/wiki/File:Ludwig_Hohlwein_M%C3%BCnchen_ARBEIT_BROT_DRUM_LISTE_1_NSDAP_Bayern_SA-Mann_1932_Propganda_Plakat_Election_poster_Bavaria_Germany_No_known_copyright_restrictions_p01g3tkv.jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Ludwig_Hohlwein_M%C3%BCnchen_ARBEIT_BROT_DRUM_LISTE_1_NSDAP_Bayern_SA-Mann_1932_Propganda_Plakat_Election_poster_Bavaria_Germany_No_known_copyright_restrictions_p01g3tkv.jpg">
+                <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ludwig_Hohlwein_M%C3%BCnchen_ARBEIT_BROT_DRUM_LISTE_1_NSDAP_Bayern_SA-Mann_1932_Propganda_Plakat_Election_poster_Bavaria_Germany_No_known_copyright_restrictions_p01g3tkv.jpg" alt="Cartaz de campanha nazista de 1932 com o slogan Trabalho e pão e a figura de um integrante da SA" loading="lazy" /><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
+                <span class="gallery-card-body"><span class="gallery-card-meta">Cartaz · Alemanha · 1932</span><strong>Promessas na propaganda eleitoral</strong><span>O slogan “trabalho e pão” em campanha.</span></span>
+              </button>
+            </article>
+            <article class="historical-gallery-card" data-gallery-type="fotografia">
+              <button type="button" class="gallery-item-open" data-gallery-open
+                data-title="Queima de livros em Berlim"
+                data-date="10 de maio de 1933 · Alemanha"
+                data-context="A fotografia mostra um integrante da SA lançando livros confiscados à fogueira na Opernplatz, em Berlim. A queima pública integrou uma campanha de perseguição a ideias e autores considerados inimigos pelo regime. A imagem documenta a repressão cultural e a destruição de obras, não a validade das acusações usadas para justificá-las."
+                data-credit="Autor não identificado; imagem associada ao U.S. National Archives e reproduzida no Wikimedia Commons."
+                data-source="https://commons.wikimedia.org/wiki/File:1933-may-10-berlin-book-burning.JPG"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/1933-may-10-berlin-book-burning.JPG">
+                <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/1933-may-10-berlin-book-burning.JPG" alt="Integrante da SA lança livros confiscados à fogueira durante a queima pública de livros em Berlim, em 1933" loading="lazy" /><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
+                <span class="gallery-card-body"><span class="gallery-card-meta">Fotografia · Alemanha · 1933</span><strong>A queima de livros em Berlim</strong><span>Censura, perseguição e repressão cultural.</span></span>
+              </button>
+            </article>
+            <article class="historical-gallery-card" data-gallery-type="fotografia">
+              <button type="button" class="gallery-item-open" data-gallery-open
+                data-title="O Reichstag em chamas"
+                data-date="27 de fevereiro de 1933 · Alemanha"
+                data-context="A imagem registra o incêndio do edifício do Reichstag em Berlim. O governo de Hitler usou o episódio como pretexto para intensificar a repressão política e restringir direitos civis. A autoria do incêndio e as disputas em torno do acontecimento devem ser analisadas com base em fontes históricas, não inferidas apenas pela fotografia."
+                data-credit="ADN-Zentralbild / Arquivo do Bundesarchiv; imagem disponibilizada no Wikimedia Commons."
+                data-source="https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_183-R99859,_Berlin,_brennender_Reichstag_(Reichstagsbrand).jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Bundesarchiv_Bild_183-R99859,_Berlin,_brennender_Reichstag_(Reichstagsbrand).jpg">
+                <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bundesarchiv_Bild_183-R99859,_Berlin,_brennender_Reichstag_(Reichstagsbrand).jpg" alt="Edifício do Reichstag em chamas em Berlim, em fevereiro de 1933" loading="lazy" /><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
+                <span class="gallery-card-body"><span class="gallery-card-meta">Fotografia · Alemanha · 1933</span><strong>O incêndio do Reichstag</strong><span>Crise política e repressão após o incêndio.</span></span>
+              </button>
+            </article>
+            <article class="historical-gallery-card" data-gallery-type="cartaz">
+              <button type="button" class="gallery-item-open" data-gallery-open
+                data-title="A conquista da Etiópia na propaganda fascista"
+                data-date="Por volta de 1936 · Itália e Etiópia ocupada"
+                data-context="O cartaz mostra uma figura de agricultor gravando os fasces e a sigla SPQR sobre o nome da Etiópia. A imagem apresenta a ocupação colonial como extensão da romanidade e do trabalho agrícola. Deve ser lida como propaganda imperial do regime, que encobria a conquista e a violência da ocupação italiana."
+                data-credit="Arte: Walter Roveroni; emitido pela Confederação Fascista dos Trabalhadores Agrícolas. Wikimedia Commons, CC BY-SA 4.0."
+                data-source="https://commons.wikimedia.org/wiki/File:Manifesto_di_epoca_fascista.png"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Manifesto_di_epoca_fascista.png">
+                <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Manifesto_di_epoca_fascista.png" alt="Cartaz fascista que representa a Etiópia como território agrícola marcado pelos símbolos de Roma" loading="lazy" /><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
+                <span class="gallery-card-body"><span class="gallery-card-meta">Cartaz · Itália / Etiópia · c. 1936</span><strong>Propaganda da conquista colonial</strong><span>Romanidade e ocupação da Etiópia.</span></span>
+              </button>
+            </article>
+            <article class="historical-gallery-card" data-gallery-type="documento">
+              <button type="button" class="gallery-item-open" data-gallery-open
+                data-title="Proclamação italiana sobre a escravidão no Tigré"
+                data-date="Outubro de 1935 · Tigré, Etiópia ocupada"
+                data-context="Este bando italiano proclamava a supressão da escravidão no Tigré durante a invasão da Etiópia. A peça apresenta a ocupação sob uma justificativa civilizatória; deve ser confrontada com o contexto da guerra colonial e com os atos de violência e dominação praticados pelo regime italiano."
+                data-credit="Antonio Canessa, 1935. Wikimedia Commons; dedicatória do autor ao domínio público."
+                data-source="https://commons.wikimedia.org/wiki/File:Bando_contro_lo_schiavismo_in_Tigr%C3%A8.jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Bando_contro_lo_schiavismo_in_Tigr%C3%A8.jpg">
+                <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bando_contro_lo_schiavismo_in_Tigr%C3%A8.jpg" alt="Proclamação italiana de 1935 sobre a supressão da escravidão no Tigré, durante a ocupação da Etiópia" loading="lazy" /><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
+                <span class="gallery-card-body"><span class="gallery-card-meta">Documento de propaganda · Etiópia · 1935</span><strong>A justificativa colonial</strong><span>Uma proclamação oficial em contexto de invasão.</span></span>
+              </button>
+            </article>
+            <article class="historical-gallery-card" data-gallery-type="fotografia">
+              <button type="button" class="gallery-item-open" data-gallery-open
+                data-title="Mussolini em visita a Milão"
+                data-date="Maio de 1930 · Itália"
+                data-context="A fotografia mostra Mussolini acompanhado por dirigentes fascistas em visita a Milão, enquanto se dirige a uma tribuna na Piazza del Duomo. O registro documenta a apresentação pública do ditador e o culto à liderança; a imagem, por si só, não informa como a população recebia o regime."
+                data-credit="Bundesarchiv, Bild 102-09843 / CC BY-SA 3.0 Alemanha."
+                data-source="https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_102-09843,_Mussolini_in_Mailand.jpg"
+                data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Bundesarchiv_Bild_102-09843,_Mussolini_in_Mailand.jpg">
+                <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bundesarchiv_Bild_102-09843,_Mussolini_in_Mailand.jpg" alt="Mussolini acompanhado por dirigentes fascistas em visita a Milão, em maio de 1930" loading="lazy" /><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
+                <span class="gallery-card-body"><span class="gallery-card-meta">Fotografia · Itália · 1930</span><strong>Mussolini em Milão</strong><span>O ditador em aparição pública.</span></span>
+              </button>
+            </article>
+          </div>
+          <p class="gallery-method-note">
+            <strong>Como ler estas fontes:</strong> identifique autoria, data,
+            finalidade e público-alvo; compare a imagem com outras fontes;
+            separe o que o documento afirma do que ele realmente comprova. Os
+            registros vinculados indicam a origem e o status de direitos
+            informado pelo Wikimedia Commons. A situação jurídica pode variar
+            por país; confira o registro original antes de reutilizar qualquer
+            item fora deste contexto educativo.
+          </p>
+        </section>
+        <dialog
+          class="gallery-viewer"
+          data-gallery-dialog
+          aria-labelledby="gallery-viewer-title"
+        >
+          <div class="gallery-viewer-header">
+            <span class="eyebrow">Visualizador de fonte histórica</span
+            ><button
+              type="button"
+              class="gallery-viewer-close"
+              data-gallery-close
+              aria-label="Fechar visualizador"
+            >
+              <i class="fas fa-xmark" aria-hidden="true"></i><span>Fechar</span>
+            </button>
+          </div>
+          <div class="gallery-viewer-layout">
+            <div class="gallery-viewer-image-wrap">
+              <img data-viewer-image alt="" />
+              <p class="gallery-viewer-credit" data-viewer-credit></p>
+            </div>
+            <div class="gallery-viewer-copy">
+              <span class="gallery-card-meta" data-viewer-date></span>
+              <h2 id="gallery-viewer-title" data-viewer-title></h2>
+              <p data-viewer-context></p>
+              <a
+                data-viewer-source
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Abrir registro original
+                <i
+                  class="fas fa-arrow-up-right-from-square"
+                  aria-hidden="true"
+                ></i
+              ></a>
+            </div>
+          </div>
+        </dialog>
+
+        <section class="civic-section civic-sources">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Fontes para aprofundar</span>
+              <h2>História documentada</h2>
+            </div>
+          </div>
+          <p>
+            Esta introdução se apoia em instituições de pesquisa histórica e
+            memória do Holocausto. As páginas abaixo detalham a ascensão
+            nazista, propaganda, perseguição e o genocídio.
+          </p>
+          <div class="source-list">
+            <a
+              href="https://encyclopedia.ushmm.org/content/en/article/the-nazi-rise-to-power"
+              target="_blank"
+              rel="noopener noreferrer"
+              >USHMM · A ascensão nazista ao poder</a
+            ><a
+              href="https://encyclopedia.ushmm.org/content/en/article/nazi-propaganda"
+              target="_blank"
+              rel="noopener noreferrer"
+              >USHMM · Propaganda nazista</a
+            ><a
+              href="https://encyclopedia.ushmm.org/content/en/article/introduction-to-the-holocaust"
+              target="_blank"
+              rel="noopener noreferrer"
+              >USHMM · Introdução ao Holocausto</a
+            ><a
+              href="https://www.britannica.com/topic/fascism"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Encyclopaedia Britannica · Fascismo</a
+            ><a
+              href="https://bibliotecadigital.tse.jus.br/items/418573ac-0980-4ba0-8079-ad436099036a/full"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Biblioteca Digital do TSE · Classificação ideológica dos
+              partidos</a
+            >
+          </div>
+        </section>
+        <section class="civic-history-link">
+          <div>
+            <span class="eyebrow">Continue aprendendo</span>
+            <h2>Explore outras ideias políticas.</h2>
+            <p>
+              Conheça correntes, eixos de análise e as diferenças entre
+              conceitos políticos.
+            </p>
+          </div>
+          <a class="cta-button" href="/ideologias">Ir para Ideologias</a>
+        </section>
+      </main>
+      <div id="footer"></div>
     </div>
-    <div class="comparison-panel" id="compare-panel" role="tabpanel" aria-labelledby="compare-tab-ideologia" tabindex="0">
-      <div class="comparison-regimes">
-        <article class="comparison-regime comparison-italy"><span class="comparison-country">Itália · 1922–1943</span><h3>Fascismo italiano</h3><p data-italy>Ultranacionalismo, Estado autoritário, culto ao líder e mobilização política de massas. O regime também incorporou imperialismo e, a partir de 1938, legislação racial antissemita.</p></article>
-        <article class="comparison-regime comparison-germany"><span class="comparison-country">Alemanha · 1933–1945</span><h3>Nazismo</h3><p data-germany>Projeto totalitário baseado no culto ao Führer, no racismo biológico, no antissemitismo radical e na conquista territorial. A ideologia racial orientou a exclusão, a perseguição e o genocídio.</p></article>
-      </div>
-      <aside class="comparison-insight"><i class="fas fa-scale-balanced" aria-hidden="true"></i><div><strong>O que comparar</strong><p data-insight>Ambos rejeitaram a democracia liberal e perseguiram adversários. No nazismo, o racismo biológico e o antissemitismo tiveram centralidade ideológica e conduziram ao Holocausto.</p></div></aside>
-      <p class="comparison-keyboard-hint"><i class="fas fa-keyboard" aria-hidden="true"></i> Use Tab para chegar aos temas e as setas do teclado para alternar entre eles.</p>
-    </div>
-  </div>
-</section>
-      <section class="civic-section"><div class="section-heading"><div><span class="eyebrow">Como o poder foi consolidado</span><h2>Etapas e mecanismos</h2></div></div><div class="history-process-grid">
-        <article><span>01</span><h3>Crise e mobilização</h3><p>Instabilidade do pós-guerra, conflitos sociais, nacionalismo e violência política criaram condições exploradas por movimentos fascistas. Esses fatores ajudam a explicar o contexto, mas não tornam a ascensão inevitável.</p></article>
-        <article><span>02</span><h3>Tomada e concentração do poder</h3><p>Na Alemanha, a nomeação de Hitler como chanceler em 1933 foi seguida pela eliminação de direitos, perseguição a opositores, dissolução de partidos e controle das instituições.</p></article>
-        <article><span>03</span><h3>Propaganda e culto ao líder</h3><p>O regime nazista coordenou propaganda e censura em meios de comunicação, educação e cultura para difundir sua ideologia, glorificar Hitler e normalizar a exclusão e a perseguição.</p></article>
-        <article><span>04</span><h3>Racismo, guerra e genocídio</h3><p>A perseguição aos judeus se radicalizou durante a Segunda Guerra Mundial. O Holocausto foi o assassinato sistemático de seis milhões de judeus europeus pela Alemanha nazista e seus colaboradores. Outros milhões também foram perseguidos e mortos pelo regime.</p></article>
-      </div></section>
-      <section class="civic-section"><div class="section-heading"><div><span class="eyebrow">Distinções úteis</span><h2>Termos relacionados não são equivalentes</h2></div></div><div class="history-terms-grid"><article><h3>Autoritarismo</h3><p>Concentração do poder e restrição da competição política. Regimes autoritários não são todos fascistas.</p></article><article><h3>Totalitarismo</h3><p>Conceito para regimes que buscam controle abrangente da sociedade. Seu uso e seus limites são debatidos por historiadores e cientistas políticos.</p></article><article><h3>Ditadura</h3><p>Regime sem garantias efetivas de alternância e competição política. Pode ter origens e ideologias diferentes.</p></article><article><h3>Nacionalismo</h3><p>Ideia que atribui centralidade à nação e à soberania. Pode assumir formas políticas distintas; não é automaticamente fascista.</p></article></div></section>
-      <section class="civic-section human-consequences" id="consequencias">
-  <div class="section-heading"><div><span class="eyebrow">Pessoas e memória histórica</span><h2>As consequências humanas</h2></div><p>As políticas dos regimes produziram perseguição, violência, deslocamentos e mortes em grande escala.</p></div>
-  <div class="human-consequences-grid">
-    <article><span class="consequence-icon"><i class="fas fa-ban" aria-hidden="true"></i></span><h3>Perseguição e perda de direitos</h3><p>Oposição política, sindicatos livres, imprensa independente e organizações autônomas foram reprimidos. Judeus e outros grupos foram excluídos por leis e políticas discriminatórias.</p></article>
-    <article><span class="consequence-icon"><i class="fas fa-users" aria-hidden="true"></i></span><h3>Grupos perseguidos</h3><p>O regime nazista perseguiu e assassinou judeus, Roma e Sinti, pessoas com deficiência, prisioneiros de guerra soviéticos, poloneses e outros povos eslavos, pessoas LGBTQ+ e outros grupos. As experiências e políticas variaram conforme o grupo e o período.</p></article>
-    <article><span class="consequence-icon"><i class="fas fa-landmark" aria-hidden="true"></i></span><h3>Guerra, ocupação e império</h3><p>A expansão militar levou à ocupação, ao trabalho forçado, à violência contra civis e a deslocamentos em massa. O fascismo italiano também promoveu guerras coloniais e repressão brutal em territórios ocupados.</p></article>
-    <article><span class="consequence-icon"><i class="fas fa-book-open" aria-hidden="true"></i></span><h3>Sobreviventes e memória</h3><p>Testemunhos, arquivos, memoriais e pesquisas documentam as vítimas e ajudam a combater o negacionismo. A memória histórica exige distinguir evidências, propaganda produzida pelos regimes e interpretações posteriores.</p></article>
-  </div>
-  <p class="human-consequences-note"><strong>Precisão histórica:</strong> o Holocausto foi o assassinato sistemático de seis milhões de judeus europeus pela Alemanha nazista e seus colaboradores. Outros grupos também foram vítimas de perseguição e assassinato em massa; suas histórias não devem ser apagadas nem confundidas com a definição específica do Holocausto.</p>
-</section>
-<section class="civic-section primary-sources-section" id="fontes-primarias">
-  <div class="section-heading"><div><span class="eyebrow">Documentos de época</span><h2>Fontes primárias em contexto</h2></div><p>Documentos mostram como os regimes justificavam suas políticas — não são relatos neutros nem prova automática de que a propaganda fosse verdadeira.</p></div>
-  <div class="primary-source-list">
-    <article><span class="source-date">1935 · Alemanha</span><h3>Leis de Nuremberg</h3><p>Leis que institucionalizaram a exclusão racial dos judeus, retirando direitos e definindo categorias raciais impostas pelo Estado. Leia o documento junto ao contexto da perseguição crescente.</p><a href="https://encyclopedia.ushmm.org/content/en/article/the-nuremberg-race-laws" target="_blank" rel="noopener noreferrer">USHMM · Contexto e explicação das leis <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></article>
-    <article><span class="source-date">1938 · Itália</span><h3>Legislação racial fascista</h3><p>O regime de Mussolini adotou leis antissemitas que restringiram direitos e expulsaram judeus de instituições e profissões. A política racial italiana precisa ser analisada em seu contexto, sem ser tratada como idêntica à política nazista.</p><a href="https://encyclopedia.ushmm.org/content/en/article/italy" target="_blank" rel="noopener noreferrer">USHMM · Itália, leis raciais e perseguição <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></article>
-    <article><span class="source-date">1933–1945 · Alemanha</span><h3>Propaganda e documentos nazistas</h3><p>Cartazes, discursos, fotografias e documentos oficiais ajudam a estudar o culto ao líder, o nacionalismo e a desumanização de grupos. Analise quem produziu cada peça, a quem se dirigia e qual objetivo político perseguia.</p><a href="https://ghdi.ghi-dc.org/sub_document.cfm?document_id=1520" target="_blank" rel="noopener noreferrer">German History in Documents and Images · Fonte histórica <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a href="https://encyclopedia.ushmm.org/content/en/article/nazi-propaganda" target="_blank" rel="noopener noreferrer">USHMM · Como funcionava a propaganda nazista <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></article>
-  </div>
-  <p class="primary-source-method"><strong>Como analisar:</strong> identifique autoria e data; verifique o público-alvo e a finalidade; compare o documento com outras fontes independentes; diferencie o que a fonte afirma, o que ela demonstra e o que historiadores interpretam.</p>
-</section>
-
-<section class="civic-section historical-gallery-section" id="galeria-historica">
-  <div class="section-heading">
-    <div><span class="eyebrow">Arquivo visual</span><h2>Imagens, cartazes e documentos de época</h2></div>
-    <p>Fontes visuais ajudam a observar como os regimes se apresentavam, como a perseguição foi documentada e quais evidências permanecem. Cada item vem acompanhado de contexto e de um link para o registro original.</p>
-  </div>
-  <p class="gallery-content-warning"><i class="fas fa-eye" aria-hidden="true"></i> <strong>Aviso de conteúdo:</strong> a galeria inclui propaganda antissemita e uma fotografia de sobreviventes durante a libertação de Auschwitz. O material é exibido para estudo histórico, sem endosso às mensagens dos regimes.</p>
-  <div class="gallery-filters" role="group" aria-label="Filtrar itens da galeria">
-    <button type="button" data-gallery-filter="todos" aria-pressed="true">Todos <span>8</span></button>
-    <button type="button" data-gallery-filter="fotografia" aria-pressed="false">Fotografias</button>
-    <button type="button" data-gallery-filter="cartaz" aria-pressed="false">Cartazes</button>
-    <button type="button" data-gallery-filter="documento" aria-pressed="false">Documentos</button>
-  </div>
-  <div class="historical-gallery-grid" data-historical-gallery>
-    <article class="historical-gallery-card" data-gallery-type="cartaz">
-      <button type="button" class="gallery-item-open" data-gallery-open
-        data-title="A organização corporativa do Estado fascista" data-date="Década de 1930 · Itália"
-        data-context="O cartaz apresenta a estrutura corporativa promovida pelo regime de Mussolini. A representação visual de uma ordem organizada e hierárquica ajudava a legitimar a concentração de poder e o controle estatal das relações de trabalho. A peça deve ser lida como propaganda institucional, não como retrato neutro do funcionamento do Estado."
-        data-credit="Autor não identificado; cartaz de propaganda corporativa. Registro digital via Wikimedia Commons; indicado como domínio público no registro."
-        data-source="https://commons.wikimedia.org/wiki/File:Ordinamento_Corporativo_dello_Stato_Fascista._Padua,_Edizione_di_propaganda_corporative_1930s_Fascist_corporations_Italian_propaganda_poster_Lithograph_139x100cm_Unknown_designer_No_known_copyright_catalogo.beniculturali.it_ICCD11587005.jpg"
-        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Ordinamento_Corporativo_dello_Stato_Fascista._Padua,_Edizione_di_propaganda_corporative_1930s_Fascist_corporations_Italian_propaganda_poster_Lithograph_139x100cm_Unknown_designer_No_known_copyright_catalogo.beniculturali.it_ICCD11587005.jpg">
-        <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ordinamento_Corporativo_dello_Stato_Fascista._Padua,_Edizione_di_propaganda_corporative_1930s_Fascist_corporations_Italian_propaganda_poster_Lithograph_139x100cm_Unknown_designer_No_known_copyright_catalogo.beniculturali.it_ICCD11587005.jpg" alt="Cartaz histórico que representa a organização corporativa do Estado fascista italiano" loading="lazy"><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
-        <span class="gallery-card-body"><span class="gallery-card-meta">Cartaz · Itália · década de 1930</span><strong>A organização corporativa do Estado</strong><span>Propaganda institucional e hierarquia política.</span></span>
-      </button>
-    </article>
-
-    <article class="historical-gallery-card" data-gallery-type="documento">
-      <button type="button" class="gallery-item-open" data-gallery-open
-        data-title="Leis raciais fascistas: o documento assinado em 1938" data-date="17 de novembro de 1938 · Itália"
-        data-context="O documento registra a promulgação das leis raciais italianas, que restringiram direitos de judeus e institucionalizaram a discriminação sob o regime de Mussolini. A comparação com a legislação nazista permite observar semelhanças e diferenças entre os regimes sem minimizar a responsabilidade do fascismo italiano por sua própria política antissemita."
-        data-credit="Fotografia do documento por Bartleby08, Wikimedia Commons, licença Creative Commons Atribuição-CompartilhaIgual 4.0 (CC BY-SA 4.0)."
-        data-source="https://commons.wikimedia.org/wiki/File:Faschist_Rassengesetze_17_Nov_1938.jpg"
-        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Faschist_Rassengesetze_17_Nov_1938.jpg">
-        <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Faschist_Rassengesetze_17_Nov_1938.jpg" alt="Documento das leis raciais italianas de 1938, com assinaturas de Mussolini e autoridades do regime" loading="lazy"><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
-        <span class="gallery-card-body"><span class="gallery-card-meta">Documento · Itália · 1938</span><strong>Leis raciais do fascismo italiano</strong><span>Discriminação legal sob o regime de Mussolini.</span></span>
-      </button>
-    </article>
-    <article class="historical-gallery-card" data-gallery-type="fotografia">
-      <button type="button" class="gallery-item-open" data-gallery-open
-        data-title="A Marcha sobre Roma" data-date="28 de outubro de 1922 · Itália"
-        data-context="A imagem registra uma manifestação fascista associada à Marcha sobre Roma, episódio que pressionou a monarquia italiana e antecedeu a nomeação de Mussolini como primeiro-ministro. A fotografia documenta a mobilização pública; sozinha, não explica a variedade de fatores políticos e institucionais que permitiram a ascensão do fascismo."
-        data-credit="Fotógrafo não identificado; publicada em Illustrazione Italiana, 1922. Registro indicado como domínio público no Wikimedia Commons."
-        data-source="https://commons.wikimedia.org/wiki/File:March_on_Rome_1922_-_Quirinale.jpg"
-        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/March_on_Rome_1922_-_Quirinale.jpg">
-        <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/March_on_Rome_1922_-_Quirinale.jpg" alt="Fotografia histórica de uma parada fascista diante do Palácio do Quirinal em Roma, em outubro de 1922" loading="lazy"><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
-        <span class="gallery-card-body"><span class="gallery-card-meta">Fotografia · Itália · 1922</span><strong>A Marcha sobre Roma</strong><span>Mobilização política e chegada ao poder.</span></span>
-      </button>
-    </article>
-    <article class="historical-gallery-card" data-gallery-type="cartaz">
-      <button type="button" class="gallery-item-open" data-gallery-open
-        data-title="Hitlerjunge Quex: propaganda juvenil" data-date="1933 · Alemanha"
-        data-context="O cartaz do filme Hitlerjunge Quex associa juventude, sacrifício e pertencimento ao movimento nazista. O cinema e outras formas de cultura popular foram usados para difundir valores do regime e incentivar a identificação com a organização juvenil nazista. A obra é propaganda e deve ser analisada criticamente."
-        data-credit="Cartaz histórico; fotografia do exemplar exposto no NS-Dokumentationszentrum Köln, publicada no Wikimedia Commons sob CC0."
-        data-source="https://commons.wikimedia.org/wiki/File:Nazi_propaganda_film_poster_of_%22Hitlerjunge_Quex%22_(1933).jpg"
-        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Nazi_propaganda_film_poster_of_%22Hitlerjunge_Quex%22_(1933).jpg">
-        <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Nazi_propaganda_film_poster_of_%22Hitlerjunge_Quex%22_(1933).jpg" alt="Cartaz de época do filme nazista Hitlerjunge Quex, de 1933" loading="lazy"><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
-        <span class="gallery-card-body"><span class="gallery-card-meta">Cartaz · Alemanha · 1933</span><strong>Propaganda dirigida à juventude</strong><span>Cinema, identidade coletiva e mobilização.</span></span>
-      </button>
-    </article>
-    <article class="historical-gallery-card" data-gallery-type="fotografia">
-      <button type="button" class="gallery-item-open" data-gallery-open
-        data-title="Parada das SA em Nuremberg" data-date="Setembro de 1935 · Alemanha"
-        data-context="A fotografia mostra integrantes das SA desfilando diante de Hitler durante o congresso do Partido Nazista em Nuremberg. Grandes cerimônias, uniformes, coreografia e arquitetura de massa ajudavam a encenar unidade e poder. A imagem mostra a encenação pública do regime, não o consenso de toda a população alemã."
-        data-credit="Autor não identificado; Charles Russell Collection, U.S. National Archives and Records Administration (NARA). Registro indicado como domínio público no Wikimedia Commons."
-        data-source="https://commons.wikimedia.org/wiki/File:Hitler_N%C3%BCrnberg_1935.jpg"
-        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Hitler_N%C3%BCrnberg_1935.jpg">
-        <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hitler_N%C3%BCrnberg_1935.jpg" alt="Parada de integrantes das SA diante de Hitler em Nuremberg, em setembro de 1935" loading="lazy"><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
-        <span class="gallery-card-body"><span class="gallery-card-meta">Fotografia · Alemanha · 1935</span><strong>O espetáculo do poder</strong><span>Rituais públicos, uniformes e culto ao líder.</span></span>
-      </button>
-    </article>
-    <article class="historical-gallery-card" data-gallery-type="fotografia">
-      <button type="button" class="gallery-item-open" data-gallery-open
-        data-title="Boicote antissemita a lojas judaicas" data-date="1º de abril de 1933 · Alemanha"
-        data-context="A imagem registra a campanha nazista de boicote a estabelecimentos judaicos em Berlim. Cartazes e intimidação pública transformaram o antissemitismo em prática cotidiana e ajudaram a preparar o terreno para medidas legais de exclusão. A mensagem antissemita reproduzida é apresentada exclusivamente como evidência histórica de perseguição."
-        data-credit="Fotógrafo não identificado; registro arquivístico reproduzido no Wikimedia Commons e indicado como sem restrições conhecidas de direitos autorais."
-        data-source="https://commons.wikimedia.org/wiki/File:Judenboykott_1933-04-01_Berlin._Anti-Semitic_Anti-Jewish_Nazi_boycott_of_Jewish_businesses_shops_Germany_Anti-Jewish_poster_advertising_column_Litfasssaule_Plakat_31.3.1933_Photo_18X24cm_(Stade_Auktionen_philasearch.com)_No_copyright.jpg"
-        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Judenboykott_1933-04-01_Berlin._Anti-Semitic_Anti-Jewish_Nazi_boycott_of_Jewish_businesses_shops_Germany_Anti-Jewish_poster_advertising_column_Litfasssaule_Plakat_31.3.1933_Photo_18X24cm_(Stade_Auktionen_philasearch.com)_No_copyright.jpg">
-        <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Judenboykott_1933-04-01_Berlin._Anti-Semitic_Anti-Jewish_Nazi_boycott_of_Jewish_businesses_shops_Germany_Anti-Jewish_poster_advertising_column_Litfasssaule_Plakat_31.3.1933_Photo_18X24cm_(Stade_Auktionen_philasearch.com)_No_copyright.jpg" alt="Registro histórico de cartaz antissemita durante o boicote nazista a lojas judaicas em Berlim, em abril de 1933" loading="lazy"><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
-        <span class="gallery-card-body"><span class="gallery-card-meta">Fotografia de propaganda · Alemanha · 1933</span><strong>O boicote a lojas judaicas</strong><span>Discriminação pública e perseguição antissemita.</span></span>
-      </button>
-    </article>
-    <article class="historical-gallery-card" data-gallery-type="documento">
-      <button type="button" class="gallery-item-open" data-gallery-open
-        data-title="Lei para a proteção do sangue alemão" data-date="15 de setembro de 1935 · Alemanha"
-        data-context="Esta publicação oficial integra as Leis de Nuremberg. A legislação proibiu casamentos e relações entre judeus e pessoas classificadas como de 'sangue alemão', institucionalizando a discriminação racial. As categorias impostas pelo regime não tinham base científica válida: eram instrumentos políticos de exclusão e perseguição."
-        data-credit="Deutsches Reich, Reichsgesetzblatt I (1935), p. 1146. Texto legislativo oficial indicado como domínio público no Wikimedia Commons."
-        data-source="https://commons.wikimedia.org/wiki/File:Blutschutzgesetz_v.15.9.1935_-_RGBl_I_1146gesamt.jpg"
-        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Blutschutzgesetz_v.15.9.1935_-_RGBl_I_1146gesamt.jpg">
-        <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Blutschutzgesetz_v.15.9.1935_-_RGBl_I_1146gesamt.jpg" alt="Digitalização da publicação oficial da Lei para a proteção do sangue alemão, de setembro de 1935" loading="lazy"><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
-        <span class="gallery-card-body"><span class="gallery-card-meta">Documento legal · Alemanha · 1935</span><strong>Leis de Nuremberg</strong><span>Como a discriminação racial foi institucionalizada.</span></span>
-      </button>
-    </article>
-    <article class="historical-gallery-card" data-gallery-type="fotografia">
-      <button type="button" class="gallery-item-open" data-gallery-open
-        data-title="A libertação de Auschwitz" data-date="Janeiro de 1945 · Polônia ocupada"
-        data-context="A fotografia documenta prisioneiros sobreviventes no complexo de Auschwitz durante sua libertação pelo Exército Vermelho. O registro deve ser visto com respeito às vítimas e sobreviventes: ele evidencia consequências humanas do sistema de campos nazista, mas não representa sozinho a diversidade das experiências do Holocausto nem o conjunto de suas vítimas."
-        data-credit="Fotógrafo não identificado, presumivelmente integrante do Exército Vermelho; fonte histórica associada ao Auschwitz Memorial and Museum. O registro no Wikimedia Commons indica domínio público."
-        data-source="https://commons.wikimedia.org/wiki/File:Auschwitz_Liberated_January_1945.jpg"
-        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Auschwitz_Liberated_January_1945.jpg">
-        <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Auschwitz_Liberated_January_1945.jpg" alt="Sobreviventes de Auschwitz fotografados durante a libertação do campo, em janeiro de 1945" loading="lazy"><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
-        <span class="gallery-card-body"><span class="gallery-card-meta">Fotografia · Polônia · 1945</span><strong>Sobreviventes na libertação</strong><span>Evidência histórica e memória das vítimas.</span></span>
-      </button>
-    </article>
-    <article class="historical-gallery-card" data-gallery-type="documento">
-      <button type="button" class="gallery-item-open" data-gallery-open
-        data-title="As Leis de Nuremberg no Reichsgesetzblatt" data-date="1935 · Alemanha"
-        data-context="A publicação das leis no diário oficial mostra como o regime converteu a ideologia racial em normas estatais. Documentos legais devem ser lidos em conjunto com a aplicação concreta das medidas, testemunhos das vítimas e outras evidências independentes."
-        data-credit="Deutsches Reich, Reichsgesetzblatt I (1935). Documento legislativo oficial indicado como domínio público no Wikimedia Commons."
-        data-source="https://commons.wikimedia.org/wiki/File:Nuremberg_Laws,_N%C3%BCrnberger_Gesetze,_1935.djvu"
-        data-image="https://commons.wikimedia.org/wiki/Special:FilePath/Blutschutzgesetz_v.15.9.1935_-_RGBl_I_1146gesamt.jpg">
-        <span class="gallery-image-wrap"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Blutschutzgesetz_v.15.9.1935_-_RGBl_I_1146gesamt.jpg" alt="Página de legislação alemã de 1935 que integrou as Leis de Nuremberg" loading="lazy"><span class="gallery-zoom"><i class="fas fa-expand" aria-hidden="true"></i> Ampliar</span></span>
-        <span class="gallery-card-body"><span class="gallery-card-meta">Documento · Alemanha · 1935</span><strong>A lei como instrumento de exclusão</strong><span>Legislação, burocracia e perseguição racial.</span></span>
-      </button>
-    </article>
-  </div>
-  <p class="gallery-method-note"><strong>Como ler estas fontes:</strong> identifique autoria, data, finalidade e público-alvo; compare a imagem com outras fontes; separe o que o documento afirma do que ele realmente comprova. Os registros vinculados indicam a origem e o status de direitos informado pelo Wikimedia Commons. A situação jurídica pode variar por país; confira o registro original antes de reutilizar qualquer item fora deste contexto educativo.</p>
-</section>
-<dialog class="gallery-viewer" data-gallery-dialog aria-labelledby="gallery-viewer-title">
-  <div class="gallery-viewer-header"><span class="eyebrow">Visualizador de fonte histórica</span><button type="button" class="gallery-viewer-close" data-gallery-close aria-label="Fechar visualizador"><i class="fas fa-xmark" aria-hidden="true"></i><span>Fechar</span></button></div>
-  <div class="gallery-viewer-layout">
-    <div class="gallery-viewer-image-wrap"><img data-viewer-image alt=""><p class="gallery-viewer-credit" data-viewer-credit></p></div>
-    <div class="gallery-viewer-copy"><span class="gallery-card-meta" data-viewer-date></span><h2 id="gallery-viewer-title" data-viewer-title></h2><p data-viewer-context></p><a data-viewer-source href="#" target="_blank" rel="noopener noreferrer">Abrir registro original <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-  </div>
-</dialog>
-
-<section class="civic-section civic-sources"><div class="section-heading"><div><span class="eyebrow">Fontes para aprofundar</span><h2>História documentada</h2></div></div><p>Esta introdução se apoia em instituições de pesquisa histórica e memória do Holocausto. As páginas abaixo detalham a ascensão nazista, propaganda, perseguição e o genocídio.</p><div class="source-list"><a href="https://encyclopedia.ushmm.org/content/en/article/the-nazi-rise-to-power" target="_blank" rel="noopener noreferrer">USHMM · A ascensão nazista ao poder</a><a href="https://encyclopedia.ushmm.org/content/en/article/nazi-propaganda" target="_blank" rel="noopener noreferrer">USHMM · Propaganda nazista</a><a href="https://encyclopedia.ushmm.org/content/en/article/introduction-to-the-holocaust" target="_blank" rel="noopener noreferrer">USHMM · Introdução ao Holocausto</a><a href="https://www.britannica.com/topic/fascism" target="_blank" rel="noopener noreferrer">Encyclopaedia Britannica · Fascismo</a><a href="https://bibliotecadigital.tse.jus.br/items/418573ac-0980-4ba0-8079-ad436099036a/full" target="_blank" rel="noopener noreferrer">Biblioteca Digital do TSE · Classificação ideológica dos partidos</a></div></section>
-      <section class="civic-history-link"><div><span class="eyebrow">Continue aprendendo</span><h2>Explore outras ideias políticas.</h2><p>Conheça correntes, eixos de análise e as diferenças entre conceitos políticos.</p></div><a class="cta-button" href="/ideologias">Ir para Ideologias</a></section>
-    </main>
-    <div id="footer"></div>
-  </div>
-  <script src="/js/sidebar.js"></script><script src="/js/footer.js"></script><script src="/js/fascismo-nazismo.js"></script>
-</body>
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/footer.js"></script>
+    <script src="/js/fascismo-nazismo.js"></script>
+  </body>
 </html>
