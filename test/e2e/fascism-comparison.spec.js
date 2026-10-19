@@ -1,21 +1,21 @@
 const { expect, test } = require('@playwright/test');
 
-test('fascism and Nazism comparison switches topics and sources', async ({ page }) => {
+test('fascism and Nazism comparison switches topics and keeps primary sources available', async ({ page }) => {
   await page.goto('/fascismo-nazismo');
 
   const panel = page.getByRole('tabpanel');
-  await expect(panel).toContainText('ditadura de partido único');
-  await expect(panel.getByRole('link', { name: /Ascensão nazista ao poder/ })).toBeVisible();
+  await expect(panel).toContainText('Ultranacionalismo');
+  await expect(panel).toContainText('racismo biológico');
+  await expect(page.locator('#fontes-primarias a[href*="the-nuremberg-race-laws"]')).toBeVisible();
 
-  const economyTab = page.getByRole('tab', { name: 'Economia e trabalho' });
-  await economyTab.click();
-  await expect(economyTab).toHaveAttribute('aria-selected', 'true');
-  await expect(panel).toContainText('propriedade privada');
+  const racialTab = page.getByRole('tab', { name: 'Racismo e antissemitismo' });
+  await racialTab.click();
+  await expect(racialTab).toHaveAttribute('aria-selected', 'true');
+  await expect(panel).toContainText('Holocausto');
 
-  await economyTab.focus();
+  await racialTab.focus();
   await page.keyboard.press('ArrowRight');
-  await expect(page.getByRole('tab', { name: 'Racismo e perseguição' })).toHaveAttribute('aria-selected', 'true');
-  await expect(panel).toContainText('Leis de Nuremberg');
+  await expect(page.getByRole('tab', { name: 'Expansionismo' })).toHaveAttribute('aria-selected', 'true');
 });
 
 test('fascism timeline dialog restores focus and search has an accessible name', async ({ page }) => {
@@ -44,6 +44,6 @@ test('comparison remains readable on narrow screens without horizontal overflow'
     viewportWidth: window.innerWidth
   }));
   expect(dimensions.documentWidth).toBeLessThanOrEqual(dimensions.viewportWidth);
-  await expect(page.getByRole('tab', { name: 'Poder e democracia' })).toBeVisible();
-  await expect(page.getByRole('tab', { name: 'Guerra e violência' })).toBeVisible();
+  await expect(page.getByRole('tab', { name: 'Ideologia' })).toBeVisible();
+  await expect(page.getByRole('tab', { name: 'Expansionismo' })).toBeVisible();
 });

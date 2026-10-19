@@ -62,7 +62,7 @@
 .history-filter.active {
   border-color: var(--primary);
   background: var(--primary);
-  color: #fff;
+  color: var(--bg-body);
 }
 
 .history-search {
