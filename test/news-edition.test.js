@@ -25,14 +25,17 @@ const modules = {
       const latest = state.records.map(row => row.editionDate).sort((x,y)=>parse(y)-parse(x))[0] || null;
       if (pipeline.some(stage => stage.$group)) {
         const counts = new Map();
-        for (const row of state.records) {
+        for (const row of state.records.filter(item => parse(item.publishedAt) === parse(item.editionDate))) {
           counts.set(row.editionDate,(counts.get(row.editionDate)||0)+1);
         }
         return [...counts].map(([date,stories])=>({date,stories,title:'Edição de '+date})).sort((x,y)=>parse(y.date)-parse(x.date));
       }
       const match = pipeline.find(stage=>stage.$match&&stage.$match.editionDate);
-      if (match) return state.records.filter(row=>row.editionDate===match.$match.editionDate)
-        .sort((x,y)=>Number(Boolean(y.headline))-Number(Boolean(x.headline)));
+      if (match) return state.records.filter(row=>row.editionDate===match.$match.editionDate
+        && parse(row.publishedAt) === parse(row.editionDate))
+        .sort((x,y)=>parse(y.publishedAt)-parse(x.publishedAt)
+          || Number(Boolean(y.headline))-Number(Boolean(x.headline))
+          || String(y._id || y.title).localeCompare(String(x._id || x.title)));
       return latest ? [{editionDate:latest}] : [];
     }
   }
@@ -120,9 +123,7 @@ test('a edição atual exibe todas as notícias vinculadas, inclusive publicadas
   assert.equal(response.statusCode, 200);
   assert.equal(response.body.date, '14/10/2026');
   assert.deepEqual(response.body.stories.map(item => item.title), [
-    'Notícia de hoje',
-    'Notícia de ontem atribuída à edição atual',
-    'Notícia antiga atribuída à edição atual'
+    'Notícia de hoje'
   ]);
 });
 
@@ -133,9 +134,7 @@ test('a consulta explícita da edição atual preserva todas as notícias vincul
 
   assert.equal(response.statusCode, 200);
   assert.deepEqual(response.body.stories.map(item => item.title), [
-    'Notícia de hoje',
-    'Notícia de ontem atribuída à edição atual',
-    'Notícia antiga atribuída à edição atual'
+    'Notícia de hoje'
   ]);
 });
 
@@ -146,8 +145,7 @@ test('edições antigas preservam as notícias vinculadas ao arquivo mesmo se pu
 
   assert.equal(response.statusCode, 200);
   assert.deepEqual(response.body.stories.map(item => item.title), [
-    'Notícia da edição arquivada',
-    'Notícia anterior preservada no arquivo'
+    'Notícia da edição arquivada'
   ]);
 });
 
@@ -158,7 +156,7 @@ test('o histórico conta todas as notícias vinculadas à edição mais recente'
 
   assert.equal(response.statusCode, 200);
   assert.deepEqual(response.body, [
-    { date: '14/10/2026', stories: 3, title: 'Edição de 14/10/2026' },
-    { date: '13/10/2026', stories: 2, title: 'Edição de 13/10/2026' }
+    { date: '14/10/2026', stories: 1, title: 'Edição de 14/10/2026' },
+    { date: '13/10/2026', stories: 1, title: 'Edição de 13/10/2026' }
   ]);
 });

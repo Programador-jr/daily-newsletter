@@ -30,6 +30,66 @@ function isValidDate(value) {
   return typeof value === 'string' && /^\d{2}\/\d{2}\/\d{4}$/.test(value) && Boolean(parseDate(value));
 }
 
+function calendarDateKey(value) {
+  if (typeof value !== 'string') return null;
+  const dayFirst = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (dayFirst) {
+    if (!parseDate(value)) return null;
+    return `${dayFirst[3]}-${dayFirst[2].padStart(2, '0')}-${dayFirst[1].padStart(2, '0')}`;
+  }
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    const date = new Date(`${value}T00:00:00.000Z`);
+    return Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== value ? null : value;
+  }
+
+  const timestamp = Date.parse(value);
+  if (Number.isNaN(timestamp)) return null;
+  const parts = new Intl.DateTimeFormat('en', {
+    timeZone: 'America/Rio_Branco', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).formatToParts(new Date(timestamp));
+  const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
+function publishedDateStages() {
+  return [
+    {
+      $addFields: {
+        _publishedSort: {
+          $let: {
+            vars: { publishedAt: { $ifNull: ['$publishedAt', ''] } },
+            in: {
+              $switch: {
+                branches: [
+                  {
+                    case: { $regexMatch: { input: '$$publishedAt', regex: /^\d{2}\/\d{2}\/\d{4}$/ } },
+                    then: { $dateFromString: { dateString: '$$publishedAt', format: '%d/%m/%Y', timezone: 'America/Rio_Branco', onError: null, onNull: null } }
+                  },
+                  {
+                    case: { $regexMatch: { input: '$$publishedAt', regex: /^\d{4}-\d{2}-\d{2}$/ } },
+                    then: { $dateFromString: { dateString: '$$publishedAt', format: '%Y-%m-%d', timezone: 'America/Rio_Branco', onError: null, onNull: null } }
+                  }
+                ],
+                default: { $dateFromString: { dateString: '$$publishedAt', onError: null, onNull: null } }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      $addFields: {
+        _publishedDay: {
+          $dateToString: {
+            date: '$_publishedSort', format: '%d/%m/%Y', timezone: 'America/Rio_Branco', onNull: null
+          }
+        }
+      }
+    }
+  ];
+}
+
 function normalizeStory(story, editionDate) {
   return {
     editionDate,
@@ -68,7 +128,9 @@ module.exports = async function handler(req, res) {
       if (req.query.history === 'true') {
         const pipeline = [
           { $addFields: { _editionSort: { $dateFromString: { dateString: '$editionDate', format: '%d/%m/%Y', onError: null, onNull: null } } } },
-          { $match: { _editionSort: { $ne: null } } }
+          { $match: { _editionSort: { $ne: null } } },
+          ...publishedDateStages(),
+          { $match: { $expr: { $eq: ['$_publishedDay', '$editionDate'] } } }
         ];
         pipeline.push(
           { $group: { _id: '$editionDate', stories: { $sum: 1 }, _editionSort: { $max: '$_editionSort' } } },
@@ -91,9 +153,10 @@ module.exports = async function handler(req, res) {
       const filter = { editionDate: date };
       const stories = await News.aggregate([
         { $match: filter },
-        { $addFields: { _publishedSort: { $dateFromString: { dateString: '$publishedAt', format: '%d/%m/%Y', onError: null, onNull: null } } } },
-        { $sort: { headline: -1, _publishedSort: -1, _id: -1 } },
-        { $project: { _publishedSort: 0 } }
+        ...publishedDateStages(),
+        { $match: { $expr: { $eq: ['$_publishedDay', '$editionDate'] } } },
+        { $sort: { _publishedSort: -1, headline: -1, _id: -1 } },
+        { $project: { _publishedSort: 0, _publishedDay: 0 } }
       ]);
       return res.status(200).json({ date, stories });
     }
@@ -115,7 +178,13 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'Uma ou mais notícias possuem campos inválidos.' });
     }
 
-    const operations = normalized.map(story => ({
+    const editionDateKey = calendarDateKey(editionDate);
+    const editionStories = normalized.filter(story => calendarDateKey(story.publishedAt) === editionDateKey);
+    if (!editionStories.length) {
+      return res.status(400).json({ error: 'Nenhuma notícia corresponde à data da edição.' });
+    }
+
+    const operations = editionStories.map(story => ({
       updateOne: {
         filter: { editionDate: story.editionDate, url: story.url },
         update: { $set: story },
@@ -128,6 +197,7 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({
       inserted: result.upsertedCount,
       updated: result.modifiedCount,
+      skipped: normalized.length - editionStories.length,
       notification: null
     });
   } catch (error) {

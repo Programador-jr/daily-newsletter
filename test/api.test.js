@@ -60,8 +60,9 @@ const modules = {
       const match = pipeline.find(stage => stage.$match && stage.$match.editionDate);
       if (match) return state.latestNews.filter(row =>
         (row.editionDate === undefined || row.editionDate === match.$match.editionDate) &&
+        parse(row.publishedAt) === parse(match.$match.editionDate) &&
         (!match.$match.publishedAt || row.publishedAt === match.$match.publishedAt)
-      ).sort((x,y) => Number(Boolean(y.headline))-Number(Boolean(x.headline)) || parse(y.publishedAt)-parse(x.publishedAt) || String(y._id).localeCompare(String(x._id)));
+      ).sort((x,y) => parse(y.publishedAt)-parse(x.publishedAt) || Number(Boolean(y.headline))-Number(Boolean(x.headline)) || String(y._id).localeCompare(String(x._id)));
       return latest ? [{ editionDate: latest }] : [];
     },
     bulkWrite: async (...args) => {
@@ -249,18 +250,19 @@ test('news history groups editions and sorts dates newest first', async () => {
   ]);
 });
 
-test('news edition sorts headline stories before other stories', async () => {
+test('news edition excludes stories published on a different date', async () => {
   state.latestNews = [
     { _id: 'a', headline: false, publishedAt: '05/10/2026' },
-    { _id: 'b', headline: true, publishedAt: '01/10/2026' },
-    { _id: 'c', headline: false, publishedAt: '06/10/2026' }
+    { _id: 'b', headline: true, publishedAt: '06/10/2026' },
+    { _id: 'c', headline: false, publishedAt: '06/10/2026' },
+    { _id: 'd', headline: true, publishedAt: '01/10/2026' }
   ];
   const response = createResponse();
 
   await newsHandler(createRequest({ query: { date: '06/10/2026' } }), response);
 
   assert.equal(response.statusCode, 200);
-  assert.deepEqual(response.body.stories.map(story => story._id), ['b', 'c', 'a']);
+  assert.deepEqual(response.body.stories.map(story => story._id), ['b', 'c']);
 });
 
 test('news publishing requires authorization', async () => {
