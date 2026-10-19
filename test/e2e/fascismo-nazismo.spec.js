@@ -42,3 +42,22 @@ test('comparison fits mobile viewport without horizontal overflow', async ({ pag
   }));
   expect(dimensions.documentWidth).toBeLessThanOrEqual(dimensions.viewportWidth);
 });
+
+
+test('historical gallery filters sources and opens an accessible detail viewer', async ({ page }) => {
+  await page.goto('/fascismo-nazismo');
+  const gallery = page.locator('[data-historical-gallery]');
+  await expect(gallery.locator('[data-gallery-type]:visible')).toHaveCount(8);
+  const posters = page.getByRole('button', { name: 'Cartazes' });
+  await posters.click();
+  await expect(posters).toHaveAttribute('aria-pressed', 'true');
+  await expect(gallery.locator('[data-gallery-type]:visible')).toHaveCount(3);
+  await page.getByRole('button', { name: /Todos/ }).click();
+  await gallery.getByRole('button', { name: /A Marcha sobre Roma/ }).click();
+  const dialog = page.getByRole('dialog', { name: 'A Marcha sobre Roma' });
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toContainText('28 de outubro de 1922');
+  await expect(dialog.getByRole('link', { name: /registro original/i })).toHaveAttribute('href', /commons\.wikimedia\.org/);
+  await page.keyboard.press('Escape');
+  await expect(dialog).not.toBeVisible();
+});
