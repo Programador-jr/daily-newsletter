@@ -26,14 +26,12 @@ const modules = {
       if (pipeline.some(stage => stage.$group)) {
         const counts = new Map();
         for (const row of state.records) {
-          if (row.editionDate === latest && row.publishedAt && row.publishedAt !== latest) continue;
           counts.set(row.editionDate,(counts.get(row.editionDate)||0)+1);
         }
         return [...counts].map(([date,stories])=>({date,stories,title:'Edição de '+date})).sort((x,y)=>parse(y.date)-parse(x.date));
       }
       const match = pipeline.find(stage=>stage.$match&&stage.$match.editionDate);
       if (match) return state.records.filter(row=>row.editionDate===match.$match.editionDate)
-        .filter(row=>!match.$match.publishedAt||row.publishedAt===match.$match.publishedAt)
         .sort((x,y)=>Number(Boolean(y.headline))-Number(Boolean(x.headline)));
       return latest ? [{editionDate:latest}] : [];
     }
@@ -145,7 +143,7 @@ test('edições antigas preservam as notícias vinculadas ao arquivo mesmo se pu
   ]);
 });
 
-test('o histórico conta apenas notícias do próprio dia na edição mais recente', async () => {
+test('o histórico conta todas as notícias vinculadas à edição mais recente', async () => {
   const response = createResponse();
 
   await newsHandler(createRequest({ history: 'true' }), response);
