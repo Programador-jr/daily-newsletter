@@ -152,6 +152,9 @@
     detail.classList.remove("open");
     detail.innerHTML = "";
     document.body.classList.remove("history-detail-open");
+    const trigger = returnFocusYear && timeline.querySelector('[data-event-year="' + CSS.escape(returnFocusYear) + '"]');
+    if (trigger) trigger.focus();
+    returnFocusYear = null;
   }
 
   function openDetail(event) {
@@ -178,13 +181,36 @@
     const button = event.target.closest("[data-event-year]");
     if (!button) return;
     const entry = events.find(item => item.year === button.dataset.eventYear);
-    if (entry) openDetail(entry);
+    if (entry) {
+      returnFocusYear = entry.year;
+      openDetail(entry);
+    }
   });
   detail.addEventListener("click", event => {
     if (event.target.closest("[data-close-detail]") || event.target.closest(".accordion-close")) closeDetail();
   });
   document.addEventListener("keydown", event => {
-    if (event.key === "Escape" && detail.classList.contains("open")) closeDetail();
+    if (!detail.classList.contains("open")) return;
+    if (event.key === "Escape") {
+      closeDetail();
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const dialog = detail.querySelector(".history-detail-dialog");
+    const focusable = dialog ? Array.from(dialog.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex="-1"])')) : [];
+    if (!focusable.length) {
+      event.preventDefault();
+      return;
+    }
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   });
   search.addEventListener("input", renderTimeline);
   renderFilters();
