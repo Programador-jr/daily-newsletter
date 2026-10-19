@@ -84,7 +84,7 @@
   tabs.forEach((tab, index) => {
     tab.addEventListener("click", () => render(tab.dataset.comparisonTab));
     tab.addEventListener("keydown", event => {
-      let nextIndex = index;
+      let nextIndex;
       if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
       else if (event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
       else if (event.key === "Home") nextIndex = 0;
