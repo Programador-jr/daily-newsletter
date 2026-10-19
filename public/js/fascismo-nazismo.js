@@ -74,4 +74,47 @@
       selectTopic(tabs[nextIndex], true);
     });
   });
+
+  const gallery = document.querySelector('[data-historical-gallery]');
+  const dialog = document.querySelector('[data-gallery-dialog]');
+  if (gallery && dialog) {
+    const filterButtons = Array.from(document.querySelectorAll('[data-gallery-filter]'));
+    const cards = Array.from(gallery.querySelectorAll('[data-gallery-type]'));
+    const closeButton = dialog.querySelector('[data-gallery-close]');
+    const viewerImage = dialog.querySelector('[data-viewer-image]');
+    const viewerTitle = dialog.querySelector('[data-viewer-title]');
+    const viewerDate = dialog.querySelector('[data-viewer-date]');
+    const viewerContext = dialog.querySelector('[data-viewer-context]');
+    const viewerCredit = dialog.querySelector('[data-viewer-credit]');
+    const viewerSource = dialog.querySelector('[data-viewer-source]');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.galleryFilter;
+        filterButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+        cards.forEach(card => { card.hidden = filter !== 'todos' && card.dataset.galleryType !== filter; });
+      });
+    });
+
+    gallery.querySelectorAll('[data-gallery-open]').forEach(button => {
+      button.addEventListener('click', () => {
+        viewerImage.src = button.dataset.image;
+        viewerImage.alt = button.querySelector('img')?.alt || button.dataset.title || '';
+        viewerTitle.textContent = button.dataset.title || '';
+        viewerDate.textContent = button.dataset.date || '';
+        viewerContext.textContent = button.dataset.context || '';
+        viewerCredit.textContent = button.dataset.credit || '';
+        viewerSource.href = button.dataset.source || '#';
+        if (typeof dialog.showModal === 'function') dialog.showModal();
+      });
+    });
+
+    closeButton?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', event => {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('close', () => {
+      viewerImage.removeAttribute('src');
+    });
+  }
 })();
