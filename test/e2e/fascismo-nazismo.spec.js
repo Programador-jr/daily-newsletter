@@ -18,8 +18,8 @@ test('fascism and Nazism comparison switches topics and updates both regimes', a
 
   await racialTab.focus();
   await page.keyboard.press('ArrowLeft');
-  await expect(page.getByRole('tab', { name: 'Propaganda' })).toBeFocused();
-  await expect(page.getByRole('tab', { name: 'Propaganda' })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('tab', { name: 'Repressão' })).toBeFocused();
+  await expect(page.getByRole('tab', { name: 'Repressão' })).toHaveAttribute('aria-selected', 'true');
 });
 
 test('human consequences and primary sources are available', async ({ page }) => {
