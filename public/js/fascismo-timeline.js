@@ -117,6 +117,7 @@
 
   let activePeriod = "all";
   let activeKey = "";
+  let returnFocusYear = null;
   const periods = [
     { id: "all", label: "Todos" },
     { id: "1918–1928", label: "1918–1928" },
