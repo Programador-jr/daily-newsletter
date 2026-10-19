@@ -1,0 +1,35 @@
+/* Interactive historical comparison */
+.fascism-comparison-section .section-heading>p,.human-consequences .section-heading>p,.primary-sources-section .section-heading>p{max-width:430px;color:var(--text-muted);font-size:.84rem;line-height:1.65}
+.comparison-widget{overflow:hidden;border:1px solid var(--border);border-radius:14px;background:var(--card-bg)}
+.comparison-tabs{display:flex;gap:.45rem;flex-wrap:wrap;padding:1rem;border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--primary) 4%,var(--card-bg))}
+.comparison-tabs [role=tab]{min-height:42px;padding:.65rem .85rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);color:var(--text-muted);font:inherit;font-size:.78rem;font-weight:650;cursor:pointer;transition:background-color 160ms ease,border-color 160ms ease,color 160ms ease}
+.comparison-tabs [role=tab]:hover{border-color:var(--primary);color:var(--text-main)}
+.comparison-tabs [role=tab][aria-selected=true]{border-color:var(--primary);background:var(--primary);color:#fff}
+.comparison-tabs [role=tab]:focus-visible,.comparison-panel:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.comparison-panel{padding:1.2rem}
+.comparison-regimes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.comparison-regime{min-width:0;padding:1.15rem;border:1px solid var(--border);border-radius:10px;background:var(--card-bg)}
+.comparison-italy{border-top:3px solid #b45309}.comparison-germany{border-top:3px solid #475569}
+.comparison-country{display:block;margin-bottom:.4rem;color:var(--text-muted);font-size:.72rem;font-weight:750;letter-spacing:.04em;text-transform:uppercase}
+.comparison-regime h3{margin:.2rem 0 .65rem;color:var(--text-main);font-family:"Playfair Display",serif;font-size:1.25rem}
+.comparison-regime p,.comparison-insight p{margin:0;color:var(--text-muted);font-size:.85rem;line-height:1.75}
+.comparison-insight{display:grid;grid-template-columns:28px minmax(0,1fr);gap:.8rem;margin-top:1rem;padding:1rem;border:1px solid color-mix(in srgb,var(--primary) 28%,var(--border));border-radius:10px;background:color-mix(in srgb,var(--primary) 5%,var(--card-bg))}
+.comparison-insight>i{margin-top:.15rem;color:var(--primary);font-size:1.15rem}
+.comparison-insight strong{display:block;margin-bottom:.25rem;color:var(--text-main);font-size:.85rem}
+.comparison-keyboard-hint{display:flex;align-items:center;gap:.5rem;margin:1rem 0 0;color:var(--text-muted);font-size:.72rem}
+.human-consequences-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem}
+.human-consequences-grid article,.primary-source-list article{padding:1.1rem;border:1px solid var(--border);border-radius:10px;background:var(--card-bg)}
+.consequence-icon{display:grid;place-items:center;width:38px;height:38px;margin-bottom:.75rem;border-radius:9px;background:color-mix(in srgb,var(--primary) 9%,var(--card-bg));color:var(--primary)}
+.human-consequences-grid h3,.primary-source-list h3{margin:.2rem 0 .5rem;color:var(--text-main);font-size:1rem}
+.human-consequences-grid p,.primary-source-list p,.human-consequences-note,.primary-source-method{color:var(--text-muted);font-size:.82rem;line-height:1.7}
+.human-consequences-grid p{margin:0}
+.human-consequences-note,.primary-source-method{margin:1rem 0 0;padding:1rem 1.1rem;border-left:3px solid var(--primary);border-radius:0 8px 8px 0;background:color-mix(in srgb,var(--primary) 5%,var(--card-bg))}
+.human-consequences-note strong,.primary-source-method strong{color:var(--text-main)}
+.primary-source-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.85rem}
+.source-date{display:block;margin-bottom:.5rem;color:var(--primary);font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.primary-source-list a{display:flex;align-items:baseline;gap:.45rem;margin-top:.7rem;color:var(--primary);font-size:.78rem;font-weight:700;line-height:1.5;text-decoration:none}
+.primary-source-list a:hover{text-decoration:underline}
+.primary-source-list a:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+@media(max-width:900px){.primary-source-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.comparison-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));padding:.75rem}.comparison-tabs [role=tab]{min-width:0;text-align:left;font-size:.74rem;padding:.6rem}.comparison-panel{padding:.8rem}.comparison-regimes,.human-consequences-grid,.primary-source-list{grid-template-columns:1fr}.comparison-regime{padding:1rem}.comparison-regime h3{font-size:1.1rem}.comparison-keyboard-hint{align-items:flex-start;line-height:1.5}.fascism-comparison-section .section-heading>p,.human-consequences .section-heading>p,.primary-sources-section .section-heading>p{max-width:none}}
+@media(prefers-reduced-motion:reduce){.comparison-tabs [role=tab]{transition:none}}
