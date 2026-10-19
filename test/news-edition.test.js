@@ -26,14 +26,12 @@ const modules = {
       if (pipeline.some(stage => stage.$group)) {
         const counts = new Map();
         for (const row of state.records) {
-          if (row.editionDate === latest && row.publishedAt && row.publishedAt !== latest) continue;
           counts.set(row.editionDate,(counts.get(row.editionDate)||0)+1);
         }
         return [...counts].map(([date,stories])=>({date,stories,title:'Edição de '+date})).sort((x,y)=>parse(y.date)-parse(x.date));
       }
       const match = pipeline.find(stage=>stage.$match&&stage.$match.editionDate);
       if (match) return state.records.filter(row=>row.editionDate===match.$match.editionDate)
-        .filter(row=>!match.$match.publishedAt||row.publishedAt===match.$match.publishedAt)
         .sort((x,y)=>Number(Boolean(y.headline))-Number(Boolean(x.headline)));
       return latest ? [{editionDate:latest}] : [];
     }
@@ -114,23 +112,31 @@ beforeEach(() => {
   ];
 });
 
-test('a edição atual exibe somente notícias publicadas na data da edição', async () => {
+test('a edição atual exibe todas as notícias vinculadas, inclusive publicadas antes', async () => {
   const response = createResponse();
 
   await newsHandler(createRequest(), response);
 
   assert.equal(response.statusCode, 200);
   assert.equal(response.body.date, '14/10/2026');
-  assert.deepEqual(response.body.stories.map(item => item.title), ['Notícia de hoje']);
+  assert.deepEqual(response.body.stories.map(item => item.title), [
+    'Notícia de hoje',
+    'Notícia de ontem atribuída à edição atual',
+    'Notícia antiga atribuída à edição atual'
+  ]);
 });
 
-test('a consulta explícita da edição atual aplica o mesmo filtro por data', async () => {
+test('a consulta explícita da edição atual preserva todas as notícias vinculadas', async () => {
   const response = createResponse();
 
   await newsHandler(createRequest({ date: '14/10/2026' }), response);
 
   assert.equal(response.statusCode, 200);
-  assert.deepEqual(response.body.stories.map(item => item.title), ['Notícia de hoje']);
+  assert.deepEqual(response.body.stories.map(item => item.title), [
+    'Notícia de hoje',
+    'Notícia de ontem atribuída à edição atual',
+    'Notícia antiga atribuída à edição atual'
+  ]);
 });
 
 test('edições antigas preservam as notícias vinculadas ao arquivo mesmo se publicadas antes', async () => {
@@ -145,14 +151,14 @@ test('edições antigas preservam as notícias vinculadas ao arquivo mesmo se pu
   ]);
 });
 
-test('o histórico conta apenas notícias do próprio dia na edição mais recente', async () => {
+test('o histórico conta todas as notícias vinculadas à edição mais recente', async () => {
   const response = createResponse();
 
   await newsHandler(createRequest({ history: 'true' }), response);
 
   assert.equal(response.statusCode, 200);
   assert.deepEqual(response.body, [
-    { date: '14/10/2026', stories: 1, title: 'Edição de 14/10/2026' },
+    { date: '14/10/2026', stories: 3, title: 'Edição de 14/10/2026' },
     { date: '13/10/2026', stories: 2, title: 'Edição de 13/10/2026' }
   ]);
 });
