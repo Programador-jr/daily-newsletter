@@ -47,7 +47,7 @@ test('comparison fits mobile viewport without horizontal overflow', async ({ pag
 test('historical gallery filters sources and opens an accessible detail viewer', async ({ page }) => {
   await page.goto('/fascismo-nazismo');
   const gallery = page.locator('[data-historical-gallery]');
-  await expect(gallery.locator('[data-gallery-type]:visible')).toHaveCount(8);
+  await expect(gallery.locator('[data-gallery-type]:visible')).toHaveCount(9);
   const posters = page.getByRole('button', { name: 'Cartazes' });
   await posters.click();
   await expect(posters).toHaveAttribute('aria-pressed', 'true');
