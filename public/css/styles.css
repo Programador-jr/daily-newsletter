@@ -3035,24 +3035,6 @@ body.sidebar-open {
   font-weight: 800;
   letter-spacing: 0.12em;
 }
-/* Keep navigation visible while the update notice blocks page scrolling. */
-html.site-update-active,
-body.site-update-active {
-  overflow: hidden !important;
-  overscroll-behavior: none;
-}
-.site-update-active .site-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1101;
-}
-@media (min-width: 1100px) {
-  .site-update-active .site-header {
-    left: 280px;
-  }
-}
 .site-update-panel .site-update-panel-header {
   position: sticky;
   top: -1rem;
@@ -3501,4 +3483,168 @@ body.site-update-active {
   .site-palette-toggle,
   .site-palette-chevron,
   .site-palette-option { transition: none; }
+}
+
+/* Nota de lançamento acessada pelo sino da navegação. */
+.site-update-notice {
+  position: relative;
+  flex: 0 0 auto;
+}
+.site-header .header-nav-actions .site-update-trigger {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  min-height: 38px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+.site-header .header-nav-actions .site-update-trigger:hover,
+.site-header .header-nav-actions .site-update-trigger:focus-visible,
+.site-header .header-nav-actions .site-update-trigger[aria-expanded="true"] {
+  background: color-mix(in srgb, var(--primary) 9%, var(--card-bg));
+  color: var(--primary);
+}
+.site-header .header-nav-actions .site-update-trigger:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.site-update-indicator {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--bg-container);
+  border-radius: 50%;
+  background: var(--primary);
+}
+.site-update-panel[hidden] {
+  display: none !important;
+}
+.site-update-panel:not([hidden]) {
+  position: absolute !important;
+  top: calc(100% + 0.75rem) !important;
+  right: 0 !important;
+  bottom: auto !important;
+  left: auto !important;
+  width: min(560px, calc(100vw - 1.5rem)) !important;
+  max-height: min(78dvh, 720px) !important;
+  margin: 0 !important;
+  padding: 1rem !important;
+  gap: 0.6rem !important;
+  transform: none !important;
+  z-index: 1202;
+  overscroll-behavior: contain;
+  animation: site-update-dropdown-in 160ms ease-out;
+}
+.site-update-panel:not([hidden]) .site-update-panel-header {
+  top: -1rem;
+  margin: -1rem -1rem 0.1rem;
+  padding: 0.8rem 1rem 0.65rem;
+}
+.site-update-panel:not([hidden]) h2 {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+.site-update-panel:not([hidden]) .site-update-markdown {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.86rem;
+  line-height: 1.65;
+}
+.site-update-panel:not([hidden]) .site-update-markdown > * {
+  max-width: 100%;
+}
+.site-update-panel:not([hidden]) .site-update-markdown > :first-child {
+  margin-top: 0;
+}
+.site-update-panel:not([hidden]) .site-update-markdown > :last-child {
+  margin-bottom: 0;
+}
+.site-update-panel:not([hidden]) .site-update-markdown p {
+  margin: 0.25rem 0 0.55rem;
+}
+.site-update-panel:not([hidden]) .site-update-markdown h3,
+.site-update-panel:not([hidden]) .site-update-markdown h4,
+.site-update-panel:not([hidden]) .site-update-markdown h5,
+.site-update-panel:not([hidden]) .site-update-markdown h6 {
+  margin: 0.85rem 0 0.4rem;
+  color: var(--text-main);
+  font-size: 1rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+.site-update-panel:not([hidden]) .site-update-markdown ul,
+.site-update-panel:not([hidden]) .site-update-markdown ol {
+  display: block;
+  margin: 0.25rem 0 0.55rem;
+  padding-left: 1.35rem;
+}
+.site-update-panel:not([hidden]) .site-update-markdown ul {
+  list-style: disc outside;
+}
+.site-update-panel:not([hidden]) .site-update-markdown ol {
+  list-style: decimal outside;
+}
+.site-update-panel:not([hidden]) .site-update-markdown li {
+  margin: 0.22rem 0;
+  padding-left: 0.15rem;
+  line-height: 1.55;
+}
+.site-update-panel:not([hidden]) .site-update-markdown li::marker {
+  color: var(--primary);
+}
+.site-update-panel:not([hidden]) .site-update-markdown strong {
+  color: var(--text-main);
+  font-weight: 750;
+}
+.site-update-panel:not([hidden]) .site-update-markdown em {
+  font-style: italic;
+}
+.site-update-panel:not([hidden]) .site-update-markdown a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+.site-update-panel:not([hidden]) .site-update-markdown blockquote {
+  margin: 0.45rem 0;
+  padding: 0.35rem 0.8rem;
+  border-left: 3px solid var(--primary);
+  color: var(--text-muted);
+}
+.site-update-panel:not([hidden]) .site-update-markdown blockquote > :first-child {
+  margin-top: 0;
+}
+.site-update-panel:not([hidden]) .site-update-markdown blockquote > :last-child {
+  margin-bottom: 0;
+}
+.site-update-panel:not([hidden]) .site-update-markdown pre {
+  max-width: 100%;
+  overflow: auto;
+}
+@keyframes site-update-dropdown-in {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 480px) {
+  .site-update-panel:not([hidden]) {
+    right: -0.4rem !important;
+    width: min(360px, calc(100vw - 1rem)) !important;
+    max-height: min(78dvh, 620px) !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-update-panel:not([hidden]) {
+    animation: none;
+  }
 }

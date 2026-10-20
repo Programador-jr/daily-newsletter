@@ -298,6 +298,7 @@
   font-size: 0.84rem;
   line-height: 1.5;
   -webkit-box-orient: vertical;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
 }
 
@@ -497,6 +498,7 @@
 }
 
 .timeline.mode-reel .timeline-card span:last-child {
+  line-clamp: 5;
   -webkit-line-clamp: 5;
 }
 
@@ -549,6 +551,7 @@
 }
 
 .timeline.mode-list .timeline-card span:last-child {
+  line-clamp: 2;
   -webkit-line-clamp: 2;
 }
 
@@ -603,6 +606,7 @@
 }
 
 .timeline.mode-grid .timeline-card span:last-child {
+  line-clamp: 3;
   -webkit-line-clamp: 3;
 }
 
@@ -1001,6 +1005,7 @@ body.history-modal-open {
   font-weight: 400;
   line-height: 1.45;
   -webkit-box-orient: vertical;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
 }
 
@@ -1782,6 +1787,7 @@ body.history-modal-open {
     overflow: hidden;
     font-size: 0.98rem;
     -webkit-box-orient: vertical;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
   }
 
@@ -1802,6 +1808,7 @@ body.history-modal-open {
   }
 
   .timeline.mode-reel .timeline-card span:last-child {
+    line-clamp: 4;
     -webkit-line-clamp: 4;
   }
 
@@ -1887,6 +1894,7 @@ body.history-modal-open {
   .accordion-title small {
     font-size: 0.75rem;
     line-height: 1.45;
+    line-clamp: 3;
     -webkit-line-clamp: 3;
   }
 

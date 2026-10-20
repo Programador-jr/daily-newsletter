@@ -120,3 +120,30 @@ test('email delivery rejects incomplete sender configuration', async t => {
   );
   assert.equal(state.createTransportCalls, transportCalls);
 });
+
+test('email delivery refuses a group of recipient addresses', async t => {
+  process.env.EMAIL_USER = 'sender@example.com';
+  process.env.EMAIL_PASS = 'smtp-secret';
+  const transportCalls = state.createTransportCalls;
+  t.mock.method(console, 'error', () => {});
+
+  await assert.rejects(
+    sendEmail({ to: 'first@example.com, second@example.com', subject: 'Update', text: 'News' }),
+    error => error.code === 'EMAIL_SINGLE_RECIPIENT_REQUIRED'
+  );
+  assert.equal(state.createTransportCalls, transportCalls);
+});
+
+test('email delivery does not count another address as this recipient being accepted', async t => {
+  process.env.EMAIL_USER = 'sender@example.com';
+  process.env.EMAIL_PASS = 'smtp-secret';
+  const errorLog = t.mock.method(console, 'error', () => {});
+  state.sendMail = async () => ({ accepted: ['different@example.com'], rejected: [] });
+
+  await assert.rejects(
+    sendEmail({ to: 'reader@example.com', subject: 'Update', text: 'News' }),
+    error => error.code === 'SMTP_RECIPIENT_NOT_ACCEPTED'
+  );
+
+  assert.equal(JSON.parse(errorLog.mock.calls[0].arguments[0]).code, 'SMTP_RECIPIENT_NOT_ACCEPTED');
+});
