@@ -207,7 +207,7 @@
       const response = await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.' + code + '/dados/ultimos/' + count + '?formato=json', { headers: { Accept: 'application/json' } });
       if (!response.ok) throw new Error('HTTP ' + response.status);
       const payload = await response.json();
-      const rows = Array.isArray(payload) ? payload.slice().reverse().filter(row => Number.isFinite(Number(String(row.valor).replace(',', '.')))) : [];
+      const rows = Array.isArray(payload) ? payload.slice().filter(row => Number.isFinite(Number(String(row.valor).replace(',', '.')))) : [];
       if (rows.length < 2) throw new Error('Poucas observações disponíveis');
       renderHistoryChart(rows, code);
       chartStatus.textContent = chartNames[code].title + ': ' + rows.length + ' observações carregadas. A linha mostra a variação relativa desde a primeira observação exibida.';
