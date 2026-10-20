@@ -15,6 +15,7 @@
     { "source": "/presidentes", "destination": "/presidentes.html" },
     { "source": "/ideologias", "destination": "/ideologias.html" },
     { "source": "/politica", "destination": "/politica.html" },
+    { "source": "/economia", "destination": "/economia.html" },
     { "source": "/fascismo-nazismo", "destination": "/fascismo-nazismo.html" },
     { "source": "/politicas-publicas", "destination": "/politicas-publicas.html" },
     { "source": "/tres-poderes", "destination": "/tres-poderes.html" },

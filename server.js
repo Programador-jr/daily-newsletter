@@ -62,6 +62,10 @@ app.get('/politica', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/politica.html'));
 });
 
+app.get('/economia', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/economia.html'));
+});
+
 app.get('/fascismo-nazismo', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/fascismo-nazismo.html'));
 });

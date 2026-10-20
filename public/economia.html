@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="pt-BR" class="history-document">
+<head>
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Entenda os principais indicadores da economia brasileira, leia notícias e consulte fontes oficiais.">
+  <meta name="theme-color" content="#064e46">
+  <title>Economia — King's Newsletter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/historia.css">
+  <link rel="stylesheet" href="/css/economia.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="/js/vercel-observability.js" defer></script>
+  <script src="/js/economia.js" defer></script>
+</head>
+<body class="history-page economy-page">
+  <div class="container">
+    <header class="site-header">
+      <a class="logo" href="/" aria-label="Página inicial"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></a>
+      <nav class="header-main-nav" aria-label="Navegação principal">
+        <div class="header-primary-links"></div>
+        <div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div>
+      </nav>
+    </header>
+    <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+      <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
+      <nav class="site-sidebar-nav" aria-label="Páginas principais"></nav>
+      <div class="site-sidebar-preferences"></div>
+    </aside>
+    <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
+
+    <main>
+      <section class="history-hero economy-hero">
+        <span class="eyebrow">Economia · Brasil</span>
+        <h1>Entenda os números da economia.</h1>
+        <p>Indicadores econômicos ajudam a explicar preços, crédito, emprego e contas públicas. Nesta página, cada conceito é explicado em linguagem direta; as fontes oficiais ficam disponíveis para conferir os dados publicados.</p>
+      </section>
+
+      <section class="economy-section" aria-labelledby="economy-indicators-title">
+        <div class="section-heading">
+          <div><span class="eyebrow">01 · Indicadores</span><h2 id="economy-indicators-title">Os números mais recentes</h2></div>
+          <p>Valores carregados de séries oficiais do Banco Central. Cada cartão informa o período da última observação disponível.</p>
+        </div>
+        <div class="economy-indicator-grid live-indicators" id="economy-indicators" aria-live="polite">
+          <article class="economy-indicator live-indicator" data-indicator="selic">
+            <p class="economy-indicator-label">Política monetária</p><h3>Taxa Selic</h3>
+            <p class="indicator-value" id="indicator-selic-value">Consultando…</p><p class="indicator-period" id="indicator-selic-period">Banco Central · SGS 432</p>
+            <p>Taxa básica de juros definida pelo Copom.</p><button class="economy-detail-button" type="button" data-modal="selic">Entenda o indicador <i class="fas fa-circle-info" aria-hidden="true"></i></button>
+          </article>
+          <article class="economy-indicator live-indicator" data-indicator="ipca">
+            <p class="economy-indicator-label">Preços</p><h3>IPCA · 12 meses</h3>
+            <p class="indicator-value" id="indicator-ipca-value">Consultando…</p><p class="indicator-period" id="indicator-ipca-period">Banco Central · SGS 13522</p>
+            <p>Variação acumulada dos preços ao consumidor.</p><button class="economy-detail-button" type="button" data-modal="ipca">Entenda o indicador <i class="fas fa-circle-info" aria-hidden="true"></i></button>
+          </article>
+          <article class="economy-indicator live-indicator" data-indicator="primario">
+            <p class="economy-indicator-label">Contas públicas</p><h3>Resultado primário</h3>
+            <p class="indicator-value" id="indicator-primario-value">Consultando…</p><p class="indicator-period" id="indicator-primario-period">Banco Central · SGS 5793</p>
+            <p>Resultado do setor público consolidado em 12 meses, em % do PIB.</p><button class="economy-detail-button" type="button" data-modal="primario">Entenda o indicador <i class="fas fa-circle-info" aria-hidden="true"></i></button>
+          </article>
+          <article class="economy-indicator live-indicator" data-indicator="divida">
+            <p class="economy-indicator-label">Endividamento</p><h3>Dívida bruta · % do PIB</h3>
+            <p class="indicator-value" id="indicator-divida-value">Consultando…</p><p class="indicator-period" id="indicator-divida-period">Banco Central · SGS 13762</p>
+            <p>Estoque de dívida do governo geral em relação ao PIB.</p><button class="economy-detail-button" type="button" data-modal="divida">Entenda o indicador <i class="fas fa-circle-info" aria-hidden="true"></i></button>
+          </article>
+<article class="economy-indicator live-indicator" data-indicator="ipca-mensal">
+            <p class="economy-indicator-label">Custo de vida</p><h3>IPCA · variação mensal</h3>
+            <p class="indicator-value" id="indicator-ipca-mensal-value">Consultando…</p><p class="indicator-period" id="indicator-ipca-mensal-period">IBGE · IPCA</p>
+            <p>Mostra quanto os preços variaram no último mês divulgado.</p><button class="economy-detail-button" type="button" data-modal="ipca-mensal">Entenda o indicador <i class="fas fa-circle-info" aria-hidden="true"></i></button>
+          </article>
+          <article class="economy-indicator live-indicator" data-indicator="pib">
+            <p class="economy-indicator-label">Atividade econômica</p><h3>Crescimento do PIB</h3>
+            <p class="indicator-value" id="indicator-pib-value">Consultando…</p><p class="indicator-period" id="indicator-pib-period">IBGE · Contas Nacionais</p>
+            <p>Variação do PIB em relação ao trimestre anterior.</p><button class="economy-detail-button" type="button" data-modal="pib">Entenda o indicador <i class="fas fa-circle-info" aria-hidden="true"></i></button>
+          </article>
+        </div>
+        <p class="economy-source-note" id="economy-indicators-updated">Consultando séries oficiais do Banco Central. Se os dados não carregarem, use o link de consulta no detalhamento de cada indicador.</p>
+      </section>
+
+      <section class="economy-section" aria-labelledby="economy-fiscal-title">
+        <div class="section-heading">
+          <div><span class="eyebrow">02 · Regras fiscais</span><h2 id="economy-fiscal-title">Como funciona o arcabouço fiscal?</h2></div>
+        </div>
+        <div class="economy-fiscal-intro">
+          <p>O arcabouço fiscal federal estabelece limites para o crescimento real das despesas primárias e metas para o resultado primário. Ele não é um orçamento fixo nem garante, sozinho, superávit ou redução da dívida.</p>
+          <button class="economy-detail-button" type="button" data-modal="arcabouco">Abrir explicação completa <i class="fas fa-circle-info" aria-hidden="true"></i></button>
+        </div>
+        <div class="economy-fiscal-grid">
+          <article class="economy-learning-card"><span class="economy-card-kicker">Regra de crescimento</span><h3>De 0,6% a 2,5% reais</h3><p>O limite anual de crescimento real da despesa fica, em regra, dentro desse intervalo, conforme a variação da receita e as condições previstas na lei.</p></article>
+          <article class="economy-learning-card"><span class="economy-card-kicker">Vínculo com a receita</span><h3>70% ou 50%</h3><p>A proporção da variação real da receita que pode ser convertida em crescimento da despesa depende do cumprimento da meta fiscal, respeitados os limites legais.</p></article>
+          <article class="economy-learning-card"><span class="economy-card-kicker">Meta fiscal</span><h3>Receitas e despesas</h3><p>A meta de resultado primário é avaliada separadamente do limite de despesa. Juros da dívida não entram no resultado primário.</p></article>
+        </div>
+      </section>
+
+
+
+      <section class="economy-section" aria-labelledby="economy-lab-title">
+        <div class="section-heading">
+          <div><span class="eyebrow">03 · Laboratório interativo</span><h2 id="economy-lab-title">Explore a economia na prática</h2></div>
+          <p>Altere valores, siga o caminho do dinheiro público e observe séries oficiais. Os exemplos de preços são fictícios e editáveis; não representam uma pesquisa de mercado.</p>
+        </div>
+
+        <article class="economy-lab-panel" aria-labelledby="price-lab-title">
+          <div class="economy-lab-heading"><span class="economy-card-kicker">01 · Inflação no seu bolso</span><h3 id="price-lab-title">Compare preços e veja o impacto no orçamento</h3><p>Os valores iniciais são apenas demonstrações. Troque-os pelos preços que você pagava antes e paga hoje. A comparação pessoal não substitui o IPCA, calculado pelo IBGE com uma cesta ampla e metodologia própria.</p></div>
+          <div class="economy-price-table-wrap">
+            <table class="economy-price-table">
+              <thead><tr><th scope="col">Produto</th><th scope="col">Preço anterior (R$)</th><th scope="col">Preço atual (R$)</th><th scope="col">Variação</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Arroz (5 kg)</th><td><label class="visually-hidden" for="price-rice-before">Preço anterior do arroz</label><input id="price-rice-before" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="25.00"></td><td><label class="visually-hidden" for="price-rice-now">Preço atual do arroz</label><input id="price-rice-now" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="29.00"></td><td id="price-rice-change">—</td></tr>
+                <tr><th scope="row">Leite (1 L)</th><td><label class="visually-hidden" for="price-milk-before">Preço anterior do leite</label><input id="price-milk-before" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="4.50"></td><td><label class="visually-hidden" for="price-milk-now">Preço atual do leite</label><input id="price-milk-now" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="5.20"></td><td id="price-milk-change">—</td></tr>
+                <tr><th scope="row">Óleo (900 ml)</th><td><label class="visually-hidden" for="price-oil-before">Preço anterior do óleo</label><input id="price-oil-before" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="6.00"></td><td><label class="visually-hidden" for="price-oil-now">Preço atual do óleo</label><input id="price-oil-now" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="6.80"></td><td id="price-oil-change">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="economy-price-summary" aria-live="polite"><div><span>Total anterior</span><strong id="price-total-before">—</strong></div><div><span>Total atual</span><strong id="price-total-now">—</strong></div><div><span>Variação do conjunto</span><strong id="price-total-change">—</strong></div></div>
+          <p class="economy-lab-note">Compare as mesmas quantidades e marcas para uma leitura mais justa. A variação calculada é a dos itens que você informou, não a inflação oficial.</p>
+        </article>
+
+        <article class="economy-lab-panel" aria-labelledby="money-flow-title">
+          <div class="economy-lab-heading"><span class="economy-card-kicker">02 · O caminho do dinheiro público</span><h3 id="money-flow-title">Clique em uma etapa para entender a ligação</h3><p>O orçamento conecta arrecadação, prestação de serviços e resultado fiscal. O esquema é conceitual e não representa a distribuição exata de cada real arrecadado.</p></div>
+          <div class="economy-flow" role="group" aria-label="Etapas do fluxo fiscal">
+            <button type="button" class="economy-flow-step is-active" data-flow="revenue" aria-pressed="true"><span>01</span><strong>Arrecadação</strong><small>Tributos e outras receitas</small></button>
+            <span class="economy-flow-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+            <button type="button" class="economy-flow-step" data-flow="spending" aria-pressed="false"><span>02</span><strong>Despesas</strong><small>Serviços e políticas públicas</small></button>
+            <span class="economy-flow-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+            <button type="button" class="economy-flow-step" data-flow="primary" aria-pressed="false"><span>03</span><strong>Resultado primário</strong><small>Receitas menos despesas primárias</small></button>
+            <span class="economy-flow-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+            <button type="button" class="economy-flow-step" data-flow="debt" aria-pressed="false"><span>04</span><strong>Dívida pública</strong><small>Estoque e custo de financiamento</small></button>
+          </div>
+          <div id="economy-flow-detail" class="economy-flow-detail" aria-live="polite"><h4>Arrecadação</h4><p>O governo obtém recursos por tributos, contribuições, exploração de patrimônio e outras receitas. A origem e a destinação legal variam conforme o tipo de receita.</p></div>
+          <p class="economy-lab-note">Juros da dívida não entram no resultado primário. O resultado nominal inclui os juros e ajuda a explicar a evolução das necessidades de financiamento.</p>
+        </article>
+
+        <article class="economy-lab-panel" aria-labelledby="economy-trends-title">
+          <div class="economy-lab-heading"><span class="economy-card-kicker">03 · Economia em perspectiva</span><h3 id="economy-trends-title">Acompanhe a trajetória dos indicadores</h3><p>Compare até 60 meses dos valores publicados. A linha mostra os percentuais originais; a Meta Selic é diária e aparece pelo último valor de cada mês. O IPCA é mensal e calculado pelo IBGE.</p></div>
+          <div class="economy-chart-controls">
+            <div><label for="economy-series-select">Indicador e fonte</label><select id="economy-series-select"><option value="432">Meta Selic · Copom (BCB, SGS 432)</option><option value="13522">IPCA em 12 meses · IBGE (BCB, SGS 13522)</option></select></div>
+            <div><label for="economy-series-count">Período exibido</label><select id="economy-series-count"><option value="12">12 meses</option><option value="24" selected>24 meses</option><option value="60">60 meses</option></select></div>
+            <button type="button" class="cta-button" id="economy-chart-load">Atualizar gráfico</button>
+          </div>
+          <div id="economy-chart-status" class="economy-lab-note" role="status">Carregando série oficial…</div>
+          <div class="economy-chart-wrap"><svg id="economy-history-chart" viewBox="0 0 760 350" role="group" tabindex="0" aria-label="Gráfico interativo dos valores oficiais. Use as setas para percorrer os meses."><text x="380" y="175" text-anchor="middle">Carregando dados oficiais…</text></svg></div>
+          <p id="economy-chart-caption" class="economy-lab-note">Fontes: Banco Central do Brasil (SGS) e IBGE. O eixo vertical apresenta a unidade original de cada indicador.</p>
+        </article>
+      </section>
+
+      <section class="economy-section" aria-labelledby="economy-examples-title">
+        <div class="section-heading">
+          <div><span class="eyebrow">04 · Decisões de crédito</span><h2 id="economy-examples-title">Como a Selic afeta seu bolso?</h2></div>
+          <p>Comece pela ideia principal e depois experimente os exemplos. Os resultados são ilustrativos, não previsões nem ofertas financeiras.</p>
+        </div>
+        <div class="economy-selic-guide">
+          <div class="economy-selic-explanation">
+            <span class="economy-card-kicker">Em palavras simples</span>
+            <h3>A Selic não é a taxa do seu empréstimo</h3>
+            <p>A Selic é a taxa básica de juros definida pelo Banco Central. Ela serve como referência para o custo do dinheiro na economia, mas o banco também considera risco de inadimplência, prazo, custos e margem de lucro. Por isso, os juros de um empréstimo costumam ser diferentes da Selic.</p>
+          </div>
+          <div class="economy-selic-scenarios" aria-label="Efeitos possíveis da Selic">
+            <article><span class="economy-scenario-icon" aria-hidden="true"><i class="fas fa-arrow-trend-up"></i></span><div><h3>Quando a Selic sobe</h3><p>O crédito tende a ficar mais caro e famílias e empresas podem adiar gastos. Isso pode ajudar a desacelerar a inflação com o tempo.</p></div></article>
+            <article><span class="economy-scenario-icon" aria-hidden="true"><i class="fas fa-equals"></i></span><div><h3>Quando a Selic fica estável</h3><p>Os efeitos continuam sendo sentidos gradualmente; as taxas cobradas pelos bancos não mudam todas ao mesmo tempo.</p></div></article>
+            <article><span class="economy-scenario-icon" aria-hidden="true"><i class="fas fa-arrow-trend-down"></i></span><div><h3>Quando a Selic cai</h3><p>O crédito pode ficar mais barato e a atividade ganhar estímulo. Aplicações ligadas à taxa também podem render menos.</p></div></article>
+          </div>
+        </div>
+        <div class="economy-interactive-grid">
+          <article class="economy-learning-card economy-calculator">
+            <span class="economy-card-kicker">Inflação e orçamento</span><h3>Quanto passa a custar sua cesta?</h3>
+            <p>Informe o valor atual das compras e uma variação hipotética de preços.</p>
+            <label for="basket-value">Valor atual (R$)</label><input id="basket-value" type="number" min="0" max="10000000" step="0.01" value="200">
+            <label for="basket-inflation">Aumento de preços (%)</label><input id="basket-inflation" type="number" min="-99" max="1000" step="0.1" value="5">
+            <div class="economy-calculation-result" aria-live="polite"><span>Novo custo estimado</span><strong id="basket-result">R$ 210,00</strong><small id="basket-difference">Aumento de R$ 10,00</small></div>
+          </article>
+          <article class="economy-learning-card economy-calculator">
+            <span class="economy-card-kicker">Crédito e juros</span><h3>Veja como os juros mudam a parcela</h3>
+            <p>Imagine pegar R$ 1.000 emprestados. Mude a taxa mensal e veja quanto pagaria em 12 parcelas fixas. A taxa abaixo é a do empréstimo, <strong>não a Selic</strong>; o cálculo não inclui tarifas, seguros ou impostos.</p>
+            <label for="loan-value">Valor emprestado (R$)</label><input id="loan-value" type="number" min="1" max="10000000" step="100" value="1000">
+            <label for="loan-rate">Juros do empréstimo ao mês (%)</label><input id="loan-rate" type="number" min="0" max="100" step="0.1" value="2">
+            <label for="loan-months">Prazo (meses)</label><input id="loan-months" type="number" min="1" max="360" step="1" value="12">
+            <div class="economy-calculation-result" aria-live="polite"><span>Parcela aproximada</span><strong id="loan-result">R$ 94,56</strong><small id="loan-total">Total estimado: R$ 1.134,72</small><small id="loan-interest">Juros estimados: R$ 134,72</small></div>
+          </article>
+          <article class="economy-learning-card economy-calculator">
+            <span class="economy-card-kicker">Arcabouço fiscal</span><h3>Simule um limite de despesa</h3>
+            <p>Exemplo hipotético da regra de crescimento: parte da variação real da receita, com piso de 0,6% e teto de 2,5% para o crescimento real das despesas, conforme as condições legais.</p>
+            <label for="revenue-growth">Variação real da receita (%)</label><input id="revenue-growth" type="number" min="-20" max="20" step="0.1" value="3">
+            <label for="fiscal-target">Cumpriu a meta fiscal?</label><select id="fiscal-target"><option value="yes">Sim — proporção de 70%</option><option value="no">Não — proporção de 50%</option></select>
+            <div class="economy-calculation-result" aria-live="polite"><span>Crescimento real ilustrativo</span><strong id="fiscal-result">2,1%</strong><small id="fiscal-explanation">70% de 3,0%, dentro do intervalo de 0,6% a 2,5%.</small></div>
+          </article>
+        </div>
+        <p class="economy-source-note">Simulações educativas com fórmulas simplificadas. A aplicação real do arcabouço depende da legislação vigente, da base de cálculo, de exceções e da apuração oficial das metas.</p>
+      </section>
+
+      <div class="history-detail economy-detail" id="economy-modal" aria-live="polite"></div>
+
+      <section class="economy-related" aria-label="Conteúdo relacionado">
+        <div><span class="eyebrow">Conteúdo relacionado</span><h2>Dinheiro público e orçamento</h2><p>Entenda de onde vêm as receitas do Estado, como os tributos são distribuídos e como as despesas públicas são registradas.</p></div>
+        <a class="cta-button" href="/arrecadacao">Ler sobre dinheiro público</a>
+      </section>
+    </main>
+    <div id="footer"></div>
+  </div>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/footer.js"></script>
+</body>
+</html>

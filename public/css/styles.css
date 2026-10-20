@@ -350,6 +350,7 @@ input:checked + .slider:before {
   text-decoration: none;
   border-radius: 8px;
   font-weight: 600;
+  border: unset;
 }
 
 .cta-button:hover {
