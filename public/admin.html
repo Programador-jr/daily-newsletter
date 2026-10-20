@@ -1,20 +1,20 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark" data-palette="gray">
 <head>
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="theme-color" content="#08110e">
+  <meta name="theme-color" content="#0b0a08">
   <title>Painel administrativo — King's Newsletter</title>
   <link rel="stylesheet" href="/css/admin.css">
   <script src="/js/admin.js" defer></script>
 </head>
 <body>
-  <div class="ambient ambient-one" aria-hidden="true"></div>
-  <div class="ambient ambient-two" aria-hidden="true"></div>
   <header class="topbar">
     <a class="brand" href="/" aria-label="King's Newsletter — página inicial">
-      <span class="brand-mark">K</span>
+      <img class="brand-mark" src="/assets/icons/kings-newsletter-icon.png" alt="">
       <span class="brand-copy"><strong>KING'S</strong><small>NEWSLETTER <i>·</i> ADMIN</small></span>
     </a>
     <div class="top-actions">
@@ -27,18 +27,13 @@
   <main class="shell">
     <section id="login-view" class="login-layout" aria-labelledby="login-title">
       <div class="login-story">
-        <div class="eyebrow"><span class="eyebrow-line"></span> CENTRAL DE OPERAÇÕES</div>
-        <h1>Uma visão clara<br>de cada <span>envio.</span></h1>
-        <p>Monitore sua audiência, acompanhe a entrega das edições e mantenha a newsletter em movimento.</p>
-        <div class="preview-card" aria-hidden="true">
-          <div class="preview-head"><span><i class="preview-dot"></i> VISÃO DO PAINEL</span><span>PRÉVIA</span></div>
-          <div class="preview-chart"><div class="chart-grid"></div><svg viewBox="0 0 520 130" preserveAspectRatio="none"><defs><linearGradient id="chart-fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#66e3a1" stop-opacity=".3"/><stop offset="1" stop-color="#66e3a1" stop-opacity="0"/></linearGradient></defs><path d="M0 105 C35 95 45 104 76 78 S125 83 158 62 S207 76 245 51 S296 68 335 36 S389 59 422 30 S476 44 520 10 V130 H0Z" fill="url(#chart-fill)"/><path d="M0 105 C35 95 45 104 76 78 S125 83 158 62 S207 76 245 51 S296 68 335 36 S389 59 422 30 S476 44 520 10" fill="none" stroke="#66e3a1" stroke-width="3" vector-effect="non-scaling-stroke"/></svg></div>
-          <div class="preview-foot"><span>Monitoramento de envios</span><strong><b>DASHBOARD</b></strong></div>
-        </div>
-        <div class="login-trust"><span class="lock-icon" aria-hidden="true">▣</span> Acesso protegido · Horário de Rio Branco</div>
+        <div class="eyebrow"><span class="eyebrow-line"></span> KING'S NEWSLETTER &#183; ADMINISTRA&#199;&#195;O</div>
+        <h1>Painel<br><span>administrativo.</span></h1>
+        <p>Gerencie os envios, acompanhe a audi&ecirc;ncia e publique avisos da newsletter.</p>
+        <div class="login-trust"><span class="lock-icon" aria-hidden="true">?</span> Acesso restrito &agrave; equipe da newsletter</div>
       </div>
       <div class="login-card">
-        <div class="login-card-mark" aria-hidden="true">↗</div>
+        <div class="login-card-mark" aria-hidden="true"><img src="/assets/icons/kings-newsletter-icon.png" alt=""></div>
         <div class="eyebrow">BEM-VINDO DE VOLTA</div>
         <h2 id="login-title">Acesse seu painel</h2>
         <p>Entre com suas credenciais administrativas.</p>
@@ -81,13 +76,25 @@
         </div>
         <div id="dashboard-message" class="message" role="status" aria-live="polite"></div>
         <section data-admin-page="overview" class="section-block overview-snapshot" aria-labelledby="overview-snapshot-title">
-          <div class="section-heading"><div><div class="eyebrow">RESUMO DA OPERAÇÃO</div><h2 id="overview-snapshot-title">Tudo em um olhar</h2></div><span class="section-caption">Dados atuais do painel</span></div>
+          <div class="section-heading"><div><div class="eyebrow">RESUMO</div><h2 id="overview-snapshot-title">Estado atual</h2></div><span class="section-caption">Dados atuais do painel</span></div>
           <div class="overview-cards">
             <article class="overview-card"><span class="overview-card-label">WORKER</span><div class="overview-card-main"><strong id="overview-worker-status">Carregando</strong><span id="overview-worker-indicator" class="status">—</span></div><p id="overview-worker-detail">Aguardando dados do worker</p><a href="#operations" data-admin-page-link="operations">Ver envios e frequência <span aria-hidden="true">→</span></a></article>
             <article class="overview-card"><span class="overview-card-label">EDIÇÃO MAIS RECENTE</span><div class="overview-card-main"><strong id="overview-edition-date">—</strong><span id="overview-edition-indicator" class="status">—</span></div><p><b id="overview-news-count">0</b> notícias · <b id="overview-delivered-count">0</b> enviadas · <b id="overview-pending-count">0</b> pendentes</p><a href="#operations" data-admin-page-link="operations">Ver detalhes da edição <span aria-hidden="true">→</span></a></article>
             <article class="overview-card"><span class="overview-card-label">AUDIÊNCIA</span><div class="overview-card-main"><strong id="overview-confirmed-count">0</strong><span class="overview-card-unit">assinantes confirmados</span></div><p><b id="overview-subscriber-total">0</b> inscrições no total</p><a href="#audience" data-admin-page-link="audience">Ver dados da audiência <span aria-hidden="true">→</span></a></article>
             <article class="overview-card"><span class="overview-card-label">E-MAILS ACEITOS PELO SMTP</span><div class="overview-card-main"><strong id="overview-accepted-count">0</strong><span id="overview-email-period" class="overview-card-unit">no período</span></div><p><b id="overview-failed-count">0</b> falhas registradas</p><a href="#activity" data-admin-page-link="activity">Ver atividade e logs <span aria-hidden="true">→</span></a></article>
           </div>
+        </section>
+        <section data-admin-page="overview" class="dashboard-chart-grid" aria-label="Tendências do painel">
+          <article class="panel chart-panel" aria-labelledby="email-chart-title">
+            <div class="section-heading"><div><div class="eyebrow">ENTREGA</div><h2 id="email-chart-title">Destinatários por dia</h2></div><span class="chart-period-label"></span></div>
+            <div id="email-activity-chart" class="activity-chart"></div>
+            <div class="chart-legend"><span><i class="legend-accepted"></i>Aceitos</span><span><i class="legend-rejected"></i>Rejeitados</span></div>
+          </article>
+          <article class="panel chart-panel" aria-labelledby="run-chart-title">
+            <div class="section-heading"><div><div class="eyebrow">WORKER</div><h2 id="run-chart-title">Execuções por dia</h2></div><span class="chart-period-label"></span></div>
+            <div id="run-activity-chart" class="activity-chart"></div>
+            <div class="chart-legend"><span><i class="legend-succeeded"></i>Concluídas</span><span><i class="legend-failed"></i>Falhas</span><span><i class="legend-skipped"></i>Sem envio</span></div>
+          </article>
         </section>
         <section id="alerts-panel" data-admin-page="overview" class="alerts-panel hidden" aria-label="Alertas operacionais" aria-live="polite"></section>
 

@@ -34,6 +34,23 @@ const statusLabels = {
   no_recipients: 'Sem assinantes', no_news: 'Sem edição'
 };
 
+const errorCodeDescriptions = {
+  RUN_TIMEOUT: 'A execução do worker excedeu o tempo limite.',
+  DELIVERY_OUTCOME_UNKNOWN: 'O resultado do envio não foi confirmado. Verifique a atividade antes de tentar novamente.',
+  DELIVERY_RESERVATION_FAILED: 'Não foi possível reservar o envio para processamento.',
+  DELIVERY_PREPARATION_FAILED: 'O envio não pôde ser preparado.',
+  RECIPIENT_DELIVERY_FAILED: 'Um ou mais destinatários não receberam a mensagem.',
+  SMTP_NO_ACCEPTED_RECIPIENTS: 'O servidor de e-mail não aceitou nenhum destinatário.',
+  EMAIL_DELIVERY_ERROR: 'Ocorreu um erro durante a entrega do e-mail.',
+  NEWSLETTER_RUN_FAILED: 'A execução da newsletter terminou com falha.',
+  API_HTTP_409: 'O serviço recusou a verificação por conflito no estado atual. Atualize e tente novamente.'
+};
+
+function describeErrorCode(code) {
+  if (!code) return 'A operação terminou com uma falha.';
+  return errorCodeDescriptions[code] || `Falha registrada: ${String(code).replaceAll('_', ' ').toLocaleLowerCase('pt-BR')}.`;
+}
+
 function formatDate(value) {
   if (!value) return '—';
   const date = new Date(value);
@@ -74,7 +91,7 @@ function setAdminPage(page, { updateHash = true } = {}) {
     else link.removeAttribute('aria-current');
   });
   const titles = {
-    overview: ['VISÃO GERAL', 'Operação da newsletter'],
+    overview: ['VISÃO GERAL', 'Visão geral'],
     operations: ['OPERAÇÃO', 'Envios e worker'],
     audience: ['AUDIÊNCIA', 'Assinantes e entregabilidade'],
     activity: ['AUDITORIA', 'Atividade e logs'],
@@ -109,7 +126,7 @@ function updateState(update) {
 function renderMarkdownPreview(container, markdown) {
   container.replaceChildren();
   const inline = (parent, text) => {
-    const pattern = /(\[[^\]]+\]\(https?:\/\/[^)\s]+\)|\*\*[^*]+\*\*|__[^_]+__|~~[^~]+~~|\*[^*]+\*|_[^_]+_|\x60[^\x60]+\x60)/g;
+    const pattern = /(\[[^\]]+\]\(https?:\/\/[^)\s]+\)|\*\*\*.+?\*\*\*|___.+?___|\*\*(?:[^*]+|\*[^*]+\*)+\*\*|__(?:[^_]+|_[^_]+_)+__|~~[^~]+~~|\*[^*]+\*|_[^_]+_|\x60[^\x60]+\x60)/g;
     let cursor = 0;
     for (const match of text.matchAll(pattern)) {
       if (match.index > cursor) parent.append(document.createTextNode(text.slice(cursor, match.index)));
@@ -127,18 +144,23 @@ function renderMarkdownPreview(container, markdown) {
             node.textContent = link[1];
           }
         } catch { /* link inválido permanece como texto */ }
+      } else if (token.startsWith('***') || token.startsWith('___')) {
+        node = document.createElement('strong');
+        const emphasis = document.createElement('em');
+        inline(emphasis, token.slice(3, -3));
+        node.append(emphasis);
       } else if (token.startsWith('**') || token.startsWith('__')) {
         node = document.createElement('strong');
-        node.textContent = token.slice(2, -2);
+        inline(node, token.slice(2, -2));
       } else if (token.startsWith('~~')) {
         node = document.createElement('del');
-        node.textContent = token.slice(2, -2);
+        inline(node, token.slice(2, -2));
       } else if (token.startsWith('\x60')) {
         node = document.createElement('code');
         node.textContent = token.slice(1, -1);
       } else {
         node = document.createElement('em');
-        node.textContent = token.slice(1, -1);
+        inline(node, token.slice(1, -1));
       }
       parent.append(node || document.createTextNode(token));
       cursor = match.index + token.length;
@@ -147,7 +169,8 @@ function renderMarkdownPreview(container, markdown) {
   };
   const lines = String(markdown || '').replace(/\r\n?/g, '\n').split('\n');
   let index = 0;
-  const isBlockStart = line => /^(#{1,4}\s|[-*+]\s|\d+[.)]\s|>\s?|---+\s*$)/.test(line.trim()) || line.trim().startsWith('\x60\x60\x60');
+  const isListItem = line => /^\s{0,3}(?:[-*+](?:[ \t]+|$)|\d{1,9}[.)](?:[ \t]+|$))/.test(line);
+  const isBlockStart = line => /^(#{1,4}\s|>\s?)/.test(line.trim()) || isListItem(line) || /^(?:[-*_][ \t]*){3,}$/.test(line.trim()) || line.trim().startsWith('\x60\x60\x60');
   while (index < lines.length) {
     const line = lines[index].trim();
     if (!line) { index += 1; continue; }
@@ -163,7 +186,7 @@ function renderMarkdownPreview(container, markdown) {
       container.append(pre);
       continue;
     }
-    if (/^---+$/.test(line)) { container.append(document.createElement('hr')); index += 1; continue; }
+    if (/^(?:[-*_][ \t]*){3,}$/.test(line)) { container.append(document.createElement('hr')); index += 1; continue; }
     const heading = line.match(/^(#{1,4})\s+(.+)$/);
     if (heading) {
       const node = document.createElement('h' + Math.min(4, heading[1].length + 2));
@@ -182,15 +205,15 @@ function renderMarkdownPreview(container, markdown) {
       container.append(quote);
       continue;
     }
-    const listMatch = line.match(/^([-*+])\s+(.+)|^(\d+)[.)]\s+(.+)$/);
+    const listMatch = line.match(/^\s{0,3}(?:([-*+])(?:[ \t]+|$)|(\d{1,9})[.)](?:[ \t]+|$))(.*)$/);
     if (listMatch) {
-      const ordered = Boolean(listMatch[3]);
+      const ordered = Boolean(listMatch[2]);
       const list = document.createElement(ordered ? 'ol' : 'ul');
       while (index < lines.length) {
-        const itemMatch = lines[index].trim().match(/^([-*+])\s+(.+)|^(\d+)[.)]\s+(.+)$/);
-        if (!itemMatch || Boolean(itemMatch[3]) !== ordered) break;
+        const itemMatch = lines[index].match(/^\s{0,3}(?:([-*+])(?:[ \t]+|$)|(\d{1,9})[.)](?:[ \t]+|$))(.*)$/);
+        if (!itemMatch || Boolean(itemMatch[2]) !== ordered) break;
         const item = document.createElement('li');
-        inline(item, itemMatch[2] || itemMatch[4]);
+        inline(item, itemMatch[3].trim());
         list.append(item);
         index += 1;
       }
@@ -617,6 +640,7 @@ function showToast(title, message = '', type = 'success', duration = 4200) {
   const region = document.querySelector('#toast-region');
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
+  toast.setAttribute('role', type === 'error' ? 'alert' : 'status');
   const icon = document.createElement('span');
   icon.className = 'toast-icon';
   icon.textContent = type === 'error' ? '!' : type === 'warning' ? '•' : '✓';
@@ -629,6 +653,15 @@ function showToast(title, message = '', type = 'success', duration = 4200) {
     const detail = document.createElement('span');
     detail.textContent = message;
     copy.append(detail);
+  }
+  if (type === 'error') {
+    const occurredAt = new Intl.DateTimeFormat('pt-BR', {
+      timeZone: timezone, dateStyle: 'short', timeStyle: 'medium'
+    }).format(new Date());
+    const meta = document.createElement('small');
+    meta.className = 'toast-meta';
+    meta.textContent = `ERRO · ${occurredAt}`;
+    copy.append(meta);
   }
   const close = document.createElement('button');
   close.className = 'toast-close';
@@ -673,6 +706,113 @@ function card(label, value, note = '', style = '') {
   return element;
 }
 
+function renderActivityChart(container, records, periodDays, series) {
+  const namespace = 'http://www.w3.org/2000/svg';
+  const width = 720;
+  const height = 230;
+  const plot = { left: 42, right: 12, top: 14, bottom: 38 };
+  const plotWidth = width - plot.left - plot.right;
+  const plotHeight = height - plot.top - plot.bottom;
+  const valuesByDay = new Map((records || []).map(record => [record._id, record]));
+  const today = new Intl.DateTimeFormat('en-CA', {
+    timeZone: timezone, year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(new Date());
+  const [year, month, day] = today.split('-').map(Number);
+  const days = Array.from({ length: periodDays }, (_, offset) => {
+    const date = new Date(Date.UTC(year, month - 1, day - (periodDays - 1 - offset)));
+    return date.toISOString().slice(0, 10);
+  });
+  const totals = days.map(date => series.map(item => Number(valuesByDay.get(date)?.[item.key] || 0)));
+  const maximum = Math.max(1, ...totals.map(values => values.reduce((sum, value) => sum + value, 0)));
+  const slotWidth = plotWidth / Math.max(days.length, 1);
+  const barWidth = Math.max(3, Math.min(30, slotWidth * 0.58));
+  const svg = document.createElementNS(namespace, 'svg');
+  svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', `Gráfico diário dos últimos ${periodDays} dias`);
+  const title = document.createElementNS(namespace, 'title');
+  title.textContent = `Atividade nos últimos ${periodDays} dias`;
+  svg.append(title);
+
+  for (let tick = 0; tick <= 4; tick += 1) {
+    const value = Math.ceil(maximum * (4 - tick) / 4);
+    const y = plot.top + plotHeight * tick / 4;
+    const line = document.createElementNS(namespace, 'line');
+    line.setAttribute('x1', plot.left);
+    line.setAttribute('x2', width - plot.right);
+    line.setAttribute('y1', y);
+    line.setAttribute('y2', y);
+    line.setAttribute('class', 'chart-gridline');
+    const label = document.createElementNS(namespace, 'text');
+    label.setAttribute('x', plot.left - 8);
+    label.setAttribute('y', y + 4);
+    label.setAttribute('text-anchor', 'end');
+    label.setAttribute('class', 'chart-axis-label');
+    label.textContent = String(value);
+    svg.append(line, label);
+  }
+
+  days.forEach((date, index) => {
+    const x = plot.left + index * slotWidth + (slotWidth - barWidth) / 2;
+    let currentY = plot.top + plotHeight;
+    const values = totals[index];
+    values.forEach((value, seriesIndex) => {
+      const barHeight = value / maximum * plotHeight;
+      if (!barHeight) return;
+      currentY -= barHeight;
+      const rect = document.createElementNS(namespace, 'rect');
+      rect.setAttribute('x', x);
+      rect.setAttribute('y', currentY);
+      rect.setAttribute('width', barWidth);
+      rect.setAttribute('height', Math.max(barHeight, 1));
+      rect.setAttribute('rx', Math.min(3, barWidth / 3));
+      rect.setAttribute('fill', series[seriesIndex].color);
+      const tooltip = document.createElementNS(namespace, 'title');
+      tooltip.textContent = `${date}: ${series[seriesIndex].label} ${value}`;
+      rect.append(tooltip);
+      svg.append(rect);
+    });
+
+    const labelEvery = Math.max(1, Math.ceil(days.length / 8));
+    if (index % labelEvery === 0 || index === days.length - 1) {
+      const dateLabel = document.createElementNS(namespace, 'text');
+      dateLabel.setAttribute('x', x + barWidth / 2);
+      dateLabel.setAttribute('y', height - 12);
+      dateLabel.setAttribute('text-anchor', 'middle');
+      dateLabel.setAttribute('class', 'chart-axis-label');
+      dateLabel.textContent = new Intl.DateTimeFormat('pt-BR', {
+        timeZone: 'UTC', day: '2-digit', month: '2-digit'
+      }).format(new Date(`${date}T12:00:00Z`));
+      svg.append(dateLabel);
+    }
+  });
+
+  container.replaceChildren(svg);
+}
+
+function renderActivityCharts(activity, periodDays) {
+  document.querySelectorAll('.chart-period-label').forEach(label => {
+    label.textContent = `ÚLTIMOS ${periodDays} DIA${periodDays === 1 ? '' : 'S'}`;
+  });
+  renderActivityChart(document.querySelector('#email-activity-chart'), activity?.emails, periodDays, [
+    { key: 'acceptedRecipients', label: 'Aceitos', color: '#f5c518' },
+    { key: 'rejectedRecipients', label: 'Rejeitados', color: '#a39a82' }
+  ]);
+  renderActivityChart(document.querySelector('#run-activity-chart'), activity?.runs, periodDays, [
+    { key: 'succeeded', label: 'Concluídas', color: '#f5c518' },
+    { key: 'failed', label: 'Falhas', color: '#b85d50' },
+    { key: 'skipped', label: 'Sem envio', color: '#77736a' }
+  ]);
+}
+
+function appendLogField(list, label, value) {
+  const term = document.createElement('dt');
+  term.textContent = label;
+  const description = document.createElement('dd');
+  description.textContent = value || '—';
+  list.append(term, description);
+}
+
 function renderLog(list, items, type) {
   list.replaceChildren();
   const prefix = type === 'run' ? 'runs' : 'emails';
@@ -713,12 +853,23 @@ function renderLog(list, items, type) {
       const details = document.createElement('details');
       details.className = 'log-details';
       const summary = document.createElement('summary');
-      summary.textContent = 'Ver detalhes';
-      const detailCopy = document.createElement('p');
+      summary.textContent = 'Dados completos da execução';
       const durationMs = item.completedAt && item.startedAt ? new Date(item.completedAt) - new Date(item.startedAt) : null;
       const duration = Number.isFinite(durationMs) && durationMs >= 0 ? `${Math.round(durationMs / 1000)} s` : 'em andamento';
-      detailCopy.textContent = `Início: ${formatDate(item.startedAt)} · Fim: ${formatDate(item.completedAt)} · Duração: ${duration} · Edição: ${item.editionDate || 'não informada'} · Código: ${item.errorCode || 'nenhum'}`;
-      details.append(summary, detailCopy);
+      const detailFields = document.createElement('dl');
+      detailFields.className = 'log-detail-grid';
+      appendLogField(detailFields, 'Status', statusLabels[item.status] || item.status);
+      appendLogField(detailFields, 'Origem', trigger === 'Manual' ? 'Disparo manual' : 'Agendamento automático');
+      appendLogField(detailFields, 'Edição', item.editionDate || 'Não informada');
+      appendLogField(detailFields, 'Início', formatDate(item.startedAt));
+      appendLogField(detailFields, 'Fim', formatDate(item.completedAt));
+      appendLogField(detailFields, 'Duração', duration);
+      appendLogField(detailFields, 'Notícias processadas', Number(item.newStories || 0).toLocaleString('pt-BR'));
+      appendLogField(detailFields, 'Destinatários aceitos', Number(item.recipients || 0).toLocaleString('pt-BR'));
+      appendLogField(detailFields, 'Destinatários com falha', Number(item.failedRecipients || 0).toLocaleString('pt-BR'));
+      appendLogField(detailFields, 'Código de erro', item.errorCode || 'Nenhum');
+      if (item.errorCode) appendLogField(detailFields, 'Diagnóstico', describeErrorCode(item.errorCode));
+      details.append(summary, detailFields);
       main.append(title, meta, details);
     } else {
       const names = { newsletter: 'Envio da newsletter', subscription_confirmation: 'Confirmação de inscrição', other: 'Outro e-mail' };
@@ -727,10 +878,17 @@ function renderLog(list, items, type) {
       const details = document.createElement('details');
       details.className = 'log-details';
       const summary = document.createElement('summary');
-      summary.textContent = 'Ver detalhes';
-      const detailCopy = document.createElement('p');
-      detailCopy.textContent = `Tipo: ${item.kind || 'não informado'} · Status: ${statusLabels[item.status] || item.status} · Aceitos: ${item.acceptedCount || 0} · Rejeitados: ${item.rejectedCount || 0} · Código: ${item.errorCode || 'nenhum'}`;
-      details.append(summary, detailCopy);
+      summary.textContent = 'Dados completos da mensagem';
+      const detailFields = document.createElement('dl');
+      detailFields.className = 'log-detail-grid';
+      appendLogField(detailFields, 'Tipo', names[item.kind] || item.kind || 'Não informado');
+      appendLogField(detailFields, 'Status', statusLabels[item.status] || item.status);
+      appendLogField(detailFields, 'Registrado em', formatDate(item.createdAt));
+      appendLogField(detailFields, 'Destinatários aceitos', Number(item.acceptedCount || 0).toLocaleString('pt-BR'));
+      appendLogField(detailFields, 'Destinatários rejeitados', Number(item.rejectedCount || 0).toLocaleString('pt-BR'));
+      appendLogField(detailFields, 'Código de erro', item.errorCode || 'Nenhum');
+      if (item.errorCode) appendLogField(detailFields, 'Diagnóstico', describeErrorCode(item.errorCode));
+      details.append(summary, detailFields);
       main.append(title, meta, details);
     }
     row.append(main, status);
@@ -772,9 +930,9 @@ function renderAlerts(data) {
   const alerts = [];
   if (!data.workerSchedule?.workerOnline) alerts.push('Worker offline ou sem sinal nos últimos 90 segundos.');
   const latestFailure = data.recentRuns?.find(run => run.status === 'failed');
-  if (latestFailure) alerts.push(`Falha em execução às ${formatDate(latestFailure.startedAt)}${latestFailure.errorCode ? ` · ${latestFailure.errorCode}` : ''}.`);
+  if (latestFailure) alerts.push(`Falha em execução às ${formatDate(latestFailure.startedAt)}${latestFailure.errorCode ? ` · ${describeErrorCode(latestFailure.errorCode)} (${latestFailure.errorCode})` : ''}.`);
   if (data.workerSchedule?.lastRunStatus === 'failed') {
-    alerts.push(`Última verificação do worker falhou${data.workerSchedule.lastRunErrorCode ? ` · ${data.workerSchedule.lastRunErrorCode}` : ''}.`);
+    alerts.push(`Última verificação do worker falhou${data.workerSchedule.lastRunErrorCode ? ` · ${describeErrorCode(data.workerSchedule.lastRunErrorCode)} (${data.workerSchedule.lastRunErrorCode})` : ''}.`);
   }
   if (!alerts.length) {
     panel.dataset.hasAlerts = 'false';
@@ -801,14 +959,14 @@ function exportFilteredLogs() {
     if (document.querySelector('#runs-status').value && item.status !== document.querySelector('#runs-status').value) continue;
     const text = `${item.editionDate || ''} ${item.trigger || ''} ${item.status || ''} ${item.errorCode || ''}`.toLocaleLowerCase('pt-BR');
     if (query && !text.includes(query)) continue;
-    rows.push(['execucao', item.startedAt, item.status, `${item.trigger}; edicao=${item.editionDate || ''}; noticias=${item.newStories || 0}; aceitos=${item.recipients || 0}; erro=${item.errorCode || ''}`]);
+    rows.push(['execucao', item.startedAt, item.status, `origem=${item.trigger || ''}; edicao=${item.editionDate || ''}; inicio=${item.startedAt || ''}; fim=${item.completedAt || ''}; noticias=${item.newStories || 0}; aceitos=${item.recipients || 0}; com_falha=${item.failedRecipients || 0}; codigo_erro=${item.errorCode || ''}; diagnostico=${item.errorCode ? describeErrorCode(item.errorCode) : ''}`]);
   }
   for (const item of currentEmails) {
     const query = document.querySelector('#emails-search').value.trim().toLocaleLowerCase('pt-BR');
     if (document.querySelector('#emails-status').value && item.status !== document.querySelector('#emails-status').value) continue;
     const text = `${item.kind || ''} ${item.status || ''} ${item.errorCode || ''}`.toLocaleLowerCase('pt-BR');
     if (query && !text.includes(query)) continue;
-    rows.push(['email', item.createdAt, item.status, `tipo=${item.kind}; aceitos=${item.acceptedCount || 0}; rejeitados=${item.rejectedCount || 0}; erro=${item.errorCode || ''}`]);
+    rows.push(['email', item.createdAt, item.status, `tipo=${item.kind}; registrado=${item.createdAt || ''}; aceitos=${item.acceptedCount || 0}; rejeitados=${item.rejectedCount || 0}; codigo_erro=${item.errorCode || ''}; diagnostico=${item.errorCode ? describeErrorCode(item.errorCode) : ''}`]);
   }
   const csv = rows.map(row => row.map(value => `"${String(value ?? '').replaceAll('"', '""')}"`).join(';')).join('\r\n');
   const url = URL.createObjectURL(new Blob(['\uFEFF', csv], { type: 'text/csv;charset=utf-8' }));
@@ -821,6 +979,7 @@ function exportFilteredLogs() {
 
 function render(data) {
   latestDashboardData = data;
+  renderActivityCharts(data.dailyActivity, data.periodDays);
   renderWorkerSchedule(data.workerSchedule, { updateFields: true });
   renderAlerts(data);
   renderScheduleHistory(data.workerSchedule?.scheduleHistory);
@@ -856,12 +1015,15 @@ function render(data) {
   status.className = `status ${edition.status}`;
   status.textContent = statusLabels[edition.status] || 'Indisponível';
   const lastRunSummary = document.querySelector('#latest-run-summary');
+  const excludedNote = Number(edition.excludedStories || 0) > 0
+    ? ` · ${Number(edition.excludedStories).toLocaleString('pt-BR')} fora do disparo: data de publicação diferente da edição`
+    : '';
   if (edition.lastRun) {
     const trigger = edition.lastRun.trigger === 'admin-manual' ? 'disparo manual' : 'execução agendada';
     const accepted = Number(edition.lastRun.recipients || 0);
-    lastRunSummary.textContent = `Última tentativa: ${trigger}, ${formatDate(edition.lastRun.startedAt)} · SMTP aceitou ${accepted}${edition.lastRun.errorCode ? ` · ${edition.lastRun.errorCode}` : ''}`;
+    lastRunSummary.textContent = `Última tentativa: ${trigger}, ${formatDate(edition.lastRun.startedAt)} · SMTP aceitou ${accepted}${edition.lastRun.errorCode ? ` · ${edition.lastRun.errorCode}` : ''}${excludedNote}`;
   } else {
-    lastRunSummary.textContent = 'Ainda não houve tentativa de envio para esta edição.';
+    lastRunSummary.textContent = `Ainda não houve tentativa de envio para esta edição.${excludedNote}`;
   }
   const noConfirmedSubscribers = Number(data.subscribers.confirmed || 0) === 0;
   dispatchButton.disabled = dispatchInProgress || edition.pendingStories <= 0 || noConfirmedSubscribers || edition.status === 'sending';

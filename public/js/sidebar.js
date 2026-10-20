@@ -75,7 +75,7 @@ const initializeBackToTop = () => {
 };
 
 const appendMarkdownInline = (parent, source) => {
-  const tokenPattern = /(\[[^\]]+\]\(https?:\/\/[^)\s]+\)|\*\*[^*]+\*\*|__[^_]+__|~~[^~]+~~|\*[^*]+\*|_[^_]+_|\x60[^\x60]+\x60)/g;
+  const tokenPattern = /(\[[^\]]+\]\(https?:\/\/[^)\s]+\)|\*\*\*.+?\*\*\*|___.+?___|\*\*(?:[^*]+|\*[^*]+\*)+\*\*|__(?:[^_]+|_[^_]+_)+__|~~[^~]+~~|\*[^*]+\*|_[^_]+_|\x60[^\x60]+\x60)/g;
   let cursor = 0;
   for (const match of source.matchAll(tokenPattern)) {
     if (match.index > cursor) parent.append(document.createTextNode(source.slice(cursor, match.index)));
@@ -95,18 +95,23 @@ const appendMarkdownInline = (parent, source) => {
           }
         } catch { /* link inválido vira texto literal */ }
       }
+    } else if (token.startsWith('***') || token.startsWith('___')) {
+      element = document.createElement('strong');
+      const emphasis = document.createElement('em');
+      appendMarkdownInline(emphasis, token.slice(3, -3));
+      element.append(emphasis);
     } else if (token.startsWith('**') || token.startsWith('__')) {
       element = document.createElement('strong');
-      element.textContent = token.slice(2, -2);
+      appendMarkdownInline(element, token.slice(2, -2));
     } else if (token.startsWith('~~')) {
       element = document.createElement('del');
-      element.textContent = token.slice(2, -2);
+      appendMarkdownInline(element, token.slice(2, -2));
     } else if (token.startsWith('\x60')) {
       element = document.createElement('code');
       element.textContent = token.slice(1, -1);
     } else if (token.startsWith('*') || token.startsWith('_')) {
       element = document.createElement('em');
-      element.textContent = token.slice(1, -1);
+      appendMarkdownInline(element, token.slice(1, -1));
     }
     parent.append(element || document.createTextNode(token));
     cursor = match.index + token.length;
@@ -118,7 +123,8 @@ const renderUpdateMarkdown = (container, markdown) => {
   container.replaceChildren();
   const lines = String(markdown || '').replace(/\r\n?/g, '\n').split('\n');
   let index = 0;
-  const isBlockStart = line => /^(#{1,4}\s|[-*+]\s|\d+[.)]\s|>\s?|---+\s*$)/.test(line.trim()) || line.trim().startsWith('\x60\x60\x60');
+  const isListItem = line => /^\s{0,3}(?:[-*+](?:[ \t]+|$)|\d{1,9}[.)](?:[ \t]+|$))/.test(line);
+  const isBlockStart = line => /^(#{1,4}\s|>\s?)/.test(line.trim()) || isListItem(line) || /^(?:[-*_][ \t]*){3,}$/.test(line.trim()) || line.trim().startsWith('\x60\x60\x60');
   while (index < lines.length) {
     const line = lines[index].trim();
     if (!line) { index += 1; continue; }
@@ -134,7 +140,7 @@ const renderUpdateMarkdown = (container, markdown) => {
       container.append(pre);
       continue;
     }
-    if (/^---+$/.test(line)) {
+    if (/^(?:[-*_][ \t]*){3,}$/.test(line)) {
       container.append(document.createElement('hr'));
       index += 1;
       continue;
@@ -157,15 +163,15 @@ const renderUpdateMarkdown = (container, markdown) => {
       container.append(quote);
       continue;
     }
-    const listMatch = line.match(/^([-*+])\s+(.+)|^(\d+)[.)]\s+(.+)$/);
+    const listMatch = line.match(/^\s{0,3}(?:([-*+])(?:[ \t]+|$)|(\d{1,9})[.)](?:[ \t]+|$))(.*)$/);
     if (listMatch) {
-      const ordered = Boolean(listMatch[3]);
+      const ordered = Boolean(listMatch[2]);
       const list = document.createElement(ordered ? 'ol' : 'ul');
       while (index < lines.length) {
-        const itemMatch = lines[index].trim().match(/^([-*+])\s+(.+)|^(\d+)[.)]\s+(.+)$/);
-        if (!itemMatch || Boolean(itemMatch[3]) !== ordered) break;
+        const itemMatch = lines[index].match(/^\s{0,3}(?:([-*+])(?:[ \t]+|$)|(\d{1,9})[.)](?:[ \t]+|$))(.*)$/);
+        if (!itemMatch || Boolean(itemMatch[2]) !== ordered) break;
         const item = document.createElement('li');
-        appendMarkdownInline(item, itemMatch[2] || itemMatch[4]);
+        appendMarkdownInline(item, itemMatch[3].trim());
         list.append(item);
         index += 1;
       }
@@ -183,8 +189,9 @@ const renderUpdateMarkdown = (container, markdown) => {
   }
 };
 
-const initializeUpdateNotice = async () => {
+const initializeUpdateNotice = async headerActions => {
   if (window.location.pathname === '/admin' || window.location.pathname === '/admin.html') return;
+  if (!headerActions || headerActions.querySelector('.site-update-notice')) return;
   try {
     const response = await fetch('/api/updates/active', { headers: { Accept: 'application/json' }, cache: 'no-store' });
     if (!response.ok) return;
@@ -207,8 +214,26 @@ const initializeUpdateNotice = async () => {
     const displayed = Number(localStorage.getItem(countKey) || 0);
     if (!Number.isSafeInteger(displayed) || displayed >= update.maxDisplays) return;
 
+    const notice = document.createElement('div');
+    notice.className = 'site-update-notice';
+    const trigger = document.createElement('button');
+    trigger.className = 'site-update-trigger';
+    trigger.type = 'button';
+    trigger.setAttribute('aria-label', 'Abrir nota de lançamento');
+    trigger.setAttribute('aria-controls', 'site-update-panel');
+    trigger.setAttribute('aria-expanded', 'false');
+    const bell = document.createElement('i');
+    bell.className = 'fas fa-bell';
+    bell.setAttribute('aria-hidden', 'true');
+    const indicator = document.createElement('span');
+    indicator.className = 'site-update-indicator';
+    indicator.setAttribute('aria-hidden', 'true');
+    trigger.append(bell, indicator);
+
     const panel = document.createElement('aside');
     panel.className = 'site-update-panel';
+    panel.id = 'site-update-panel';
+    panel.hidden = true;
     panel.setAttribute('role', 'region');
     panel.setAttribute('aria-labelledby', 'site-update-title');
     const header = document.createElement('div');
@@ -246,35 +271,55 @@ const initializeUpdateNotice = async () => {
     body.className = 'site-update-markdown';
     renderUpdateMarkdown(body, update.body);
     panel.append(header, eyebrow, heading, body);
-    document.body.append(panel);
-    document.body.classList.add('site-update-active');
-    document.documentElement.classList.add('site-update-active');
-    const previousBodyOverflow = document.body.style.overflow;
-    const previousHtmlOverflow = document.documentElement.style.overflow;
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
-    localStorage.setItem(countKey, String(displayed + 1));
+    notice.append(trigger, panel);
+    headerActions.append(notice);
+    let displayCount = displayed;
+    let cleanupListeners = () => {};
 
-    const dismiss = () => {
-      panel.remove();
-      document.body.classList.remove('site-update-active');
-      document.documentElement.classList.remove('site-update-active');
-      document.body.style.overflow = previousBodyOverflow;
-      document.documentElement.style.overflow = previousHtmlOverflow;
-      close.removeEventListener('click', dismiss);
-      document.removeEventListener('keydown', onKeydown);
+    const collapse = () => {
+      panel.hidden = true;
+      trigger.setAttribute('aria-expanded', 'false');
+      if (displayCount >= update.maxDisplays) {
+        notice.remove();
+        cleanupListeners();
+      }
     };
+    const expand = () => {
+      panel.hidden = false;
+      trigger.setAttribute('aria-expanded', 'true');
+      displayCount += 1;
+      localStorage.setItem(countKey, String(displayCount));
+    };
+
+    trigger.addEventListener('click', () => {
+      if (panel.hidden) expand();
+      else collapse();
+    });
+    close.addEventListener('click', () => {
+      collapse();
+      if (notice.isConnected) trigger.focus();
+      else headerActions.querySelector('button')?.focus();
+    });
     const onKeydown = event => {
-      if (event.key === 'Escape') dismiss();
+      if (event.key === 'Escape' && !panel.hidden) {
+        collapse();
+        if (notice.isConnected) trigger.focus();
+        else headerActions.querySelector('button')?.focus();
+      }
     };
-    close.addEventListener('click', dismiss);
+    const onDocumentClick = event => {
+      if (!panel.hidden && !notice.contains(event.target)) collapse();
+    };
     document.addEventListener('keydown', onKeydown);
+    document.addEventListener('click', onDocumentClick);
+    cleanupListeners = () => {
+      document.removeEventListener('keydown', onKeydown);
+      document.removeEventListener('click', onDocumentClick);
+    };
   } catch {
     // Avisos são opcionais; falha de rede ou armazenamento não deve afetar a página.
   }
 };
-
-void initializeUpdateNotice();
 
 const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
 const canonicalPath = currentPath === "/index.html"
@@ -468,6 +513,7 @@ const initializeNavigation = () => {
   };
 
   syncThemeToggleLocation();
+  void initializeUpdateNotice(headerActions);
   desktopSidebar.addEventListener("change", syncThemeToggleLocation);
   syncSidebarLayout();
   desktopSidebar.addEventListener("change", syncSidebarLayout);
