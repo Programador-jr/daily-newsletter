@@ -65,6 +65,7 @@
     }
   };
   const numberFormat = (value, digits = 2) => new Intl.NumberFormat('pt-BR', { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(value);
+  const money = value => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
   const dateFormat = value => { const parts = String(value || '').split('/'); return parts.length === 3 ? parts.join('/') : value; };
   const loadSeries = async (code, id, unit, digits = 2) => {
     const valueEl = document.getElementById('indicator-' + id + '-value');
@@ -311,7 +312,6 @@
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && modal?.classList.contains('open')) closeModal();
   });
-  const money = value => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
   const clampNumber = (id, min, max, fallback) => {
     const input = document.getElementById(id), value = Number(input?.value);
     if (!input || !Number.isFinite(value)) return fallback;
