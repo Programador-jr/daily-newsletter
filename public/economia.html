@@ -67,6 +67,21 @@
             <p class="indicator-value" id="indicator-divida-value">Consultando…</p><p class="indicator-period" id="indicator-divida-period">Banco Central · SGS 13762</p>
             <p>Estoque de dívida do governo geral em relação ao PIB.</p><button class="economy-detail-button" type="button" data-modal="divida">Entenda o indicador <i class="fas fa-circle-info" aria-hidden="true"></i></button>
           </article>
+          <article class="economy-indicator live-indicator" data-indicator="desemprego">
+            <p class="economy-indicator-label">Mercado de trabalho</p><h3>Taxa de desemprego</h3>
+            <p class="indicator-value" id="indicator-desemprego-value">Consultando…</p><p class="indicator-period" id="indicator-desemprego-period">IBGE · PNAD Contínua</p>
+            <p>Parcela da força de trabalho que está sem emprego e procura trabalho.</p><button class="economy-detail-button" type="button" data-modal="desemprego">Entenda o indicador <i class="fas fa-circle-info" aria-hidden="true"></i></button>
+          </article>
+          <article class="economy-indicator live-indicator" data-indicator="ipca-mensal">
+            <p class="economy-indicator-label">Custo de vida</p><h3>IPCA · variação mensal</h3>
+            <p class="indicator-value" id="indicator-ipca-mensal-value">Consultando…</p><p class="indicator-period" id="indicator-ipca-mensal-period">IBGE · IPCA</p>
+            <p>Mostra quanto os preços variaram no último mês divulgado.</p><button class="economy-detail-button" type="button" data-modal="ipca-mensal">Entenda o indicador <i class="fas fa-circle-info" aria-hidden="true"></i></button>
+          </article>
+          <article class="economy-indicator live-indicator" data-indicator="pib">
+            <p class="economy-indicator-label">Atividade econômica</p><h3>Crescimento do PIB</h3>
+            <p class="indicator-value" id="indicator-pib-value">Consultando…</p><p class="indicator-period" id="indicator-pib-period">IBGE · Contas Nacionais</p>
+            <p>Variação do PIB em relação ao trimestre anterior.</p><button class="economy-detail-button" type="button" data-modal="pib">Entenda o indicador <i class="fas fa-circle-info" aria-hidden="true"></i></button>
+          </article>
         </div>
         <p class="economy-source-note" id="economy-indicators-updated">Consultando séries oficiais do Banco Central. Se os dados não carregarem, use o link de consulta no detalhamento de cada indicador.</p>
       </section>
@@ -99,8 +114,20 @@
 
       <section class="economy-section" aria-labelledby="economy-examples-title">
         <div class="section-heading">
-          <div><span class="eyebrow">04 · Exemplos interativos</span><h2 id="economy-examples-title">Teste os cenários</h2></div>
-          <p>Altere os valores para ver os efeitos matemáticos. Os simuladores são didáticos e não representam previsões econômicas.</p>
+          <div><span class="eyebrow">04 · Aprenda na prática</span><h2 id="economy-examples-title">Como a Selic afeta seu bolso?</h2></div>
+          <p>Comece pela ideia principal e depois experimente os exemplos. Os resultados são ilustrativos, não previsões nem ofertas financeiras.</p>
+        </div>
+        <div class="economy-selic-guide">
+          <div class="economy-selic-explanation">
+            <span class="economy-card-kicker">Em palavras simples</span>
+            <h3>A Selic não é a taxa do seu empréstimo</h3>
+            <p>A Selic é a taxa básica de juros definida pelo Banco Central. Ela serve como referência para o custo do dinheiro na economia, mas o banco também considera risco de inadimplência, prazo, custos e margem de lucro. Por isso, os juros de um empréstimo costumam ser diferentes da Selic.</p>
+          </div>
+          <div class="economy-selic-scenarios" aria-label="Efeitos possíveis da Selic">
+            <article><span class="economy-scenario-icon" aria-hidden="true"><i class="fas fa-arrow-trend-up"></i></span><div><h3>Quando a Selic sobe</h3><p>O crédito tende a ficar mais caro e famílias e empresas podem adiar gastos. Isso pode ajudar a desacelerar a inflação com o tempo.</p></div></article>
+            <article><span class="economy-scenario-icon" aria-hidden="true"><i class="fas fa-equals"></i></span><div><h3>Quando a Selic fica estável</h3><p>Os efeitos continuam sendo sentidos gradualmente; as taxas cobradas pelos bancos não mudam todas ao mesmo tempo.</p></div></article>
+            <article><span class="economy-scenario-icon" aria-hidden="true"><i class="fas fa-arrow-trend-down"></i></span><div><h3>Quando a Selic cai</h3><p>O crédito pode ficar mais barato e a atividade ganhar estímulo. Aplicações ligadas à taxa também podem render menos.</p></div></article>
+          </div>
         </div>
         <div class="economy-interactive-grid">
           <article class="economy-learning-card economy-calculator">
@@ -111,12 +138,12 @@
             <div class="economy-calculation-result" aria-live="polite"><span>Novo custo estimado</span><strong id="basket-result">R$ 210,00</strong><small id="basket-difference">Aumento de R$ 10,00</small></div>
           </article>
           <article class="economy-learning-card economy-calculator">
-            <span class="economy-card-kicker">Crédito e juros</span><h3>Compare o custo de um empréstimo</h3>
-            <p>Simulação simplificada de parcelas fixas, sem tarifas, seguros ou impostos. Não é uma oferta de crédito.</p>
-            <label for="loan-value">Valor financiado (R$)</label><input id="loan-value" type="number" min="1" max="10000000" step="100" value="5000">
-            <label for="loan-rate">Juros ao mês (%)</label><input id="loan-rate" type="number" min="0" max="100" step="0.1" value="2">
+            <span class="economy-card-kicker">Crédito e juros</span><h3>Veja como os juros mudam a parcela</h3>
+            <p>Imagine pegar R$ 1.000 emprestados. Mude a taxa mensal e veja quanto pagaria em 12 parcelas fixas. A taxa abaixo é a do empréstimo, <strong>não a Selic</strong>; o cálculo não inclui tarifas, seguros ou impostos.</p>
+            <label for="loan-value">Valor emprestado (R$)</label><input id="loan-value" type="number" min="1" max="10000000" step="100" value="1000">
+            <label for="loan-rate">Juros do empréstimo ao mês (%)</label><input id="loan-rate" type="number" min="0" max="100" step="0.1" value="2">
             <label for="loan-months">Prazo (meses)</label><input id="loan-months" type="number" min="1" max="360" step="1" value="12">
-            <div class="economy-calculation-result" aria-live="polite"><span>Parcela aproximada</span><strong id="loan-result">R$ 473,00</strong><small id="loan-total">Total estimado: R$ 5.676,00</small></div>
+            <div class="economy-calculation-result" aria-live="polite"><span>Parcela aproximada</span><strong id="loan-result">R$ 94,56</strong><small id="loan-total">Total estimado: R$ 1.134,72</small><small id="loan-interest">Juros estimados: R$ 134,72</small></div>
           </article>
           <article class="economy-learning-card economy-calculator">
             <span class="economy-card-kicker">Arcabouço fiscal</span><h3>Simule um limite de despesa</h3>
