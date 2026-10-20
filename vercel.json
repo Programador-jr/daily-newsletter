@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    { "source": "/editions", "destination": "/editions.html" },
+    { "source": "/historia", "destination": "/historia.html" },
+    { "source": "/presidentes", "destination": "/presidentes.html" },
+    { "source": "/ideologias", "destination": "/ideologias.html" },
+    { "source": "/politica", "destination": "/politica.html" },
+    { "source": "/fascismo-nazismo", "destination": "/fascismo-nazismo.html" },
+    { "source": "/politicas-publicas", "destination": "/politicas-publicas.html" },
+    { "source": "/tres-poderes", "destination": "/tres-poderes.html" },
+    { "source": "/cargos-publicos", "destination": "/cargos-publicos.html" },
+    { "source": "/como-funciona-estado", "destination": "/estado-brasileiro.html" },
+    { "source": "/estado-brasileiro", "destination": "/estado-brasileiro.html" },
+    { "source": "/arrecadacao", "destination": "/arrecadacao.html" },
+    { "source": "/gastos-publicos", "destination": "/gastos-publicos.html" },
+    { "source": "/impostos-gastos", "destination": "/impostos-gastos.html" },
+    { "source": "/gastos-parlamentares", "destination": "/gastos-parlamentares.html" },
+    { "source": "/como-fiscalizar", "destination": "/como-fiscalizar.html" },
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/subscription-status", "destination": "/subscription-status.html" }
+  ]
+}
