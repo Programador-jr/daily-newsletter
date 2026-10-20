@@ -34,7 +34,7 @@ test('painel navega entre páginas internas e mostra o editor de atualizações'
   await page.locator('#username').fill('admin');
   await page.locator('#password').fill('test-password');
   await page.getByRole('button', { name: /Entrar no painel/ }).click();
-  await expect(page.getByRole('heading', { name: 'Operação da newsletter' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Visão geral' })).toBeVisible();
   await expect(page.locator('#overview-snapshot-title')).toBeVisible();
   await expect(page.locator('#overview-confirmed-count')).toHaveText('5');
   await expect(page.locator('#overview-news-count')).toHaveText('3');
