@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR" class="history-document">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Acompanhe indicadores econômicos brasileiros, entenda os dados e leia notícias com fontes verificáveis.">
+  <meta name="theme-color" content="#064e46">
+  <title>Economia — King's Newsletter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/historia.css">
+  <link rel="stylesheet" href="/css/economia.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="/js/vercel-observability.js" defer></script>
+  <script src="/js/economia.js" defer></script>
+</head>
+<body class="history-page economy-page">
+  <div class="container">
+    <header class="site-header">
+      <a class="logo" href="/" aria-label="Página inicial"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></a>
+      <nav class="header-main-nav" aria-label="Navegação principal">
+        <div class="header-primary-links"></div>
+        <div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div>
+      </nav>
+    </header>
+    <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+      <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
+      <nav class="site-sidebar-nav" aria-label="Páginas principais"></nav>
+      <div class="site-sidebar-preferences"></div>
+    </aside>
+    <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
+
+    <main>
+      <section class="history-hero economy-hero">
+        <span class="eyebrow"><i class="fas fa-chart-line" aria-hidden="true"></i> Economia brasileira</span>
+        <h1>Os números por trás das decisões.</h1>
+        <p>Acompanhe os principais indicadores, entenda o que eles medem e leia notícias econômicas com contexto. Todo dado precisa de fonte, período e definição.</p>
+        <div class="economy-hero-meta"><span><i class="fas fa-check-circle" aria-hidden="true"></i> Fontes oficiais</span><span><i class="fas fa-book-open" aria-hidden="true"></i> Explicações sem jargão</span></div>
+      </section>
+
+      <section class="economy-section" aria-labelledby="economy-indicators-title">
+        <div class="economy-section-heading">
+          <div><span class="eyebrow">01 · Panorama</span><h2 id="economy-indicators-title">Indicadores para acompanhar</h2></div>
+          <p>Os links levam às fontes primárias. Confira nelas o último valor publicado e a data de referência antes de comparar.</p>
+        </div>
+        <div class="economy-indicator-grid">
+          <article class="economy-indicator">
+            <span class="economy-indicator-icon"><i class="fas fa-percent" aria-hidden="true"></i></span>
+            <p class="economy-indicator-label">Taxa Selic</p><h3>Juros básicos</h3>
+            <p>Referência da política monetária, definida pelo Comitê de Política Monetária (Copom).</p>
+            <a href="https://www.bcb.gov.br/controleinflacao/taxaselic" target="_blank" rel="noopener noreferrer">Consultar Banco Central <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+          </article>
+          <article class="economy-indicator">
+            <span class="economy-indicator-icon"><i class="fas fa-basket-shopping" aria-hidden="true"></i></span>
+            <p class="economy-indicator-label">IPCA</p><h3>Inflação oficial</h3>
+            <p>Mede a variação média de preços ao consumidor. Observe o mês e o acumulado informado.</p>
+            <a href="https://www.ibge.gov.br/explica/inflacao.php" target="_blank" rel="noopener noreferrer">Consultar IBGE <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+          </article>
+          <article class="economy-indicator">
+            <span class="economy-indicator-icon"><i class="fas fa-scale-balanced" aria-hidden="true"></i></span>
+            <p class="economy-indicator-label">Resultado primário</p><h3>Contas públicas</h3>
+            <p>Compara receitas e despesas primárias no escopo e período definidos pela fonte.</p>
+            <a href="https://www.tesourotransparente.gov.br/temas/estatisticas-fiscais" target="_blank" rel="noopener noreferrer">Consultar Tesouro Nacional <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+          </article>
+          <article class="economy-indicator">
+            <span class="economy-indicator-icon"><i class="fas fa-landmark" aria-hidden="true"></i></span>
+            <p class="economy-indicator-label">Dívida pública</p><h3>Estoque de obrigações</h3>
+            <p>Verifique qual medida está sendo usada, como DBGG ou DLSP, e a unidade de comparação.</p>
+            <a href="https://www.bcb.gov.br/estatisticas/estatisticasfiscais" target="_blank" rel="noopener noreferrer">Consultar estatísticas fiscais <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+          </article>
+        </div>
+        <p class="economy-source-note"><i class="fas fa-circle-info" aria-hidden="true"></i> Esta página não inventa valores nem apresenta números sem data de referência. Consulte as fontes primárias para obter a publicação mais recente.</p>
+      </section>
+
+      <section class="economy-section" aria-labelledby="economy-news-title">
+        <div class="economy-section-heading">
+          <div><span class="eyebrow">02 · Atualidades</span><h2 id="economy-news-title">Economia em pauta</h2></div>
+          <p>Notícias da edição atual relacionadas a juros, inflação, atividade econômica, emprego, investimentos e contas públicas.</p>
+        </div>
+        <div id="economy-news" class="economy-news-list" aria-live="polite" aria-busy="true">
+          <div class="economy-state" role="status"><span class="economy-spinner" aria-hidden="true"></span>Carregando notícias econômicas…</div>
+        </div>
+        <p class="economy-more-news"><a href="/editions">Ver a edição completa <i class="fas fa-arrow-right" aria-hidden="true"></i></a></p>
+      </section>
+
+      <section class="economy-section" aria-labelledby="economy-learn-title">
+        <div class="economy-section-heading">
+          <div><span class="eyebrow">03 · Guia rápido</span><h2 id="economy-learn-title">Entenda antes de interpretar</h2></div>
+          <p>Conceitos para ler indicadores e manchetes com mais precisão.</p>
+        </div>
+        <div class="economy-learning-grid">
+          <article class="economy-learning-card"><span>01</span><h3>Selic e crédito</h3><p>Juros influenciam o custo do crédito, a remuneração de aplicações e as decisões de consumo e investimento. O efeito varia conforme o prazo e as condições de mercado.</p><a href="https://www.bcb.gov.br/controleinflacao/taxaselic" target="_blank" rel="noopener noreferrer">Entender a Selic <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></article>
+          <article class="economy-learning-card"><span>02</span><h3>Inflação e poder de compra</h3><p>Inflação é a variação de preços ao longo do tempo. Uma taxa menor não significa necessariamente que os preços caíram; pode significar que subiram mais devagar.</p><a href="https://www.ibge.gov.br/explica/inflacao.php" target="_blank" rel="noopener noreferrer">Entender o IPCA <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></article>
+          <article class="economy-learning-card"><span>03</span><h3>Resultado fiscal e dívida</h3><p>O resultado fiscal mede um fluxo durante determinado período. A dívida é um estoque de obrigações. Déficit e aumento da dívida não são conceitos idênticos.</p><a href="https://www.tesourotransparente.gov.br/temas/estatisticas-fiscais" target="_blank" rel="noopener noreferrer">Ver dados fiscais <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></article>
+        </div>
+      </section>
+
+      <section class="economy-example" aria-labelledby="economy-example-title">
+        <div class="economy-example-mark"><i class="fas fa-flask" aria-hidden="true"></i><span>Exemplo hipotético</span></div>
+        <h2 id="economy-example-title">Como a inflação afeta o poder de compra?</h2>
+        <p>Imagine, apenas para fins didáticos, uma cesta que custa R$ 1.000 e sofre uma alta hipotética de 5%. Ela passaria a custar R$ 1.050. Com os mesmos R$ 1.000, seria possível comprar menos itens dessa cesta.</p>
+        <small>Este cenário é ilustrativo, não representa a inflação atual nem uma previsão econômica.</small>
+      </section>
+
+      <section class="economy-related" aria-label="Conteúdos relacionados">
+        <div><span class="eyebrow">Continue explorando</span><h2>Economia também passa pelas contas públicas.</h2><p>Veja como tributos, orçamento e despesas do Estado são registrados e fiscalizados.</p></div>
+        <a class="cta-button" href="/arrecadacao">Explorar dinheiro público</a>
+      </section>
+    </main>
+    <div id="footer"></div>
+  </div>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/footer.js"></script>
+</body>
+</html>
