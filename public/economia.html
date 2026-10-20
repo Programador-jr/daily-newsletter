@@ -107,9 +107,60 @@
         <p class="economy-more-news"><a href="/editions">Ver a edição completa</a></p>
       </section>
 
+
+      <section class="economy-section" aria-labelledby="economy-lab-title">
+        <div class="section-heading">
+          <div><span class="eyebrow">04 · Laboratório interativo</span><h2 id="economy-lab-title">Explore a economia na prática</h2></div>
+          <p>Altere valores, siga o caminho do dinheiro público e observe séries oficiais. Os exemplos de preços são fictícios e editáveis; não representam uma pesquisa de mercado.</p>
+        </div>
+
+        <article class="economy-lab-panel" aria-labelledby="price-lab-title">
+          <div class="economy-lab-heading"><span class="economy-card-kicker">01 · Inflação no seu bolso</span><h3 id="price-lab-title">Compare preços e veja o impacto no orçamento</h3><p>Os valores iniciais são apenas demonstrações. Troque-os pelos preços que você pagava antes e paga hoje. A comparação pessoal não substitui o IPCA, calculado pelo IBGE com uma cesta ampla e metodologia própria.</p></div>
+          <div class="economy-price-table-wrap">
+            <table class="economy-price-table">
+              <thead><tr><th scope="col">Produto</th><th scope="col">Preço anterior (R$)</th><th scope="col">Preço atual (R$)</th><th scope="col">Variação</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Arroz (5 kg)</th><td><label class="visually-hidden" for="price-rice-before">Preço anterior do arroz</label><input id="price-rice-before" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="25.00"></td><td><label class="visually-hidden" for="price-rice-now">Preço atual do arroz</label><input id="price-rice-now" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="29.00"></td><td id="price-rice-change">—</td></tr>
+                <tr><th scope="row">Leite (1 L)</th><td><label class="visually-hidden" for="price-milk-before">Preço anterior do leite</label><input id="price-milk-before" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="4.50"></td><td><label class="visually-hidden" for="price-milk-now">Preço atual do leite</label><input id="price-milk-now" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="5.20"></td><td id="price-milk-change">—</td></tr>
+                <tr><th scope="row">Óleo (900 ml)</th><td><label class="visually-hidden" for="price-oil-before">Preço anterior do óleo</label><input id="price-oil-before" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="6.00"></td><td><label class="visually-hidden" for="price-oil-now">Preço atual do óleo</label><input id="price-oil-now" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="6.80"></td><td id="price-oil-change">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="economy-price-summary" aria-live="polite"><div><span>Total anterior</span><strong id="price-total-before">—</strong></div><div><span>Total atual</span><strong id="price-total-now">—</strong></div><div><span>Variação do conjunto</span><strong id="price-total-change">—</strong></div></div>
+          <p class="economy-lab-note">Compare as mesmas quantidades e marcas para uma leitura mais justa. A variação calculada é a dos itens que você informou, não a inflação oficial.</p>
+        </article>
+
+        <article class="economy-lab-panel" aria-labelledby="money-flow-title">
+          <div class="economy-lab-heading"><span class="economy-card-kicker">02 · O caminho do dinheiro público</span><h3 id="money-flow-title">Clique em uma etapa para entender a ligação</h3><p>O orçamento conecta arrecadação, prestação de serviços e resultado fiscal. O esquema é conceitual e não representa a distribuição exata de cada real arrecadado.</p></div>
+          <div class="economy-flow" role="group" aria-label="Etapas do fluxo fiscal">
+            <button type="button" class="economy-flow-step is-active" data-flow="revenue" aria-pressed="true"><span>01</span><strong>Arrecadação</strong><small>Tributos e outras receitas</small></button>
+            <span class="economy-flow-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+            <button type="button" class="economy-flow-step" data-flow="spending" aria-pressed="false"><span>02</span><strong>Despesas</strong><small>Serviços e políticas públicas</small></button>
+            <span class="economy-flow-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+            <button type="button" class="economy-flow-step" data-flow="primary" aria-pressed="false"><span>03</span><strong>Resultado primário</strong><small>Receitas menos despesas primárias</small></button>
+            <span class="economy-flow-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+            <button type="button" class="economy-flow-step" data-flow="debt" aria-pressed="false"><span>04</span><strong>Dívida pública</strong><small>Estoque e custo de financiamento</small></button>
+          </div>
+          <div id="economy-flow-detail" class="economy-flow-detail" aria-live="polite"><h4>Arrecadação</h4><p>O governo obtém recursos por tributos, contribuições, exploração de patrimônio e outras receitas. A origem e a destinação legal variam conforme o tipo de receita.</p></div>
+          <p class="economy-lab-note">Juros da dívida não entram no resultado primário. O resultado nominal inclui os juros e ajuda a explicar a evolução das necessidades de financiamento.</p>
+        </article>
+
+        <article class="economy-lab-panel" aria-labelledby="economy-trends-title">
+          <div class="economy-lab-heading"><span class="economy-card-kicker">03 · Economia em perspectiva</span><h3 id="economy-trends-title">Observe a trajetória dos indicadores</h3><p>Escolha uma série oficial e a quantidade de observações recentes. O gráfico transforma o primeiro ponto em índice 100 para facilitar a leitura da trajetória, não para comparar níveis ou unidades diferentes.</p></div>
+          <div class="economy-chart-controls">
+            <div><label for="economy-series-select">Série</label><select id="economy-series-select"><option value="432">Meta Selic (Banco Central · SGS 432)</option><option value="13522">IPCA acumulado em 12 meses (Banco Central · SGS 13522)</option></select></div>
+            <div><label for="economy-series-count">Observações</label><select id="economy-series-count"><option value="12">12 observações</option><option value="24" selected>24 observações</option><option value="60">60 observações</option></select></div>
+            <button type="button" class="cta-button" id="economy-chart-load">Atualizar gráfico</button>
+          </div>
+          <div id="economy-chart-status" class="economy-lab-note" role="status">Carregando série oficial…</div>
+          <div class="economy-chart-wrap"><svg id="economy-history-chart" viewBox="0 0 720 300" role="img" aria-label="Gráfico da trajetória histórica do indicador selecionado"><text x="360" y="150" text-anchor="middle">Carregando dados oficiais…</text></svg></div>
+          <p id="economy-chart-caption" class="economy-lab-note">Fonte: Banco Central do Brasil, Sistema Gerenciador de Séries Temporais. Frequência e períodos dependem da série escolhida.</p>
+        </article>
+      </section>
+
       <section class="economy-section" aria-labelledby="economy-examples-title">
         <div class="section-heading">
-          <div><span class="eyebrow">04 · Aprenda na prática</span><h2 id="economy-examples-title">Como a Selic afeta seu bolso?</h2></div>
+          <div><span class="eyebrow">05 · Decisões de crédito</span><h2 id="economy-examples-title">Como a Selic afeta seu bolso?</h2></div>
           <p>Comece pela ideia principal e depois experimente os exemplos. Os resultados são ilustrativos, não previsões nem ofertas financeiras.</p>
         </div>
         <div class="economy-selic-guide">
