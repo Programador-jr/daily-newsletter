@@ -1,6 +1,15 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
+    { "source": "/api/admin/login", "destination": "/api/control?route=admin/login" },
+    { "source": "/api/admin/logout", "destination": "/api/control?route=admin/logout" },
+    { "source": "/api/admin/dashboard", "destination": "/api/control?route=admin/dashboard" },
+    { "source": "/api/admin/dispatch", "destination": "/api/control?route=admin/dispatch" },
+    { "source": "/api/admin/schedule", "destination": "/api/control?route=admin/schedule" },
+    { "source": "/api/admin/updates", "destination": "/api/control?route=admin/updates" },
+    { "source": "/api/updates/active", "destination": "/api/control?route=updates/active" },
+    { "source": "/api/worker/config", "destination": "/api/control?route=worker/config" },
+    { "source": "/api/worker/heartbeat", "destination": "/api/control?route=worker/heartbeat" },
     { "source": "/editions", "destination": "/editions.html" },
     { "source": "/historia", "destination": "/historia.html" },
     { "source": "/presidentes", "destination": "/presidentes.html" },
