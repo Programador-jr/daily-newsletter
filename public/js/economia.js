@@ -49,23 +49,36 @@
       container.replaceChildren(...filtered.slice(0, 6).map(renderStory)); container.setAttribute('aria-busy', 'false');
     }).catch(() => showMessage('Não foi possível carregar as notícias econômicas agora. Os links para as fontes oficiais continuam disponíveis acima.'));
 
+  const fetchJson = async (url, timeoutMs = 10000) => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const response = await fetch(url, {
+        headers: { Accept: 'application/json' },
+        cache: 'no-store',
+        signal: controller.signal
+      });
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      return await response.json();
+    } finally {
+      clearTimeout(timeout);
+    }
+  };
   const numberFormat = (value, digits = 2) => new Intl.NumberFormat('pt-BR', { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(value);
   const dateFormat = value => { const parts = String(value || '').split('/'); return parts.length === 3 ? parts.join('/') : value; };
   const loadSeries = async (code, id, unit, digits = 2) => {
     const valueEl = document.getElementById('indicator-' + id + '-value');
     const periodEl = document.getElementById('indicator-' + id + '-period');
     try {
-      const response = await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.' + code + '/dados/ultimos/1?formato=json', { headers: { Accept: 'application/json' } });
-      if (!response.ok) throw new Error('HTTP ' + response.status);
-      const rows = await response.json();
+      const rows = await fetchJson('https://api.bcb.gov.br/dados/serie/bcdata.sgs.' + code + '/dados/ultimos/1?formato=json');
       if (!Array.isArray(rows) || !rows.length || !Number.isFinite(Number(rows[0].valor))) throw new Error('Série sem observação');
       valueEl.textContent = numberFormat(Number(rows[0].valor), digits) + unit;
       periodEl.textContent = 'Observação de ' + dateFormat(rows[0].data) + ' · Banco Central';
       valueEl.dataset.loaded = 'true';
       return true;
     } catch {
-      valueEl.textContent = 'Indisponível';
-      periodEl.textContent = 'Consulte a série oficial';
+      if (valueEl) valueEl.textContent = 'Indisponível';
+      if (periodEl) periodEl.textContent = 'Falha na consulta · tente novamente';
       return false;
     }
   };
@@ -75,9 +88,22 @@
     try {
       const classification = table === '5932' ? '/c11255/90707' : '';
       const url = 'https://apisidra.ibge.gov.br/values/t/' + table + '/n1/1/v/' + variable + '/p/last%201' + classification;
-      const response = await fetch(url, { headers: { Accept: 'application/json' } });
-      if (!response.ok) throw new Error('HTTP ' + response.status);
-      const rows = await response.json();
+      let rows;
+      try {
+        rows = await fetchJson(url);
+      } catch (primaryError) {
+        // Fallback oficial da API SIDRA v3; evita deixar a métrica sem alternativa quando a rota legada falha.
+        const fallbackUrl = 'https://servicodados.ibge.gov.br/api/v3/agregados/' + table + '/periodos/-1/variaveis/' + variable + '?localidades=N1[all]';
+        const fallback = await fetchJson(fallbackUrl);
+        const series = fallback?.[0]?.resultados?.[0]?.series?.[0]?.serie;
+        const periods = series && typeof series === 'object' ? Object.keys(series).sort() : [];
+        const lastPeriod = periods.at(-1);
+        if (!lastPeriod || !Number.isFinite(Number(String(series[lastPeriod]).replace(',', '.')))) throw primaryError;
+        valueEl.textContent = numberFormat(Number(String(series[lastPeriod]).replace(',', '.')), digits) + unit;
+        periodEl.textContent = lastPeriod + ' · ' + sourceLabel + ' (SIDRA API v3)';
+        valueEl.dataset.loaded = 'true';
+        return true;
+      }
       const latest = Array.isArray(rows) ? rows.slice(1).reverse().find(row => row.V && row.V !== '...') : null;
       if (!latest || !Number.isFinite(Number(String(latest.V).replace(',', '.')))) throw new Error('Série sem observação');
       valueEl.textContent = numberFormat(Number(String(latest.V).replace(',', '.')), digits) + unit;
@@ -85,8 +111,8 @@
       valueEl.dataset.loaded = 'true';
       return true;
     } catch {
-      valueEl.textContent = 'Indisponível';
-      periodEl.textContent = 'Consulte a série oficial';
+      if (valueEl) valueEl.textContent = 'Indisponível';
+      if (periodEl) periodEl.textContent = 'Falha na consulta · tente novamente';
       return false;
     }
   };
@@ -98,11 +124,14 @@
     loadIbgeSeries('1737', '63', 'ipca-mensal', '%', 'IBGE · IPCA'),
     loadIbgeSeries('5932', '6564', 'pib', '%', 'IBGE · PIB trimestral')
   ];
-  Promise.all(indicatorLoads).then(results => {
+  Promise.allSettled(indicatorLoads).then(results => {
     const status = document.getElementById('economy-indicators-updated');
-    if (status) status.textContent = results.every(Boolean)
-      ? 'Dados consultados nas séries oficiais do Banco Central e do IBGE. Cada cartão informa o período da observação retornada pela fonte.'
-      : 'Algumas séries não puderam ser carregadas agora. Os cartões indicam quais valores estão indisponíveis; consulte as fontes oficiais no detalhamento.';
+    const successful = results.filter(result => result.status === 'fulfilled' && result.value === true).length;
+    if (status) status.textContent = successful === indicatorLoads.length
+      ? 'Todas as séries foram carregadas. Os cartões exibem a data de cada observação oficial.'
+      : successful > 0
+        ? successful + ' de ' + indicatorLoads.length + ' séries carregadas. As demais estão indisponíveis no momento; cada cartão informa seu estado.'
+        : 'Não foi possível consultar as séries agora. Use os links oficiais nos detalhes ou tente novamente mais tarde.';
   });
 
 
@@ -204,9 +233,7 @@
     const loadButton = document.getElementById('economy-chart-load');
     if (loadButton) loadButton.disabled = true;
     try {
-      const response = await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.' + code + '/dados/ultimos/' + count + '?formato=json', { headers: { Accept: 'application/json' } });
-      if (!response.ok) throw new Error('HTTP ' + response.status);
-      const payload = await response.json();
+      const payload = await fetchJson('https://api.bcb.gov.br/dados/serie/bcdata.sgs.' + code + '/dados/ultimos/' + count + '?formato=json');
       const rows = Array.isArray(payload) ? payload.slice().filter(row => Number.isFinite(Number(String(row.valor).replace(',', '.')))) : [];
       if (rows.length < 2) throw new Error('Poucas observações disponíveis');
       renderHistoryChart(rows, code);
@@ -214,7 +241,7 @@
       const caption = document.getElementById('economy-chart-caption');
       if (caption) caption.textContent = 'Fonte: ' + chartNames[code].source + '. Valores oficiais em ' + chartNames[code].unit + '; gráfico reindexado para a primeira observação = 100. A frequência depende da série.';
     } catch {
-      chartStatus.textContent = 'Não foi possível carregar essa série agora. Tente novamente ou consulte o Banco Central do Brasil.';
+      chartStatus.textContent = 'A série não respondeu dentro do prazo ou está indisponível. Tente novamente ou consulte o Banco Central do Brasil.';
       chartSvg.replaceChildren();
       const message = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       message.setAttribute('x', '360'); message.setAttribute('y', '150'); message.setAttribute('text-anchor', 'middle');
