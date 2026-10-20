@@ -93,7 +93,7 @@
         rows = await fetchJson(url);
       } catch (primaryError) {
         // Fallback oficial da API SIDRA v3; evita deixar a métrica sem alternativa quando a rota legada falha.
-        const fallbackUrl = 'https://servicodados.ibge.gov.br/api/v3/agregados/' + table + '/periodos/-1/variaveis/' + variable + '?localidades=N1[all]';
+        const fallbackUrl = 'https://servicodados.ibge.gov.br/api/v3/agregados/' + table + '/periodos/-1/variaveis/' + variable + '?localidades=N1[all]' + (table === '5932' ? '&classificacao=11255[90707]' : '');
         const fallback = await fetchJson(fallbackUrl);
         const series = fallback?.[0]?.resultados?.[0]?.series?.[0]?.serie;
         const periods = series && typeof series === 'object' ? Object.keys(series).sort() : [];
