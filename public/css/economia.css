@@ -76,3 +76,17 @@
 @media (max-width: 1000px) { .economy-interactive-grid, .economy-fiscal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 768px) { .economy-interactive-grid, .economy-fiscal-grid { grid-template-columns: 1fr; } .economy-modal-footer { align-items: flex-start; flex-direction: column; } }
 @media (prefers-reduced-motion: reduce) { .economy-detail, .economy-detail .history-detail-backdrop, .economy-detail .history-detail-dialog, .economy-detail .accordion-close { transition: none !important; } }
+
+
+/* GUIA DIDÁTICO DA SELIC */
+.economy-selic-guide { display: grid; gap: 1rem; margin-bottom: 1.25rem; }
+.economy-selic-explanation { padding: 1.25rem; border: 1px solid var(--border); border-left: 3px solid var(--primary); border-radius: 10px; background: var(--card-bg); }
+.economy-selic-explanation h3 { margin: 0 0 .5rem; color: var(--text-main); font-size: 1.15rem; }
+.economy-selic-explanation p { max-width: 900px; margin: 0; color: var(--text-muted); font-size: .9rem; line-height: 1.75; }
+.economy-selic-scenarios { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.economy-selic-scenarios article { display: grid; grid-template-columns: 38px minmax(0, 1fr); align-items: start; gap: .8rem; padding: 1rem; border: 1px solid var(--border); border-radius: 10px; background: var(--card-bg); }
+.economy-scenario-icon { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 8px; color: var(--primary); background: var(--bg-container); }
+.economy-selic-scenarios h3 { margin: .1rem 0 .35rem; color: var(--text-main); font-size: .9rem; }
+.economy-selic-scenarios p { margin: 0; color: var(--text-muted); font-size: .82rem; line-height: 1.65; }
+@media (max-width: 900px) { .economy-selic-scenarios { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .economy-selic-guide * { scroll-behavior: auto !important; } }
