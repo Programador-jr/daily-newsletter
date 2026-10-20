@@ -96,21 +96,11 @@
         </div>
       </section>
 
-      <section class="economy-section" aria-labelledby="economy-news-title">
-        <div class="section-heading">
-          <div><span class="eyebrow">03 · Atualidades</span><h2 id="economy-news-title">Notícias de economia</h2></div>
-          <p>Notícias da edição atual relacionadas a juros, inflação, atividade econômica, emprego, investimentos e contas públicas.</p>
-        </div>
-        <div id="economy-news" class="economy-news-list" aria-live="polite" aria-busy="true">
-          <p class="economy-state" role="status">Carregando notícias econômicas…</p>
-        </div>
-        <p class="economy-more-news"><a href="/editions">Ver a edição completa</a></p>
-      </section>
 
 
       <section class="economy-section" aria-labelledby="economy-lab-title">
         <div class="section-heading">
-          <div><span class="eyebrow">04 · Laboratório interativo</span><h2 id="economy-lab-title">Explore a economia na prática</h2></div>
+          <div><span class="eyebrow">03 · Laboratório interativo</span><h2 id="economy-lab-title">Explore a economia na prática</h2></div>
           <p>Altere valores, siga o caminho do dinheiro público e observe séries oficiais. Os exemplos de preços são fictícios e editáveis; não representam uma pesquisa de mercado.</p>
         </div>
 
@@ -146,21 +136,21 @@
         </article>
 
         <article class="economy-lab-panel" aria-labelledby="economy-trends-title">
-          <div class="economy-lab-heading"><span class="economy-card-kicker">03 · Economia em perspectiva</span><h3 id="economy-trends-title">Observe a trajetória dos indicadores</h3><p>Escolha uma série oficial e a quantidade de observações recentes. O gráfico transforma o primeiro ponto em índice 100 para facilitar a leitura da trajetória, não para comparar níveis ou unidades diferentes.</p></div>
+          <div class="economy-lab-heading"><span class="economy-card-kicker">03 · Economia em perspectiva</span><h3 id="economy-trends-title">Acompanhe a trajetória dos indicadores</h3><p>Compare até 60 meses dos valores publicados. A linha mostra os percentuais originais; a Meta Selic é diária e aparece pelo último valor de cada mês. O IPCA é mensal e calculado pelo IBGE.</p></div>
           <div class="economy-chart-controls">
-            <div><label for="economy-series-select">Série</label><select id="economy-series-select"><option value="432">Meta Selic (Banco Central · SGS 432)</option><option value="13522">IPCA acumulado em 12 meses (Banco Central · SGS 13522)</option></select></div>
-            <div><label for="economy-series-count">Observações</label><select id="economy-series-count"><option value="12">12 observações</option><option value="24" selected>24 observações</option><option value="60">60 observações</option></select></div>
+            <div><label for="economy-series-select">Indicador e fonte</label><select id="economy-series-select"><option value="432">Meta Selic · Copom (BCB, SGS 432)</option><option value="13522">IPCA em 12 meses · IBGE (BCB, SGS 13522)</option></select></div>
+            <div><label for="economy-series-count">Período exibido</label><select id="economy-series-count"><option value="12">12 meses</option><option value="24" selected>24 meses</option><option value="60">60 meses</option></select></div>
             <button type="button" class="cta-button" id="economy-chart-load">Atualizar gráfico</button>
           </div>
           <div id="economy-chart-status" class="economy-lab-note" role="status">Carregando série oficial…</div>
-          <div class="economy-chart-wrap"><svg id="economy-history-chart" viewBox="0 0 720 300" role="img" aria-label="Gráfico da trajetória histórica do indicador selecionado"><text x="360" y="150" text-anchor="middle">Carregando dados oficiais…</text></svg></div>
-          <p id="economy-chart-caption" class="economy-lab-note">Fonte: Banco Central do Brasil, Sistema Gerenciador de Séries Temporais. Frequência e períodos dependem da série escolhida.</p>
+          <div class="economy-chart-wrap"><svg id="economy-history-chart" viewBox="0 0 760 350" role="group" tabindex="0" aria-label="Gráfico interativo dos valores oficiais. Use as setas para percorrer os meses."><text x="380" y="175" text-anchor="middle">Carregando dados oficiais…</text></svg></div>
+          <p id="economy-chart-caption" class="economy-lab-note">Fontes: Banco Central do Brasil (SGS) e IBGE. O eixo vertical apresenta a unidade original de cada indicador.</p>
         </article>
       </section>
 
       <section class="economy-section" aria-labelledby="economy-examples-title">
         <div class="section-heading">
-          <div><span class="eyebrow">05 · Decisões de crédito</span><h2 id="economy-examples-title">Como a Selic afeta seu bolso?</h2></div>
+          <div><span class="eyebrow">04 · Decisões de crédito</span><h2 id="economy-examples-title">Como a Selic afeta seu bolso?</h2></div>
           <p>Comece pela ideia principal e depois experimente os exemplos. Os resultados são ilustrativos, não previsões nem ofertas financeiras.</p>
         </div>
         <div class="economy-selic-guide">

@@ -117,9 +117,39 @@
       return false;
     }
   };
+  const loadIpcaTwelveMonthSeries = async () => {
+    if (await loadSeries('13522', 'ipca', '%', 2)) return true;
+    const valueEl = document.getElementById('indicator-ipca-value');
+    const periodEl = document.getElementById('indicator-ipca-period');
+    try {
+      let observations;
+      try {
+        const rows = await fetchJson('https://apisidra.ibge.gov.br/values/t/1737/n1/1/v/63/p/last%2012');
+        observations = Array.isArray(rows) ? rows.slice(1).filter(row => Number.isFinite(Number(String(row.V).replace(',', '.')))) : [];
+      } catch {
+        const data = await fetchJson('https://servicodados.ibge.gov.br/api/v3/agregados/1737/periodos/-12/variaveis/63?localidades=N1[all]');
+        const series = data?.[0]?.resultados?.[0]?.series?.[0]?.serie;
+        observations = series && typeof series === 'object'
+          ? Object.keys(series).sort().map(period => ({ period, value: series[period] })).filter(row => Number.isFinite(Number(String(row.value).replace(',', '.'))))
+          : [];
+      }
+      if (observations.length < 12) throw new Error('Série mensal do IPCA incompleta');
+      const latest = observations[observations.length - 1];
+      const inflation = (observations.slice(-12).reduce((factor, row) => factor * (1 + Number(String(row.V ?? row.value).replace(',', '.')) / 100), 1) - 1) * 100;
+      if (!Number.isFinite(inflation)) throw new Error('Série mensal do IPCA inválida');
+      valueEl.textContent = numberFormat(inflation, 2) + '%';
+      periodEl.textContent = (latest.D3N || latest.period || 'Últimos 12 meses') + ' · IBGE · acumulado em 12 meses';
+      valueEl.dataset.loaded = 'true';
+      return true;
+    } catch {
+      if (valueEl) valueEl.textContent = 'Indisponível';
+      if (periodEl) periodEl.textContent = 'Falha na consulta · tente novamente';
+      return false;
+    }
+  };
   const indicatorLoads = [
     loadSeries('432', 'selic', '% a.a.', 2),
-    loadSeries('13522', 'ipca', '%', 2),
+    loadIpcaTwelveMonthSeries(),
     loadSeries('5793', 'primario', '% do PIB', 2),
     loadSeries('13762', 'divida', '% do PIB', 2),
     loadIbgeSeries('1737', '63', 'ipca-mensal', '%', 'IBGE · IPCA'),
@@ -189,20 +219,23 @@
   const chartSvg = document.getElementById('economy-history-chart');
   const chartStatus = document.getElementById('economy-chart-status');
   const chartNames = {
-    '432': { title: 'Meta Selic', unit: '% ao ano', source: 'Banco Central · SGS 432' },
-    '13522': { title: 'IPCA acumulado em 12 meses', unit: '%', source: 'Banco Central · SGS 13522' }
+    '432': { title: 'Meta Selic definida pelo Copom', unit: '% a.a.', source: 'Banco Central do Brasil · SGS 432', frequency: 'diária, consolidada pelo último valor de cada mês' },
+    '13522': { title: 'IPCA acumulado em 12 meses', unit: '%', source: 'Banco Central do Brasil · SGS 13522, com dados do IPCA calculado pelo IBGE', frequency: 'mensal' }
   };
   let chartRequestId = 0;
+  const parseSgsDate = value => {
+    const parts = String(value || '').split('/');
+    return parts.length === 3 ? new Date(Number(parts[2]), Number(parts[1]) - 1, Number(parts[0])) : new Date(value);
+  };
   const renderHistoryChart = (rows, code) => {
     if (!chartSvg || !rows.length) return;
-    const width = 720, height = 320, left = 62, right = 20, top = 28, bottom = 54;
+    const width = 760, height = 350, left = 76, right = 24, top = 28, bottom = 60;
     const values = rows.map(row => Number(String(row.valor).replace(',', '.')));
-    const base = values[0];
-    const indexed = values.map(value => base === 0 ? value : value / base * 100);
-    let min = Math.min(...indexed), max = Math.max(...indexed);
-    if (min === max) { min -= 1; max += 1; }
-    const pad = (max - min) * .12;
-    min -= pad; max += pad;
+    let min = Math.min(...values), max = Math.max(...values);
+    const span = max - min || Math.max(Math.abs(max) * .1, 1);
+    min = Math.max(0, min - span * .16);
+    max += span * .16;
+    const step = (max - min) / 4;
     const x = i => left + i * (width - left - right) / Math.max(1, rows.length - 1);
     const y = value => top + (max - value) * (height - top - bottom) / (max - min);
     const ns = 'http://www.w3.org/2000/svg';
@@ -213,29 +246,89 @@
       return node;
     };
     const children = [];
-    for (let tick = 0; tick < 5; tick++) {
-      const value = min + (max - min) * tick / 4, yy = y(value);
+    for (let tick = 0; tick <= 4; tick++) {
+      const value = min + step * tick, yy = y(value);
       children.push(make('line', { x1: left, y1: yy, x2: width - right, y2: yy, class: 'economy-chart-gridline' }));
-      children.push(make('text', { x: left - 9, y: yy + 4, 'text-anchor': 'end', class: 'economy-chart-label economy-chart-y-label' }, numberFormat(value, 0)));
+      children.push(make('text', { x: left - 12, y: yy + 4, 'text-anchor': 'end', class: 'economy-chart-label economy-chart-y-label' }, numberFormat(value, 1) + ' ' + chartNames[code].unit));
     }
-    children.push(make('polyline', { points: indexed.map((value, i) => x(i) + ',' + y(value)).join(' '), class: 'economy-chart-line' }));
-    indexed.forEach((value, i) => {
-      const dot = make('circle', { cx: x(i), cy: y(value), r: rows.length <= 24 ? 3.2 : 1.8, class: 'economy-chart-point' });
-      dot.append(make('title', {}, rows[i].data + ': ' + numberFormat(values[i], 2) + chartNames[code].unit));
+    const linePoints = values.map((value, i) => x(i) + ',' + y(value)).join(' ');
+    children.push(make('polygon', { points: left + ',' + (height - bottom) + ' ' + linePoints + ' ' + x(values.length - 1) + ',' + (height - bottom), class: 'economy-chart-area' }));
+    children.push(make('polyline', { points: linePoints, class: 'economy-chart-line' }));
+    const pointStride = Math.max(1, Math.ceil(rows.length / 12));
+    values.forEach((value, i) => {
+      if (i % pointStride !== 0 && i !== values.length - 1) return;
+      const dot = make('circle', { cx: x(i), cy: y(value), r: i === values.length - 1 ? 5 : 3, class: 'economy-chart-point' });
+      dot.append(make('title', {}, rows[i].data + ': ' + numberFormat(value, 2) + chartNames[code].unit));
       children.push(dot);
     });
     const labelIndices = [...new Set([0, Math.floor((rows.length - 1) / 2), rows.length - 1])];
     labelIndices.forEach(i => {
       children.push(make('text', {
-        x: x(i), y: height - 18,
+        x: x(i), y: height - 22,
         'text-anchor': i === 0 ? 'start' : i === rows.length - 1 ? 'end' : 'middle',
         class: 'economy-chart-label economy-chart-x-label'
       }, rows[i].data));
     });
-    children.push(make('text', { x: left, y: 15, class: 'economy-chart-label' }, 'Índice (primeira observação = 100)'));
+    children.push(make('text', { x: left, y: 16, class: 'economy-chart-label economy-chart-title' }, chartNames[code].title + ' (' + chartNames[code].unit + ')'));
+    children.push(make('rect', { x: left, y: top, width: width - left - right, height: height - top - bottom, class: 'economy-chart-hit-area' }));
+    const selected = make('g', { class: 'economy-chart-selection', 'aria-hidden': 'true' });
+    selected.append(
+      make('line', { x1: 0, y1: top, x2: 0, y2: height - bottom, class: 'economy-chart-crosshair' }),
+      make('circle', { cx: 0, cy: 0, r: 6, class: 'economy-chart-selected-point' }),
+      make('rect', { x: 0, y: 0, width: 176, height: 48, rx: 7, class: 'economy-chart-tooltip-bg' }),
+      make('text', { x: 10, y: 19, class: 'economy-chart-tooltip-date' }),
+      make('text', { x: 10, y: 38, class: 'economy-chart-tooltip-value' })
+    );
+    children.push(selected);
     chartSvg.replaceChildren(...children);
     chartSvg.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
-    chartSvg.setAttribute('aria-label', 'Trajetória indexada de ' + chartNames[code].title + ', com ' + rows.length + ' observações, da mais antiga para a mais recente');
+    chartSvg.setAttribute('role', 'group');
+    chartSvg.setAttribute('tabindex', '0');
+    chartSvg.setAttribute('aria-label', 'Gráfico interativo: ' + chartNames[code].title + '. Use as setas esquerda e direita para percorrer os meses.');
+    const selectPoint = index => {
+      const safeIndex = Math.max(0, Math.min(rows.length - 1, index));
+      const selectedGroup = chartSvg.querySelector('.economy-chart-selection');
+      if (!selectedGroup) return;
+      const pointX = x(safeIndex), pointY = y(values[safeIndex]);
+      selectedGroup.querySelector('.economy-chart-crosshair').setAttribute('x1', pointX);
+      selectedGroup.querySelector('.economy-chart-crosshair').setAttribute('x2', pointX);
+      selectedGroup.querySelector('.economy-chart-selected-point').setAttribute('cx', pointX);
+      selectedGroup.querySelector('.economy-chart-selected-point').setAttribute('cy', pointY);
+      const tooltipX = pointX > width * .68 ? pointX - 188 : pointX + 12;
+      const tooltipY = Math.max(top + 4, Math.min(height - bottom - 52, pointY - 54));
+      const bg = selectedGroup.querySelector('.economy-chart-tooltip-bg');
+      bg.setAttribute('x', tooltipX);
+      bg.setAttribute('y', tooltipY);
+      const dateLabel = selectedGroup.querySelector('.economy-chart-tooltip-date');
+      dateLabel.setAttribute('x', tooltipX + 10);
+      dateLabel.setAttribute('y', tooltipY + 18);
+      dateLabel.textContent = rows[safeIndex].data;
+      const valueLabel = selectedGroup.querySelector('.economy-chart-tooltip-value');
+      valueLabel.setAttribute('x', tooltipX + 10);
+      valueLabel.setAttribute('y', tooltipY + 38);
+      valueLabel.textContent = numberFormat(values[safeIndex], 2) + ' ' + chartNames[code].unit;
+      chartSvg.setAttribute('aria-label', 'Gráfico interativo: ' + chartNames[code].title + '. Selecionado: ' + rows[safeIndex].data + ', ' + numberFormat(values[safeIndex], 2) + ' ' + chartNames[code].unit + '. Use as setas esquerda e direita para percorrer os meses.');
+      chartSvg.dataset.selectedIndex = String(safeIndex);
+    };
+    const pointFromPointer = event => {
+      const rect = chartSvg.getBoundingClientRect();
+      if (!rect.width) return 0;
+      const viewX = (event.clientX - rect.left) * width / rect.width;
+      return Math.round((viewX - left) / (width - left - right) * (rows.length - 1));
+    };
+    chartSvg.onpointermove = event => selectPoint(pointFromPointer(event));
+    chartSvg.onclick = event => selectPoint(pointFromPointer(event));
+    chartSvg.onkeydown = event => {
+      let index = Number(chartSvg.dataset.selectedIndex || rows.length - 1);
+      if (event.key === 'ArrowRight' || event.key === 'ArrowUp') index++;
+      else if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') index--;
+      else if (event.key === 'Home') index = 0;
+      else if (event.key === 'End') index = rows.length - 1;
+      else return;
+      event.preventDefault();
+      selectPoint(index);
+    };
+    selectPoint(rows.length - 1);
   };
   const loadHistoryChart = async () => {
     if (!chartSvg || !chartStatus) return;
@@ -243,32 +336,33 @@
     const code = document.getElementById('economy-series-select')?.value || '432';
     const count = Number(document.getElementById('economy-series-count')?.value || 24);
     const loadButton = document.getElementById('economy-chart-load');
-    chartStatus.textContent = 'Consultando ' + count + ' observações da série oficial…';
+    chartStatus.textContent = 'Consultando até ' + count + ' meses da série oficial…';
     if (loadButton) loadButton.disabled = true;
     try {
-      const url = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.' + code + '/dados/ultimos/' + count + '?formato=json';
+      const end = new Date();
+      const start = new Date(end.getFullYear(), end.getMonth() - count + 1, 1);
+      const formatQueryDate = date => String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear();
+      const params = new URLSearchParams({ formato: 'json', dataInicial: formatQueryDate(start), dataFinal: formatQueryDate(end) });
+      const url = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.' + code + '/dados?' + params.toString();
       const payload = await fetchJson(url);
       if (requestId !== chartRequestId) return;
-      const rows = Array.isArray(payload) ? payload
+      let rows = Array.isArray(payload) ? payload
         .filter(row => row && row.data && Number.isFinite(Number(String(row.valor).replace(',', '.'))))
-        .sort((a, b) => {
-          const parseDate = value => {
-            const parts = String(value).split('/');
-            return parts.length === 3 ? new Date(Number(parts[2]), Number(parts[1]) - 1, Number(parts[0])).getTime() : new Date(value).getTime();
-          };
-          return parseDate(a.data) - parseDate(b.data);
-        }) : [];
+        .sort((a, b) => parseSgsDate(a.data) - parseSgsDate(b.data)) : [];
       if (rows.length < 2) throw new Error('Poucas observações disponíveis');
+      const monthly = new Map();
+      rows.forEach(row => monthly.set(row.data.split('/').slice(1).reverse().join('-'), row));
+      rows = [...monthly.values()].slice(-count);
       renderHistoryChart(rows, code);
-      chartStatus.textContent = rows.length + ' de ' + count + ' observações solicitadas carregadas, da mais antiga à mais recente. A série pode ter menos registros disponíveis no período.';
+      chartStatus.textContent = rows.length + ' observações mensais, da mais antiga à mais recente. Passe o cursor, toque no gráfico ou use as setas do teclado para consultar cada valor. Para a Meta Selic diária, foi usado o último valor observado em cada mês.';
       const caption = document.getElementById('economy-chart-caption');
-      if (caption) caption.textContent = 'Fonte: ' + chartNames[code].source + '. Valores oficiais em ' + chartNames[code].unit + '; linha reindexada para a primeira observação = 100. Toque nos pontos para consultar data e valor.';
+      if (caption) caption.textContent = 'Fonte: ' + chartNames[code].source + '. Série ' + chartNames[code].frequency + '. O eixo vertical mostra o valor original em ' + chartNames[code].unit + ', sem reindexação. A meta Selic é definida pelo Copom; o IPCA é produzido pelo IBGE.';
     } catch {
       if (requestId !== chartRequestId) return;
       chartStatus.textContent = 'Não foi possível carregar a série solicitada. Verifique a conexão e tente novamente; os links oficiais permanecem disponíveis.';
       chartSvg.replaceChildren();
       const message = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      message.setAttribute('x', '360'); message.setAttribute('y', '160'); message.setAttribute('text-anchor', 'middle');
+      message.setAttribute('x', '380'); message.setAttribute('y', '175'); message.setAttribute('text-anchor', 'middle');
       message.setAttribute('class', 'economy-chart-label');
       message.textContent = 'Dados temporariamente indisponíveis';
       chartSvg.append(message);
