@@ -136,3 +136,33 @@
   .economy-flow-step { width: 100%; }
   .economy-price-table th, .economy-price-table td { padding: .55rem .35rem; }
 }
+
+
+/* Ajustes de responsividade e estados de consulta */
+.economy-page, .economy-page * { box-sizing: border-box; }
+.economy-page .container { min-width: 0; }
+.economy-section { min-width: 0; margin-right: clamp(1rem, 3vw, 3rem); margin-left: clamp(1rem, 3vw, 3rem); }
+.economy-indicator-grid, .economy-fiscal-grid, .economy-interactive-grid,
+.economy-selic-scenarios, .economy-price-summary { min-width: 0; }
+.economy-indicator, .economy-learning-card, .economy-lab-panel { min-width: 0; }
+.economy-price-table-wrap { max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
+.economy-price-table { min-width: 560px; }
+.economy-chart-wrap { min-width: 0; }
+.economy-chart-wrap svg { min-width: 0; min-height: 0; }
+.economy-chart-controls > div { min-width: 0; }
+.economy-chart-controls select { width: 100%; min-width: 0; }
+.economy-flow-step { overflow-wrap: anywhere; }
+@media (max-width: 900px) {
+  .economy-flow { display: grid; grid-template-columns: minmax(0, 1fr); gap: .35rem; }
+  .economy-flow-arrow { min-height: 1.25rem; transform: rotate(90deg); }
+  .economy-flow-step { width: 100%; }
+  .economy-section { margin-right: 1.5rem; margin-left: 1.5rem; }
+}
+@media (max-width: 600px) {
+  .economy-section { margin-right: 1rem; margin-left: 1rem; }
+  .economy-lab-panel { padding: .85rem; }
+  .economy-chart-controls { align-items: stretch; flex-direction: column; }
+  .economy-chart-controls > div, .economy-chart-controls button { width: 100%; }
+  .economy-price-table th, .economy-price-table td { padding: .5rem .35rem; }
+  .economy-price-summary strong { overflow-wrap: anywhere; }
+}
