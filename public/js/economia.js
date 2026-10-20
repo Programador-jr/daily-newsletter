@@ -105,6 +105,130 @@
       : 'Algumas séries não puderam ser carregadas agora. Os cartões indicam quais valores estão indisponíveis; consulte as fontes oficiais no detalhamento.';
   });
 
+
+  const priceItems = [
+    { id: 'rice', label: 'arroz' },
+    { id: 'milk', label: 'leite' },
+    { id: 'oil', label: 'óleo' }
+  ];
+  const updatePriceLab = () => {
+    let beforeTotal = 0, nowTotal = 0;
+    priceItems.forEach(item => {
+      const beforeInput = document.getElementById('price-' + item.id + '-before');
+      const nowInput = document.getElementById('price-' + item.id + '-now');
+      const changeEl = document.getElementById('price-' + item.id + '-change');
+      const before = Math.max(0, Number(beforeInput?.value) || 0);
+      const now = Math.max(0, Number(nowInput?.value) || 0);
+      beforeTotal += before; nowTotal += now;
+      const difference = before === 0 ? null : ((now - before) / before) * 100;
+      if (changeEl) changeEl.textContent = difference === null ? 'Informe o preço anterior' : (difference > 0 ? '+' : '') + numberFormat(difference, 1) + '%';
+    });
+    const totalDifference = beforeTotal === 0 ? null : ((nowTotal - beforeTotal) / beforeTotal) * 100;
+    const beforeEl = document.getElementById('price-total-before');
+    const nowEl = document.getElementById('price-total-now');
+    const changeEl = document.getElementById('price-total-change');
+    if (beforeEl) beforeEl.textContent = money(beforeTotal);
+    if (nowEl) nowEl.textContent = money(nowTotal);
+    if (changeEl) changeEl.textContent = totalDifference === null ? 'Informe os preços anteriores' : (totalDifference > 0 ? '+' : '') + numberFormat(totalDifference, 1) + '%';
+  };
+  document.querySelectorAll('.economy-price-input').forEach(input => input.addEventListener('input', updatePriceLab));
+  updatePriceLab();
+
+  const flowDetails = {
+    revenue: { title: 'Arrecadação', body: 'O governo obtém recursos por tributos, contribuições, exploração de patrimônio e outras receitas. A origem e a destinação legal variam conforme o tipo de receita.' },
+    spending: { title: 'Despesas públicas', body: 'As despesas financiam serviços, políticas públicas, investimentos e funcionamento do Estado. A execução depende do orçamento aprovado, das regras legais e da disponibilidade financeira.' },
+    primary: { title: 'Resultado primário', body: 'É a diferença entre receitas e despesas primárias, sem contar os juros nominais da dívida. Superávit significa receitas primárias maiores que despesas primárias; déficit significa o contrário.' },
+    debt: { title: 'Dívida pública e juros', body: 'A dívida representa obrigações acumuladas. Sua trajetória depende, entre outros fatores, do resultado fiscal, dos juros, do crescimento da economia, da inflação e de ajustes patrimoniais.' }
+  };
+  const flowDetail = document.getElementById('economy-flow-detail');
+  document.querySelectorAll('[data-flow]').forEach(button => button.addEventListener('click', () => {
+    const detail = flowDetails[button.dataset.flow];
+    if (!detail || !flowDetail) return;
+    document.querySelectorAll('[data-flow]').forEach(step => {
+      const active = step === button;
+      step.classList.toggle('is-active', active);
+      step.setAttribute('aria-pressed', String(active));
+    });
+    const heading = document.createElement('h4');
+    heading.textContent = detail.title;
+    const paragraph = document.createElement('p');
+    paragraph.textContent = detail.body;
+    flowDetail.replaceChildren(heading, paragraph);
+  }));
+
+  const chartSvg = document.getElementById('economy-history-chart');
+  const chartStatus = document.getElementById('economy-chart-status');
+  const chartNames = {
+    '432': { title: 'Meta Selic', unit: '% ao ano', source: 'Banco Central · SGS 432' },
+    '13522': { title: 'IPCA acumulado em 12 meses', unit: '%', source: 'Banco Central · SGS 13522' }
+  };
+  const renderHistoryChart = (rows, code) => {
+    if (!chartSvg || !rows.length) return;
+    const width = 720, height = 300, left = 58, right = 24, top = 24, bottom = 46;
+    const values = rows.map(row => Number(String(row.valor).replace(',', '.')));
+    const base = values[0];
+    const indexed = values.map(value => base === 0 ? value : value / base * 100);
+    let min = Math.min(...indexed), max = Math.max(...indexed);
+    if (min === max) { min -= 1; max += 1; }
+    const pad = (max - min) * .12;
+    min -= pad; max += pad;
+    const x = i => left + i * (width - left - right) / Math.max(1, rows.length - 1);
+    const y = value => top + (max - value) * (height - top - bottom) / (max - min);
+    const ns = 'http://www.w3.org/2000/svg';
+    const make = (tag, attrs, content) => {
+      const node = document.createElementNS(ns, tag);
+      Object.entries(attrs || {}).forEach(([key, value]) => node.setAttribute(key, String(value)));
+      if (content !== undefined) node.textContent = content;
+      return node;
+    };
+    const children = [];
+    for (let tick = 0; tick < 5; tick++) {
+      const value = min + (max - min) * tick / 4, yy = y(value);
+      children.push(make('line', { x1: left, y1: yy, x2: width - right, y2: yy, class: 'economy-chart-gridline' }));
+      children.push(make('text', { x: left - 10, y: yy + 4, 'text-anchor': 'end', class: 'economy-chart-label' }, numberFormat(value, 0)));
+    }
+    const points = indexed.map((value, i) => x(i) + ',' + y(value)).join(' ');
+    children.push(make('polyline', { points, class: 'economy-chart-line' }));
+    [0, Math.floor((rows.length - 1) / 2), rows.length - 1].filter((value, index, array) => array.indexOf(value) === index).forEach(i => {
+      children.push(make('text', { x: x(i), y: height - 16, 'text-anchor': i === 0 ? 'start' : i === rows.length - 1 ? 'end' : 'middle', class: 'economy-chart-label' }, rows[i].data));
+    });
+    children.push(make('text', { x: left, y: 14, class: 'economy-chart-label' }, 'Índice (primeira observação = 100)'));
+    chartSvg.replaceChildren(...children);
+    chartSvg.setAttribute('aria-label', 'Trajetória indexada de ' + chartNames[code].title + ', primeira observação igual a 100');
+  };
+  const loadHistoryChart = async () => {
+    if (!chartSvg || !chartStatus) return;
+    const code = document.getElementById('economy-series-select')?.value || '432';
+    const count = Number(document.getElementById('economy-series-count')?.value || 24);
+    chartStatus.textContent = 'Consultando a série oficial…';
+    const loadButton = document.getElementById('economy-chart-load');
+    if (loadButton) loadButton.disabled = true;
+    try {
+      const response = await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.' + code + '/dados/ultimos/' + count + '?formato=json', { headers: { Accept: 'application/json' } });
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      const payload = await response.json();
+      const rows = Array.isArray(payload) ? payload.slice().reverse().filter(row => Number.isFinite(Number(String(row.valor).replace(',', '.')))) : [];
+      if (rows.length < 2) throw new Error('Poucas observações disponíveis');
+      renderHistoryChart(rows, code);
+      chartStatus.textContent = chartNames[code].title + ': ' + rows.length + ' observações carregadas. A linha mostra a variação relativa desde a primeira observação exibida.';
+      const caption = document.getElementById('economy-chart-caption');
+      if (caption) caption.textContent = 'Fonte: ' + chartNames[code].source + '. Valores oficiais em ' + chartNames[code].unit + '; gráfico reindexado para a primeira observação = 100. A frequência depende da série.';
+    } catch {
+      chartStatus.textContent = 'Não foi possível carregar essa série agora. Tente novamente ou consulte o Banco Central do Brasil.';
+      chartSvg.replaceChildren();
+      const message = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      message.setAttribute('x', '360'); message.setAttribute('y', '150'); message.setAttribute('text-anchor', 'middle');
+      message.textContent = 'Dados temporariamente indisponíveis';
+      chartSvg.append(message);
+    } finally {
+      if (loadButton) loadButton.disabled = false;
+    }
+  };
+  document.getElementById('economy-chart-load')?.addEventListener('click', loadHistoryChart);
+  document.getElementById('economy-series-select')?.addEventListener('change', loadHistoryChart);
+  document.getElementById('economy-series-count')?.addEventListener('change', loadHistoryChart);
+  loadHistoryChart();
+
   const modal = document.getElementById('economy-modal');
   let modalReturnFocus = null;
   let modalScrollY = 0;
