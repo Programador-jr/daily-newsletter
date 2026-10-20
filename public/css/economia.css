@@ -66,17 +66,13 @@
 .economy-calculation-result { display: flex; flex-direction: column; gap: .25rem; margin-top: auto; padding: 1rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-container); }
 .economy-calculation-result span, .economy-calculation-result small { color: var(--text-muted); font-size: .75rem; line-height: 1.5; }
 .economy-calculation-result strong { color: var(--primary); font-size: 1.35rem; font-variant-numeric: tabular-nums; }
-.economy-modal { width: min(620px, calc(100% - 2rem)); max-height: min(80vh, 760px); overflow-y: auto; padding: 1.5rem; border: 1px solid var(--border); border-radius: 12px; background: var(--card-bg); color: var(--text-main); }
-.economy-modal::backdrop { background: rgb(0 0 0 / 48%); }
-.economy-modal-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.economy-modal-close { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid var(--border); border-radius: 8px; background: transparent; color: var(--text-main); cursor: pointer; }
-.economy-modal h2 { margin: .65rem 0 1rem; font-family: "Playfair Display", serif; font-size: 1.65rem; line-height: 1.25; }
 .economy-modal-body { color: var(--text-muted); font-size: .9rem; line-height: 1.75; }
-.economy-modal-body p { margin: .65rem 0; }
-.economy-modal-body ul { padding-left: 1.25rem; }
+.economy-modal-body p { margin: 0 0 .8rem; }
+.economy-modal-body ul { display: grid; gap: .5rem; margin: 0 0 .8rem; padding-left: 1.2rem; }
 .economy-modal-body strong { color: var(--text-main); }
-.economy-modal-footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.economy-modal-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .8rem 1rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border); }
 .economy-modal-footer a { color: var(--primary); font-size: .82rem; font-weight: 700; }
-.economy-modal-footer .cta-button { border: 0; cursor: pointer; }
+.economy-modal-footer .cta-button { flex: 0 0 auto; border: 0; cursor: pointer; }
 @media (max-width: 1000px) { .economy-interactive-grid, .economy-fiscal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 768px) { .economy-interactive-grid, .economy-fiscal-grid { grid-template-columns: 1fr; } .economy-modal { padding: 1.15rem; } .economy-modal-footer { align-items: flex-start; flex-direction: column; } }
+@media (max-width: 768px) { .economy-interactive-grid, .economy-fiscal-grid { grid-template-columns: 1fr; } .economy-modal-footer { align-items: flex-start; flex-direction: column; } }
+@media (prefers-reduced-motion: reduce) { .economy-detail, .economy-detail .history-detail-backdrop, .economy-detail .history-detail-dialog, .economy-detail .accordion-close { transition: none !important; } }
