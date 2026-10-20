@@ -77,11 +77,19 @@ test('indicadores abrem explicações em pop-up acessível', async ({ page }) =>
   await page.route('**/api/news', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ stories: [] }) }));
   await page.route('https://api.bcb.gov.br/**', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify([{ data: '16/10/2026', valor: '15.00' }]) }));
   await page.goto('/economia');
-  await page.getByRole('button', { name: /Entenda o indicador/ }).first().click();
+  const firstIndicatorButton = page.getByRole('button', { name: /Entenda o indicador/ }).first();
+  await firstIndicatorButton.click();
+  await expect(page.locator('#economy-modal')).toHaveClass(/history-detail/);
   await expect(page.getByRole('dialog')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Taxa Selic' })).toBeVisible();
+  await expect(page.locator('.history-detail-dialog')).toBeVisible();
   await page.getByRole('button', { name: 'Fechar explicação' }).click();
   await expect(page.getByRole('dialog')).not.toBeVisible();
+  await firstIndicatorButton.click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog')).not.toBeVisible();
+  await expect(firstIndicatorButton).toBeFocused();
 });
 
 test('simuladores recalculam os resultados ao alterar os valores', async ({ page }) => {
