@@ -192,9 +192,10 @@
     '432': { title: 'Meta Selic', unit: '% ao ano', source: 'Banco Central · SGS 432' },
     '13522': { title: 'IPCA acumulado em 12 meses', unit: '%', source: 'Banco Central · SGS 13522' }
   };
+  let chartRequestId = 0;
   const renderHistoryChart = (rows, code) => {
     if (!chartSvg || !rows.length) return;
-    const width = 720, height = 300, left = 58, right = 24, top = 24, bottom = 46;
+    const width = 720, height = 320, left = 62, right = 20, top = 28, bottom = 54;
     const values = rows.map(row => Number(String(row.valor).replace(',', '.')));
     const base = values[0];
     const indexed = values.map(value => base === 0 ? value : value / base * 100);
@@ -215,41 +216,64 @@
     for (let tick = 0; tick < 5; tick++) {
       const value = min + (max - min) * tick / 4, yy = y(value);
       children.push(make('line', { x1: left, y1: yy, x2: width - right, y2: yy, class: 'economy-chart-gridline' }));
-      children.push(make('text', { x: left - 10, y: yy + 4, 'text-anchor': 'end', class: 'economy-chart-label' }, numberFormat(value, 0)));
+      children.push(make('text', { x: left - 9, y: yy + 4, 'text-anchor': 'end', class: 'economy-chart-label economy-chart-y-label' }, numberFormat(value, 0)));
     }
-    const points = indexed.map((value, i) => x(i) + ',' + y(value)).join(' ');
-    children.push(make('polyline', { points, class: 'economy-chart-line' }));
-    [0, Math.floor((rows.length - 1) / 2), rows.length - 1].filter((value, index, array) => array.indexOf(value) === index).forEach(i => {
-      children.push(make('text', { x: x(i), y: height - 16, 'text-anchor': i === 0 ? 'start' : i === rows.length - 1 ? 'end' : 'middle', class: 'economy-chart-label' }, rows[i].data));
+    children.push(make('polyline', { points: indexed.map((value, i) => x(i) + ',' + y(value)).join(' '), class: 'economy-chart-line' }));
+    indexed.forEach((value, i) => {
+      const dot = make('circle', { cx: x(i), cy: y(value), r: rows.length <= 24 ? 3.2 : 1.8, class: 'economy-chart-point' });
+      dot.append(make('title', {}, rows[i].data + ': ' + numberFormat(values[i], 2) + chartNames[code].unit));
+      children.push(dot);
     });
-    children.push(make('text', { x: left, y: 14, class: 'economy-chart-label' }, 'Índice (primeira observação = 100)'));
+    const labelIndices = [...new Set([0, Math.floor((rows.length - 1) / 2), rows.length - 1])];
+    labelIndices.forEach(i => {
+      children.push(make('text', {
+        x: x(i), y: height - 18,
+        'text-anchor': i === 0 ? 'start' : i === rows.length - 1 ? 'end' : 'middle',
+        class: 'economy-chart-label economy-chart-x-label'
+      }, rows[i].data));
+    });
+    children.push(make('text', { x: left, y: 15, class: 'economy-chart-label' }, 'Índice (primeira observação = 100)'));
     chartSvg.replaceChildren(...children);
-    chartSvg.setAttribute('aria-label', 'Trajetória indexada de ' + chartNames[code].title + ', primeira observação igual a 100');
+    chartSvg.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
+    chartSvg.setAttribute('aria-label', 'Trajetória indexada de ' + chartNames[code].title + ', com ' + rows.length + ' observações, da mais antiga para a mais recente');
   };
   const loadHistoryChart = async () => {
     if (!chartSvg || !chartStatus) return;
+    const requestId = ++chartRequestId;
     const code = document.getElementById('economy-series-select')?.value || '432';
     const count = Number(document.getElementById('economy-series-count')?.value || 24);
-    chartStatus.textContent = 'Consultando a série oficial…';
     const loadButton = document.getElementById('economy-chart-load');
+    chartStatus.textContent = 'Consultando ' + count + ' observações da série oficial…';
     if (loadButton) loadButton.disabled = true;
     try {
-      const payload = await fetchJson('https://api.bcb.gov.br/dados/serie/bcdata.sgs.' + code + '/dados/ultimos/' + count + '?formato=json');
-      const rows = Array.isArray(payload) ? payload.slice().filter(row => Number.isFinite(Number(String(row.valor).replace(',', '.')))) : [];
+      const url = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.' + code + '/dados/ultimos/' + count + '?formato=json';
+      const payload = await fetchJson(url);
+      if (requestId !== chartRequestId) return;
+      const rows = Array.isArray(payload) ? payload
+        .filter(row => row && row.data && Number.isFinite(Number(String(row.valor).replace(',', '.'))))
+        .sort((a, b) => {
+          const parseDate = value => {
+            const parts = String(value).split('/');
+            return parts.length === 3 ? new Date(Number(parts[2]), Number(parts[1]) - 1, Number(parts[0])).getTime() : new Date(value).getTime();
+          };
+          return parseDate(a.data) - parseDate(b.data);
+        }) : [];
       if (rows.length < 2) throw new Error('Poucas observações disponíveis');
       renderHistoryChart(rows, code);
-      chartStatus.textContent = chartNames[code].title + ': ' + rows.length + ' observações carregadas. A linha mostra a variação relativa desde a primeira observação exibida.';
+      chartStatus.textContent = rows.length + ' de ' + count + ' observações solicitadas carregadas, da mais antiga à mais recente. A série pode ter menos registros disponíveis no período.';
       const caption = document.getElementById('economy-chart-caption');
-      if (caption) caption.textContent = 'Fonte: ' + chartNames[code].source + '. Valores oficiais em ' + chartNames[code].unit + '; gráfico reindexado para a primeira observação = 100. A frequência depende da série.';
+      if (caption) caption.textContent = 'Fonte: ' + chartNames[code].source + '. Valores oficiais em ' + chartNames[code].unit + '; linha reindexada para a primeira observação = 100. Toque nos pontos para consultar data e valor.';
     } catch {
-      chartStatus.textContent = 'A série não respondeu dentro do prazo ou está indisponível. Tente novamente ou consulte o Banco Central do Brasil.';
+      if (requestId !== chartRequestId) return;
+      chartStatus.textContent = 'Não foi possível carregar a série solicitada. Verifique a conexão e tente novamente; os links oficiais permanecem disponíveis.';
       chartSvg.replaceChildren();
       const message = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      message.setAttribute('x', '360'); message.setAttribute('y', '150'); message.setAttribute('text-anchor', 'middle');
+      message.setAttribute('x', '360'); message.setAttribute('y', '160'); message.setAttribute('text-anchor', 'middle');
+      message.setAttribute('class', 'economy-chart-label');
       message.textContent = 'Dados temporariamente indisponíveis';
       chartSvg.append(message);
     } finally {
-      if (loadButton) loadButton.disabled = false;
+      if (requestId === chartRequestId && loadButton) loadButton.disabled = false;
     }
   };
   document.getElementById('economy-chart-load')?.addEventListener('click', loadHistoryChart);
