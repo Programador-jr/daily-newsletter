@@ -13,7 +13,13 @@ test('aviso público respeita o limite de aparições por navegador e versão', 
   }));
 
   await page.goto('/historia');
+  const trigger = page.getByRole('button', { name: 'Abrir nota de lançamento' });
   const panel = page.getByRole('region', { name: 'Novidades da newsletter' });
+  await expect(trigger).toBeVisible();
+  await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+  await expect(panel).toBeHidden();
+  await trigger.click();
+  await expect(trigger).toHaveAttribute('aria-expanded', 'true');
   await expect(panel).toBeVisible();
   await expect(panel.locator('.site-update-mark .fa-crown')).toBeVisible();
   await expect(panel).toContainText('NOTA DE RELEASE');
@@ -23,17 +29,25 @@ test('aviso público respeita o limite de aparições por navegador e versão', 
   await expect(panel.locator('.site-update-markdown a')).toHaveAttribute('href', 'https://example.com/');
   await expect(panel).not.toContainText('disponível até');
   await expect(page.locator('.site-update-overlay')).toHaveCount(0);
-  await panel.getByRole('button', { name: /Fechar atualizações/i }).click();
+  await panel.getByRole('button', { name: 'Fechar nota de lançamento' }).click();
+  await expect(panel).toBeHidden();
 
   await page.reload();
-  await expect(page.getByRole('region', { name: 'Novidades da newsletter' })).toBeVisible();
-  await page.getByRole('button', { name: /Fechar atualizações/i }).click();
+  const secondTrigger = page.getByRole('button', { name: 'Abrir nota de lançamento' });
+  await expect(secondTrigger).toBeVisible();
+  await secondTrigger.click();
+  await expect(panel).toBeVisible();
+  await panel.getByRole('button', { name: 'Fechar nota de lançamento' }).click();
   await page.reload();
+  await expect(page.getByRole('button', { name: 'Abrir nota de lançamento' })).toHaveCount(0);
   await expect(page.getByRole('region', { name: 'Novidades da newsletter' })).toHaveCount(0);
 
   activationId = 'campaign-version-2';
   await page.reload();
-  await expect(page.getByRole('region', { name: 'Novidades da newsletter' })).toBeVisible();
+  const nextVersionTrigger = page.getByRole('button', { name: 'Abrir nota de lançamento' });
+  await expect(nextVersionTrigger).toBeVisible();
+  await nextVersionTrigger.click();
+  await expect(panel).toBeVisible();
   const browserId = await page.evaluate(() => localStorage.getItem('kings-newsletter:notice-browser-id'));
   expect(browserId).toBeTruthy();
 });
