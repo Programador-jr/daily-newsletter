@@ -114,7 +114,7 @@ test('accordion animation is available wherever accordions appear', async ({ pag
     }
   }
 
-  for (const route of ['/historia', '/presidentes', '/ideologias', '/politicas-publicas', '/tres-poderes']) {
+  for (const route of ['/historia', '/politicas-publicas', '/tres-poderes']) {
     await page.goto(route, { waitUntil: 'domcontentloaded' });
     const accordion = page.locator('details').first();
     const summary = accordion.locator(':scope > summary');

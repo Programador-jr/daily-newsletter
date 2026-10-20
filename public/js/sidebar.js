@@ -257,7 +257,7 @@ const initializeUpdateNotice = async headerActions => {
     const close = document.createElement('button');
     close.className = 'site-update-close';
     close.type = 'button';
-    close.setAttribute('aria-label', 'Fechar atualizações');
+    close.setAttribute('aria-label', 'Fechar nota de lançamento');
     close.textContent = '×';
     header.append(brand, close);
     const eyebrow = document.createElement('span');
