@@ -83,9 +83,8 @@
   });
 
   const modal = document.getElementById('economy-modal');
-  const modalTitle = document.getElementById('economy-modal-title');
-  const modalBody = document.getElementById('economy-modal-body');
-  const modalSource = document.getElementById('economy-modal-source');
+  let modalReturnFocus = null;
+  let modalScrollY = 0;
   const modalContent = {
     selic: { title: 'Taxa Selic', source: 'https://www.bcb.gov.br/controleinflacao/taxaselic', body: '<p>A Selic é a taxa básica de juros da economia, definida pelo Comitê de Política Monetária (Copom). Ela influencia o custo do crédito, as decisões de consumo e investimento e o retorno de aplicações de renda fixa.</p><p><strong>Como interpretar:</strong> elevações tendem a encarecer o crédito e reduzir pressões de demanda ao longo do tempo; cortes podem estimular a atividade. O efeito não é imediato e as taxas bancárias também dependem de risco, prazo, custos e concorrência.</p><p><strong>O número do cartão:</strong> é a meta Selic anualizada publicada na série 432 do Banco Central, não a taxa de todo empréstimo ou investimento.</p>' },
     ipca: { title: 'IPCA acumulado em 12 meses', source: 'https://www.ibge.gov.br/explica/inflacao.php', body: '<p>O IPCA é calculado pelo IBGE e mede a variação de preços de uma cesta de consumo. O acumulado em 12 meses compara o nível de preços com o mesmo período do ano anterior.</p><p><strong>Inflação menor não significa necessariamente preços menores.</strong> Se o índice passa de 6% para 4%, os preços em média continuam subindo, mas em ritmo mais lento.</p><p><strong>O número do cartão:</strong> é a série de variação acumulada em 12 meses do Banco Central (SGS 13522), baseada no IPCA.</p>' },
@@ -93,19 +92,49 @@
     divida: { title: 'Dívida bruta do governo geral', source: 'https://www.bcb.gov.br/estatisticas/estatisticasfiscais', body: '<p>A Dívida Bruta do Governo Geral (DBGG) mede obrigações do Governo Federal, estados e municípios segundo a metodologia do Banco Central. A razão dívida/PIB compara o estoque de obrigações com o tamanho anual da economia.</p><p><strong>Como interpretar:</strong> observe a trajetória ao longo do tempo, os juros, o crescimento nominal do PIB, os resultados fiscais, as emissões e outros ajustes. A variação mensal não é explicada por um único fator.</p><p>Fonte: série SGS 13762, metodologia usada desde 2008.</p>' },
     arcabouco: { title: 'Arcabouço fiscal: as regras em conjunto', source: 'https://www.planalto.gov.br/ccivil_03/leis/lcp/Lcp200.htm', body: '<p>A Lei Complementar nº 200/2023 instituiu o regime fiscal sustentável para as contas da União. O desenho combina metas de resultado primário com limites para o crescimento real das despesas primárias.</p><ul><li><strong>Faixa de crescimento:</strong> em regra, o limite de despesa cresce entre 0,6% e 2,5% acima da inflação.</li><li><strong>Receita como referência:</strong> o limite considera uma proporção da variação real da receita — em geral 70% quando a meta fiscal é cumprida e 50% quando não é, respeitados os critérios legais.</li><li><strong>Piso e teto:</strong> o cálculo também está sujeito ao piso e ao teto legais; por isso, aplicar apenas a multiplicação pode não reproduzir o limite oficial.</li><li><strong>Meta fiscal:</strong> mede o resultado primário e não deve ser confundida com o limite de despesa. A dívida também depende de juros, crescimento, receitas, despesas e outros fatores.</li></ul><p>O simulador desta página é ilustrativo. Não substitui o cálculo oficial nem incorpora todas as exceções, ajustes e regras de transição.</p>' }
   };
-  const closeModal = () => { if (modal?.open) modal.close(); };
-  document.querySelectorAll('[data-modal]').forEach(button => button.addEventListener('click', () => {
-    const item = modalContent[button.dataset.modal];
+  const lockModalPageScroll = () => {
+    modalScrollY = window.scrollY;
+    document.body.style.setProperty('--history-scroll-lock-top', '-' + modalScrollY + 'px');
+    document.body.classList.add('history-modal-open');
+  };
+  const unlockModalPageScroll = () => {
+    document.body.classList.remove('history-modal-open');
+    document.body.style.removeProperty('--history-scroll-lock-top');
+    window.scrollTo(0, modalScrollY);
+  };
+  const closeModal = () => {
+    if (!modal?.classList.contains('open')) return;
+    modal.classList.remove('open');
+    unlockModalPageScroll();
+    modal.innerHTML = '';
+    modalReturnFocus?.focus();
+    modalReturnFocus = null;
+  };
+  const openModal = (key, trigger) => {
+    const item = modalContent[key];
     if (!item || !modal) return;
-    modalTitle.textContent = item.title;
-    modalBody.innerHTML = item.body;
-    modalSource.href = item.source;
-    modal.showModal();
-  }));
-  document.getElementById('economy-modal-close')?.addEventListener('click', closeModal);
-  document.getElementById('economy-modal-done')?.addEventListener('click', closeModal);
-  modal?.addEventListener('click', event => { if (event.target === modal) closeModal(); });
-
+    modalReturnFocus = trigger;
+    modal.innerHTML =
+      '<div class="history-detail-backdrop" aria-hidden="true"></div>' +
+      '<div class="history-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="economy-modal-title">' +
+        '<div class="history-accordion-header">' +
+          '<div><span class="detail-kicker">Guia de economia</span><h2 id="economy-modal-title">' + item.title + '</h2></div>' +
+          '<button class="accordion-close" type="button" aria-label="Fechar explicação"><i class="fas fa-times" aria-hidden="true"></i></button>' +
+        '</div>' +
+        '<div class="history-accordion-lead economy-modal-body">' + item.body + '</div>' +
+        '<div class="economy-modal-footer"><a href="' + item.source + '" target="_blank" rel="noopener noreferrer">Consultar fonte oficial <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a><button type="button" class="cta-button economy-modal-done">Fechar</button></div>' +
+      '</div>';
+    lockModalPageScroll();
+    modal.classList.add('open');
+    modal.querySelector('.history-detail-backdrop')?.addEventListener('click', closeModal);
+    modal.querySelector('.accordion-close')?.addEventListener('click', closeModal);
+    modal.querySelector('.economy-modal-done')?.addEventListener('click', closeModal);
+    modal.querySelector('.accordion-close')?.focus();
+  };
+  document.querySelectorAll('[data-modal]').forEach(button => button.addEventListener('click', () => openModal(button.dataset.modal, button)));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && modal?.classList.contains('open')) closeModal();
+  });
   const money = value => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
   const clampNumber = (id, min, max, fallback) => {
     const input = document.getElementById(id), value = Number(input?.value);
