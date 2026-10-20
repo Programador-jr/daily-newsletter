@@ -73,7 +73,8 @@
     const valueEl = document.getElementById('indicator-' + id + '-value');
     const periodEl = document.getElementById('indicator-' + id + '-period');
     try {
-      const url = 'https://apisidra.ibge.gov.br/values/t/' + table + '/n1/1/v/' + variable + '/p/last%201';
+      const classification = table === '5932' ? '/c11255/90707' : '';
+      const url = 'https://apisidra.ibge.gov.br/values/t/' + table + '/n1/1/v/' + variable + '/p/last%201' + classification;
       const response = await fetch(url, { headers: { Accept: 'application/json' } });
       if (!response.ok) throw new Error('HTTP ' + response.status);
       const rows = await response.json();
