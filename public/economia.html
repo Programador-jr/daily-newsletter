@@ -43,44 +43,52 @@
 
       <section class="economy-section" aria-labelledby="economy-indicators-title">
         <div class="section-heading">
-          <div><span class="eyebrow">01 · Indicadores</span><h2 id="economy-indicators-title">O que acompanhar e como interpretar</h2></div>
+          <div><span class="eyebrow">01 · Indicadores</span><h2 id="economy-indicators-title">Os números mais recentes</h2></div>
+          <p>Valores carregados de séries oficiais do Banco Central. Cada cartão informa o período da última observação disponível.</p>
         </div>
-        <div class="economy-indicator-grid">
-          <article class="economy-indicator">
-            <p class="economy-indicator-label">Política monetária</p>
-            <h3>Taxa Selic</h3>
-            <p>A Selic é a taxa básica de juros da economia brasileira, definida pelo Copom, do Banco Central. Ela influencia outras taxas de juros, o custo de empréstimos e o retorno de algumas aplicações, mas não determina sozinha todas as taxas cobradas no mercado.</p>
-            <p><strong>Como interpretar:</strong> juros mais altos tendem a encarecer o crédito e conter a demanda; juros mais baixos podem estimular consumo e investimento. Os efeitos levam tempo e dependem do contexto.</p>
-            <a href="https://www.bcb.gov.br/controleinflacao/taxaselic" target="_blank" rel="noopener noreferrer">Fonte oficial: Banco Central</a>
+        <div class="economy-indicator-grid live-indicators" id="economy-indicators" aria-live="polite">
+          <article class="economy-indicator live-indicator" data-indicator="selic">
+            <p class="economy-indicator-label">Política monetária</p><h3>Taxa Selic</h3>
+            <p class="indicator-value" id="indicator-selic-value">Consultando…</p><p class="indicator-period" id="indicator-selic-period">Banco Central · SGS 432</p>
+            <p>Taxa básica de juros definida pelo Copom.</p><button class="economy-detail-button" type="button" data-modal="selic">Entenda o indicador <i class="fas fa-circle-info" aria-hidden="true"></i></button>
           </article>
-          <article class="economy-indicator">
-            <p class="economy-indicator-label">Preços</p>
-            <h3>IPCA e inflação</h3>
-            <p>O Índice Nacional de Preços ao Consumidor Amplo (IPCA), calculado pelo IBGE, mede a variação de preços de uma cesta de produtos e serviços consumidos por famílias. É a referência oficial de inflação do país.</p>
-            <p><strong>Como interpretar:</strong> inflação positiva significa que, em média, os preços subiram no período. Quando a inflação diminui, os preços podem continuar subindo, só que em ritmo menor.</p>
-            <a href="https://www.ibge.gov.br/explica/inflacao.php" target="_blank" rel="noopener noreferrer">Fonte oficial: IBGE</a>
+          <article class="economy-indicator live-indicator" data-indicator="ipca">
+            <p class="economy-indicator-label">Preços</p><h3>IPCA · 12 meses</h3>
+            <p class="indicator-value" id="indicator-ipca-value">Consultando…</p><p class="indicator-period" id="indicator-ipca-period">Banco Central · SGS 13522</p>
+            <p>Variação acumulada dos preços ao consumidor.</p><button class="economy-detail-button" type="button" data-modal="ipca">Entenda o indicador <i class="fas fa-circle-info" aria-hidden="true"></i></button>
           </article>
-          <article class="economy-indicator">
-            <p class="economy-indicator-label">Contas públicas</p>
-            <h3>Resultado primário</h3>
-            <p>É a diferença entre receitas e despesas públicas primárias, isto é, desconsiderando os juros da dívida no cálculo. O resultado depende do setor de governo e do período analisados.</p>
-            <p><strong>Como interpretar:</strong> superávit indica receitas primárias acima das despesas primárias; déficit indica despesas acima das receitas. O resultado primário não inclui, por si só, todo o custo dos juros da dívida.</p>
-            <a href="https://www.tesourotransparente.gov.br/temas/estatisticas-fiscais" target="_blank" rel="noopener noreferrer">Fonte oficial: Tesouro Nacional</a>
+          <article class="economy-indicator live-indicator" data-indicator="primario">
+            <p class="economy-indicator-label">Contas públicas</p><h3>Resultado primário</h3>
+            <p class="indicator-value" id="indicator-primario-value">Consultando…</p><p class="indicator-period" id="indicator-primario-period">Banco Central · SGS 5793</p>
+            <p>Resultado do setor público consolidado em 12 meses, em % do PIB.</p><button class="economy-detail-button" type="button" data-modal="primario">Entenda o indicador <i class="fas fa-circle-info" aria-hidden="true"></i></button>
           </article>
-          <article class="economy-indicator">
-            <p class="economy-indicator-label">Endividamento</p>
-            <h3>Dívida pública</h3>
-            <p>Representa obrigações financeiras acumuladas pelo setor público. Há diferentes medidas, como a Dívida Bruta do Governo Geral (DBGG) e a Dívida Líquida do Setor Público (DLSP); elas têm abrangências e critérios diferentes.</p>
-            <p><strong>Como interpretar:</strong> compare sempre a mesma medida e observe a dívida em relação ao PIB, sua trajetória, os juros, o prazo e o custo de financiamento. Um valor isolado não conta toda a história fiscal.</p>
-            <a href="https://www.bcb.gov.br/estatisticas/estatisticasfiscais" target="_blank" rel="noopener noreferrer">Fonte oficial: estatísticas fiscais do Banco Central</a>
+          <article class="economy-indicator live-indicator" data-indicator="divida">
+            <p class="economy-indicator-label">Endividamento</p><h3>Dívida bruta · % do PIB</h3>
+            <p class="indicator-value" id="indicator-divida-value">Consultando…</p><p class="indicator-period" id="indicator-divida-period">Banco Central · SGS 13762</p>
+            <p>Estoque de dívida do governo geral em relação ao PIB.</p><button class="economy-detail-button" type="button" data-modal="divida">Entenda o indicador <i class="fas fa-circle-info" aria-hidden="true"></i></button>
           </article>
         </div>
-        <p class="economy-source-note">Os valores oficiais mudam com novas divulgações. Para evitar números desatualizados, consulte a publicação mais recente e observe a data, o período e a metodologia de cada indicador.</p>
+        <p class="economy-source-note" id="economy-indicators-updated">Consultando séries oficiais do Banco Central. Se os dados não carregarem, use o link de consulta no detalhamento de cada indicador.</p>
+      </section>
+
+      <section class="economy-section" aria-labelledby="economy-fiscal-title">
+        <div class="section-heading">
+          <div><span class="eyebrow">02 · Regras fiscais</span><h2 id="economy-fiscal-title">Como funciona o arcabouço fiscal?</h2></div>
+        </div>
+        <div class="economy-fiscal-intro">
+          <p>O arcabouço fiscal federal estabelece limites para o crescimento real das despesas primárias e metas para o resultado primário. Ele não é um orçamento fixo nem garante, sozinho, superávit ou redução da dívida.</p>
+          <button class="economy-detail-button" type="button" data-modal="arcabouco">Abrir explicação completa <i class="fas fa-circle-info" aria-hidden="true"></i></button>
+        </div>
+        <div class="economy-fiscal-grid">
+          <article class="economy-learning-card"><span class="economy-card-kicker">Regra de crescimento</span><h3>De 0,6% a 2,5% reais</h3><p>O limite anual de crescimento real da despesa fica, em regra, dentro desse intervalo, conforme a variação da receita e as condições previstas na lei.</p></article>
+          <article class="economy-learning-card"><span class="economy-card-kicker">Vínculo com a receita</span><h3>70% ou 50%</h3><p>A proporção da variação real da receita que pode ser convertida em crescimento da despesa depende do cumprimento da meta fiscal, respeitados os limites legais.</p></article>
+          <article class="economy-learning-card"><span class="economy-card-kicker">Meta fiscal</span><h3>Receitas e despesas</h3><p>A meta de resultado primário é avaliada separadamente do limite de despesa. Juros da dívida não entram no resultado primário.</p></article>
+        </div>
       </section>
 
       <section class="economy-section" aria-labelledby="economy-news-title">
         <div class="section-heading">
-          <div><span class="eyebrow">02 · Atualidades</span><h2 id="economy-news-title">Notícias de economia</h2></div>
+          <div><span class="eyebrow">03 · Atualidades</span><h2 id="economy-news-title">Notícias de economia</h2></div>
           <p>Notícias da edição atual relacionadas a juros, inflação, atividade econômica, emprego, investimentos e contas públicas.</p>
         </div>
         <div id="economy-news" class="economy-news-list" aria-live="polite" aria-busy="true">
@@ -91,24 +99,41 @@
 
       <section class="economy-section" aria-labelledby="economy-examples-title">
         <div class="section-heading">
-          <div><span class="eyebrow">03 · Exemplos didáticos</span><h2 id="economy-examples-title">Como esses indicadores afetam o cotidiano</h2></div>
+          <div><span class="eyebrow">04 · Exemplos interativos</span><h2 id="economy-examples-title">Teste os cenários</h2></div>
+          <p>Altere os valores para ver os efeitos matemáticos. Os simuladores são didáticos e não representam previsões econômicas.</p>
         </div>
-        <div class="economy-learning-grid">
-          <article class="economy-learning-card">
-            <h3>Crédito e Selic</h3>
-            <p>Imagine que uma família pretende financiar um eletrodoméstico. Se os juros cobrados no mercado aumentarem, as parcelas de um novo financiamento podem ficar mais caras. A mudança depende do banco, do prazo, do risco e das condições do contrato.</p>
+        <div class="economy-interactive-grid">
+          <article class="economy-learning-card economy-calculator">
+            <span class="economy-card-kicker">Inflação e orçamento</span><h3>Quanto passa a custar sua cesta?</h3>
+            <p>Informe o valor atual das compras e uma variação hipotética de preços.</p>
+            <label for="basket-value">Valor atual (R$)</label><input id="basket-value" type="number" min="0" max="10000000" step="0.01" value="200">
+            <label for="basket-inflation">Aumento de preços (%)</label><input id="basket-inflation" type="number" min="-99" max="1000" step="0.1" value="5">
+            <div class="economy-calculation-result" aria-live="polite"><span>Novo custo estimado</span><strong id="basket-result">R$ 210,00</strong><small id="basket-difference">Aumento de R$ 10,00</small></div>
           </article>
-          <article class="economy-learning-card">
-            <h3>Inflação e orçamento</h3>
-            <p>Uma cesta de compras custa R$ 200. Se os mesmos itens ficarem, hipoteticamente, 5% mais caros, a cesta passará a custar R$ 210. Com o mesmo dinheiro, a família comprará menos itens ou precisará gastar mais.</p>
+          <article class="economy-learning-card economy-calculator">
+            <span class="economy-card-kicker">Crédito e juros</span><h3>Compare o custo de um empréstimo</h3>
+            <p>Simulação simplificada de parcelas fixas, sem tarifas, seguros ou impostos. Não é uma oferta de crédito.</p>
+            <label for="loan-value">Valor financiado (R$)</label><input id="loan-value" type="number" min="1" max="10000000" step="100" value="5000">
+            <label for="loan-rate">Juros ao mês (%)</label><input id="loan-rate" type="number" min="0" max="100" step="0.1" value="2">
+            <label for="loan-months">Prazo (meses)</label><input id="loan-months" type="number" min="1" max="360" step="1" value="12">
+            <div class="economy-calculation-result" aria-live="polite"><span>Parcela aproximada</span><strong id="loan-result">R$ 473,00</strong><small id="loan-total">Total estimado: R$ 5.676,00</small></div>
           </article>
-          <article class="economy-learning-card">
-            <h3>Resultado e dívida</h3>
-            <p>O resultado primário é como um balanço de receitas e despesas durante um período; a dívida é o total de obrigações acumuladas em determinado momento. São medidas relacionadas, mas não equivalentes: os juros, os ajustes patrimoniais e outros fatores também afetam a dívida.</p>
+          <article class="economy-learning-card economy-calculator">
+            <span class="economy-card-kicker">Arcabouço fiscal</span><h3>Simule um limite de despesa</h3>
+            <p>Exemplo hipotético da regra de crescimento: parte da variação real da receita, com piso de 0,6% e teto de 2,5% para o crescimento real das despesas, conforme as condições legais.</p>
+            <label for="revenue-growth">Variação real da receita (%)</label><input id="revenue-growth" type="number" min="-20" max="20" step="0.1" value="3">
+            <label for="fiscal-target">Cumpriu a meta fiscal?</label><select id="fiscal-target"><option value="yes">Sim — proporção de 70%</option><option value="no">Não — proporção de 50%</option></select>
+            <div class="economy-calculation-result" aria-live="polite"><span>Crescimento real ilustrativo</span><strong id="fiscal-result">2,1%</strong><small id="fiscal-explanation">70% de 3,0%, dentro do intervalo de 0,6% a 2,5%.</small></div>
           </article>
         </div>
-        <p class="economy-source-note">Os exemplos desta seção são hipotéticos e servem apenas para explicar os conceitos. Não representam dados atuais, previsões nem recomendações de investimento.</p>
+        <p class="economy-source-note">Simulações educativas com fórmulas simplificadas. A aplicação real do arcabouço depende da legislação vigente, da base de cálculo, de exceções e da apuração oficial das metas.</p>
       </section>
+
+      <dialog class="economy-modal" id="economy-modal" aria-labelledby="economy-modal-title">
+        <div class="economy-modal-header"><span class="eyebrow">Guia de economia</span><button type="button" class="economy-modal-close" id="economy-modal-close" aria-label="Fechar explicação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
+        <h2 id="economy-modal-title">Entenda o indicador</h2><div id="economy-modal-body" class="economy-modal-body"></div>
+        <div class="economy-modal-footer"><a id="economy-modal-source" href="https://www.bcb.gov.br/estatisticas" target="_blank" rel="noopener noreferrer">Consultar fonte oficial</a><button type="button" class="cta-button" id="economy-modal-done">Fechar</button></div>
+      </dialog>
 
       <section class="economy-related" aria-label="Conteúdo relacionado">
         <div><span class="eyebrow">Conteúdo relacionado</span><h2>Dinheiro público e orçamento</h2><p>Entenda de onde vêm as receitas do Estado, como os tributos são distribuídos e como as despesas públicas são registradas.</p></div>
