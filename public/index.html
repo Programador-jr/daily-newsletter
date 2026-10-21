@@ -17,14 +17,13 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="/css/historia.css" />
-    <link
+        <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <script src="/js/vercel-observability.js" defer></script>
   </head>
-  <body class="history-page">
+  <body class="home-page">
     <div class="container">
       <header class="site-header">
         <a class="logo" href="/" aria-label="Página inicial">
@@ -152,6 +151,17 @@
           <a href="/editions" class="cta-button">Ver Edição Atual</a>
         </section>
 
+        <section class="preview-section home-featured-section" aria-labelledby="featured-news-title">
+          <div class="home-section-heading">
+            <div>
+              <p class="eyebrow">Edição atual</p>
+              <h2 id="featured-news-title">Notícia em destaque</h2>
+              <p class="home-section-description">O principal assunto da edição, com resumo, contexto e acesso à fonte.</p>
+            </div>
+            <a href="/editions" class="home-text-link">Ver todas as edições <span aria-hidden="true">→</span></a>
+          </div>
+          <div id="featured-news" class="featured-news"></div>
+        </section>
         <section class="home-civic-teaser" aria-labelledby="home-civic-title">
           <div>
             <span class="eyebrow">Política, Estado e dados</span>
@@ -222,10 +232,6 @@
           </div>
         </section>
 
-        <section class="preview-section">
-          <h2>Destaque de Hoje</h2>
-          <div id="featured-news" class="featured-news"></div>
-        </section>
       </main>
 
       <div id="footer"></div>
