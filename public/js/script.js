@@ -215,8 +215,8 @@ async function loadHistoryList() {
       item.setAttribute('role', 'button');
       item.setAttribute('aria-disabled', archive.date ? 'false' : 'true');
       item.append(
-        createElement('div', 'history-date', formatDate(archive.date).toUpperCase()),
-        createElement('div', 'history-title', archive.title || `Edição ${archive.date}`),
+        createElement('div', 'history-date', (archive.issueNumber ? 'EDIÇÃO #' + String(archive.issueNumber).padStart(3, '0') + ' · ' : '') + formatDate(archive.date).toUpperCase()),
+        createElement('div', 'history-title', archive.issueNumber ? 'Edição #' + String(archive.issueNumber).padStart(3, '0') : (archive.title || `Edição ${archive.date}`)),
         createElement('div', 'history-meta', `${archive.stories} notícias`)
       );
 
@@ -268,9 +268,10 @@ window.loadArchiveEdition = function(date) {
     .then((data) => {
       const editionTitle = document.querySelector('#edition-title');
       if (editionTitle) {
+        const issueLabel = data.issueNumber ? 'Edição #' + String(data.issueNumber).padStart(3, '0') : 'Edição';
         editionTitle.textContent = data.date === currentEditionDate
-          ? 'Edição Atual'
-          : `Edição ${formatDate(data.date)}`;
+          ? issueLabel + ' · Atual'
+          : issueLabel + ' · ' + formatDate(data.date);
       }
 
       if (dateEl) dateEl.textContent = formatDate(data.date).toUpperCase();
