@@ -17,14 +17,13 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="/css/historia.css" />
-    <link
+        <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <script src="/js/vercel-observability.js" defer></script>
   </head>
-  <body class="history-page">
+  <body class="home-page">
     <div class="container">
       <header class="site-header">
         <a class="logo" href="/" aria-label="Página inicial">
@@ -152,6 +151,16 @@
           <a href="/editions" class="cta-button">Ver Edição Atual</a>
         </section>
 
+        <section class="preview-section home-featured-section" aria-labelledby="featured-news-title">
+          <div class="home-section-heading">
+            <div>
+              <p class="eyebrow">Edição atual</p>
+              <h2 id="featured-news-title">Notícia em destaque</h2>
+              <p class="home-section-description">O principal assunto da edição, com resumo, contexto e acesso à fonte.</p>
+            </div>
+          </div>
+          <div id="featured-news" class="featured-news"></div>
+        </section>
         <section class="home-civic-teaser" aria-labelledby="home-civic-title">
           <div>
             <span class="eyebrow">Política, Estado e dados</span>
@@ -167,22 +176,7 @@
           <a href="/politica" class="cta-button">Explorar o guia</a>
         </section>
 
-        <section
-          class="home-history-teaser"
-          aria-labelledby="home-history-title"
-        >
-          <div>
-            <span class="eyebrow">História do Brasil</span>
-            <h2 id="home-history-title">
-              Além das notícias, entenda como o Brasil chegou até aqui.
-            </h2>
-            <p>
-              Uma área de referência com linha do tempo, presidentes, governos,
-              constituições, conflitos, economia, sociedade e cultura.
-            </p>
-          </div>
-          <a href="/historia" class="cta-button">Conhecer a História</a>
-        </section>
+
 
         <section
           class="subscription-section"
@@ -222,10 +216,6 @@
           </div>
         </section>
 
-        <section class="preview-section">
-          <h2>Destaque de Hoje</h2>
-          <div id="featured-news" class="featured-news"></div>
-        </section>
       </main>
 
       <div id="footer"></div>

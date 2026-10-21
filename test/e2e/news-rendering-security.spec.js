@@ -24,6 +24,7 @@ async function mockNewsApi(page) {
         contentType: 'application/json',
         body: JSON.stringify([{
           date: '06/10/2026',
+          issueNumber: 7,
           title: '<img src=x onerror="window.__xssExecuted=1">Arquivo malicioso',
           stories: 1
         }])
@@ -100,7 +101,9 @@ test('archive titles are rendered as text and archive dates are safely encoded',
   await page.locator('#history-toggle').click();
 
   const historyItem = page.locator('#history-list .history-item').first();
-  await expect(historyItem.locator('.history-title')).toHaveText('<img src=x onerror="window.__xssExecuted=1">Arquivo malicioso');
+  await expect(historyItem.locator('.history-date')).toHaveText('Edição #007 · 06/10/2026');
+  await expect(historyItem.locator('.history-meta')).toHaveText('1 notícias');
+  await expect(historyItem).not.toContainText('Arquivo malicioso');
   await expect(page.locator('#history-list img')).toHaveCount(0);
   expect(await page.evaluate(() => window.__xssExecuted)).toBe(0);
 });

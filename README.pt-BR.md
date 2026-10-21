@@ -52,7 +52,7 @@ A King's Newsletter é uma plataforma responsiva de notícias para acompanhar ac
 
 ## Funcionalidades
 
-- **Edições diárias** — notícias com resumos, contexto, datas de publicação e links para as fontes.
+- **Edições numeradas** — cada edição recebe um número persistente, além da data, com histórico pesquisável.
 - **Arquivo pesquisável** — consulte edições anteriores e filtre notícias.
 - **História do Brasil** — linha do tempo interativa, marcos históricos, presidentes, governos, constituições e guias temáticos.
 - **Educação cívica** — guias de referência sobre ideologias políticas, políticas públicas, gastos públicos e funções constitucionais dos três Poderes.
@@ -180,7 +180,11 @@ Na inicialização, o servidor avisa quando MongoDB, e-mail ou publicação prot
 | `GET` | `/api/worker/config` | Consulta a configuração de agendamento do worker. Exige `WORKER_CONTROL_SECRET`. |
 | `POST` | `/api/worker/heartbeat` | Informa o estado do worker e o horário da próxima execução. Exige `WORKER_CONTROL_SECRET`. |
 
-As datas das edições usam o formato `dd/mm/yyyy`. Os endpoints protegidos esperam o segredo configurado no cabeçalho `Authorization`.
+As datas das edições usam o formato `dd/mm/yyyy`. A API também retorna `issueNumber` quando a edição já foi registrada. Os endpoints protegidos esperam o segredo configurado no cabeçalho `Authorization`.
+
+### Numeração de edições existentes
+
+Antes de ativar a numeração em um banco com notícias antigas, execute primeiro `npm run migrate:edition-numbers` para conferir as datas que serão migradas (modo de simulação). Após validar a lista e confirmar que está conectado ao banco correto, execute `npm run migrate:edition-numbers -- --apply`. A migração atribui números às datas em ordem cronológica e preserva números já existentes; faça backup antes de aplicá-la em produção.
 
 ## Testes
 

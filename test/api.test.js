@@ -17,10 +17,18 @@ const state = {
   latestNews: [],
   historyNews: [],
   rateLimitBlocked: false,
-  rateLimitCalls: []
+  rateLimitCalls: [],
+  editions: []
 };
 
 const modules = {
+  '../lib/edition': {
+    find: query => ({ lean: async () => state.editions.filter(item => query.editionDate.$in.includes(item.editionDate)) }),
+    findOne: query => ({ lean: async () => state.editions.find(item => item.editionDate === query.editionDate) || null })
+  },
+  '../lib/edition-numbering': {
+    ensureEdition: async date => state.editions.find(item => item.editionDate === date) || { editionDate: date, issueNumber: 1 }
+  },
   '../lib/db': {
     connectDatabase: async () => {
       state.databaseCalls += 1;
@@ -193,6 +201,7 @@ beforeEach(() => {
   state.historyNews = [];
   state.rateLimitBlocked = false;
   state.rateLimitCalls = [];
+  state.editions = [];
   process.env.NOTIFY_SECRET = 'test-notify-secret';
   process.env.APP_URL = 'http://localhost:3000';
 });
@@ -245,8 +254,8 @@ test('news history groups editions and sorts dates newest first', async () => {
 
   assert.equal(response.statusCode, 200);
   assert.deepEqual(response.body, [
-    { date: '06/10/2026', stories: 1, title: 'Edição de 06/10/2026' },
-    { date: '01/10/2026', stories: 2, title: 'Edição de 01/10/2026' }
+    { date: '06/10/2026', stories: 1, title: 'Edição de 06/10/2026', issueNumber: null },
+    { date: '01/10/2026', stories: 2, title: 'Edição de 01/10/2026', issueNumber: null }
   ]);
 });
 
@@ -315,6 +324,7 @@ test('news publishing normalizes valid stories without sending notifications', a
 
   assert.equal(response.statusCode, 200);
   assert.equal(response.body.inserted, 1);
+  assert.equal(response.body.issueNumber, 1);
   assert.equal(state.bulkWriteCalls.length, 1);
   assert.equal(state.bulkWriteCalls[0][0][0].updateOne.filter.url, 'https://example.com/story');
   assert.equal(state.bulkWriteCalls[0][0][0].updateOne.update.$set.title, 'Notícia');
