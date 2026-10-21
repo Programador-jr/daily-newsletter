@@ -122,6 +122,15 @@ fetch("/api/news")
     const stories = Array.isArray(data?.stories) ? data.stories : [];
     currentEditionDate = asText(data?.date);
 
+    if (isEditionsPage) {
+      const editionTitle = document.querySelector('#edition-title');
+      if (editionTitle) {
+        editionTitle.textContent = data?.issueNumber
+          ? 'Edição #' + String(data.issueNumber).padStart(3, '0') + ' · Atual'
+          : 'Edição Atual';
+      }
+    }
+
     if (dateEl) {
       dateEl.textContent = formatDate(data?.date).toUpperCase();
     }
