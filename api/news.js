@@ -1,5 +1,7 @@
 const { connectDatabase } = require('../lib/db');
 const News = require('../lib/news');
+const Edition = require('../lib/edition');
+const { ensureEdition } = require('../lib/edition-numbering');
 
 function parseDate(value) {
   if (typeof value !== 'string') return null;
@@ -137,7 +139,19 @@ module.exports = async function handler(req, res) {
           { $sort: { _editionSort: -1 } },
           { $project: { _id: 0, date: '$_id', stories: 1, title: { $concat: ['Edição de ', '$_id'] } } }
         );
-        return res.status(200).json(await News.aggregate(pipeline));
+        const archives = await News.aggregate(pipeline);
+        const editionDates = archives.map(archive => archive.date);
+        const editionRecords = editionDates.length
+          ? await Edition.find({ editionDate: { $in: editionDates } }).lean()
+          : [];
+        const issueByDate = new Map(editionRecords.map(item => [item.editionDate, item.issueNumber]));
+        return res.status(200).json(archives.map(archive => ({
+          ...archive,
+          issueNumber: issueByDate.get(archive.date) ?? null,
+          title: issueByDate.has(archive.date)
+            ? 'Edição #' + String(issueByDate.get(archive.date)).padStart(3, '0')
+            : archive.title
+        })));
       }
 
       let date = req.query.date;
@@ -158,7 +172,8 @@ module.exports = async function handler(req, res) {
         { $sort: { _publishedSort: -1, headline: -1, _id: -1 } },
         { $project: { _publishedSort: 0, _publishedDay: 0 } }
       ]);
-      return res.status(200).json({ date, stories });
+      const edition = await Edition.findOne({ editionDate: date }).lean();
+      return res.status(200).json({ date, issueNumber: edition?.issueNumber ?? null, stories });
     }
 
     if (!process.env.NOTIFY_SECRET || req.headers.authorization !== `Bearer ${process.env.NOTIFY_SECRET}`) {
@@ -193,8 +208,10 @@ module.exports = async function handler(req, res) {
     }));
 
     const result = await News.bulkWrite(operations, { ordered: false });
+    const edition = await ensureEdition(editionDate);
 
     return res.status(200).json({
+      issueNumber: edition.issueNumber,
       inserted: result.upsertedCount,
       updated: result.modifiedCount,
       skipped: normalized.length - editionStories.length,
