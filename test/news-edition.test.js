@@ -3,10 +3,16 @@ const { beforeEach, test } = require('node:test');
 
 const state = {
   records: [],
-  databaseCalls: 0
+  databaseCalls: 0,
+  editions: []
 };
 
 const modules = {
+  '../lib/edition': {
+    find: query => ({ lean: async () => state.editions.filter(item => query.editionDate.$in.includes(item.editionDate)) }),
+    findOne: query => ({ lean: async () => state.editions.find(item => item.editionDate === query.editionDate) || null })
+  },
+  '../lib/edition-numbering': { ensureEdition: async date => state.editions.find(item => item.editionDate === date) || { editionDate: date, issueNumber: 1 } },
   '../lib/db': {
     connectDatabase: async () => {
       state.databaseCalls += 1;
@@ -106,6 +112,10 @@ function story(editionDate, publishedAt, title, headline = false) {
 
 beforeEach(() => {
   state.databaseCalls = 0;
+  state.editions = [
+    { editionDate: '13/10/2026', issueNumber: 23 },
+    { editionDate: '14/10/2026', issueNumber: 24 }
+  ];
   state.records = [
     story('14/10/2026', '14/10/2026', 'Notícia de hoje', true),
     story('14/10/2026', '13/10/2026', 'Notícia de ontem atribuída à edição atual'),
@@ -122,6 +132,7 @@ test('a edição atual exibe todas as notícias vinculadas, inclusive publicadas
 
   assert.equal(response.statusCode, 200);
   assert.equal(response.body.date, '14/10/2026');
+  assert.equal(response.body.issueNumber, 24);
   assert.deepEqual(response.body.stories.map(item => item.title), [
     'Notícia de hoje'
   ]);
@@ -156,7 +167,7 @@ test('o histórico conta todas as notícias vinculadas à edição mais recente'
 
   assert.equal(response.statusCode, 200);
   assert.deepEqual(response.body, [
-    { date: '14/10/2026', stories: 1, title: 'Edição de 14/10/2026' },
-    { date: '13/10/2026', stories: 1, title: 'Edição de 13/10/2026' }
+    { date: '14/10/2026', stories: 1, title: 'Edição #024', issueNumber: 24 },
+    { date: '13/10/2026', stories: 1, title: 'Edição #023', issueNumber: 23 }
   ]);
 });
