@@ -224,7 +224,7 @@ async function loadHistoryList() {
       item.setAttribute('role', 'button');
       item.setAttribute('aria-disabled', archive.date ? 'false' : 'true');
       item.append(
-        createElement('div', 'history-date', (archive.issueNumber ? 'EDIÇÃO #' + String(archive.issueNumber).padStart(3, '0') + ' · ' : '') + formatDate(archive.date).toUpperCase()),
+        createElement('div', 'history-date', formatDate(archive.date).toUpperCase()),
         createElement('div', 'history-title', archive.issueNumber ? 'Edição #' + String(archive.issueNumber).padStart(3, '0') : (archive.title || `Edição ${archive.date}`)),
         createElement('div', 'history-meta', `${archive.stories} notícias`)
       );
