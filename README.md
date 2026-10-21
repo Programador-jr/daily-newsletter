@@ -52,7 +52,7 @@ King's Newsletter is a responsive news platform for following current events and
 
 ## Features
 
-- **Daily editions** — stories with summaries, context, publication dates, and source links.
+- **Numbered editions** — every edition has a persistent issue number as well as its date, with a searchable archive.
 - **Searchable archive** — browse previous editions and filter stories.
 - **Brazilian History** — an interactive timeline, historical milestones, presidents, governments, constitutions, and topic guides.
 - **Civic education** — reference guides to political ideologies, public policy, public spending, and the constitutional roles of the three branches of government.
@@ -180,7 +180,11 @@ On startup, the server warns when MongoDB, email, or protected publishing is not
 | `GET` | `/api/worker/config` | Read worker scheduling configuration. Requires `WORKER_CONTROL_SECRET`. |
 | `POST` | `/api/worker/heartbeat` | Report the worker's status and next run time. Requires `WORKER_CONTROL_SECRET`. |
 
-Edition dates use the `dd/mm/yyyy` format. Protected endpoints expect the configured secret in the `Authorization` header.
+Edition dates use the `dd/mm/yyyy` format. The API also returns `issueNumber` once an edition record exists. Protected endpoints expect the configured secret in the `Authorization` header.
+
+### Numbering existing editions
+
+Before enabling numbering for a database with existing stories, run `npm run migrate:edition-numbers` to review the dates that would be migrated (dry-run mode). After verifying the list and confirming the correct database is selected, run `npm run migrate:edition-numbers -- --apply`. The migration assigns numbers to existing dates in chronological order and preserves numbers already assigned; back up production data before applying it.
 
 ## Testing
 
