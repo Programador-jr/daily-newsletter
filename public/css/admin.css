@@ -243,3 +243,8 @@ html,body{background:#090909!important;background-image:none!important}
 .update-preview-markdown blockquote { margin: .5rem 0; padding: .25rem .7rem; border-left: 2px solid var(--accent, #f5c518); }
 .update-preview-markdown pre { max-width: 100%; overflow: auto; padding: .6rem; border: 1px solid var(--line, #2c3d36); border-radius: 7px; }
 .update-preview-markdown code { padding: .08rem .25rem; border-radius: 4px; background: rgba(255,255,255,.06); font-size: .92em; }
+
+
+.test-email-divider{height:1px;margin:20px 0 16px;background:var(--line,#292929)}
+#test-email-button{width:100%;margin-top:6px}
+#test-email-message{overflow-wrap:anywhere}
