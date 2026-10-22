@@ -307,6 +307,16 @@ if (dateParam && isEditionsPage) {
 
 function createStoryCard(story, featured = false, index = 0) {
   const article = createElement('article', `story ${featured || index === 0 ? 'featured' : ''} ${featured ? 'spotlight-card' : ''}`.trim());
+  const imageUrl = safeExternalUrl(story?.image?.url);
+  if (imageUrl && imageUrl.startsWith('https://')) {
+    const image = createElement('img', 'story-image');
+    image.src = imageUrl;
+    image.alt = asText(story?.image?.alt || story?.title || 'Imagem da notícia');
+    image.loading = 'lazy';
+    image.decoding = 'async';
+    article.append(image);
+  }
+
   const meta = createElement('div', 'story-meta');
   meta.append(
     createElement('span', 'category', story?.category),
