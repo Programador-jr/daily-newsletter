@@ -8,6 +8,8 @@ const dashboardMessage = document.querySelector('#dashboard-message');
 const logoutButton = document.querySelector('#logout-button');
 const dispatchButton = document.querySelector('#dispatch-button');
 const dispatchMessage = document.querySelector('#dispatch-message');
+const testEmailButton = document.querySelector('#test-email-button');
+const testEmailMessage = document.querySelector('#test-email-message');
 const loadingOverlay = document.querySelector('#loading-overlay');
 const dispatchModal = document.querySelector('#dispatch-modal');
 const confirmDispatchButton = document.querySelector('#confirm-dispatch');
@@ -1283,6 +1285,34 @@ document.querySelector('#updates-refresh').addEventListener('click', () => {
   button.disabled = true;
   refreshUpdates().catch(error => showToast('Falha ao atualizar avisos', error.message, 'error'))
     .finally(() => { button.disabled = false; });
+});
+
+testEmailButton.addEventListener('click', async () => {
+  if (dispatchInProgress || testEmailButton.disabled) return;
+  const confirmed = window.confirm('Enviar uma prévia da edição atual somente para o destinatário privado configurado no ambiente de teste? Nenhum assinante receberá esta mensagem.');
+  if (!confirmed) return;
+
+  testEmailButton.disabled = true;
+  testEmailMessage.textContent = 'Preparando e enviando a prévia…';
+  setLoading(true, 'Enviando e-mail de teste', 'A mensagem será enviada somente ao destinatário privado configurado no preview.');
+  try {
+    const response = await fetch('/api/admin/test-email', {
+      method: 'POST',
+      headers: { Accept: 'application/json' },
+      cache: 'no-store'
+    });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || 'Não foi possível enviar o e-mail de teste.');
+    const message = 'E-mail de teste aceito pelo servidor SMTP. Edição: ' + payload.editionDate + '; notícias: ' + payload.stories + '. Verifique a caixa de entrada e o spam.';
+    testEmailMessage.textContent = message;
+    showToast('Teste enviado', message, 'success', 6500);
+  } catch (error) {
+    testEmailMessage.textContent = error.message;
+    showToast('Falha no e-mail de teste', error.message, 'error', 6500);
+  } finally {
+    setLoading(false);
+    testEmailButton.disabled = false;
+  }
 });
 
 dispatchButton.addEventListener('click', openDispatchModal);
