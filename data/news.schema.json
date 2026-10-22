@@ -11,6 +11,8 @@
     "context": { "type": "string" },
     "source": { "type": "string" },
     "publishedAt": { "type": "string" },
-    "url": { "type": "string", "format": "uri" }
+    "url": { "type": "string", "format": "uri" },
+    "imageUrl": { "type": "string", "format": "uri" },
+    "imageAlt": { "type": "string" }
   }
 }
