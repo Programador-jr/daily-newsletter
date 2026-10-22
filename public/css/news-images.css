@@ -1,0 +1,20 @@
+.story-image {
+  display: block;
+  width: 100%;
+  max-height: 320px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  margin: 0 0 1rem;
+}
+
+.story-image + .story-meta {
+  margin-top: 0;
+}
+
+@media (max-width: 600px) {
+  .story-image {
+    max-height: 220px;
+    border-radius: 0.5rem;
+  }
+}
