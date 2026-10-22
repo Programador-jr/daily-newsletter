@@ -5,6 +5,7 @@
     { "source": "/api/admin/logout", "destination": "/api/control?route=admin/logout" },
     { "source": "/api/admin/dashboard", "destination": "/api/control?route=admin/dashboard" },
     { "source": "/api/admin/dispatch", "destination": "/api/control?route=admin/dispatch" },
+    { "source": "/api/admin/test-email", "destination": "/api/control?route=admin/test-email" },
     { "source": "/api/admin/schedule", "destination": "/api/control?route=admin/schedule" },
     { "source": "/api/admin/updates", "destination": "/api/control?route=admin/updates" },
     { "source": "/api/updates/active", "destination": "/api/control?route=updates/active" },
