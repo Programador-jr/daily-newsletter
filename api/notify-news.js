@@ -241,6 +241,7 @@ async function notifyLatestNews() {
             '<p style="font-size:13px;color:#536762">Você está recebendo este e-mail porque confirmou sua inscrição.</p>' +
             '<p style="font-size:13px"><a href="' + unsubscribeUrl + '" style="color:#0b766b">Cancelar inscrição</a></p>' +
             '<p style="font-size:12px;color:#536762;text-align:center;margin:24px 0 0">Feito com café e JavaScript por Daniel Melo</p>' +
+            '</div>' +
             '</div>'
         });
       } catch (error) {
