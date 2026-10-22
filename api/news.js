@@ -2,6 +2,7 @@ const { connectDatabase } = require('../lib/db');
 const News = require('../lib/news');
 const Edition = require('../lib/edition');
 const { ensureEdition } = require('../lib/edition-numbering');
+const { uploadImageFromUrl } = require('../lib/r2');
 
 function parseDate(value) {
   if (typeof value !== 'string') return null;
@@ -102,7 +103,9 @@ function normalizeStory(story, editionDate) {
     source: String(story.source || '').trim(),
     publishedAt: String(story.publishedAt || '').trim(),
     url: String(story.url || '').trim(),
-    headline: Boolean(story.headline)
+    headline: Boolean(story.headline),
+    imageUrl: String(story.imageUrl || '').trim(),
+    imageAlt: String(story.imageAlt || '').trim()
   };
 }
 
@@ -199,6 +202,22 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'Nenhuma notícia corresponde à data da edição.' });
     }
 
+    for (const story of editionStories) {
+      const sourceImageUrl = story.imageUrl;
+      const imageAlt = story.imageAlt || story.title;
+      delete story.imageUrl;
+      delete story.imageAlt;
+
+      if (sourceImageUrl) {
+        const uploadedImage = await uploadImageFromUrl(sourceImageUrl);
+        story.image = {
+          url: uploadedImage.url,
+          alt: imageAlt,
+          contentType: uploadedImage.contentType
+        };
+      }
+    }
+
     const operations = editionStories.map(story => ({
       updateOne: {
         filter: { editionDate: story.editionDate, url: story.url },
@@ -218,6 +237,9 @@ module.exports = async function handler(req, res) {
       notification: null
     });
   } catch (error) {
+    if (error?.code === 'R2_NOT_CONFIGURED') {
+      return res.status(503).json({ error: 'O armazenamento de imagens ainda não está configurado.' });
+    }
     console.error('Erro ao salvar notícias:', error);
     return res.status(500).json({ error: 'Não foi possível salvar as notícias.' });
   }
