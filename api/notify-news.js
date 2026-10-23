@@ -199,10 +199,10 @@ async function notifyLatestNews() {
           : '';
         const imageAlt = escapeHtml(story.image?.alt || story.title || 'Imagem da notícia');
         const imageMarkup = imageUrl
-          ? '<img src="' + escapeHtml(imageUrl) + '" alt="' + imageAlt + '" width="616" style="display:block;width:100%;max-width:616px;height:auto;max-height:346px;object-fit:cover;border:0;border-radius:12px;margin:0 0 18px" />'
+          ? '<img src="' + escapeHtml(imageUrl) + '" alt="' + imageAlt + '" width="616" style="display:block;width:100%;max-width:616px;height:auto;object-fit:contain;border:0;margin:0 0 18px" />'
           : '';
 
-        return '<article style="padding:0 0 28px;margin:0 0 28px;border-bottom:1px solid #d8e5e1">' +
+        return '<article style="padding:0 0 24px;margin:0 0 24px;border-bottom:1px solid #d8e5e1">' +
           imageMarkup +
           '<div style="font-size:12px;font-weight:bold;text-transform:uppercase;color:#0b766b;letter-spacing:.5px">' + escapeHtml(story.category || '') + '</div>' +
           '<h2 style="font-family:Georgia,serif;font-size:21px;line-height:1.25;margin:8px 0">' + escapeHtml(story.title || '') + '</h2>' +
@@ -225,23 +225,15 @@ async function notifyLatestNews() {
           subject: 'Novas atualizações — ' + latestEditionDate,
           text: "King's Newsletter\n\nNovas atualizações — " + latestEditionDate + '\n\n' +
             textItems + '\n\nCancelar inscrição: ' + unsubscribeUrl,
-          html: '<div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;padding:20px 16px;color:#1c2d2a;background:#f4f7f5">' +
-            '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;border-spacing:0;margin:0 0 24px">' +
-              '<tr><td style="background:#064e46;padding:28px 24px;border-bottom:4px solid #f5c518;border-radius:12px 12px 0 0">' +
-                '<div style="font-family:Georgia,serif;font-size:27px;line-height:1.2;font-weight:bold;color:#ffffff">King\'s Newsletter</div>' +
-                '<div style="font-size:11px;line-height:1.5;letter-spacing:2px;text-transform:uppercase;color:#f5c518;margin-top:8px">Notícias com contexto</div>' +
-              '</td></tr>' +
-              '<tr><td style="background:#ffffff;padding:16px 24px;border:1px solid #d8e5e1;border-top:0;border-radius:0 0 12px 12px">' +
-                '<div style="font-size:15px;font-weight:bold;color:#1c2d2a">Novas atualizações</div>' +
-                '<div style="font-size:13px;color:#536762;margin-top:4px">Edição de ' + escapeHtml(latestEditionDate) + '</div>' +
-              '</td></tr>' +
-            '</table>' +
-            '<div style="background:#ffffff;padding:24px;border:1px solid #d8e5e1;border-radius:12px">' +
+          html: '<div style="font-family:Arial,sans-serif;width:100%;max-width:680px;margin:0 auto;padding:32px;box-sizing:border-box;color:#1c2d2a;background:#ffffff">' +
+            '<div style="background:#064e46;padding:12px 16px;margin:0 0 16px;border-bottom:3px solid #f5c518">' +
+              '<img src="https://cdn.shardcloud.app/4d7d8031-4b99-4759-afbc-1e01575b29d6/kingsNewsletter.png" alt="King\'s Newsletter" width="220" style="display:block;width:100%;max-width:220px;height:auto;border:0" />' +
+            '</div>' +
+            '<p style="color:#536762">Novas atualizações — ' + escapeHtml(latestEditionDate) + '</p>' +
             items +
             '<p style="font-size:13px;color:#536762">Você está recebendo este e-mail porque confirmou sua inscrição.</p>' +
             '<p style="font-size:13px"><a href="' + unsubscribeUrl + '" style="color:#0b766b">Cancelar inscrição</a></p>' +
             '<p style="font-size:12px;color:#536762;text-align:center;margin:24px 0 0">Feito com café e JavaScript por Daniel Melo</p>' +
-            '</div>' +
             '</div>'
         });
       } catch (error) {

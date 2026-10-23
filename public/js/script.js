@@ -317,6 +317,21 @@ function createStoryCard(story, featured = false, index = 0) {
     article.append(image);
   }
 
+  if (featured) {
+    article.append(createElement('h2', '', story?.title));
+
+    const editionLink = createElement('a', 'home-edition-link');
+    editionLink.href = '/editions';
+    editionLink.setAttribute('aria-label', 'Abrir edição completa');
+    editionLink.append(
+      createElement('span', '', 'Abrir edição'),
+      createElement('i', 'fas fa-arrow-up-right-from-square')
+    );
+    editionLink.lastElementChild.setAttribute('aria-hidden', 'true');
+    article.append(editionLink);
+    return article;
+  }
+
   const meta = createElement('div', 'story-meta');
   meta.append(
     createElement('span', 'category', story?.category),

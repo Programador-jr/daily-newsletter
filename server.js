@@ -27,6 +27,7 @@ app.post('/api/admin/login', require('./lib/api-handlers/admin/login'));
 app.post('/api/admin/logout', require('./lib/api-handlers/admin/logout'));
 app.get('/api/admin/dashboard', require('./lib/api-handlers/admin/dashboard'));
 app.post('/api/admin/dispatch', require('./lib/api-handlers/admin/dispatch'));
+app.post('/api/admin/test-email', require('./lib/api-handlers/admin/test-email'));
 app.get('/api/admin/schedule', require('./lib/api-handlers/admin/schedule'));
 app.put('/api/admin/schedule', require('./lib/api-handlers/admin/schedule'));
 app.all('/api/admin/updates', require('./lib/api-handlers/admin/updates'));

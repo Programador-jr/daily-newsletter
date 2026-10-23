@@ -10,6 +10,9 @@ const dispatchButton = document.querySelector('#dispatch-button');
 const dispatchMessage = document.querySelector('#dispatch-message');
 const testEmailButton = document.querySelector('#test-email-button');
 const testEmailMessage = document.querySelector('#test-email-message');
+const testEmailRecipient = document.querySelector('#test-email-recipient');
+const testEmailModal = document.querySelector('#test-email-modal');
+const confirmTestEmailButton = document.querySelector('#confirm-test-email');
 const loadingOverlay = document.querySelector('#loading-overlay');
 const dispatchModal = document.querySelector('#dispatch-modal');
 const confirmDispatchButton = document.querySelector('#confirm-dispatch');
@@ -1287,21 +1290,23 @@ document.querySelector('#updates-refresh').addEventListener('click', () => {
     .finally(() => { button.disabled = false; });
 });
 
-testEmailButton.addEventListener('click', async () => {
-  if (dispatchInProgress || testEmailButton.disabled) return;
-  const confirmed = window.confirm('Enviar uma prévia da edição atual somente para o destinatário privado configurado no ambiente de teste? Nenhum assinante receberá esta mensagem.');
-  if (!confirmed) return;
-
+async function sendTestEmail(recipient) {
   testEmailButton.disabled = true;
   testEmailMessage.textContent = 'Preparando e enviando a prévia…';
-  setLoading(true, 'Enviando e-mail de teste', 'A mensagem será enviada somente ao destinatário privado configurado no preview.');
+  setLoading(true, 'Enviando e-mail de teste', 'A prévia será enviada somente para ' + recipient + '.');
   try {
     const response = await fetch('/api/admin/test-email', {
       method: 'POST',
-      headers: { Accept: 'application/json' },
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: recipient }),
       cache: 'no-store'
     });
-    const payload = await response.json();
+    let payload;
+    try {
+      payload = await response.json();
+    } catch {
+      throw new Error('A rota de envio de teste não retornou JSON. Verifique se o servidor está atualizado e tente novamente.');
+    }
     if (!response.ok) throw new Error(payload.error || 'Não foi possível enviar o e-mail de teste.');
     const message = 'E-mail de teste aceito pelo servidor SMTP. Edição: ' + payload.editionDate + '; notícias: ' + payload.stories + '. Verifique a caixa de entrada e o spam.';
     testEmailMessage.textContent = message;
@@ -1313,6 +1318,28 @@ testEmailButton.addEventListener('click', async () => {
     setLoading(false);
     testEmailButton.disabled = false;
   }
+}
+
+testEmailButton.addEventListener('click', () => {
+  if (dispatchInProgress || testEmailButton.disabled || !testEmailRecipient.reportValidity()) return;
+  document.querySelector('#test-email-modal-copy').textContent =
+    'A edição será enviada somente para ' + testEmailRecipient.value.trim() + '. Nenhum assinante receberá esta mensagem.';
+  testEmailModal.classList.remove('hidden');
+  confirmTestEmailButton.focus();
+});
+function closeTestEmailModal() {
+  testEmailModal.classList.add('hidden');
+  testEmailButton.focus();
+}
+document.querySelector('#cancel-test-email').addEventListener('click', closeTestEmailModal);
+document.querySelector('#close-test-email-modal').addEventListener('click', closeTestEmailModal);
+testEmailModal.addEventListener('click', event => {
+  if (event.target === testEmailModal) closeTestEmailModal();
+});
+confirmTestEmailButton.addEventListener('click', () => {
+  const recipient = testEmailRecipient.value.trim();
+  closeTestEmailModal();
+  sendTestEmail(recipient);
 });
 
 dispatchButton.addEventListener('click', openDispatchModal);
@@ -1322,6 +1349,17 @@ dispatchModal.addEventListener('click', event => {
   if (event.target === dispatchModal) closeDispatchModal();
 });
 document.addEventListener('keydown', event => {
+  if (!testEmailModal.classList.contains('hidden')) {
+    if (event.key === 'Escape') closeTestEmailModal();
+    if (event.key === 'Tab') {
+      const focusable = [...testEmailModal.querySelectorAll('button:not(:disabled)')];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+    return;
+  }
   if (dispatchModal.classList.contains('hidden')) return;
   if (event.key === 'Escape') closeDispatchModal();
   if (event.key === 'Tab') {

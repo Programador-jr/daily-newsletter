@@ -7,7 +7,7 @@ const { getAppUrl } = require('../lib/app-url');
 
 const CONFIRMATION_TOKEN_TTL_MS = 24 * 60 * 60 * 1000;
 const CONFIRMATION_EMAIL_COOLDOWN_MS = 60 * 1000;
-const GENERIC_MESSAGE = 'Se este endereço puder receber uma confirmação, enviaremos um link por e-mail. Verifique também a caixa de spam. Se você já solicitou um link recentemente, aguarde um minuto antes de tentar novamente.';
+const GENERIC_MESSAGE = 'Se este endereço puder receber uma confirmação, enviaremos um link por e-mail. Inscrições já confirmadas permanecem ativas e não são duplicadas. Verifique também a caixa de spam.';
 
 function isValidEmail(email) {
   return typeof email === 'string' &&
@@ -147,6 +147,9 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({ message: GENERIC_MESSAGE });
   } catch (error) {
+    if (error?.code === 11000) {
+      return res.status(200).json({ message: GENERIC_MESSAGE });
+    }
     console.error('Erro ao cadastrar inscrito:', error);
     return res.status(500).json({ error: 'Não foi possível processar a solicitação agora.' });
   }

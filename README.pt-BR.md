@@ -76,20 +76,22 @@ A King's Newsletter é uma plataforma responsiva de notícias para acompanhar ac
 
 ```text
 .
-├── api/                  # Manipuladores de notícias, assinaturas, confirmações e notificações
-├── data/                 # Dados de exemplo e esquema de notícias
-├── lib/                  # Conexão com banco, modelos, e-mail e tokens
+├── api/                  # Manipuladores de notícias, assinaturas, notificações e rotas da Vercel
+├── data/                 # Edições JSON legadas usadas na importação pontual para o MongoDB
+├── lib/                  # Modelos, manipuladores de API, e-mail, armazenamento e segurança
 ├── test/                 # Testes de API e utilitários
 ├── public/
 │   ├── css/              # Estilos do site e das páginas
 │   ├── js/               # Comportamento executado no navegador
 │   └── *.html             # Newsletter, edições, história e páginas de presidentes
-├── scripts/              # Scripts de diagnóstico e benchmark
+├── scripts/              # Migração de edições, diagnóstico e benchmarks
 ├── .github/workflows/    # Verificações automatizadas em pull requests direcionados à main
 ├── server.js             # Servidor Express local e rotas
 ├── vercel.json           # Configuração da Vercel
 └── package.json
 ```
+
+As edições atuais e o histórico são lidos do MongoDB. Os arquivos JSON em `data/` são fontes legadas para a importação pontual de `/api/migrate-news`, não o armazenamento ativo das notícias.
 
 ## Como começar
 
@@ -132,6 +134,8 @@ Acesse [http://localhost:3000](http://localhost:3000).
 | Variável | Finalidade |
 | --- | --- |
 | `MONGODB_URI` | String de conexão do MongoDB. Necessária para notícias e assinaturas. |
+| `MONGODB_NAME` | Nome opcional do banco; tem prioridade sobre `MONGODB_DB_NAME`. O padrão é `kings_newsletter` em produção e `kings_newsletter_preview` nos demais ambientes. |
+| `MONGODB_DB_NAME` | Configuração opcional compatível para o nome do banco, usada quando `MONGODB_NAME` não estiver definida. |
 | `RATE_LIMIT_WINDOW_MS` | Janela do limitador de requisições em milissegundos (padrão: 900000, 15 minutos). |
 | `RATE_LIMIT_SUBSCRIBE_IP_MAX` | Solicitações de assinatura por IP em cada janela (padrão: 10). |
 | `RATE_LIMIT_SUBSCRIBE_EMAIL_MAX` | Tentativas por e-mail normalizado em cada janela (padrão: 3). |
@@ -143,6 +147,11 @@ Acesse [http://localhost:3000](http://localhost:3000).
 | `APP_URL` | URL pública canônica usada para gerar links de confirmação e cancelamento. |
 | `NOTIFY_SECRET` | Segredo que autoriza operações protegidas de publicação e notificação de notícias. |
 | `WORKER_CONTROL_SECRET` | Segredo separado, com pelo menos 32 caracteres, compartilhado entre o site e o canal de controle do worker. |
+| `CLOUDFLARE_ACCOUNT_ID` | ID da conta Cloudflare usado para enviar imagens ao R2. |
+| `R2_ACCESS_KEY_ID` | ID da chave de acesso ao R2 usada no envio de imagens. |
+| `R2_SECRET_ACCESS_KEY` | Chave secreta de acesso ao R2 usada no envio de imagens. |
+| `R2_BUCKET_NAME` | Nome opcional do bucket R2; o padrão é `kings-newsletter-images`. |
+| `R2_PUBLIC_BASE_URL` | URL pública base das imagens enviadas ao R2. O ID da conta, o ID e o segredo da chave de acesso e a URL pública são necessários ao publicar uma notícia com imagem. |
 | `ADMIN_USERNAME` | Nome de usuário do painel administrativo privado. |
 | `ADMIN_PASSWORD` | Senha forte para o painel administrativo privado. |
 | `ADMIN_SESSION_SECRET` | Chave aleatória de assinatura, com pelo menos 32 caracteres, para as sessões administrativas. |
@@ -167,20 +176,25 @@ Na inicialização, o servidor avisa quando MongoDB, e-mail ou publicação prot
 | `GET` | `/api/news` | Retorna a edição mais recente. |
 | `GET` | `/api/news?date=dd/mm/yyyy` | Retorna uma edição por data. |
 | `GET` | `/api/news?history=true` | Lista as datas de edições disponíveis. |
-| `POST` | `/api/news` | Publica ou atualiza notícias de uma edição. Exige `NOTIFY_SECRET`. |
+| `POST` | `/api/news` | Publica ou atualiza notícias de uma edição. Exige `NOTIFY_SECRET`; também requer R2 ao enviar uma imagem. |
 | `POST` | `/api/subscribe` | Solicita confirmação de assinatura por e-mail. |
 | `GET` | `/api/confirm?token=...` | Confirma uma assinatura. |
-| `GET` | `/api/unsubscribe?token=...` | Cancela notificações por e-mail. |
+| `GET`, `POST` | `/api/unsubscribe?token=...` | GET exibe a confirmação do cancelamento; POST conclui o cancelamento. |
 | `POST` | `/api/notify-news` | Envia notificações de notícias publicadas. Exige `NOTIFY_SECRET`. |
+| `POST` | `/api/migrate-news` | Importação pontual das edições JSON de `data/` para o MongoDB. Exige `NOTIFY_SECRET`; existe como função da Vercel, mas não é montada no servidor Express local. |
 | `POST` | `/api/admin/login` | Inicia uma sessão administrativa. |
 | `POST` | `/api/admin/logout` | Encerra uma sessão administrativa. |
 | `GET` | `/api/admin/dashboard?days=7` | Consulta métricas de inscritos, e-mails e worker. Exige sessão administrativa. |
+| `POST` | `/api/admin/test-email` | Envia uma cópia de teste ao endereço informado por um administrador autenticado. Restrito à branch Preview `reconciliation/newsletter-r2-homepage` da Vercel e ao banco `kings_newsletter_preview`. |
+| `GET`, `POST`, `PUT`, `DELETE` | `/api/admin/updates` | Gerencia avisos do site. Exige sessão administrativa. |
 | `GET`, `PUT` | `/api/admin/schedule` | Consulta ou altera o intervalo e o estado do agendamento do worker. Exige sessão administrativa. |
 | `POST` | `/api/admin/dispatch` | Envia imediatamente as notícias pendentes. Exige sessão administrativa. |
+| `GET` | `/api/updates/active` | Consulta o aviso ativo no momento. |
 | `GET` | `/api/worker/config` | Consulta a configuração de agendamento do worker. Exige `WORKER_CONTROL_SECRET`. |
 | `POST` | `/api/worker/heartbeat` | Informa o estado do worker e o horário da próxima execução. Exige `WORKER_CONTROL_SECRET`. |
+| `GET` | `/api/camara-deputados`, `/api/camara-despesas`, `/api/camara-ceap`, `/api/transferegov-emendas` | Manipuladores de dados públicos montados pelo Express local. Na Vercel, use `/api/public-data?source=...`; os rewrites dos caminhos amigáveis ainda não estão configurados, então as requisições atuais do frontend para esses caminhos não são encaminhadas lá. |
 
-As datas das edições usam o formato `dd/mm/yyyy`. A API também retorna `issueNumber` quando a edição já foi registrada. Os endpoints protegidos esperam o segredo configurado no cabeçalho `Authorization`.
+As datas das edições usam o formato `dd/mm/yyyy`. A API também retorna `issueNumber` quando a edição já foi registrada. Publicação, notificação e migração usam `NOTIFY_SECRET` como token Bearer; os endpoints do worker usam `WORKER_CONTROL_SECRET`. Os endpoints administrativos usam o cookie de sessão criado no login, não um segredo no cabeçalho `Authorization`.
 
 ### Numeração de edições existentes
 
@@ -196,6 +210,8 @@ npm run lint
 ```
 
 Os testes unitários usam substitutos para o MongoDB e o envio de e-mails, portanto não exigem serviços externos nem credenciais de produção. Os testes de navegador usam Playwright e Chromium. O workflow está configurado para executar testes unitários no Node.js 20 e 22, lint e testes de navegador em pull requests direcionados à `main`. Rastros e relatórios do navegador são enviados como artefatos quando essas verificações falham.
+
+O script `npm test` lista explicitamente os arquivos dos testes unitários e atualmente não inclui `test/worker-schedule.test.js`; execute esse teste separadamente com `node --test test/worker-schedule.test.js`.
 
 Para executar os testes de navegador localmente, instale o Chromium:
 
@@ -216,7 +232,7 @@ Se o envio falhar, verifique se as duas variáveis SMTP estão configuradas, se 
 
 - Configure `APP_URL` como a origem canônica do site (por exemplo, `https://seudominio.com`), sem caminho, query string ou fragmento. Os links enviados por e-mail não devem depender do cabeçalho `Host` recebido.
 - Em produção, `APP_URL` e `MONGODB_URI` são obrigatórias; a inicialização informa claramente quando falta configuração necessária.
-- O cancelamento de inscrição usa GET apenas para exibir a página de confirmação e POST para concluir a ação. Os cabeçalhos de segurança são configurados na Vercel.
+- O cancelamento de inscrição usa GET apenas para exibir a página de confirmação e POST para concluir a ação. O manipulador define `Referrer-Policy: no-referrer` nesse fluxo. Atualmente, `vercel.json` configura rewrites, mas não declara regras próprias de cabeçalhos de segurança.
 - As consultas à Câmara dos Deputados e ao Transferegov usam limites de tempo e tamanho, cache local limitado e cache compartilhado no CDN para respostas públicas bem-sucedidas. As listas de deputados e despesas usam `s-maxage=300` (5 minutos), a CEAP usa `s-maxage=1800` (30 minutos) e as emendas do Transferegov usam `s-maxage=600` (10 minutos). O `stale-while-revalidate` permite servir dados temporariamente desatualizados enquanto o CDN atualiza o cache. Respostas de erro não recebem esses cabeçalhos, e a API de notícias não usa cache compartilhado no CDN para evitar atrasos após a publicação de uma edição.
 - O código da aplicação não chama `url.parse()` diretamente. Para identificar a origem de um aviso `DEP0169`, reproduza-o com `NODE_OPTIONS=--trace-deprecation` e inspecione o stack trace do runtime/implantação em vez de atualizar dependências sem diagnóstico.
 

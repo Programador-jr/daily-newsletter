@@ -5,8 +5,7 @@ const testEmail = require('../lib/api-handlers/admin/test-email');
 
 const environmentKeys = [
   'ADMIN_USERNAME', 'ADMIN_PASSWORD', 'ADMIN_SESSION_SECRET',
-  'VERCEL_ENV', 'VERCEL_GIT_COMMIT_REF', 'MONGODB_NAME',
-  'MONGODB_DB_NAME', 'NEWSLETTER_TEST_EMAIL'
+  'VERCEL_ENV', 'VERCEL_GIT_COMMIT_REF', 'MONGODB_NAME', 'MONGODB_DB_NAME'
 ];
 
 function configurePreview(t, overrides = {}) {
@@ -18,7 +17,6 @@ function configurePreview(t, overrides = {}) {
     VERCEL_ENV: 'preview',
     VERCEL_GIT_COMMIT_REF: 'reconciliation/newsletter-r2-homepage',
     MONGODB_DB_NAME: 'kings_newsletter_preview',
-    NEWSLETTER_TEST_EMAIL: 'private-test@example.com',
     ...overrides
   });
   t.after(() => {
@@ -48,20 +46,20 @@ test('newsletter test email requires an authenticated admin session', async t =>
   assert.equal(response.headers['Cache-Control'], 'no-store');
 });
 
-test('newsletter test email is restricted to the isolated preview branch and database', async t => {
-  configurePreview(t, { VERCEL_GIT_COMMIT_REF: 'main' });
+test('newsletter test email is restricted to the isolated Preview environment', async t => {
+  configurePreview(t, { VERCEL_ENV: 'production' });
   const token = createSessionToken();
   const response = mockResponse();
-  await testEmail({ method: 'POST', headers: { cookie: 'kings_admin_session=' + token } }, response);
+  await testEmail({ method: 'POST', headers: { cookie: 'kings_admin_session=' + token }, body: { email: 'admin@example.com' } }, response);
   assert.equal(response.statusCode, 403);
 });
 
-test('newsletter test email fails closed when the private recipient is not configured', async t => {
-  configurePreview(t, { NEWSLETTER_TEST_EMAIL: '' });
+test('newsletter test email validates the recipient supplied by the admin', async t => {
+  configurePreview(t);
   const token = createSessionToken();
   const response = mockResponse();
-  await testEmail({ method: 'POST', headers: { cookie: 'kings_admin_session=' + token } }, response);
-  assert.equal(response.statusCode, 503);
+  await testEmail({ method: 'POST', headers: { cookie: 'kings_admin_session=' + token }, body: { email: 'invalid' } }, response);
+  assert.equal(response.statusCode, 400);
 });
 
 test('newsletter test email endpoint only accepts POST', async () => {
