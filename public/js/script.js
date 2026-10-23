@@ -305,7 +305,7 @@ function createStoryCard(story, featured = false, index = 0) {
     image.alt = asText(story?.image?.alt || story?.title || 'Imagem da notícia');
     image.loading = 'lazy';
     image.decoding = 'async';
-    image.referrerPolicy = 'no-referrer';
+    image.referrerPolicy = 'strict-origin-when-cross-origin';
     image.addEventListener('error', () => image.remove(), { once: true });
     article.append(image);
   }
