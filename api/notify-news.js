@@ -7,8 +7,7 @@ const crypto = require('node:crypto');
 const { sendEmail } = require('../lib/email');
 const { createToken, hashToken } = require('../lib/tokens');
 const { getAppUrl } = require('../lib/app-url');
-const { calendarDateKey } = require('../lib/news-date');
-
+ 
 function getNewsKey(story) {
   return story.url || `${story.editionDate || ''}|${story.title || ''}`;
 }
@@ -45,12 +44,12 @@ async function notifyLatestNews() {
       .sort((a, b) => parseDate(b.editionDate) - parseDate(a.editionDate))[0]
       .editionDate;
 
-    const editionDateKey = calendarDateKey(latestEditionDate);
-    const stories = (await News.find({ editionDate: latestEditionDate }).lean())
-      .filter(story => calendarDateKey(story.publishedAt) === editionDateKey);
+    // Include every story assigned to the latest edition, even when publishedAt is earlier.
+    const stories = await News.find({ editionDate: latestEditionDate }).lean();
     stories.sort((a, b) => {
-      const difference = parseDate(b.publishedAt) - parseDate(a.publishedAt);
-      return difference || String(a._id).localeCompare(String(b._id));
+      const headlineDifference = Number(Boolean(b.headline)) - Number(Boolean(a.headline));
+      const publishedDifference = parseDate(b.publishedAt) - parseDate(a.publishedAt);
+      return headlineDifference || publishedDifference || String(a._id).localeCompare(String(b._id));
     });
 
     const keys = stories.map(getNewsKey);
