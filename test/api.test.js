@@ -59,7 +59,6 @@ const modules = {
       if (pipeline.some(stage => stage.$group)) {
         const counts = new Map();
         for (const row of state.historyNews) {
-          if (row.editionDate === latest && row.publishedAt && row.publishedAt !== latest) continue;
           counts.set(row.editionDate, (counts.get(row.editionDate) || 0) + 1);
         }
         return [...counts].map(([date, stories]) => ({ date, stories, title: 'Edição de ' + date }))
@@ -67,10 +66,8 @@ const modules = {
       }
       const match = pipeline.find(stage => stage.$match && stage.$match.editionDate);
       if (match) return state.latestNews.filter(row =>
-        (row.editionDate === undefined || row.editionDate === match.$match.editionDate) &&
-        parse(row.publishedAt) === parse(match.$match.editionDate) &&
-        (!match.$match.publishedAt || row.publishedAt === match.$match.publishedAt)
-      ).sort((x,y) => parse(y.publishedAt)-parse(x.publishedAt) || Number(Boolean(y.headline))-Number(Boolean(x.headline)) || String(y._id).localeCompare(String(x._id)));
+        row.editionDate === undefined || row.editionDate === match.$match.editionDate
+      ).sort((x,y) => Number(Boolean(y.headline))-Number(Boolean(x.headline)) || parse(y.publishedAt)-parse(x.publishedAt) || String(y._id).localeCompare(String(x._id)));
       return latest ? [{ editionDate: latest }] : [];
     },
     bulkWrite: async (...args) => {
@@ -259,7 +256,7 @@ test('news history groups editions and sorts dates newest first', async () => {
   ]);
 });
 
-test('news edition excludes stories published on a different date', async () => {
+test('news edition includes all stories assigned to the edition regardless of publication date', async () => {
   state.latestNews = [
     { _id: 'a', headline: false, publishedAt: '05/10/2026' },
     { _id: 'b', headline: true, publishedAt: '06/10/2026' },
@@ -271,7 +268,7 @@ test('news edition excludes stories published on a different date', async () => 
   await newsHandler(createRequest({ query: { date: '06/10/2026' } }), response);
 
   assert.equal(response.statusCode, 200);
-  assert.deepEqual(response.body.stories.map(story => story._id), ['b', 'c']);
+  assert.deepEqual(response.body.stories.map(story => story._id), ['b', 'd', 'c', 'a']);
 });
 
 test('news publishing requires authorization', async () => {
