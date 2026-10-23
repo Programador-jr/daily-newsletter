@@ -236,6 +236,23 @@ test('new stories added to the same edition do not resend stories already delive
 });
 
 
+test('stories with earlier publication dates are still included in their assigned edition', async () => {
+  state.latestStories = [
+    { ...makeStory('Headline', 'https://example.com/headline'), headline: true },
+    { ...makeStory('Late news', 'https://example.com/late'), publishedAt: '20/10/2026', headline: false },
+    { ...makeStory('Older report', 'https://example.com/older'), publishedAt: '09/10/2026', headline: false }
+  ];
+
+  const result = await notifyHandler.notifyLatestNews({ headers: { host: 'localhost:3000' } });
+
+  assert.equal(result.sent, true);
+  assert.equal(result.newStories, 3);
+  assert.equal(state.sentEmails.length, 1);
+  assert.match(state.sentEmails[0].text, /Headline/);
+  assert.match(state.sentEmails[0].text, /Late news/);
+  assert.match(state.sentEmails[0].text, /Older report/);
+});
+
 test('the same source can be delivered again in a different edition', async () => {
   const request = { headers: { host: 'localhost:3000' } };
   await notifyHandler.notifyLatestNews(request);
