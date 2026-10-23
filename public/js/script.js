@@ -93,6 +93,14 @@ const formatDate = (value) => {
   }).format(date);
 };
 
+const formatEditionLabel = (issueNumber, date) => {
+  const formattedDate = formatDate(date);
+  if (!formattedDate) return "";
+  return issueNumber
+    ? `Edição #${String(issueNumber).padStart(3, '0')} • ${formattedDate}`
+    : formattedDate;
+};
+
 const setLoadingState = (loading) => {
   if (dateEl && loading) {
     dateEl.textContent = "CARREGANDO...";
@@ -123,7 +131,7 @@ fetch("/api/news")
     currentEditionDate = asText(data?.date);
 
     if (dateEl) {
-      dateEl.textContent = formatDate(data?.date).toUpperCase();
+      dateEl.textContent = formatEditionLabel(data?.issueNumber, data?.date);
     }
 
     document.title = `King's Newsletter — ${formatDate(data?.date)}`;
@@ -268,12 +276,15 @@ window.loadArchiveEdition = function(date) {
     .then((data) => {
       const editionTitle = document.querySelector('#edition-title');
       if (editionTitle) {
+        const issueLabel = data?.issueNumber
+          ? 'Edição #' + String(data.issueNumber).padStart(3, '0')
+          : 'Edição';
         editionTitle.textContent = data.date === currentEditionDate
-          ? 'Edição Atual'
-          : `Edição ${formatDate(data.date)}`;
+          ? issueLabel + ' · Atual'
+          : issueLabel + ' · ' + formatDate(data.date);
       }
 
-      if (dateEl) dateEl.textContent = formatDate(data.date).toUpperCase();
+      if (dateEl) dateEl.textContent = formatEditionLabel(data.issueNumber, data.date);
 
       currentStories = Array.isArray(data.stories) ? data.stories : [];
       currentFilter = 'all';
