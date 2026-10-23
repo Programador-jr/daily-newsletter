@@ -314,6 +314,7 @@ function createStoryCard(story, featured = false, index = 0) {
     image.alt = asText(story?.image?.alt || story?.title || 'Imagem da notícia');
     image.loading = 'lazy';
     image.decoding = 'async';
+    image.referrerPolicy = 'strict-origin-when-cross-origin';
     article.append(image);
   }
 
