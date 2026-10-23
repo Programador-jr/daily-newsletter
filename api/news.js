@@ -218,12 +218,16 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    const selectedHeadline = editionStories.find(story => story.headline);
-    if (selectedHeadline) {
-      await News.updateMany(
-        { editionDate, headline: true },
-        { $set: { headline: false } }
-      );
+    const existingHeadline = await News.findOne({ editionDate, headline: true })
+      .select('url')
+      .lean();
+
+    if (existingHeadline) {
+      for (const story of editionStories) {
+        story.headline = story.url === existingHeadline.url;
+      }
+    } else {
+      const selectedHeadline = editionStories.find(story => story.headline) || editionStories[0];
       for (const story of editionStories) {
         story.headline = story.url === selectedHeadline.url;
       }
