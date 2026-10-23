@@ -172,7 +172,7 @@ module.exports = async function handler(req, res) {
         { $match: filter },
         ...publishedDateStages(),
         { $match: { $expr: { $eq: ['$_publishedDay', '$editionDate'] } } },
-        { $sort: { _publishedSort: -1, headline: -1, _id: -1 } },
+        { $sort: { headline: -1, _id: -1 } },
         { $project: { _publishedSort: 0, _publishedDay: 0 } }
       ]);
       const edition = await Edition.findOne({ editionDate: date }).lean();
@@ -215,6 +215,17 @@ module.exports = async function handler(req, res) {
           alt: imageAlt,
           contentType: uploadedImage.contentType
         };
+      }
+    }
+
+    const selectedHeadline = editionStories.find(story => story.headline);
+    if (selectedHeadline) {
+      await News.updateMany(
+        { editionDate, headline: true },
+        { $set: { headline: false } }
+      );
+      for (const story of editionStories) {
+        story.headline = story.url === selectedHeadline.url;
       }
     }
 
