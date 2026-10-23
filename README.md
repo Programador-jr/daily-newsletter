@@ -185,7 +185,7 @@ On startup, the server warns when MongoDB, email, or protected publishing is not
 | `POST` | `/api/admin/login` | Start an administrator session. |
 | `POST` | `/api/admin/logout` | End an administrator session. |
 | `GET` | `/api/admin/dashboard?days=7` | Read subscriber, email, and worker metrics. Requires an administrator session. |
-| `POST` | `/api/admin/test-email` | Send a test edition to the recipient supplied by an administrator session. Restricted to the `reconciliation/newsletter-r2-homepage` Vercel Preview branch and `kings_newsletter_preview` database. |
+| `POST` | `/api/admin/test-email` | Send a test edition to the recipient supplied by an authenticated administrator. Requires a valid admin session signed with `ADMIN_SESSION_SECRET`; available in Preview and production. |
 | `GET`, `POST`, `PUT`, `DELETE` | `/api/admin/updates` | Manage announcement cards. Requires an administrator session. |
 | `GET`, `PUT` | `/api/admin/schedule` | Read or update the worker interval and enabled state. Requires an administrator session. |
 | `POST` | `/api/admin/dispatch` | Immediately send pending news. Requires an administrator session. |

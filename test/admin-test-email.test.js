@@ -46,12 +46,12 @@ test('newsletter test email requires an authenticated admin session', async t =>
   assert.equal(response.headers['Cache-Control'], 'no-store');
 });
 
-test('newsletter test email is restricted to the isolated Preview environment', async t => {
+test('newsletter test email is available in production for an authenticated admin', async t => {
   configurePreview(t, { VERCEL_ENV: 'production' });
   const token = createSessionToken();
   const response = mockResponse();
-  await testEmail({ method: 'POST', headers: { cookie: 'kings_admin_session=' + token }, body: { email: 'admin@example.com' } }, response);
-  assert.equal(response.statusCode, 403);
+  await testEmail({ method: 'POST', headers: { cookie: 'kings_admin_session=' + token }, body: { email: 'invalid' } }, response);
+  assert.equal(response.statusCode, 400);
 });
 
 test('newsletter test email validates the recipient supplied by the admin', async t => {
