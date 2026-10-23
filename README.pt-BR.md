@@ -185,7 +185,7 @@ Na inicialização, o servidor avisa quando MongoDB, e-mail ou publicação prot
 | `POST` | `/api/admin/login` | Inicia uma sessão administrativa. |
 | `POST` | `/api/admin/logout` | Encerra uma sessão administrativa. |
 | `GET` | `/api/admin/dashboard?days=7` | Consulta métricas de inscritos, e-mails e worker. Exige sessão administrativa. |
-| `POST` | `/api/admin/test-email` | Envia uma cópia de teste ao endereço informado por um administrador autenticado. Restrito à branch Preview `reconciliation/newsletter-r2-homepage` da Vercel e ao banco `kings_newsletter_preview`. |
+| `POST` | `/api/admin/test-email` | Envia uma cópia de teste ao endereço informado por um administrador autenticado. Exige uma sessão válida assinada com `ADMIN_SESSION_SECRET` e funciona em Preview e produção. |
 | `GET`, `POST`, `PUT`, `DELETE` | `/api/admin/updates` | Gerencia avisos do site. Exige sessão administrativa. |
 | `GET`, `PUT` | `/api/admin/schedule` | Consulta ou altera o intervalo e o estado do agendamento do worker. Exige sessão administrativa. |
 | `POST` | `/api/admin/dispatch` | Envia imediatamente as notícias pendentes. Exige sessão administrativa. |
