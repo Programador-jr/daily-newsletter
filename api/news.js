@@ -134,8 +134,6 @@ module.exports = async function handler(req, res) {
         const pipeline = [
           { $addFields: { _editionSort: { $dateFromString: { dateString: '$editionDate', format: '%d/%m/%Y', onError: null, onNull: null } } } },
           { $match: { _editionSort: { $ne: null } } },
-          ...publishedDateStages(),
-          { $match: { $expr: { $eq: ['$_publishedDay', '$editionDate'] } } }
         ];
         pipeline.push(
           { $group: { _id: '$editionDate', stories: { $sum: 1 }, _editionSort: { $max: '$_editionSort' } } },
@@ -171,8 +169,7 @@ module.exports = async function handler(req, res) {
       const stories = await News.aggregate([
         { $match: filter },
         ...publishedDateStages(),
-        { $match: { $expr: { $eq: ['$_publishedDay', '$editionDate'] } } },
-        { $sort: { headline: -1, _id: -1 } },
+        { $sort: { headline: -1, _publishedSort: -1, _id: -1 } },
         { $project: { _publishedSort: 0, _publishedDay: 0 } }
       ]);
       const edition = await Edition.findOne({ editionDate: date }).lean();
@@ -196,11 +193,8 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'Uma ou mais notícias possuem campos inválidos.' });
     }
 
-    const editionDateKey = calendarDateKey(editionDate);
-    const editionStories = normalized.filter(story => calendarDateKey(story.publishedAt) === editionDateKey);
-    if (!editionStories.length) {
-      return res.status(400).json({ error: 'Nenhuma notícia corresponde à data da edição.' });
-    }
+    // editionDate identifies the newsletter edition; publishedAt preserves the real publication date.
+    const editionStories = normalized;
 
     for (const story of editionStories) {
       const sourceImageUrl = story.imageUrl;
