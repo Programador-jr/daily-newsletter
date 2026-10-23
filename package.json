@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node --watch server.js",
     "start": "node server.js",
-    "test": "node --test test/api.test.js test/news-edition.test.js test/admin-auth.test.js test/admin-metrics.test.js test/admin-updates.test.js test/config.test.js test/email.test.js test/lib.test.js test/notify.test.js test/rate-limiter.test.js test/read-response-limited.test.js test/public-cache.test.js",
+    "test": "node --test test/admin-test-email.test.js test/api.test.js test/news-edition.test.js test/admin-auth.test.js test/admin-metrics.test.js test/admin-updates.test.js test/config.test.js test/email.test.js test/lib.test.js test/notify.test.js test/rate-limiter.test.js test/read-response-limited.test.js test/public-cache.test.js",
     "test:e2e": "playwright test",
     "lint": "eslint .",
     "migrate:edition-numbers": "node scripts/backfill-edition-numbers.js"

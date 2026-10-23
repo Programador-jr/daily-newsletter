@@ -193,15 +193,24 @@ async function notifyLatestNews() {
 
       const unsubscribeUrl = appUrl + '/api/unsubscribe?token=' + unsubscribeToken;
       const reservedStories = reservations.map(item => item.story);
-      const items = reservedStories.map(story =>
-        '<article style="padding:0 0 24px;margin:0 0 24px;border-bottom:1px solid #d8e5e1">' +
-          '<div style="font-size:12px;font-weight:bold;text-transform:uppercase;color:#0b766b">' + escapeHtml(story.category || '') + '</div>' +
+      const items = reservedStories.map(story => {
+        const imageUrl = typeof story.image?.url === 'string' && /^https:\/\//i.test(story.image.url)
+          ? story.image.url
+          : '';
+        const imageAlt = escapeHtml(story.image?.alt || story.title || 'Imagem da notícia');
+        const imageMarkup = imageUrl
+          ? '<img src="' + escapeHtml(imageUrl) + '" alt="' + imageAlt + '" width="616" style="display:block;width:100%;max-width:616px;height:auto;object-fit:contain;border:0;margin:0 0 18px" />'
+          : '';
+
+        return '<article style="padding:0 0 24px;margin:0 0 24px;border-bottom:1px solid #d8e5e1">' +
+          imageMarkup +
+          '<div style="font-size:12px;font-weight:bold;text-transform:uppercase;color:#0b766b;letter-spacing:.5px">' + escapeHtml(story.category || '') + '</div>' +
           '<h2 style="font-family:Georgia,serif;font-size:21px;line-height:1.25;margin:8px 0">' + escapeHtml(story.title || '') + '</h2>' +
           '<p style="line-height:1.6;color:#536762">' + escapeHtml(story.summary || '') + '</p>' +
           '<p style="line-height:1.6"><strong>Contexto:</strong> ' + escapeHtml(story.context || '') + '</p>' +
           '<a href="' + escapeHtml(story.url || '#') + '" style="color:#0b766b;font-weight:bold">Ler fonte</a>' +
-        '</article>'
-      ).join('');
+        '</article>';
+      }).join('');
 
       const textItems = reservedStories.map(story =>
         (story.title || '') + '\n' + (story.summary || '') + '\nContexto: ' +
@@ -216,13 +225,15 @@ async function notifyLatestNews() {
           subject: 'Novas atualizações — ' + latestEditionDate,
           text: "King's Newsletter\n\nNovas atualizações — " + latestEditionDate + '\n\n' +
             textItems + '\n\nCancelar inscrição: ' + unsubscribeUrl,
-          html: '<div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;padding:32px;color:#1c2d2a">' +
-            '<h1 style="font-family:Georgia,serif;margin:0 0 8px">King\'s Newsletter</h1>' +
+          html: '<div style="font-family:Arial,sans-serif;width:100%;max-width:680px;margin:0 auto;padding:32px;box-sizing:border-box;color:#1c2d2a;background:#ffffff">' +
+            '<div style="background:#064e46;padding:12px 16px;margin:0 0 16px;border-bottom:3px solid #f5c518">' +
+              '<img src="https://cdn.shardcloud.app/4d7d8031-4b99-4759-afbc-1e01575b29d6/kingsNewsletter.png" alt="King\'s Newsletter" width="220" style="display:block;width:100%;max-width:220px;height:auto;border:0" />' +
+            '</div>' +
             '<p style="color:#536762">Novas atualizações — ' + escapeHtml(latestEditionDate) + '</p>' +
             items +
             '<p style="font-size:13px;color:#536762">Você está recebendo este e-mail porque confirmou sua inscrição.</p>' +
             '<p style="font-size:13px"><a href="' + unsubscribeUrl + '" style="color:#0b766b">Cancelar inscrição</a></p>' +
-            '<p style="font-size:12px;color:#536762">Feito com café e JavaScript por Daniel Melo</p>' +
+            '<p style="font-size:12px;color:#536762;text-align:center;margin:24px 0 0">Feito com café e JavaScript por Daniel Melo</p>' +
             '</div>'
         });
       } catch (error) {

@@ -76,20 +76,22 @@ King's Newsletter is a responsive news platform for following current events and
 
 ```text
 .
-├── api/                  # News, subscription, confirmation, and notification handlers
-├── data/                 # Example news data and schema
-├── lib/                  # Database connection, models, email, and token helpers
+├── api/                  # News, subscription, notification, and Vercel route handlers
+├── data/                 # Legacy JSON editions used by the one-time MongoDB importer
+├── lib/                  # Database models, API handlers, email, storage, and security helpers
 ├── test/                 # API and utility tests
 ├── public/
 │   ├── css/              # Site and page styles
 │   ├── js/               # Browser-side behavior
 │   └── *.html             # Newsletter, editions, history, and president pages
-├── scripts/              # Diagnostic and benchmark scripts
+├── scripts/              # Edition migration, diagnostics, and benchmark scripts
 ├── .github/workflows/    # Automated checks for pull requests targeting main
 ├── server.js             # Local Express server and routes
 ├── vercel.json           # Vercel configuration
 └── package.json
 ```
+
+Current editions and archives are read from MongoDB. The JSON files in `data/` are legacy import sources for `/api/migrate-news`, not the live news store.
 
 ## Getting started
 
@@ -132,6 +134,8 @@ Open [http://localhost:3000](http://localhost:3000).
 | Variable | Purpose |
 | --- | --- |
 | `MONGODB_URI` | MongoDB connection string. Required for news and subscription data. |
+| `MONGODB_NAME` | Optional database name; takes precedence over `MONGODB_DB_NAME`. Defaults to `kings_newsletter` in production and `kings_newsletter_preview` otherwise. |
+| `MONGODB_DB_NAME` | Optional compatibility setting for the database name when `MONGODB_NAME` is unset. |
 | `RATE_LIMIT_WINDOW_MS` | Rate-limit window in milliseconds (default: 900000, 15 minutes). |
 | `RATE_LIMIT_SUBSCRIBE_IP_MAX` | Subscription requests per IP per window (default: 10). |
 | `RATE_LIMIT_SUBSCRIBE_EMAIL_MAX` | Attempts per normalized email per window (default: 3). |
@@ -143,6 +147,11 @@ Open [http://localhost:3000](http://localhost:3000).
 | `APP_URL` | Canonical public base URL used to generate confirmation and unsubscribe links. |
 | `NOTIFY_SECRET` | Secret used to authorize protected news publishing and notification requests. |
 | `WORKER_CONTROL_SECRET` | Separate secret of at least 32 characters shared by the site and worker control channel. |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare account ID used for R2 image uploads. |
+| `R2_ACCESS_KEY_ID` | R2 access key ID used for image uploads. |
+| `R2_SECRET_ACCESS_KEY` | R2 secret access key used for image uploads. |
+| `R2_BUCKET_NAME` | Optional R2 bucket name; defaults to `kings-newsletter-images`. |
+| `R2_PUBLIC_BASE_URL` | Public base URL for uploaded R2 images. The account ID, access key ID, secret access key, and public base URL are required when publishing a story with an image. |
 | `ADMIN_USERNAME` | Username for the private administration panel. |
 | `ADMIN_PASSWORD` | Strong password for the private administration panel. |
 | `ADMIN_SESSION_SECRET` | Random signing key of at least 32 characters for administrator sessions. |
@@ -167,20 +176,25 @@ On startup, the server warns when MongoDB, email, or protected publishing is not
 | `GET` | `/api/news` | Get the latest edition. |
 | `GET` | `/api/news?date=dd/mm/yyyy` | Get an edition by date. |
 | `GET` | `/api/news?history=true` | List available edition dates. |
-| `POST` | `/api/news` | Publish or update stories for an edition. Requires `NOTIFY_SECRET`. |
+| `POST` | `/api/news` | Publish or update stories for an edition. Requires `NOTIFY_SECRET`; R2 settings are also required when uploading an image. |
 | `POST` | `/api/subscribe` | Request an email subscription confirmation. |
 | `GET` | `/api/confirm?token=...` | Confirm a subscription. |
-| `GET` | `/api/unsubscribe?token=...` | Unsubscribe from email updates. |
+| `GET`, `POST` | `/api/unsubscribe?token=...` | GET displays the cancellation confirmation; POST completes the cancellation. |
 | `POST` | `/api/notify-news` | Send notifications for newly published stories. Requires `NOTIFY_SECRET`. |
+| `POST` | `/api/migrate-news` | One-time import of JSON editions from `data/` into MongoDB. Requires `NOTIFY_SECRET`; available as a Vercel function, not mounted by the local Express server. |
 | `POST` | `/api/admin/login` | Start an administrator session. |
 | `POST` | `/api/admin/logout` | End an administrator session. |
 | `GET` | `/api/admin/dashboard?days=7` | Read subscriber, email, and worker metrics. Requires an administrator session. |
+| `POST` | `/api/admin/test-email` | Send a test edition to the recipient supplied by an administrator session. Restricted to the `reconciliation/newsletter-r2-homepage` Vercel Preview branch and `kings_newsletter_preview` database. |
+| `GET`, `POST`, `PUT`, `DELETE` | `/api/admin/updates` | Manage announcement cards. Requires an administrator session. |
 | `GET`, `PUT` | `/api/admin/schedule` | Read or update the worker interval and enabled state. Requires an administrator session. |
 | `POST` | `/api/admin/dispatch` | Immediately send pending news. Requires an administrator session. |
+| `GET` | `/api/updates/active` | Read the currently active announcement. |
 | `GET` | `/api/worker/config` | Read worker scheduling configuration. Requires `WORKER_CONTROL_SECRET`. |
 | `POST` | `/api/worker/heartbeat` | Report the worker's status and next run time. Requires `WORKER_CONTROL_SECRET`. |
+| `GET` | `/api/camara-deputados`, `/api/camara-despesas`, `/api/camara-ceap`, `/api/transferegov-emendas` | Public data handlers mounted by the local Express server. On Vercel, use `/api/public-data?source=...`; friendly-path rewrites are not currently configured, so the frontend's friendly-path requests are not routed there. |
 
-Edition dates use the `dd/mm/yyyy` format. The API also returns `issueNumber` once an edition record exists. Protected endpoints expect the configured secret in the `Authorization` header.
+Edition dates use the `dd/mm/yyyy` format. The API also returns `issueNumber` once an edition record exists. News publishing, notification, and migration requests use `NOTIFY_SECRET` as a Bearer token; worker endpoints use `WORKER_CONTROL_SECRET`. Administrator endpoints use the session cookie created at login, not an `Authorization` secret.
 
 ### Numbering existing editions
 
@@ -196,6 +210,8 @@ npm run lint
 ```
 
 Unit tests use stubs for MongoDB and email delivery, so they do not require external services or production credentials. The browser suite uses Playwright and Chromium. The workflow is configured to run unit tests on Node.js 20 and 22, lint, and browser checks for pull requests targeting `main`. Browser traces and reports are uploaded when browser checks fail.
+
+The `npm test` script lists its unit-test files explicitly and currently omits `test/worker-schedule.test.js`; run that test separately with `node --test test/worker-schedule.test.js`.
 
 Run browser tests locally after installing Chromium:
 
@@ -216,7 +232,7 @@ If email delivery fails, verify that both SMTP variables are configured, that th
 
 - Set `APP_URL` to the canonical site origin (for example, `https://your-domain.com`), without a path, query string, or fragment. Email links must not depend on the incoming `Host` header.
 - In production, `APP_URL` and `MONGODB_URI` are required; startup reports missing required configuration clearly.
-- Unsubscribe uses GET only to display the confirmation page and POST to complete the action. Security headers are configured in Vercel.
+- Unsubscribe uses GET only to display the confirmation page and POST to complete the action. The handler sets `Referrer-Policy: no-referrer` for this flow. `vercel.json` currently defines rewrites but no custom security-header rules.
 - Câmara dos Deputados and Transferegov queries use time and size limits, bounded local caching, and shared CDN caching for successful public responses. Deputy and spending lists use `s-maxage=300` (5 minutes), CEAP uses `s-maxage=1800` (30 minutes), and Transferegov amendments use `s-maxage=600` (10 minutes). `stale-while-revalidate` allows temporarily stale data while the CDN refreshes it. Error responses do not receive these cache headers, and the news API is not placed in shared CDN cache to avoid delaying newly published editions.
 - The application code does not directly call `url.parse()`. To identify the source of a `DEP0169` warning, reproduce it with `NODE_OPTIONS=--trace-deprecation` and inspect the runtime/deployment stack trace rather than updating dependencies blindly.
 
