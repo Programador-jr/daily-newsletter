@@ -139,7 +139,8 @@ fetch("/api/news")
 
     if (currentPage === '/') {
       if (featuredNews && stories.length > 0) {
-        featuredNews.replaceChildren(createStoryCard(stories[0], true));
+        const headlineStory = stories.find(story => story?.headline === true) || stories[0];
+        featuredNews.replaceChildren(createStoryCard(headlineStory, true));
       } else if (featuredNews) {
         showMessage(featuredNews, 'Nenhuma notícia disponível', 'Não há notícias para exibir nesta edição.');
       }
