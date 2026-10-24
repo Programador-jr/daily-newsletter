@@ -93,6 +93,14 @@ const formatDate = (value) => {
   }).format(date);
 };
 
+const formatEditionLabel = (issueNumber, date) => {
+  const formattedDate = formatDate(date);
+  if (!formattedDate) return "";
+  return issueNumber
+    ? `Edição #${String(issueNumber).padStart(3, '0')} • ${formattedDate}`
+    : formattedDate;
+};
+
 const setLoadingState = (loading) => {
   if (dateEl && loading) {
     dateEl.textContent = "CARREGANDO...";
@@ -125,14 +133,12 @@ fetch("/api/news")
     if (isEditionsPage) {
       const editionTitle = document.querySelector('#edition-title');
       if (editionTitle) {
-        editionTitle.textContent = data?.issueNumber
-          ? 'Edição #' + String(data.issueNumber).padStart(3, '0') + ' · Atual'
-          : 'Edição Atual';
+        editionTitle.textContent = formatEditionLabel(data?.issueNumber, data?.date) || 'Edição Atual';
       }
     }
 
     if (dateEl) {
-      dateEl.textContent = formatDate(data?.date).toUpperCase();
+      dateEl.textContent = formatEditionLabel(data?.issueNumber, data?.date);
     }
 
     document.title = `King's Newsletter — ${formatDate(data?.date)}`;
@@ -277,10 +283,7 @@ window.loadArchiveEdition = function(date) {
     .then((data) => {
       const editionTitle = document.querySelector('#edition-title');
       if (editionTitle) {
-        const issueLabel = data.issueNumber ? 'Edição #' + String(data.issueNumber).padStart(3, '0') : 'Edição';
-        editionTitle.textContent = data.date === currentEditionDate
-          ? issueLabel + ' · Atual'
-          : issueLabel + ' · ' + formatDate(data.date);
+        editionTitle.textContent = formatEditionLabel(data.issueNumber, data.date) || 'Edição';
       }
 
       if (dateEl) dateEl.textContent = formatDate(data.date).toUpperCase();
