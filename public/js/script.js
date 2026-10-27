@@ -79,7 +79,8 @@ window.addEventListener('site:navigation-ready', bindNavigationSearch);
 const formatDate = (value) => {
   if (!value) return "";
 
-  const match = String(value).match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  // Accept date-only values and date strings with time/metadata appended.
+  const match = String(value).trim().match(/^(\d{2})\/(\d{2})\/(\d{4})(?:\s|$)/);
   if (match) {
     return match[1] + '/' + match[2] + '/' + match[3];
   }
