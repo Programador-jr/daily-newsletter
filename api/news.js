@@ -65,11 +65,15 @@ function publishedDateStages() {
               $switch: {
                 branches: [
                   {
-                    case: { $regexMatch: { input: '$$publishedAt', regex: /^\d{2}\/\d{2}\/\d{4}$/ } },
-                    then: { $dateFromString: { dateString: '$$publishedAt', format: '%d/%m/%Y', timezone: 'America/Rio_Branco', onError: null, onNull: null } }
+                    case: { $regexMatch: { input: '$publishedAt', regex: /^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}/ } },
+                    then: { $dateFromString: { dateString: { $substrBytes: ['$publishedAt', 0, 16] }, format: '%d/%m/%Y %H:%M', timezone: 'America/Rio_Branco', onError: null, onNull: null } }
                   },
                   {
-                    case: { $regexMatch: { input: '$$publishedAt', regex: /^\d{4}-\d{2}-\d{2}$/ } },
+                    case: { $regexMatch: { input: '$publishedAt', regex: /^\d{2}\/\d{2}\/\d{4}/ } },
+                    then: { $dateFromString: { dateString: { $substrBytes: ['$publishedAt', 0, 10] }, format: '%d/%m/%Y', timezone: 'America/Rio_Branco', onError: null, onNull: null } }
+                  },
+                  {
+                    case: { $regexMatch: { input: '$publishedAt', regex: /^\d{4}-\d{2}-\d{2}$/ } },
                     then: { $dateFromString: { dateString: '$$publishedAt', format: '%Y-%m-%d', timezone: 'America/Rio_Branco', onError: null, onNull: null } }
                   }
                 ],
