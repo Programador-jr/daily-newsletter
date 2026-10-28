@@ -79,14 +79,16 @@ window.addEventListener('site:navigation-ready', bindNavigationSearch);
 const formatDate = (value) => {
   if (!value) return "";
 
-  // Accept date-only values and date strings with time/metadata appended.
-  const match = String(value).trim().match(/^(\d{2})\/(\d{2})\/(\d{4})(?:\s|$)/);
+  const textValue = String(value).trim();
+  // Parse Brazilian dates explicitly so DD/MM/YYYY with a time is never passed
+  // to Date(), which treats this format inconsistently across browsers.
+  const match = textValue.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:\s+(\d{2}):(\d{2}))?(?:\s|$)/);
   if (match) {
-    return match[1] + '/' + match[2] + '/' + match[3];
+    const date = match[1] + '/' + match[2] + '/' + match[3];
+    return match[4] && match[5] ? date + ' • ' + match[4] + ':' + match[5] : date;
   }
 
-  const date = new Date(value);
-
+  const date = new Date(textValue);
   return Number.isNaN(date.getTime()) ? "" : new Intl.DateTimeFormat("pt-BR", {
     day: "2-digit",
     month: "2-digit",
