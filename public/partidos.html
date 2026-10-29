@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="pt-BR" class="history-document">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore partidos e movimentos políticos, suas trajetórias, países, orientações e perfis comparáveis em 12 eixos.">
+  <title>Partidos e movimentos | King's Newsletter</title>
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/historia.css">
+  <link rel="stylesheet" href="/css/ideologias.css">
+  <link rel="stylesheet" href="/css/atlas.css">
+  <link rel="stylesheet" href="/css/political-catalogs.css">
+  <link rel="stylesheet" href="/css/partidos.css">
+  <link rel="stylesheet" href="/css/page-patterns.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/ui-kit.css">
+  <script src="/js/vercel-observability.js" defer></script>
+</head>
+<body class="history-page ideologies-page political-catalog-page atlas-catalog-page dedicated-catalog-page dedicated-parties-page" data-catalog-default="partidos">
+  <a class="skip-link" href="#catalog-main">Pular para o conteúdo</a>
+  <div class="container">
+    <header class="site-header">
+      <a class="logo" href="/" aria-label="Página inicial"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></a>
+      <nav class="header-main-nav" aria-label="Navegação principal"><div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div></nav>
+    </header>
+    <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+      <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
+      <nav class="site-sidebar-nav" aria-label="Páginas principais"><div class="site-sidebar-group"></div></nav>
+      <div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false"><span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div>
+    </aside>
+    <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
+
+    <main class="catalog-main" id="catalog-main" tabindex="-1">
+      <nav class="catalog-breadcrumb" aria-label="Trilha de navegação">
+        <a href="/politica">Política</a><span aria-hidden="true">/</span>
+        <a href="/catalogo-politico">Catálogo político</a><span aria-hidden="true">/</span>
+        <span id="catalog-breadcrumb-current">Ideologias e valores</span>
+      </nav>
+
+      <section class="history-hero ideology-hero catalog-hero atlas-hero">
+        <span class="eyebrow" id="catalog-eyebrow">Catálogo político · Ideologias e valores</span>
+        <h1 id="catalog-title">Ideologias e valores em doze dimensões.</h1>
+        <p id="catalog-description">Correntes e conceitos que disputam o poder, a economia e os costumes. Cada ficha reúne contexto, origem do vetor e uma impressão digital de doze eixos independentes.</p>
+        <div class="catalog-hero-links">
+          <a class="atlas-button" href="/teste-politico"><i class="fas fa-list-check" aria-hidden="true"></i> Fazer o quiz político</a>
+          <a class="atlas-button atlas-button-ghost" href="/comparar"><i class="fas fa-code-compare" aria-hidden="true"></i> Comparar perfis</a>
+          <a class="atlas-button atlas-button-ghost" href="/ideologias"><i class="fas fa-scale-balanced" aria-hidden="true"></i> Guia de ideologias</a>
+        </div>
+        <div class="catalog-stats atlas-hero-stats" id="catalog-stats" aria-label="Resumo do catálogo"></div>
+        <div class="catalog-spectrum" id="catalog-spectrum" aria-label="Distribuição do catálogo por famílias e grupos"></div>
+      </section>
+
+      <div class="catalog-ideology-view" id="catalog-ideology-view">
+        <div class="catalog-tools" id="catalog-tools" role="search">
+          <div class="catalog-tools-row">
+            <label class="catalog-search">
+              <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+              <input id="catalog-search" type="search" autocomplete="off" placeholder="Buscar ideologia, valor, ideia ou pensador..." aria-label="Buscar no catálogo de ideologias e valores">
+              <kbd aria-hidden="true">/</kbd>
+            </label>
+            <button class="catalog-filter-toggle" id="catalog-filter-toggle" type="button" aria-expanded="false" aria-controls="catalog-filter-drawer">
+              <i class="fas fa-sliders" aria-hidden="true"></i>
+              <span>Filtros</span>
+              <span class="catalog-filter-count" id="catalog-filter-count" hidden>0</span>
+            </button>
+            <div class="catalog-scope" id="catalog-scope" role="group" aria-label="Recorte do catálogo"></div>
+          </div>
+          <div class="catalog-chips" id="catalog-chips" role="group" aria-label="Filtrar por família ou grupo de valores"></div>
+        </div>
+
+        <div class="catalog-filter-drawer" id="catalog-filter-drawer" hidden>
+          <div class="catalog-drawer-inner">
+            <div class="catalog-drawer-head">
+              <div>
+                <span class="catalog-drawer-eyebrow"><i class="fas fa-sliders" aria-hidden="true"></i> 12 eixos</span>
+                <h2>Filtros avançados</h2>
+                <p>Filtre por inclinação nos 12 eixos políticos e pela intensidade da posição.</p>
+              </div>
+              <div class="catalog-drawer-actions">
+                <button type="button" class="catalog-drawer-clear" id="catalog-drawer-clear">Limpar tudo</button>
+                <button type="button" class="catalog-drawer-close" id="catalog-drawer-close" aria-label="Fechar filtros"><i class="fas fa-xmark" aria-hidden="true"></i></button>
+              </div>
+            </div>
+
+            <div class="catalog-drawer-subhead">
+              <div>
+                <h3>Posição nos 12 eixos políticos</h3>
+                <p>Selecione o polo desejado em cada eixo para encontrar perfis alinhados.</p>
+              </div>
+              <div class="catalog-intensity" role="radiogroup" aria-label="Intensidade da posição">
+                <span class="catalog-intensity-label">Intensidade:</span>
+                <label class="catalog-intensity-option">
+                  <input type="radio" name="catalog-intensity" value="any" checked>
+                  <span>Qualquer inclinação</span>
+                </label>
+                <label class="catalog-intensity-option">
+                  <input type="radio" name="catalog-intensity" value="strong">
+                  <span>Posição forte (≥ 60%)</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="catalog-axis-grid" id="catalog-axis-grid"></div>
+
+            <div class="catalog-drawer-foot">
+              <span class="catalog-drawer-result" id="catalog-drawer-result" aria-live="polite"></span>
+              <button type="button" class="atlas-button catalog-drawer-apply" id="catalog-drawer-apply">Ver resultados</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="catalog-active-filters" id="catalog-active-filters" hidden>
+          <span class="catalog-active-label">Filtros ativos:</span>
+          <div class="catalog-active-pills" id="catalog-active-pills"></div>
+          <button type="button" class="catalog-active-clear" id="catalog-active-clear">Limpar tudo</button>
+        </div>
+
+        <p class="catalog-result-info" id="catalog-result-count" role="status" aria-live="polite"></p>
+        <div class="catalog-method-note" id="catalog-method-note" hidden></div>
+
+        <p class="catalog-dna-note"><b>Como ler a faixa de 12 ícones:</b> cada ícone é um eixo e mostra o polo para onde o item pende. Quanto mais forte o ícone, mais intensa a posição. Passe o mouse para ver o valor.</p>
+        <ul class="catalog-legend" id="catalog-legend" aria-label="Polos de cada eixo, na ordem da faixa"></ul>
+
+        <div class="catalog-sections" id="catalog-sections" aria-label="Ideologias e valores" aria-busy="true">
+          <p class="catalog-loading">Carregando o catálogo…</p>
+        </div>
+
+        <aside class="catalog-quiz-cta" aria-labelledby="catalog-quiz-cta-title">
+          <div>
+            <span class="eyebrow">Teste político</span>
+            <h2 id="catalog-quiz-cta-title">E você, onde se encaixa?</h2>
+            <p>Responda ao quiz e veja com quais destas correntes e valores você tem mais afinidade.</p>
+          </div>
+          <a class="atlas-button catalog-quiz-cta-button" href="/teste-politico">Fazer o teste <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+        </aside>
+      </div>
+
+      <div class="catalog-generic-view" id="catalog-generic-view" hidden>
+        <div class="catalog-country-spectrum" id="catalog-country-spectrum" hidden></div>
+        <div class="catalog-personality-spectrum" id="catalog-personality-spectrum" hidden></div>
+        <div class="catalog-party-spectrum" id="catalog-party-spectrum" hidden></div>
+        <section class="atlas-controls catalog-controls" aria-label="Busca, ordenação e filtros">
+          <label class="atlas-search">
+            <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+            <input id="catalog-generic-search" type="search" autocomplete="off" placeholder="Buscar neste catálogo" aria-label="Buscar neste catálogo">
+          </label>
+          <div class="catalog-subfilters" id="catalog-generic-subfilters">
+            <label class="atlas-sort" for="catalog-generic-sort">Ordenar <select id="catalog-generic-sort"></select></label>
+          </div>
+          <div class="atlas-filters" id="catalog-generic-filters" aria-label="Filtrar catálogo"></div>
+        </section>
+
+        <section class="atlas-featured" id="catalog-featured" aria-labelledby="catalog-featured-title">
+          <div class="atlas-featured-head">
+            <div><span class="eyebrow" data-catalog-featured-label>Seleção editorial de ideologias</span><h2 id="catalog-featured-title">Comece por estas fichas</h2></div>
+            <p data-catalog-featured-note>Três recortes para começar.</p>
+          </div>
+          <div class="atlas-featured-grid" id="catalog-featured-grid"></div>
+        </section>
+
+        <div class="catalog-notice" id="catalog-generic-notice" hidden></div>
+
+        <section class="atlas-section catalog-section" id="catalogo" aria-labelledby="catalog-generic-grid-title">
+          <div class="section-heading">
+            <div><span class="eyebrow">Catálogo completo</span><h2 id="catalog-generic-grid-title">Explore as fichas</h2></div>
+            <p class="atlas-section-note" id="catalog-generic-count" role="status" aria-live="polite"></p>
+          </div>
+          <div class="atlas-grid" id="catalog-generic-grid" aria-label="Perfis do catálogo"></div>
+          <div class="catalog-more-row">
+            <button class="atlas-button catalog-load-more" id="catalog-generic-load-more" type="button" hidden>Carregar mais perfis</button>
+          </div>
+        </section>
+      </div>
+
+      <p class="catalog-disclaimer">Os perfis são sínteses editoriais e comparações didáticas. Não representam apoio, filiação, recomendação de voto ou uma descrição definitiva de qualquer pessoa, partido ou sociedade.</p>
+    </main>
+
+    <div id="footer"></div>
+  </div>
+
+  <dialog class="atlas-dialog catalog-dialog" id="catalog-dialog" aria-labelledby="catalog-dialog-title"></dialog>
+
+  <script src="/js/accordion-motion.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/footer.js"></script>
+  <script src="/js/axis-icons.js"></script>
+  <script src="/js/political-catalogs.js"></script>
+</body>
+</html>

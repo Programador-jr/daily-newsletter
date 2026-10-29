@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="pt-BR" class="history-document">
+<head>
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Biblioteca de política em doze eixos: obras essenciais, autores, correntes e níveis de leitura para começar ou aprofundar.">
+  <title>King's Newsletter - Livros</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/historia.css">
+  <link rel="stylesheet" href="/css/atlas.css">
+  <link rel="stylesheet" href="/css/page-patterns.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/ui-kit.css">
+  <script src="/js/vercel-observability.js" defer></script>
+</head>
+<body class="history-page atlas-page" data-atlas-page="livros">
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div class="container">
+    <header class="site-header">
+      <a class="logo" href="/" aria-label="Página inicial"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></a>
+      <nav class="header-main-nav" aria-label="Navegação principal"><div class="header-primary-links"></div><div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div></nav>
+    </header>
+    <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+      <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
+      <nav class="site-sidebar-nav" aria-label="Páginas principais"><div class="site-sidebar-group"></div></nav>
+      <div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false"><span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div>
+    </aside>
+    <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
+    <main id="main" tabindex="-1">
+      <section class="history-hero atlas-hero">
+        <span class="eyebrow">Política · Livros</span>
+        <h1>Uma biblioteca para pensar a política.</h1>
+        <p>Clássicos e obras contemporâneas que ajudam a entender ideias, instituições e conflitos. Cada livro traz uma ficha editorial, uma nota sobre por que importa e uma imagem do livro ou de seu autor.</p>
+        <div class="atlas-hero-stats" aria-label="Números do catálogo">
+          <span><strong data-atlas-stat="total">321</strong> obras</span>
+          <span><strong data-atlas-stat="eixos">12</strong> eixos</span>
+          <span><strong data-atlas-stat="areas">8</strong> áreas</span>
+        </div>
+        <div class="atlas-book-spectrum" id="atlas-book-spectrum" aria-label="Distribuição das obras por área"></div>
+      </section>
+
+      <section class="atlas-method" aria-label="Nota metodológica">
+        <div class="atlas-method-icon"><i class="fas fa-book-open" aria-hidden="true"></i></div>
+        <div>
+          <span class="eyebrow">Como ler as fichas</span>
+          <h2>O vetor do livro é uma leitura do autor, não da obra inteira.</h2>
+          <p>A lista de obras e os retratos vêm do projeto 12 Axes, de Enzo Xavier Santos, usados com autorização escrita. As fichas, a classificação por área e as notas de leitura são editoriais do King's Newsletter. A imagem identifica o livro ou seu autor; ela não representa uma avaliação de qualidade.</p>
+        </div>
+      </section>
+
+      <details class="atlas-legend">
+        <summary><i class="fas fa-compass" aria-hidden="true"></i> Conheça os doze eixos</summary>
+        <div id="atlas-legend-grid"></div>
+      </details>
+
+      <section class="atlas-controls" aria-label="Busca, ordenação e filtros">
+        <label class="atlas-search">
+          <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+          <input type="search" id="atlas-search" placeholder="Buscar título, autor, tema ou corrente..." aria-label="Buscar livros">
+        </label>
+        <label class="atlas-sort">Ordenar
+          <select id="atlas-sort" aria-label="Ordenar livros"></select>
+        </label>
+        <div class="atlas-filters" id="atlas-filters"></div>
+      </section>
+
+      <section class="atlas-featured" id="atlas-featured" hidden>
+        <div class="atlas-featured-head">
+          <div>
+            <span class="eyebrow">Para começar</span>
+            <h2 data-atlas-featured-label>Seleção editorial de livros</h2>
+          </div>
+          <p>Três portas de entrada para diferentes tradições.</p>
+        </div>
+        <div class="atlas-featured-grid" id="atlas-featured-grid"></div>
+      </section>
+
+      <section class="atlas-section" id="atlas-catalogo">
+        <div class="section-heading">
+          <div><span class="eyebrow">Catálogo</span><h2>Todos os livros</h2></div>
+          <p class="atlas-section-note">Filtre por área, nível de leitura ou século e abra a ficha para ver o argumento, o autor e as correntes relacionadas.</p>
+        </div>
+        <div class="atlas-grid" id="atlas-grid"></div>
+      </section>
+
+      <section class="atlas-sources" aria-labelledby="livros-fontes">
+        <span class="eyebrow">Fontes e créditos</span>
+        <h2 id="livros-fontes">De onde vem esta biblioteca</h2>
+        <p>A seleção de obras, os retratos e as recomendações por personalidade têm como base o projeto <a href="https://github.com/RomanCypherpunk/12axes" target="_blank" rel="noopener noreferrer">12 Axes</a>, de Enzo Xavier Santos, utilizado com autorização escrita. Os textos de ficha, a classificação por área e as notas de leitura foram produzidos pelo King's Newsletter. Onde a obra está em domínio público ou há edição aberta, o link leva a uma busca no Open Library.</p>
+        <div class="source-list">
+          <a href="https://12axes.vercel.app/" target="_blank" rel="noopener noreferrer">12 Axes — teste político original</a>
+          <a href="https://openlibrary.org/" target="_blank" rel="noopener noreferrer">Open Library</a>
+          <a href="https://www.gutenberg.org/" target="_blank" rel="noopener noreferrer">Project Gutenberg</a>
+          <a href="https://plato.stanford.edu/" target="_blank" rel="noopener noreferrer">Stanford Encyclopedia of Philosophy</a>
+        </div>
+      </section>
+
+      <dialog class="atlas-dialog" id="atlas-dialog" aria-labelledby="atlas-dialog-title"></dialog>
+    </main>
+    <div id="footer"></div>
+  </div>
+  <script src="/js/accordion-motion.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/footer.js"></script>
+  <script src="/js/data/atlas-axes.js"></script>
+  <script src="/js/data/atlas-ideologias.js"></script>
+  <script src="/js/data/atlas-personalidades.js"></script>
+  <script src="/js/data/atlas-paises.js"></script>
+  <script src="/js/data/atlas-partidos.js"></script>
+  <script src="/js/data/atlas-livros-completo.js"></script>
+  <script src="/js/atlas.js"></script>
+</body>
+</html>

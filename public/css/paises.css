@@ -1,0 +1,6 @@
+/* Países e regimes: preserva leitura de bandeiras e contexto geográfico. */
+.dedicated-countries-page .catalog-hero { border-bottom:1px solid var(--border); }
+.dedicated-countries-page .catalog-country-card { display:flex; flex-direction:column; min-height:100%; }
+.dedicated-countries-page .catalog-country-card .catalog-country-flag { display:grid; place-items:center; width:100%; aspect-ratio:16/10; overflow:hidden; border-radius:8px; background:var(--bg-body); color:var(--primary); font-family:"Playfair Display",Georgia,serif; font-size:1.6rem; font-weight:700; }
+.dedicated-countries-page .catalog-country-card .catalog-country-flag img { width:100%; height:100%; object-fit:contain; padding:.55rem; }
+.dedicated-countries-page .catalog-country-spectrum { margin:0 0 1.25rem; }

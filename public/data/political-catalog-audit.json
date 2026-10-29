@@ -1,0 +1,4565 @@
+{
+  "meta": {
+    "generatedAt": "2026-10-27T23:10:49.289Z",
+    "catalogGeneratedAt": "2026-10-27T23:10:49.098Z",
+    "calibrationVersion": 1,
+    "scoreFormula": "matchScore de /comparar e do quiz",
+    "thresholds": {
+      "leaderParty": "definido por par",
+      "partyIdeology": "≥85% e rank ≤10",
+      "figureIdeology": "≥80% e rank ≤20 (aviso)",
+      "books": "vetor diferente do autor",
+      "countries": "rubrica estrutural"
+    }
+  },
+  "summary": {
+    "errors": 0,
+    "warnings": 2,
+    "ok": true
+  },
+  "errors": [],
+  "warnings": [
+    {
+      "area": "vetores",
+      "message": "ideologias/centrismo-radical: 12 eixos exatamente no centro",
+      "detail": null
+    },
+    {
+      "area": "vetores",
+      "message": "paises/coreia-do-norte: 10 eixos em extremos (≤5 ou ≥95)",
+      "detail": null
+    }
+  ],
+  "checks": {
+    "axes": {
+      "ok": true,
+      "order": [
+        "estrutura",
+        "representacao",
+        "poder",
+        "imigracao",
+        "diplomacia",
+        "intervencao",
+        "economia",
+        "controle",
+        "comercio",
+        "religiao",
+        "moral",
+        "tecnologia"
+      ]
+    },
+    "calibration": {
+      "declared": 154,
+      "applied": 154,
+      "meta": {
+        "version": 1,
+        "updatedAt": "2026-10-27",
+        "note": "Camada de calibração editorial aplicada sobre os vetores do atlas e do 12axes. Cada override mantém a origem original em vectorSource e registra o vetor anterior em vectorBase e o rótulo em vectorLabel. Os livros são ajustados a partir do autor para refletir a ênfase própria da obra.",
+        "axisOrder": [
+          "estrutura",
+          "representacao",
+          "poder",
+          "imigracao",
+          "diplomacia",
+          "intervencao",
+          "economia",
+          "controle",
+          "comercio",
+          "religiao",
+          "moral",
+          "tecnologia"
+        ]
+      }
+    },
+    "sanity": {
+      "items": 1579,
+      "duplicates": []
+    },
+    "leaderParty": [
+      {
+        "figure": "Matteo Salvini",
+        "figureId": "matteo-salvini",
+        "party": "Liga",
+        "partyId": "lega",
+        "mode": "current",
+        "score": 100,
+        "rank": 1,
+        "total": 142,
+        "best": {
+          "name": "Liga",
+          "id": "lega",
+          "score": 100
+        },
+        "maxRank": 8,
+        "minScore": 88
+      },
+      {
+        "figure": "Narendra Modi",
+        "figureId": "narendra-modi",
+        "party": "Partido do Povo Indiano",
+        "partyId": "bjp",
+        "mode": "current",
+        "score": 99.7,
+        "rank": 1,
+        "total": 142,
+        "best": {
+          "name": "Partido do Povo Indiano",
+          "id": "bjp",
+          "score": 99.7
+        },
+        "maxRank": 8,
+        "minScore": 88
+      },
+      {
+        "figure": "João Goulart",
+        "figureId": "joao-goulart",
+        "party": "Partido Trabalhista Brasileiro (1945–1965)",
+        "partyId": "ptb-1945",
+        "mode": "historical",
+        "score": 99.4,
+        "rank": 1,
+        "total": 69,
+        "best": {
+          "name": "Partido Trabalhista Brasileiro (1945–1965)",
+          "id": "ptb-1945",
+          "score": 99.4
+        },
+        "maxRank": 5,
+        "minScore": 92
+      },
+      {
+        "figure": "Luiz Inácio Lula da Silva",
+        "figureId": "lula",
+        "party": "Partido dos Trabalhadores",
+        "partyId": "pt",
+        "mode": "current",
+        "score": 99.3,
+        "rank": 1,
+        "total": 142,
+        "best": {
+          "name": "Partido dos Trabalhadores",
+          "id": "pt",
+          "score": 99.3
+        },
+        "maxRank": 3,
+        "minScore": 94
+      },
+      {
+        "figure": "Viktor Orbán",
+        "figureId": "viktor-orban",
+        "party": "Fidesz – União Cívica Húngara",
+        "partyId": "fidesz",
+        "mode": "current",
+        "score": 99.1,
+        "rank": 1,
+        "total": 142,
+        "best": {
+          "name": "Fidesz – União Cívica Húngara",
+          "id": "fidesz",
+          "score": 99.1
+        },
+        "maxRank": 8,
+        "minScore": 88
+      },
+      {
+        "figure": "Cyril Ramaphosa",
+        "figureId": "cyril-ramaphosa",
+        "party": "Congresso Nacional Africano",
+        "partyId": "anc",
+        "mode": "current",
+        "score": 98.6,
+        "rank": 1,
+        "total": 142,
+        "best": {
+          "name": "Congresso Nacional Africano",
+          "id": "anc",
+          "score": 98.6
+        },
+        "maxRank": 8,
+        "minScore": 88
+      },
+      {
+        "figure": "Benito Mussolini",
+        "figureId": "mussolini",
+        "party": "Partido Nacional Fascista",
+        "partyId": "partido-fascista-italiano",
+        "mode": "historical",
+        "score": 98.4,
+        "rank": 1,
+        "total": 69,
+        "best": {
+          "name": "Partido Nacional Fascista",
+          "id": "partido-fascista-italiano",
+          "score": 98.4
+        },
+        "maxRank": 5,
+        "minScore": 92
+      },
+      {
+        "figure": "Emmanuel Macron",
+        "figureId": "macron",
+        "party": "Renascimento",
+        "partyId": "renaissance",
+        "mode": "current",
+        "score": 98.1,
+        "rank": 1,
+        "total": 142,
+        "best": {
+          "name": "Renascimento",
+          "id": "renaissance",
+          "score": 98.1
+        },
+        "maxRank": 10,
+        "minScore": 86
+      },
+      {
+        "figure": "Plínio Salgado",
+        "figureId": "plinio-salgado",
+        "party": "Ação Integralista Brasileira",
+        "partyId": "aib",
+        "mode": "historical",
+        "score": 98.1,
+        "rank": 1,
+        "total": 69,
+        "best": {
+          "name": "Ação Integralista Brasileira",
+          "id": "aib",
+          "score": 98.1
+        },
+        "maxRank": 5,
+        "minScore": 92
+      },
+      {
+        "figure": "Margaret Thatcher",
+        "figureId": "margaret-thatcher",
+        "party": "Partido Conservador",
+        "partyId": "partido-conservador-reino-unido",
+        "mode": "current",
+        "score": 97.7,
+        "rank": 1,
+        "total": 142,
+        "best": {
+          "name": "Partido Conservador",
+          "id": "partido-conservador-reino-unido",
+          "score": 97.7
+        },
+        "maxRank": 5,
+        "minScore": 92
+      },
+      {
+        "figure": "Jawaharlal Nehru",
+        "figureId": "jawaharlal-nehru",
+        "party": "Congresso Nacional Indiano",
+        "partyId": "congresso-nacional-indiano",
+        "mode": "current",
+        "score": 97.7,
+        "rank": 1,
+        "total": 142,
+        "best": {
+          "name": "Congresso Nacional Indiano",
+          "id": "congresso-nacional-indiano",
+          "score": 97.7
+        },
+        "maxRank": 8,
+        "minScore": 88
+      },
+      {
+        "figure": "António de Oliveira Salazar",
+        "figureId": "salazar",
+        "party": "União Nacional",
+        "partyId": "uniao-nacional-portuguesa",
+        "mode": "historical",
+        "score": 97.5,
+        "rank": 1,
+        "total": 69,
+        "best": {
+          "name": "União Nacional",
+          "id": "uniao-nacional-portuguesa",
+          "score": 97.5
+        },
+        "maxRank": 5,
+        "minScore": 90
+      },
+      {
+        "figure": "Xi Jinping",
+        "figureId": "xi-jinping",
+        "party": "Partido Comunista da China",
+        "partyId": "partido-comunista-chines",
+        "mode": "current",
+        "score": 96.5,
+        "rank": 1,
+        "total": 142,
+        "best": {
+          "name": "Partido Comunista da China",
+          "id": "partido-comunista-chines",
+          "score": 96.5
+        },
+        "maxRank": 5,
+        "minScore": 92
+      },
+      {
+        "figure": "Bill Clinton",
+        "figureId": "bill-clinton",
+        "party": "Partido Democrata",
+        "partyId": "partido-democrata-eua",
+        "mode": "current",
+        "score": 95.6,
+        "rank": 1,
+        "total": 142,
+        "best": {
+          "name": "Partido Democrata",
+          "id": "partido-democrata-eua",
+          "score": 95.6
+        },
+        "maxRank": 10,
+        "minScore": 86
+      },
+      {
+        "figure": "Mao Tsé-Tung",
+        "figureId": "mao",
+        "party": "Partido Comunista da China",
+        "partyId": "partido-comunista-chines",
+        "mode": "current",
+        "score": 94.4,
+        "rank": 1,
+        "total": 142,
+        "best": {
+          "name": "Partido Comunista da China",
+          "id": "partido-comunista-chines",
+          "score": 94.4
+        },
+        "maxRank": 8,
+        "minScore": 88
+      },
+      {
+        "figure": "Juan Domingo Perón",
+        "figureId": "juan-peron",
+        "party": "Partido Justicialista",
+        "partyId": "partido-justicialista",
+        "mode": "current",
+        "score": 93.9,
+        "rank": 1,
+        "total": 142,
+        "best": {
+          "name": "Partido Justicialista",
+          "id": "partido-justicialista",
+          "score": 93.9
+        },
+        "maxRank": 5,
+        "minScore": 92
+      },
+      {
+        "figure": "Jair Bolsonaro",
+        "figureId": "bolsonaro",
+        "party": "Partido Liberal",
+        "partyId": "pl",
+        "mode": "current",
+        "score": 98.5,
+        "rank": 2,
+        "total": 142,
+        "best": {
+          "name": "Alternativa para a Alemanha",
+          "id": "afd",
+          "score": 98.5
+        },
+        "maxRank": 5,
+        "minScore": 92
+      },
+      {
+        "figure": "Francisco Franco",
+        "figureId": "francisco-franco",
+        "party": "Falange Espanhola",
+        "partyId": "falange",
+        "mode": "historical",
+        "score": 97.9,
+        "rank": 2,
+        "total": 69,
+        "best": {
+          "name": "Casa de Bourbon (ramo francês)",
+          "id": "casa-de-bourbon-franca",
+          "score": 98.2
+        },
+        "maxRank": 10,
+        "minScore": 86
+      },
+      {
+        "figure": "Barack Obama",
+        "figureId": "barack-obama",
+        "party": "Partido Democrata",
+        "partyId": "partido-democrata-eua",
+        "mode": "current",
+        "score": 97.1,
+        "rank": 2,
+        "total": 142,
+        "best": {
+          "name": "Partido Trabalhista",
+          "id": "partido-trabalhista-reino-unido",
+          "score": 98.1
+        },
+        "maxRank": 8,
+        "minScore": 88
+      },
+      {
+        "figure": "Nelson Mandela",
+        "figureId": "nelson-mandela",
+        "party": "Congresso Nacional Africano",
+        "partyId": "anc",
+        "mode": "current",
+        "score": 96.6,
+        "rank": 2,
+        "total": 142,
+        "best": {
+          "name": "Partido da Social Democracia Brasileira",
+          "id": "psdb",
+          "score": 97.7
+        },
+        "maxRank": 5,
+        "minScore": 92
+      },
+      {
+        "figure": "Josef Stálin",
+        "figureId": "stalin",
+        "party": "Partido Comunista da União Soviética",
+        "partyId": "partido-comunista-da-uniao-sovietica",
+        "mode": "historical",
+        "score": 96,
+        "rank": 2,
+        "total": 69,
+        "best": {
+          "name": "Exército Vermelho",
+          "id": "exercito-vermelho",
+          "score": 98.4
+        },
+        "maxRank": 8,
+        "minScore": 88
+      },
+      {
+        "figure": "Fernando Henrique Cardoso",
+        "figureId": "fernando-henrique-cardoso",
+        "party": "Partido da Social Democracia Brasileira",
+        "partyId": "psdb",
+        "mode": "current",
+        "score": 95.5,
+        "rank": 2,
+        "total": 142,
+        "best": {
+          "name": "Partido Democrata",
+          "id": "pd-italia",
+          "score": 96.1
+        },
+        "maxRank": 5,
+        "minScore": 92
+      },
+      {
+        "figure": "Vladimir Lênin",
+        "figureId": "lenin",
+        "party": "Partido Operário Social-Democrata Russo (bolchevique)",
+        "partyId": "partido-bolchevique",
+        "mode": "historical",
+        "score": 95.1,
+        "rank": 2,
+        "total": 69,
+        "best": {
+          "name": "Partido Socialista Operário Húngaro (MSZMP)",
+          "id": "partido-socialista-operario-hungaro",
+          "score": 95.5
+        },
+        "maxRank": 5,
+        "minScore": 92
+      },
+      {
+        "figure": "Getúlio Vargas",
+        "figureId": "getulio-vargas",
+        "party": "Partido Trabalhista Brasileiro (1945–1965)",
+        "partyId": "ptb-1945",
+        "mode": "historical",
+        "score": 91.7,
+        "rank": 2,
+        "total": 69,
+        "best": {
+          "name": "Partido Social Democrático (PSD histórico)",
+          "id": "psd-historico",
+          "score": 92.6
+        },
+        "maxRank": 5,
+        "minScore": 90
+      },
+      {
+        "figure": "Indira Gandhi",
+        "figureId": "indira-gandhi",
+        "party": "Congresso Nacional Indiano",
+        "partyId": "congresso-nacional-indiano",
+        "mode": "current",
+        "score": 90.2,
+        "rank": 3,
+        "total": 142,
+        "best": {
+          "name": "Partido Justicialista",
+          "id": "partido-justicialista",
+          "score": 92
+        },
+        "maxRank": 8,
+        "minScore": 88
+      },
+      {
+        "figure": "Keir Starmer",
+        "figureId": "keir-starmer",
+        "party": "Partido Trabalhista",
+        "partyId": "partido-trabalhista-reino-unido",
+        "mode": "current",
+        "score": 95.3,
+        "rank": 4,
+        "total": 142,
+        "best": {
+          "name": "Partido Democrático Progressista (DPP)",
+          "id": "dpp-taiwan",
+          "score": 97
+        },
+        "maxRank": 12,
+        "minScore": 85
+      },
+      {
+        "figure": "Adolf Hitler",
+        "figureId": "hitler",
+        "party": "Partido Nacional-Socialista dos Trabalhadores Alemães",
+        "partyId": "partido-nazista",
+        "mode": "historical",
+        "score": 95.2,
+        "rank": 4,
+        "total": 69,
+        "best": {
+          "name": "Associação de Auxílio ao Governo Imperial (Taisei Yokusankai)",
+          "id": "taisei-yokusankai",
+          "score": 97.4
+        },
+        "maxRank": 5,
+        "minScore": 92
+      },
+      {
+        "figure": "Joe Biden",
+        "figureId": "joe-biden",
+        "party": "Partido Democrata",
+        "partyId": "partido-democrata-eua",
+        "mode": "current",
+        "score": 95.4,
+        "rank": 5,
+        "total": 142,
+        "best": {
+          "name": "União Cívica Radical (UCR)",
+          "id": "union-civica-radical",
+          "score": 96.8
+        },
+        "maxRank": 10,
+        "minScore": 86
+      },
+      {
+        "figure": "Winston Churchill",
+        "figureId": "winston-churchill",
+        "party": "Partido Conservador",
+        "partyId": "partido-conservador-reino-unido",
+        "mode": "current",
+        "score": 93.1,
+        "rank": 6,
+        "total": 142,
+        "best": {
+          "name": "Centro Democrático (CD)",
+          "id": "centro-democratico",
+          "score": 95.6
+        },
+        "maxRank": 12,
+        "minScore": 85
+      },
+      {
+        "figure": "Ronald Reagan",
+        "figureId": "ronald-reagan",
+        "party": "Partido Republicano",
+        "partyId": "partido-republicano-eua",
+        "mode": "current",
+        "score": 91.3,
+        "rank": 6,
+        "total": 142,
+        "best": {
+          "name": "Partido Conservador",
+          "id": "partido-conservador-reino-unido",
+          "score": 97
+        },
+        "maxRank": 8,
+        "minScore": 88
+      },
+      {
+        "figure": "Donald Trump",
+        "figureId": "donald-trump",
+        "party": "Partido Republicano",
+        "partyId": "partido-republicano-eua",
+        "mode": "current",
+        "score": 94.7,
+        "rank": 8,
+        "total": 142,
+        "best": {
+          "name": "Reunião Nacional",
+          "id": "rassemblement-national",
+          "score": 97.9
+        },
+        "maxRank": 8,
+        "minScore": 88
+      },
+      {
+        "figure": "Tony Blair",
+        "figureId": "tony-blair",
+        "party": "Partido Trabalhista",
+        "partyId": "partido-trabalhista-reino-unido",
+        "mode": "current",
+        "score": 90.9,
+        "rank": 9,
+        "total": 142,
+        "best": {
+          "name": "Partido Democrático Progressista (DPP)",
+          "id": "dpp-taiwan",
+          "score": 95
+        },
+        "maxRank": 12,
+        "minScore": 85
+      }
+    ],
+    "partidosIdeology": [
+      {
+        "group": "partidos",
+        "id": "pl",
+        "name": "Partido Liberal",
+        "ideology": "Populismo de Direita",
+        "ideologyId": "populismo-de-direita",
+        "score": 87.9,
+        "rank": 10,
+        "total": 283,
+        "best": {
+          "name": "Democracia Intervencionista",
+          "id": "democracia-intervencionista",
+          "score": 92.2
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "novo",
+        "name": "Partido Novo",
+        "ideology": "Liberalismo clássico",
+        "ideologyId": "liberalismo-classico",
+        "score": 89.9,
+        "rank": 8,
+        "total": 283,
+        "best": {
+          "name": "Capitalismo",
+          "id": "capitalismo",
+          "score": 95.1
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "chega",
+        "name": "Chega",
+        "ideology": "Nacionalismo de Direita",
+        "ideologyId": "nacionalismo-de-direita",
+        "score": 91.3,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Nacionalismo de Direita",
+          "id": "nacionalismo-de-direita",
+          "score": 91.3
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "likud",
+        "name": "Likud",
+        "ideology": "Nacionalismo de Direita",
+        "ideologyId": "nacionalismo-de-direita",
+        "score": 91.3,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Nacionalismo de Direita",
+          "id": "nacionalismo-de-direita",
+          "score": 91.3
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "afd",
+        "name": "Alternativa para a Alemanha",
+        "ideology": "Populismo de Direita",
+        "ideologyId": "populismo-de-direita",
+        "score": 91.7,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Populismo de Direita",
+          "id": "populismo-de-direita",
+          "score": 91.7
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "vox",
+        "name": "Vox",
+        "ideology": "Nacionalismo de Direita",
+        "ideologyId": "nacionalismo-de-direita",
+        "score": 91.7,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Nacionalismo de Direita",
+          "id": "nacionalismo-de-direita",
+          "score": 91.7
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "partido-comunista-chines",
+        "name": "Partido Comunista da China",
+        "ideology": "Socialismo Chinês",
+        "ideologyId": "socialismo-chines",
+        "score": 91.7,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Maoismo",
+          "id": "maoismo",
+          "score": 94.4
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "partido-republicano-eua",
+        "name": "Partido Republicano",
+        "ideology": "Conservadorismo",
+        "ideologyId": "conservadorismo",
+        "score": 92.2,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Neoconservadorismo",
+          "id": "neoconservadorismo",
+          "score": 92.6
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "rassemblement-national",
+        "name": "Reunião Nacional",
+        "ideology": "Populismo de Direita",
+        "ideologyId": "populismo-de-direita",
+        "score": 92.3,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Populismo de Direita",
+          "id": "populismo-de-direita",
+          "score": 92.3
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "lega",
+        "name": "Liga",
+        "ideology": "Nacionalismo de Direita",
+        "ideologyId": "nacionalismo-de-direita",
+        "score": 92.9,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Nacionalismo de Direita",
+          "id": "nacionalismo-de-direita",
+          "score": 92.9
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "bjp",
+        "name": "Partido do Povo Indiano",
+        "ideology": "Nacionalismo de Direita",
+        "ideologyId": "nacionalismo-de-direita",
+        "score": 93,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Nacionalismo de Direita",
+          "id": "nacionalismo-de-direita",
+          "score": 93
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "gruene",
+        "name": "Os Verdes",
+        "ideology": "Ecossocialismo",
+        "ideologyId": "ecossocialismo",
+        "score": 93.1,
+        "rank": 8,
+        "total": 283,
+        "best": {
+          "name": "Feminismo",
+          "id": "feminismo",
+          "score": 98.9
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "renaissance",
+        "name": "Renascimento",
+        "ideology": "Liberalismo social",
+        "ideologyId": "liberalismo-social",
+        "score": 93.1,
+        "rank": 4,
+        "total": 283,
+        "best": {
+          "name": "Democracia Internacionalista",
+          "id": "democracia-internacionalista",
+          "score": 94.8
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "udn",
+        "name": "União Democrática Nacional",
+        "ideology": "Conservadorismo",
+        "ideologyId": "conservadorismo",
+        "score": 93.5,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Conservadorismo",
+          "id": "conservadorismo",
+          "score": 93.5
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "pp",
+        "name": "Progressistas",
+        "ideology": "Conservadorismo",
+        "ideologyId": "conservadorismo",
+        "score": 93.8,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo Conservador",
+          "id": "liberalismo-conservador",
+          "score": 94
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "fidesz",
+        "name": "Fidesz – União Cívica Húngara",
+        "ideology": "Populismo de Direita",
+        "ideologyId": "populismo-de-direita",
+        "score": 93.8,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Populismo de Direita",
+          "id": "populismo-de-direita",
+          "score": 93.8
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "partido-justicialista",
+        "name": "Partido Justicialista",
+        "ideology": "Peronismo",
+        "ideologyId": "peronismo",
+        "score": 93.9,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Desenvolvimentismo",
+          "id": "desenvolvimentismo",
+          "score": 94.9
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "mdb",
+        "name": "Movimento Democrático Brasileiro",
+        "ideology": "Social-democracia",
+        "ideologyId": "social-democracia",
+        "score": 94,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Social-democracia",
+          "id": "social-democracia",
+          "score": 94
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "frente-ampla",
+        "name": "Frente Ampla",
+        "ideology": "Social-democracia",
+        "ideologyId": "social-democracia",
+        "score": 94.4,
+        "rank": 4,
+        "total": 283,
+        "best": {
+          "name": "Socialismo democrático",
+          "id": "socialismo-democratico",
+          "score": 97.7
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "fratelli-ditalia",
+        "name": "Irmãos da Itália",
+        "ideology": "Conservadorismo",
+        "ideologyId": "conservadorismo",
+        "score": 94.8,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Conservadorismo",
+          "id": "conservadorismo",
+          "score": 94.8
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "akp",
+        "name": "Partido da Justiça e Desenvolvimento",
+        "ideology": "Populismo de Direita",
+        "ideologyId": "populismo-de-direita",
+        "score": 94.9,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Populismo de Direita",
+          "id": "populismo-de-direita",
+          "score": 94.9
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "pdt",
+        "name": "Partido Democrático Trabalhista",
+        "ideology": "Trabalhismo",
+        "ideologyId": "trabalhismo",
+        "score": 95,
+        "rank": 9,
+        "total": 283,
+        "best": {
+          "name": "Pan-africanismo",
+          "id": "pan-africanismo",
+          "score": 98.5
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "movimento-5-estrelas",
+        "name": "Movimento 5 Estrelas",
+        "ideology": "Populismo",
+        "ideologyId": "populismo",
+        "score": 95,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Trabalhismo",
+          "id": "trabalhismo",
+          "score": 96.9
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "partido-socialista-portugues",
+        "name": "Partido Socialista",
+        "ideology": "Social-democracia",
+        "ideologyId": "social-democracia",
+        "score": 95,
+        "rank": 7,
+        "total": 283,
+        "best": {
+          "name": "Socialismo democrático",
+          "id": "socialismo-democratico",
+          "score": 96.6
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "partido-democrata-eua",
+        "name": "Partido Democrata",
+        "ideology": "Liberalismo social",
+        "ideologyId": "liberalismo-social",
+        "score": 95.1,
+        "rank": 3,
+        "total": 283,
+        "best": {
+          "name": "Democracia Internacionalista",
+          "id": "democracia-internacionalista",
+          "score": 96.3
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "partido-bolchevique",
+        "name": "Partido Operário Social-Democrata Russo (bolchevique)",
+        "ideology": "Marxismo-leninismo",
+        "ideologyId": "marxismo-leninismo",
+        "score": 95.1,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Maoismo",
+          "id": "maoismo",
+          "score": 96.1
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "republicanos",
+        "name": "Republicanos",
+        "ideology": "Conservadorismo",
+        "ideologyId": "conservadorismo",
+        "score": 95.2,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Conservadorismo",
+          "id": "conservadorismo",
+          "score": 95.2
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "partido-nazista",
+        "name": "Partido Nacional-Socialista dos Trabalhadores Alemães",
+        "ideology": "Nazismo",
+        "ideologyId": "nazismo",
+        "score": 95.2,
+        "rank": 3,
+        "total": 283,
+        "best": {
+          "name": "Fascismo",
+          "id": "fascismo",
+          "score": 96.5
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "psoe",
+        "name": "Partido Socialista Operário Espanhol",
+        "ideology": "Social-democracia",
+        "ideologyId": "social-democracia",
+        "score": 95.4,
+        "rank": 3,
+        "total": 283,
+        "best": {
+          "name": "Socialismo democrático",
+          "id": "socialismo-democratico",
+          "score": 96.5
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "partido-conservador-reino-unido",
+        "name": "Partido Conservador",
+        "ideology": "Conservadorismo",
+        "ideologyId": "conservadorismo",
+        "score": 95.7,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Conservadorismo",
+          "id": "conservadorismo",
+          "score": 95.7
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "eff",
+        "name": "Lutadores pela Liberdade Econômica",
+        "ideology": "Socialismo democrático",
+        "ideologyId": "socialismo-democratico",
+        "score": 95.7,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Socialismo",
+          "id": "socialismo",
+          "score": 96.1
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "anc",
+        "name": "Congresso Nacional Africano",
+        "ideology": "Social-democracia",
+        "ideologyId": "social-democracia",
+        "score": 95.8,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Pan-africanismo",
+          "id": "pan-africanismo",
+          "score": 97.7
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "spd",
+        "name": "Partido Social-Democrata da Alemanha",
+        "ideology": "Social-democracia",
+        "ideologyId": "social-democracia",
+        "score": 95.9,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Socialismo democrático",
+          "id": "socialismo-democratico",
+          "score": 96.8
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "pp-espanha",
+        "name": "Partido Popular",
+        "ideology": "Conservadorismo",
+        "ideologyId": "conservadorismo",
+        "score": 95.9,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Conservadorismo",
+          "id": "conservadorismo",
+          "score": 95.9
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "cdu",
+        "name": "União Democrata-Cristã",
+        "ideology": "Democracia cristã",
+        "ideologyId": "democracia-crista",
+        "score": 96.1,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Democracia cristã",
+          "id": "democracia-crista",
+          "score": 96.1
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "chp",
+        "name": "Partido Republicano do Povo",
+        "ideology": "Social-democracia",
+        "ideologyId": "social-democracia",
+        "score": 96.1,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Pan-africanismo",
+          "id": "pan-africanismo",
+          "score": 96.3
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "partido-comunista-da-uniao-sovietica",
+        "name": "Partido Comunista da União Soviética",
+        "ideology": "Socialismo Stalinista",
+        "ideologyId": "socialismo-stalinista",
+        "score": 96.1,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Socialismo Stalinista",
+          "id": "socialismo-stalinista",
+          "score": 96.1
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "congresso-nacional-indiano",
+        "name": "Congresso Nacional Indiano",
+        "ideology": "Nacionalismo de Esquerda",
+        "ideologyId": "nacionalismo-de-esquerda",
+        "score": 96.5,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Nacionalismo de Esquerda",
+          "id": "nacionalismo-de-esquerda",
+          "score": 96.5
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "partido-trabalhista-israelense",
+        "name": "Partido Trabalhista Israelense",
+        "ideology": "Social-democracia",
+        "ideologyId": "social-democracia",
+        "score": 96.5,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Social-democracia",
+          "id": "social-democracia",
+          "score": 96.5
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "psol",
+        "name": "Partido Socialismo e Liberdade",
+        "ideology": "Socialismo democrático",
+        "ideologyId": "socialismo-democratico",
+        "score": 96.7,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Socialismo Luxemburguista",
+          "id": "socialismo-luxemburguista",
+          "score": 98.5
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "pd-italia",
+        "name": "Partido Democrata",
+        "ideology": "Social-democracia",
+        "ideologyId": "social-democracia",
+        "score": 96.9,
+        "rank": 3,
+        "total": 283,
+        "best": {
+          "name": "Republicanismo",
+          "id": "republicanismo",
+          "score": 97.1
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "psdb",
+        "name": "Partido da Social Democracia Brasileira",
+        "ideology": "Social-democracia",
+        "ideologyId": "social-democracia",
+        "score": 97.5,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Social-democracia",
+          "id": "social-democracia",
+          "score": 97.5
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "pcdo-b",
+        "name": "Partido Comunista do Brasil",
+        "ideology": "Comunismo",
+        "ideologyId": "comunismo",
+        "score": 97.7,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Trotskismo",
+          "id": "trotskismo",
+          "score": 98.7
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "arena",
+        "name": "Aliança Renovadora Nacional",
+        "ideology": "Conservadorismo Autoritário",
+        "ideologyId": "conservadorismo-autoritario",
+        "score": 97.7,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Conservadorismo Autoritário",
+          "id": "conservadorismo-autoritario",
+          "score": 97.7
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "partido-comunista-chile",
+        "name": "Partido Comunista do Chile",
+        "ideology": "Comunismo",
+        "ideologyId": "comunismo",
+        "score": 97.7,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Trotskismo",
+          "id": "trotskismo",
+          "score": 98.7
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "uniao-nacional-portuguesa",
+        "name": "União Nacional",
+        "ideology": "Salazarismo",
+        "ideologyId": "salazarismo",
+        "score": 97.8,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Salazarismo",
+          "id": "salazarismo",
+          "score": 97.8
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "partido-trabalhista-reino-unido",
+        "name": "Partido Trabalhista",
+        "ideology": "Social-democracia",
+        "ideologyId": "social-democracia",
+        "score": 97.9,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Social-democracia",
+          "id": "social-democracia",
+          "score": 97.9
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "die-linke",
+        "name": "A Esquerda",
+        "ideology": "Socialismo democrático",
+        "ideologyId": "socialismo-democratico",
+        "score": 97.9,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Socialismo democrático",
+          "id": "socialismo-democratico",
+          "score": 97.9
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "aib",
+        "name": "Ação Integralista Brasileira",
+        "ideology": "Integralismo",
+        "ideologyId": "integralismo",
+        "score": 98.1,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Integralismo",
+          "id": "integralismo",
+          "score": 98.1
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "syriza",
+        "name": "Coalizão da Esquerda Radical",
+        "ideology": "Socialismo democrático",
+        "ideologyId": "socialismo-democratico",
+        "score": 98.1,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Socialismo democrático",
+          "id": "socialismo-democratico",
+          "score": 98.1
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "la-france-insoumise",
+        "name": "França Insubmissa",
+        "ideology": "Socialismo democrático",
+        "ideologyId": "socialismo-democratico",
+        "score": 98.2,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Socialismo democrático",
+          "id": "socialismo-democratico",
+          "score": 98.2
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "partido-fascista-italiano",
+        "name": "Partido Nacional Fascista",
+        "ideology": "Fascismo",
+        "ideologyId": "fascismo",
+        "score": 98.4,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Fascismo",
+          "id": "fascismo",
+          "score": 98.4
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "falange",
+        "name": "Falange Espanhola",
+        "ideology": "Nacional-sindicalismo",
+        "ideologyId": "nacional-sindicalismo",
+        "score": 98.6,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Nacional-sindicalismo",
+          "id": "nacional-sindicalismo",
+          "score": 98.6
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "ptb-1945",
+        "name": "Partido Trabalhista Brasileiro (1945–1965)",
+        "ideology": "Trabalhismo",
+        "ideologyId": "trabalhismo",
+        "score": 98.9,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Trabalhismo",
+          "id": "trabalhismo",
+          "score": 98.9
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "partido-socialista-chile",
+        "name": "Partido Socialista do Chile",
+        "ideology": "Socialismo democrático",
+        "ideologyId": "socialismo-democratico",
+        "score": 99,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Socialismo democrático",
+          "id": "socialismo-democratico",
+          "score": 99
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "chile-vamos",
+        "name": "Chile Vamos",
+        "ideology": "Liberalismo Conservador",
+        "ideologyId": "liberalismo-conservador",
+        "score": 99,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo Conservador",
+          "id": "liberalismo-conservador",
+          "score": 99
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "pt",
+        "name": "Partido dos Trabalhadores",
+        "ideology": "Socialismo democrático",
+        "ideologyId": "socialismo-democratico",
+        "score": 99.1,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Socialismo democrático",
+          "id": "socialismo-democratico",
+          "score": 99.1
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "partido-socialdemocrata-portugues",
+        "name": "Partido Social Democrata",
+        "ideology": "Liberalismo Conservador",
+        "ideologyId": "liberalismo-conservador",
+        "score": 99.1,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo Conservador",
+          "id": "liberalismo-conservador",
+          "score": 99.1
+        }
+      },
+      {
+        "group": "partidos",
+        "id": "nova-democracia",
+        "name": "Nova Democracia",
+        "ideology": "Liberalismo Conservador",
+        "ideologyId": "liberalismo-conservador",
+        "score": 99.4,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo Conservador",
+          "id": "liberalismo-conservador",
+          "score": 99.4
+        }
+      }
+    ],
+    "personalidadesIdeology": [
+      {
+        "group": "personalidades",
+        "id": "olavo-de-carvalho",
+        "name": "Olavo de Carvalho",
+        "ideology": "Conservadorismo Autoritário",
+        "ideologyId": "conservadorismo-autoritario",
+        "score": 87,
+        "rank": 20,
+        "total": 283,
+        "best": {
+          "name": "Populismo de Direita",
+          "id": "populismo-de-direita",
+          "score": 93.3
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "tony-blair",
+        "name": "Tony Blair",
+        "ideology": "Social-democracia",
+        "ideologyId": "social-democracia",
+        "score": 87,
+        "rank": 19,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo Pragmático",
+          "id": "liberalismo-pragmatico",
+          "score": 95.3
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "stalin",
+        "name": "Josef Stálin",
+        "ideology": "Marxismo-leninismo",
+        "ideologyId": "marxismo-leninismo",
+        "score": 87.5,
+        "rank": 10,
+        "total": 283,
+        "best": {
+          "name": "Socialismo Stalinista",
+          "id": "socialismo-stalinista",
+          "score": 99.1
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "winston-churchill",
+        "name": "Winston Churchill",
+        "ideology": "Conservadorismo",
+        "ideologyId": "conservadorismo",
+        "score": 88.7,
+        "rank": 6,
+        "total": 283,
+        "best": {
+          "name": "Neoconservadorismo",
+          "id": "neoconservadorismo",
+          "score": 95.9
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "bolsonaro",
+        "name": "Jair Bolsonaro",
+        "ideology": "Populismo de Direita",
+        "ideologyId": "populismo-de-direita",
+        "score": 89,
+        "rank": 4,
+        "total": 283,
+        "best": {
+          "name": "Democracia Intervencionista",
+          "id": "democracia-intervencionista",
+          "score": 89.4
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "getulio-vargas",
+        "name": "Getúlio Vargas",
+        "ideology": "Trabalhismo",
+        "ideologyId": "trabalhismo",
+        "score": 89.1,
+        "rank": 14,
+        "total": 283,
+        "best": {
+          "name": "Peronismo",
+          "id": "peronismo",
+          "score": 98.6
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "xi-jinping",
+        "name": "Xi Jinping",
+        "ideology": "Marxismo-leninismo",
+        "ideologyId": "marxismo-leninismo",
+        "score": 90.6,
+        "rank": 10,
+        "total": 283,
+        "best": {
+          "name": "Maoismo",
+          "id": "maoismo",
+          "score": 94.7
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "keir-starmer",
+        "name": "Keir Starmer",
+        "ideology": "Social-democracia",
+        "ideologyId": "social-democracia",
+        "score": 90.9,
+        "rank": 14,
+        "total": 283,
+        "best": {
+          "name": "Social-Democracia Nórdica",
+          "id": "social-democracia-nordica",
+          "score": 96.1
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "mill",
+        "name": "John Stuart Mill",
+        "ideology": "Liberalismo clássico",
+        "ideologyId": "liberalismo-classico",
+        "score": 91,
+        "rank": 12,
+        "total": 283,
+        "best": {
+          "name": "Libertarianismo Bleeding-Heart",
+          "id": "libertarianismo-bleeding-heart",
+          "score": 95.9
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "donald-trump",
+        "name": "Donald Trump",
+        "ideology": "Populismo de Direita",
+        "ideologyId": "populismo-de-direita",
+        "score": 91,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Direita alternativa",
+          "id": "alt-lite",
+          "score": 92
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "macron",
+        "name": "Emmanuel Macron",
+        "ideology": "Liberalismo social",
+        "ideologyId": "liberalismo-social",
+        "score": 91.1,
+        "rank": 12,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo Pragmático",
+          "id": "liberalismo-pragmatico",
+          "score": 95.9
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "margaret-thatcher",
+        "name": "Margaret Thatcher",
+        "ideology": "Conservadorismo",
+        "ideologyId": "conservadorismo",
+        "score": 92.4,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Conservadorismo",
+          "id": "conservadorismo",
+          "score": 92.4
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "tocqueville",
+        "name": "Alexis de Tocqueville",
+        "ideology": "Liberalismo clássico",
+        "ideologyId": "liberalismo-classico",
+        "score": 92.7,
+        "rank": 7,
+        "total": 283,
+        "best": {
+          "name": "Ordoliberalismo",
+          "id": "ordoliberalismo",
+          "score": 98.1
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "matteo-salvini",
+        "name": "Matteo Salvini",
+        "ideology": "Nacionalismo de Direita",
+        "ideologyId": "nacionalismo-de-direita",
+        "score": 92.9,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Nacionalismo de Direita",
+          "id": "nacionalismo-de-direita",
+          "score": 92.9
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "angela-davis",
+        "name": "Angela Davis",
+        "ideology": "Socialismo democrático",
+        "ideologyId": "socialismo-democratico",
+        "score": 93.2,
+        "rank": 11,
+        "total": 283,
+        "best": {
+          "name": "Socialismo Luxemburguista",
+          "id": "socialismo-luxemburguista",
+          "score": 97.2
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "maquiavel",
+        "name": "Nicolau Maquiavel",
+        "ideology": "Republicanismo Maquiavélico",
+        "ideologyId": "republicanismo-maquiavelico",
+        "score": 93.3,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Republicanismo Maquiavélico",
+          "id": "republicanismo-maquiavelico",
+          "score": 93.3
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "malala-yousafzai",
+        "name": "Malala Yousafzai",
+        "ideology": "Liberalismo social",
+        "ideologyId": "liberalismo-social",
+        "score": 93.4,
+        "rank": 11,
+        "total": 283,
+        "best": {
+          "name": "Feminismo",
+          "id": "feminismo",
+          "score": 98
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "jean-marie-le-pen",
+        "name": "Jean-Marie Le Pen",
+        "ideology": "Populismo de Direita",
+        "ideologyId": "populismo-de-direita",
+        "score": 93.6,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Populismo de Direita",
+          "id": "populismo-de-direita",
+          "score": 93.6
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "montesquieu",
+        "name": "Montesquieu",
+        "ideology": "Republicanismo",
+        "ideologyId": "republicanismo",
+        "score": 93.8,
+        "rank": 6,
+        "total": 283,
+        "best": {
+          "name": "Ordoliberalismo",
+          "id": "ordoliberalismo",
+          "score": 96.5
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "joe-biden",
+        "name": "Joe Biden",
+        "ideology": "Liberalismo social",
+        "ideologyId": "liberalismo-social",
+        "score": 93.9,
+        "rank": 9,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo Islâmico",
+          "id": "liberalismo-islamico",
+          "score": 97.3
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "bill-clinton",
+        "name": "Bill Clinton",
+        "ideology": "Liberalismo social",
+        "ideologyId": "liberalismo-social",
+        "score": 94.6,
+        "rank": 5,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo Islâmico",
+          "id": "liberalismo-islamico",
+          "score": 97
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "narendra-modi",
+        "name": "Narendra Modi",
+        "ideology": "Nacionalismo de Direita",
+        "ideologyId": "nacionalismo-de-direita",
+        "score": 94.6,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Nacionalismo de Direita",
+          "id": "nacionalismo-de-direita",
+          "score": 94.6
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "rosa-parks",
+        "name": "Rosa Parks",
+        "ideology": "Liberalismo social",
+        "ideologyId": "liberalismo-social",
+        "score": 94.8,
+        "rank": 8,
+        "total": 283,
+        "best": {
+          "name": "Feminismo",
+          "id": "feminismo",
+          "score": 96.5
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "viktor-orban",
+        "name": "Viktor Orbán",
+        "ideology": "Populismo de Direita",
+        "ideologyId": "populismo-de-direita",
+        "score": 94.8,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Populismo de Direita",
+          "id": "populismo-de-direita",
+          "score": 94.8
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "ronald-reagan",
+        "name": "Ronald Reagan",
+        "ideology": "Conservadorismo Reaganista",
+        "ideologyId": "conservadorismo-reaganista",
+        "score": 95.2,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Conservadorismo Reaganista",
+          "id": "conservadorismo-reaganista",
+          "score": 95.2
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "emmeline-pankhurst",
+        "name": "Emmeline Pankhurst",
+        "ideology": "Feminismo",
+        "ideologyId": "feminismo",
+        "score": 95.3,
+        "rank": 6,
+        "total": 283,
+        "best": {
+          "name": "Democracia Internacionalista",
+          "id": "democracia-internacionalista",
+          "score": 97
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "nkrumah",
+        "name": "Kwame Nkrumah",
+        "ideology": "Pan-africanismo",
+        "ideologyId": "pan-africanismo",
+        "score": 95.4,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Pan-africanismo",
+          "id": "pan-africanismo",
+          "score": 95.4
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "popper",
+        "name": "Karl Popper",
+        "ideology": "Liberalismo social",
+        "ideologyId": "liberalismo-social",
+        "score": 95.5,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo Verde",
+          "id": "liberalismo-verde",
+          "score": 95.6
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "arendt",
+        "name": "Hannah Arendt",
+        "ideology": "Republicanismo",
+        "ideologyId": "republicanismo",
+        "score": 95.6,
+        "rank": 3,
+        "total": 283,
+        "best": {
+          "name": "Feminismo",
+          "id": "feminismo",
+          "score": 96.4
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "ayn-rand",
+        "name": "Ayn Rand",
+        "ideology": "Liberalismo clássico",
+        "ideologyId": "liberalismo-classico",
+        "score": 95.7,
+        "rank": 3,
+        "total": 283,
+        "best": {
+          "name": "Minarquismo",
+          "id": "minarquismo",
+          "score": 97.3
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "simone-weil",
+        "name": "Simone Weil",
+        "ideology": "Socialismo democrático",
+        "ideologyId": "socialismo-democratico",
+        "score": 95.7,
+        "rank": 9,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo Progressista",
+          "id": "liberalismo-progressista",
+          "score": 97.5
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "barack-obama",
+        "name": "Barack Obama",
+        "ideology": "Liberalismo social",
+        "ideologyId": "liberalismo-social",
+        "score": 95.9,
+        "rank": 3,
+        "total": 283,
+        "best": {
+          "name": "Democracia Internacionalista",
+          "id": "democracia-internacionalista",
+          "score": 97.3
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "indira-gandhi",
+        "name": "Indira Gandhi",
+        "ideology": "Nacional-Desenvolvimentismo",
+        "ideologyId": "nacional-desenvolvimentismo",
+        "score": 96.1,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Nacional-Desenvolvimentismo",
+          "id": "nacional-desenvolvimentismo",
+          "score": 96.1
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "mises",
+        "name": "Ludwig von Mises",
+        "ideology": "Liberalismo clássico",
+        "ideologyId": "liberalismo-classico",
+        "score": 96.4,
+        "rank": 4,
+        "total": 283,
+        "best": {
+          "name": "Minarquismo",
+          "id": "minarquismo",
+          "score": 99.2
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "nelson-mandela",
+        "name": "Nelson Mandela",
+        "ideology": "Social-democracia",
+        "ideologyId": "social-democracia",
+        "score": 96.7,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Republicanismo",
+          "id": "republicanismo",
+          "score": 96.7
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "jawaharlal-nehru",
+        "name": "Jawaharlal Nehru",
+        "ideology": "Nacionalismo de Esquerda",
+        "ideologyId": "nacionalismo-de-esquerda",
+        "score": 96.8,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Nacionalismo de Esquerda",
+          "id": "nacionalismo-de-esquerda",
+          "score": 96.8
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "francisco-franco",
+        "name": "Francisco Franco",
+        "ideology": "Conservadorismo Autoritário",
+        "ideologyId": "conservadorismo-autoritario",
+        "score": 96.9,
+        "rank": 8,
+        "total": 283,
+        "best": {
+          "name": "Fundamentalismo Religioso",
+          "id": "fundamentalismo-religioso",
+          "score": 98.2
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "rousseau",
+        "name": "Jean-Jacques Rousseau",
+        "ideology": "Republicanismo",
+        "ideologyId": "republicanismo",
+        "score": 97.1,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo social",
+          "id": "liberalismo-social",
+          "score": 97.4
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "wollstonecraft",
+        "name": "Mary Wollstonecraft",
+        "ideology": "Feminismo",
+        "ideologyId": "feminismo",
+        "score": 97.1,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Feminismo",
+          "id": "feminismo",
+          "score": 97.1
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "cyril-ramaphosa",
+        "name": "Cyril Ramaphosa",
+        "ideology": "Social-democracia",
+        "ideologyId": "social-democracia",
+        "score": 97.1,
+        "rank": 3,
+        "total": 283,
+        "best": {
+          "name": "Pan-africanismo",
+          "id": "pan-africanismo",
+          "score": 98
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "rosa-luxemburgo",
+        "name": "Rosa Luxemburgo",
+        "ideology": "Socialismo democrático",
+        "ideologyId": "socialismo-democratico",
+        "score": 97.3,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Socialismo democrático",
+          "id": "socialismo-democratico",
+          "score": 97.3
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "paulo-freire",
+        "name": "Paulo Freire",
+        "ideology": "Socialismo democrático",
+        "ideologyId": "socialismo-democratico",
+        "score": 97.3,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Socialismo democrático",
+          "id": "socialismo-democratico",
+          "score": 97.3
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "wangari-maathai",
+        "name": "Wangari Maathai",
+        "ideology": "Liberalismo Verde",
+        "ideologyId": "liberalismo-verde",
+        "score": 97.3,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo Verde",
+          "id": "liberalismo-verde",
+          "score": 97.3
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "hobbes",
+        "name": "Thomas Hobbes",
+        "ideology": "Conservadorismo Autoritário",
+        "ideologyId": "conservadorismo-autoritario",
+        "score": 97.4,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Militarismo",
+          "id": "militarismo",
+          "score": 97.5
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "schmitt",
+        "name": "Carl Schmitt",
+        "ideology": "Conservadorismo Autoritário",
+        "ideologyId": "conservadorismo-autoritario",
+        "score": 97.4,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Integralismo",
+          "id": "integralismo",
+          "score": 97.5
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "keynes",
+        "name": "John Maynard Keynes",
+        "ideology": "Liberalismo social",
+        "ideologyId": "liberalismo-social",
+        "score": 97.7,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Social-democracia",
+          "id": "social-democracia",
+          "score": 98.7
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "adam-smith",
+        "name": "Adam Smith",
+        "ideology": "Liberalismo clássico",
+        "ideologyId": "liberalismo-classico",
+        "score": 97.8,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo clássico",
+          "id": "liberalismo-classico",
+          "score": 97.8
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "gramsci",
+        "name": "Antonio Gramsci",
+        "ideology": "Socialismo democrático",
+        "ideologyId": "socialismo-democratico",
+        "score": 97.8,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Socialismo democrático",
+          "id": "socialismo-democratico",
+          "score": 97.8
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "lula",
+        "name": "Luiz Inácio Lula da Silva",
+        "ideology": "Socialismo democrático",
+        "ideologyId": "socialismo-democratico",
+        "score": 97.8,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Socialismo democrático",
+          "id": "socialismo-democratico",
+          "score": 97.8
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "pinochet",
+        "name": "Augusto Pinochet",
+        "ideology": "Neoliberalismo Autoritário",
+        "ideologyId": "neoliberalismo-autoritario",
+        "score": 97.8,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Neoliberalismo Autoritário",
+          "id": "neoliberalismo-autoritario",
+          "score": 97.8
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "locke",
+        "name": "John Locke",
+        "ideology": "Liberalismo clássico",
+        "ideologyId": "liberalismo-classico",
+        "score": 97.9,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo clássico",
+          "id": "liberalismo-classico",
+          "score": 97.9
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "fanon",
+        "name": "Frantz Fanon",
+        "ideology": "Pan-africanismo",
+        "ideologyId": "pan-africanismo",
+        "score": 97.9,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Pan-africanismo",
+          "id": "pan-africanismo",
+          "score": 97.9
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "rothbard",
+        "name": "Murray Rothbard",
+        "ideology": "Anarcocapitalismo",
+        "ideologyId": "anarcocapitalismo",
+        "score": 98.1,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Anarcocapitalismo",
+          "id": "anarcocapitalismo",
+          "score": 98.1
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "friedman",
+        "name": "Milton Friedman",
+        "ideology": "Liberalismo clássico",
+        "ideologyId": "liberalismo-classico",
+        "score": 98.2,
+        "rank": 3,
+        "total": 283,
+        "best": {
+          "name": "Minarquismo",
+          "id": "minarquismo",
+          "score": 99.1
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "nozick",
+        "name": "Robert Nozick",
+        "ideology": "Minarquismo",
+        "ideologyId": "minarquismo",
+        "score": 98.3,
+        "rank": 2,
+        "total": 283,
+        "best": {
+          "name": "Neoliberalismo",
+          "id": "neoliberalismo",
+          "score": 98.4
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "golda-meir",
+        "name": "Golda Meir",
+        "ideology": "Sionismo Trabalhista",
+        "ideologyId": "sionismo-trabalhista",
+        "score": 98.3,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Sionismo Trabalhista",
+          "id": "sionismo-trabalhista",
+          "score": 98.3
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "djamila-ribeiro",
+        "name": "Djamila Ribeiro",
+        "ideology": "Feminismo",
+        "ideologyId": "feminismo",
+        "score": 98.3,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Feminismo",
+          "id": "feminismo",
+          "score": 98.3
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "burke",
+        "name": "Edmund Burke",
+        "ideology": "Conservadorismo",
+        "ideologyId": "conservadorismo",
+        "score": 98.4,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Conservadorismo",
+          "id": "conservadorismo",
+          "score": 98.4
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "bakunin",
+        "name": "Mikhail Bakunin",
+        "ideology": "Anarcocomunismo",
+        "ideologyId": "anarcocomunismo",
+        "score": 98.4,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Anarcocomunismo",
+          "id": "anarcocomunismo",
+          "score": 98.4
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "sergio-buarque",
+        "name": "Sérgio Buarque de Holanda",
+        "ideology": "Liberalismo social",
+        "ideologyId": "liberalismo-social",
+        "score": 98.4,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo social",
+          "id": "liberalismo-social",
+          "score": 98.4
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "rawls",
+        "name": "John Rawls",
+        "ideology": "Liberalismo social",
+        "ideologyId": "liberalismo-social",
+        "score": 98.5,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo social",
+          "id": "liberalismo-social",
+          "score": 98.5
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "orwell",
+        "name": "George Orwell",
+        "ideology": "Socialismo democrático",
+        "ideologyId": "socialismo-democratico",
+        "score": 98.6,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Socialismo democrático",
+          "id": "socialismo-democratico",
+          "score": 98.6
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "henry-george",
+        "name": "Henry George",
+        "ideology": "Georgismo",
+        "ideologyId": "georgismo",
+        "score": 98.7,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Georgismo",
+          "id": "georgismo",
+          "score": 98.7
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "darcy-ribeiro",
+        "name": "Darcy Ribeiro",
+        "ideology": "Socialismo democrático",
+        "ideologyId": "socialismo-democratico",
+        "score": 98.8,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Socialismo democrático",
+          "id": "socialismo-democratico",
+          "score": 98.8
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "fernando-henrique-cardoso",
+        "name": "Fernando Henrique Cardoso",
+        "ideology": "Liberalismo social",
+        "ideologyId": "liberalismo-social",
+        "score": 98.9,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo social",
+          "id": "liberalismo-social",
+          "score": 98.9
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "celso-furtado",
+        "name": "Celso Furtado",
+        "ideology": "Desenvolvimentismo",
+        "ideologyId": "desenvolvimentismo",
+        "score": 99,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Desenvolvimentismo",
+          "id": "desenvolvimentismo",
+          "score": 99
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "trotsky",
+        "name": "Leon Trotsky",
+        "ideology": "Trotskismo",
+        "ideologyId": "trotskismo",
+        "score": 99,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Trotskismo",
+          "id": "trotskismo",
+          "score": 99
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "hayek",
+        "name": "Friedrich Hayek",
+        "ideology": "Liberalismo clássico",
+        "ideologyId": "liberalismo-classico",
+        "score": 99.1,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Liberalismo clássico",
+          "id": "liberalismo-classico",
+          "score": 99.1
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "karl-marx",
+        "name": "Karl Marx",
+        "ideology": "Marxismo",
+        "ideologyId": "marxismo",
+        "score": 99.1,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Marxismo",
+          "id": "marxismo",
+          "score": 99.1
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "kropotkin",
+        "name": "Piotr Kropotkin",
+        "ideology": "Anarcocomunismo",
+        "ideologyId": "anarcocomunismo",
+        "score": 99.1,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Anarcocomunismo",
+          "id": "anarcocomunismo",
+          "score": 99.1
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "stirner",
+        "name": "Max Stirner",
+        "ideology": "Anarcoindividualismo",
+        "ideologyId": "anarcoindividualismo",
+        "score": 99.1,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Anarcoindividualismo",
+          "id": "anarcoindividualismo",
+          "score": 99.1
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "joao-goulart",
+        "name": "João Goulart",
+        "ideology": "Trabalhismo",
+        "ideologyId": "trabalhismo",
+        "score": 99.3,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Trabalhismo",
+          "id": "trabalhismo",
+          "score": 99.3
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "friedrich-engels",
+        "name": "Friedrich Engels",
+        "ideology": "Marxismo",
+        "ideologyId": "marxismo",
+        "score": 99.5,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Marxismo",
+          "id": "marxismo",
+          "score": 99.5
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "beauvoir",
+        "name": "Simone de Beauvoir",
+        "ideology": "Feminismo",
+        "ideologyId": "feminismo",
+        "score": 99.5,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Feminismo",
+          "id": "feminismo",
+          "score": 99.5
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "proudhon",
+        "name": "Pierre-Joseph Proudhon",
+        "ideology": "Mutualismo",
+        "ideologyId": "mutualismo",
+        "score": 99.8,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Mutualismo",
+          "id": "mutualismo",
+          "score": 99.8
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "salazar",
+        "name": "António de Oliveira Salazar",
+        "ideology": "Salazarismo",
+        "ideologyId": "salazarismo",
+        "score": 99.8,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Salazarismo",
+          "id": "salazarismo",
+          "score": 99.8
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "lenin",
+        "name": "Vladimir Lênin",
+        "ideology": "Marxismo-leninismo",
+        "ideologyId": "marxismo-leninismo",
+        "score": 100,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Marxismo-leninismo",
+          "id": "marxismo-leninismo",
+          "score": 100
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "juan-peron",
+        "name": "Juan Domingo Perón",
+        "ideology": "Peronismo",
+        "ideologyId": "peronismo",
+        "score": 100,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Peronismo",
+          "id": "peronismo",
+          "score": 100
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "mussolini",
+        "name": "Benito Mussolini",
+        "ideology": "Fascismo",
+        "ideologyId": "fascismo",
+        "score": 100,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Fascismo",
+          "id": "fascismo",
+          "score": 100
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "hitler",
+        "name": "Adolf Hitler",
+        "ideology": "Nazismo",
+        "ideologyId": "nazismo",
+        "score": 100,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Nazismo",
+          "id": "nazismo",
+          "score": 100
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "plinio-salgado",
+        "name": "Plínio Salgado",
+        "ideology": "Integralismo",
+        "ideologyId": "integralismo",
+        "score": 100,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Integralismo",
+          "id": "integralismo",
+          "score": 100
+        }
+      },
+      {
+        "group": "personalidades",
+        "id": "mao",
+        "name": "Mao Tsé-Tung",
+        "ideology": "Maoismo",
+        "ideologyId": "maoismo",
+        "score": 100,
+        "rank": 1,
+        "total": 283,
+        "best": {
+          "name": "Maoismo",
+          "id": "maoismo",
+          "score": 100
+        }
+      }
+    ],
+    "books": [
+      {
+        "id": "o-espirito-das-leis",
+        "title": "O Espírito das Leis",
+        "author": "Montesquieu",
+        "year": 1748,
+        "maxDiff": 3,
+        "meanDiff": 0.9166666666666666,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "republicanismo",
+            "name": "Republicanismo",
+            "score": 93.9
+          },
+          {
+            "id": "liberalismo-classico",
+            "name": "Liberalismo clássico",
+            "score": 87.9
+          }
+        ],
+        "bestIdeology": {
+          "id": "republicanismo",
+          "name": "Republicanismo",
+          "score": 93.9
+        }
+      },
+      {
+        "id": "progresso-e-pobreza",
+        "title": "Progresso e Pobreza",
+        "author": "Henry George",
+        "year": 1879,
+        "maxDiff": 3,
+        "meanDiff": 1.1666666666666667,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "georgismo",
+            "name": "Georgismo",
+            "score": 98.5
+          }
+        ],
+        "bestIdeology": {
+          "id": "georgismo",
+          "name": "Georgismo",
+          "score": 98.5
+        }
+      },
+      {
+        "id": "acao-humana",
+        "title": "Ação Humana",
+        "author": "Ludwig von Mises",
+        "year": 1949,
+        "maxDiff": 3,
+        "meanDiff": 0.75,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "liberalismo-classico",
+            "name": "Liberalismo clássico",
+            "score": 95.8
+          }
+        ],
+        "bestIdeology": {
+          "id": "liberalismo-classico",
+          "name": "Liberalismo clássico",
+          "score": 95.8
+        }
+      },
+      {
+        "id": "raizes-do-brasil",
+        "title": "Raízes do Brasil",
+        "author": "Sérgio Buarque de Holanda",
+        "year": 1936,
+        "maxDiff": 3,
+        "meanDiff": 2,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "liberalismo-social",
+            "name": "Liberalismo social",
+            "score": 97.5
+          },
+          {
+            "id": "desenvolvimentismo",
+            "name": "Desenvolvimentismo",
+            "score": 73.4
+          }
+        ],
+        "bestIdeology": {
+          "id": "liberalismo-social",
+          "name": "Liberalismo social",
+          "score": 97.5
+        }
+      },
+      {
+        "id": "doutrina-do-fascismo",
+        "title": "Doutrina do Fascismo",
+        "author": "Benito Mussolini e Giovanni Gentile",
+        "year": 1932,
+        "maxDiff": 3,
+        "meanDiff": 1.8333333333333333,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "fascismo",
+            "name": "Fascismo",
+            "score": 99.2
+          }
+        ],
+        "bestIdeology": {
+          "id": "fascismo",
+          "name": "Fascismo",
+          "score": 99.2
+        }
+      },
+      {
+        "id": "uma-teoria-da-justica",
+        "title": "Uma Teoria da Justiça",
+        "author": "John Rawls",
+        "year": 1971,
+        "maxDiff": 3,
+        "meanDiff": 1.4166666666666667,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "liberalismo-social",
+            "name": "Liberalismo social",
+            "score": 97.8
+          }
+        ],
+        "bestIdeology": {
+          "id": "liberalismo-social",
+          "name": "Liberalismo social",
+          "score": 97.8
+        }
+      },
+      {
+        "id": "a-sociedade-aberta-e-seus-inimigos",
+        "title": "A Sociedade Aberta e seus Inimigos",
+        "author": "Karl Popper",
+        "year": 1945,
+        "maxDiff": 3,
+        "meanDiff": 1.5,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "liberalismo-social",
+            "name": "Liberalismo social",
+            "score": 94.8
+          },
+          {
+            "id": "liberalismo-classico",
+            "name": "Liberalismo clássico",
+            "score": 87.7
+          }
+        ],
+        "bestIdeology": {
+          "id": "liberalismo-social",
+          "name": "Liberalismo social",
+          "score": 94.8
+        }
+      },
+      {
+        "id": "reforma-ou-revolucao",
+        "title": "Reforma ou Revolução?",
+        "author": "Rosa Luxemburgo",
+        "year": 1899,
+        "maxDiff": 4,
+        "meanDiff": 1.6666666666666667,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "comunismo-de-conselhos",
+            "name": "Comunismo de conselhos",
+            "score": 96.1
+          }
+        ],
+        "bestIdeology": {
+          "id": "comunismo-de-conselhos",
+          "name": "Comunismo de conselhos",
+          "score": 96.1
+        }
+      },
+      {
+        "id": "os-cadernos-do-carcere",
+        "title": "Os Cadernos do Cárcere",
+        "author": "Antonio Gramsci",
+        "year": 1929,
+        "maxDiff": 4,
+        "meanDiff": 1.8333333333333333,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "socialismo-democratico",
+            "name": "Socialismo democrático",
+            "score": 97.5
+          },
+          {
+            "id": "marxismo",
+            "name": "Marxismo",
+            "score": 84.3
+          }
+        ],
+        "bestIdeology": {
+          "id": "socialismo-democratico",
+          "name": "Socialismo democrático",
+          "score": 97.5
+        }
+      },
+      {
+        "id": "teoria-geral-do-emprego-do-juro-e-da-moeda",
+        "title": "Teoria Geral do Emprego, do Juro e da Moeda",
+        "author": "John Maynard Keynes",
+        "year": 1936,
+        "maxDiff": 4,
+        "meanDiff": 1.4166666666666667,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "social-democracia",
+            "name": "Social-democracia",
+            "score": 99
+          },
+          {
+            "id": "desenvolvimentismo",
+            "name": "Desenvolvimentismo",
+            "score": 81.2
+          }
+        ],
+        "bestIdeology": {
+          "id": "social-democracia",
+          "name": "Social-democracia",
+          "score": 99
+        }
+      },
+      {
+        "id": "capitalismo-e-liberdade",
+        "title": "Capitalismo e Liberdade",
+        "author": "Milton Friedman",
+        "year": 1962,
+        "maxDiff": 4,
+        "meanDiff": 1.6666666666666667,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "liberalismo-classico",
+            "name": "Liberalismo clássico",
+            "score": 97.5
+          }
+        ],
+        "bestIdeology": {
+          "id": "liberalismo-classico",
+          "name": "Liberalismo clássico",
+          "score": 97.5
+        }
+      },
+      {
+        "id": "anarquia-estado-e-utopia",
+        "title": "Anarquia, Estado e Utopia",
+        "author": "Robert Nozick",
+        "year": 1974,
+        "maxDiff": 4,
+        "meanDiff": 1.5,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "minarquismo",
+            "name": "Minarquismo",
+            "score": 97.9
+          }
+        ],
+        "bestIdeology": {
+          "id": "minarquismo",
+          "name": "Minarquismo",
+          "score": 97.9
+        }
+      },
+      {
+        "id": "a-etica-da-liberdade",
+        "title": "A Ética da Liberdade",
+        "author": "Murray Rothbard",
+        "year": 1982,
+        "maxDiff": 4,
+        "meanDiff": 1.8333333333333333,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "anarcocapitalismo",
+            "name": "Anarcocapitalismo",
+            "score": 98.1
+          }
+        ],
+        "bestIdeology": {
+          "id": "anarcocapitalismo",
+          "name": "Anarcocapitalismo",
+          "score": 98.1
+        }
+      },
+      {
+        "id": "formacao-economica-do-brasil",
+        "title": "Formação Econômica do Brasil",
+        "author": "Celso Furtado",
+        "year": 1959,
+        "maxDiff": 4,
+        "meanDiff": 1.8333333333333333,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "desenvolvimentismo",
+            "name": "Desenvolvimentismo",
+            "score": 98.8
+          }
+        ],
+        "bestIdeology": {
+          "id": "desenvolvimentismo",
+          "name": "Desenvolvimentismo",
+          "score": 98.8
+        }
+      },
+      {
+        "id": "o-povo-brasileiro",
+        "title": "O Povo Brasileiro",
+        "author": "Darcy Ribeiro",
+        "year": 1995,
+        "maxDiff": 4,
+        "meanDiff": 1.9166666666666667,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "socialismo-democratico",
+            "name": "Socialismo democrático",
+            "score": 98.9
+          }
+        ],
+        "bestIdeology": {
+          "id": "socialismo-democratico",
+          "name": "Socialismo democrático",
+          "score": 98.9
+        }
+      },
+      {
+        "id": "a-origem-do-totalitarismo",
+        "title": "A Origem do Totalitarismo",
+        "author": "Hannah Arendt",
+        "year": 1951,
+        "maxDiff": 4,
+        "meanDiff": 1.3333333333333333,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "republicanismo",
+            "name": "Republicanismo",
+            "score": 94.9
+          }
+        ],
+        "bestIdeology": {
+          "id": "republicanismo",
+          "name": "Republicanismo",
+          "score": 94.9
+        }
+      },
+      {
+        "id": "vindicacao-dos-direitos-da-mulher",
+        "title": "Reivindicação dos Direitos da Mulher",
+        "author": "Mary Wollstonecraft",
+        "year": 1792,
+        "maxDiff": 4,
+        "meanDiff": 1.8333333333333333,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "feminismo",
+            "name": "Feminismo",
+            "score": 97.8
+          },
+          {
+            "id": "liberalismo-classico",
+            "name": "Liberalismo clássico",
+            "score": 78.3
+          }
+        ],
+        "bestIdeology": {
+          "id": "feminismo",
+          "name": "Feminismo",
+          "score": 97.8
+        }
+      },
+      {
+        "id": "o-segundo-sexo",
+        "title": "O Segundo Sexo",
+        "author": "Simone de Beauvoir",
+        "year": 1949,
+        "maxDiff": 4,
+        "meanDiff": 1.8333333333333333,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "feminismo",
+            "name": "Feminismo",
+            "score": 99.8
+          }
+        ],
+        "bestIdeology": {
+          "id": "feminismo",
+          "name": "Feminismo",
+          "score": 99.8
+        }
+      },
+      {
+        "id": "pedagogia-do-oprimido",
+        "title": "Pedagogia do Oprimido",
+        "author": "Paulo Freire",
+        "year": 1968,
+        "maxDiff": 4,
+        "meanDiff": 1.6666666666666667,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "socialismo-democratico",
+            "name": "Socialismo democrático",
+            "score": 97.9
+          }
+        ],
+        "bestIdeology": {
+          "id": "socialismo-democratico",
+          "name": "Socialismo democrático",
+          "score": 97.9
+        }
+      },
+      {
+        "id": "neocolonialismo-ultimo-estagio-do-imperialismo",
+        "title": "Neocolonialismo: o Último Estágio do Imperialismo",
+        "author": "Kwame Nkrumah",
+        "year": 1965,
+        "maxDiff": 4,
+        "meanDiff": 2.25,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "pan-africanismo",
+            "name": "Pan-africanismo",
+            "score": 95.5
+          },
+          {
+            "id": "desenvolvimentismo",
+            "name": "Desenvolvimentismo",
+            "score": 86.5
+          }
+        ],
+        "bestIdeology": {
+          "id": "pan-africanismo",
+          "name": "Pan-africanismo",
+          "score": 95.5
+        }
+      },
+      {
+        "id": "livro-vermelho",
+        "title": "O Livro Vermelho",
+        "author": "Mao Tsé-Tung",
+        "year": 1964,
+        "maxDiff": 4,
+        "meanDiff": 2.25,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "maoismo",
+            "name": "Maoismo",
+            "score": 99.2
+          }
+        ],
+        "bestIdeology": {
+          "id": "maoismo",
+          "name": "Maoismo",
+          "score": 99.2
+        }
+      },
+      {
+        "id": "a-revolucao-permanente",
+        "title": "A Revolução Permanente",
+        "author": "Leon Trotsky",
+        "year": 1930,
+        "maxDiff": 4,
+        "meanDiff": 1.8333333333333333,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "trotskismo",
+            "name": "Trotskismo",
+            "score": 99.2
+          }
+        ],
+        "bestIdeology": {
+          "id": "trotskismo",
+          "name": "Trotskismo",
+          "score": 99.2
+        }
+      },
+      {
+        "id": "dois-tratados-sobre-o-governo",
+        "title": "Dois Tratados sobre o Governo",
+        "author": "John Locke",
+        "year": 1689,
+        "maxDiff": 5,
+        "meanDiff": 2.3333333333333335,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "liberalismo-classico",
+            "name": "Liberalismo clássico",
+            "score": 97.9
+          }
+        ],
+        "bestIdeology": {
+          "id": "liberalismo-classico",
+          "name": "Liberalismo clássico",
+          "score": 97.9
+        }
+      },
+      {
+        "id": "do-contrato-social",
+        "title": "Do Contrato Social",
+        "author": "Jean-Jacques Rousseau",
+        "year": 1762,
+        "maxDiff": 5,
+        "meanDiff": 1.9166666666666667,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "republicanismo",
+            "name": "Republicanismo",
+            "score": 96.8
+          }
+        ],
+        "bestIdeology": {
+          "id": "republicanismo",
+          "name": "Republicanismo",
+          "score": 96.8
+        }
+      },
+      {
+        "id": "a-riqueza-das-nacoes",
+        "title": "A Riqueza das Nações",
+        "author": "Adam Smith",
+        "year": 1776,
+        "maxDiff": 5,
+        "meanDiff": 1.75,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "liberalismo-classico",
+            "name": "Liberalismo clássico",
+            "score": 98
+          }
+        ],
+        "bestIdeology": {
+          "id": "liberalismo-classico",
+          "name": "Liberalismo clássico",
+          "score": 98
+        }
+      },
+      {
+        "id": "o-manifesto-comunista",
+        "title": "O Manifesto Comunista",
+        "author": "Karl Marx e Friedrich Engels",
+        "year": 1848,
+        "maxDiff": 5,
+        "meanDiff": 2,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "marxismo-leninismo",
+            "name": "Marxismo-leninismo",
+            "score": 95.6
+          },
+          {
+            "id": "socialismo-democratico",
+            "name": "Socialismo democrático",
+            "score": 73
+          }
+        ],
+        "bestIdeology": {
+          "id": "marxismo-leninismo",
+          "name": "Marxismo-leninismo",
+          "score": 95.6
+        }
+      },
+      {
+        "id": "da-liberdade",
+        "title": "Da Liberdade",
+        "author": "John Stuart Mill",
+        "year": 1859,
+        "maxDiff": 5,
+        "meanDiff": 1.8333333333333333,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "liberalismo-classico",
+            "name": "Liberalismo clássico",
+            "score": 89.5
+          },
+          {
+            "id": "liberalismo-social",
+            "name": "Liberalismo social",
+            "score": 87.1
+          }
+        ],
+        "bestIdeology": {
+          "id": "liberalismo-classico",
+          "name": "Liberalismo clássico",
+          "score": 89.5
+        }
+      },
+      {
+        "id": "o-capital",
+        "title": "O Capital, Livro I",
+        "author": "Karl Marx",
+        "year": 1867,
+        "maxDiff": 5,
+        "meanDiff": 2.5,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "marxismo-leninismo",
+            "name": "Marxismo-leninismo",
+            "score": 96.2
+          }
+        ],
+        "bestIdeology": {
+          "id": "marxismo-leninismo",
+          "name": "Marxismo-leninismo",
+          "score": 96.2
+        }
+      },
+      {
+        "id": "deus-e-o-estado",
+        "title": "Deus e o Estado",
+        "author": "Mikhail Bakunin",
+        "year": 1882,
+        "maxDiff": 5,
+        "meanDiff": 2.25,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "anarcossindicalismo",
+            "name": "Anarcossindicalismo",
+            "score": 99.1
+          },
+          {
+            "id": "anarcocomunismo",
+            "name": "Anarcocomunismo",
+            "score": 98.9
+          }
+        ],
+        "bestIdeology": {
+          "id": "anarcossindicalismo",
+          "name": "Anarcossindicalismo",
+          "score": 99.1
+        }
+      },
+      {
+        "id": "a-conquista-do-pao",
+        "title": "A Conquista do Pão",
+        "author": "Piotr Kropotkin",
+        "year": 1892,
+        "maxDiff": 5,
+        "meanDiff": 2.3333333333333335,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "anarcocomunismo",
+            "name": "Anarcocomunismo",
+            "score": 97.9
+          }
+        ],
+        "bestIdeology": {
+          "id": "anarcocomunismo",
+          "name": "Anarcocomunismo",
+          "score": 97.9
+        }
+      },
+      {
+        "id": "o-estado-e-a-revolucao",
+        "title": "O Estado e a Revolução",
+        "author": "Lênin",
+        "year": 1917,
+        "maxDiff": 5,
+        "meanDiff": 2.0833333333333335,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "marxismo-leninismo",
+            "name": "Marxismo-leninismo",
+            "score": 99.4
+          }
+        ],
+        "bestIdeology": {
+          "id": "marxismo-leninismo",
+          "name": "Marxismo-leninismo",
+          "score": 99.4
+        }
+      },
+      {
+        "id": "a-democracia-na-america",
+        "title": "A Democracia na América",
+        "author": "Alexis de Tocqueville",
+        "year": 1835,
+        "maxDiff": 5,
+        "meanDiff": 1.5833333333333333,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "liberalismo-classico",
+            "name": "Liberalismo clássico",
+            "score": 93.6
+          },
+          {
+            "id": "republicanismo",
+            "name": "Republicanismo",
+            "score": 91.6
+          }
+        ],
+        "bestIdeology": {
+          "id": "liberalismo-classico",
+          "name": "Liberalismo clássico",
+          "score": 93.6
+        }
+      },
+      {
+        "id": "o-principe",
+        "title": "O Príncipe",
+        "author": "Nicolau Maquiavel",
+        "year": 1532,
+        "maxDiff": 5,
+        "meanDiff": 2.5833333333333335,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "republicanismo-maquiavelico",
+            "name": "Republicanismo Maquiavélico",
+            "score": 94.5
+          },
+          {
+            "id": "republicanismo",
+            "name": "Republicanismo",
+            "score": 72.7
+          }
+        ],
+        "bestIdeology": {
+          "id": "republicanismo-maquiavelico",
+          "name": "Republicanismo Maquiavélico",
+          "score": 94.5
+        }
+      },
+      {
+        "id": "o-caminho-da-servidao",
+        "title": "O Caminho da Servidão",
+        "author": "Friedrich Hayek",
+        "year": 1944,
+        "maxDiff": 5,
+        "meanDiff": 1.8333333333333333,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "liberalismo-classico",
+            "name": "Liberalismo clássico",
+            "score": 98.2
+          },
+          {
+            "id": "ordoliberalismo",
+            "name": "Ordoliberalismo",
+            "score": 91.5
+          }
+        ],
+        "bestIdeology": {
+          "id": "liberalismo-classico",
+          "name": "Liberalismo clássico",
+          "score": 98.2
+        }
+      },
+      {
+        "id": "1984",
+        "title": "1984",
+        "author": "George Orwell",
+        "year": 1949,
+        "maxDiff": 5,
+        "meanDiff": 2.0833333333333335,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "socialismo-democratico",
+            "name": "Socialismo democrático",
+            "score": 97.8
+          }
+        ],
+        "bestIdeology": {
+          "id": "socialismo-democratico",
+          "name": "Socialismo democrático",
+          "score": 97.8
+        }
+      },
+      {
+        "id": "minha-luta",
+        "title": "Minha Luta",
+        "author": "Adolf Hitler",
+        "year": 1925,
+        "maxDiff": 5,
+        "meanDiff": 1.9166666666666667,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "nazismo",
+            "name": "Nazismo",
+            "score": 99.2
+          }
+        ],
+        "bestIdeology": {
+          "id": "nazismo",
+          "name": "Nazismo",
+          "score": 99.2
+        }
+      },
+      {
+        "id": "o-integralismo-de-plinio-salgado",
+        "title": "O Integralismo de Plínio Salgado",
+        "author": "Plínio Salgado",
+        "year": 1933,
+        "maxDiff": 5,
+        "meanDiff": 2.3333333333333335,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "integralismo",
+            "name": "Integralismo",
+            "score": 99.3
+          }
+        ],
+        "bestIdeology": {
+          "id": "integralismo",
+          "name": "Integralismo",
+          "score": 99.3
+        }
+      },
+      {
+        "id": "o-unico-e-sua-propriedade",
+        "title": "O Único e sua Propriedade",
+        "author": "Max Stirner",
+        "year": 1844,
+        "maxDiff": 5,
+        "meanDiff": 2.5,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "anarcoindividualismo",
+            "name": "Anarcoindividualismo",
+            "score": 97.7
+          }
+        ],
+        "bestIdeology": {
+          "id": "anarcoindividualismo",
+          "name": "Anarcoindividualismo",
+          "score": 97.7
+        }
+      },
+      {
+        "id": "os-condenados-da-terra",
+        "title": "Os Condenados da Terra",
+        "author": "Frantz Fanon",
+        "year": 1961,
+        "maxDiff": 5,
+        "meanDiff": 2.3333333333333335,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "pan-africanismo",
+            "name": "Pan-africanismo",
+            "score": 96.9
+          }
+        ],
+        "bestIdeology": {
+          "id": "pan-africanismo",
+          "name": "Pan-africanismo",
+          "score": 96.9
+        }
+      },
+      {
+        "id": "o-conceito-do-politico",
+        "title": "O Conceito do Político",
+        "author": "Carl Schmitt",
+        "year": 1932,
+        "maxDiff": 5,
+        "meanDiff": 2.8333333333333335,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "conservadorismo-autoritario",
+            "name": "Conservadorismo Autoritário",
+            "score": 98.9
+          },
+          {
+            "id": "conservadorismo",
+            "name": "Conservadorismo",
+            "score": 71
+          }
+        ],
+        "bestIdeology": {
+          "id": "conservadorismo-autoritario",
+          "name": "Conservadorismo Autoritário",
+          "score": 98.9
+        }
+      },
+      {
+        "id": "reflexoes-sobre-a-revolucao-na-franca",
+        "title": "Reflexões sobre a Revolução na França",
+        "author": "Edmund Burke",
+        "year": 1790,
+        "maxDiff": 6,
+        "meanDiff": 1.8333333333333333,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "conservadorismo",
+            "name": "Conservadorismo",
+            "score": 97.6
+          }
+        ],
+        "bestIdeology": {
+          "id": "conservadorismo",
+          "name": "Conservadorismo",
+          "score": 97.6
+        }
+      },
+      {
+        "id": "leviata",
+        "title": "Leviatã",
+        "author": "Thomas Hobbes",
+        "year": 1651,
+        "maxDiff": 8,
+        "meanDiff": 2.6666666666666665,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "conservadorismo-autoritario",
+            "name": "Conservadorismo Autoritário",
+            "score": 97.3
+          },
+          {
+            "id": "conservadorismo",
+            "name": "Conservadorismo",
+            "score": 66
+          }
+        ],
+        "bestIdeology": {
+          "id": "conservadorismo-autoritario",
+          "name": "Conservadorismo Autoritário",
+          "score": 97.3
+        }
+      },
+      {
+        "id": "o-que-e-a-propriedade",
+        "title": "O que é a propriedade?",
+        "author": "Pierre-Joseph Proudhon",
+        "year": 1840,
+        "maxDiff": 8,
+        "meanDiff": 3.5833333333333335,
+        "vectorCalibrated": true,
+        "ideologies": [
+          {
+            "id": "mutualismo",
+            "name": "Mutualismo",
+            "score": 98.4
+          }
+        ],
+        "bestIdeology": {
+          "id": "mutualismo",
+          "name": "Mutualismo",
+          "score": 98.4
+        }
+      }
+    ],
+    "countries": [
+      {
+        "id": "estados-unidos",
+        "name": "Estados Unidos",
+        "vector": [
+          95,
+          78,
+          76,
+          35,
+          75,
+          45,
+          24,
+          14,
+          50,
+          38,
+          38,
+          94
+        ],
+        "violations": []
+      },
+      {
+        "id": "canada",
+        "name": "Canadá",
+        "vector": [
+          90,
+          96,
+          45,
+          88,
+          25,
+          80,
+          52,
+          38,
+          30,
+          86,
+          90,
+          82
+        ],
+        "violations": []
+      },
+      {
+        "id": "mexico",
+        "name": "México",
+        "vector": [
+          70,
+          65,
+          68,
+          60,
+          15,
+          68,
+          60,
+          48,
+          58,
+          55,
+          55,
+          62
+        ],
+        "violations": []
+      },
+      {
+        "id": "argentina",
+        "name": "Argentina",
+        "vector": [
+          70,
+          72,
+          65,
+          70,
+          15,
+          68,
+          62,
+          48,
+          60,
+          60,
+          65,
+          60
+        ],
+        "violations": []
+      },
+      {
+        "id": "brasil",
+        "name": "Brasil",
+        "vector": [
+          80,
+          72,
+          58,
+          72,
+          18,
+          72,
+          66,
+          55,
+          60,
+          58,
+          62,
+          62
+        ],
+        "violations": []
+      },
+      {
+        "id": "chile",
+        "name": "Chile",
+        "vector": [
+          25,
+          88,
+          65,
+          65,
+          18,
+          78,
+          45,
+          28,
+          20,
+          72,
+          62,
+          72
+        ],
+        "violations": []
+      },
+      {
+        "id": "uruguai",
+        "name": "Uruguai",
+        "vector": [
+          20,
+          95,
+          45,
+          85,
+          8,
+          85,
+          66,
+          52,
+          50,
+          88,
+          90,
+          62
+        ],
+        "violations": []
+      },
+      {
+        "id": "reino-unido",
+        "name": "Reino Unido",
+        "vector": [
+          30,
+          92,
+          65,
+          70,
+          50,
+          65,
+          55,
+          40,
+          40,
+          65,
+          75,
+          88
+        ],
+        "violations": []
+      },
+      {
+        "id": "franca",
+        "name": "França",
+        "vector": [
+          20,
+          93,
+          65,
+          75,
+          45,
+          70,
+          62,
+          48,
+          42,
+          85,
+          80,
+          90
+        ],
+        "violations": []
+      },
+      {
+        "id": "alemanha",
+        "name": "Alemanha",
+        "vector": [
+          75,
+          96,
+          55,
+          85,
+          30,
+          85,
+          58,
+          45,
+          30,
+          75,
+          82,
+          94
+        ],
+        "violations": []
+      },
+      {
+        "id": "italia",
+        "name": "Itália",
+        "vector": [
+          30,
+          92,
+          62,
+          65,
+          30,
+          75,
+          55,
+          42,
+          42,
+          70,
+          65,
+          82
+        ],
+        "violations": []
+      },
+      {
+        "id": "espanha",
+        "name": "Espanha",
+        "vector": [
+          45,
+          94,
+          55,
+          80,
+          25,
+          82,
+          58,
+          42,
+          38,
+          88,
+          82,
+          80
+        ],
+        "violations": []
+      },
+      {
+        "id": "portugal",
+        "name": "Portugal",
+        "vector": [
+          20,
+          95,
+          55,
+          80,
+          20,
+          85,
+          55,
+          40,
+          38,
+          88,
+          78,
+          75
+        ],
+        "violations": []
+      },
+      {
+        "id": "suecia",
+        "name": "Suécia",
+        "vector": [
+          20,
+          98,
+          45,
+          85,
+          25,
+          90,
+          55,
+          35,
+          25,
+          95,
+          96,
+          96
+        ],
+        "violations": []
+      },
+      {
+        "id": "noruega",
+        "name": "Noruega",
+        "vector": [
+          20,
+          98,
+          45,
+          85,
+          25,
+          90,
+          58,
+          38,
+          28,
+          95,
+          96,
+          94
+        ],
+        "violations": []
+      },
+      {
+        "id": "dinamarca",
+        "name": "Dinamarca",
+        "vector": [
+          20,
+          98,
+          45,
+          55,
+          28,
+          90,
+          55,
+          35,
+          25,
+          95,
+          94,
+          95
+        ],
+        "violations": []
+      },
+      {
+        "id": "finlandia",
+        "name": "Finlândia",
+        "vector": [
+          20,
+          98,
+          50,
+          80,
+          40,
+          90,
+          58,
+          40,
+          30,
+          94,
+          92,
+          98
+        ],
+        "violations": []
+      },
+      {
+        "id": "suica",
+        "name": "Suíça",
+        "vector": [
+          75,
+          96,
+          55,
+          75,
+          20,
+          88,
+          40,
+          25,
+          20,
+          82,
+          78,
+          96
+        ],
+        "violations": []
+      },
+      {
+        "id": "polonia",
+        "name": "Polônia",
+        "vector": [
+          20,
+          85,
+          65,
+          30,
+          45,
+          55,
+          50,
+          38,
+          45,
+          25,
+          20,
+          78
+        ],
+        "violations": []
+      },
+      {
+        "id": "hungria",
+        "name": "Hungria",
+        "vector": [
+          20,
+          55,
+          78,
+          15,
+          35,
+          25,
+          55,
+          50,
+          50,
+          30,
+          15,
+          72
+        ],
+        "violations": []
+      },
+      {
+        "id": "russia",
+        "name": "Rússia",
+        "vector": [
+          45,
+          25,
+          85,
+          20,
+          75,
+          15,
+          65,
+          70,
+          55,
+          80,
+          20,
+          85
+        ],
+        "violations": []
+      },
+      {
+        "id": "ucrania",
+        "name": "Ucrânia",
+        "vector": [
+          25,
+          75,
+          75,
+          60,
+          65,
+          30,
+          55,
+          45,
+          55,
+          75,
+          55,
+          72
+        ],
+        "violations": []
+      },
+      {
+        "id": "grecia",
+        "name": "Grécia",
+        "vector": [
+          20,
+          92,
+          55,
+          80,
+          30,
+          82,
+          58,
+          42,
+          40,
+          85,
+          75,
+          72
+        ],
+        "violations": []
+      },
+      {
+        "id": "turquia",
+        "name": "Turquia",
+        "vector": [
+          20,
+          45,
+          78,
+          15,
+          65,
+          20,
+          50,
+          45,
+          55,
+          10,
+          15,
+          72
+        ],
+        "violations": []
+      },
+      {
+        "id": "china",
+        "name": "China",
+        "vector": [
+          10,
+          10,
+          85,
+          15,
+          45,
+          10,
+          85,
+          98,
+          55,
+          92,
+          20,
+          96
+        ],
+        "violations": []
+      },
+      {
+        "id": "japao",
+        "name": "Japão",
+        "vector": [
+          25,
+          95,
+          55,
+          25,
+          20,
+          85,
+          40,
+          25,
+          35,
+          75,
+          55,
+          96
+        ],
+        "violations": []
+      },
+      {
+        "id": "india",
+        "name": "Índia",
+        "vector": [
+          65,
+          85,
+          55,
+          55,
+          35,
+          65,
+          50,
+          38,
+          50,
+          65,
+          55,
+          80
+        ],
+        "violations": []
+      },
+      {
+        "id": "coreia-do-sul",
+        "name": "Coreia do Sul",
+        "vector": [
+          25,
+          92,
+          55,
+          45,
+          45,
+          80,
+          42,
+          30,
+          35,
+          55,
+          55,
+          95
+        ],
+        "violations": []
+      },
+      {
+        "id": "coreia-do-norte",
+        "name": "Coreia do Norte",
+        "vector": [
+          5,
+          2,
+          95,
+          2,
+          75,
+          2,
+          98,
+          100,
+          100,
+          98,
+          5,
+          80
+        ],
+        "violations": []
+      },
+      {
+        "id": "indonesia",
+        "name": "Indonésia",
+        "vector": [
+          35,
+          72,
+          65,
+          35,
+          20,
+          70,
+          55,
+          45,
+          55,
+          45,
+          35,
+          72
+        ],
+        "violations": []
+      },
+      {
+        "id": "paquistao",
+        "name": "Paquistão",
+        "vector": [
+          55,
+          55,
+          80,
+          10,
+          60,
+          10,
+          55,
+          50,
+          60,
+          5,
+          8,
+          62
+        ],
+        "violations": []
+      },
+      {
+        "id": "israel",
+        "name": "Israel",
+        "vector": [
+          25,
+          88,
+          85,
+          30,
+          80,
+          60,
+          45,
+          30,
+          40,
+          15,
+          45,
+          97
+        ],
+        "violations": []
+      },
+      {
+        "id": "ira",
+        "name": "Irã",
+        "vector": [
+          20,
+          8,
+          90,
+          5,
+          60,
+          5,
+          75,
+          85,
+          75,
+          2,
+          5,
+          70
+        ],
+        "violations": []
+      },
+      {
+        "id": "arabia-saudita",
+        "name": "Arábia Saudita",
+        "vector": [
+          15,
+          10,
+          88,
+          5,
+          60,
+          10,
+          40,
+          45,
+          55,
+          2,
+          3,
+          82
+        ],
+        "violations": []
+      },
+      {
+        "id": "africa-do-sul",
+        "name": "África do Sul",
+        "vector": [
+          65,
+          88,
+          65,
+          80,
+          20,
+          75,
+          60,
+          45,
+          50,
+          80,
+          72,
+          66
+        ],
+        "violations": []
+      },
+      {
+        "id": "nigeria",
+        "name": "Nigéria",
+        "vector": [
+          60,
+          62,
+          75,
+          45,
+          25,
+          50,
+          50,
+          40,
+          55,
+          45,
+          30,
+          55
+        ],
+        "violations": []
+      },
+      {
+        "id": "egito",
+        "name": "Egito",
+        "vector": [
+          20,
+          25,
+          85,
+          10,
+          45,
+          15,
+          60,
+          65,
+          55,
+          20,
+          15,
+          62
+        ],
+        "violations": []
+      },
+      {
+        "id": "australia",
+        "name": "Austrália",
+        "vector": [
+          85,
+          96,
+          55,
+          85,
+          35,
+          85,
+          45,
+          30,
+          25,
+          86,
+          88,
+          86
+        ],
+        "violations": []
+      },
+      {
+        "id": "nova-zelandia",
+        "name": "Nova Zelândia",
+        "vector": [
+          25,
+          98,
+          45,
+          90,
+          15,
+          92,
+          52,
+          38,
+          25,
+          92,
+          94,
+          82
+        ],
+        "violations": []
+      },
+      {
+        "id": "costa-rica",
+        "name": "Costa Rica",
+        "vector": [
+          28.7,
+          80,
+          45,
+          61.2,
+          10,
+          67.5,
+          56.2,
+          50,
+          31.2,
+          33,
+          57.5,
+          38.8
+        ],
+        "violations": []
+      }
+    ],
+    "regimes": [
+      {
+        "id": "chile-pinochetista",
+        "name": "Chile de Pinochet",
+        "violations": []
+      },
+      {
+        "id": "africa-do-sul-apartheid",
+        "name": "África do Sul do Apartheid",
+        "violations": []
+      },
+      {
+        "id": "brasil-ditadura-militar",
+        "name": "Brasil da Ditadura Militar",
+        "violations": []
+      },
+      {
+        "id": "uniao-sovietica",
+        "name": "União Soviética",
+        "violations": []
+      },
+      {
+        "id": "alemanha-nazista",
+        "name": "Alemanha Nazista",
+        "violations": []
+      },
+      {
+        "id": "italia-fascista",
+        "name": "Itália Fascista",
+        "violations": []
+      },
+      {
+        "id": "portugal-salazarista",
+        "name": "Portugal Salazarista",
+        "violations": []
+      },
+      {
+        "id": "espanha-franquista",
+        "name": "Espanha Franquista",
+        "violations": []
+      }
+    ],
+    "coverage": {
+      "ideologias": {
+        "declared": 2,
+        "total": 283,
+        "share": 0.7
+      },
+      "personalidades": {
+        "declared": 36,
+        "total": 667,
+        "share": 5.4
+      },
+      "paises": {
+        "declared": 45,
+        "total": 194,
+        "share": 23.2
+      },
+      "regimes": {
+        "declared": 2,
+        "total": 114,
+        "share": 1.8
+      },
+      "partidos": {
+        "declared": 29,
+        "total": 211,
+        "share": 13.7
+      },
+      "valores": {
+        "declared": 0,
+        "total": 110,
+        "share": 0
+      },
+      "livros": {
+        "declared": 43,
+        "total": 43,
+        "share": 100
+      }
+    }
+  }
+}

@@ -1,0 +1,81 @@
+/* Shared styling for the dedicated political catalogs and unified catalog. */
+.political-catalog-page {
+  --catalog-line: var(--border, #d9dfd8);
+  --catalog-surface: var(--card-bg, #fff);
+  --catalog-muted: var(--text-muted, #68736d);
+  --catalog-ink: var(--text-main, #1c2822);
+  --catalog-accent: var(--primary, #145b4d);
+}
+
+.catalog-main { width: 100%; padding: 0 3rem 4rem; }
+.catalog-breadcrumb { display:flex; flex-wrap:wrap; gap:.5rem; margin:1.25rem 0 0; color:var(--catalog-muted); font-size:.8rem; }
+.catalog-breadcrumb a { color:var(--catalog-accent); font-weight:650; text-decoration:none; }
+.catalog-hero { max-width:860px; padding:2.6rem 0 1.35rem; }
+.catalog-hero h1 { max-width:20ch; }
+.catalog-hero #catalog-description { max-width:720px; color:var(--catalog-muted); line-height:1.75; }
+.catalog-hero-links { display:flex; flex-wrap:wrap; gap:.55rem; margin-top:1.35rem; }
+.catalog-stats { display:flex; flex-wrap:wrap; gap:.65rem 2rem; margin-top:1.5rem; }
+.catalog-stat { display:flex; flex-direction:column; gap:.15rem; color:var(--catalog-muted); font-size:.78rem; }
+
+.catalog-main .atlas-controls { display:grid; grid-template-columns:minmax(220px,1fr) auto; gap:.75rem 1rem; margin:0 0 2rem; padding:.9rem; border:1px solid var(--catalog-line); border-radius:12px; background:var(--catalog-surface); }
+.atlas-search { display:flex; align-items:center; gap:.6rem; min-height:42px; padding:0 .8rem; border:1px solid var(--catalog-line); border-radius:9px; background:var(--bg-container,var(--catalog-surface)); }
+.atlas-search input { width:100%; min-width:0; border:0; outline:0; background:transparent; color:var(--catalog-ink); font:inherit; }
+.catalog-subfilters,.atlas-filters { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; }
+.atlas-sort { display:flex; align-items:center; gap:.5rem; color:var(--catalog-muted); font-size:.8rem; }
+.atlas-sort select { min-height:36px; padding:.35rem .6rem; border:1px solid var(--catalog-line); border-radius:8px; background:var(--catalog-surface); color:var(--catalog-ink); }
+.atlas-featured,.atlas-section { margin:0 0 3rem; }
+.atlas-featured-head,.section-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; margin-bottom:1rem; }
+.atlas-featured-head h2,.section-heading h2 { margin:.25rem 0 0; font-family:"Playfair Display",serif; }
+.atlas-featured-grid,.atlas-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+.atlas-card,.catalog-card { min-width:0; padding:1rem; overflow:hidden; border:1px solid var(--catalog-line); border-radius:12px; background:var(--catalog-surface); color:var(--catalog-ink); text-decoration:none; box-shadow:0 2px 8px rgba(16,36,32,.04); transition:border-color 180ms ease,box-shadow 180ms ease,transform 180ms ease; }
+.atlas-card:hover,.atlas-card:focus-visible { border-color:var(--catalog-accent); box-shadow:0 8px 22px rgba(16,36,32,.09); transform:translateY(-2px); }
+.catalog-card-top { display:flex; gap:.85rem; align-items:center; }
+.catalog-card-thumb { display:grid; flex:none; place-items:center; width:76px; aspect-ratio:4/3; overflow:hidden; border-radius:9px; background:color-mix(in srgb,var(--catalog-accent) 8%,var(--catalog-surface)); }
+.catalog-card-thumb img { width:100%; height:100%; object-fit:cover; }
+.catalog-card-thumb.is-flag img,.catalog-card-thumb.is-logo img { object-fit:contain; padding:.35rem; }
+.catalog-card h3 { margin:.55rem 0 .25rem; font-family:"Playfair Display",serif; font-size:1.15rem; }
+.catalog-card-summary { color:var(--catalog-muted); font-size:.84rem; line-height:1.6; }
+.catalog-card-tags { display:flex; flex-wrap:wrap; gap:.35rem; margin-top:.55rem; }
+.catalog-card-tags span,.atlas-card-tags span { padding:.2rem .5rem; border:1px solid var(--catalog-line); border-radius:999px; color:var(--catalog-muted); font-size:.68rem; }
+.atlas-button { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; min-height:38px; padding:.5rem .85rem; border:1px solid var(--catalog-accent); border-radius:8px; background:var(--catalog-accent); color:white; font:inherit; font-size:.8rem; font-weight:700; text-decoration:none; cursor:pointer; }
+.atlas-button-ghost { background:transparent; color:var(--catalog-ink); border-color:var(--catalog-line); }
+.atlas-button:hover { filter:brightness(.94); }
+.catalog-more-row { display:flex; justify-content:center; margin-top:1.25rem; }
+.catalog-notice { margin:1rem 0; padding:1rem; border:1px solid var(--catalog-line); border-radius:10px; color:var(--catalog-muted); }
+.catalog-disclaimer { max-width:850px; margin:2rem auto; color:var(--catalog-muted); font-size:.75rem; line-height:1.6; }
+.catalog-dialog { width:min(1040px,calc(100vw - 2rem)); max-height:min(94vh,1100px); padding:0; border:1px solid var(--catalog-line); border-radius:12px; background:var(--catalog-surface); color:var(--catalog-ink); }
+.catalog-dialog::backdrop { background:rgba(15,24,20,.58); backdrop-filter:blur(3px); }
+.catalog-profile-shell { max-height:min(94vh,1100px); overflow:auto; }
+.catalog-profile-content { padding:0 2rem 2rem; }
+.catalog-profile-hero { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:1.5rem; padding:2rem; border-bottom:1px solid var(--catalog-line); }
+.catalog-profile-hero h2 { font-family:"Playfair Display",serif; font-size:clamp(1.8rem,4vw,2.8rem); }
+.catalog-profile-tabs { display:flex; flex-wrap:wrap; gap:.4rem; margin:1.25rem 0; padding:.35rem; border:1px solid var(--catalog-line); border-radius:10px; }
+.catalog-profile-tabs button { padding:.55rem .8rem; border:0; border-radius:7px; background:transparent; color:var(--catalog-ink); cursor:pointer; }
+.catalog-profile-tabs button[aria-selected="true"] { background:var(--catalog-accent); color:white; }
+.catalog-profile-distinction-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem; }
+.catalog-profile-distinction-grid article,.catalog-profile-reference,.catalog-profile-phrase { padding:1rem; border:1px solid var(--catalog-line); border-radius:10px; background:var(--catalog-surface); }
+.catalog-profile-cta { display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-top:1.5rem; padding:1.25rem; border:1px solid var(--catalog-line); border-radius:12px; }
+.catalog-profile-back,.catalog-profile-close { cursor:pointer; }
+.catalog-profile-axis-list { display:grid; gap:.5rem; }
+.catalog-profile-axis-row { display:grid; grid-template-columns:minmax(120px,.8fr) 2fr; gap:.75rem; align-items:center; padding:.6rem .75rem; border:1px solid var(--catalog-line); border-radius:8px; }
+[hidden] { display:none !important; }
+
+.dedicated-catalog-page .catalog-hero { max-width:860px; }
+.dedicated-catalog-page .catalog-main { max-width:1440px; margin-inline:auto; }
+.dedicated-catalog-page .catalog-hero-links a[href="/ideologias"],
+.dedicated-catalog-page .catalog-hero-links a[href="/teste-politico"] { display:none; }
+
+@media (max-width:900px) { .atlas-grid,.atlas-featured-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:768px) {
+  .catalog-main { padding:0 1.25rem 3rem; }
+  .catalog-hero { padding-top:2rem; }
+  .catalog-main .atlas-controls { grid-template-columns:minmax(0,1fr); }
+  .atlas-grid,.atlas-featured-grid { grid-template-columns:1fr; }
+  .atlas-featured-head,.section-heading { align-items:flex-start; flex-direction:column; }
+  .catalog-profile-hero { grid-template-columns:1fr; padding:1.25rem; }
+  .catalog-profile-content { padding:0 1rem 1rem; }
+  .catalog-profile-distinction-grid { grid-template-columns:1fr; }
+  .catalog-profile-cta { align-items:flex-start; flex-direction:column; }
+}
+
+@media (prefers-reduced-motion:reduce) { .atlas-card,.catalog-card,.atlas-button { transition:none; } }

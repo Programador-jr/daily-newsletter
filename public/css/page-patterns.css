@@ -1,0 +1,7 @@
+/* Geometria editorial compartilhada; tokens e tipografia vêm de styles.css. */
+.history-page main { padding-bottom:2rem; }
+.history-page :is(.civic-hero,.ideology-hero,.atlas-hero,.catalog-hero,.compare-hero,.quiz-hero) { max-width:860px; }
+.history-page main > section:not(.history-hero),.history-page main > .quiz-section { width:calc(100% - 6rem); max-width:1155px; margin-right:auto; margin-left:auto; }
+.history-page .section-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; }
+.history-page :is(.civic-section,.ideology-section,.atlas-section,.compare-section,.quiz-section) { margin-bottom:3rem; }
+@media(max-width:768px){.history-page main > section:not(.history-hero),.history-page main > .quiz-section{width:calc(100% - 2.5rem)}.history-page .section-heading{align-items:flex-start;flex-direction:column}}

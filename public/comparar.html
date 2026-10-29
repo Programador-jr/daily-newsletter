@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="pt-BR" class="history-document">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compare ideologias, personalidades, países, regimes, partidos e valores do catálogo político nos 12 eixos, com convergências, distâncias e links para as fichas.">
+  <title>Comparar perfis políticos | King's Newsletter</title>
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/historia.css">
+  <link rel="stylesheet" href="/css/ideologias.css">
+  <link rel="stylesheet" href="/css/page-patterns.css">
+  <link rel="stylesheet" href="/css/political-compare.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/ui-kit.css">
+  <script src="/js/vercel-observability.js" defer></script>
+</head>
+<body class="history-page ideologies-page compare-page">
+  <a class="skip-link" href="#compare-main">Pular para o conteúdo</a>
+  <div class="container">
+    <header class="site-header">
+      <a class="logo" href="/" aria-label="Página inicial"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></a>
+      <nav class="header-main-nav" aria-label="Navegação principal"><div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div></nav>
+    </header>
+    <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+      <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
+      <nav class="site-sidebar-nav" aria-label="Páginas principais"><div class="site-sidebar-group"></div></nav>
+      <div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false"><span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div>
+    </aside>
+    <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
+
+    <main class="compare-main" id="compare-main" tabindex="-1">
+      <nav class="compare-breadcrumb" aria-label="Trilha de navegação">
+        <a href="/politica">Política</a><span aria-hidden="true">/</span>
+        <a href="/catalogo-politico">Catálogo político</a><span aria-hidden="true">/</span>
+        <span>Comparar perfis</span>
+      </nav>
+
+      <section class="history-hero ideology-hero compare-hero">
+        <div class="compare-hero-copy">
+          <h1><span class="compare-title-line">Três perfis.</span> <span class="compare-title-line">Doze eixos.</span> <em class="compare-title-line">Nenhum veredito.</em></h1>
+          <p class="compare-deck">Escolha até três perfis do catálogo para ver onde as posições convergem, onde se afastam e o que muda a leitura. A comparação é uma ferramenta de contexto, não uma nota de identidade.</p>
+          <div class="compare-hero-links">
+            <a class="atlas-button" href="/catalogo-politico"><i class="fas fa-table-cells-large" aria-hidden="true"></i> Explorar o catálogo</a>
+            <a class="atlas-button atlas-button-ghost" href="/teste-politico"><i class="fas fa-list-check" aria-hidden="true"></i> Fazer o teste político</a>
+          </div>
+        </div>
+        <aside class="compare-hero-aside" aria-label="Como ler a comparação">
+          <p class="compare-aside-title">Como ler esta página</p>
+          <ul class="compare-aside-list">
+            <li><strong>O encontro</strong><span>Onde as posições dos perfis coincidem.</span></li>
+            <li><strong>O atrito</strong><span>Onde os vetores se afastam e qual eixo explica a distância.</span></li>
+            <li><strong>O contexto</strong><span>O que o percentual não diz sobre identidade, filiação ou voto.</span></li>
+          </ul>
+          <div class="compare-stats" id="compare-stats" aria-label="Escopo do comparador"></div>
+        </aside>
+      </section>
+
+      <section class="compare-workbench" id="compare-workbench" aria-labelledby="compare-selection-title" aria-busy="true">
+        <div class="compare-workbench-head">
+          <div>
+            <h2 id="compare-selection-title">Perfis na comparação</h2>
+          </div>
+          <button class="compare-clear" id="compare-clear" type="button" hidden><i class="fas fa-rotate-left" aria-hidden="true"></i> Limpar seleção</button>
+        </div>
+
+        <div class="compare-selected" id="compare-selected"></div>
+
+        <div class="compare-picker" id="compare-picker">
+          <label class="compare-search-label" for="compare-search">Adicionar um perfil</label>
+          <div class="compare-field">
+            <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+            <input
+              class="compare-input"
+              id="compare-search"
+              type="search"
+              placeholder="Buscar ideologia, personalidade, país, partido ou valor"
+              autocomplete="off"
+              role="combobox"
+              aria-expanded="false"
+              aria-controls="compare-options"
+              aria-autocomplete="list"
+            >
+            <kbd aria-hidden="true">/</kbd>
+          </div>
+          <ul class="compare-options" id="compare-options" role="listbox" aria-label="Perfis para comparar" hidden></ul>
+          <p class="compare-hint" id="compare-hint">Você pode comparar até três perfis do catálogo.</p>
+          <p class="sr-only" id="compare-status" role="status" aria-live="polite"></p>
+        </div>
+
+        <p class="compare-limit" id="compare-limit" hidden>Você já comparou com três perfis. Remova um para escolher outro.</p>
+
+        <div class="compare-empty" id="compare-empty">
+          <i class="fas fa-code-compare" aria-hidden="true"></i>
+          <p>Selecione dois ou três perfis do catálogo para comparar as posições nos 12 eixos.</p>
+        </div>
+
+        <p class="compare-error" id="compare-error" role="alert" hidden>Não foi possível carregar o comparador. Recarregue a página para tentar novamente.</p>
+      </section>
+
+      <section class="compare-results" id="compare-results" aria-labelledby="compare-results-title" hidden>
+        <div class="compare-results-head">
+          <div>
+            <h2 id="compare-results-title">O que aproxima e o que separa</h2>
+            <p class="compare-summary" id="compare-summary"></p>
+          </div>
+        </div>
+
+        <div class="compare-pairs" id="compare-pairs" aria-label="Compatibilidade entre os perfis"></div>
+
+        <section class="compare-section compare-ideology" id="compare-ideology" aria-labelledby="compare-ideology-title">
+          <div class="compare-section-head">
+            <div>
+              <h3 id="compare-ideology-title">Ideologia mais próxima</h3>
+            </div>
+            <p class="compare-section-note">O “em comum” é a média dos vetores selecionados. Cada perfil também recebe a sua própria vizinhança ideológica.</p>
+          </div>
+          <div id="compare-ideology-content"></div>
+        </section>
+
+        <div class="compare-axes-head">
+          <div>
+            <h3>As posições de cada perfil</h3>
+          </div>
+          <div class="compare-legend" id="compare-legend"></div>
+        </div>
+        <div class="compare-axes" id="compare-axes"></div>
+        <div class="compare-readout" id="compare-readout"></div>
+
+        <section class="compare-section compare-countries" id="compare-countries-section" aria-labelledby="compare-countries-title">
+          <div class="compare-section-head">
+            <div>
+              <h3 id="compare-countries-title">Países mais próximos</h3>
+            </div>
+            <p class="compare-section-note">A lista considera países atuais e experiências históricas em abas separadas. Regiões, províncias e o próprio perfil selecionado ficam de fora.</p>
+          </div>
+          <div class="compare-tabs" id="compare-country-tabs" role="group" aria-label="Tipo de país">
+            <button class="compare-tab" type="button" aria-pressed="true" data-mode="current">Países atuais</button>
+            <button class="compare-tab" type="button" aria-pressed="false" data-mode="historical">Experiências históricas</button>
+          </div>
+          <div class="compare-near-grid" id="compare-countries"></div>
+        </section>
+
+        <section class="compare-section compare-personalities" id="compare-personalities-section" aria-labelledby="compare-personalities-title">
+          <div class="compare-section-head">
+            <div>
+              <h3 id="compare-personalities-title">Personalidades mais próximas</h3>
+            </div>
+            <p class="compare-section-note">O ranking compara o vetor de cada perfil com o de outras personalidades do catálogo. O próprio perfil não entra na lista.</p>
+          </div>
+          <div class="compare-near-grid" id="compare-personalities"></div>
+        </section>
+
+        <section class="compare-section compare-parties" id="compare-parties-section" aria-labelledby="compare-parties-title">
+          <div class="compare-section-head">
+            <div>
+              <h3 id="compare-parties-title">Partidos mais próximos</h3>
+            </div>
+            <p class="compare-section-note">A proximidade indica afinidade de vetor, não filiação ou voto. Partidos atuais e históricos ficam em abas separadas.</p>
+          </div>
+          <div class="compare-tabs" id="compare-party-tabs" role="group" aria-label="Tipo de partido">
+            <button class="compare-tab" type="button" aria-pressed="true" data-mode="current">Partidos atuais</button>
+            <button class="compare-tab" type="button" aria-pressed="false" data-mode="historical">Partidos históricos</button>
+          </div>
+          <div class="compare-near-grid" id="compare-parties"></div>
+        </section>
+
+        <section class="compare-section compare-values-section" id="compare-values-section" aria-labelledby="compare-values-title">
+          <div class="compare-section-head">
+            <div>
+              <h3 id="compare-values-title">As famílias de valores mais próximas</h3>
+            </div>
+            <p class="compare-section-note">Cada valor é comparado apenas nos eixos que declara; os demais ficam de fora. A escolha é sempre dentro da mesma família.</p>
+          </div>
+          <div class="compare-values-grid" id="compare-values"></div>
+        </section>
+
+        <section class="compare-section compare-compass" id="compare-compass" aria-labelledby="compare-compass-title">
+          <div class="compare-section-head">
+            <div>
+              <h3 id="compare-compass-title">O mapa de cinco eixos</h3>
+            </div>
+            <p class="compare-section-note">A bússola combina economia e controle no eixo esquerda–direita; poder, representação e estrutura no eixo autoritarismo–anarquismo; e moral no eixo progressista–tradicionalista.</p>
+          </div>
+          <div id="compare-compass-content"></div>
+        </section>
+
+        <p class="compare-method">A compatibilidade usa o mesmo cálculo de proximidade do quiz: combina a semelhança eixo a eixo, a direção geral dos vetores e a intensidade das posições. As seções de proximidade aplicam esse cálculo aos demais perfis do catálogo; valores usam apenas os eixos que declaram. A barra dos 12 eixos segue a convenção do catálogo: o polo à esquerda corresponde a 100 e o polo à direita, a 0. A amplitude mostra a distância entre a maior e a menor posição do conjunto naquele eixo. Alguns perfis usam o vetor curado do atlas; por isso, os percentuais podem diferir dos exibidos no 12 Axes.</p>
+      </section>
+
+      <section class="compare-explainer" aria-labelledby="compare-explainer-title">
+        <div class="compare-explainer-head">
+          <div>
+            <h2 id="compare-explainer-title">Três camadas, não um veredito</h2>
+          </div>
+          <p>O comparador ajuda a localizar diferenças entre modelos editoriais. Ele não mede identidade, intenção ou filiação.</p>
+        </div>
+        <div class="compare-explainer-grid">
+          <article>
+            <h3>Posição</h3>
+            <p>Cada perfil tem um vetor de 12 eixos independentes. O valor indica a proximidade de um dos polos, não uma nota de qualidade.</p>
+          </article>
+          <article>
+            <h3>Similaridade</h3>
+            <p>A compatibilidade combina a semelhança eixo a eixo, a direção geral dos vetores e a intensidade das posições. Ela não mede identidade política, filiação ou intenção de voto.</p>
+          </article>
+          <article>
+            <h3>Contexto</h3>
+            <p>Dois perfis podem coincidir em um eixo e divergir em outro. Leia o conjunto, a ficha e as fontes antes de tirar conclusões.</p>
+          </article>
+        </div>
+        <p class="compare-explainer-links"><a href="/teste-politico">Fazer o teste e comparar com o seu perfil</a> <a href="/catalogo-politico">Voltar ao catálogo político</a></p>
+      </section>
+
+      <section class="atlas-sources compare-credit" aria-labelledby="compare-credit-title">
+        <h2 id="compare-credit-title">Uma adaptação autorizada de 12 Axes</h2>
+        <p>Os perfis, vetores, descrições e recomendações de leitura deste catálogo foram reproduzidos do projeto <a href="https://12axes.vercel.app/" target="_blank" rel="noopener noreferrer">12 Axes</a>, criado por Enzo Xavier Santos, com autorização escrita do autor. A interface, a navegação e a redação de apresentação foram adaptadas à King's Newsletter.</p>
+        <p>As posições nos doze eixos são sínteses editoriais aproximadas. Não representam apoio, filiação, recomendação de voto nem uma descrição definitiva de pessoas, partidos ou sociedades. Conceitos com perfil parcial são comparados apenas nos eixos em que há posição definida.</p>
+        <p class="compare-credit-links"><a href="https://github.com/RomanCypherpunk/12axes" target="_blank" rel="noopener noreferrer">Repositório e documentação de 12 Axes</a> <a href="/teste-politico">Fazer o quiz político</a></p>
+      </section>
+    </main>
+
+    <div id="footer"></div>
+  </div>
+
+  <script src="/js/accordion-motion.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/footer.js"></script>
+  <script src="/js/political-compare.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+/* Resultado do questionário — composição editorial responsiva. */
+.results-page main { padding:2rem 0 3rem; }
+.results-page .results-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(190px,250px); gap:1.5rem; width:calc(100% - 6rem); max-width:1320px; margin:0 auto; align-items:start; }
+.results-page .results-column { min-width:0; }
+.results-page .results-intro { display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; margin-bottom:1.25rem; }
+.results-page .results-intro h1 { margin:.35rem 0 0; }
+.results-page .results-restart { color:var(--primary); font-weight:700; text-decoration:none; }
+.results-page .results-empty,.results-page .quiz-panel { padding:1.1rem; border:1px solid var(--border); border-radius:10px; background:var(--card-bg); }
+.results-page .results-side { position:sticky; top:1.25rem; }
+.results-page .results-toc { display:grid; gap:.4rem; padding:1rem; border:1px solid var(--border); border-radius:9px; background:var(--card-bg); }
+.results-page .results-toc p { margin:0 0 .35rem; font-weight:700; }
+.results-page .results-toc a { display:flex; gap:.55rem; color:var(--text-muted); font-size:.78rem; text-decoration:none; }
+.results-page .results-toc a:hover { color:var(--primary); }
+.results-page .results-hero,.results-page .results-summary,.results-page .results-section { width:calc(100% - 6rem); max-width:1155px; margin:0 auto 1.5rem; }
+.results-page .results-hero { padding:1.5rem; border:1px solid var(--border); border-radius:10px; background:var(--card-bg); }
+.results-page :is(.result-card,.results-card,.result-profile,.results-section) { border:1px solid var(--border); border-radius:10px; background:var(--card-bg); color:var(--text-main); }
+.results-page :is(.result-card,.results-card,.result-profile) { padding:1rem; }
+.results-page :is(.results-grid,.result-grid,.result-matches,.result-axes) { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem; }
+.results-page :is(.result-axis,.result-match,.result-item) { padding:.9rem; border:1px solid var(--border); border-radius:8px; background:var(--bg-container); }
+.results-page :is(.result-score,.result-match-score) { color:var(--primary); font-weight:750; }
+.results-page .results-actions { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1rem; }
+@media(max-width:900px){.results-page .results-layout{grid-template-columns:1fr}.results-page .results-side{position:static}.results-page .results-toc{grid-template-columns:repeat(2,minmax(0,1fr))}.results-page .results-toc p{grid-column:1/-1}}
+@media(max-width:768px){.results-page .results-layout,.results-page .results-hero,.results-page .results-summary,.results-page .results-section{width:calc(100% - 2.5rem)}.results-page :is(.results-grid,.result-grid,.result-matches,.result-axes){grid-template-columns:1fr}.results-page .results-intro{align-items:flex-start;flex-direction:column}}

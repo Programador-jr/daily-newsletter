@@ -10,6 +10,17 @@
   max-width: 860px;
 }
 
+.ideology-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.35rem;
+}
+
+.ideology-hero-actions .atlas-button {
+  text-decoration: none;
+}
+
 /* MÉTODO */
 
 .ideology-method {
@@ -791,4 +802,40 @@
   color: var(--text-muted);
   font-size: 0.76rem;
   line-height: 1.6;
+}
+
+/* GUIA — grade dos doze eixos */
+.axis-grid-12 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+.axis-grid-12 article {
+  padding: 0.95rem;
+}
+.axis-grid-12 strong {
+  font-size: 0.8rem;
+}
+.axis-grid-12 p {
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+.axis-grid-footnote {
+  margin: 1rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+.axis-grid-footnote a {
+  color: var(--primary);
+  font-weight: 700;
+}
+@media (max-width: 900px) {
+  .axis-grid-12 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 620px) {
+  .axis-grid-12 {
+    grid-template-columns: 1fr;
+  }
 }

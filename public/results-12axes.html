@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR" class="history-document">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resultado do Teste Político de 12 Eixos: perfil por dimensão, comparações e leituras associadas.">
+  <title>Seu perfil político | King's Newsletter</title>
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/historia.css">
+  <link rel="stylesheet" href="/css/ideologias.css">
+  <link rel="stylesheet" href="/css/quiz.css">
+  <link rel="stylesheet" href="/css/page-patterns.css">
+  <link rel="stylesheet" href="/css/results-12axes.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/ui-kit.css">
+  <script src="/js/vercel-observability.js" defer></script>
+</head>
+<body class="history-page ideologies-page quiz-page results-page">
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+<div class="container">
+  <header class="site-header">
+    <a class="logo" href="/" aria-label="Página inicial"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></a>
+    <nav class="header-main-nav" aria-label="Navegação principal"><div class="header-primary-links"></div><div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div></nav>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+    <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
+    <nav class="site-sidebar-nav" aria-label="Páginas principais"><div class="site-sidebar-group"></div></nav>
+    <div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false"><span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div>
+  </aside>
+  <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
+
+  <main id="main" tabindex="-1">
+    <div class="results-layout">
+      <div class="results-column">
+        <header class="results-intro">
+          <div>
+            <span class="eyebrow">Análise concluída</span>
+            <h1>Seu perfil <em>ideológico</em></h1>
+          </div>
+          <a class="results-restart" href="/teste-politico">Refazer o teste <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+        </header>
+
+        <div class="results-empty" id="results-empty" role="status" hidden>
+          <p>Nenhum perfil foi informado neste endereço. Faça o questionário para gerar seu retrato em 12 dimensões.</p>
+          <a class="quiz-button quiz-primary" href="/teste-politico"><i class="fas fa-list-check" aria-hidden="true"></i> Fazer o teste político</a>
+        </div>
+
+        <div class="ideology-quiz" id="ideology-quiz">
+          <div class="quiz-intro" hidden>
+            <p class="quiz-catalog-counts">12 eixos · 240 afirmações</p>
+            <button class="quiz-button quiz-primary" id="quiz-start" type="button" tabindex="-1">Começar questionário</button>
+          </div>
+          <div class="quiz-question-view" hidden>
+            <div class="quiz-progress"><span id="quiz-progress-label" aria-live="polite"></span><progress id="quiz-progress" max="12" value="1" aria-label="Progresso do questionário"></progress></div>
+            <span class="eyebrow" id="quiz-axis-label"></span>
+            <h3 id="quiz-question" tabindex="-1"></h3>
+            <fieldset class="quiz-answers" id="quiz-answers"><legend class="visually-hidden">Selecione seu grau de concordância</legend></fieldset>
+            <div class="quiz-navigation"><button class="quiz-button quiz-secondary" id="quiz-back" type="button">Voltar</button><button class="quiz-button quiz-primary" id="quiz-next" type="button">Próxima</button></div>
+            <input type="radio" name="quiz-length" value="short" checked hidden>
+          </div>
+          <div class="quiz-results" id="quiz-results" hidden aria-live="polite"></div>
+          <div class="quiz-error" id="quiz-error" hidden role="alert"><h3>Não foi possível carregar os dados deste resultado.</h3><p>Recarregue a página ou refaça o questionário.</p></div>
+          <dialog class="quiz-help-dialog quiz-result-help" id="result-help-dialog" aria-labelledby="result-help-dialog-title">
+            <div class="quiz-help-dialog-shell">
+              <div class="quiz-help-dialog-header">
+                <h2 id="result-help-dialog-title">Detalhes do resultado</h2>
+                <button id="result-help-close" type="button" aria-label="Fechar detalhes">×</button>
+              </div>
+              <div id="result-help-content"></div>
+            </div>
+          </dialog>
+        </div>
+
+        <section class="quiz-panel quiz-credit" id="metodologia" aria-labelledby="result-credit-title">
+          <span class="eyebrow">Créditos e metodologia</span>
+          <h2 id="result-credit-title">Como ler este resultado</h2>
+          <p>Os percentuais indicam posições relativas entre os polos de cada eixo. A proximidade combina distância por eixo, direção, intensidade e divergências isoladas. Os vetores são modelos editoriais do catálogo 12 Axes, não respostas atribuídas a essas pessoas nem equivalência de valores ou trajetórias.</p>
+          <p>Dados e questionário: <a href="https://12axes.vercel.app/" target="_blank" rel="noopener noreferrer">12 Axes</a> · Enzo Xavier Santos, reproduzidos com autorização escrita do autor.</p>
+        </section>
+      </div>
+
+      <aside class="results-side">
+        <nav class="results-toc" id="results-toc" aria-label="Nesta página" hidden>
+          <p>Nesta página</p>
+          <a href="#eixos-resultado"><span>01</span> 12 eixos</a>
+          <a href="#assinatura"><span>02</span> Distinção</a>
+          <a href="#resultado-paises"><span>03</span> Países</a>
+          <a href="#resultado-figuras"><span>04</span> Personalidades</a>
+          <a href="#areas"><span>05</span> Áreas</a>
+          <a href="#resultado-livros"><span>06</span> Livros</a>
+          <a href="#resultado-partidos"><span>07</span> Partidos</a>
+          <a href="#valores"><span>08</span> Valores</a>
+          <a href="#resultado-ideologias"><span>09</span> Ideologias</a>
+          <a href="#bussola"><span>10</span> Bússola</a>
+          <a href="#comparar"><span>11</span> Comparar</a>
+        </nav>
+      </aside>
+    </div>
+  </main>
+  <div id="footer"></div>
+</div>
+<script src="/js/accordion-motion.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/footer.js"></script>
+<script src="/js/axis-icons.js"></script>
+<script src="/js/ideology-quiz.js"></script>
+</body>
+</html>
