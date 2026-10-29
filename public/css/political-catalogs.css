@@ -165,3 +165,11 @@
 .catalog-error { padding:1rem; border:1px solid #d78c8c; border-radius:10px; background:#fff3f2; color:#8b2424; }
 @media(max-width:900px){.catalog-ideas-grid,.atlas-nearby{grid-template-columns:repeat(2,minmax(0,1fr))}.catalog-axis-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:768px){.catalog-tools-row{align-items:stretch;flex-direction:column}.catalog-ideas-grid,.atlas-nearby,.catalog-country-kpis{grid-template-columns:1fr}.catalog-axis-grid{grid-template-columns:1fr}.catalog-intensity{grid-template-columns:1fr}.catalog-country-periods{grid-template-columns:1fr}.catalog-spectrum-seg{flex-basis:100%}}
+
+.catalog-stat-label { color:var(--catalog-muted); font-size:.72rem; }
+.catalog-dialog-media { display:grid; min-height:160px; place-items:center; overflow:hidden; border-radius:10px; background:color-mix(in srgb,var(--catalog-accent) 8%,var(--catalog-surface)); }
+.catalog-dialog-media img { width:100%; max-height:360px; object-fit:contain; }
+.catalog-profile-pole { padding:.4rem .6rem; border:1px solid var(--catalog-line); border-radius:8px; font-size:.75rem; }
+.catalog-profile-pole.is-active { border-color:var(--catalog-accent); background:color-mix(in srgb,var(--catalog-accent) 9%,var(--catalog-surface)); }
+.catalog-profile-tab-panel { min-width:0; padding-top:1rem; }
+.atlas-dialog-summary { margin:.75rem 0; color:var(--catalog-muted); line-height:1.7; }
