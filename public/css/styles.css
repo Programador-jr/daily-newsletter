@@ -74,6 +74,10 @@ body {
   overflow-x: clip;
 }
 
+html {
+  scroll-padding-top: 5.5rem;
+}
+
 body {
   font-family: "Inter", sans-serif;
   background: var(--bg-body);
@@ -96,8 +100,9 @@ body {
 
 /* HEADER */
 .site-header {
-  position: relative;
-  z-index: 1;
+  position: sticky;
+  top: 0;
+  z-index: 20;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -3903,4 +3908,338 @@ body.sidebar-open {
   .home-page .home-text-link {
     transition: none;
   }
+}
+
+@media (max-width: 640px) {
+  .home-page .home-section-heading {
+    padding-inline: 1.25rem;
+  }
+}
+
+/* Identidade editorial compartilhada pelas páginas públicas. */
+:root {
+  --bg-body: #f1f3ed;
+  --bg-container: #fbfcf8;
+  --text-main: #182522;
+  --text-muted: #52645d;
+  --primary: #176b63;
+  --primary-hover: #10574f;
+  --border: #d8e0d9;
+  --card-bg: #fbfcf8;
+  --card-border: #d8e0d9;
+  --sidebar-bg: #e8eee8;
+  --sidebar-text: #20312b;
+  --sidebar-muted: #5d6c64;
+  --sidebar-border: #d1dbd2;
+  --sidebar-hover: #dce6df;
+  --editorial-accent: #c39535;
+  --editorial-ink: #182522;
+}
+
+[data-theme="dark"] {
+  --bg-body: #17211e;
+  --bg-container: #202c28;
+  --text-main: #edf2ed;
+  --text-muted: #b1beb6;
+  --primary: #68b6a8;
+  --primary-hover: #8acabd;
+  --border: #3a4a43;
+  --card-bg: #202c28;
+  --card-border: #3a4a43;
+  --sidebar-bg: #1b2723;
+  --sidebar-text: #edf2ed;
+  --sidebar-muted: #b1beb6;
+  --sidebar-border: #34443d;
+  --sidebar-hover: #293832;
+  --editorial-accent: #e1ba65;
+  --editorial-ink: #edf2ed;
+}
+
+body {
+  background: var(--bg-body);
+  color: var(--text-main);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.container {
+  background: var(--bg-container);
+  color: var(--text-main);
+  border-color: var(--border);
+  box-shadow: none;
+}
+
+.site-header {
+  background: var(--bg-container);
+  color: var(--text-main);
+  border-color: var(--border);
+  box-shadow: none !important;
+}
+
+.logo-top,
+main h1,
+main h2,
+main h3 {
+  color: var(--editorial-ink);
+}
+
+.logo-top,
+main h1,
+main h2 {
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+.logo-bottom {
+  color: var(--text-muted);
+}
+
+main a:not(.cta-button):not(.button):not([class*="btn-"]) {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+main :is(input, select, textarea, button) {
+  font: inherit;
+}
+
+main :is(input, select, textarea) {
+  color: var(--text-main);
+  background-color: var(--bg-container);
+  border-color: var(--border);
+}
+
+main :is(a, button, input, select, textarea):focus-visible {
+  outline-color: color-mix(in srgb, var(--primary) 65%, transparent);
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 0;
+  }
+
+  .container {
+    border-radius: 0;
+  }
+}
+
+/* ============================================================
+   Refinamento de interface: acessibilidade + identidade editorial
+   Camada aditiva — não substitui as regras existentes.
+   ============================================================ */
+
+/* Utilidades */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Atalho de teclado para o conteúdo principal */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 200;
+  padding: 0.7rem 1.15rem;
+  background: var(--primary);
+  color: var(--bg-container);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 18%);
+  transform: translateY(-160%);
+  transition: transform 140ms ease-out;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 3px solid var(--editorial-accent);
+  outline-offset: 2px;
+}
+
+/* Foco de teclado consistente e visível em toda a interface */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--primary) 72%, transparent);
+  outline-offset: 2px;
+}
+
+/* Ritmo tipográfico */
+main h1,
+main h2,
+main h3,
+.hero h1 {
+  text-wrap: balance;
+}
+
+main p,
+main li {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--primary) 24%, transparent);
+}
+
+/* Alvos de toque confortáveis em links utilitários */
+.source-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding-block: 0.25rem;
+}
+
+/* Cabeçalho do herói em duas colunas: texto + resumo da edição */
+.home-page .hero > .hero-copy {
+  max-width: 42rem;
+}
+
+.hero-snapshot {
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--editorial-accent);
+  background: color-mix(in srgb, var(--bg-body) 45%, var(--bg-container));
+  border-radius: 4px;
+  padding: 1.5rem 1.5rem 1.35rem;
+}
+
+.hero-snapshot-label {
+  margin: 0 0 0.6rem;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.hero-snapshot-issue {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2.75rem;
+  line-height: 1;
+  color: var(--editorial-ink);
+}
+
+.hero-snapshot-date {
+  margin: 0.35rem 0 1.25rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.hero-snapshot-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem 1rem;
+  margin: 0;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--border);
+}
+
+.hero-snapshot-stats dt {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.hero-snapshot-stats dd {
+  margin: 0.2rem 0 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.hero-snapshot-stats .snapshot-topics {
+  font-weight: 500;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.hero-snapshot-stats > div:last-child {
+  grid-column: 1 / -1;
+}
+
+.hero-snapshot-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.25rem;
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.92rem;
+  text-decoration: none;
+}
+
+.hero-snapshot-link:hover,
+.hero-snapshot-link:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+@media (min-width: 1024px) {
+  .home-page .hero:has(> .hero-copy) {
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 19rem);
+    align-items: start;
+    column-gap: 3rem;
+  }
+
+  .home-page .hero:has(> .hero-copy) .hero-snapshot {
+    margin-top: 0.35rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .hero-snapshot {
+    margin-top: 2rem;
+  }
+
+  .hero-snapshot-issue {
+    font-size: 2rem;
+  }
+}
+
+/* Cartões sem imagem: o texto ocupa a largura toda em vez de deixar vazio */
+@media (min-width: 901px) {
+  .story.featured.has-no-image {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-page #featured-news .spotlight-card.has-no-image {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-link {
+    transition: none;
+  }
+}
+
+/* Títulos principais das páginas Sobre e Edições */
+.about h1,
+.editions-heading h1 {
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+.about h1 {
+  font-size: 2rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.editions-heading h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+/* O <main> recebe foco programático pelo atalho de teclado, sem anel visual. */
+main[tabindex="-1"]:focus {
+  outline: none;
 }

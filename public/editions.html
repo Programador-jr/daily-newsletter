@@ -17,6 +17,7 @@
   <script src="/js/vercel-observability.js" defer></script>
 </head>
 <body class="history-page">
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
   <div class="container">
     <header class="site-header">
       <a class="logo" href="/" aria-label="Página inicial">
@@ -68,9 +69,9 @@
 </aside>
 <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
 
-    <main>
+    <main id="main" tabindex="-1">
       <section class="editions">
-        <div class="editions-heading"><div><span class="eyebrow">Arquivo editorial</span><h2 id="edition-title">Edição Atual</h2></div><p>Consulte a edição de hoje ou pesquise pelo histórico.</p></div>
+        <div class="editions-heading"><div><span class="eyebrow">Arquivo editorial</span><h1 id="edition-title">Edição Atual</h1></div><p>Consulte a edição de hoje ou pesquise pelo histórico.</p></div>
         <div class="filter-buttons" id="filter-buttons">
           <button class="filter-btn active" data-filter="all">Todas</button>
           <button class="filter-btn" data-filter="Política">Política</button>
@@ -92,8 +93,8 @@
     <div class="history-panel" id="history-panel">
       <div class="history-header">
         <h3>Histórico de Publicações</h3>
-        <button class="close-history" id="close-history">
-          <i class="fas fa-times"></i>
+        <button class="close-history" id="close-history" type="button" aria-label="Fechar histórico de edições">
+          <i class="fas fa-times" aria-hidden="true"></i>
         </button>
       </div>
       <div class="history-list" id="history-list"></div>
@@ -105,13 +106,5 @@
   <script src="js/script.js"></script>
   <script src="js/sidebar.js"></script>
   <script src="js/footer.js"></script>
-  <script>
-    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/insights/script.js"></script>
-  <script>
-    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="history-document">
   <head>
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
@@ -18,13 +18,15 @@
     />
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="/css/news-images.css" />
+    <link rel="stylesheet" href="/css/historia.css" />
         <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <script src="/js/vercel-observability.js" defer></script>
   </head>
-  <body class="home-page">
+  <body class="history-page home-page">
+    <a class="skip-link" href="#main">Pular para o conteúdo</a>
     <div class="container">
       <header class="site-header">
         <a class="logo" href="/" aria-label="Página inicial">
@@ -141,15 +143,46 @@
         aria-hidden="true"
       ></div>
 
-      <main>
-        <section class="hero">
-          <p class="eyebrow" id="edition-date">CARREGANDO...</p>
-          <h1>As notícias que importam,<br />sem enrolação.</h1>
-          <p class="lead">
-            Um briefing direto com resumo e contexto sobre política, economia,
-            tecnologia, Brasil e mundo.
-          </p>
-          <a href="/editions" class="cta-button">Ver Edição Atual</a>
+      <main id="main" tabindex="-1">
+        <section class="hero" aria-labelledby="home-title">
+          <div class="hero-copy">
+            <p class="eyebrow" id="edition-date">CARREGANDO...</p>
+            <h1 id="home-title">As notícias que importam,<br />sem enrolação.</h1>
+            <p class="lead">
+              Um briefing direto com resumo e contexto sobre política, economia,
+              tecnologia, Brasil e mundo.
+            </p>
+            <a href="/editions" class="cta-button">Ver Edição Atual</a>
+          </div>
+
+          <aside
+            class="hero-snapshot"
+            id="edition-snapshot"
+            aria-label="Resumo da edição de hoje"
+            hidden
+          >
+            <p class="hero-snapshot-label">Nesta edição</p>
+            <p class="hero-snapshot-issue" id="snapshot-issue">#—</p>
+            <p class="hero-snapshot-date" id="snapshot-date">—</p>
+            <dl class="hero-snapshot-stats">
+              <div>
+                <dt>Notícias</dt>
+                <dd id="snapshot-count">—</dd>
+              </div>
+              <div>
+                <dt>Editorias</dt>
+                <dd id="snapshot-editors">—</dd>
+              </div>
+              <div>
+                <dt>Assuntos</dt>
+                <dd class="snapshot-topics" id="snapshot-topics">—</dd>
+              </div>
+            </dl>
+            <a class="hero-snapshot-link" href="/editions">
+              Ver arquivo completo
+              <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
+          </aside>
         </section>
 
         <div class="home-featured-layout">
@@ -228,21 +261,5 @@
     <script src="js/footer.js"></script>
     <script src="js/script.js"></script>
     <script src="js/subscribe.js"></script>
-    <script>
-      window.va =
-        window.va ||
-        function () {
-          (window.vaq = window.vaq || []).push(arguments);
-        };
-    </script>
-    <script defer src="/_vercel/insights/script.js"></script>
-    <script>
-      window.si =
-        window.si ||
-        function () {
-          (window.siq = window.siq || []).push(arguments);
-        };
-    </script>
-    <script defer src="/_vercel/speed-insights/script.js"></script>
   </body>
 </html>

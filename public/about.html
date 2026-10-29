@@ -16,6 +16,7 @@
   <script src="/js/vercel-observability.js" defer></script>
 </head>
 <body class="history-page">
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
   <div class="container">
     <header class="site-header">
       <a class="logo" href="/" aria-label="Página inicial">
@@ -63,11 +64,11 @@
 </aside>
 <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
 
-    <main>
+    <main id="main" tabindex="-1">
       <section class="about">
         <div class="about-content">
           <p class="eyebrow">SOBRE O KING'S NEWSLETTER</p>
-          <h2>Missão</h2>
+          <h1>Missão</h1>
           <p>O King's Newsletter nasceu para levar notícias importantes com clareza para quem têm pressa. Em um mundo saturado de informações, filtramos o que realmente importa e entregamos de forma direta e técnica.</p>
           <p>Nossa abordagem é parcial e deliberada: focamos nos fatos e dados que impactam diretamente decisões, deixando de lado opiniões e especulações. Cada notícia é analisada sob um olhar técnico, priorizando precisão e objetividade.</p>
           <p>Atual, automatizado e eficiente, o projeto respeita seu tempo com resumos diretos que vão direto ao ponto, sem enrolação ou sensacionalismo.</p>
@@ -81,13 +82,5 @@
   <script src="/js/accordion-motion.js"></script>
   <script src="js/sidebar.js"></script>
   <script src="js/footer.js"></script>
-  <script>
-    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/insights/script.js"></script>
-  <script>
-    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>

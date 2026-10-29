@@ -73,6 +73,7 @@
   <script src="/js/vercel-observability.js" defer></script>
 </head>
 <body class="history-page">
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
   <div class="container">
     <header class="site-header">
       <a class="logo" href="/" aria-label="Página inicial">
@@ -122,7 +123,7 @@
     </aside>
     <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
 
-    <main>
+    <main id="main" tabindex="-1">
       <div class="error-page">
         <div class="error-code">404</div>
         <h1 class="error-title">Página Não Encontrada</h1>
@@ -138,13 +139,5 @@
   <script src="js/footer.js"></script>
   <script src="/js/accordion-motion.js"></script>
   <script src="js/sidebar.js"></script>
-  <script>
-    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/insights/script.js"></script>
-  <script>
-    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>

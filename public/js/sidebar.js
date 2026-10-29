@@ -447,15 +447,37 @@ const initializeNavigation = () => {
   document.getElementById("shared-nav-search")?.toggleAttribute("hidden", canonicalPath !== "/editions");
   if (canonicalPath === "/editions") headerNav.classList.add("header-main-nav-editions");
 
-  [headerLinks, sidebarNav].forEach(container => {
-    container?.querySelectorAll("a[href]").forEach(link => {
-      const href = link.getAttribute("href").replace(/\/+$/, "") || "/";
-      const isCurrentPage = href === canonicalPath;
-      link.classList.toggle("active", isCurrentPage);
-      if (isCurrentPage) link.setAttribute("aria-current", "page");
-      else link.removeAttribute("aria-current");
+  const sidebarCatalogTabs = new Set(["personalidades", "paises", "partidos"]);
+  const currentCanonicalPath = () => {
+    const path = window.location.pathname.replace(/\/+$/, "") || "/";
+    return path === "/index.html" ? "/" : path.replace(/\.html$/, "");
+  };
+  const catalogTabFromLocation = () => {
+    const path = currentCanonicalPath();
+    if (path === "/valores") return "ideologias";
+    if (path !== "/catalogo-politico") return null;
+    const requested = new URLSearchParams(window.location.search).get("catalogo");
+    return sidebarCatalogTabs.has(requested) ? requested : "ideologias";
+  };
+  const syncActiveLinks = () => {
+    const catalogTab = catalogTabFromLocation();
+    const activePath = currentCanonicalPath();
+    [headerLinks, sidebarNav].forEach(container => {
+      container?.querySelectorAll("a[href]").forEach(link => {
+        const href = (link.getAttribute("href") || "/").split(/[?#]/)[0].replace(/\/+$/, "") || "/";
+        const catalogKey = link.dataset.sidebarCatalog || null;
+        let isCurrentPage;
+        if (catalogKey) isCurrentPage = catalogKey === catalogTab;
+        else if (href === "/catalogo-politico" && catalogTab) isCurrentPage = catalogTab === "ideologias";
+        else isCurrentPage = href === activePath;
+        link.classList.toggle("active", isCurrentPage);
+        if (isCurrentPage) link.setAttribute("aria-current", "page");
+        else link.removeAttribute("aria-current");
+      });
     });
-  });
+  };
+  syncActiveLinks();
+  window.addEventListener("site:catalog-change", syncActiveLinks);
 
   const headerActions = header?.querySelector(".header-nav-actions");
   const topPreferences = document.createElement("div");

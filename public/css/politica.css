@@ -87,3 +87,68 @@ body.history-detail-open { overflow: hidden; }
   .comparison-regimes { grid-template-columns: 1fr; }
   .comparison-regime { padding: .95rem; }
 }
+
+/* HUB DE POLÍTICA */
+
+.civic-grid-four {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.civic-grid-four .civic-card {
+  min-height: 220px;
+}
+
+.hub-link-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .7rem;
+}
+
+.hub-link-grid a {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  padding: .95rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  text-decoration: none;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.hub-link-grid a:hover,
+.hub-link-grid a:focus-visible {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+  outline: none;
+}
+
+.hub-link-grid strong {
+  color: var(--text-main);
+  font-size: .86rem;
+}
+
+.hub-link-grid span {
+  color: var(--text-muted);
+  font-size: .75rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .hub-link-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .civic-grid-four {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .hub-link-grid {
+    grid-template-columns: 1fr;
+  }
+}

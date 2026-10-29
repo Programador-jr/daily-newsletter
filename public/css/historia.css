@@ -2353,3 +2353,120 @@ body.history-modal-open {
     display: flex;
   }
 }
+
+/* Padrão compartilhado: cards, controles, diálogos e sanfonas da seção História. */
+html body main article,
+html body main :is([class~="card"], [class$="-card"], [class*="-card "]):not([class*="-cards"]):not([class*="-card-"]) {
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--card-bg), color-mix(in srgb, var(--primary) 3%, var(--card-bg)));
+  box-shadow: 0 2px 8px rgba(16, 36, 32, 0.035);
+  transition: border-color 180ms ease, box-shadow 220ms ease, background-color 180ms ease;
+}
+
+html body main article:is(:hover, :focus-within),
+html body main :is([class~="card"], [class$="-card"], [class*="-card "]):not([class*="-cards"]):not([class*="-card-"]):is(:hover, :focus-within) {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--card-border));
+  box-shadow: 0 8px 22px rgba(16, 36, 32, 0.075);
+}
+
+html body main :is(button, .cta-button, .button, [class~="btn"]) {
+  border-radius: 8px;
+  font-family: inherit;
+  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+html body main :is(button, .cta-button, .button, [class~="btn"]):focus-visible,
+html body main summary:focus-visible,
+html body :is(dialog, [role="dialog"]):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+html body main .cta-button {
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: var(--bg-body);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+html body main .cta-button:hover {
+  border-color: var(--primary-hover);
+  background: var(--primary-hover);
+  color: var(--bg-body);
+}
+
+html body :is(dialog, [role="dialog"], .history-detail-dialog) {
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  background: var(--card-bg) !important;
+  color: var(--text-main) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18) !important;
+}
+
+html body dialog::backdrop {
+  background: rgba(13, 25, 21, 0.56);
+  backdrop-filter: blur(2px);
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion) {
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: var(--card-bg);
+  box-shadow: 0 2px 8px rgba(16, 36, 32, 0.035);
+  transition: border-color 180ms ease, box-shadow 220ms ease;
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion):is(:hover, [open]) {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion)[open] {
+  box-shadow: 0 7px 20px rgba(16, 36, 32, 0.075);
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion) > summary {
+  padding: 0.95rem 1.1rem;
+  border-radius: inherit;
+  color: var(--text-main);
+  font-weight: 700;
+  line-height: 1.45;
+  cursor: pointer;
+  transition: background-color 180ms ease;
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion) > summary:hover,
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion)[open] > summary {
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion)[open] > summary {
+  border-bottom: 1px solid var(--border);
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion) > summary::-webkit-details-marker {
+  display: none;
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion) > summary:not(:has(i, svg, [class*="icon"]))::after {
+  content: "⌄";
+  margin-left: 1rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+  transition: transform 180ms ease, color 180ms ease;
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion)[open] > summary:not(:has(i, svg, [class*="icon"]))::after {
+  color: var(--primary);
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body main :is(button, .cta-button, .button, [class~="btn"]),
+  html body main details,
+  html body main details > summary {
+    transition-duration: 0.01ms;
+  }
+}

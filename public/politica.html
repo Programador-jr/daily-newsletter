@@ -5,7 +5,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Guia de política para entender ideias, instituições, políticas públicas e dados do Estado brasileiro.">
+  <meta name="description" content="Hub de política: guia de ideologias, catálogo em 12 eixos, teste político e biblioteca.">
   <title>King's Newsletter - Política</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,14 +13,16 @@
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/historia.css">
   <link rel="stylesheet" href="/css/politica.css">
+  <link rel="stylesheet" href="/css/page-patterns.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="/js/vercel-observability.js" defer></script>
 </head>
 <body class="history-page civic-page">
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
   <div class="container">
     <header class="site-header">
       <a class="logo" href="/" aria-label="Página inicial"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></a>
-      <nav class="header-main-nav" aria-label="Navegação principal"><div class="header-primary-links"></div><div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div></nav>
+      <nav class="header-main-nav" aria-label="Navegação principal"><div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div></nav>
     </header>
     <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
       <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
@@ -28,28 +30,36 @@
       <div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false"><span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div>
     </aside>
     <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
-    <main>
+    <main id="main" tabindex="-1">
       <section class="history-hero civic-hero">
         <span class="eyebrow">Um guia para entender o presente</span>
-        <h1>Política, Estado e dados públicos com contexto.</h1>
-        <p>Aprenda como ideias políticas se organizam, como as instituições brasileiras funcionam e como acompanhar decisões e recursos públicos. Cada tema começa por conceitos claros e aponta caminhos para conferir as fontes.</p>
+        <h1>Política, ideias e instituições com contexto.</h1>
+        <p>Comece pelas correntes políticas, compare perfis em doze eixos ou consulte o funcionamento do Estado brasileiro. Cada caminho parte de conceitos claros e aponta para as fontes.</p>
       </section>
       <section class="civic-principle" aria-label="Princípio editorial">
         <span class="civic-principle-mark" aria-hidden="true"><i class="fas fa-magnifying-glass-chart"></i></span>
         <div><span class="eyebrow">Método do guia</span><h2>Fonte → dado → contexto → interpretação</h2><p>Dados e conceitos precisam de período, escopo e método para fazer sentido. O guia apresenta referências para que você possa verificar a informação e formar sua própria leitura.</p></div>
       </section>
       <section class="civic-section" aria-labelledby="politics-path-title">
-        <div class="section-heading"><div><span class="eyebrow">Explore por assunto</span><h2 id="politics-path-title">Escolha por onde começar</h2></div><p>Do vocabulário político às instituições e à fiscalização cidadã.</p></div>
-        <div class="civic-grid">
-          <a class="civic-card" href="/ideologias"><span class="civic-card-icon"><i class="fas fa-scale-balanced" aria-hidden="true"></i></span><span class="eyebrow">Ideias políticas</span><h3>Ideologias e conceitos</h3><p>Esquerda, direita, centro e correntes políticas. Compare dimensões sem transformar posições em juízos de valor.</p><span class="civic-card-link">Explorar ideias <i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
-          <a class="civic-card civic-card-featured" href="/fascismo-nazismo"><span class="civic-card-icon"><i class="fas fa-book-open" aria-hidden="true"></i></span><span class="eyebrow">História política</span><h3>Fascismo e Nazismo</h3><p>Origens, ascensão, estruturas de poder, perseguição e consequências históricas, com conceitos tratados em contexto.</p><span class="civic-card-link">Estudar o tema <i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
-          <a class="civic-card" href="/tres-poderes"><span class="civic-card-icon"><i class="fas fa-building-columns" aria-hidden="true"></i></span><span class="eyebrow">Instituições</span><h3>Três Poderes</h3><p>Conheça atribuições típicas, controles recíprocos e como Executivo, Legislativo e Judiciário se organizam.</p><span class="civic-card-link">Entender os poderes <i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
-          <a class="civic-card" href="/cargos-publicos"><span class="civic-card-icon"><i class="fas fa-id-card" aria-hidden="true"></i></span><span class="eyebrow">Agentes públicos</span><h3>Quem faz o quê?</h3><p>Veja funções, formas de ingresso, mandatos, responsabilidades e limites de autoridades públicas.</p><span class="civic-card-link">Consultar cargos <i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
-          <a class="civic-card" href="/politicas-publicas"><span class="civic-card-icon"><i class="fas fa-list-check" aria-hidden="true"></i></span><span class="eyebrow">Vida cotidiana</span><h3>Políticas públicas</h3><p>Acompanhe o caminho de um problema público: diagnóstico, proposta, orçamento, implementação e avaliação.</p><span class="civic-card-link">Ver o ciclo de políticas <i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
-          <a class="civic-card" href="/como-funciona-estado"><span class="civic-card-icon"><i class="fas fa-sitemap" aria-hidden="true"></i></span><span class="eyebrow">Organização do Estado</span><h3>Como funciona o Estado</h3><p>Entenda federação, União, estados, municípios, administração pública e prestação de serviços.</p><span class="civic-card-link">Conhecer a estrutura <i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
-          <a class="civic-card" href="/arrecadacao"><span class="civic-card-icon"><i class="fas fa-coins" aria-hidden="true"></i></span><span class="eyebrow">Dados públicos</span><h3>Arrecadação</h3><p>Leia números de tributos considerando esfera, período e a diferença entre arrecadação e dinheiro livre.</p><span class="civic-card-link">Abrir painel fiscal <i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
-          <a class="civic-card" href="/gastos-publicos"><span class="civic-card-icon"><i class="fas fa-chart-pie" aria-hidden="true"></i></span><span class="eyebrow">Orçamento público</span><h3>Gastos públicos</h3><p>Interprete despesas por esfera e estágio: empenhado, liquidado e pago. Consulte registros oficiais com contexto.</p><span class="civic-card-link">Entender despesas <i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>          <a class="civic-card" href="/gastos-parlamentares"><span class="civic-card-icon"><i class="fas fa-receipt" aria-hidden="true"></i></span><span class="eyebrow">Transparência</span><h3>Gastos parlamentares</h3><p>Investigue despesas com filtros e referências oficiais, sem transformar dados em um placar de pessoas.</p><span class="civic-card-link">Consultar despesas <i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
-          <a class="civic-card" href="/como-fiscalizar"><span class="civic-card-icon"><i class="fas fa-magnifying-glass" aria-hidden="true"></i></span><span class="eyebrow">Participação cidadã</span><h3>Como fiscalizar</h3><p>Encontre portais oficiais e aprenda a conferir gastos, contratos, licitações, emendas e votações.</p><span class="civic-card-link">Começar a verificar <i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
+        <div class="section-heading"><div><span class="eyebrow">Explore por assunto</span><h2 id="politics-path-title">Escolha por onde começar</h2></div><p>Quatro caminhos para entender ideias, comparar perfis e formar sua leitura.</p></div>
+        <div class="civic-grid civic-grid-four">
+          <a class="civic-card" href="/ideologias"><span class="civic-card-icon"><i class="fas fa-scale-balanced" aria-hidden="true"></i></span><span class="eyebrow">Ideias políticas</span><h3>Ideologias e conceitos</h3><p>Esquerda, direita, centro e correntes políticas. Um guia conceitual para comparar dimensões sem transformar posições em juízos de valor.</p><span class="civic-card-link">Explorar ideias <i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
+          <a class="civic-card civic-card-featured" href="/catalogo-politico"><span class="civic-card-icon"><i class="fas fa-table-cells-large" aria-hidden="true"></i></span><span class="eyebrow">Catálogo comparativo</span><h3>Catálogo político</h3><p>Ideologias, personalidades, países, regimes, partidos e valores com fotos, busca, filtros, fontes e os 12 eixos.</p><span class="civic-card-link">Explorar o catálogo <i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
+          <a class="civic-card civic-card-featured" href="/teste-politico"><span class="civic-card-icon"><i class="fas fa-list-check" aria-hidden="true"></i></span><span class="eyebrow">Ferramenta interativa</span><h3>Teste político</h3><p>Responda a afirmações sobre economia, instituições e sociedade, ou ajuste os doze eixos manualmente para encontrar afinidades.</p><span class="civic-card-link">Fazer o teste <i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
+          <a class="civic-card" href="/livros"><span class="civic-card-icon"><i class="fas fa-book-open" aria-hidden="true"></i></span><span class="eyebrow">Biblioteca</span><h3>Livros de política</h3><p>Clássicos e obras contemporâneas com resumo do argumento, nível de leitura e retrato em doze eixos.</p><span class="civic-card-link">Abrir biblioteca <i class="fas fa-arrow-right" aria-hidden="true"></i></span></a>
+        </div>
+      </section>
+      <section class="civic-section civic-hub-links" aria-labelledby="politics-more-title">
+        <div class="section-heading"><div><span class="eyebrow">Instituições e dados</span><h2 id="politics-more-title">Continue pelo funcionamento do Estado</h2></div><p>Páginas para entender regras, orçamento e controle público.</p></div>
+        <div class="hub-link-grid">
+          <a href="/fascismo-nazismo"><strong>Fascismo e Nazismo</strong><span>Origens, regimes e consequências históricas</span></a>
+          <a href="/politicas-publicas"><strong>Políticas públicas</strong><span>Do diagnóstico à avaliação</span></a>
+          <a href="/tres-poderes"><strong>Três Poderes</strong><span>Atribuições e controles recíprocos</span></a>
+          <a href="/cargos-publicos"><strong>Cargos públicos</strong><span>Quem faz o quê e com quais limites</span></a>
+          <a href="/como-funciona-estado"><strong>Como funciona o Estado</strong><span>Federação, administração e serviços</span></a>
+          <a href="/arrecadacao"><strong>Arrecadação</strong><span>Tributos, esferas e período</span></a>
+          <a href="/gastos-publicos"><strong>Gastos públicos</strong><span>Empenhado, liquidado e pago</span></a>
+          <a href="/como-fiscalizar"><strong>Como fiscalizar</strong><span>Contratos, emendas e votações</span></a>
         </div>
       </section>
       <section class="civic-history-link"><div><span class="eyebrow">Contexto histórico</span><h2>O presente também tem uma história.</h2><p>Conheça a formação do Brasil, as mudanças de regime e as disputas que moldaram o Estado.</p></div><a class="cta-button" href="/historia">Ir para História</a></section>
