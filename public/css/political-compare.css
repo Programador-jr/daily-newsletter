@@ -115,3 +115,8 @@
 .compare-no-results { padding:.8rem; color:var(--text-muted); font-size:.8rem; }
 @media(max-width:900px){.catalog-ideas-grid,.atlas-nearby{grid-template-columns:repeat(2,minmax(0,1fr))}.compare-ideology-layout,.compare-compass-layout{grid-template-columns:1fr}}
 @media(max-width:768px){.compare-main{padding:0 1.25rem 3rem}.compare-selected,.compare-pairs,.compare-near-grid,.compare-values-grid,.compare-explainer-grid{grid-template-columns:1fr}.compare-ideology-layout,.compare-compass-layout{grid-template-columns:1fr}.compare-profile{align-items:flex-start}.compare-avatar{width:42px;height:42px}}
+
+.compare-dot { display:inline-block; width:.55rem; height:.55rem; flex:none; border-radius:50%; background:var(--primary); }
+.compare-readout-card { min-width:0; padding:1rem; border:1px solid var(--border); border-radius:9px; background:var(--bg-container); }
+.compare-readout-card h3 { margin:.2rem 0 .65rem; font-size:.95rem; }
+.compare-value { display:inline-flex; align-items:center; gap:.35rem; padding:.3rem .5rem; border:1px solid var(--border); border-radius:7px; font-size:.76rem; }
