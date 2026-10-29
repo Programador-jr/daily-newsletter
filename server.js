@@ -1,20 +1,36 @@
 require('dotenv').config();
 
 const express = require('express');
+const os = require('os');
 const path = require('path');
 const { validateRuntimeEnvironment } = require('./lib/config');
+const { securityHeaders } = require('./lib/security-headers');
+const { errorHandler } = require('./lib/error-handler');
 
 const { warnings } = validateRuntimeEnvironment();
 warnings.forEach(message => console.warn(`[config] ${message}`));
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+// Sem HOST o Node escuta em todas as interfaces (IPv4 e IPv6), o que já atende
+// a rede local. Defina HOST=0.0.0.0 para restringir a IPv4.
+const HOST = process.env.HOST || null;
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+function localIpv4Addresses() {
+  return Object.values(os.networkInterfaces())
+    .flat()
+    .filter(iface => iface && !iface.internal && iface.family === 'IPv4')
+    .map(iface => iface.address);
+}
+
+
+app.disable('x-powered-by');
+app.use(securityHeaders);
+app.use(express.json({ limit: '100kb' }));
+app.use(express.urlencoded({ extended: true, limit: '100kb' }));
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/data', express.static(path.join(__dirname, 'data')));
+app.use('/data', express.static(path.join(__dirname, 'data'), { dotfiles: 'deny', index: false }));
 
 app.get('/api/news', require('./api/news'));
 app.post('/api/news', require('./api/news'));
@@ -57,6 +73,41 @@ app.get('/presidentes', (req, res) => {
 
 app.get('/ideologias', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/ideologias.html'));
+});
+
+app.get('/personalidades', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/personalidades.html'));
+});
+app.get('/paises', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/paises.html'));
+});
+
+app.get('/partidos', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/partidos.html'));
+});
+
+app.get('/livros', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/livros.html'));
+});
+
+app.get('/teste-politico', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/teste-politico.html'));
+});
+
+app.get('/resultado-politico', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/results-12axes.html'));
+});
+
+app.get('/catalogo-politico', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/catalogo-politico.html'));
+});
+
+app.get('/comparar', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/comparar.html'));
+});
+
+app.get('/valores', (req, res) => {
+  res.redirect(301, '/catalogo-politico?catalogo=valores');
 });
 
 app.get('/politica', (req, res) => {
@@ -119,6 +170,19 @@ app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'public/404.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+app.use(errorHandler);
+
+const server = HOST ? app.listen(PORT, HOST) : app.listen(PORT);
+
+server.on('listening', () => {
+  const { address, port } = server.address();
+  const family = address === '::' || address === '0.0.0.0' ? 'todas as interfaces' : address;
+  console.log(`Servidor rodando em http://localhost:${port} (${family})`);
+
+  const lanAddresses = localIpv4Addresses();
+  if (lanAddresses.length) {
+    console.log(`Na rede local: ${lanAddresses.map(ip => `http://${ip}:${port}`).join(' | ')}`);
+  } else {
+    console.log('Nenhum endereço IPv4 de rede local encontrado.');
+  }
 });

@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { connectDatabase } = require('../lib/db');
 const News = require('../lib/news');
+const { isBearerAuthorized } = require('../lib/bearer-auth');
 
 function normalize(story, editionDate) {
   return {
@@ -22,7 +23,7 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Método não permitido.' });
   }
 
-  if (!process.env.NOTIFY_SECRET || req.headers.authorization !== `Bearer ${process.env.NOTIFY_SECRET}`) {
+  if (!isBearerAuthorized(req, process.env.NOTIFY_SECRET)) {
     return res.status(401).json({ error: 'Não autorizado.' });
   }
 

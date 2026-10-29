@@ -7,6 +7,7 @@ const crypto = require('node:crypto');
 const { sendEmail } = require('../lib/email');
 const { createToken, hashToken } = require('../lib/tokens');
 const { getAppUrl } = require('../lib/app-url');
+const { isBearerAuthorized } = require('../lib/bearer-auth');
  
 function getNewsKey(story) {
   return story.url || `${story.editionDate || ''}|${story.title || ''}`;
@@ -345,7 +346,7 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Método não permitido.' });
   }
 
-  if (!process.env.NOTIFY_SECRET || req.headers.authorization !== `Bearer ${process.env.NOTIFY_SECRET}`) {
+  if (!isBearerAuthorized(req, process.env.NOTIFY_SECRET)) {
     return res.status(401).json({ error: 'Não autorizado.' });
   }
 

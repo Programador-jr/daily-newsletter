@@ -164,16 +164,24 @@ test('enforcement returns HTTP 429, Retry-After and no-store when the limit is e
   assert.equal(blocked.body.retryAfterSeconds, 59);
 });
 
-test('client IP extraction uses the last forwarded address and falls back to real-IP', () => {
-  assert.equal(
-    getClientIp({
-      headers: {
-        'x-real-ip': '203.0.113.1',
-        'x-forwarded-for': '198.51.100.10, 203.0.113.2'
-      },
-      ip: '127.0.0.1'
-    }),
-    '203.0.113.2'
-  );
-  assert.equal(getClientIp({ headers: { 'x-real-ip': '203.0.113.1' }, ip: '127.0.0.1' }), '203.0.113.1');
+test('client IP extraction trusts forwarding headers only behind a trusted proxy', () => {
+  const req = {
+    headers: {
+      'x-real-ip': '203.0.113.1',
+      'x-forwarded-for': '198.51.100.10, 203.0.113.2'
+    },
+    ip: '127.0.0.1',
+    socket: { remoteAddress: '127.0.0.1' }
+  };
+
+  assert.equal(getClientIp(req, { TRUST_PROXY: '1' }), '203.0.113.2');
+  assert.equal(getClientIp(req, { VERCEL: '1' }), '203.0.113.2');
+  assert.equal(getClientIp(req, {}), '127.0.0.1');
+
+  const direct = {
+    headers: { 'x-real-ip': '203.0.113.9', 'x-forwarded-for': '203.0.113.9' },
+    ip: '127.0.0.1',
+    socket: { remoteAddress: '127.0.0.1' }
+  };
+  assert.equal(getClientIp(direct, {}), '127.0.0.1');
 });
