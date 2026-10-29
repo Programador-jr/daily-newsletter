@@ -225,8 +225,8 @@ async function notifyLatestNews() {
           text: "King's Newsletter\n\nNovas atualizações — " + latestEditionDate + '\n\n' +
             textItems + '\n\nCancelar inscrição: ' + unsubscribeUrl,
           html: '<div style="font-family:Arial,sans-serif;width:100%;max-width:680px;margin:0 auto;padding:32px;box-sizing:border-box;color:#1c2d2a;background:#ffffff">' +
-            '<div style="background:#064e46;padding:12px 16px;margin:0 0 16px;border-bottom:3px solid #f5c518">' +
-              '<img src="https://cdn.shardcloud.app/4d7d8031-4b99-4759-afbc-1e01575b29d6/kingsNewsletter.png" alt="King\'s Newsletter" width="220" style="display:block;width:100%;max-width:220px;height:auto;border:0" />' +
+            '<div style="background:#064e46;padding:0;margin:0 0 16px;border-bottom:3px solid #f5c518">' +
+              '<img src="https://cdn.shardcloud.app/4d7d8031-4b99-4759-afbc-1e01575b29d6/King_s_Newsletter_faixa_20261029_074825_0000.png" alt="King\'s Newsletter — edição especial de Halloween" width="616" style="display:block;width:100%;max-width:616px;height:auto;border:0;margin:0 auto" />' +
             '</div>' +
             '<p style="color:#536762">Novas atualizações — ' + escapeHtml(latestEditionDate) + '</p>' +
             items +
