@@ -1260,6 +1260,21 @@
     renderBookSpectrum();
     renderSort();
     renderFilters();
+
+    const filterAccordion = document.getElementById("atlas-filter-accordion");
+    if (filterAccordion) {
+      const mobileFilters = window.matchMedia("(max-width: 768px)");
+      const syncFilterAccordion = () => {
+        filterAccordion.open = !mobileFilters.matches;
+      };
+      syncFilterAccordion();
+      if (typeof mobileFilters.addEventListener === "function") {
+        mobileFilters.addEventListener("change", syncFilterAccordion);
+      } else {
+        mobileFilters.addListener(syncFilterAccordion);
+      }
+    }
+
     renderFeatured();
 
     const search = document.getElementById("atlas-search");
