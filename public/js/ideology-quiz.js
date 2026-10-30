@@ -3131,6 +3131,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const startQuiz = (mode) => {
     if (!questionCard) return;
+    document.body.classList.add("quiz-fullscreen-active");
     selectedMode = mode;
     selectedQuestions = questionSet(mode);
     answers = [];
