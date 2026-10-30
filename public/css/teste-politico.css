@@ -1223,3 +1223,80 @@
 .quiz-fullscreen-active .quiz-question-card {
   width: 100%;
 }
+
+/* Alinhamento estrutural do modo exclusivo do questionário. */
+body.quiz-fullscreen-active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body.quiz-fullscreen-active > .container {
+  display: flex;
+  width: 100%;
+  max-width: none;
+  min-height: 100svh;
+  flex: 1 1 100%;
+  align-items: center;
+  justify-content: center;
+}
+body.quiz-fullscreen-active #main {
+  display: flex;
+  width: 100%;
+  min-height: 100svh;
+  align-items: center;
+  justify-content: center;
+}
+body.quiz-fullscreen-active #main > .quiz-standalone {
+  display: flex;
+  width: 100%;
+  max-width: none;
+  min-height: 100svh;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: clamp(1rem, 4vw, 3rem);
+  box-sizing: border-box;
+}
+body.quiz-fullscreen-active .quiz-standalone .quiz-question-view,
+body.quiz-fullscreen-active .quiz-standalone .quiz-results,
+body.quiz-fullscreen-active .quiz-standalone .quiz-error {
+  display: block;
+  width: min(100%, 960px);
+  max-width: 960px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+body.quiz-fullscreen-active .quiz-progress {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto 1.5rem;
+}
+body.quiz-fullscreen-active .quiz-question-card {
+  width: 100%;
+  max-width: 820px;
+  margin: 1.5rem auto;
+  box-sizing: border-box;
+}
+body.quiz-fullscreen-active .quiz-navigation {
+  display: flex;
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  justify-content: space-between;
+}
+@media (max-width: 768px) {
+  body.quiz-fullscreen-active,
+  body.quiz-fullscreen-active > .container,
+  body.quiz-fullscreen-active #main,
+  body.quiz-fullscreen-active #main > .quiz-standalone {
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+  body.quiz-fullscreen-active #main > .quiz-standalone {
+    padding: .75rem;
+  }
+  body.quiz-fullscreen-active .quiz-standalone .quiz-question-view {
+    width: 100%;
+    min-height: calc(100svh - 1.5rem);
+  }
+}
