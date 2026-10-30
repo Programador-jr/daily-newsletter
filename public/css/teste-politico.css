@@ -1104,3 +1104,102 @@
     padding: .85rem;
   }
 }
+
+
+/* Modo de questionário: substitui toda a página pelo fluxo de perguntas. */
+.quiz-fullscreen-active {
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow-x: hidden;
+}
+
+.quiz-fullscreen-active > .skip-link,
+.quiz-fullscreen-active .container > .site-header,
+.quiz-fullscreen-active .container > .site-sidebar,
+.quiz-fullscreen-active .container > .site-sidebar-backdrop,
+.quiz-fullscreen-active #main > .quiz-hero,
+.quiz-fullscreen-active #main > .quiz-axis-guide,
+.quiz-fullscreen-active #footer {
+  display: none !important;
+}
+
+.quiz-fullscreen-active .container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.quiz-fullscreen-active #main {
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 0;
+}
+
+.quiz-fullscreen-active .quiz-standalone {
+  display: flex;
+  min-height: 100vh;
+  min-height: 100svh;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  padding: clamp(1rem, 4vw, 3.5rem);
+  scroll-margin: 0;
+}
+
+.quiz-fullscreen-active .quiz-standalone > .section-heading {
+  display: none;
+}
+
+.quiz-fullscreen-active .quiz-standalone .quiz-question-view,
+.quiz-fullscreen-active .quiz-standalone .quiz-results,
+.quiz-fullscreen-active .quiz-standalone .quiz-error {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: clamp(1rem, 3vw, 2rem);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--card-bg);
+  box-shadow: 0 8px 30px rgb(25 31 40 / 7%);
+}
+
+.quiz-fullscreen-active .quiz-question-card {
+  width: 100%;
+  max-width: 820px;
+  margin: 1.5rem auto;
+}
+
+.quiz-fullscreen-active .quiz-progress {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto 1.5rem;
+}
+
+.quiz-fullscreen-active .quiz-navigation {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.quiz-fullscreen-active .quiz-help-dialog[open] {
+  z-index: 10000;
+}
+
+@media (max-width: 768px) {
+  .quiz-fullscreen-active .quiz-standalone {
+    justify-content: flex-start;
+    padding: .75rem;
+  }
+
+  .quiz-fullscreen-active .quiz-standalone .quiz-question-view,
+  .quiz-fullscreen-active .quiz-standalone .quiz-results,
+  .quiz-fullscreen-active .quiz-standalone .quiz-error {
+    min-height: calc(100svh - 1.5rem);
+    padding: .85rem;
+  }
+
+  .quiz-fullscreen-active .quiz-question-card {
+    margin: 1rem auto;
+  }
+}
