@@ -641,6 +641,7 @@
   }
 
   function makeCard(item, config, featured) {
+    const isBook = config.colecao === "livros";
     const color = config.colorOf ? config.colorOf(item) : null;
     const card = el("a", {
       class: "atlas-card",
@@ -669,17 +670,30 @@
       }, { once: true });
     }
 
-    card.append(
-      el(
+    if (isBook) {
+      const cover = el(
         "div",
-        { class: "atlas-card-top" },
-        makeMark(item, config),
-        tags
-      ),
-      bookImage,
-      el("h3", { text: item.nome || item.titulo }),
-      el("p", { class: "atlas-card-sub", text: config.subtitle(item) })
-    );
+        { class: "atlas-book-cover" },
+        bookImage,
+        el("span", { class: "atlas-book-cover-year", text: String(item.ano || "") }),
+        el("span", { class: "atlas-book-cover-area", text: areaLabel("livros", item.area) }),
+        el("h3", { text: item.titulo }),
+        el("p", { text: item.autor })
+      );
+      card.append(cover, tags);
+    } else {
+      card.append(
+        el(
+          "div",
+          { class: "atlas-card-top" },
+          makeMark(item, config),
+          tags
+        ),
+        bookImage,
+        el("h3", { text: item.nome || item.titulo }),
+        el("p", { class: "atlas-card-sub", text: config.subtitle(item) })
+      );
+    }
 
     const fingerprint = buildFingerprint(item);
     if (fingerprint) card.append(fingerprint);
@@ -763,7 +777,8 @@
   }
 
   function renderDialog(item, config) {
-    const dialog = document.getElementById("atlas-dialog");
+    const isBook = config.colecao === "livros";
+    const dialog = document.getElementById(isBook ? "atlas-book-detail" : "atlas-dialog");
     if (!dialog) return;
     const color = config.colorOf ? config.colorOf(item) : null;
     if (color) dialog.style.setProperty("--fam", color);
@@ -795,18 +810,29 @@
       close
     );
 
+    if (config.colecao === "livros") head.classList.add("atlas-dialog-head-book");
+    let bookCover = null;
     const body = el("div", { class: "atlas-dialog-body" });
     if (config.colecao === "livros") {
       if (item.imagePath) {
-        const cover = el("img", {
-          class: "atlas-dialog-book-cover",
+        const coverImage = el("img", {
+          class: "atlas-dialog-book-image",
           src: item.imagePath,
-          alt: item.imageAlt || "Retrato de " + item.autor,
+          alt: item.imageAlt || "",
           loading: "lazy"
         });
-        cover.addEventListener("error", () => cover.remove());
-        head.insertBefore(cover, close);
+        const cover = el(
+          "div",
+          { class: "atlas-dialog-book-cover", role: "img", "aria-label": "Capa de " + name + ", de " + item.autor },
+          coverImage,
+          el("span", { class: "atlas-dialog-cover-area", text: areaLabel("livros", item.area) }),
+          el("strong", { class: "atlas-dialog-cover-title", text: name }),
+          el("span", { class: "atlas-dialog-cover-author", text: item.autor })
+        );
+        coverImage.addEventListener("error", () => cover.classList.add("has-no-image"));
+        bookCover = cover;
       }
+      if (bookCover) body.append(bookCover);
       const author =
         item.autorId && relatedName("personalidades", item.autorId)
           ? el(
@@ -855,7 +881,24 @@
         );
       }
       body.append(footer);
-      dialog.replaceChildren(el("div", { class: "atlas-dialog-shell" }, head, body));
+      const panel = el(
+        "article",
+        {
+          class: "history-detail-dialog atlas-dialog-book",
+          role: "dialog",
+          "aria-modal": "true",
+          "aria-labelledby": "atlas-dialog-title"
+        },
+        el("div", { class: "atlas-dialog-shell" }, head, body)
+      );
+      if (color) panel.style.setProperty("--fam", color);
+      const backdrop = el("div", { class: "history-detail-backdrop", "aria-hidden": "true" });
+      backdrop.addEventListener("click", () => closeDialog());
+      backdrop.addEventListener("wheel", (event) => {
+        window.scrollBy({ left: event.deltaX, top: event.deltaY, behavior: "auto" });
+        event.preventDefault();
+      }, { passive: false });
+      dialog.replaceChildren(backdrop, panel);
       return;
     }
     body.append(el("p", { class: "atlas-dialog-summary", text: item.resumo || config.summary(item) }));
@@ -954,16 +997,22 @@
   function openItem(id, options) {
     const item = findItem(id);
     if (!item) return false;
-    const dialog = document.getElementById("atlas-dialog");
+    const isBook = state.config.colecao === "livros";
+    const dialog = document.getElementById(isBook ? "atlas-book-detail" : "atlas-dialog");
     if (!dialog) return false;
-    if (!dialog.open) lastFocus = document.activeElement;
+    const isOpen = isBook ? dialog.classList.contains("open") : dialog.open;
+    if (!isOpen) lastFocus = document.activeElement;
     renderDialog(item, state.config);
-    if (typeof dialog.showModal === "function") {
-      if (!dialog.open) dialog.showModal();
+    if (isBook) {
+      dialog.classList.add("open");
     } else {
-      dialog.setAttribute("open", "");
+      if (typeof dialog.showModal === "function") {
+        if (!dialog.open) dialog.showModal();
+      } else {
+        dialog.setAttribute("open", "");
+      }
     }
-    document.documentElement.classList.add("atlas-modal-open");
+    if (!isBook) document.documentElement.classList.add("atlas-modal-open");
     if (!options || options.updateHash !== false) {
       window.history.replaceState(null, "", "#" + encodeURIComponent(item.id));
     }
@@ -972,11 +1021,18 @@
   }
 
   function closeDialog(options) {
-    const dialog = document.getElementById("atlas-dialog");
-    if (!dialog || !dialog.open) return;
-    if (typeof dialog.close === "function") dialog.close();
-    else dialog.removeAttribute("open");
-    document.documentElement.classList.remove("atlas-modal-open");
+    const isBook = state.config?.colecao === "livros";
+    const dialog = document.getElementById(isBook ? "atlas-book-detail" : "atlas-dialog");
+    const isOpen = isBook ? dialog?.classList.contains("open") : dialog?.open;
+    if (!dialog || !isOpen) return;
+    if (isBook) {
+      dialog.classList.remove("open");
+      dialog.replaceChildren();
+    } else {
+      if (typeof dialog.close === "function") dialog.close();
+      else dialog.removeAttribute("open");
+      document.documentElement.classList.remove("atlas-modal-open");
+    }
     if (!options || options.clearHash !== false) {
       window.history.replaceState(null, "", window.location.pathname + window.location.search);
     }
@@ -1054,6 +1110,11 @@
   }
 
   function applyFilters() {
+    const featured = document.getElementById("atlas-featured");
+    const hasActiveFilters = Boolean(state.query) || Object.values(state.filters).some(Boolean);
+    if (featured && state.config.colecao === "livros") {
+      featured.hidden = hasActiveFilters;
+    }
     state.filtered = sortItems(state.items.filter(matches));
     renderGrid();
   }
@@ -1212,15 +1273,22 @@
 
     applyFilters();
 
-    const dialog = document.getElementById("atlas-dialog");
+    const isBook = config.colecao === "livros";
+    const dialog = document.getElementById(isBook ? "atlas-book-detail" : "atlas-dialog");
     if (dialog) {
-      dialog.addEventListener("click", (event) => {
-        if (event.target === dialog) closeDialog();
-      });
-      dialog.addEventListener("cancel", (event) => {
-        event.preventDefault();
-        closeDialog();
-      });
+      if (isBook) {
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && dialog.classList.contains("open")) closeDialog();
+        });
+      } else {
+        dialog.addEventListener("click", (event) => {
+          if (event.target === dialog) closeDialog();
+        });
+        dialog.addEventListener("cancel", (event) => {
+          event.preventDefault();
+          closeDialog();
+        });
+      }
     }
     window.addEventListener("hashchange", handleHash);
     handleHash();

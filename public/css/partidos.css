@@ -1,5 +1,28 @@
 /* Partidos e movimentos: destaque consistente para siglas e marcas. */
-.dedicated-parties-page .catalog-hero { border-bottom:1px solid var(--border); }
-.dedicated-parties-page .catalog-party-card { display:flex; flex-direction:column; min-height:100%; }
-.dedicated-parties-page .catalog-party-card .catalog-party-logo { display:grid; place-items:center; width:100%; aspect-ratio:16/10; overflow:hidden; border-radius:8px; background:var(--bg-body); color:var(--primary); font-family:"Playfair Display",Georgia,serif; font-size:1.5rem; font-weight:750; }
-.dedicated-parties-page .catalog-party-card .catalog-party-logo img { width:100%; height:100%; object-fit:contain; padding:.65rem; }
+.dedicated-parties-page .catalog-hero {
+  border-bottom: 1px solid var(--border);
+}
+.dedicated-parties-page .catalog-party-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.dedicated-parties-page .catalog-party-card .catalog-party-logo {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--bg-body);
+  color: var(--primary);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 750;
+}
+.dedicated-parties-page .catalog-party-card .catalog-party-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.65rem;
+}

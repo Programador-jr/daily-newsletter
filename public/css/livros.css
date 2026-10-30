@@ -1,0 +1,907 @@
+/* Biblioteca: mesma geometria editorial das páginas de Ideologias e História. */
+.books-page .atlas-hero {
+  max-width: 860px;
+  padding: 4rem 3rem 2.5rem;
+}
+
+.books-page main > .atlas-method {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 4px 14px rgb(25 31 40 / 4%);
+}
+
+.atlas-related {
+  margin-top: 1.25rem;
+}
+
+.books-page .ideology-method-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--primary) 9%, var(--bg-container));
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.books-page .atlas-method h2 {
+  margin: 0 0 .25rem;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+.books-page .atlas-method p {
+  max-width: 850px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .82rem;
+  line-height: 1.6;
+}
+
+.books-page .atlas-hero-stats > span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .35rem;
+  padding: .45rem .7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card-bg);
+  font-size: .8rem;
+}
+
+.books-page .atlas-hero-stats strong {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.books-page .atlas-book-spectrum {
+  margin-top: 1.25rem;
+}
+
+.books-page .atlas-book-spectrum-label {
+  display: block;
+  margin-bottom: .6rem;
+  color: var(--text-muted);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.books-page .atlas-book-spectrum-bar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .5rem;
+}
+
+.books-page .atlas-book-spectrum-segment {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: .55rem .65rem;
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--c);
+  border-radius: 7px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  font-size: .73rem;
+}
+
+.books-page .atlas-book-spectrum-segment b {
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.books-page .atlas-book-spectrum-segment em {
+  flex: none;
+  color: var(--text-muted);
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+.books-page .atlas-legend {
+  width: calc(100% - 6rem);
+  max-width: 1155px;
+  margin-bottom: 1.25rem;
+  margin-right: auto;
+  margin-left: auto;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card-bg);
+}
+
+.books-page .atlas-legend summary {
+  padding: .8rem 1rem;
+  color: var(--text-main);
+  font-size: .84rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.books-page #atlas-legend-grid {
+  padding: 0 1rem 1rem;
+}
+
+.books-page .atlas-controls {
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 14px rgb(25 31 40 / 3%);
+}
+
+.books-page .atlas-featured-grid,
+.books-page .atlas-grid {
+  align-items: stretch;
+  grid-auto-rows: 1fr;
+}
+
+.books-page .atlas-card {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border-top: 3px solid var(--fam, var(--primary));
+}
+
+.books-page .atlas-card-top {
+  align-items: flex-start;
+  min-height: 56px;
+}
+
+.books-page .atlas-card-tags {
+  min-width: 0;
+  margin: 0;
+  align-content: flex-start;
+}
+
+.books-page .atlas-mark-sigla {
+  background: color-mix(in srgb, var(--fam, var(--primary)) 12%, var(--card-bg));
+  color: var(--fam, var(--primary));
+  font-variant-numeric: tabular-nums;
+}
+
+.books-page .atlas-book-card-image,
+.books-page .atlas-book-card-fallback {
+  display: block;
+  width: 100%;
+  height: 12rem;
+  margin-top: .8rem;
+  border-radius: 7px;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.books-page .atlas-book-card-fallback {
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--fam, var(--primary)) 12%, var(--card-bg));
+  color: var(--fam, var(--primary));
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.books-page .atlas-card h3 {
+  min-height: 2.5em;
+  margin: .8rem 0 .25rem;
+  line-height: 1.25;
+}
+
+.books-page .atlas-card-sub {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.books-page .atlas-card-summary {
+  display: -webkit-box;
+  min-height: 4.5em;
+  margin: .65rem 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-height: 1.5;
+}
+
+.books-page .atlas-card-cta {
+  margin-top: auto;
+  padding-top: .65rem;
+}
+
+.books-page .atlas-featured,
+.books-page .atlas-section {
+  margin-bottom: 3rem;
+}
+
+.books-page .atlas-featured-head,
+.books-page .section-heading {
+  padding-bottom: .85rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.35rem;
+  flex-direction: column;
+  align-items: start;
+}
+
+.books-page .atlas-section-note {
+  max-width: 460px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .82rem;
+  line-height: 1.6;
+}
+
+.books-page .atlas-sources {
+  margin-bottom: 3.5rem;
+  padding: 1.75rem 0 0;
+  border-top: 1px solid var(--border);
+}
+
+.books-page .atlas-sources h2 {
+  margin: .35rem 0 .65rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.books-page .atlas-sources > p {
+  max-width: 800px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .84rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .books-page .atlas-hero {
+    padding: 2rem 1.25rem 1.4rem;
+  }
+
+  .books-page .atlas-legend {
+    width: calc(100% - 2.5rem);
+  }
+
+  .books-page main > .atlas-method {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .books-page .atlas-book-spectrum-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .books-page .atlas-book-spectrum-bar {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* As capas ficam alinhadas à esquerda como uma estante de leitura. */
+.books-page .atlas-featured-grid,
+.books-page .atlas-grid {
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 18rem));
+  justify-content: center;
+  align-items: stretch;
+  gap: 1.25rem;
+}
+
+.books-page .atlas-card {
+  position: relative;
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-left: 7px solid color-mix(in srgb, var(--fam, var(--primary)) 72%, #111);
+  border-radius: 5px 9px 9px 5px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--fam, var(--primary)) 5%, var(--card-bg)), var(--card-bg) 1.2rem);
+  box-shadow: 2px 0 0 color-mix(in srgb, var(--border) 55%, transparent), 0 3px 8px rgb(0 0 0 / 8%);
+  transform-origin: left center;
+  animation: book-card-enter 320ms ease-out both;
+  transition: border-color 180ms ease, box-shadow 220ms ease, transform 220ms cubic-bezier(.2,.8,.2,1);
+}
+
+.books-page .atlas-card::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: rgb(255 255 255 / 25%);
+  content: "";
+  pointer-events: none;
+}
+
+.books-page .atlas-card:hover,
+.books-page .atlas-card:focus-visible {
+  border-color: color-mix(in srgb, var(--fam, var(--primary)) 55%, var(--border));
+  box-shadow: 5px 8px 18px rgb(0 0 0 / 17%);
+  transform: perspective(900px) translateY(-5px) rotateY(-2deg);
+}
+
+.books-page .atlas-card:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.books-page .atlas-book-cover {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  width: min(100%, 15rem);
+  aspect-ratio: 3 / 4;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-self: center;
+  margin: 0 auto .9rem;
+  overflow: hidden;
+  padding: 1.1rem .9rem .9rem 1.1rem;
+  border-radius: 3px 7px 7px 3px;
+  background: color-mix(in srgb, var(--fam, var(--primary)) 30%, #18211f);
+  color: #fff;
+  box-shadow: 5px 6px 12px rgb(0 0 0 / 25%), inset 1px 0 rgb(255 255 255 / 25%);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.books-page .atlas-book-cover::before {
+  position: absolute;
+  z-index: 3;
+  inset: 0 auto 0 0;
+  width: 10px;
+  background: linear-gradient(90deg, rgb(0 0 0 / 30%), rgb(255 255 255 / 18%), transparent);
+  content: "";
+  pointer-events: none;
+}
+
+.books-page .atlas-book-cover::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(8 14 13 / 12%) 12%, rgb(8 14 13 / 24%) 40%, rgb(8 14 13 / 88%) 100%);
+  content: "";
+  pointer-events: none;
+}
+
+.books-page .atlas-book-card-image,
+.books-page .atlas-book-card-fallback {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 0;
+  object-fit: cover;
+  object-position: center 28%;
+}
+
+.books-page .atlas-book-card-fallback {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--fam, var(--primary)) 55%, #17211f), #18211f 72%);
+  color: rgb(255 255 255 / 78%);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 4rem;
+  font-weight: 700;
+}
+
+.books-page .atlas-book-cover-year,
+.books-page .atlas-book-cover-area,
+.books-page .atlas-book-cover h3,
+.books-page .atlas-book-cover p {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  text-shadow: 0 1px 4px rgb(0 0 0 / 45%);
+}
+
+.books-page .atlas-book-cover-year {
+  position: absolute;
+  top: .7rem;
+  right: .7rem;
+  padding: .25rem .45rem;
+  border: 1px solid rgb(255 255 255 / 45%);
+  border-radius: 3px;
+  background: rgb(12 19 18 / 42%);
+  font-size: .7rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.books-page .atlas-book-cover-area {
+  align-self: flex-start;
+  margin-bottom: .55rem;
+  font-size: .63rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.books-page .atlas-book-cover h3 {
+  min-height: 0;
+  margin: auto 0 .35rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.25rem;
+  line-height: 1.22;
+  text-wrap: pretty;
+}
+
+.books-page .atlas-book-cover p {
+  margin: 0;
+  font-size: .76rem;
+  line-height: 1.4;
+}
+
+.books-page .atlas-card-tags {
+  min-height: 2rem;
+  align-content: flex-start;
+  margin: .1rem 0 .4rem;
+}
+
+.books-page .atlas-card-summary {
+  min-height: 6em;
+  margin: .45rem 0 .65rem;
+  -webkit-line-clamp: 4;
+  line-height: 1.5;
+}
+
+.books-page .atlas-card-cta {
+  margin-top: auto;
+  padding-top: .6rem;
+}
+
+.books-page .atlas-empty {
+  grid-column: 1 / -1;
+  max-width: 32rem;
+}
+
+/* Ficha do livro: capa, contexto editorial e leitura em uma composição só. */
+.atlas-dialog-book .atlas-dialog-shell {
+  background: var(--bg-container);
+}
+
+html body.books-page dialog.atlas-dialog-book {
+  position: fixed;
+  inset: 0;
+  width: min(820px, calc(100vw - 2rem));
+  max-width: calc(100vw - 2rem);
+  max-height: min(90vh, 900px);
+  margin: auto;
+  overflow: hidden;
+  box-sizing: border-box;
+  border-radius: 14px;
+  box-shadow: 0 24px 80px rgb(0 0 0 / 35%);
+}
+
+.atlas-dialog-book .atlas-dialog-head {
+  min-height: 300px;
+  grid-template-columns: minmax(150px, 190px) minmax(0, 1fr);
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 3.5rem 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(120deg, color-mix(in srgb, var(--fam, var(--primary)) 8%, var(--card-bg)), var(--bg-container) 68%);
+}
+
+.atlas-dialog-book .atlas-dialog-head > .atlas-mark {
+  display: none;
+}
+
+.atlas-dialog-book .atlas-dialog-title {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.atlas-dialog-book .atlas-dialog-title h2 {
+  margin: .65rem 0 .4rem;
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  line-height: 1.15;
+}
+
+.atlas-dialog-book .atlas-dialog-title .atlas-card-tags {
+  gap: .4rem;
+  margin: 0;
+}
+
+.atlas-dialog-book .atlas-dialog-title .atlas-tag {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--primary);
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.atlas-dialog-book .atlas-dialog-title > p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.atlas-dialog-book .atlas-dialog-book-cover {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  grid-column: 1;
+  grid-row: 1;
+  width: min(100%, 190px);
+  aspect-ratio: 3 / 4;
+  height: auto;
+  margin: 0;
+  border-radius: 4px 8px 8px 4px;
+  overflow: hidden;
+  padding: 1rem .85rem .9rem 1.1rem;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: #fff;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--fam, var(--primary)) 58%, #18211e), #111714 78%);
+  box-shadow: 7px 9px 18px rgb(0 0 0 / 22%), inset 6px 0 rgb(0 0 0 / 30%), inset 8px 0 rgb(255 255 255 / 15%);
+}
+
+.atlas-dialog-book .atlas-dialog-book-cover::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(8 14 13 / 35%), rgb(8 14 13 / 5%) 36%, rgb(8 14 13 / 92%));
+  content: "";
+}
+
+.atlas-dialog-book .atlas-dialog-book-image {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 28%;
+}
+
+.atlas-dialog-book .atlas-dialog-cover-area,
+.atlas-dialog-book .atlas-dialog-cover-title,
+.atlas-dialog-book .atlas-dialog-cover-author {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  text-shadow: 0 1px 5px rgb(0 0 0 / 70%);
+}
+
+.atlas-dialog-book .atlas-dialog-cover-area {
+  margin-bottom: auto;
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.atlas-dialog-book .atlas-dialog-cover-title {
+  font: 700 1.1rem/1.2 "Playfair Display", Georgia, serif;
+}
+
+.atlas-dialog-book .atlas-dialog-cover-author {
+  margin-top: .35rem;
+  font-size: .7rem;
+}
+
+.atlas-dialog-book .atlas-dialog-book-cover.has-no-image {
+  background-image: radial-gradient(ellipse at 75% 15%, color-mix(in srgb, var(--fam, var(--primary)) 38%, transparent), transparent 55%);
+}
+
+.atlas-dialog-book .atlas-dialog-close {
+  z-index: 4;
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.atlas-dialog-book .atlas-dialog-close:hover {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 9%, var(--card-bg));
+}
+
+.atlas-dialog-book .atlas-dialog-body {
+  padding: 1.5rem;
+}
+
+.atlas-dialog-book .atlas-dialog-section {
+  margin: 0;
+  padding: 1.25rem 0;
+  border-top: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.atlas-dialog-book .atlas-dialog-section h3 {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin: 0 0 .8rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.2rem;
+}
+
+.atlas-dialog-book .atlas-dialog-section h3 i {
+  color: var(--primary);
+  font-size: .95rem;
+}
+
+.atlas-dialog-book .atlas-dialog-list {
+  gap: .5rem;
+  list-style: none;
+}
+
+.atlas-dialog-book .atlas-dialog-list li {
+  color: var(--text-muted);
+  font-size: .88rem;
+  line-height: 1.6;
+}
+
+.atlas-dialog-book .atlas-dialog-body a {
+  color: var(--primary);
+  text-decoration-color: color-mix(in srgb, var(--primary) 45%, transparent);
+  text-underline-offset: .16em;
+}
+
+.atlas-dialog-book .atlas-dialog-body a:hover {
+  text-decoration-color: currentColor;
+}
+
+.atlas-dialog-book .atlas-dialog-summary {
+  margin: .9rem 0 0;
+  color: var(--text-main);
+  line-height: 1.7;
+}
+
+.atlas-dialog-book .atlas-dialog-footer {
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem 1.5rem;
+  background: var(--card-bg);
+}
+
+.atlas-dialog-book .atlas-dialog-footer p {
+  max-width: 38rem;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .78rem;
+  line-height: 1.55;
+}
+
+.atlas-dialog-book .atlas-readmore {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: .45rem;
+  min-height: 40px;
+  padding: .55rem .8rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--primary);
+  font-size: .8rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.atlas-dialog-book .atlas-readmore:hover {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 7%, var(--card-bg));
+}
+
+@keyframes book-card-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes atlas-book-dialog-enter {
+  from { opacity: 0; transform: translateY(10px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 768px) {
+  .books-page .atlas-featured-grid,
+  .books-page .atlas-grid {
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 18rem));
+    justify-content: center;
+  }
+
+  .atlas-dialog-book .atlas-dialog-head {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem 3.5rem 1rem 1rem;
+  }
+
+  .atlas-dialog-book .atlas-dialog-book-cover {
+    grid-column: 1;
+    grid-row: 1;
+    width: min(58vw, 13rem);
+    justify-self: start;
+  }
+
+  .atlas-dialog-book .atlas-dialog-title {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .atlas-dialog-book .atlas-dialog-body {
+    padding: 1rem;
+  }
+
+  .atlas-dialog-book .atlas-dialog-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .books-page .atlas-featured-grid,
+  .books-page .atlas-grid {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }
+
+  .books-page .atlas-card {
+    max-width: 22rem;
+  }
+}
+
+.books-page .atlas-card {
+  transition: transform 240ms cubic-bezier(.2, .75, .25, 1), border-color 200ms ease, box-shadow 240ms ease;
+}
+
+.books-page .atlas-card:hover,
+.books-page .atlas-card:focus-visible {
+  box-shadow: 0 16px 30px rgb(0 0 0 / 22%);
+  transform: translateY(-7px);
+}
+
+.books-page .atlas-card:hover .atlas-book-cover,
+.books-page .atlas-card:focus-visible .atlas-book-cover {
+  box-shadow: 8px 12px 22px rgb(0 0 0 / 32%), inset 1px 0 rgb(255 255 255 / 25%);
+  transform: perspective(700px) rotateY(-3deg) scale(1.025);
+}
+
+.books-page .atlas-card-cta {
+  justify-content: center;
+  min-height: 2.6rem;
+  padding: .6rem .8rem;
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--primary);
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.books-page .atlas-card:hover .atlas-card-cta,
+.books-page .atlas-card:focus-visible .atlas-card-cta {
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .books-page .atlas-card,
+  .books-page .atlas-book-cover,
+  .atlas-dialog-book .atlas-dialog-close {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Usa o overlay, backdrop e painel de detalhes da página História. */
+.books-page main > section.books-detail {
+  width: auto;
+  max-width: none;
+  margin: 0;
+}
+
+.atlas-dialog-book .atlas-dialog-shell {
+  max-height: none;
+  overflow: visible;
+  background: transparent;
+}
+
+.atlas-dialog-book .atlas-dialog-head {
+  position: sticky;
+  top: -2rem;
+  z-index: 3;
+  display: flex;
+  min-height: 0;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: -2rem -2rem 1.25rem;
+  padding: 2rem 2rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--card-bg) !important;
+}
+
+.atlas-dialog-book .atlas-dialog-head > .atlas-mark {
+  display: none;
+}
+
+.atlas-dialog-book .atlas-dialog-title {
+  min-width: 0;
+}
+
+.atlas-dialog-book .atlas-dialog-title h2 {
+  margin: .35rem 0;
+  font-size: clamp(1.7rem, 4vw, 2.35rem);
+  line-height: 1.15;
+}
+
+.atlas-dialog-book .atlas-dialog-title > p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.atlas-dialog-book .atlas-dialog-close {
+  position: relative;
+  top: auto;
+  right: auto;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.atlas-dialog-book .atlas-dialog-close:hover,
+.atlas-dialog-book .atlas-dialog-close:focus-visible {
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 6%, transparent);
+  transform: none;
+}
+
+.atlas-dialog-book .atlas-dialog-body {
+  padding: 0;
+}
+
+.atlas-dialog-book .atlas-dialog-book-cover {
+  width: min(100%, 190px);
+  margin: 0 0 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .atlas-dialog-book .atlas-dialog-head {
+    top: -1.25rem;
+    margin: -1.25rem -1.25rem 1rem;
+    padding: 1.25rem 1.25rem 1rem;
+  }
+
+  .atlas-dialog-book .atlas-dialog-book-cover {
+    width: min(58vw, 13rem);
+    justify-self: start;
+  }
+
+  .atlas-dialog-book .atlas-dialog-title,
+  .atlas-dialog-book .atlas-dialog-title h2 {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .atlas-dialog-book .atlas-dialog-head {
+    top: -1rem;
+    margin: -1rem -1rem 1rem;
+    padding: 1rem 1rem .9rem;
+  }
+}

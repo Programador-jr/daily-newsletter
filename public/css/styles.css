@@ -189,21 +189,6 @@ main
     text-decoration-color 180ms ease;
 }
 
-main
-  a:not(.cta-button):not(.error-btn):not(.source-link):not(
-    .subscription-secondary-button
-  ):hover,
-main
-  a:not(.cta-button):not(.error-btn):not(.source-link):not(
-    .subscription-secondary-button
-  ):focus-visible,
-.footer-links a:hover,
-.footer-links a:focus-visible {
-  color: var(--primary);
-  text-decoration: underline;
-  text-decoration-color: currentColor;
-}
-
 .nav-search {
   position: relative;
   flex: 0 1 240px;
@@ -3830,6 +3815,18 @@ body.sidebar-open {
     padding: 1.25rem;
   }
 
+  .home-edition-link {
+    border: 1px solid var(--primary);
+    border-radius: 6px;
+    text-decoration: none!important;
+    padding: 0.45rem 0.75rem;
+  }
+
+  .home-edition-link:hover {
+    background: var(--primary);
+    color: var(--bg-container)!important;
+  }
+
   .home-page #featured-news .spotlight-card .story-image,
   .home-page #featured-news .spotlight-card h2,
   .home-page #featured-news .spotlight-card .home-edition-link {
@@ -3917,43 +3914,6 @@ body.sidebar-open {
 }
 
 /* Identidade editorial compartilhada pelas páginas públicas. */
-:root {
-  --bg-body: #f1f3ed;
-  --bg-container: #fbfcf8;
-  --text-main: #182522;
-  --text-muted: #52645d;
-  --primary: #176b63;
-  --primary-hover: #10574f;
-  --border: #d8e0d9;
-  --card-bg: #fbfcf8;
-  --card-border: #d8e0d9;
-  --sidebar-bg: #e8eee8;
-  --sidebar-text: #20312b;
-  --sidebar-muted: #5d6c64;
-  --sidebar-border: #d1dbd2;
-  --sidebar-hover: #dce6df;
-  --editorial-accent: #c39535;
-  --editorial-ink: #182522;
-}
-
-[data-theme="dark"] {
-  --bg-body: #17211e;
-  --bg-container: #202c28;
-  --text-main: #edf2ed;
-  --text-muted: #b1beb6;
-  --primary: #68b6a8;
-  --primary-hover: #8acabd;
-  --border: #3a4a43;
-  --card-bg: #202c28;
-  --card-border: #3a4a43;
-  --sidebar-bg: #1b2723;
-  --sidebar-text: #edf2ed;
-  --sidebar-muted: #b1beb6;
-  --sidebar-border: #34443d;
-  --sidebar-hover: #293832;
-  --editorial-accent: #e1ba65;
-  --editorial-ink: #edf2ed;
-}
 
 body {
   background: var(--bg-body);

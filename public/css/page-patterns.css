@@ -1,7 +1,89 @@
 /* Geometria editorial compartilhada; tokens e tipografia vêm de styles.css. */
-.history-page main { padding-bottom:2rem; }
-.history-page :is(.civic-hero,.ideology-hero,.atlas-hero,.catalog-hero,.compare-hero,.quiz-hero) { max-width:860px; }
-.history-page main > section:not(.history-hero),.history-page main > .quiz-section { width:calc(100% - 6rem); max-width:1155px; margin-right:auto; margin-left:auto; }
-.history-page .section-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; }
-.history-page :is(.civic-section,.ideology-section,.atlas-section,.compare-section,.quiz-section) { margin-bottom:3rem; }
-@media(max-width:768px){.history-page main > section:not(.history-hero),.history-page main > .quiz-section{width:calc(100% - 2.5rem)}.history-page .section-heading{align-items:flex-start;flex-direction:column}}
+.history-page main {
+  padding-bottom: 2rem;
+}
+.history-page
+  :is(
+    .civic-hero,
+    .ideology-hero,
+    .atlas-hero,
+    .catalog-hero,
+    .compare-hero,
+    .quiz-hero
+  ) {
+  max-width: 860px;
+}
+.history-page .section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.history-page
+  :is(
+    .civic-section,
+    .ideology-section,
+    .atlas-section,
+    .compare-section,
+    .quiz-section
+  ) {
+  margin-bottom: 3rem;
+}
+@media (max-width: 768px) {
+  .history-page main > section:not(.history-hero),
+  .history-page main > .quiz-section {
+    width: calc(100% - 2.5rem);
+  }
+  .history-page .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* Ideologias e Livros seguem a leitura em coluna da página História. */
+.ideologies-page:not(.political-catalog-page):not(.compare-page):not(.quiz-page)
+  main
+  > section:not(.history-hero),
+.books-page main > section:not(.history-hero) {
+  width: auto;
+  max-width: none;
+  margin-right: 3rem;
+  margin-left: 3rem;
+}
+
+.books-page main > .atlas-legend {
+  width: auto;
+  max-width: none;
+  margin: 0 3rem 1.25rem;
+}
+
+.ideologies-page:not(.political-catalog-page):not(.compare-page):not(.quiz-page)
+  .ideology-hero,
+.books-page .atlas-hero {
+  max-width: 860px;
+  padding: 4rem 3rem 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .ideologies-page:not(.political-catalog-page):not(.compare-page):not(
+      .quiz-page
+    )
+    main
+    > section:not(.history-hero),
+  .books-page main > section:not(.history-hero) {
+    margin-right: 1.25rem;
+    margin-left: 1.25rem;
+  }
+
+  .books-page main > .atlas-legend {
+    margin: 0 1.25rem 1.25rem;
+  }
+
+  .ideologies-page:not(.political-catalog-page):not(.compare-page):not(
+      .quiz-page
+    )
+    .ideology-hero,
+  .books-page .atlas-hero {
+    padding: 2rem 1.25rem 1.4rem;
+  }
+}

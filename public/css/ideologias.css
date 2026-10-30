@@ -21,6 +21,27 @@
   text-decoration: none;
 }
 
+.fascim-link {
+  display: inline-block;
+  margin-top: 0.8rem;
+  color: var(--primary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  padding: 0.45rem 0.75rem;
+  margin-left: 0.15rem;
+}
+
+.atlas-hero-stats strong {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.fascim-link:hover {
+  color: var(--primary-hover);
+}
+
 /* MÉTODO */
 
 .ideology-method {
@@ -78,6 +99,18 @@
   font-family: "Playfair Display", serif;
   font-size: 1.8rem;
   line-height: 1.2;
+}
+
+#atalhos .section-heading {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+#atalhos .section-heading > p {
+  margin: 0.25rem 0 0;
+  color: var(--text-muted);
+  line-height: 1.7;
 }
 
 .ideology-prose {
@@ -808,6 +841,23 @@
 .axis-grid-12 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.55rem;
+}
+.ideology-axes-detail {
+  width: 100%;
+  margin: 1rem 0;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card-bg);
+}
+.ideology-axes-detail > summary {
+  padding: 0.8rem 1rem;
+  color: var(--text-main);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.ideology-axes-detail > #guide-axis-grid {
+  padding: 0 1rem 1rem;
 }
 .axis-grid-12 article {
   padding: 0.95rem;
