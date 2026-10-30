@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const answersLegend = document.getElementById("quiz-answers-legend");
   const backButton = document.getElementById("quiz-back");
   const nextButton = document.getElementById("quiz-next");
-  const skipButton = document.getElementById("quiz-skip");
   const autoAdvance = document.getElementById("quiz-auto-advance");
   const autoAdvanceLabel = document.getElementById("quiz-auto-advance-label");
   const helpButton = document.getElementById("quiz-help-button");
@@ -225,7 +224,6 @@ document.addEventListener("DOMContentLoaded", () => {
       : 'Próxima <i class="fas fa-arrow-right" aria-hidden="true"></i>';
     nextButton.disabled = answers[current] === undefined;
     nextButton.hidden = false;
-    if (skipButton) skipButton.hidden = true;
     if (autoAdvanceLabel) autoAdvanceLabel.hidden = false;
     questionView?.classList.remove("is-archetype");
     questionCard?.classList.remove("is-archetype");
@@ -330,7 +328,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (answersLegend) answersLegend.textContent = "Escolha uma alternativa";
     if (helpButton) helpButton.hidden = true;
     if (nextButton) nextButton.hidden = true;
-    if (skipButton) skipButton.hidden = false;
     if (autoAdvanceLabel) autoAdvanceLabel.hidden = true;
     backButton.disabled = false;
     clearAnswerOptions();
@@ -405,14 +402,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     finishQuiz();
-  };
-
-  const skipArchetype = () => {
-    const question = archetypeQuestions[archetypeIndex];
-    if (question) delete archetypeAnswers[question.id];
-    window.clearTimeout(archetypeTimer);
-    archetypeTimer = 0;
-    advanceArchetype();
   };
 
   const enterArchetype = () => {
@@ -3194,7 +3183,6 @@ document.addEventListener("DOMContentLoaded", () => {
     enterArchetype();
   });
 
-  if (skipButton) skipButton.addEventListener("click", skipArchetype);
 
   fetch("/data/political-catalog.json")
     .then((response) => {
