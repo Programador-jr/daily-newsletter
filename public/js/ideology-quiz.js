@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const backButton = document.getElementById("quiz-back");
   const nextButton = document.getElementById("quiz-next");
   const skipButton = document.getElementById("quiz-skip");
-  const startButton = document.getElementById("quiz-start");
   const autoAdvance = document.getElementById("quiz-auto-advance");
   const autoAdvanceLabel = document.getElementById("quiz-auto-advance-label");
   const helpButton = document.getElementById("quiz-help-button");
@@ -31,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultHelpTitle = document.getElementById("result-help-dialog-title");
   const resultHelpContent = document.getElementById("result-help-content");
   const resultHelpClose = document.getElementById("result-help-close");
-  const quizClose = document.getElementById("quiz-dialog-close");
   const archetypeQuestions = Array.isArray(window.KINGS_ARCHETYPE_QUESTIONS)
     ? window.KINGS_ARCHETYPE_QUESTIONS
     : [];
@@ -3142,30 +3140,13 @@ document.addEventListener("DOMContentLoaded", () => {
     archetypeAnswers = {};
     window.clearTimeout(archetypeTimer);
     archetypeTimer = 0;
-    if (root instanceof HTMLDialogElement && !root.open) root.showModal();
+    if (intro) intro.hidden = true;
+    root.hidden = false;
     error.hidden = true;
+    resultsView.hidden = true;
     questionView.hidden = false;
     renderQuestion();
   };
-
-  startButton.addEventListener("click", () => {
-    startQuiz(document.querySelector('input[name="quiz-length"]:checked')?.value || "short");
-  });
-
-  if (quizClose && root instanceof HTMLDialogElement) {
-    quizClose.addEventListener("click", () => {
-      window.clearTimeout(archetypeTimer);
-      archetypeTimer = 0;
-      root.close();
-    });
-    root.addEventListener("click", (event) => {
-      if (event.target === root) {
-        window.clearTimeout(archetypeTimer);
-        archetypeTimer = 0;
-        root.close();
-      }
-    });
-  }
 
   if (helpClose && helpDialog) {
     helpClose.addEventListener("click", () => helpDialog.close());
