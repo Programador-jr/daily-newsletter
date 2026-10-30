@@ -905,3 +905,115 @@ html body.books-page dialog.atlas-dialog-book {
     padding: 1rem 1rem .9rem;
   }
 }
+
+
+/* Pesquisa permanece acessível durante a navegação pelo catálogo. */
+.books-page .atlas-search-dock {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  margin: 0 3rem .75rem;
+  padding: .65rem 0;
+  background: var(--bg-container);
+}
+
+.books-page .atlas-search-dock .atlas-search {
+  min-height: 48px;
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
+  background: var(--card-bg);
+  box-shadow: 0 5px 18px rgb(0 0 0 / 9%);
+}
+
+.books-page .atlas-filter-accordion {
+  min-width: 0;
+}
+
+.books-page .atlas-filter-accordion > summary {
+  display: none;
+}
+
+.books-page .atlas-filter-chevron {
+  transition: transform 180ms ease;
+}
+
+.books-page .atlas-filter-accordion[open] .atlas-filter-chevron {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .books-page .atlas-search-dock {
+    margin: 0 1.25rem .65rem;
+    padding: .55rem 0;
+  }
+
+  .books-page .atlas-controls {
+    gap: .65rem;
+  }
+
+  .books-page .atlas-filter-accordion {
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--card-bg);
+  }
+
+  .books-page .atlas-filter-accordion > summary {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    padding: .7rem .85rem;
+    color: var(--text-main);
+    font-size: .82rem;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .books-page .atlas-filter-accordion > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .books-page .atlas-filter-accordion > summary span {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+  }
+
+  .books-page .atlas-filter-accordion > summary span i {
+    color: var(--primary);
+  }
+
+  .books-page .atlas-filter-accordion[open] > summary {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .books-page .atlas-filter-accordion .atlas-filters {
+    display: flex;
+    flex-direction: column;
+    gap: .85rem;
+    padding: .85rem;
+  }
+
+  .books-page .atlas-filter-accordion .atlas-filter-group {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: .45rem;
+  }
+
+  .books-page .atlas-filter-accordion .atlas-chips-row {
+    gap: .4rem;
+  }
+
+  .books-page .atlas-filter-accordion .atlas-chip,
+  .books-page .atlas-filter-accordion .atlas-clear {
+    min-height: 38px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .books-page .atlas-filter-chevron {
+    transition: none;
+  }
+}
