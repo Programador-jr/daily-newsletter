@@ -50,7 +50,7 @@
       </div>
     </section>
 
-    <section class="ideology-section quiz-section" id="quiz-politico" aria-labelledby="quiz-title">
+    <section class="ideology-section quiz-section quiz-standalone" id="ideology-quiz" aria-labelledby="quiz-title">
       <div class="section-heading">
         <div><span class="eyebrow">Questionário anônimo</span><h2 id="quiz-title">Seu perfil político</h2></div>
         <p class="quiz-section-note">As respostas ficam no seu navegador. Só o perfil agregado vai no link, se você decidir compartilhá-lo.</p>
@@ -95,10 +95,7 @@
           </fieldset>
           <p class="quiz-landing-note"><span>• Todas as versões usam os mesmos 12 eixos</span><span>• 6 perguntas de arquétipo</span><span>• Anônimo, sem cadastro</span><span>• Resultado imediato</span></p>
           <p class="quiz-method-note"><strong>Como interpretar:</strong> cada dimensão é calculada separadamente. A compatibilidade considera distância por eixo, direção, intensidade e divergências isoladas. As cinco perguntas de arquétipo entram como uma resposta adicional em cada eixo que tocam; a pergunta sobre religião é opcional e não altera o cálculo. É uma ferramenta de exploração, não um diagnóstico ou recomendação de voto.</p>
-          <button class="quiz-button quiz-primary" id="quiz-start" type="button">Começar questionário</button>
       </div>
-      <dialog class="ideology-quiz quiz-main-dialog" id="ideology-quiz" aria-labelledby="quiz-dialog-title">
-        <div class="quiz-dialog-header"><h2 id="quiz-dialog-title">Seu perfil político</h2><button class="quiz-dialog-close" id="quiz-dialog-close" type="button" aria-label="Fechar questionário">×</button></div>
         <div class="quiz-question-view" id="quiz-question-view" hidden>
           <div class="quiz-progress">
             <div class="quiz-progress-head"><span id="quiz-progress-label" aria-live="polite"></span><span id="quiz-progress-percent">0% concluído</span></div>
@@ -114,7 +111,6 @@
         </div>
         <div class="quiz-results" id="quiz-results" hidden aria-live="polite"></div>
         <div class="quiz-error" id="quiz-error" hidden role="alert"><h3>Não foi possível carregar o questionário.</h3><p>Confira sua conexão e recarregue esta página.</p></div>
-      </dialog>
       <dialog class="quiz-help-dialog" id="quiz-help-dialog" aria-labelledby="quiz-help-dialog-title"><div class="quiz-help-dialog-shell"><div class="quiz-help-dialog-header"><h2 id="quiz-help-dialog-title">Sobre esta pergunta</h2><button id="quiz-help-close" type="button" aria-label="Fechar explicação">×</button></div><div id="quiz-help-content"></div></div></dialog>
     </section>
 
