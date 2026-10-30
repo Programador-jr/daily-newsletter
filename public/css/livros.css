@@ -910,8 +910,8 @@ html body.books-page dialog.atlas-dialog-book {
 /* Pesquisa permanece acessível durante a navegação pelo catálogo. */
 .books-page .atlas-search-dock {
   position: sticky;
-  top: 0;
-  z-index: 30;
+  top: 5.5rem;
+  z-index: 10;
   margin: 0 3rem .75rem;
   padding: .65rem 0;
   background: var(--bg-container);
@@ -942,6 +942,7 @@ html body.books-page dialog.atlas-dialog-book {
 
 @media (max-width: 768px) {
   .books-page .atlas-search-dock {
+    top: 4.75rem;
     margin: 0 1.25rem .65rem;
     padding: .55rem 0;
   }
