@@ -48,21 +48,27 @@
       <section class="ideology-method atlas-method" aria-label="Nota metodológica">
         <div class="ideology-method-icon"><i class="fas fa-book-open" aria-hidden="true"></i></div>
         <div>
-          <span class="eyebrow">Como ler as fichas</span>
-          <h2>O vetor do livro é uma leitura do autor, não da obra inteira.</h2>
-          <p>A lista de obras e os retratos vêm do projeto 12 Axes, de Enzo Xavier Santos, usados com autorização escrita. As fichas, a classificação por área e as notas de leitura são editoriais do King's Newsletter. A imagem identifica o livro ou seu autor; ela não representa uma avaliação de qualidade.</p>
+          <span class="eyebrow">Como usar a biblioteca</span>
+          <h2>Uma ficha para conhecer a obra, seu contexto e as ideias do autor.</h2>
+          <p>As fichas reúnem informações bibliográficas, uma síntese editorial e relações com correntes políticas. O retrato em 12 eixos é uma interpretação aproximada das posições atribuídas ao autor, não uma avaliação do livro nem um resumo definitivo de toda a obra. A seleção e os retratos têm como base o projeto 12 Axes, de Enzo Xavier Santos, utilizados com autorização; textos, classificações e notas de leitura são editoriais do King's Newsletter.</p>
         </div>
       </section>
 
-      <section class="atlas-controls" aria-label="Busca, ordenação e filtros">
+      <div class="atlas-search-dock" role="search">
         <label class="atlas-search">
           <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
           <input type="search" id="atlas-search" placeholder="Buscar título, autor, tema ou corrente..." aria-label="Buscar livros">
         </label>
+      </div>
+
+      <section class="atlas-controls" aria-label="Ordenação e filtros">
         <label class="atlas-sort">Ordenar
           <select id="atlas-sort" aria-label="Ordenar livros"></select>
         </label>
-        <div class="atlas-filters" id="atlas-filters"></div>
+        <details class="atlas-filter-accordion" id="atlas-filter-accordion" open>
+          <summary><span><i class="fas fa-sliders" aria-hidden="true"></i> Filtros</span><i class="fas fa-chevron-down atlas-filter-chevron" aria-hidden="true"></i></summary>
+          <div class="atlas-filters" id="atlas-filters"></div>
+        </details>
       </section>
 
       <section class="atlas-featured" id="atlas-featured" hidden>
