@@ -1203,3 +1203,23 @@
     margin: 1rem auto;
   }
 }
+
+
+/* Centralização do questionário em todas as etapas. */
+.quiz-fullscreen-active .quiz-standalone {
+  align-items: center;
+}
+.quiz-fullscreen-active .quiz-standalone .quiz-question-view,
+.quiz-fullscreen-active .quiz-standalone .quiz-results,
+.quiz-fullscreen-active .quiz-standalone .quiz-error {
+  margin-inline: auto;
+}
+.quiz-fullscreen-active .quiz-progress,
+.quiz-fullscreen-active .quiz-question-card,
+.quiz-fullscreen-active .quiz-navigation {
+  margin-left: auto;
+  margin-right: auto;
+}
+.quiz-fullscreen-active .quiz-question-card {
+  width: 100%;
+}
