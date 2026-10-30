@@ -1050,3 +1050,57 @@
     transition-duration: .01ms !important;
   }
 }
+
+
+/* O questionário ocupa o fluxo normal da página, sem modal principal. */
+.quiz-standalone {
+  scroll-margin-top: 1.5rem;
+}
+
+.quiz-standalone .quiz-intro {
+  transition: opacity 180ms ease;
+}
+
+.quiz-standalone .quiz-question-view,
+.quiz-standalone .quiz-results,
+.quiz-standalone .quiz-error {
+  width: 100%;
+  max-width: 960px;
+  margin: 1.25rem auto 0;
+  padding: clamp(1rem, 3vw, 1.75rem);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card-bg);
+  box-shadow: 0 4px 18px rgb(25 31 40 / 5%);
+}
+
+.quiz-standalone .quiz-question-card {
+  background: var(--bg-container);
+}
+
+.quiz-standalone .quiz-progress {
+  margin-bottom: 1.25rem;
+}
+
+.quiz-standalone .quiz-question-view[hidden],
+.quiz-standalone .quiz-results[hidden],
+.quiz-standalone .quiz-error[hidden],
+.quiz-standalone .quiz-intro[hidden] {
+  display: none;
+}
+
+.quiz-standalone .quiz-navigation {
+  padding-top: .25rem;
+}
+
+.quiz-standalone .quiz-question-view.is-archetype .quiz-question-card {
+  border-top-width: 3px;
+}
+
+@media (max-width: 768px) {
+  .quiz-standalone .quiz-question-view,
+  .quiz-standalone .quiz-results,
+  .quiz-standalone .quiz-error {
+    padding: .85rem;
+  }
+}
