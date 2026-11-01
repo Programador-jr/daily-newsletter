@@ -1277,8 +1277,21 @@ document.addEventListener("DOMContentLoaded", () => {
       groupLabel.textContent = group.label;
       const name = document.createElement("h3");
       name.textContent = item.name;
-      const summary = document.createElement("p");
-      summary.textContent = item.summary || item.description || "";
+      const aboutButton = document.createElement("button");
+      aboutButton.type = "button";
+      aboutButton.className = "quiz-help-trigger quiz-value-about";
+      aboutButton.setAttribute("aria-label", `Sobre ${item.name}`);
+      aboutButton.textContent = "Sobre";
+      aboutButton.addEventListener("click", () => {
+        openResultHelp({
+          title: `Sobre ${item.name}`,
+          blocks: [
+            { heading: group.label, text: item.summary || item.description || "Este valor representa uma posição política dentro desta família." },
+            { heading: "Sua afinidade", text: `${formatPercent(score)} de afinidade com o seu perfil.` }
+          ],
+          link: { href: catalogProfileUrl("values", item), label: "Ver a ficha completa no catálogo" }
+        });
+      });
       const foot = document.createElement("div");
       foot.className = "quiz-value-foot";
       const bar = document.createElement("span");
@@ -1294,7 +1307,7 @@ document.addEventListener("DOMContentLoaded", () => {
       strong.textContent = formatPercent(score);
       scoreLabel.append(strong, document.createTextNode(" de afinidade"));
       foot.append(bar, scoreLabel);
-      card.append(groupLabel, name, summary, foot);
+      card.append(groupLabel, name, aboutButton, foot);
       grid.append(card);
     });
 
@@ -1868,12 +1881,25 @@ document.addEventListener("DOMContentLoaded", () => {
       detail.textContent = metaText;
       card.append(detail);
     }
-    const description = document.createElement("p");
-    description.textContent = item.summary || item.description || item.longDescription || "";
-    card.append(description);
+    const descriptionText = item.summary || item.description || item.longDescription || "";
 
     const actions = document.createElement("div");
     actions.className = "quiz-match-actions";
+    const aboutButton = document.createElement("button");
+    aboutButton.type = "button";
+    aboutButton.className = "quiz-help-trigger quiz-match-about";
+    aboutButton.setAttribute("aria-label", `Sobre ${item.name}`);
+    aboutButton.textContent = "Sobre";
+    aboutButton.addEventListener("click", () => {
+      openResultHelp({
+        title: `Sobre ${item.name}`,
+        blocks: [
+          descriptionText ? { heading: "Resumo", text: descriptionText } : null,
+          { heading: "Sua proximidade", text: `${formatPercent(matchScore(profile, item.axes))} de proximidade com o seu perfil.` }
+        ],
+        link: { href: catalogProfileUrl(group, item), label: "Ver a ficha completa no catálogo" }
+      });
+    });
     const catalogLink = document.createElement("a");
     catalogLink.className = "quiz-match-catalog-link";
     catalogLink.href = catalogProfileUrl(group, item);
@@ -1905,8 +1931,17 @@ document.addEventListener("DOMContentLoaded", () => {
       catalog.axes.forEach((axis, axisIndex) => {
         const row = document.createElement("div");
         row.className = "quiz-axis-comparison-row";
+        row.style.setProperty("--axis-a-color", axis.aColor || "var(--primary)");
+        row.style.setProperty("--axis-b-color", axis.bColor || "var(--compare-b)");
+        const heading = document.createElement("div");
+        heading.className = "quiz-axis-comparison-heading";
         const label = document.createElement("strong");
         label.textContent = axis.name;
+        const poles = document.createElement("span");
+        poles.className = "quiz-axis-comparison-poles";
+        poles.textContent = `${axis.a} × ${axis.b}`;
+        poles.setAttribute("aria-label", `Eixo entre ${axis.a} e ${axis.b}`);
+        heading.append(label, poles);
         const values = document.createElement("div");
         values.className = "quiz-axis-comparison-values";
         const userValue = document.createElement("span");
@@ -1915,6 +1950,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const profileValue = document.createElement("span");
         profileValue.className = "is-profile";
         profileValue.textContent = `${item.name} ${formatPercent(item.axes[axisIndex])}`;
+        profileValue.setAttribute("aria-label", `${item.name}: ${formatPercent(item.axes[axisIndex])}`);
         values.append(userValue, profileValue);
         const scale = document.createElement("div");
         scale.className = "quiz-axis-comparison-scale";
@@ -1927,7 +1963,7 @@ document.addEventListener("DOMContentLoaded", () => {
         profileMark.className = "quiz-profile-mark";
         profileMark.style.left = `${100 - item.axes[axisIndex]}%`;
         scale.append(userMark, profileMark);
-        row.append(label, values, scale);
+        row.append(heading, values, scale);
         comparisonList.append(row);
       });
       openResultHelp({
@@ -1943,7 +1979,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     });
-    actions.append(catalogLink, compareButton);
+    actions.append(aboutButton, catalogLink, compareButton);
     card.append(actions);
     if (index === 0) card.classList.add("quiz-match-top");
     return card;
@@ -2072,7 +2108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         link: fullBook?.link || book.url || ""
       };
     };
-    const createBookCover = ({ book, figure, meta, interactive, extraClass = "" }) => {
+    const createBookCover = ({ book, figure, meta, interactive, extraClass = "", minimal = false }) => {
       const cover = document.createElement(interactive ? "button" : "div");
       if (interactive) {
         cover.type = "button";
@@ -2106,10 +2142,12 @@ document.addEventListener("DOMContentLoaded", () => {
         fallback.textContent = bookInitials(book.author);
         cover.append(fallback);
       }
-      const area = document.createElement("span");
-      area.className = "quiz-book-cover-area";
-      area.textContent = meta.areaLabel;
-      cover.append(area);
+      if (!minimal) {
+        const area = document.createElement("span");
+        area.className = "quiz-book-cover-area";
+        area.textContent = meta.areaLabel;
+        cover.append(area);
+      }
       if (book.year) {
         const year = document.createElement("span");
         year.className = "quiz-book-cover-year";
@@ -2119,10 +2157,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const title = document.createElement("strong");
       title.className = "quiz-book-cover-title";
       title.textContent = book.title;
-      const author = document.createElement("span");
-      author.className = "quiz-book-cover-author";
-      author.textContent = book.author;
-      cover.append(title, author);
+      cover.append(title);
+      if (!minimal) {
+        const author = document.createElement("span");
+        author.className = "quiz-book-cover-author";
+        author.textContent = book.author;
+        cover.append(author);
+      }
       return cover;
     };
     const openBookHelp = ({ book, fullBook, figure, score, meta }) => {
@@ -2166,28 +2207,7 @@ document.addEventListener("DOMContentLoaded", () => {
       card.className = "quiz-book-card";
       card.style.setProperty("--book-area", meta.areaColor);
       const open = () => openBookHelp({ book, fullBook, figure, score, meta });
-      const cover = createBookCover({ book, figure, meta, interactive: true });
-      cover.addEventListener("click", open);
-      const tags = document.createElement("div");
-      tags.className = "quiz-book-tags";
-      const areaTag = document.createElement("span");
-      areaTag.className = "quiz-book-tag";
-      areaTag.textContent = meta.areaLabel;
-      tags.append(areaTag);
-      if (meta.difficulty) {
-        const difficulty = document.createElement("span");
-        difficulty.className = "quiz-book-tag";
-        difficulty.textContent = meta.difficulty;
-        tags.append(difficulty);
-      }
-      const association = document.createElement("p");
-      association.className = "quiz-book-association";
-      const figureName = document.createElement("strong");
-      figureName.textContent = figure.name;
-      association.append(document.createTextNode("Associada a "), figureName, document.createTextNode(` · ${formatPercent(score)} de proximidade`));
-      const summary = document.createElement("p");
-      summary.className = "quiz-book-summary";
-      summary.textContent = meta.summary || `Obra de ${figure.name}${figure.role ? `, ${figure.role.toLowerCase()}` : ""}, indicada pela proximidade com o seu perfil.`;
+      const cover = createBookCover({ book, figure, meta, interactive: false, minimal: true });
       const cta = document.createElement("button");
       cta.type = "button";
       cta.className = "quiz-book-cta";
@@ -2198,7 +2218,7 @@ document.addEventListener("DOMContentLoaded", () => {
       arrow.setAttribute("aria-hidden", "true");
       cta.append(arrow);
       cta.addEventListener("click", open);
-      card.append(cover, tags, association, summary, cta);
+      card.append(cover, cta);
       return card;
     };
 
@@ -3029,6 +3049,23 @@ document.addEventListener("DOMContentLoaded", () => {
       module.append(head, body);
       return module;
     };
+    const openAnalysisProfile = (item, score, group, label) => {
+      const summary = item.summary || item.description || item.longDescription || "";
+      openResultHelp({
+        title: `Sobre ${item.name}`,
+        blocks: [
+          summary ? { heading: "Resumo", text: summary } : null,
+          {
+            heading: "Sua proximidade",
+            text: `${item.name} aparece entre ${label} mais compatíveis com o seu perfil, com ${formatPercent(score)} de proximidade.`
+          }
+        ],
+        link: {
+          href: catalogProfileUrl(group, item),
+          label: "Ver a ficha completa no catálogo"
+        }
+      });
+    };
 
     const axesGrid = document.createElement("div");
     axesGrid.className = "quiz-analysis-axes";
@@ -3240,6 +3277,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const link = document.createElement("a");
       link.className = "quiz-analysis-timeline-card";
       link.href = catalogProfileUrl("figures", item);
+      link.setAttribute("aria-haspopup", "dialog");
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        openAnalysisProfile(item, score, "figures", "as trajetórias");
+      });
       const avatar = document.createElement("span");
       avatar.className = "quiz-analysis-timeline-avatar";
       const fallback = document.createElement("span");
@@ -3291,7 +3333,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const link = document.createElement("a");
       link.className = "quiz-analysis-place";
       link.href = catalogProfileUrl(group, item);
-      link.setAttribute("aria-label", `Ver ficha de ${item.name} no catálogo`);
+      link.setAttribute("aria-label", `Abrir detalhes de ${item.name}`);
+      link.setAttribute("aria-haspopup", "dialog");
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        openAnalysisProfile(item, score, group, "os lugares");
+      });
       const rank = document.createElement("span");
       rank.className = "quiz-analysis-place-rank";
       rank.textContent = String(index + 1).padStart(2, "0");
@@ -3720,7 +3767,24 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!toc) return;
     toc.hidden = false;
     if (toc.dataset.ready) return;
-    const links = [...toc.querySelectorAll('a[href^="#"]')];
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "results-toc-toggle";
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-controls", "results-toc-links");
+    const toggleLabel = document.createElement("span");
+    toggleLabel.className = "results-toc-current";
+    const toggleIcon = document.createElement("i");
+    toggleIcon.className = "fas fa-chevron-down";
+    toggleIcon.setAttribute("aria-hidden", "true");
+    toggle.append(toggleLabel, toggleIcon);
+    toc.append(toggle);
+    const linkGroup = document.createElement("div");
+    linkGroup.className = "results-toc-links";
+    linkGroup.id = "results-toc-links";
+    [...toc.querySelectorAll('a[href^="#"]')].forEach((link) => linkGroup.append(link));
+    toc.append(linkGroup);
+    const links = [...linkGroup.querySelectorAll('a[href^="#"]')];
     const targets = links.map((link) => ({
       link,
       target: document.getElementById(link.getAttribute("href").slice(1))
@@ -3734,7 +3798,30 @@ document.addEventListener("DOMContentLoaded", () => {
         if (active) link.setAttribute("aria-current", "true");
         else link.removeAttribute("aria-current");
       });
+      const active = targets.find(({ target }) => target.id === id);
+      if (active) toggleLabel.textContent = active.link.textContent.replace(/\s+/g, " ").trim();
     };
+    toggle.addEventListener("click", () => {
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!expanded));
+      toc.classList.toggle("is-open", !expanded);
+    });
+    linkGroup.addEventListener("click", (event) => {
+      const link = event.target.closest("a");
+      if (link) {
+        toggle.setAttribute("aria-expanded", "false");
+        toc.classList.remove("is-open");
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        const target = targets.find(({ link: targetLink }) => targetLink === link)?.target;
+        if (!target) return;
+        event.preventDefault();
+        window.history.pushState(null, "", link.hash);
+        target.scrollIntoView({
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+          block: "start"
+        });
+      }
+    });
     activate(targets[0].target.id);
 
     if ("IntersectionObserver" in window) {

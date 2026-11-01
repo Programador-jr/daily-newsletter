@@ -242,6 +242,12 @@ test('o resultado concentra detalhes em pop-ups com links internos', async ({ pa
   await expect(dialog).not.toBeVisible();
 
   const ideologyCard = page.locator('#resultado-ideologias .quiz-match-card').first();
+  await expect(ideologyCard.locator(':scope > p')).toHaveCount(0);
+  await ideologyCard.getByRole('button', { name: `Sobre ${await ideologyCard.locator('h4').innerText()}` }).click();
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator('#result-help-dialog-title')).toHaveText(/^Sobre /);
+  await page.locator('#result-help-close').click();
+  await expect(dialog).not.toBeVisible();
   await expect(ideologyCard.locator('.quiz-match-catalog-link')).toHaveAttribute('href', /^\/catalogo-politico\?catalogo=ideologias#/);
   await ideologyCard.getByRole('button', { name: /^Comparar os 12 eixos com / }).click();
   await expect(dialog).toBeVisible();
@@ -252,6 +258,16 @@ test('o resultado concentra detalhes em pop-ups com links internos', async ({ pa
   await expect(dialog.locator('.quiz-axis-comparison-row')).toHaveCount(12);
   await expect(dialog.locator('.quiz-axis-comparison-row').first()).toContainText('Você');
   await expect(dialog.getByRole('link', { name: /^Ver ficha de .* no catálogo$/ })).toHaveAttribute('href', /^\/catalogo-politico\?catalogo=ideologias#/);
+  await page.locator('#result-help-close').click();
+  await expect(dialog).not.toBeVisible();
+
+  const reportTimelineCard = page.locator('#analise-completa .quiz-analysis-timeline-card').first();
+  await expect(reportTimelineCard).toBeVisible();
+  const reportUrl = page.url();
+  await reportTimelineCard.click();
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator('#result-help-dialog-title')).toHaveText(/^Sobre /);
+  expect(page.url()).toBe(reportUrl);
   await page.locator('#result-help-close').click();
   await expect(dialog).not.toBeVisible();
 
@@ -278,9 +294,18 @@ test('o perfil de referência mantém Distinção e Valores do 12 Axes', async (
     const card = page.locator('#valores .quiz-value-card').nth(index);
     await expect(card.locator('.quiz-value-group')).toHaveText(expectedValues[index][0]);
     await expect(card.locator('h3')).toHaveText(expectedValues[index][1]);
-    await expect(card.locator('p')).not.toBeEmpty();
+    await expect(card.locator('p')).toHaveCount(0);
+    await expect(card.getByRole('button', { name: `Sobre ${expectedValues[index][1]}` })).toBeVisible();
     await expect(card.locator('.quiz-value-score')).toContainText('%');
   }
+
+  const valueCard = page.locator('#valores .quiz-value-card').first();
+  const valueName = await valueCard.locator('h3').innerText();
+  await valueCard.getByRole('button', { name: `Sobre ${valueName}` }).click();
+  await expect(page.locator('#result-help-dialog')).toBeVisible();
+  await expect(page.locator('#result-help-dialog-title')).toHaveText(`Sobre ${valueName}`);
+  await expect(page.locator('#result-help-dialog')).toContainText('afinidade');
+  await page.locator('#result-help-close').click();
 });
 
 test('a seção de comparação busca perfis, cruza os 12 eixos e permite remover', async ({ page }) => {
