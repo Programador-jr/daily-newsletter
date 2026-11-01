@@ -26,8 +26,6 @@ test('o questionário curto calcula o perfil e abre o resultado completo', async
   await expect(page.locator('#quiz-progress-segments span')).toHaveCount(13);
   await expect(page.locator('#quiz-progress-segments span').last()).toHaveClass(/is-partial/);
   await expect(page.locator('#quiz-auto-advance-label')).toBeHidden();
-  await expect(page.locator('#quiz-skip')).toBeVisible();
-  await expect(page.locator('#quiz-next')).toBeHidden();
 
   await page.locator('.quiz-archetype-option').nth(3).click();
   await expect(page.locator('#quiz-progress-percent')).toHaveText('2 de 6');
@@ -48,8 +46,8 @@ test('o questionário curto calcula o perfil e abre o resultado completo', async
   await page.locator('.quiz-archetype-option').nth(3).click();
   await expect(page.locator('#quiz-progress-percent')).toHaveText('2 de 6');
 
-  // Pular remove a resposta desta pergunta.
-  await page.locator('#quiz-skip').click();
+  // Responder avança para a próxima pergunta de arquétipo.
+  await page.locator('.quiz-archetype-option').nth(1).click();
   await expect(page.locator('#quiz-progress-percent')).toHaveText('3 de 6');
   await expect(page.locator('#quiz-axis-label')).toHaveText('Economia');
   await expect(page.locator('.quiz-archetype-option')).toHaveCount(6);
@@ -91,7 +89,8 @@ test('o questionário curto calcula o perfil e abre o resultado completo', async
     '08 Valores',
     '09 Ideologias',
     '10 Bússola',
-    '11 Comparar'
+    '11 Comparar',
+    '12 Análise completa'
   ]);
   const sectionOrder = await page.locator('#quiz-results > section[id]').evaluateAll((nodes) => nodes.map((node) => node.id));
   expect(sectionOrder).toEqual([
@@ -105,7 +104,8 @@ test('o questionário curto calcula o perfil e abre o resultado completo', async
     'valores',
     'resultado-ideologias',
     'bussola',
-    'comparar'
+    'comparar',
+    'analise-completa'
   ]);
   const economyRow = page.locator('.quiz-result-axis').filter({
     has: page.locator('.quiz-result-axis-heading strong', { hasText: 'Economia' })
@@ -115,26 +115,34 @@ test('o questionário curto calcula o perfil e abre o resultado completo', async
   const representationRow = page.locator('.quiz-result-axis').filter({
     has: page.locator('.quiz-result-axis-heading strong', { hasText: 'Representação' })
   });
-  await expect(representationRow.locator('.quiz-result-axis-percent')).toHaveText('50%');
+  await expect(representationRow.locator('.quiz-result-axis-percent')).toHaveText('47,5%');
   await expect(page.locator('.quiz-profile-affinity')).toContainText('Maior proximidade nesta seleção');
   await expect(page.locator('.quiz-match-group')).toHaveCount(4);
-  await expect(page.locator('.quiz-match-group > h3').nth(0)).toContainText('Países mais próximos de você (194)');
-  await expect(page.locator('.quiz-match-group > h3').nth(1)).toContainText('Personalidades mais próximas de você (667)');
-  await expect(page.locator('.quiz-match-group > h3').nth(2)).toContainText('Partidos mais próximos de você (211)');
-  await expect(page.locator('.quiz-match-group > h3').nth(3)).toContainText('Ideologias mais próximas de você (283)');
-  await expect(page.locator('#resultado-paises .quiz-match-subgroup > h4')).toHaveText('Regimes e modelos políticos (114)');
+  await expect(page.locator('.quiz-match-group .section-heading h2').nth(0)).toHaveText('Países mais próximos de você');
+  await expect(page.locator('.quiz-match-group .section-heading h2').nth(1)).toHaveText('Personalidades mais próximas de você');
+  await expect(page.locator('.quiz-match-group .section-heading h2').nth(2)).toHaveText('Partidos mais próximos de você');
+  await expect(page.locator('.quiz-match-group .section-heading h2').nth(3)).toHaveText('Ideologias mais próximas de você');
+  await expect(page.locator('.quiz-match-group .section-heading p').nth(0)).toHaveText('Os três países de maior proximidade entre os 194 comparados.');
+  await expect(page.locator('.quiz-match-group .section-heading p').nth(1)).toHaveText('As três personalidades de maior proximidade entre as 667 comparadas.');
+  await expect(page.locator('#resultado-paises .quiz-match-subgroup h3')).toHaveText('Regimes e modelos políticos');
   await expect(page.locator('.quiz-match-card')).toHaveCount(15);
   await expect(page.locator('#assinatura .quiz-distinction-card')).toHaveCount(2);
+  await expect(page.locator('#assinatura .quiz-distinction-track')).toHaveCount(2);
+  await expect(page.locator('#assinatura .quiz-distinction-poles')).toHaveCount(2);
   await expect(page.locator('#areas .quiz-rank-row')).toHaveCount(8);
   await expect(page.locator('#valores .quiz-value-card')).toHaveCount(6);
   await expect(page.locator('.quiz-books .quiz-book-card')).toHaveCount(6);
+  await expect(page.locator('#analise-completa')).toBeVisible();
+  await expect(page.locator('#analise-completa .quiz-analysis-module')).toHaveCount(5);
+  await expect(page.locator('#analise-completa .quiz-analysis-axis')).toHaveCount(12);
 
   const areas = page.locator('#areas');
   await expect(areas.locator('.quiz-areas-tab')).toHaveCount(2);
   await expect(areas.getByRole('tab', { name: 'Compatibilidade geral' })).toHaveAttribute('aria-selected', 'true');
   await areas.getByRole('tab', { name: 'Área de atuação' }).click();
   await expect(areas.getByRole('tab', { name: 'Área de atuação' })).toHaveAttribute('aria-selected', 'true');
-  await expect(areas.locator('.quiz-panel-title')).toHaveText('Os mais próximos por área de atuação');
+  await expect(areas.locator('.quiz-panel-title')).toHaveCount(0);
+  await expect(areas.locator('.section-heading h2')).toHaveText('Os mais próximos por área de atuação');
   await expect(areas.locator('.quiz-rank-row')).toHaveCount(8);
   const areaLabels = await areas.locator('.quiz-rank-info small').allTextContents();
   expect(new Set(areaLabels).size).toBe(8);
@@ -148,16 +156,34 @@ test('o resultado importado mostra eixos, afinidades, leituras e reinício', asy
   await page.goto(`/resultado-politico?${legacyProfileQuery}`);
 
   await expect(page.locator('#results-empty')).toBeHidden();
-  await expect(page.locator('#quiz-results > h3')).toHaveText('Perfil convertido do 12axes');
+  await expect(page.locator('#results-eyebrow')).toHaveText('Perfil convertido · 12 Axes');
   await expect(page.locator('.quiz-result-axis')).toHaveCount(12);
   await expect(page.locator('#quiz-results details')).toHaveCount(0);
   await expect(page.locator('.quiz-result-axis .quiz-axis-help')).toHaveCount(12);
   await expect(page.locator('.quiz-match-card').first().getByRole('button', { name: /^Comparar os 12 eixos com / })).toBeVisible();
-  await expect(page.locator('.quiz-books-intro')).toContainText('não endossos');
-  await expect(page.locator('.quiz-book-card').first().locator('strong')).not.toBeEmpty();
+  await expect(page.locator('.quiz-books .section-heading p')).toContainText('não endossos');
+  await expect(page.locator('.quiz-book-card').first().locator('.quiz-book-cover-title')).not.toBeEmpty();
+  await expect(page.locator('.quiz-book-card').first().locator('.quiz-book-cover')).toBeVisible();
+  await expect(page.locator('.quiz-book-card').first().locator('.quiz-book-cover-image, .quiz-book-cover-fallback')).toHaveCount(1);
 
   await expect(page.locator('#bussola')).toBeVisible();
+  await expect(page.locator('#bussola .section-heading .eyebrow')).toHaveText('Sua posição calibrada');
+  await expect(page.locator('#bussola .section-heading p')).toContainText('Pragmatismo de Direita');
   await expect(page.locator('#bussola .quiz-compass-sentence')).toContainText('com valores sociais');
+  await expect(page.locator('#bussola .quiz-compass-sentence')).toContainText('Direita com valores sociais Moderados');
+  await expect(page.locator('#bussola .quiz-compass-grid .quiz-compass-x')).toHaveAttribute('style', /left: 66\.8%/);
+  await expect(page.locator('#bussola .quiz-compass-mark')).toHaveText('Moderados');
+  const stripMarker = page.locator('#bussola .quiz-compass-strip .quiz-compass-x');
+  await expect(stripMarker).toHaveAttribute('style', /--cell: 5/);
+  const markerCrossCentered = await stripMarker.evaluate((marker) => {
+    const cross = marker.querySelector('svg');
+    const markerBox = marker.getBoundingClientRect();
+    const crossBox = cross.getBoundingClientRect();
+    const centeredX = Math.abs((crossBox.left + crossBox.width / 2) - (markerBox.left + markerBox.width / 2)) < 1;
+    const centeredY = Math.abs((crossBox.top + crossBox.height / 2) - (markerBox.top + markerBox.height / 2)) < 1;
+    return centeredX && centeredY;
+  });
+  expect(markerCrossCentered).toBe(true);
 
   const downloadPromise = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Baixar cartão' }).click();
@@ -196,11 +222,33 @@ test('o resultado concentra detalhes em pop-ups com links internos', async ({ pa
   await page.locator('#result-help-close').click();
   await expect(dialog).not.toBeVisible();
 
+  await page.locator('.quiz-profile-about').click();
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator('#result-help-dialog-title')).toHaveText(/^Sobre /);
+  await expect(dialog).toContainText('Sua proximidade');
+  await page.locator('#result-help-close').click();
+  await expect(dialog).not.toBeVisible();
+
+  const bookCard = page.locator('.quiz-book-card').first();
+  const bookTitle = await bookCard.locator('.quiz-book-cover-title').innerText();
+  await bookCard.locator('.quiz-book-cta').click();
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator('#result-help-dialog-title')).toHaveText(bookTitle);
+  await expect(dialog.locator('#result-help-dialog-kicker')).toContainText('Biblioteca');
+  await expect(dialog.locator('.quiz-book-cover')).toBeVisible();
+  await expect(dialog).toContainText('Ficha');
+  await expect(dialog).toContainText('Nesta lista');
+  await page.locator('#result-help-close').click();
+  await expect(dialog).not.toBeVisible();
+
   const ideologyCard = page.locator('#resultado-ideologias .quiz-match-card').first();
   await expect(ideologyCard.locator('.quiz-match-catalog-link')).toHaveAttribute('href', /^\/catalogo-politico\?catalogo=ideologias#/);
   await ideologyCard.getByRole('button', { name: /^Comparar os 12 eixos com / }).click();
   await expect(dialog).toBeVisible();
   await expect(dialog.locator('#result-help-dialog-title')).toHaveText('Comparar os 12 eixos');
+  await expect(dialog.locator('.quiz-axis-comparison-legend')).toHaveCount(1);
+  await expect(dialog.locator('.quiz-axis-comparison-legend .is-you')).toHaveText('Você');
+  await expect(dialog.locator('.quiz-axis-comparison-legend .is-profile')).toHaveCount(1);
   await expect(dialog.locator('.quiz-axis-comparison-row')).toHaveCount(12);
   await expect(dialog.locator('.quiz-axis-comparison-row').first()).toContainText('Você');
   await expect(dialog.getByRole('link', { name: /^Ver ficha de .* no catálogo$/ })).toHaveAttribute('href', /^\/catalogo-politico\?catalogo=ideologias#/);

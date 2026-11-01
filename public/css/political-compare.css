@@ -98,6 +98,76 @@
 .compare-compass-lbl { position:absolute; z-index:2; color:var(--text-muted); font-size:.68rem; }
 .compare-compass-lbl.is-top { top:.4rem; left:50%; transform:translateX(-50%); }
 .compare-compass-lbl.is-bottom { bottom:.4rem; left:50%; transform:translateX(-50%); }
+
+/* O comparador usa o mesmo modelo visual dos cartões de eixo do resultado. */
+.compare-main .compare-axis {
+  gap:.65rem;
+  padding: .95rem 1rem;
+  border:1px solid var(--border);
+  border-top:3px solid var(--primary);
+  border-radius:10px;
+  background:var(--card-bg);
+}
+
+.compare-main .compare-axis-head {
+  align-items:center;
+  font-size:.86rem;
+}
+
+.compare-main .compare-axis-head h4 {
+  margin:0;
+  font-size:inherit;
+}
+
+.compare-main .compare-axis-head a {
+  color:var(--text-main);
+  text-decoration:none;
+}
+
+.compare-main .compare-axis-head a:hover,
+.compare-main .compare-axis-head a:focus-visible {
+  color:var(--primary);
+  text-decoration:underline;
+}
+
+.compare-main .compare-track {
+  height:7px;
+  margin:.2rem 0 .1rem;
+  border-radius:999px;
+  background:linear-gradient(90deg,
+    color-mix(in srgb,var(--compare-a) 22%,var(--border)),
+    var(--border) 50%,
+    color-mix(in srgb,var(--compare-b) 22%,var(--border)));
+}
+
+.compare-main .compare-marker {
+  width:11px;
+  height:11px;
+  border:2px solid var(--card-bg);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--marker,var(--primary)) 38%,transparent);
+}
+
+.compare-main .compare-track-center {
+  top:-3px;
+  height:13px;
+  border-left:1px dashed var(--text-muted);
+}
+
+.compare-main .compare-poles {
+  font-size:.7rem;
+  line-height:1.35;
+}
+
+.compare-main .compare-values {
+  gap:.35rem;
+  padding-top:.35rem;
+  border-top:1px solid var(--border);
+}
+
+.compare-main .compare-value {
+  border-color:color-mix(in srgb,var(--marker,var(--primary)) 28%,var(--border));
+  background:color-mix(in srgb,var(--marker,var(--primary)) 6%,var(--card-bg));
+}
 .compare-compass-lbl.is-left { top:50%; left:.4rem; transform:translateY(-50%); }
 .compare-compass-lbl.is-right { top:50%; right:.4rem; transform:translateY(-50%); }
 .compare-compass-read,.compare-compass-note { color:var(--text-muted); font-size:.78rem; line-height:1.6; }

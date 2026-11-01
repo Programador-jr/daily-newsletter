@@ -88,7 +88,15 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
+  margin: 0.5rem;
 }
+
+.atlas-filters-count {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  margin: 1.5rem 0.5rem;
+}
+
 .atlas-filter-group {
   display: flex;
   flex-wrap: wrap;
@@ -310,6 +318,35 @@
   padding: 0;
   list-style: none;
 }
+/* Ícones dos 12 eixos — utilitário compartilhado entre as páginas. */
+.axis-icon {
+  flex: 0 0 auto;
+  fill: currentColor;
+}
+.axis-poles,
+.axis-grid .axis-poles {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.axis-poles > .axis-pole {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: inherit;
+  font: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+.axis-poles > .axis-pole-sep {
+  display: inline-flex;
+  color: var(--text-muted);
+  font: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
 .atlas-axis-row {
   padding: 0.75rem;
   border: 1px solid var(--border);

@@ -15,9 +15,10 @@
 }
 .history-page .section-heading {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  justify-content: space-evenly;
   gap: 1rem;
+  flex-wrap: wrap-reverse;
+  flex-direction: column;
 }
 .history-page
   :is(

@@ -26,7 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const helpContent = document.getElementById("quiz-help-content");
   const helpClose = document.getElementById("quiz-help-close");
   const resultHelpDialog = document.getElementById("result-help-dialog");
+  const resultHelpKicker = document.getElementById("result-help-dialog-kicker");
   const resultHelpTitle = document.getElementById("result-help-dialog-title");
+  const resultHelpSubtitle = document.getElementById("result-help-dialog-subtitle");
   const resultHelpContent = document.getElementById("result-help-content");
   const resultHelpClose = document.getElementById("result-help-close");
   const archetypeQuestions = Array.isArray(window.KINGS_ARCHETYPE_QUESTIONS)
@@ -39,6 +41,61 @@ document.addEventListener("DOMContentLoaded", () => {
     { value: 25, label: "Discordo", tone: "disagree" },
     { value: 0, label: "Discordo totalmente", tone: "disagree" }
   ];
+  const axisIcons = globalThis.AxisIcons;
+  const axisPillHost = axisIcon ? axisIcon.parentElement : null;
+
+  // Ícones dos polos do eixo; usa o sprite 12 Axes quando disponível.
+  const axisIconNode = (axis, pole, size = 15, fallback = "fa-compass") => {
+    if (axisIcons && axis?.id) return axisIcons.create(axis.id, pole, size);
+    if (!fallback) return null;
+    const icon = document.createElement("i");
+    icon.className = `fas ${fallback}`;
+    icon.setAttribute("aria-hidden", "true");
+    return icon;
+  };
+
+  const showAxisPillPair = (axis) => {
+    if (!axisPillHost || !axisIcon) return;
+    if (!axisIcons || !axis?.id) {
+      axisPillHost.replaceChildren(axisIcon);
+      axisIcon.className = "fas fa-compass";
+      return;
+    }
+    axisPillHost.replaceChildren(
+      axisIcons.create(axis.id, "a", 15),
+      axisIcons.create(axis.id, "b", 15)
+    );
+  };
+
+  const showArchetypePillIcon = (name) => {
+    if (!axisPillHost || !axisIcon) return;
+    axisPillHost.replaceChildren(axisIcon);
+    axisIcon.className = `fas ${name || "fa-compass"}`;
+  };
+
+  // Cabeçalho editorial das seções do resultado, no mesmo padrão das demais páginas.
+  const createSectionHeading = ({ eyebrow, title, lead, id, level = 2, compact = false }) => {
+    const wrapper = document.createElement("div");
+    wrapper.className = compact ? "results-subheading" : "section-heading";
+    const text = document.createElement("div");
+    if (eyebrow && !compact) {
+      const label = document.createElement("span");
+      label.className = "eyebrow";
+      label.textContent = eyebrow;
+      text.append(label);
+    }
+    const heading = document.createElement(level === 3 ? "h3" : "h2");
+    if (id) heading.id = id;
+    heading.textContent = title;
+    text.append(heading);
+    wrapper.append(text);
+    if (lead) {
+      const description = document.createElement("p");
+      description.textContent = lead;
+      wrapper.append(description);
+    }
+    return wrapper;
+  };
   let catalog;
   let selectedQuestions = [];
   let answers = [];
@@ -129,11 +186,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const renderAxisGuide = (axes) => {
     const grid = document.getElementById("quiz-axis-guide-grid");
     if (!grid || !Array.isArray(axes)) return;
-    const icons = [
-      "fa-city", "fa-landmark", "fa-shield-halved", "fa-people-group",
-      "fa-jet-fighter", "fa-flag", "fa-building-columns", "fa-sliders",
-      "fa-earth-americas", "fa-atom", "fa-heart", "fa-microchip"
-    ];
     grid.replaceChildren(...axes.map((axis, index) => {
       const card = document.createElement("article");
       card.className = "quiz-axis-card";
@@ -146,17 +198,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const poles = document.createElement("div");
       poles.className = "quiz-axis-poles";
       const low = document.createElement("span");
-      const lowIcon = document.createElement("i");
-      lowIcon.className = `fas ${icons[index] || "fa-compass"}`;
-      lowIcon.setAttribute("aria-hidden", "true");
-      low.append(lowIcon, document.createTextNode(axis.a));
+      const lowIcon = axisIconNode(axis, "a");
+      if (lowIcon) low.append(lowIcon);
+      low.append(document.createTextNode(axis.a));
       const arrow = document.createElement("span");
       arrow.textContent = "↔";
       const high = document.createElement("span");
-      const highIcon = document.createElement("i");
-      highIcon.className = `fas ${icons[(index + 1) % icons.length] || "fa-compass"}`;
-      highIcon.setAttribute("aria-hidden", "true");
-      high.append(highIcon, document.createTextNode(axis.b));
+      const highIcon = axisIconNode(axis, "b");
+      if (highIcon) high.append(highIcon);
+      high.append(document.createTextNode(axis.b));
       poles.append(low, arrow, high);
       const description = document.createElement("p");
       description.textContent = axis.aDesc || axis.description || "Compara duas formas de organizar a vida política.";
@@ -216,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
     questionNumber.textContent = String(current + 1).padStart(2, "0");
     renderProgressSegments(current, selectedQuestions.length);
     axisLabel.textContent = question.axisName;
-    axisIcon.className = "fas fa-compass";
+    showAxisPillPair(catalog.axes.find((axis) => axis.id === question.axis));
     questionText.textContent = question.text;
     backButton.disabled = current === 0;
     nextButton.innerHTML = current === selectedQuestions.length - 1
@@ -319,7 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
     questionNumber.textContent = String(archetypeIndex + 1).padStart(2, "0");
     renderArchetypeProgress();
     axisLabel.textContent = question.label;
-    axisIcon.className = `fas ${question.icon || "fa-compass"}`;
+    showArchetypePillIcon(question.icon);
     questionText.textContent = question.text;
     questionView?.classList.add("is-archetype");
     questionCard?.classList.add("is-archetype");
@@ -582,35 +632,93 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  const openResultHelp = ({ title, blocks = [], content = null, link = null }) => {
+  let resultScrollY = 0;
+  const lockResultScroll = () => {
+    if (document.body.classList.contains("quiz-modal-open")) return;
+    resultScrollY = window.scrollY;
+    document.body.style.setProperty("--quiz-scroll-lock-top", `-${resultScrollY}px`);
+    document.body.classList.add("quiz-modal-open");
+  };
+  const unlockResultScroll = () => {
+    if (!document.body.classList.contains("quiz-modal-open")) return;
+    document.body.classList.remove("quiz-modal-open");
+    document.body.style.removeProperty("--quiz-scroll-lock-top");
+    window.scrollTo(0, resultScrollY);
+  };
+
+  const openResultHelp = ({
+    kicker = "Detalhes do resultado",
+    title,
+    subtitle = "",
+    cover = null,
+    blocks = [],
+    content = null,
+    link = null,
+    note = ""
+  }) => {
     if (!resultHelpDialog || !resultHelpTitle || !resultHelpContent) return;
+    if (resultHelpKicker) resultHelpKicker.textContent = kicker || "Detalhes do resultado";
     resultHelpTitle.textContent = title;
-    const nodes = blocks.filter(Boolean).map(({ heading, text }) => {
+    if (resultHelpSubtitle) {
+      resultHelpSubtitle.textContent = subtitle;
+      resultHelpSubtitle.hidden = !subtitle;
+    }
+    const nodes = [];
+    if (cover) nodes.push(cover);
+    blocks.filter(Boolean).forEach(({ heading, text, icon = "fa-circle-info" }) => {
       const block = document.createElement("section");
       block.className = "quiz-help-block";
       if (heading) {
         const headingNode = document.createElement("h3");
-        headingNode.textContent = heading;
+        const iconNode = document.createElement("i");
+        iconNode.className = `fas ${icon}`;
+        iconNode.setAttribute("aria-hidden", "true");
+        const labelNode = document.createElement("span");
+        labelNode.textContent = heading;
+        headingNode.append(iconNode, labelNode);
         block.append(headingNode);
       }
       const paragraph = document.createElement("p");
       appendRichText(paragraph, text);
       block.append(paragraph);
-      return block;
+      nodes.push(block);
     });
     if (content) nodes.push(content);
-    if (link) {
-      const anchor = document.createElement("a");
-      anchor.className = "quiz-result-help-link";
-      anchor.href = link.href;
-      anchor.textContent = link.label;
-      nodes.push(anchor);
+    if (note || link) {
+      const footer = document.createElement("div");
+      footer.className = "quiz-help-footer";
+      if (note) {
+        const noteNode = document.createElement("p");
+        noteNode.className = "quiz-help-note";
+        noteNode.textContent = note;
+        footer.append(noteNode);
+      }
+      if (link) {
+        const anchor = document.createElement("a");
+        const external = link.external ?? /^https?:\/\//i.test(link.href);
+        anchor.className = "quiz-result-help-link";
+        anchor.href = link.href;
+        if (external) {
+          anchor.target = "_blank";
+          anchor.rel = "noopener noreferrer";
+        }
+        anchor.append(document.createTextNode(link.label));
+        const linkIcon = document.createElement("i");
+        linkIcon.className = `fas ${external ? "fa-arrow-up-right-from-square" : "fa-arrow-right"}`;
+        linkIcon.setAttribute("aria-hidden", "true");
+        anchor.append(linkIcon);
+        footer.append(anchor);
+      }
+      nodes.push(footer);
     }
     resultHelpContent.replaceChildren(...nodes);
+    lockResultScroll();
     if (!resultHelpDialog.open) {
       if (typeof resultHelpDialog.showModal === "function") resultHelpDialog.showModal();
       else resultHelpDialog.setAttribute("open", "");
     }
+    resultHelpDialog.querySelector(".quiz-help-dialog-shell")?.scrollTo({ top: 0 });
+    resultHelpDialog.scrollTo({ top: 0 });
     resultHelpClose?.focus();
   };
 
@@ -619,6 +727,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resultHelpDialog.addEventListener("click", (event) => {
       if (event.target === resultHelpDialog) resultHelpDialog.close();
     });
+    resultHelpDialog.addEventListener("close", unlockResultScroll);
   }
 
   const rankedProfiles = (profile, group) => catalog.profiles[group]
@@ -723,8 +832,11 @@ document.addEventListener("DOMContentLoaded", () => {
     section.setAttribute("aria-label", "Resumo do perfil");
 
     const closest = rankedProfiles(profile, "ideologies")[0];
+    const region = COMPASS_REGION_META[normalizeCompassRegion(closest.item.category)] || COMPASS_REGION_META.centro;
     const affinity = document.createElement("article");
     affinity.className = "quiz-profile-affinity";
+    affinity.style.setProperty("--affinity-color", region.base);
+    affinity.style.setProperty("--affinity-bg", region.bg);
 
     const head = document.createElement("div");
     head.className = "quiz-profile-head";
@@ -742,7 +854,8 @@ document.addEventListener("DOMContentLoaded", () => {
       tag.textContent = closest.item.category;
       kicker.append(tag);
     }
-    const name = document.createElement("h4");
+    const name = document.createElement("h2");
+    name.className = "quiz-profile-name";
     name.textContent = closest.item.name;
     identity.append(kicker, name);
 
@@ -756,12 +869,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const ringTrack = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     ringTrack.setAttribute("class", "quiz-ring-track");
     ["cx", "cy"].forEach((attribute) => ringTrack.setAttribute(attribute, "60"));
-    ringTrack.setAttribute("r", "52");
+    ringTrack.setAttribute("r", "56");
     ringTrack.setAttribute("pathLength", "100");
     const ringValue = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     ringValue.setAttribute("class", "quiz-ring-value");
     ["cx", "cy"].forEach((attribute) => ringValue.setAttribute(attribute, "60"));
-    ringValue.setAttribute("r", "52");
+    ringValue.setAttribute("r", "56");
     ringValue.setAttribute("pathLength", "100");
     ringValue.style.strokeDasharray = `${Math.max(0, Math.min(100, Number(closest.score) || 0))} 100`;
     ringSvg.append(ringTrack, ringValue);
@@ -785,18 +898,40 @@ document.addEventListener("DOMContentLoaded", () => {
     const quoteBody = document.createElement("div");
     const quoteLabel = document.createElement("p");
     quoteLabel.className = "eyebrow";
-    quoteLabel.textContent = "Uma frase que descreve";
+    quoteLabel.textContent = "Uma frase que te descreve";
     const blockquote = document.createElement("blockquote");
     blockquote.textContent = closest.item.phrase || closest.item.summary || closest.item.description || "";
     quoteBody.append(quoteLabel, blockquote);
     quote.append(quoteMark, quoteBody);
     body.append(quote);
 
-    const catalogLink = document.createElement("a");
-    catalogLink.className = "quiz-profile-source";
-    catalogLink.href = catalogProfileUrl("ideologies", closest.item);
-    catalogLink.textContent = "Ver ficha completa no catálogo";
-    body.append(catalogLink);
+    const summary = closest.item.summary || closest.item.description || "";
+    const totalIdeologies = catalog.profiles.ideologies.length;
+    const about = document.createElement("button");
+    about.type = "button";
+    about.className = "quiz-profile-about";
+    const aboutIcon = document.createElement("span");
+    aboutIcon.className = "quiz-profile-about-icon";
+    aboutIcon.setAttribute("aria-hidden", "true");
+    aboutIcon.textContent = "+";
+    about.append(aboutIcon, document.createTextNode(`Sobre ${closest.item.name}`));
+    about.addEventListener("click", () => {
+      openResultHelp({
+        title: `Sobre ${closest.item.name}`,
+        blocks: [
+          summary ? { heading: "Resumo", text: summary } : null,
+          {
+            heading: "Sua proximidade",
+            text: `Seu perfil tem ${formatPercent(closest.score)} de proximidade com ${closest.item.name}, a maior entre as ${totalIdeologies} ideologias comparadas.`
+          }
+        ],
+        link: {
+          href: catalogProfileUrl("ideologies", closest.item),
+          label: "Ver a ficha completa no catálogo"
+        }
+      });
+    });
+    body.append(about);
 
     affinity.append(head, body);
     section.append(affinity);
@@ -845,9 +980,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const poles = document.createElement("div");
     poles.className = "quiz-distinction-poles";
     const low = document.createElement("span");
-    low.textContent = axis.a;
+    const lowIcon = axisIconNode(axis, "a", 12, null);
+    if (lowIcon) low.append(lowIcon);
+    low.append(document.createTextNode(axis.a));
     const high = document.createElement("span");
-    high.textContent = axis.b;
+    high.append(document.createTextNode(axis.b));
+    const highIcon = axisIconNode(axis, "b", 12, null);
+    if (highIcon) high.append(highIcon);
     poles.append(low, high);
 
     scale.append(track, legend, poles);
@@ -857,6 +996,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const createDistinctionCard = (entry, kind, rank) => {
     const card = document.createElement("article");
     card.className = `quiz-distinction-card${kind === "unusual" ? " is-strong" : ""}`;
+    card.style.setProperty("--axis-color", entry.value >= 50 ? entry.axis.aColor : entry.axis.bColor);
 
     const top = document.createElement("div");
     top.className = "quiz-distinction-top";
@@ -938,14 +1078,12 @@ document.addEventListener("DOMContentLoaded", () => {
     section.id = "assinatura";
     section.setAttribute("aria-labelledby", "assinatura-title");
 
-    const title = document.createElement("h2");
-    title.className = "quiz-panel-title";
-    title.id = "assinatura-title";
-    title.textContent = "O que te distingue";
-
-    const lead = document.createElement("p");
-    lead.className = "quiz-panel-lead";
-    lead.textContent = "Onde seu perfil mais se afasta — e onde ele mais se aproxima — do conjunto das ideologias do catálogo.";
+    const heading = createSectionHeading({
+      eyebrow: "Assinatura do perfil",
+      title: "O que te distingue",
+      lead: "Onde seu perfil mais se afasta — e onde ele mais se aproxima — do conjunto das ideologias do catálogo.",
+      id: "assinatura-title"
+    });
 
     const grid = document.createElement("div");
     grid.className = "quiz-distinction-grid";
@@ -958,7 +1096,7 @@ document.addEventListener("DOMContentLoaded", () => {
     method.className = "quiz-distinction-caption";
     method.textContent = `Mediana e intervalo interquartil calculados sobre ${catalog.profiles.ideologies.length} ideologias. O percentil indica quantas delas estão menos próximas do polo destacado.`;
 
-    section.append(title, lead, grid, method);
+    section.append(heading, grid, method);
     return section;
   };
 
@@ -977,11 +1115,14 @@ document.addEventListener("DOMContentLoaded", () => {
     section.id = "areas";
     section.setAttribute("aria-labelledby", "areas-title");
 
-    const title = document.createElement("h2");
-    title.className = "quiz-panel-title";
-    title.id = "areas-title";
-    const lead = document.createElement("p");
-    lead.className = "quiz-panel-lead";
+    const heading = createSectionHeading({
+      eyebrow: "Afinidades · personalidades",
+      title: "Os mais próximos dos seus resultados",
+      lead: "As oito personalidades de maior compatibilidade com o seu perfil.",
+      id: "areas-title"
+    });
+    const title = heading.querySelector("h2");
+    const lead = heading.querySelector("p");
 
     const tabs = document.createElement("div");
     tabs.className = "quiz-areas-tabs";
@@ -1098,7 +1239,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     tabs.append(...buttons);
-    section.append(title, lead, tabs, panel);
+    section.append(heading, tabs, panel);
     selectMode("general");
     return section;
   };
@@ -1119,14 +1260,12 @@ document.addEventListener("DOMContentLoaded", () => {
     section.id = "valores";
     section.setAttribute("aria-labelledby", "valores-title");
 
-    const title = document.createElement("h2");
-    title.className = "quiz-panel-title";
-    title.id = "valores-title";
-    title.textContent = "Seus valores";
-
-    const lead = document.createElement("p");
-    lead.className = "quiz-panel-lead";
-    lead.textContent = "Em cada família de valores, a posição que mais se aproxima das suas respostas.";
+    const heading = createSectionHeading({
+      eyebrow: "Valores",
+      title: "Seus valores",
+      lead: "Em cada família de valores, a posição que mais se aproxima das suas respostas.",
+      id: "valores-title"
+    });
 
     const grid = document.createElement("div");
     grid.className = "quiz-values-grid";
@@ -1163,7 +1302,7 @@ document.addEventListener("DOMContentLoaded", () => {
     method.className = "quiz-values-caption";
     method.textContent = "Cada valor é comparado apenas nos eixos que declara; os demais ficam de fora. O percentual resume a proximidade entre suas respostas e o valor.";
 
-    section.append(title, lead, grid, method);
+    section.append(heading, grid, method);
     return section;
   };
 
@@ -1232,9 +1371,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const poles = document.createElement("div");
     poles.className = "quiz-result-poles";
     const a = document.createElement("span");
-    a.textContent = axis.a;
+    const aIcon = axisIconNode(axis, "a", 14, null);
+    if (aIcon) a.append(aIcon);
+    a.append(document.createTextNode(axis.a));
     const b = document.createElement("span");
-    b.textContent = axis.b;
+    b.append(document.createTextNode(axis.b));
+    const bIcon = axisIconNode(axis, "b", 14, null);
+    if (bIcon) b.append(bIcon);
     if (!balanced && leansA) a.classList.add("is-win");
     if (!balanced && !leansA) b.classList.add("is-win");
     poles.append(a, b);
@@ -1275,6 +1418,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "ext-direita": "A Extrema direita se define por hierarquia e identidade. A bússola mede economia e poder; moral, religião e nação ficam de fora.",
     "esq-radical": "A Esquerda radical se define por revolução e coletivização. A bússola mede economia e poder; o projeto revolucionário fica de fora.",
     libertarian: "Sua ideologia fica na divisa entre duas regiões. A bússola mede economia e poder, e uma diferença pequena em um deles decide o lado.",
+    categoria: "A bússola lê economia, controle, poder, representação e estrutura. A categoria do perfil vem do conjunto dos 12 eixos e pode apontar para outro lado.",
     generic: "A bússola mede 5 dos 12 eixos; os outros 7 ficam de fora."
   };
   const COMPASS_REGION_RECTS = [
@@ -1395,6 +1539,21 @@ document.addEventListener("DOMContentLoaded", () => {
     return null;
   };
 
+  const compassPositionKey = (right, regionKey) => {
+    if (regionKey !== "centro") return regionKey;
+    if (right < 50) return "esquerda";
+    if (right > 50) return "direita";
+    return "centro";
+  };
+
+  const compassPositionLabel = (positionKey, regionKey) => {
+    if (positionKey === "centro") return COMPASS_SPECTRUM_LABELS.centro;
+    if (regionKey === "centro") {
+      return positionKey === "esquerda" ? "Centro-esquerda" : "Centro-direita";
+    }
+    return COMPASS_SPECTRUM_LABELS[positionKey];
+  };
+
   const compassSocialKey = (traditional) => {
     if (traditional < 20) return "veryProgressive";
     if (traditional < 40) return "progressive";
@@ -1403,23 +1562,19 @@ document.addEventListener("DOMContentLoaded", () => {
     return "veryTraditional";
   };
 
-  const compassSocialColor = (traditional) => compassRgb(compassMixMany(
+  const compassSocialChannels = (traditional) => compassMixMany(
     compassHexToRgb("#D23E84"),
     [123, 127, 134],
     compassHexToRgb("#74502C"),
     traditional / 100
-  ));
+  );
 
-  const compassMarkerColor = (spectrumKey, regionKey) => {
-    if (spectrumKey === regionKey) return null;
-    if (spectrumKey !== "centro" && regionKey !== "centro") return null;
-    const other = spectrumKey === "centro" ? regionKey : spectrumKey;
-    return compassRgb(compassMix(
-      compassHexToRgb(COMPASS_REGION_META.centro.base),
-      compassHexToRgb((COMPASS_REGION_META[other] || COMPASS_REGION_META.centro).base),
-      0.5
-    ));
-  };
+  const compassSocialColor = (traditional) => compassRgb(compassSocialChannels(traditional));
+
+  // Marca mais escura para o marcador da régua social, que precisa de contraste com o X branco.
+  const compassSocialMarkerColor = (traditional) => compassRgb(
+    compassMix(compassSocialChannels(traditional), [16, 16, 16], 0.52)
+  );
 
   const compassNoteHint = (spectrumKey, regionKey) => {
     if (spectrumKey === regionKey || compassCenterSide(spectrumKey, regionKey)) return null;
@@ -1434,7 +1589,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const computeCompass = (profile, category) => {
     const axisValue = (id) => {
       const index = catalog.axes.findIndex((axis) => axis.id === id);
-      return index >= 0 ? profile[index] : 50;
+      const value = index >= 0 ? profile[index] : 50;
+      return Number.isFinite(value) ? value : 50;
     };
     const economy = axisValue("economia");
     const control = axisValue("controle");
@@ -1442,34 +1598,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const representation = axisValue("representacao");
     const structure = axisValue("estrutura");
     const moral = axisValue("moral");
-    const right = Math.max(0, Math.min(100, 0.6 * economy + 0.4 * control));
-    const authoritarian = Math.max(0, Math.min(100, ((100 - power) + representation + structure) / 3));
-    const traditional = Math.max(0, Math.min(100, moral));
+    const right = 100 - (0.6 * economy + 0.4 * control);
+    const authoritarian = (power + (100 - representation) + (100 - structure)) / 3;
+    const traditional = 100 - moral;
     const regionKey = compassRegionFor(right, authoritarian);
+    const positionKey = compassPositionKey(right, regionKey);
     const spectrumKey = normalizeCompassRegion(category);
-    const centerSideKey = compassCenterSide(spectrumKey, regionKey);
     const socialKey = compassSocialKey(traditional);
-    const markerColor = compassMarkerColor(spectrumKey, regionKey) || COMPASS_REGION_META[spectrumKey].base;
+    const markerColor = COMPASS_REGION_META[positionKey].base;
     return {
       right,
       authoritarian,
       traditional,
       regionKey,
       region: COMPASS_REGION_META[regionKey],
+      positionKey,
       spectrumKey,
-      spectrum: COMPASS_REGION_META[spectrumKey],
-      centerSideKey,
-      sentenceLabel: centerSideKey === "esquerda"
-        ? "Centro-esquerda"
-        : centerSideKey === "direita"
-          ? "Centro-direita"
-          : COMPASS_SPECTRUM_LABELS[spectrumKey],
-      sentenceColor: COMPASS_REGION_META[centerSideKey || spectrumKey].base,
+      sentenceLabel: compassPositionLabel(positionKey, regionKey),
+      sentenceColor: COMPASS_REGION_META[positionKey].base,
       socialKey,
       socialLabel: COMPASS_SOCIAL_LABELS[socialKey],
       socialColor: compassSocialColor(traditional),
+      socialMarkerColor: compassSocialMarkerColor(traditional),
       markerColor,
-      noteHint: compassNoteHint(spectrumKey, regionKey)
+      noteHint: compassNoteHint(spectrumKey, regionKey) ||
+        (spectrumKey !== positionKey ? "categoria" : null)
     };
   };
 
@@ -1479,10 +1632,15 @@ document.addEventListener("DOMContentLoaded", () => {
     section.id = "bussola";
     section.setAttribute("aria-labelledby", "bussola-title");
 
-    const title = document.createElement("h2");
-    title.className = "quiz-panel-title";
-    title.id = "bussola-title";
-    title.textContent = "Bússola política";
+    const calibration = compass.calibration;
+    const heading = createSectionHeading({
+      eyebrow: calibration ? "Sua posição calibrada" : "Sua posição",
+      title: "Bússola política",
+      lead: calibration
+        ? `Leitura calibrada pela ideologia de maior proximidade, ${calibration.name} (${formatPercent(calibration.score)}): economia no eixo esquerda–direita e poder no eixo autoritarismo–liberdade, com a camada de valores sociais.`
+        : "Uma leitura bidimensional: economia no eixo esquerda–direita e poder no eixo autoritarismo–liberdade, com a camada de valores sociais.",
+      id: "bussola-title"
+    });
 
     const body = document.createElement("div");
     body.className = "quiz-compass-body";
@@ -1490,7 +1648,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const chart = document.createElement("div");
     chart.className = "quiz-compass-chart";
     chart.setAttribute("role", "img");
-    chart.setAttribute("aria-label", `Sua posição: ${Math.round(compass.right)}% rumo à direita, ${Math.round(compass.authoritarian)}% rumo ao autoritarismo e ${Math.round(compass.traditional)}% rumo ao tradicionalismo.`);
+    chart.setAttribute("aria-label", `${calibration
+      ? `Posição calibrada por ${calibration.name} (${formatPercent(calibration.score)} de proximidade): ${compass.sentenceLabel.toLowerCase()}.`
+      : `Sua posição: ${compass.sentenceLabel.toLowerCase()}.`} ${Math.round(compass.right)}% no eixo esquerda–direita, ${Math.round(compass.authoritarian)}% rumo ao autoritarismo e ${Math.round(compass.traditional)}% rumo ao tradicionalismo.`);
     const label = (text, modifier) => {
       const node = document.createElement("span");
       node.className = `quiz-compass-lbl ${modifier}`;
@@ -1510,12 +1670,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const yAxis = document.createElement("i");
     yAxis.className = "quiz-compass-axis is-y";
     yAxis.setAttribute("aria-hidden", "true");
+    const compassCross = () => {
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("viewBox", "0 0 24 24");
+      svg.setAttribute("aria-hidden", "true");
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", "M6 6l12 12M18 6 6 18");
+      svg.append(path);
+      return svg;
+    };
     const marker = document.createElement("span");
     marker.className = "quiz-compass-x";
-    marker.style.left = `${Math.max(4, Math.min(96, compass.right))}%`;
-    marker.style.top = `${Math.max(4, Math.min(96, 100 - compass.authoritarian))}%`;
+    marker.style.left = `${Math.max(7, Math.min(93, compass.right))}%`;
+    marker.style.top = `${Math.max(7, Math.min(93, 100 - compass.authoritarian))}%`;
     marker.style.background = compass.markerColor;
     marker.setAttribute("aria-hidden", "true");
+    marker.append(compassCross());
     grid.append(xAxis, yAxis, marker);
     chart.append(
       label("Autoritarismo", "is-top"),
@@ -1561,9 +1731,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     const socialMarker = document.createElement("span");
     socialMarker.className = "quiz-compass-x";
-    socialMarker.style.left = `${Math.max(4, Math.min(96, compass.traditional))}%`;
-    socialMarker.style.background = compass.socialColor;
+    socialMarker.style.setProperty("--cell", String(compassCell(compass.traditional)));
+    socialMarker.style.background = compass.socialMarkerColor;
     socialMarker.setAttribute("aria-hidden", "true");
+    socialMarker.append(compassCross());
     strip.append(socialMarker);
     bar.append(barLabels, strip);
     read.append(sentence, bar);
@@ -1582,9 +1753,16 @@ document.addEventListener("DOMContentLoaded", () => {
       openResultHelp({
         title: "Como a bússola é feita",
         blocks: [
-          { heading: "O eixo autoritário × libertário", text: "Mede o grau de concentração do poder político e de intervenção do Estado sobre a vida dos indivíduos. Considera liberdades individuais, representação política e estrutura do Estado." },
-          { heading: "O eixo esquerda × direita", text: "Mede a posição pela organização da economia: de propriedade coletiva e planejamento estatal, de um lado, a propriedade privada e livre mercado, do outro. Considera economia e controle." },
-          { heading: "O eixo social", text: "Mede a orientação dos valores entre progressismo e tradicionalismo, refletindo a posição em questões de costumes, cultura e valores sociais." }
+          {
+            heading: "Calibração",
+            icon: "fa-compass-drafting",
+            text: compass.calibration
+              ? `A posição é calibrada por ${compass.calibration.name} (${formatPercent(compass.calibration.score)} de proximidade), a ideologia mais próxima do seu perfil. A bússola usa os eixos economia, controle, poder, representação e estrutura desse vetor; os outros sete eixos ficam de fora.`
+              : "A bússola usa os eixos economia, controle, poder, representação e estrutura; os outros sete eixos ficam de fora."
+          },
+          { heading: "O eixo autoritário × libertário", icon: "fa-shield-halved", text: "Mede o grau de concentração do poder político e de intervenção do Estado sobre a vida dos indivíduos. Considera liberdades individuais, representação política e estrutura do Estado." },
+          { heading: "O eixo esquerda × direita", icon: "fa-coins", text: "Mede a posição pela organização da economia: de propriedade coletiva e planejamento estatal, de um lado, a propriedade privada e livre mercado, do outro. Considera economia e controle." },
+          { heading: "O eixo social", icon: "fa-heart", text: "Mede a orientação dos valores entre progressismo e tradicionalismo, refletindo a posição em questões de costumes, cultura e valores sociais." }
         ],
         link: { href: "/teste-politico#guia-eixos", label: "Ver o guia dos 12 eixos" }
       });
@@ -1592,7 +1770,7 @@ document.addEventListener("DOMContentLoaded", () => {
     method.append(methodButton);
 
     body.append(chart, read);
-    section.append(title, body);
+    section.append(heading, body);
 
     if (compass.noteHint) {
       const note = document.createElement("aside");
@@ -1604,7 +1782,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const noteTitle = document.createElement("strong");
       const dot = document.createElement("i");
       dot.setAttribute("aria-hidden", "true");
-      noteTitle.append(dot, document.createTextNode(`Na bússola: ${COMPASS_SPECTRUM_LABELS[compass.regionKey]}`));
+      noteTitle.append(dot, document.createTextNode(`Na bússola: ${compass.sentenceLabel}`));
       const noteText = document.createElement("span");
       noteText.textContent = COMPASS_NOTE_HINTS[compass.noteHint];
       note.append(noteTitle, noteText);
@@ -1712,13 +1890,32 @@ document.addEventListener("DOMContentLoaded", () => {
     compareButton.addEventListener("click", () => {
       const comparisonList = document.createElement("div");
       comparisonList.className = "quiz-axis-comparison-list";
+      const comparisonLegend = document.createElement("div");
+      comparisonLegend.className = "quiz-axis-comparison-legend";
+      const legendLabel = document.createElement("span");
+      legendLabel.textContent = "Marcadores";
+      const legendYou = document.createElement("span");
+      legendYou.className = "is-you";
+      legendYou.append(document.createElement("i"), document.createTextNode("Você"));
+      const legendProfile = document.createElement("span");
+      legendProfile.className = "is-profile";
+      legendProfile.append(document.createElement("i"), document.createTextNode(item.name));
+      comparisonLegend.append(legendLabel, legendYou, legendProfile);
+      comparisonList.append(comparisonLegend);
       catalog.axes.forEach((axis, axisIndex) => {
         const row = document.createElement("div");
         row.className = "quiz-axis-comparison-row";
         const label = document.createElement("strong");
         label.textContent = axis.name;
-        const values = document.createElement("span");
-        values.textContent = `Você ${formatPercent(profile[axisIndex])} · Perfil ${formatPercent(item.axes[axisIndex])}`;
+        const values = document.createElement("div");
+        values.className = "quiz-axis-comparison-values";
+        const userValue = document.createElement("span");
+        userValue.className = "is-you";
+        userValue.textContent = `Você ${formatPercent(profile[axisIndex])}`;
+        const profileValue = document.createElement("span");
+        profileValue.className = "is-profile";
+        profileValue.textContent = `${item.name} ${formatPercent(item.axes[axisIndex])}`;
+        values.append(userValue, profileValue);
         const scale = document.createElement("div");
         scale.className = "quiz-axis-comparison-scale";
         scale.setAttribute("role", "img");
@@ -1737,7 +1934,7 @@ document.addEventListener("DOMContentLoaded", () => {
         title: `Comparar os 12 eixos`,
         blocks: [{
           heading: `Você × ${item.name}`,
-          text: `${formatPercent(matchScore(profile, item.axes))} de proximidade. Em cada barra, a marca verde representa seu perfil e a laranja, o perfil do catálogo.`
+          text: `${formatPercent(matchScore(profile, item.axes))} de proximidade. A legenda identifica cada marcador em todas as barras.`
         }],
         content: comparisonList,
         link: {
@@ -1752,14 +1949,20 @@ document.addEventListener("DOMContentLoaded", () => {
     return card;
   };
 
-  const createMatchSection = (profile, key, title, catalogKey, sectionId) => {
+  const createMatchSection = (profile, key, options) => {
     const ranked = rankedProfiles(profile, key);
     const section = document.createElement("section");
-    section.className = "quiz-match-group";
-    section.id = `resultado-${sectionId}`;
+    section.className = options.compact ? "quiz-match-subgroup" : "quiz-match-group";
+    section.id = `resultado-${options.sectionId}`;
     section.dataset.section = key;
-    const heading = document.createElement("h3");
-    heading.textContent = `${title} (${ranked.length})`;
+    const heading = createSectionHeading({
+      eyebrow: options.eyebrow,
+      title: options.title,
+      lead: options.lead ? options.lead(ranked.length) : undefined,
+      id: `resultado-${options.sectionId}-title`,
+      level: options.compact ? 3 : 2,
+      compact: options.compact
+    });
     section.append(heading);
 
     const grid = document.createElement("div");
@@ -1767,10 +1970,10 @@ document.addEventListener("DOMContentLoaded", () => {
     ranked.slice(0, 3).forEach(({ item }, index) => grid.append(createMatchCard(profile, item, index, key)));
     section.append(grid);
 
-    if (ranked.length > 3) {
+    if (!options.compact && ranked.length > 3) {
       const catalogLink = document.createElement("a");
       catalogLink.className = "quiz-catalog-link";
-      catalogLink.href = `/catalogo-politico?catalogo=${catalogKey}`;
+      catalogLink.href = `/catalogo-politico?catalogo=${options.catalogKey}`;
       catalogLink.textContent = `Ver os ${ranked.length} no catálogo completo`;
       section.append(catalogLink);
     }
@@ -1778,18 +1981,56 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const createCountriesSection = (profile) => {
-    const section = createMatchSection(profile, "countries", "Países mais próximos de você", "paises", "paises");
-    const regimes = createMatchSection(profile, "regimes", "Regimes e modelos políticos", "paises", "regimes");
-    regimes.classList.remove("quiz-match-group");
-    regimes.classList.add("quiz-match-subgroup");
-    const heading = regimes.querySelector("h3");
-    if (heading) {
-      const subheading = document.createElement("h4");
-      subheading.textContent = heading.textContent;
-      heading.replaceWith(subheading);
-    }
+    const section = createMatchSection(profile, "countries", {
+      sectionId: "paises",
+      title: "Países mais próximos de você",
+      eyebrow: "Afinidades · países",
+      lead: (total) => `Os três países de maior proximidade entre os ${total} comparados.`,
+      catalogKey: "paises"
+    });
+    const regimes = createMatchSection(profile, "regimes", {
+      sectionId: "regimes",
+      title: "Regimes e modelos políticos",
+      lead: (total) => `Os três modelos de maior proximidade entre os ${total} comparados.`,
+      catalogKey: "paises",
+      compact: true
+    });
     section.append(regimes);
     return section;
+  };
+
+  const BOOK_AREA_META = {
+    filosofia: { label: "Filosofia", color: "#526e9b" },
+    economia: { label: "Economia", color: "#8a6522" },
+    historia: { label: "História", color: "#8f5a2e" },
+    brasil: { label: "Brasil", color: "#3f7c5a" },
+    sociedade: { label: "Sociedade", color: "#7a4090" },
+    politica: { label: "Política", color: "#35608f" },
+    "teoria-politica": { label: "Teoria política", color: "#5b4b84" },
+    "vida-intelectual": { label: "Vida intelectual", color: "#5b4b84" },
+    ativismo: { label: "Ativismo", color: "#a33a57" },
+    religiao: { label: "Religião", color: "#ae5a1c" },
+    empresariado: { label: "Empresariado", color: "#8f5a2e" }
+  };
+  const BOOK_DIFFICULTY_LABELS = {
+    introdutorio: "Introdutório",
+    intermediario: "Intermediário",
+    avancado: "Avançado"
+  };
+  const normalizeBookText = (value) => String(value ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+  const bookInitials = (name) => {
+    const words = String(name || "")
+      .replace(/[^\p{L}\s-]/gu, " ")
+      .split(/[\s-]+/)
+      .filter(Boolean);
+    if (!words.length) return "?";
+    if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+    return `${words[0][0]}${words[words.length - 1][0]}`.toUpperCase();
   };
 
   const createBooksSection = (profile) => {
@@ -1805,46 +2046,180 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (!picks.length) return null;
 
+    const atlasBooks = Array.isArray(globalThis.AtlasData?.livros) ? globalThis.AtlasData.livros : [];
+    const booksByAuthor = new Map();
+    atlasBooks.forEach((item) => {
+      if (!item.autorId) return;
+      if (!booksByAuthor.has(item.autorId)) booksByAuthor.set(item.autorId, []);
+      booksByAuthor.get(item.autorId).push(item);
+    });
+    const fullBookFor = (recommendation) => {
+      const list = booksByAuthor.get(recommendation.figureId || recommendation.personalityId) || [];
+      const title = normalizeBookText(recommendation.title);
+      return list.find((item) => normalizeBookText(item.titulo) === title) ||
+        (list.length === 1 ? list[0] : null);
+    };
+    const presentationFor = (book, fullBook, figure) => {
+      const areaKey = fullBook?.area || "";
+      const areaMeta = BOOK_AREA_META[areaKey];
+      const figureArea = (catalog.areas || []).find((item) => item.id === figure.area);
+      return {
+        areaLabel: areaMeta?.label || figure.areaLabel || areaKey || "Livro",
+        areaColor: areaMeta?.color || figureArea?.cor || "#0b766b",
+        difficulty: BOOK_DIFFICULTY_LABELS[fullBook?.dificuldade] || "",
+        summary: fullBook?.resumo || "",
+        why: fullBook?.porque || "",
+        link: fullBook?.link || book.url || ""
+      };
+    };
+    const createBookCover = ({ book, figure, meta, interactive, extraClass = "" }) => {
+      const cover = document.createElement(interactive ? "button" : "div");
+      if (interactive) {
+        cover.type = "button";
+        cover.setAttribute("aria-label", `Ver detalhes de ${book.title}, de ${book.author}`);
+      } else {
+        cover.setAttribute("role", "img");
+        cover.setAttribute("aria-label", `Capa de ${book.title}, de ${book.author}`);
+      }
+      cover.className = `quiz-book-cover${extraClass ? ` ${extraClass}` : ""}`;
+      cover.style.setProperty("--book-area", meta.areaColor);
+      const imagePath = fullBookFor(book)?.imagePath || figure.imagePath;
+      if (imagePath && !isUnverifiedImage(figure)) {
+        const image = document.createElement("img");
+        image.className = "quiz-book-cover-image";
+        image.src = imagePath;
+        image.alt = figure.imageAlt || `Retrato de ${figure.name}`;
+        image.loading = "lazy";
+        image.decoding = "async";
+        image.addEventListener("error", () => {
+          const fallback = document.createElement("span");
+          fallback.className = "quiz-book-cover-fallback";
+          fallback.setAttribute("aria-hidden", "true");
+          fallback.textContent = bookInitials(book.author);
+          image.replaceWith(fallback);
+        }, { once: true });
+        cover.append(image);
+      } else {
+        const fallback = document.createElement("span");
+        fallback.className = "quiz-book-cover-fallback";
+        fallback.setAttribute("aria-hidden", "true");
+        fallback.textContent = bookInitials(book.author);
+        cover.append(fallback);
+      }
+      const area = document.createElement("span");
+      area.className = "quiz-book-cover-area";
+      area.textContent = meta.areaLabel;
+      cover.append(area);
+      if (book.year) {
+        const year = document.createElement("span");
+        year.className = "quiz-book-cover-year";
+        year.textContent = String(book.year);
+        cover.append(year);
+      }
+      const title = document.createElement("strong");
+      title.className = "quiz-book-cover-title";
+      title.textContent = book.title;
+      const author = document.createElement("span");
+      author.className = "quiz-book-cover-author";
+      author.textContent = book.author;
+      cover.append(title, author);
+      return cover;
+    };
+    const openBookHelp = ({ book, fullBook, figure, score, meta }) => {
+      const ficha = [
+        `**Autor:** ${book.author}`,
+        book.year ? `**Publicação:** ${book.year}` : "",
+        fullBook?.area ? `**Área:** ${meta.areaLabel}` : "",
+        meta.difficulty ? `**Nível:** ${meta.difficulty}` : ""
+      ].filter(Boolean).join(" · ");
+      const cover = createBookCover({ book, figure, meta, interactive: false, extraClass: "is-dialog" });
+      const coverWrap = document.createElement("div");
+      coverWrap.className = "quiz-help-cover";
+      coverWrap.append(cover);
+      openResultHelp({
+        kicker: `Biblioteca${meta.areaLabel ? ` · ${meta.areaLabel}` : ""}`,
+        title: book.title,
+        subtitle: [book.author, book.year].filter(Boolean).join(" · "),
+        cover: coverWrap,
+        blocks: [
+          { heading: "Ficha", icon: "fa-circle-info", text: ficha },
+          meta.why ? { heading: "Por que ler", icon: "fa-lightbulb", text: meta.why } : null,
+          {
+            heading: "Nesta lista",
+            icon: "fa-link",
+            text: `Associada a ${figure.name}, a ${formatPercent(score)} de proximidade com o seu perfil.`
+          }
+        ],
+        link: meta.link
+          ? { href: meta.link, label: "Consultar no Open Library" }
+          : { href: catalogProfileUrl("figures", figure), label: "Ver perfil do autor no catálogo" },
+        note: fullBook
+          ? "Resumo e nota de leitura são editoriais do King's Newsletter; não substituem a obra."
+          : "Obra associada pela proximidade da figura; a ficha completa está no catálogo."
+      });
+    };
+    const createBookCard = (pick) => {
+      const { book, figure, score } = pick;
+      const fullBook = fullBookFor(book);
+      const meta = presentationFor(book, fullBook, figure);
+      const card = document.createElement("article");
+      card.className = "quiz-book-card";
+      card.style.setProperty("--book-area", meta.areaColor);
+      const open = () => openBookHelp({ book, fullBook, figure, score, meta });
+      const cover = createBookCover({ book, figure, meta, interactive: true });
+      cover.addEventListener("click", open);
+      const tags = document.createElement("div");
+      tags.className = "quiz-book-tags";
+      const areaTag = document.createElement("span");
+      areaTag.className = "quiz-book-tag";
+      areaTag.textContent = meta.areaLabel;
+      tags.append(areaTag);
+      if (meta.difficulty) {
+        const difficulty = document.createElement("span");
+        difficulty.className = "quiz-book-tag";
+        difficulty.textContent = meta.difficulty;
+        tags.append(difficulty);
+      }
+      const association = document.createElement("p");
+      association.className = "quiz-book-association";
+      const figureName = document.createElement("strong");
+      figureName.textContent = figure.name;
+      association.append(document.createTextNode("Associada a "), figureName, document.createTextNode(` · ${formatPercent(score)} de proximidade`));
+      const summary = document.createElement("p");
+      summary.className = "quiz-book-summary";
+      summary.textContent = meta.summary || `Obra de ${figure.name}${figure.role ? `, ${figure.role.toLowerCase()}` : ""}, indicada pela proximidade com o seu perfil.`;
+      const cta = document.createElement("button");
+      cta.type = "button";
+      cta.className = "quiz-book-cta";
+      cta.setAttribute("aria-label", `Sobre o livro: ${book.title}`);
+      cta.append(document.createTextNode("Sobre o livro"));
+      const arrow = document.createElement("i");
+      arrow.className = "fas fa-arrow-right";
+      arrow.setAttribute("aria-hidden", "true");
+      cta.append(arrow);
+      cta.addEventListener("click", open);
+      card.append(cover, tags, association, summary, cta);
+      return card;
+    };
+
     const section = document.createElement("section");
     section.className = "quiz-books";
     section.id = "resultado-livros";
-    const heading = document.createElement("h3");
-    heading.textContent = "Leituras associadas ao seu perfil";
-    const intro = document.createElement("p");
-    intro.className = "quiz-books-intro";
-    intro.textContent = "Obras indicadas para as figuras mais próximas do seu resultado. São sugestões editoriais do catálogo, não endossos de ideias ou trajetórias.";
+    section.setAttribute("aria-labelledby", "resultado-livros-title");
+    const heading = createSectionHeading({
+      eyebrow: "Biblioteca",
+      title: "Leituras associadas ao seu perfil",
+      lead: "Obras indicadas para as figuras mais próximas do seu resultado. São sugestões editoriais do catálogo, não endossos de ideias ou trajetórias.",
+      id: "resultado-livros-title"
+    });
     const grid = document.createElement("div");
     grid.className = "quiz-books-grid";
-    picks.forEach(({ book, figure, score }) => {
-      const card = document.createElement("article");
-      card.className = "quiz-book-card";
-      const title = document.createElement("strong");
-      title.textContent = book.title;
-      const byline = document.createElement("span");
-      byline.textContent = [book.author, book.year].filter(Boolean).join(" · ");
-      const note = document.createElement("small");
-      note.textContent = `Associada a ${figure.name} · ${formatPercent(score)} de proximidade`;
-      card.append(title, byline, note);
-      if (book.url) {
-        const link = document.createElement("a");
-        link.href = book.url;
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-        link.textContent = "Abrir obra";
-        card.append(link);
-      } else {
-        const link = document.createElement("a");
-        link.href = catalogProfileUrl("figures", figure);
-        link.textContent = "Perfil do autor no catálogo";
-        card.append(link);
-      }
-      grid.append(card);
-    });
+    picks.forEach((pick) => grid.append(createBookCard(pick)));
     const catalogLink = document.createElement("a");
     catalogLink.className = "quiz-catalog-link";
-    catalogLink.href = "/catalogo-politico?catalogo=personalidades";
-    catalogLink.textContent = "Explorar todas as personalidades e leituras";
-    section.append(heading, intro, grid, catalogLink);
+    catalogLink.href = "/livros";
+    catalogLink.textContent = "Explorar a biblioteca completa";
+    section.append(heading, grid, catalogLink);
     return section;
   };
 
@@ -1860,14 +2235,12 @@ document.addEventListener("DOMContentLoaded", () => {
     section.id = "comparar";
     section.setAttribute("aria-labelledby", "comparar-title");
 
-    const title = document.createElement("h2");
-    title.className = "quiz-panel-title";
-    title.id = "comparar-title";
-    title.textContent = "Lado a lado, nos 12 eixos";
-
-    const lead = document.createElement("p");
-    lead.className = "quiz-panel-lead";
-    lead.textContent = "Busque uma personalidade, um país ou uma ideologia e veja, eixo por eixo, onde vocês se aproximam ou se afastam.";
+    const heading = createSectionHeading({
+      eyebrow: "Comparação",
+      title: "Lado a lado, nos 12 eixos",
+      lead: "Busque uma personalidade, um país ou uma ideologia e veja, eixo por eixo, onde vocês se aproximam ou se afastam.",
+      id: "comparar-title"
+    });
 
     const normalize = (value) => String(value ?? "")
       .normalize("NFD")
@@ -2476,7 +2849,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!searchShell.contains(event.target)) closeSuggestions();
     });
 
-    section.append(title, lead, profiles, picker, empty, result);
+    section.append(heading, profiles, picker, empty, result);
     render();
     return section;
   };
@@ -2619,6 +2992,380 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const cardTint = (value, amount = 0.16) => cardBlend(value, "#FFFFFF", amount);
+
+  const createAnalysisSection = (profile, closestIdeology) => {
+    const closest = closestIdeology || rankedProfiles(profile, "ideologies")[0];
+    const axisEntries = profile.map((value, index) => ({
+      index,
+      ...axisDistribution(index, value)
+    }));
+    const axisById = new Map(catalog.axes.map((axis, index) => [axis.id, { axis, index }]));
+    const lower = (text) => String(text || "").toLocaleLowerCase("pt-BR");
+    const axisEntry = (id) => {
+      const record = axisById.get(id);
+      if (!record) return null;
+      return {
+        index: record.index,
+        ...axisDistribution(record.index, profile[record.index])
+      };
+    };
+    const moduleNode = ({ index, id, title, lead, body }) => {
+      const module = document.createElement("section");
+      module.className = "quiz-analysis-module";
+      module.setAttribute("aria-labelledby", id);
+      const head = document.createElement("header");
+      head.className = "quiz-analysis-head";
+      const number = document.createElement("span");
+      number.className = "quiz-analysis-index";
+      number.textContent = index;
+      const text = document.createElement("div");
+      const heading = document.createElement("h3");
+      heading.id = id;
+      heading.textContent = title;
+      const description = document.createElement("p");
+      description.textContent = lead;
+      text.append(heading, description);
+      head.append(number, text);
+      module.append(head, body);
+      return module;
+    };
+
+    const axesGrid = document.createElement("div");
+    axesGrid.className = "quiz-analysis-axes";
+    axisEntries.forEach((entry) => {
+      const card = document.createElement("article");
+      card.className = "quiz-analysis-axis";
+      card.style.setProperty("--axis-color", entry.value >= 50 ? entry.axis.aColor : entry.axis.bColor);
+      const head = document.createElement("div");
+      head.className = "quiz-analysis-axis-head";
+      const name = document.createElement("span");
+      name.className = "quiz-analysis-axis-name";
+      const icon = axisIconNode(entry.axis, entry.value >= 50 ? "a" : "b", 14, null);
+      if (icon) name.append(icon);
+      name.append(document.createTextNode(entry.axis.name));
+      const score = document.createElement("strong");
+      score.className = "quiz-analysis-axis-score";
+      score.append(document.createTextNode(formatPercent(entry.intensity)));
+      const pole = document.createElement("small");
+      pole.textContent = ` ${entry.pole}`;
+      score.append(pole);
+      head.append(name, score);
+      const description = document.createElement("p");
+      description.textContent = entry.value >= 50 ? entry.axis.aDesc : entry.axis.bDesc;
+      const foot = document.createElement("small");
+      const percentile = Math.max(1, Math.round(entry.percentile));
+      foot.textContent = Math.abs(entry.value - 50) < 2.5
+        ? "No centro do eixo, sem puxar para nenhum polo."
+        : entry.percentile >= 99.5
+          ? `Nenhuma ideologia puxa tanto para ${lower(entry.pole)}.`
+          : `Mais para ${lower(entry.pole)} do que ${percentile}% das ideologias.`;
+      card.append(head, description, foot);
+      axesGrid.append(card);
+    });
+
+    const analysisAxisModule = moduleNode({
+      index: "01",
+      id: "analise-eixos-title",
+      title: "Análise completa, eixo a eixo",
+      lead: "Doze leituras curtas sobre o que cada eixo diz do seu perfil e como ele se compara às ideologias do catálogo.",
+      body: axesGrid
+    });
+
+    const diffEntries = profile.map((value, index) => {
+      const target = closest?.item.axes?.[index];
+      if (!Number.isFinite(target)) return null;
+      return { axis: catalog.axes[index], value, target, diff: value - target, abs: Math.abs(value - target) };
+    }).filter(Boolean).sort((first, second) => second.abs - first.abs).slice(0, 3);
+    const diffGrid = document.createElement("div");
+    diffGrid.className = "quiz-analysis-diffs";
+    diffEntries.forEach((entry) => {
+      const card = document.createElement("article");
+      card.className = "quiz-analysis-diff";
+      const userPole = entry.value >= 50 ? entry.axis.a : entry.axis.b;
+      const targetPole = entry.target >= 50 ? entry.axis.a : entry.axis.b;
+      const userIntensity = entry.value >= 50 ? entry.value : 100 - entry.value;
+      const targetIntensity = entry.target >= 50 ? entry.target : 100 - entry.target;
+      const diffPole = entry.diff > 0 ? entry.axis.a : entry.axis.b;
+      card.style.setProperty("--diff-color", entry.diff > 0 ? entry.axis.aColor : entry.axis.bColor);
+      const head = document.createElement("div");
+      head.className = "quiz-analysis-diff-head";
+      const name = document.createElement("strong");
+      name.textContent = entry.axis.name;
+      const delta = document.createElement("span");
+      delta.className = "quiz-analysis-diff-delta";
+      delta.textContent = `${entry.diff > 0 ? "+" : "−"}${formatPercent(entry.abs)}`;
+      head.append(name, delta);
+      const track = document.createElement("div");
+      track.className = "quiz-analysis-diff-track";
+      const you = document.createElement("span");
+      you.className = "quiz-analysis-diff-marker is-you";
+      you.style.left = `${Math.max(0, Math.min(100, 100 - entry.value))}%`;
+      you.setAttribute("aria-hidden", "true");
+      const target = document.createElement("span");
+      target.className = "quiz-analysis-diff-marker is-target";
+      target.style.left = `${Math.max(0, Math.min(100, 100 - entry.target))}%`;
+      target.setAttribute("aria-hidden", "true");
+      track.append(you, target);
+      const poles = document.createElement("div");
+      poles.className = "quiz-analysis-diff-poles";
+      const low = document.createElement("span");
+      low.textContent = entry.axis.a;
+      const high = document.createElement("span");
+      high.textContent = entry.axis.b;
+      poles.append(low, high);
+      const legend = document.createElement("div");
+      legend.className = "quiz-analysis-diff-legend";
+      const youLabel = document.createElement("span");
+      const youDot = document.createElement("i");
+      youDot.className = "is-you";
+      youLabel.append(youDot, document.createTextNode("Você"));
+      const targetLabel = document.createElement("span");
+      const targetDot = document.createElement("i");
+      targetDot.className = "is-target";
+      targetLabel.append(targetDot, document.createTextNode(closest?.item.name || "Catálogo"));
+      legend.append(youLabel, targetLabel);
+      const sentence = document.createElement("p");
+      sentence.textContent = entry.abs < 0.05
+        ? `Você e ${closest?.item.name || "a referência"} estão no mesmo ponto em ${entry.axis.name}.`
+        : `Você está ${formatPercent(entry.abs)} mais para ${lower(diffPole)} do que ${closest?.item.name || "a referência"}.`;
+      const values = document.createElement("small");
+      values.textContent = `Você: ${formatPercent(userIntensity)} ${userPole} · ${closest?.item.name || "Referência"}: ${formatPercent(targetIntensity)} ${targetPole}`;
+      card.append(head, track, poles, legend, sentence, values);
+      diffGrid.append(card);
+    });
+    const diffModule = moduleNode({
+      index: "02",
+      id: "analise-discordancias-title",
+      title: "Onde você mais discorda",
+      lead: closest
+        ? `As três maiores distâncias entre o seu perfil e ${closest.item.name}, a ideologia mais próxima.`
+        : "As três maiores distâncias em relação ao centro do catálogo.",
+      body: diffGrid
+    });
+
+    const governmentEntries = {
+      structure: axisEntry("estrutura"),
+      representation: axisEntry("representacao"),
+      power: axisEntry("poder"),
+      economy: axisEntry("economia"),
+      control: axisEntry("controle"),
+      commerce: axisEntry("comercio"),
+      immigration: axisEntry("imigracao"),
+      moral: axisEntry("moral"),
+      religion: axisEntry("religiao"),
+      diplomacy: axisEntry("diplomacia"),
+      intervention: axisEntry("intervencao"),
+      technology: axisEntry("tecnologia")
+    };
+    const word = (entry, dictionary, fallback) => entry ? (dictionary[entry.pole] || lower(entry.pole)) : fallback;
+    const structureWord = word(governmentEntries.structure, { Federal: "federal", Unitário: "unitário" }, "definido");
+    const representationWord = word(governmentEntries.representation, { Democracia: "democrático", Autocracia: "com poder concentrado" }, "institucional");
+    const powerWord = word(governmentEntries.power, { Segurança: "segurança", Liberdade: "liberdades individuais" }, "ordem e liberdade");
+    const economyWord = word(governmentEntries.economy, { Público: "com forte presença pública", Privado: "de mercado" }, "mista");
+    const controlWord = word(governmentEntries.control, { Planejamento: "planejada", "Livre mercado": "liberal" }, "regulada");
+    const moralWord = word(governmentEntries.moral, { Progressista: "valores progressistas", Tradicionalista: "valores tradicionalistas" }, "valores em disputa");
+    const religionWord = word(governmentEntries.religion, { Irreligioso: "laicidade", Religioso: "presença religiosa" }, "laicidade");
+    const commerceWord = word(governmentEntries.commerce, { Protecionismo: "protecionismo", Globalismo: "globalismo" }, "comércio aberto");
+    const diplomacyWord = word(governmentEntries.diplomacy, { Militarista: "militarismo", Pacifista: "pacifismo" }, "diplomacia");
+    const interventionWord = word(governmentEntries.intervention, { "Não intervencionista": "não intervenção", Nacionalista: "nacionalismo" }, "soberania");
+    const immigrationWord = word(governmentEntries.immigration, { Multiculturalismo: "multiculturalismo", Assimilação: "assimilação" }, "integração");
+    const technologyWord = word(governmentEntries.technology, { Tecnologia: "inovação tecnológica", Biologia: "limites naturais" }, "tecnologia");
+    const govSummary = document.createElement("div");
+    govSummary.className = "quiz-analysis-gov-summary";
+    const govLead = document.createElement("p");
+    govLead.className = "quiz-analysis-gov-lead";
+    govLead.textContent = `Um Estado ${structureWord}, ${representationWord}, que prioriza ${powerWord} e uma economia ${economyWord} e ${controlWord}.`;
+    const govSociety = document.createElement("p");
+    govSociety.textContent = `Na sociedade, pende para ${moralWord} e ${religionWord}; na imigração, para ${immigrationWord}.`;
+    const govWorld = document.createElement("p");
+    govWorld.textContent = `No comércio, para ${commerceWord}; no mundo, para ${diplomacyWord} e ${interventionWord}; na tecnologia, para ${technologyWord}.`;
+    const govNote = document.createElement("p");
+    govNote.className = "quiz-analysis-gov-note";
+    govNote.textContent = "Síntese editorial dos seus 12 eixos; não é um programa de governo.";
+    govSummary.append(govLead, govSociety, govWorld, govNote);
+    const govList = document.createElement("dl");
+    govList.className = "quiz-analysis-gov-list";
+    [
+      ["Estrutura", governmentEntries.structure],
+      ["Representação", governmentEntries.representation],
+      ["Poder", governmentEntries.power],
+      ["Economia", governmentEntries.economy],
+      ["Controle", governmentEntries.control],
+      ["Comércio", governmentEntries.commerce],
+      ["Imigração", governmentEntries.immigration],
+      ["Sociedade", governmentEntries.moral],
+      ["Mundo", governmentEntries.diplomacy],
+      ["Tecnologia", governmentEntries.technology]
+    ].forEach(([label, entry]) => {
+      if (!entry) return;
+      const row = document.createElement("div");
+      row.className = "quiz-analysis-gov-row";
+      const term = document.createElement("dt");
+      term.textContent = label;
+      const value = document.createElement("dd");
+      const pole = document.createElement("strong");
+      pole.textContent = entry.pole;
+      const intensity = document.createElement("span");
+      intensity.textContent = formatPercent(entry.intensity);
+      value.append(pole, intensity);
+      row.append(term, value);
+      govList.append(row);
+    });
+    const govBody = document.createElement("div");
+    govBody.className = "quiz-analysis-government";
+    govBody.append(govSummary, govList);
+    const governmentModule = moduleNode({
+      index: "03",
+      id: "analise-governo-title",
+      title: "Seu governo ideal",
+      lead: "Uma síntese editorial do Estado, da economia e da sociedade que os seus eixos sugerem.",
+      body: govBody
+    });
+
+    const timelineEntries = [];
+    for (const entry of rankedProfiles(profile, "figures")) {
+      const yearMatch = String(entry.item.lifespan || entry.item.periodo || "").match(/\b(1\d{3}|20\d{2})\b/);
+      if (!yearMatch) continue;
+      timelineEntries.push({ ...entry, year: Number(yearMatch[1]) });
+      if (timelineEntries.length === 6) break;
+    }
+    timelineEntries.sort((first, second) => first.year - second.year);
+    const timeline = document.createElement("ol");
+    timeline.className = "quiz-analysis-timeline";
+    timelineEntries.forEach(({ item, score, year }) => {
+      const row = document.createElement("li");
+      const time = document.createElement("time");
+      time.dateTime = String(year);
+      time.textContent = String(year);
+      const link = document.createElement("a");
+      link.className = "quiz-analysis-timeline-card";
+      link.href = catalogProfileUrl("figures", item);
+      const avatar = document.createElement("span");
+      avatar.className = "quiz-analysis-timeline-avatar";
+      const fallback = document.createElement("span");
+      fallback.textContent = cardInitials(item.name);
+      fallback.setAttribute("aria-hidden", "true");
+      if (item.imagePath && !isUnverifiedImage(item)) {
+        const image = document.createElement("img");
+        image.src = item.imagePath;
+        image.alt = `Retrato de ${item.name}`;
+        image.loading = "lazy";
+        image.decoding = "async";
+        image.addEventListener("error", () => image.replaceWith(fallback), { once: true });
+        avatar.append(image);
+      } else {
+        avatar.append(fallback);
+      }
+      const info = document.createElement("span");
+      info.className = "quiz-analysis-timeline-info";
+      const name = document.createElement("strong");
+      name.textContent = item.name;
+      const meta = document.createElement("small");
+      meta.textContent = [item.role || item.areaLabel, item.lifespan || item.periodo].filter(Boolean).join(" · ");
+      const summary = document.createElement("span");
+      summary.className = "quiz-analysis-timeline-summary";
+      summary.textContent = item.summary || item.description || "";
+      const scoreLabel = document.createElement("b");
+      scoreLabel.textContent = `${formatPercent(score)} de proximidade`;
+      info.append(name, meta, summary, scoreLabel);
+      link.append(avatar, info);
+      row.append(time, link);
+      timeline.append(row);
+    });
+    const timelineModule = moduleNode({
+      index: "04",
+      id: "analise-timeline-title",
+      title: "Sua linha do tempo ideológica",
+      lead: "As seis trajetórias mais próximas do seu perfil, em ordem cronológica.",
+      body: timeline
+    });
+
+    const places = [
+      ...rankedProfiles(profile, "countries").map((entry) => ({ ...entry, group: "countries", type: "País" })),
+      ...rankedProfiles(profile, "regimes").map((entry) => ({ ...entry, group: "regimes", type: "Regime e modelo" }))
+    ].sort((first, second) => second.score - first.score).slice(0, 10);
+    const placeList = document.createElement("ol");
+    placeList.className = "quiz-analysis-places";
+    places.forEach(({ item, score, group, type }, index) => {
+      const row = document.createElement("li");
+      const link = document.createElement("a");
+      link.className = "quiz-analysis-place";
+      link.href = catalogProfileUrl(group, item);
+      link.setAttribute("aria-label", `Ver ficha de ${item.name} no catálogo`);
+      const rank = document.createElement("span");
+      rank.className = "quiz-analysis-place-rank";
+      rank.textContent = String(index + 1).padStart(2, "0");
+      const visual = document.createElement("span");
+      visual.className = "quiz-analysis-place-visual";
+      const fallback = document.createElement("span");
+      fallback.className = "quiz-analysis-place-fallback";
+      fallback.textContent = item.sigla || cardInitials(item.name);
+      fallback.setAttribute("aria-hidden", "true");
+      if (item.imagePath && !isUnverifiedImage(item)) {
+        const image = document.createElement("img");
+        image.src = item.imagePath;
+        image.alt = item.imageType === "flag" ? `Bandeira ou símbolo de ${item.name}` : `Símbolo de ${item.name}`;
+        image.loading = "lazy";
+        image.decoding = "async";
+        image.addEventListener("error", () => image.replaceWith(fallback), { once: true });
+        visual.append(image);
+      } else {
+        visual.append(fallback);
+      }
+      const info = document.createElement("span");
+      info.className = "quiz-analysis-place-info";
+      const name = document.createElement("strong");
+      name.textContent = item.name;
+      const meta = document.createElement("small");
+      meta.textContent = `${type}${item.regiao ? ` · ${item.regiao}` : item.periodo ? ` · ${item.periodo}` : ""}`;
+      info.append(name, meta);
+      const scoreWrap = document.createElement("span");
+      scoreWrap.className = "quiz-analysis-place-score";
+      const scoreValue = document.createElement("strong");
+      scoreValue.textContent = formatPercent(score);
+      const bar = document.createElement("span");
+      bar.className = "quiz-analysis-place-bar";
+      const fill = document.createElement("i");
+      fill.style.width = `${Math.max(0, Math.min(100, score))}%`;
+      bar.append(fill);
+      scoreWrap.append(scoreValue, bar);
+      const go = document.createElement("i");
+      go.className = "fas fa-arrow-right quiz-analysis-place-go";
+      go.setAttribute("aria-hidden", "true");
+      link.append(rank, visual, info, scoreWrap, go);
+      row.append(link);
+      placeList.append(row);
+    });
+    const placesModule = moduleNode({
+      index: "05",
+      id: "analise-lugares-title",
+      title: "10 países ou regiões para viver",
+      lead: "Os dez países e modelos históricos mais compatíveis com o seu resultado.",
+      body: placeList
+    });
+
+    const section = document.createElement("section");
+    section.className = "quiz-analysis";
+    section.id = "analise-completa";
+    section.setAttribute("aria-labelledby", "analise-completa-title");
+    const heading = createSectionHeading({
+      eyebrow: "Relatório",
+      title: "Análise completa",
+      lead: "Os 12 eixos em detalhe, as discordâncias com a ideologia mais próxima, a síntese de governo, a linha do tempo das afinidades e os dez lugares mais compatíveis.",
+      id: "analise-completa-title"
+    });
+    const report = document.createElement("div");
+    report.className = "quiz-analysis-report";
+    report.append(
+      analysisAxisModule,
+      diffModule,
+      governmentModule,
+      timelineModule,
+      placesModule
+    );
+    section.append(heading, report);
+    return section;
+  };
 
   const cardImageCache = new Map();
   const cardImageData = (path) => {
@@ -2920,7 +3667,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const [portrait, ...remainingImages] = await Promise.all(imageRequests);
     const figureImages = remainingImages.slice(0, otherFigures.length);
     const countryImages = remainingImages.slice(otherFigures.length, otherFigures.length + topCountries.length);
-    const compass = computeCompass(profile, ideology.item.category);
+    const compass = computeCompass(ideology.item.axes, ideology.item.category);
+    compass.calibration = { name: ideology.item.name, score: ideology.score };
     const svg = buildProfileCard({
       ideology,
       topFigure,
@@ -2971,8 +3719,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const toc = document.getElementById("results-toc");
     if (!toc) return;
     toc.hidden = false;
-    const layout = toc.closest(".results-layout");
-    if (layout) layout.classList.add("has-results");
     if (toc.dataset.ready) return;
     const links = [...toc.querySelectorAll('a[href^="#"]')];
     const targets = links.map((link) => ({
@@ -3019,44 +3765,67 @@ document.addEventListener("DOMContentLoaded", () => {
     resultsView.replaceChildren();
     root.dataset.state = "results";
 
-    const title = document.createElement("h3");
-    title.className = "quiz-results-title";
-    title.textContent = imported ? "Perfil convertido do 12axes" : shared ? "Perfil político compartilhado" : "Seu perfil por dimensão";
-    const note = document.createElement("p");
-    note.className = "quiz-method-note";
-    note.textContent = "Os percentuais são posições relativas entre polos, não uma medida científica. As cinco perguntas de arquétipo respondidas entram como sinais adicionais no cálculo. A proximidade combina distância por eixo, direção, intensidade e divergências isoladas. Os vetores do atlas são leituras editoriais; os demais foram convertidos da base 12 Axes para a mesma régua.";
+    const eyebrow = document.getElementById("results-eyebrow");
+    if (eyebrow) {
+      eyebrow.textContent = imported
+        ? "Perfil convertido · 12 Axes"
+        : shared
+          ? "Perfil compartilhado · 12 dimensões"
+          : "Seu resultado · 12 dimensões";
+    }
 
     const axesSection = document.createElement("section");
     axesSection.className = "quiz-panel quiz-axes-panel";
     axesSection.id = "eixos-resultado";
-    const axesTitle = document.createElement("h2");
-    axesTitle.className = "quiz-panel-title";
-    axesTitle.textContent = "Seus 12 eixos";
-    const axesLead = document.createElement("p");
-    axesLead.className = "quiz-panel-lead";
-    axesLead.textContent = "Cada barra marca sua posição entre dois polos. O centro representa equilíbrio entre eles.";
+    axesSection.setAttribute("aria-labelledby", "eixos-resultado-title");
+    const axesHeading = createSectionHeading({
+      eyebrow: "Perfil por dimensão",
+      title: "Seus 12 eixos",
+      lead: "Cada barra marca sua posição entre dois polos. O centro representa equilíbrio entre eles.",
+      id: "eixos-resultado-title"
+    });
     const axesGrid = document.createElement("div");
     axesGrid.className = "quiz-results-axes";
     catalog.axes.forEach((axis, index) => axesGrid.append(createAxisRow(axis, profile[index])));
-    axesSection.append(axesTitle, axesLead, axesGrid);
+    axesSection.append(axesHeading, axesGrid);
 
     const closestIdeology = rankedProfiles(profile, "ideologies")[0];
-    const compass = computeCompass(profile, closestIdeology?.item.category);
+    const compass = computeCompass(closestIdeology?.item.axes || profile, closestIdeology?.item.category);
+    if (closestIdeology) {
+      compass.calibration = { name: closestIdeology.item.name, score: closestIdeology.score };
+    }
     const sections = [
-      title,
-      note,
       createProfileHighlights(profile),
       axesSection,
       createDistinction(profile),
       createCountriesSection(profile),
-      createMatchSection(profile, "figures", "Personalidades mais próximas de você", "personalidades", "figuras"),
+      createMatchSection(profile, "figures", {
+        sectionId: "figuras",
+        title: "Personalidades mais próximas de você",
+        eyebrow: "Afinidades · personalidades",
+        lead: (total) => `As três personalidades de maior proximidade entre as ${total} comparadas.`,
+        catalogKey: "personalidades"
+      }),
       createAreasSection(profile),
       createBooksSection(profile),
-      createMatchSection(profile, "parties", "Partidos mais próximos de você", "partidos", "partidos"),
+      createMatchSection(profile, "parties", {
+        sectionId: "partidos",
+        title: "Partidos mais próximos de você",
+        eyebrow: "Afinidades · partidos",
+        lead: (total) => `Os três partidos de maior proximidade entre os ${total} comparados.`,
+        catalogKey: "partidos"
+      }),
       createValuesSection(profile),
-      createMatchSection(profile, "ideologies", "Ideologias mais próximas de você", "ideologias", "ideologias"),
+      createMatchSection(profile, "ideologies", {
+        sectionId: "ideologias",
+        title: "Ideologias mais próximas de você",
+        eyebrow: "Afinidades · ideologias",
+        lead: (total) => `As três ideologias de maior proximidade entre as ${total} comparadas.`,
+        catalogKey: "ideologias"
+      }),
       createCompassSection(compass),
-      createComparisonSection(profile)
+      createComparisonSection(profile),
+      createAnalysisSection(profile, closestIdeology)
     ].filter(Boolean);
     resultsView.append(...sections);
 

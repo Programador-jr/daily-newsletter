@@ -769,24 +769,9 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   };
 
-  const axisHref = (axisId, pole) => {
-    if (axisId === "imigracao") return `#pi-${axisId}-${pole === "a" ? "r" : "l"}`;
-    return `#pi-${axisId}-${pole}`;
-  };
-
   const poleName = (axis, pole) => (pole === "a" ? axis.a : axis.b);
 
-  const axisSvg = (axis, pole, size) => {
-    const svg = document.createElementNS(SVG_NS, "svg");
-    svg.setAttribute("width", String(size));
-    svg.setAttribute("height", String(size));
-    svg.setAttribute("aria-hidden", "true");
-    svg.setAttribute("focusable", "false");
-    const use = document.createElementNS(SVG_NS, "use");
-    use.setAttribute("href", axisHref(axis.id, pole));
-    svg.append(use);
-    return svg;
-  };
+  const axisSvg = (axis, pole, size) => globalThis.AxisIcons.create(axis.id, pole, size);
 
   const renderSpectrum = () => {
     const spectrum = document.getElementById("catalog-spectrum");

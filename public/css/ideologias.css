@@ -845,19 +845,12 @@
 .ideology-axes-detail {
   width: 100%;
   margin: 1rem 0;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  background: var(--card-bg);
 }
 .ideology-axes-detail > summary {
-  padding: 0.8rem 1rem;
-  color: var(--text-main);
-  font-size: 0.84rem;
-  font-weight: 700;
-  cursor: pointer;
+  grid-template-columns: minmax(0, 1fr) 24px;
 }
-.ideology-axes-detail > #guide-axis-grid {
-  padding: 0 1rem 1rem;
+.ideology-axes-detail > .accordion-content {
+  padding: 1rem;
 }
 .axis-grid-12 article {
   padding: 0.95rem;

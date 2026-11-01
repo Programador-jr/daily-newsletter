@@ -35,72 +35,74 @@
   <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
 
   <main id="main" tabindex="-1">
-    <div class="results-layout">
-      <div class="results-column">
-        <header class="results-intro">
-          <div>
-            <span class="eyebrow">Seu resultado · 12 dimensões</span>
-            <h1>Seu perfil <em>ideológico</em></h1>
-            <p class="results-intro-lead">Uma leitura das suas respostas em 12 dimensões, com comparações para contextualizar afinidades e diferenças.</p>
-          </div>
-          <a class="results-restart" href="/teste-politico">Refazer o teste <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-        </header>
-
-        <div class="results-empty" id="results-empty" role="status" hidden>
-          <p>Nenhum perfil foi informado neste endereço. Faça o questionário para gerar seu retrato em 12 dimensões.</p>
-          <a class="quiz-button quiz-primary" href="/teste-politico"><i class="fas fa-list-check" aria-hidden="true"></i> Fazer o teste político</a>
-        </div>
-
-        <div class="ideology-quiz" id="ideology-quiz">
-          <div class="quiz-intro" hidden>
-            <p class="quiz-catalog-counts">12 eixos · 240 afirmações</p>
-            <button class="quiz-button quiz-primary" id="quiz-start" type="button" tabindex="-1">Começar questionário</button>
-          </div>
-          <div class="quiz-question-view" hidden>
-            <div class="quiz-progress"><span id="quiz-progress-label" aria-live="polite"></span><progress id="quiz-progress" max="12" value="1" aria-label="Progresso do questionário"></progress></div>
-            <span class="eyebrow" id="quiz-axis-label"></span>
-            <h3 id="quiz-question" tabindex="-1"></h3>
-            <fieldset class="quiz-answers" id="quiz-answers"><legend class="visually-hidden">Selecione seu grau de concordância</legend></fieldset>
-            <div class="quiz-navigation"><button class="quiz-button quiz-secondary" id="quiz-back" type="button">Voltar</button><button class="quiz-button quiz-primary" id="quiz-next" type="button">Próxima</button></div>
-            <input type="radio" name="quiz-length" value="short" checked hidden>
-          </div>
-          <div class="quiz-results" id="quiz-results" hidden aria-live="polite"></div>
-          <div class="quiz-error" id="quiz-error" hidden role="alert"><h3>Não foi possível carregar os dados deste resultado.</h3><p>Recarregue a página ou refaça o questionário.</p></div>
-          <dialog class="quiz-help-dialog quiz-result-help" id="result-help-dialog" aria-labelledby="result-help-dialog-title">
-            <div class="quiz-help-dialog-shell">
-              <div class="quiz-help-dialog-header">
-                <h2 id="result-help-dialog-title">Detalhes do resultado</h2>
-                <button id="result-help-close" type="button" aria-label="Fechar detalhes">×</button>
-              </div>
-              <div id="result-help-content"></div>
-            </div>
-          </dialog>
-        </div>
-
-        <section class="quiz-panel quiz-credit" id="metodologia" aria-labelledby="result-credit-title">
-          <span class="eyebrow">Créditos e metodologia</span>
-          <h2 id="result-credit-title">Como ler este resultado</h2>
-          <p>Os percentuais indicam posições relativas entre os polos de cada eixo. A proximidade combina distância por eixo, direção, intensidade e divergências isoladas. Os vetores são modelos editoriais do catálogo 12 Axes, não respostas atribuídas a essas pessoas nem equivalência de valores ou trajetórias.</p>
-          <p>Dados e questionário: <a href="https://12axes.vercel.app/" target="_blank" rel="noopener noreferrer">12 Axes</a> · Enzo Xavier Santos, reproduzidos com autorização escrita do autor.</p>
-        </section>
+    <section class="history-hero results-hero">
+      <span class="eyebrow" id="results-eyebrow">Seu resultado · 12 dimensões</span>
+      <h1>Seu perfil <em>ideológico</em>.</h1>
+      <p class="results-hero-lead">Uma leitura das suas respostas em 12 dimensões, com afinidades, comparações e leituras para contextualizar o resultado. O perfil é um retrato do momento, não um rótulo definitivo.</p>
+      <div class="results-hero-actions">
+        <a class="quiz-button quiz-primary" href="/teste-politico"><i class="fas fa-rotate-left" aria-hidden="true"></i> Refazer o teste</a>
+        <a class="quiz-button quiz-secondary" href="/catalogo-politico"><i class="fas fa-table-cells-large" aria-hidden="true"></i> Explorar o catálogo</a>
       </div>
+    </section>
 
-      <aside class="results-side">
-        <nav class="results-toc" id="results-toc" aria-label="Nesta página" hidden>
-          <p>Nesta página</p>
-          <a href="#eixos-resultado"><span>01</span> 12 eixos</a>
-          <a href="#assinatura"><span>02</span> Distinção</a>
-          <a href="#resultado-paises"><span>03</span> Países</a>
-          <a href="#resultado-figuras"><span>04</span> Personalidades</a>
-          <a href="#areas"><span>05</span> Áreas</a>
-          <a href="#resultado-livros"><span>06</span> Livros</a>
-          <a href="#resultado-partidos"><span>07</span> Partidos</a>
-          <a href="#valores"><span>08</span> Valores</a>
-          <a href="#resultado-ideologias"><span>09</span> Ideologias</a>
-          <a href="#bussola"><span>10</span> Bússola</a>
-          <a href="#comparar"><span>11</span> Comparar</a>
-        </nav>
-      </aside>
+    <nav class="results-toc" id="results-toc" aria-label="Nesta página" hidden>
+      <p>Nesta página</p>
+      <a href="#eixos-resultado"><span>01</span> 12 eixos</a>
+      <a href="#assinatura"><span>02</span> Distinção</a>
+      <a href="#resultado-paises"><span>03</span> Países</a>
+      <a href="#resultado-figuras"><span>04</span> Personalidades</a>
+      <a href="#areas"><span>05</span> Áreas</a>
+      <a href="#resultado-livros"><span>06</span> Livros</a>
+      <a href="#resultado-partidos"><span>07</span> Partidos</a>
+      <a href="#valores"><span>08</span> Valores</a>
+      <a href="#resultado-ideologias"><span>09</span> Ideologias</a>
+      <a href="#bussola"><span>10</span> Bússola</a>
+      <a href="#comparar"><span>11</span> Comparar</a>
+      <a href="#analise-completa"><span>12</span> Análise completa</a>
+    </nav>
+
+    <section class="ideology-method results-method" aria-labelledby="results-method-title">
+      <div class="ideology-method-icon"><i class="fas fa-compass-drafting" aria-hidden="true"></i></div>
+      <div>
+        <span class="eyebrow">Como ler este resultado</span>
+        <h2 id="results-method-title">Percentuais são posições relativas, não rótulos.</h2>
+        <p>Os percentuais indicam posições entre os polos de cada eixo. A proximidade combina distância por eixo, direção, intensidade e divergências isoladas; as perguntas de arquétipo entram como sinais adicionais. Os vetores do atlas são leituras editoriais, e os demais perfis foram convertidos da base 12 Axes para a mesma régua.</p>
+      </div>
+    </section>
+
+    <div class="results-empty" id="results-empty" role="status" hidden>
+      <p>Nenhum perfil foi informado neste endereço. Faça o questionário para gerar seu retrato em 12 dimensões.</p>
+      <a class="quiz-button quiz-primary" href="/teste-politico"><i class="fas fa-list-check" aria-hidden="true"></i> Fazer o teste político</a>
+    </div>
+
+    <div class="ideology-quiz results-quiz" id="ideology-quiz">
+      <div class="quiz-intro" hidden>
+        <p class="quiz-catalog-counts">12 eixos · 240 afirmações</p>
+        <button class="quiz-button quiz-primary" id="quiz-start" type="button" tabindex="-1">Começar questionário</button>
+      </div>
+      <div class="quiz-question-view" hidden>
+        <div class="quiz-progress"><span id="quiz-progress-label" aria-live="polite"></span><progress id="quiz-progress" max="12" value="1" aria-label="Progresso do questionário"></progress></div>
+        <span class="eyebrow" id="quiz-axis-label"></span>
+        <h3 id="quiz-question" tabindex="-1"></h3>
+        <fieldset class="quiz-answers" id="quiz-answers"><legend class="visually-hidden">Selecione seu grau de concordância</legend></fieldset>
+        <div class="quiz-navigation"><button class="quiz-button quiz-secondary" id="quiz-back" type="button">Voltar</button><button class="quiz-button quiz-primary" id="quiz-next" type="button">Próxima</button></div>
+        <input type="radio" name="quiz-length" value="short" checked hidden>
+      </div>
+      <div class="quiz-results" id="quiz-results" hidden aria-live="polite"></div>
+      <div class="quiz-error" id="quiz-error" hidden role="alert"><h3>Não foi possível carregar os dados deste resultado.</h3><p>Recarregue a página ou refaça o questionário.</p></div>
+      <dialog class="quiz-help-dialog quiz-result-help" id="result-help-dialog" aria-labelledby="result-help-dialog-title">
+        <div class="quiz-help-dialog-shell">
+          <div class="quiz-help-dialog-header">
+            <div class="quiz-help-dialog-heading">
+              <span class="eyebrow" id="result-help-dialog-kicker">Detalhes do resultado</span>
+              <h2 id="result-help-dialog-title">Detalhes do resultado</h2>
+              <p class="quiz-help-dialog-subtitle" id="result-help-dialog-subtitle" hidden></p>
+            </div>
+            <button id="result-help-close" type="button" aria-label="Fechar detalhes">×</button>
+          </div>
+          <div id="result-help-content"></div>
+        </div>
+      </dialog>
     </div>
   </main>
   <div id="footer"></div>
@@ -109,6 +111,7 @@
 <script src="/js/sidebar.js"></script>
 <script src="/js/footer.js"></script>
 <script src="/js/axis-icons.js"></script>
+<script src="/js/data/atlas-livros-completo.js"></script>
 <script src="/js/ideology-quiz.js"></script>
 </body>
 </html>
