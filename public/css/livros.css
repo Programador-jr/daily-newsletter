@@ -906,6 +906,175 @@ html body.books-page dialog.atlas-dialog-book {
   }
 }
 
+/* LIVROS · duas colunas em telas pequenas */
+@media (max-width: 768px) {
+  .books-page .atlas-featured-grid,
+  .books-page .atlas-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: stretch;
+    justify-items: stretch;
+    gap: .75rem;
+  }
+
+  .books-page .atlas-card {
+    gap: .75rem;
+    min-height: 0;
+    padding: .75rem;
+    border-radius: 10px;
+  }
+
+  .books-page .atlas-featured-grid,
+  .books-page .atlas-grid {
+    grid-auto-rows: auto;
+  }
+
+  .books-page .atlas-card-tags,
+  .books-page .atlas-card-summary,
+  .books-page .atlas-card .atlas-fp {
+    display: none;
+  }
+
+  .books-page .atlas-book-cover {
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .books-page .atlas-book-cover h3 {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .books-page .atlas-book-cover-area,
+  .books-page .atlas-book-cover p {
+    display: none;
+  }
+
+  .books-page .atlas-card-cta {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 2.3rem;
+    margin-top: 0;
+    padding: .45rem .6rem;
+    font-size: .74rem;
+  }
+}
+
+/* FICHA DO LIVRO · subtítulos discretos */
+.atlas-dialog-book .atlas-dialog-title > p,
+.atlas-dialog-book .atlas-dialog-summary {
+  color: var(--text-muted);
+}
+
+/* CONTROLES MOBILE · filtros, pesquisa e ordenação na mesma barra */
+.books-page .atlas-controls-shell {
+  display: contents;
+}
+
+@media (max-width: 768px) {
+  .books-page .atlas-controls-shell {
+    position: sticky;
+    top: 4.75rem;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+    align-items: center;
+    gap: .5rem;
+    margin: 0 1.25rem .65rem;
+    padding: .55rem 0;
+    background: var(--bg-container);
+  }
+
+  .books-page .atlas-search-dock {
+    position: static;
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    padding: 0;
+  }
+
+  .books-page .atlas-controls {
+    display: contents;
+  }
+
+  .books-page .atlas-filter-accordion,
+  .books-page .atlas-sort {
+    grid-row: 1;
+  }
+
+  .books-page .atlas-filter-accordion {
+    grid-column: 1;
+    overflow: visible;
+    border: 0;
+    background: transparent;
+  }
+
+  .books-page .atlas-filter-accordion > summary {
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card-bg);
+  }
+
+  .books-page .atlas-filter-accordion > summary span {
+    justify-content: center;
+  }
+
+  .books-page .atlas-filter-accordion > summary span b,
+  .books-page .atlas-filter-accordion > summary > .atlas-filter-chevron {
+    display: none;
+  }
+
+  .books-page .atlas-filter-accordion .atlas-filters {
+    position: absolute;
+    top: calc(100% + .4rem);
+    left: 0;
+    right: 0;
+    z-index: 2;
+    max-height: min(60vh, 26rem);
+    overflow-y: auto;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--card-bg);
+    box-shadow: 0 12px 28px rgb(24 37 34 / 16%);
+  }
+
+  .books-page .atlas-sort {
+    position: relative;
+    grid-column: 3;
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    place-items: center;
+    color: var(--primary);
+    font-size: 1rem;
+  }
+
+  .books-page .atlas-sort span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .books-page .atlas-sort select {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    min-height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+}
+
 
 /* Pesquisa permanece acessível durante a navegação pelo catálogo. */
 .books-page .atlas-search-dock {
@@ -1016,5 +1185,28 @@ html body.books-page dialog.atlas-dialog-book {
 @media (prefers-reduced-motion: reduce) {
   .books-page .atlas-filter-chevron {
     transition: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .books-page .atlas-search-dock {
+    position: static;
+    top: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  .books-page .atlas-filter-accordion {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+  }
+
+  .books-page .atlas-filter-accordion > summary {
+    width: 2.75rem;
+    height: 2.75rem;
+    min-height: 0;
+    justify-content: center;
+    padding: 0;
   }
 }
