@@ -347,24 +347,12 @@
   margin: auto;
   overflow: auto;
   padding: 0;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--bg-container);
-  color: var(--text-main);
-  box-shadow: 0 24px 80px rgb(10 20 16 / 28%);
   overscroll-behavior: contain;
 }
 
 .quiz-main-dialog[open],
 .quiz-help-dialog[open] {
   animation: quiz-dialog-enter 240ms cubic-bezier(.2,.75,.25,1) both;
-}
-
-.quiz-main-dialog::backdrop,
-.quiz-help-dialog::backdrop {
-  background: rgb(12 20 17 / 62%);
-  backdrop-filter: blur(5px);
-  animation: quiz-backdrop-enter 200ms ease both;
 }
 
 .quiz-main-dialog[open] {

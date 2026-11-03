@@ -263,14 +263,6 @@
   width: min(980px, calc(100vw - 2rem));
   max-height: min(92vh, 1000px);
   padding: 0;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--bg-container);
-  color: var(--text-main);
-}
-.atlas-dialog::backdrop {
-  background: rgb(17 29 24 / 58%);
-  backdrop-filter: blur(3px);
 }
 .atlas-dialog-shell {
   max-height: min(92vh, 1000px);

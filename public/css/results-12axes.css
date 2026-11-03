@@ -2785,26 +2785,7 @@
   border-top: 1px solid var(--border);
 }
 
-/* DIALOG DE DETALHES — mesmo padrão da ficha de livro */
-
-.results-page .quiz-result-help {
-  width: min(920px, calc(100vw - 2rem));
-  max-width: 920px;
-  max-height: min(86vh, 900px);
-  margin: auto;
-  padding: 0;
-  overflow: hidden;
-  animation: result-help-in 180ms ease-out;
-}
-
-.results-page .quiz-result-help::backdrop {
-  background: #abb0ae;
-  backdrop-filter: none;
-}
-
-[data-theme="dark"] .results-page .quiz-result-help::backdrop {
-  background: #000;
-}
+/* DIALOG DE DETALHES — content layout follows the shared dialog shell. */
 
 .results-page .quiz-result-help .quiz-help-dialog-shell {
   min-width: 0;
@@ -3649,16 +3630,8 @@ body.quiz-modal-open {
   max-height: min(86vh, 900px);
   margin: auto;
   padding: 2rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--card-bg);
-  color: var(--text-main);
-  box-shadow: 0 20px 60px rgb(0 0 0 / 18%);
-}
-
-.results-page .quiz-result-help::backdrop {
-  background: rgb(13 25 21 / 56%);
-  backdrop-filter: blur(2px);
+  overflow: hidden;
+  animation: result-help-in 180ms ease-out;
 }
 
 .results-page .quiz-help-dialog-shell {

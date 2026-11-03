@@ -14,8 +14,7 @@
 .quiz-button { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; min-height:40px; padding:.55rem .9rem; border:1px solid var(--border); border-radius:7px; background:var(--card-bg); color:var(--text-main); font:inherit; font-weight:700; cursor:pointer; }
 .quiz-primary { border-color:var(--primary); background:var(--primary); color:var(--bg-container); }
 .quiz-secondary { background:transparent; }
-.quiz-main-dialog,.quiz-help-dialog { width:min(760px,calc(100vw - 1.5rem)); max-height:92vh; padding:1.2rem; border:1px solid var(--border); border-radius:12px; background:var(--bg-container); color:var(--text-main); }
-.quiz-main-dialog::backdrop,.quiz-help-dialog::backdrop { background:rgb(16 26 22 / 58%); backdrop-filter:blur(3px); }
+.quiz-main-dialog,.quiz-help-dialog { width:min(760px,calc(100vw - 1.5rem)); max-height:92vh; padding:1.2rem; }
 .quiz-dialog-header,.quiz-help-dialog-header,.quiz-navigation,.quiz-progress-head { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
 .quiz-progress-segments { display:flex; gap:3px; margin:.7rem 0 1.2rem; }
 .quiz-progress-segments > * { flex:1; min-height:4px; border-radius:9px; background:var(--border); }
