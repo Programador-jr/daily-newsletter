@@ -44,3 +44,110 @@
     --kn-component-enter-transition: 0ms;
   }
 }
+
+/* Shared modal shell used by editorial detail panels. */
+body.history-modal-open {
+  position: fixed;
+  top: var(--history-scroll-lock-top);
+  left: 0;
+  right: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.history-detail {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 2rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  transition: opacity var(--kn-component-transition), visibility var(--kn-component-transition);
+}
+
+.history-detail.open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.history-detail-backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--kn-component-overlay);
+  opacity: 0;
+  transition: opacity var(--kn-component-transition);
+}
+
+.history-detail.open .history-detail-backdrop {
+  opacity: 1;
+}
+
+.history-detail-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(920px, 100%);
+  max-height: min(86vh, 900px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 2rem;
+  border: 1px solid var(--kn-component-border);
+  border-radius: var(--kn-component-radius);
+  background: var(--kn-component-surface);
+  color: var(--text-main);
+  box-shadow: var(--kn-component-shadow);
+  box-sizing: border-box;
+  transform: translateY(12px) scale(0.985);
+  transition: transform var(--kn-component-enter-transition);
+}
+
+.history-detail.open .history-detail-dialog {
+  transform: translateY(0) scale(1);
+}
+
+/* Native dialog defaults; page-specific layouts may override these values. */
+:where(dialog, [role="dialog"], .history-detail-dialog) {
+  border: 1px solid var(--kn-component-border);
+  border-radius: var(--kn-component-radius);
+  background: var(--kn-component-surface);
+  color: var(--text-main);
+  box-shadow: var(--kn-component-shadow);
+}
+
+:where(dialog)::backdrop {
+  background: var(--kn-component-overlay);
+  backdrop-filter: blur(var(--kn-component-overlay-blur));
+}
+
+@media (max-width: 768px) {
+  .history-detail {
+    padding: 1rem;
+  }
+
+  .history-detail-dialog {
+    width: 100%;
+    max-height: 90vh;
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 520px) {
+  .history-detail {
+    padding: 0.65rem;
+  }
+
+  .history-detail-dialog {
+    max-height: 92vh;
+    padding: 1rem;
+  }
+}
