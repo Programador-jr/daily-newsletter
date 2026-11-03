@@ -1470,3 +1470,55 @@
     transition: none;
   }
 }
+
+
+/* Reference links inside ideology profile headers. */
+.political-catalog-page .catalog-profile-references {
+  display: grid;
+  gap: .5rem;
+  align-content: center;
+}
+
+.political-catalog-page .catalog-profile-reference {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: .65rem;
+}
+
+.political-catalog-page .catalog-profile-reference img,
+.political-catalog-page .catalog-profile-reference .catalog-profile-ref-initials {
+  width: 42px;
+  height: 42px;
+  min-height: 42px;
+  border-radius: 7px;
+  object-fit: cover;
+  font-family: "Inter", sans-serif;
+  font-size: .9rem;
+}
+
+.political-catalog-page .catalog-profile-reference > span:not(.catalog-profile-ref-initials) {
+  display: grid;
+  min-width: 0;
+  gap: .12rem;
+}
+
+.political-catalog-page .catalog-profile-reference small {
+  color: var(--text-muted);
+  font-size: .62rem;
+}
+
+.political-catalog-page .catalog-profile-reference b {
+  overflow: hidden;
+  color: var(--text-main);
+  font-size: .72rem;
+  text-overflow: ellipsis;
+}
+
+.political-catalog-page .catalog-profile-reference em {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: .62rem;
+  font-style: normal;
+  text-overflow: ellipsis;
+}
