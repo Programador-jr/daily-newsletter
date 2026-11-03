@@ -466,3 +466,71 @@
     transition: none;
   }
 }
+
+/* ==========================================================================
+   DISTRIBUIÇÃO POR ÁREA (Book Spectrum) — componente reutilizável do Atlas
+   Classes: .atlas-book-spectrum, .atlas-book-spectrum-label,
+            .atlas-book-spectrum-bar, .atlas-book-spectrum-segment
+   Uso: sem prefixo de página, funciona em qualquer página .atlas-page
+   ========================================================================== */
+
+.atlas-book-spectrum {
+  margin-top: 1.25rem;
+}
+
+.atlas-book-spectrum-label {
+  display: block;
+  margin-bottom: .6rem;
+  color: var(--text-muted);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.atlas-book-spectrum-bar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .5rem;
+}
+
+.atlas-book-spectrum-segment {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: .55rem .65rem;
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--c);
+  border-radius: 7px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  font-size: .73rem;
+}
+
+.atlas-book-spectrum-segment b {
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.atlas-book-spectrum-segment em {
+  flex: none;
+  color: var(--text-muted);
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 768px) {
+  .atlas-book-spectrum-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .atlas-book-spectrum-bar {
+    grid-template-columns: 1fr;
+  }
+}

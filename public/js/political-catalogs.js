@@ -711,12 +711,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const current = countries.length;
     spectrum.hidden = false;
     spectrum.replaceChildren(
-      el("div", { class: "catalog-country-periods" },
-        el("span", { class: "catalog-spectrum-title", text: "Recorte histórico" }),
-        el("div", { class: "catalog-spectrum-bar" },
-          el("button", { class: "catalog-spectrum-seg", type: "button", style: { "--n": String(current), "--c": "#35608f" }, title: `${current} países atuais` }, el("b", { text: "Países atuais" }), el("em", { text: String(current) })),
-          ...periods.map((period) => el("button", { class: "catalog-spectrum-seg", type: "button", style: { "--n": String(counts.get(period) || 1), "--c": "#7a4090" }, title: `${counts.get(period) || 0} em ${period}` }, el("b", { text: period }), el("em", { text: String(counts.get(period) || 0) })))
-        )
+      el("span", { class: "atlas-book-spectrum-label", text: "Recorte histórico" }),
+      el("div", { class: "atlas-book-spectrum-bar" },
+        el("span", { class: "atlas-book-spectrum-segment", style: { "--c": "#35608f" }, title: `${current} países atuais` }, el("b", { text: "Países atuais" }), el("em", { text: String(current) })),
+        ...periods.map((period) => el("span", { class: "atlas-book-spectrum-segment", style: { "--c": "#7a4090" }, title: `${counts.get(period) || 0} em ${period}` }, el("b", { text: period }), el("em", { text: String(counts.get(period) || 0) })))
       )
     );
   };
@@ -734,10 +732,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const counts = new Map(areas.map((area) => [area.id, items.filter((item) => item.area === area.id).length]));
     spectrum.hidden = false;
     spectrum.replaceChildren(
-      el("div", { class: "catalog-country-periods" },
-        el("span", { class: "catalog-spectrum-title", text: "Distribuição por área" }),
-        el("div", { class: "catalog-spectrum-bar" }, areas.map((area) => el("button", { class: "catalog-spectrum-seg", type: "button", style: { "--n": String(counts.get(area.id) || 1), "--c": area.cor || "#35608f" }, title: `${area.rotulo}: ${counts.get(area.id) || 0}` }, el("b", { text: area.rotulo }), el("em", { text: String(counts.get(area.id) || 0) }))))
-      )
+      el("span", { class: "atlas-book-spectrum-label", text: "Distribuição por área" }),
+      el("div", { class: "atlas-book-spectrum-bar" }, areas.map((area) => el("span", { class: "atlas-book-spectrum-segment", style: { "--c": area.cor || "#35608f" }, title: `${area.rotulo}: ${counts.get(area.id) || 0}` }, el("b", { text: area.rotulo }), el("em", { text: String(counts.get(area.id) || 0) }))))
     );
   };
 
@@ -752,20 +748,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const items = DATA.profiles.parties || [];
     const categories = ["Partido", "Movimento", "Casa dinástica", "Organização armada"];
     const counts = new Map(categories.map((category) => [category, items.filter((item) => item.category === category).length]));
+    const colors = ["#35608f", "#a33a57", "#8f5a2e", "#5a3b28"];
+    const labels = {
+      Partido: "Partidos",
+      Movimento: "Movimentos",
+      "Casa dinástica": "Casas dinásticas",
+      "Organização armada": "Organizações armadas"
+    };
     spectrum.hidden = false;
     spectrum.replaceChildren(
-      el("div", { class: "catalog-country-periods" },
-        el("span", { class: "catalog-spectrum-title", text: "Distribuição por tipo de organização" }),
-        el("div", { class: "catalog-spectrum-bar" }, categories.map((category) => {
-          const labels = {
-            Partido: "Partidos",
-            Movimento: "Movimentos",
-            "Casa dinástica": "Casas dinásticas",
-            "Organização armada": "Organizações armadas"
-          };
-          return el("button", { class: "catalog-spectrum-seg", type: "button", style: { "--n": String(counts.get(category) || 1), "--c": ["#35608f", "#a33a57", "#8f5a2e", "#5a3b28"][categories.indexOf(category)] }, title: `${category}: ${counts.get(category) || 0}` }, el("b", { text: labels[category] || category }), el("em", { text: String(counts.get(category) || 0) }));
-        }))
-      )
+      el("span", { class: "atlas-book-spectrum-label", text: "Distribuição por tipo de organização" }),
+      el("div", { class: "atlas-book-spectrum-bar" }, categories.map((category, index) => el("span", { class: "atlas-book-spectrum-segment", style: { "--c": colors[index] }, title: `${category}: ${counts.get(category) || 0}` }, el("b", { text: labels[category] || category }), el("em", { text: String(counts.get(category) || 0) }))))
     );
   };
 
@@ -1401,17 +1394,127 @@ document.addEventListener("DOMContentLoaded", () => {
     notice.textContent = "";
   };
 
+  let closeGenericSortMenu = () => {};
+
+  const setGenericSortValue = (value, { apply = true, close = false } = {}) => {
+    const sorts = [
+      { value: "curadoria", label: "Ordem editorial" },
+      { value: "az", label: "Nome (A–Z)" },
+      { value: "za", label: "Nome (Z–A)" }
+    ];
+    const sort = sorts.find((entry) => entry.value === value) || sorts[0];
+    if (!sort) return;
+    state.sort = sort.value;
+    const valueNode = document.getElementById("catalog-generic-sort-value");
+    if (valueNode) valueNode.textContent = sort.label;
+    document.querySelectorAll("#catalog-generic-sort-menu .atlas-sort-option").forEach((option) => {
+      const selected = option.dataset.value === sort.value;
+      option.setAttribute("aria-selected", String(selected));
+      option.tabIndex = selected ? 0 : -1;
+    });
+    if (apply) applyFilters(true);
+    if (close) closeGenericSortMenu({ restoreFocus: true });
+  };
+
   const renderSort = () => {
-    const select = document.getElementById("catalog-generic-sort");
-    if (!select) return;
-    select.replaceChildren(
+    const control = document.getElementById("catalog-generic-sort");
+    const trigger = document.getElementById("catalog-generic-sort-trigger");
+    const menu = document.getElementById("catalog-generic-sort-menu");
+    if (!control || !trigger || !menu) return;
+
+    menu.replaceChildren(
       ...[
         { value: "curadoria", label: "Ordem editorial" },
         { value: "az", label: "Nome (A–Z)" },
         { value: "za", label: "Nome (Z–A)" }
-      ].map((sort) => el("option", { value: sort.value, text: sort.label }))
+      ].map((sort) =>
+        el(
+          "li",
+          { role: "presentation" },
+          el(
+            "button",
+            {
+              class: "atlas-sort-option",
+              type: "button",
+              role: "option",
+              "data-value": sort.value,
+              "aria-selected": String(sort.value === state.sort),
+              tabindex: sort.value === state.sort ? "0" : "-1"
+            },
+            el("span", { text: sort.label }),
+            icon("fa-check")
+          )
+        )
+      )
     );
-    select.value = state.sort;
+
+    const setOpen = (open, { focusOption = false } = {}) => {
+      menu.hidden = !open;
+      trigger.setAttribute("aria-expanded", String(open));
+      control.dataset.open = String(open);
+      if (!open || !focusOption) return;
+      const selected = menu.querySelector('[aria-selected="true"]') || menu.querySelector(".atlas-sort-option");
+      selected?.focus();
+    };
+
+    closeGenericSortMenu = ({ restoreFocus = false } = {}) => {
+      if (menu.hidden) return;
+      setOpen(false);
+      if (restoreFocus) trigger.focus();
+    };
+
+    const options = () => [...menu.querySelectorAll(".atlas-sort-option")];
+
+    trigger.addEventListener("click", () => {
+      if (menu.hidden) setOpen(true, { focusOption: true });
+      else setOpen(false);
+    });
+
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+      event.preventDefault();
+      if (menu.hidden) {
+        setOpen(true, { focusOption: true });
+        return;
+      }
+      const list = options();
+      const target = event.key === "ArrowDown" ? list[0] : list[list.length - 1];
+      target?.focus();
+    });
+
+    menu.addEventListener("click", (event) => {
+      const option = event.target instanceof Element ? event.target.closest(".atlas-sort-option") : null;
+      if (!option) return;
+      setGenericSortValue(option.dataset.value, { close: true });
+    });
+
+    menu.addEventListener("keydown", (event) => {
+      const list = options();
+      if (list.length === 0) return;
+      const index = list.indexOf(document.activeElement);
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        const step = event.key === "ArrowDown" ? 1 : -1;
+        list[(index + step + list.length) % list.length]?.focus();
+      } else if (event.key === "Home" || event.key === "End") {
+        event.preventDefault();
+        list[event.key === "Home" ? 0 : list.length - 1]?.focus();
+      } else if (event.key === "Escape") {
+        event.preventDefault();
+        closeGenericSortMenu({ restoreFocus: true });
+      } else if (event.key === "Tab") {
+        closeGenericSortMenu();
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!control.contains(event.target)) closeGenericSortMenu();
+    });
+    document.addEventListener("focusin", (event) => {
+      if (!control.contains(event.target)) closeGenericSortMenu();
+    });
+
+    setGenericSortValue(state.sort, { apply: false });
   };
 
   const renderFilters = () => {
@@ -1421,11 +1524,11 @@ document.addEventListener("DOMContentLoaded", () => {
     currentConfig().filters.forEach((filter) => {
       const group = el("div", { class: "atlas-filter-group" });
       group.append(el("span", { class: "atlas-filter-label", text: filter.label }));
-      const chips = el("div", { class: "atlas-chips-row" });
+      const chipRow = el("div", { class: "atlas-chips-row" });
       const options = [{ value: "", label: "Todas" }, ...filter.options.filter((option) => option.value)];
       options.forEach((option) => {
         const chip = el("button", {
-          class: "atlas-chip catalog-filter",
+          class: "atlas-chip",
           type: "button",
           "aria-pressed": String((state.filters[filter.key] || "") === option.value),
           "data-filter": filter.key,
@@ -1434,24 +1537,18 @@ document.addEventListener("DOMContentLoaded", () => {
         chip.textContent = option.label;
         chip.addEventListener("click", () => {
           state.filters[filter.key] = option.value;
-          group.querySelectorAll(".catalog-filter").forEach((button) => {
+          group.querySelectorAll(".atlas-chip").forEach((button) => {
             button.setAttribute("aria-pressed", String(button.dataset.value === option.value));
           });
           applyFilters(true);
         });
-        chips.append(chip);
+        chipRow.append(chip);
       });
-      group.append(chips);
+      group.append(chipRow);
       container.append(group);
     });
 
-    const clear = el("button", {
-      class: "atlas-clear",
-      type: "button",
-      id: "catalog-generic-clear",
-      hidden: true,
-      text: "Limpar filtros"
-    });
+    const clear = el("button", { class: "atlas-clear", type: "button", id: "catalog-generic-clear", hidden: true, text: "Limpar filtros" });
     clear.addEventListener("click", () => {
       state.query = "";
       state.queryText = "";
@@ -1459,8 +1556,7 @@ document.addEventListener("DOMContentLoaded", () => {
       state.sort = "curadoria";
       const search = document.getElementById("catalog-generic-search");
       if (search) search.value = "";
-      const sort = document.getElementById("catalog-generic-sort");
-      if (sort) sort.value = "curadoria";
+      setGenericSortValue("curadoria", { apply: false });
       renderFilters();
       applyFilters(true);
       search?.focus();
@@ -2578,10 +2674,6 @@ document.addEventListener("DOMContentLoaded", () => {
         state.queryText = genericSearch.value.trim();
         applyFilters(true);
       });
-      document.getElementById("catalog-generic-sort")?.addEventListener("change", (event) => {
-        state.sort = event.target.value;
-        applyFilters(true);
-      });
       document.getElementById("catalog-generic-load-more")?.addEventListener("click", () => {
         state.visible += PAGE_SIZE;
         renderGrid();
@@ -2606,6 +2698,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       updateStickyOffset();
       renderAll();
+
+      // Initialize filter accordion as closed (like atlas.js does)
+      const genericFilterAccordion = document.getElementById("catalog-generic-filter-accordion");
+      if (genericFilterAccordion) {
+        genericFilterAccordion.open = false;
+      }
+      const ideaFilterAccordion = document.getElementById("atlas-filter-accordion");
+      if (ideaFilterAccordion) {
+        ideaFilterAccordion.open = false;
+      }
+
       const id = hashId();
       if (id) {
         const found = findItemByHash(id);

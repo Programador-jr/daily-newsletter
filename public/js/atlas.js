@@ -1051,6 +1051,23 @@
     sort: "curadoria"
   };
 
+  let closeSortMenu = () => {};
+
+  function setSortValue(value, { apply = true, close = false } = {}) {
+    const sort = state.config.sorts.find((entry) => entry.value === value) || state.config.sorts[0];
+    if (!sort) return;
+    state.sort = sort.value;
+    const valueNode = document.getElementById("atlas-sort-value");
+    if (valueNode) valueNode.textContent = sort.label;
+    document.querySelectorAll("#atlas-sort-menu .atlas-sort-option").forEach((option) => {
+      const selected = option.dataset.value === sort.value;
+      option.setAttribute("aria-selected", String(selected));
+      option.tabIndex = selected ? 0 : -1;
+    });
+    if (apply) applyFilters();
+    if (close) closeSortMenu({ restoreFocus: true });
+  }
+
   function matches(item) {
     if (state.query) {
       const haystack = normalize(state.config.search(item));
@@ -1154,11 +1171,9 @@
     clear.addEventListener("click", () => {
       state.query = "";
       state.filters = {};
-      state.sort = "curadoria";
       const search = document.getElementById("atlas-search");
       if (search) search.value = "";
-      const sort = document.getElementById("atlas-sort");
-      if (sort) sort.value = "curadoria";
+      setSortValue("curadoria", { apply: false });
       renderFilters();
       applyFilters();
       search?.focus();
@@ -1169,18 +1184,100 @@
   }
 
   function renderSort() {
-    const select = document.getElementById("atlas-sort");
-    if (!select) return;
-    select.replaceChildren();
-    state.config.sorts.forEach((sort) => {
-      const option = el("option", { value: sort.value, text: sort.label });
-      select.append(option);
+    const control = document.getElementById("atlas-sort");
+    const trigger = document.getElementById("atlas-sort-trigger");
+    const menu = document.getElementById("atlas-sort-menu");
+    if (!control || !trigger || !menu) return;
+
+    menu.replaceChildren(
+      ...state.config.sorts.map((sort) =>
+        el(
+          "li",
+          { role: "presentation" },
+          el(
+            "button",
+            {
+              class: "atlas-sort-option",
+              type: "button",
+              role: "option",
+              "data-value": sort.value,
+              "aria-selected": String(sort.value === state.sort),
+              tabindex: sort.value === state.sort ? "0" : "-1"
+            },
+            el("span", { text: sort.label }),
+            icon("fa-check")
+          )
+        )
+      )
+    );
+
+    const setOpen = (open, { focusOption = false } = {}) => {
+      menu.hidden = !open;
+      trigger.setAttribute("aria-expanded", String(open));
+      control.dataset.open = String(open);
+      if (!open || !focusOption) return;
+      const selected = menu.querySelector('[aria-selected="true"]') || menu.querySelector(".atlas-sort-option");
+      selected?.focus();
+    };
+
+    closeSortMenu = ({ restoreFocus = false } = {}) => {
+      if (menu.hidden) return;
+      setOpen(false);
+      if (restoreFocus) trigger.focus();
+    };
+
+    const options = () => [...menu.querySelectorAll(".atlas-sort-option")];
+
+    trigger.addEventListener("click", () => {
+      if (menu.hidden) setOpen(true, { focusOption: true });
+      else setOpen(false);
     });
-    select.value = state.sort;
-    select.addEventListener("change", () => {
-      state.sort = select.value;
-      applyFilters();
+
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+      event.preventDefault();
+      if (menu.hidden) {
+        setOpen(true, { focusOption: true });
+        return;
+      }
+      const list = options();
+      const target = event.key === "ArrowDown" ? list[0] : list[list.length - 1];
+      target?.focus();
     });
+
+    menu.addEventListener("click", (event) => {
+      const option = event.target instanceof Element ? event.target.closest(".atlas-sort-option") : null;
+      if (!option) return;
+      setSortValue(option.dataset.value, { close: true });
+    });
+
+    menu.addEventListener("keydown", (event) => {
+      const list = options();
+      if (list.length === 0) return;
+      const index = list.indexOf(document.activeElement);
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        const step = event.key === "ArrowDown" ? 1 : -1;
+        list[(index + step + list.length) % list.length]?.focus();
+      } else if (event.key === "Home" || event.key === "End") {
+        event.preventDefault();
+        list[event.key === "Home" ? 0 : list.length - 1]?.focus();
+      } else if (event.key === "Escape") {
+        event.preventDefault();
+        closeSortMenu({ restoreFocus: true });
+      } else if (event.key === "Tab") {
+        closeSortMenu();
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!control.contains(event.target)) closeSortMenu();
+    });
+    document.addEventListener("focusin", (event) => {
+      if (!control.contains(event.target)) closeSortMenu();
+    });
+
+    setSortValue(state.sort, { apply: false });
   }
 
   function renderFeatured() {
@@ -1263,16 +1360,7 @@
 
     const filterAccordion = document.getElementById("atlas-filter-accordion");
     if (filterAccordion) {
-      const mobileFilters = window.matchMedia("(max-width: 768px)");
-      const syncFilterAccordion = () => {
-        filterAccordion.open = !mobileFilters.matches;
-      };
-      syncFilterAccordion();
-      if (typeof mobileFilters.addEventListener === "function") {
-        mobileFilters.addEventListener("change", syncFilterAccordion);
-      } else {
-        mobileFilters.addListener(syncFilterAccordion);
-      }
+      filterAccordion.open = false;
     }
 
     renderFeatured();

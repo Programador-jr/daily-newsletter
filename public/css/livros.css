@@ -65,55 +65,6 @@
   font-size: 1rem;
 }
 
-.books-page .atlas-book-spectrum {
-  margin-top: 1.25rem;
-}
-
-.books-page .atlas-book-spectrum-label {
-  display: block;
-  margin-bottom: .6rem;
-  color: var(--text-muted);
-  font-size: .72rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.books-page .atlas-book-spectrum-bar {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: .5rem;
-}
-
-.books-page .atlas-book-spectrum-segment {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  justify-content: space-between;
-  gap: .5rem;
-  padding: .55rem .65rem;
-  border: 1px solid var(--border);
-  border-top: 2px solid var(--c);
-  border-radius: 7px;
-  background: var(--card-bg);
-  color: var(--text-main);
-  font-size: .73rem;
-}
-
-.books-page .atlas-book-spectrum-segment b {
-  overflow: hidden;
-  font-weight: 600;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.books-page .atlas-book-spectrum-segment em {
-  flex: none;
-  color: var(--text-muted);
-  font-style: normal;
-  font-variant-numeric: tabular-nums;
-}
-
 .books-page .atlas-legend {
   width: calc(100% - 6rem);
   max-width: 1155px;
@@ -212,6 +163,7 @@
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   line-height: 1.5;
 }
 
@@ -277,16 +229,6 @@
   .books-page main > .atlas-method {
     grid-template-columns: 1fr;
     align-items: start;
-  }
-
-  .books-page .atlas-book-spectrum-bar {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 420px) {
-  .books-page .atlas-book-spectrum-bar {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -456,6 +398,7 @@
   min-height: 6em;
   margin: .45rem 0 .65rem;
   -webkit-line-clamp: 4;
+  line-clamp: 4;
   line-height: 1.5;
 }
 
@@ -882,6 +825,7 @@ html body.books-page dialog.atlas-dialog-book {
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
   }
 
   .books-page .atlas-book-cover-area,
@@ -903,6 +847,131 @@ html body.books-page dialog.atlas-dialog-book {
 .atlas-dialog-book .atlas-dialog-title > p,
 .atlas-dialog-book .atlas-dialog-summary {
   color: var(--text-muted);
+}
+
+/* ORDENAÇÃO · controle customizado */
+.books-page .atlas-sort {
+  position: relative;
+  display: block;
+  min-width: 0;
+}
+
+.books-page .atlas-sort-trigger {
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  align-items: center;
+  gap: .5rem;
+  padding: 0 .85rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  font: inherit;
+  font-size: .8rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.books-page .atlas-sort-trigger:hover,
+.books-page .atlas-sort[data-open="true"] .atlas-sort-trigger {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.books-page .atlas-sort-label {
+  color: var(--text-muted);
+}
+
+.books-page .atlas-sort-value {
+  font-weight: 700;
+}
+
+.books-page .atlas-sort-chevron {
+  color: var(--text-muted);
+  font-size: .7rem;
+  transition: transform 180ms ease;
+}
+
+.books-page .atlas-sort[data-open="true"] .atlas-sort-chevron {
+  transform: rotate(180deg);
+}
+
+.books-page .atlas-sort-menu {
+  position: absolute;
+  top: calc(100% + .4rem);
+  right: 0;
+  left: auto;
+  z-index: 20;
+  display: grid;
+  width: max-content;
+  min-width: 15rem;
+  max-width: min(20rem, calc(100vw - 2.5rem));
+  margin: 0;
+  padding: .35rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card-bg);
+  box-shadow: 0 12px 28px rgb(24 37 34 / 16%);
+  list-style: none;
+}
+
+.books-page .atlas-sort-menu[hidden] {
+  display: none;
+}
+
+.books-page .atlas-sort-option {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .55rem .6rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-main);
+  font: inherit;
+  font-size: .78rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.books-page .atlas-sort-option i {
+  color: var(--primary);
+  font-size: .72rem;
+  opacity: 0;
+}
+
+.books-page .atlas-sort-option:hover,
+.books-page .atlas-sort-option:focus-visible {
+  background: color-mix(in srgb, var(--primary) 8%, var(--card-bg));
+  color: var(--primary);
+  outline: none;
+}
+
+.books-page .atlas-sort-option[aria-selected="true"] {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.books-page .atlas-sort-option[aria-selected="true"] i {
+  opacity: 1;
+}
+
+.books-page .atlas-filter-accordion .atlas-clear {
+  align-self: center;
+  height: 34px;
+  min-height: 34px;
+  padding: .4rem .7rem;
+  color: var(--text-muted);
+  font-size: .75rem;
+  font-weight: 600;
+}
+
+.books-page .atlas-filter-accordion .atlas-clear:hover {
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 /* CONTROLES MOBILE · filtros, pesquisa e ordenação na mesma barra */
@@ -932,6 +1001,10 @@ html body.books-page dialog.atlas-dialog-book {
     padding: 0;
   }
 
+  .books-page .atlas-search-dock .atlas-search {
+    width: 100%;
+  }
+
   .books-page .atlas-controls {
     display: contents;
   }
@@ -948,23 +1021,63 @@ html body.books-page dialog.atlas-dialog-book {
     background: transparent;
   }
 
+  /* Botão Filtros mobile — mesmo estilo da barra de pesquisa */
   .books-page .atlas-filter-accordion > summary {
-    justify-content: center;
+    display: grid;
     width: 2.75rem;
     height: 2.75rem;
+    place-items: center;
     padding: 0;
     border: 1px solid var(--border);
     border-radius: 8px;
-    background: var(--card-bg);
+    background: var(--bg-container);
+    color: var(--text-main);
+    cursor: pointer;
+    list-style: none;
+    transition: border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
+  }
+
+  .books-page .atlas-filter-accordion > summary:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .books-page .atlas-filter-accordion > summary:focus-visible {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
+  }
+
+  .books-page .atlas-filter-accordion > summary::-webkit-details-marker {
+    display: none;
   }
 
   .books-page .atlas-filter-accordion > summary span {
+    display: flex;
+    align-items: center;
     justify-content: center;
+  }
+
+  .books-page .atlas-filter-accordion > summary span i {
+    color: var(--primary);
+    font-size: 1rem;
+    transition: color 180ms ease;
+  }
+
+  .books-page .atlas-filter-accordion > summary:hover span i,
+  .books-page .atlas-filter-accordion > summary:focus-visible span i {
+    color: var(--primary);
   }
 
   .books-page .atlas-filter-accordion > summary span b,
   .books-page .atlas-filter-accordion > summary > .atlas-filter-chevron {
     display: none;
+  }
+
+  .books-page .atlas-filter-accordion[open] > summary {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--bg-container);
   }
 
   .books-page .atlas-filter-accordion .atlas-filters {
@@ -981,18 +1094,46 @@ html body.books-page dialog.atlas-dialog-book {
     box-shadow: 0 12px 28px rgb(24 37 34 / 16%);
   }
 
+  /* Botão Ordenar mobile — mesmo estilo da barra de pesquisa */
   .books-page .atlas-sort {
-    position: relative;
     grid-column: 3;
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .books-page .atlas-sort-trigger {
     display: grid;
     width: 2.75rem;
     height: 2.75rem;
+    min-height: 0;
     place-items: center;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-container);
     color: var(--primary);
     font-size: 1rem;
+    transition: border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
   }
 
-  .books-page .atlas-sort span {
+  .books-page .atlas-sort-trigger:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .books-page .atlas-sort-trigger:focus-visible {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
+  }
+
+  .books-page .atlas-sort[data-open="true"] .atlas-sort-trigger {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .books-page .atlas-sort-label,
+  .books-page .atlas-sort-value {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -1001,19 +1142,17 @@ html body.books-page dialog.atlas-dialog-book {
     white-space: nowrap;
   }
 
-  .books-page .atlas-sort select {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    width: 100%;
-    min-height: 100%;
-    opacity: 0;
-    cursor: pointer;
+  .books-page .atlas-sort-chevron {
+    display: none;
+  }
+
+  .books-page .atlas-sort-menu {
+    right: 0;
+    width: min(15rem, calc(100vw - 2.5rem));
   }
 }
 
-
-/* Pesquisa permanece acessível durante a navegação pelo catálogo. */
+/* Pesquisa — estilo inspirado na página História, mas com tamanho próprio */
 .books-page .atlas-search-dock {
   position: sticky;
   top: 5.5rem;
@@ -1024,10 +1163,48 @@ html body.books-page dialog.atlas-dialog-book {
 }
 
 .books-page .atlas-search-dock .atlas-search {
-  min-height: 48px;
-  border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
-  background: var(--card-bg);
-  box-shadow: 0 5px 18px rgb(0 0 0 / 9%);
+  position: relative;
+}
+
+.books-page .atlas-search-dock .atlas-search i {
+  position: absolute;
+  top: 50%;
+  left: .9rem;
+  color: var(--text-muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: .85rem;
+  transition: color 180ms ease;
+}
+
+.books-page .atlas-search-dock .atlas-search input {
+  width: 100%;
+  padding: .68rem .9rem .68rem 2.4rem;
+  border-radius: 8px;
+  outline: none;
+  background: var(--bg-container);
+  color: var(--text-main);
+  font: inherit;
+  font-size: .82rem;
+  box-sizing: border-box;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.books-page .atlas-search-dock .atlas-search input:focus + i,
+.books-page .atlas-search-dock .atlas-search:focus-within i {
+  color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .books-page .atlas-search-dock {
+    top: 4.75rem;
+    margin: 0 1.25rem .65rem;
+    padding: .55rem 0;
+  }
+
+  .books-page .atlas-search-dock .atlas-search {
+    width: 100%;
+  }
 }
 
 .books-page .atlas-filter-accordion {
@@ -1099,6 +1276,7 @@ html body.books-page dialog.atlas-dialog-book {
   .books-page .atlas-filter-accordion .atlas-filters {
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
     gap: .85rem;
     padding: .85rem;
   }
@@ -1145,5 +1323,189 @@ html body.books-page dialog.atlas-dialog-book {
     min-height: 0;
     justify-content: center;
     padding: 0;
+  }
+}
+
+/* CONTROLES DESKTOP · pesquisa, filtros e ordenação na mesma barra */
+@media (min-width: 769px) {
+  .books-page .atlas-controls-shell {
+    position: sticky;
+    top: 5.5rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    margin: 0 3rem .75rem;
+    padding: .65rem 0;
+    background: var(--bg-container);
+  }
+
+  .books-page .atlas-search-dock {
+    position: static;
+    top: auto;
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+  }
+
+  .books-page .atlas-controls {
+    display: contents;
+  }
+
+  .books-page details#atlas-filter-accordion {
+    position: static;
+    flex: none;
+    min-width: 0;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* Botão Filtros — mesmo estilo da barra de pesquisa */
+  .books-page details#atlas-filter-accordion > summary {
+    display: flex;
+    height: 42px;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: 0 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-container);
+    color: var(--text-main);
+    font-size: .8rem;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    list-style: none;
+    transition: border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
+  }
+
+  .books-page details#atlas-filter-accordion > summary:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .books-page details#atlas-filter-accordion > summary:focus-visible {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
+  }
+
+  .books-page details#atlas-filter-accordion > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .books-page details#atlas-filter-accordion > summary span {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+  }
+
+  .books-page details#atlas-filter-accordion > summary span i {
+    color: var(--primary);
+    transition: color 180ms ease;
+  }
+
+  .books-page details#atlas-filter-accordion > summary:hover span i,
+  .books-page details#atlas-filter-accordion > summary:focus-visible span i {
+    color: var(--primary);
+  }
+
+  .books-page details#atlas-filter-accordion[open] > summary {
+    border-color: var(--primary);
+    background: var(--bg-container);
+    color: var(--primary);
+  }
+
+  .books-page .atlas-filter-accordion .atlas-filters {
+    position: absolute;
+    top: calc(100% + .4rem);
+    right: 0;
+    left: 0;
+    z-index: 2;
+    max-height: min(60vh, 26rem);
+    margin: 0;
+    padding: .85rem;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--card-bg);
+    box-shadow: 0 12px 28px rgb(24 37 34 / 16%);
+  }
+
+  /* Botão Ordenar — mesmo estilo da barra de pesquisa */
+  .books-page .atlas-sort {
+    flex: none;
+  }
+
+  .books-page .atlas-sort-trigger {
+    height: 42px;
+    min-height: 42px;
+    padding: 0 1rem 0 .9rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-container);
+    color: var(--text-main);
+    font-size: .8rem;
+    transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease;
+  }
+
+  .books-page .atlas-sort-trigger:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--bg-container);
+  }
+
+  .books-page .atlas-sort-trigger:focus-visible {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
+  }
+
+  .books-page .atlas-sort[data-open="true"] .atlas-sort-trigger {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--bg-container);
+  }
+
+  .books-page .atlas-sort-label {
+    font-weight: 600;
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--text-muted);
+    transition: color 180ms ease;
+  }
+
+  .books-page .atlas-sort-trigger:hover .atlas-sort-label,
+  .books-page .atlas-sort[data-open="true"] .atlas-sort-label {
+    color: var(--primary);
+  }
+
+  .books-page .atlas-sort-value {
+    font-weight: 600;
+    font-size: .8rem;
+  }
+
+  .books-page .atlas-sort-chevron {
+    color: var(--text-muted);
+    font-size: .65rem;
+    transition: transform 200ms cubic-bezier(.2,.8,.2,1), color 180ms ease;
+  }
+
+  .books-page .atlas-sort-trigger:hover .atlas-sort-chevron,
+  .books-page .atlas-sort[data-open="true"] .atlas-sort-chevron {
+    color: var(--primary);
+  }
+
+  .books-page .atlas-sort[data-open="true"] .atlas-sort-chevron {
+    transform: rotate(180deg);
   }
 }
