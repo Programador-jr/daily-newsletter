@@ -3,7 +3,7 @@
  * Page-specific styles consume these values during the modal migration.
  */
 :root {
-  --kn-component-overlay: rgb(0 0 0 / 78%);
+  --kn-component-overlay: rgb(0 0 0 / 100%);
   --kn-component-overlay-blur: 3px;
   --kn-component-surface: var(--card-bg, var(--bg-container));
   --kn-component-border: var(--border);
