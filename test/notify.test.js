@@ -172,6 +172,8 @@ test('notification delivery records each recipient and does not resend on retrie
   });
   assert.equal(state.sentEmails.length, 1);
   assert.equal(state.sendAttempts.length, 1);
+  assert.match(state.sentEmails[0].html, /King_s_Newsletter_faixa_20261029_074825_0000\.png/);
+  assert.match(state.sentEmails[0].html, /max-width:616px;height:auto/);
   assert.equal(getRecordFor('Notícia teste', 'subscriber-1').status, 'sent');
 });
 
