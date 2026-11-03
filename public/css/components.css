@@ -568,3 +568,26 @@ body.subscription-popup-open {
     animation: none;
   }
 }
+
+
+/* Shared form-control defaults; page styles retain control over sizing and layout. */
+main :is(input, select, textarea, button) {
+  font: inherit;
+}
+
+main :is(input, select, textarea) {
+  color: var(--text-main);
+  background-color: var(--bg-container);
+  border-color: var(--border);
+  border-radius: 8px;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+main :is(a, button, input, select, textarea):focus-visible {
+  outline-color: color-mix(in srgb, var(--primary) 65%, transparent);
+}
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--primary) 72%, transparent);
+  outline-offset: 2px;
+}

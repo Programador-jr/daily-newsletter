@@ -3646,20 +3646,6 @@ main a:not(.cta-button):not(.button):not([class*="btn-"]) {
   text-underline-offset: 0.18em;
 }
 
-main :is(input, select, textarea, button) {
-  font: inherit;
-}
-
-main :is(input, select, textarea) {
-  color: var(--text-main);
-  background-color: var(--bg-container);
-  border-color: var(--border);
-}
-
-main :is(a, button, input, select, textarea):focus-visible {
-  outline-color: color-mix(in srgb, var(--primary) 65%, transparent);
-}
-
 @media (max-width: 640px) {
   body {
     padding: 0;
@@ -3713,11 +3699,6 @@ main :is(a, button, input, select, textarea):focus-visible {
 }
 
 /* Foco de teclado consistente e visível em toda a interface */
-:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--primary) 72%, transparent);
-  outline-offset: 2px;
-}
-
 /* Ritmo tipográfico */
 main h1,
 main h2,
