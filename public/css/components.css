@@ -1,0 +1,46 @@
+/*
+ * Shared component design tokens.
+ * Page-specific styles consume these values during the modal migration.
+ */
+:root {
+  --kn-component-overlay: rgb(13 25 21 / 56%);
+  --kn-component-overlay-blur: 3px;
+  --kn-component-surface: var(--card-bg, var(--bg-container));
+  --kn-component-border: var(--border);
+  --kn-component-radius: 12px;
+  --kn-component-shadow: 0 20px 60px rgb(0 0 0 / 18%);
+  --kn-component-transition: 180ms ease;
+  --kn-component-enter-transition: 220ms cubic-bezier(.2, .75, .25, 1);
+}
+
+/*
+ * Shared text and focus treatment for native dialogs.
+ * Layout and content remain controlled by each page until its migration step.
+ */
+:where(
+  dialog.atlas-dialog,
+  dialog.catalog-dialog,
+  dialog.quiz-main-dialog,
+  dialog.quiz-help-dialog,
+  dialog.quiz-result-help
+) {
+  color: var(--text-main);
+}
+
+:where(
+  dialog.atlas-dialog,
+  dialog.catalog-dialog,
+  dialog.quiz-main-dialog,
+  dialog.quiz-help-dialog,
+  dialog.quiz-result-help
+):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --kn-component-transition: 0ms;
+    --kn-component-enter-transition: 0ms;
+  }
+}
