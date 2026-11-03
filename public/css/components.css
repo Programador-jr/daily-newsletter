@@ -3,7 +3,7 @@
  * Page-specific styles consume these values during the modal migration.
  */
 :root {
-  --kn-component-overlay: rgb(13 25 21 / 56%);
+  --kn-component-overlay: rgb(0 0 0 / 78%);
   --kn-component-overlay-blur: 3px;
   --kn-component-surface: var(--card-bg, var(--bg-container));
   --kn-component-border: var(--border);
@@ -46,6 +46,12 @@
 }
 
 /* Shared modal shell used by editorial detail panels. */
+html:has(body.history-modal-open),
+html:has(body.subscription-popup-open) {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 body.history-modal-open {
   position: fixed;
   top: var(--history-scroll-lock-top);
