@@ -470,10 +470,6 @@
 }
 
 /* Ficha do livro: capa, contexto editorial e leitura em uma composição só. */
-.atlas-dialog-book .atlas-dialog-shell {
-  background: var(--bg-container);
-}
-
 html body.books-page dialog.atlas-dialog-book {
   position: fixed;
   inset: 0;
@@ -485,32 +481,6 @@ html body.books-page dialog.atlas-dialog-book {
   box-sizing: border-box;
   border-radius: 14px;
   box-shadow: 0 24px 80px rgb(0 0 0 / 35%);
-}
-
-.atlas-dialog-book .atlas-dialog-head {
-  min-height: 300px;
-  grid-template-columns: minmax(150px, 190px) minmax(0, 1fr);
-  align-items: center;
-  gap: 1.5rem;
-  padding: 1.5rem 3.5rem 1.5rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  background: linear-gradient(120deg, color-mix(in srgb, var(--fam, var(--primary)) 8%, var(--card-bg)), var(--bg-container) 68%);
-}
-
-.atlas-dialog-book .atlas-dialog-head > .atlas-mark {
-  display: none;
-}
-
-.atlas-dialog-book .atlas-dialog-title {
-  grid-column: 2;
-  grid-row: 1;
-  min-width: 0;
-}
-
-.atlas-dialog-book .atlas-dialog-title h2 {
-  margin: .65rem 0 .4rem;
-  font-size: clamp(1.6rem, 3vw, 2.3rem);
-  line-height: 1.15;
 }
 
 .atlas-dialog-book .atlas-dialog-title .atlas-card-tags {
@@ -531,8 +501,6 @@ html body.books-page dialog.atlas-dialog-book {
 }
 
 .atlas-dialog-book .atlas-dialog-title > p {
-  margin: 0;
-  color: var(--text-muted);
   line-height: 1.5;
 }
 
@@ -540,12 +508,8 @@ html body.books-page dialog.atlas-dialog-book {
   position: relative;
   isolation: isolate;
   display: flex;
-  grid-column: 1;
-  grid-row: 1;
-  width: min(100%, 190px);
   aspect-ratio: 3 / 4;
   height: auto;
-  margin: 0;
   border-radius: 4px 8px 8px 4px;
   overflow: hidden;
   padding: 1rem .85rem .9rem 1.1rem;
@@ -612,10 +576,6 @@ html body.books-page dialog.atlas-dialog-book {
 .atlas-dialog-book .atlas-dialog-close:hover {
   border-color: var(--primary);
   background: color-mix(in srgb, var(--primary) 9%, var(--card-bg));
-}
-
-.atlas-dialog-book .atlas-dialog-body {
-  padding: 1.5rem;
 }
 
 .atlas-dialog-book .atlas-dialog-section {
@@ -719,30 +679,7 @@ html body.books-page dialog.atlas-dialog-book {
     justify-content: center;
   }
 
-  .atlas-dialog-book .atlas-dialog-head {
-    min-height: 0;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding: 1rem 3.5rem 1rem 1rem;
-  }
-
-  .atlas-dialog-book .atlas-dialog-book-cover {
-    grid-column: 1;
-    grid-row: 1;
-    width: min(58vw, 13rem);
-    justify-self: start;
-  }
-
-  .atlas-dialog-book .atlas-dialog-title {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  .atlas-dialog-book .atlas-dialog-body {
-    padding: 1rem;
-  }
-
-  .atlas-dialog-book .atlas-dialog-footer {
+.atlas-dialog-book .atlas-dialog-footer {
     align-items: flex-start;
     flex-direction: column;
     padding: 1rem;
