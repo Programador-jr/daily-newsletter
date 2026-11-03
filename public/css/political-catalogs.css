@@ -1,0 +1,1524 @@
+/*
+ * Political catalog page.
+ * Page-specific presentation only; shared tokens and primitives live in
+ * components.css, atlas.css, and styles.css.
+ */
+
+.political-catalog-page .catalog-main {
+  --catalog-content-gutter: 3rem;
+  --catalog-accent: var(--primary);
+  padding-bottom: 3rem;
+}
+
+.political-catalog-page .catalog-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+  margin: 1.25rem var(--catalog-content-gutter) 0;
+  color: var(--text-muted);
+  font-size: .76rem;
+}
+
+.political-catalog-page .catalog-breadcrumb a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.political-catalog-page .catalog-breadcrumb a:hover,
+.political-catalog-page .catalog-breadcrumb a:focus-visible {
+  color: var(--primary);
+}
+
+.political-catalog-page .catalog-breadcrumb > span:last-child {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.political-catalog-page .catalog-hero {
+  max-width: 100%;
+  padding: 2.8rem var(--catalog-content-gutter) 1.8rem;
+}
+
+.political-catalog-page .catalog-hero h1 {
+  max-width: 22ch;
+}
+
+.political-catalog-page .catalog-hero > p {
+  max-width: 760px;
+}
+
+.political-catalog-page .catalog-hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem;
+  margin-top: 1.35rem;
+}
+
+.political-catalog-page .catalog-hero-links .atlas-button {
+  min-height: 42px;
+}
+
+.political-catalog-page .catalog-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-top: 1.5rem;
+}
+
+.political-catalog-page .catalog-stat {
+  display: grid;
+  gap: .12rem;
+  min-width: 112px;
+  padding: .7rem .85rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+.political-catalog-page .catalog-stat strong {
+  color: var(--primary);
+  font-size: 1.2rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.political-catalog-page .catalog-stat-label {
+  color: var(--text-muted);
+  font-size: .7rem;
+}
+
+.political-catalog-page .catalog-spectrum {
+  display: grid;
+  gap: .9rem;
+  margin-top: 1.35rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card-bg);
+}
+
+.political-catalog-page .catalog-spectrum-title {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.05rem;
+}
+
+.political-catalog-page .catalog-spectrum-row {
+  display: grid;
+  gap: .45rem;
+}
+
+.political-catalog-page .catalog-spectrum-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--text-muted);
+  font-size: .72rem;
+}
+
+.political-catalog-page .catalog-spectrum-head strong {
+  color: var(--text-main);
+}
+
+.political-catalog-page .catalog-spectrum-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+
+.political-catalog-page .catalog-spectrum-seg {
+  display: flex;
+  flex: 1 1 130px;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6rem;
+  min-width: 0;
+  min-height: 38px;
+  padding: .45rem .65rem;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--c, var(--primary));
+  border-radius: 7px;
+  background: var(--bg-container);
+  color: var(--text-main);
+  font: inherit;
+  font-size: .72rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease;
+}
+
+.political-catalog-page .catalog-spectrum-seg:hover,
+.political-catalog-page .catalog-spectrum-seg[aria-pressed="true"] {
+  border-color: var(--c, var(--primary));
+  background: color-mix(in srgb, var(--c, var(--primary)) 8%, var(--card-bg));
+}
+
+.political-catalog-page .catalog-spectrum-seg[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 1px var(--c, var(--primary));
+}
+
+.political-catalog-page .catalog-spectrum-seg b {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.political-catalog-page .catalog-spectrum-seg em {
+  flex: none;
+  color: var(--text-muted);
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+.political-catalog-page .catalog-ideology-view,
+.political-catalog-page .catalog-generic-view {
+  min-width: 0;
+}
+
+.political-catalog-page .catalog-tools {
+  display: grid;
+  gap: .8rem;
+  margin: 0 var(--catalog-content-gutter) 1.4rem;
+  padding: .9rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card-bg);
+  box-shadow: 0 3px 12px rgb(0 0 0 / 3%);
+}
+
+.political-catalog-page .catalog-tools-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) auto minmax(220px, auto);
+  align-items: center;
+  gap: .65rem;
+}
+
+.political-catalog-page .catalog-search,
+.political-catalog-page .atlas-search {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 .85rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg-container);
+  color: var(--text-muted);
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.political-catalog-page .catalog-search:focus-within,
+.political-catalog-page .atlas-search:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+.political-catalog-page .catalog-search input,
+.political-catalog-page .atlas-search input {
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text-main);
+  font: inherit;
+  font-size: .82rem;
+}
+
+.political-catalog-page .catalog-search kbd {
+  flex: none;
+  padding: .12rem .4rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: .7rem;
+}
+
+.political-catalog-page .catalog-filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  min-height: 44px;
+  padding: .5rem .85rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg-container);
+  color: var(--text-main);
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.political-catalog-page .catalog-filter-toggle:hover,
+.political-catalog-page .catalog-filter-toggle[aria-expanded="true"] {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.political-catalog-page .catalog-filter-count {
+  display: inline-grid;
+  min-width: 20px;
+  height: 20px;
+  place-items: center;
+  padding: 0 .3rem;
+  border-radius: 99px;
+  background: var(--primary);
+  color: #fff;
+  font-size: .68rem;
+  font-weight: 800;
+}
+
+.political-catalog-page .catalog-scope {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: .3rem;
+  padding: .25rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg-body);
+}
+
+.political-catalog-page .catalog-scope-button {
+  min-height: 34px;
+  padding: .4rem .7rem;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: .72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.political-catalog-page .catalog-scope-button[aria-pressed="true"] {
+  background: var(--card-bg);
+  color: var(--primary);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 8%);
+}
+
+.political-catalog-page .catalog-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+
+.political-catalog-page .catalog-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  min-height: 32px;
+  padding: .35rem .6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-container);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: .7rem;
+  cursor: pointer;
+}
+
+.political-catalog-page .catalog-chip-dot,
+.political-catalog-page .catalog-group-mark {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--c, var(--primary));
+}
+
+.political-catalog-page .catalog-chip em {
+  color: var(--text-muted);
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+.political-catalog-page .catalog-chip[aria-pressed="true"],
+.political-catalog-page .catalog-chip:hover {
+  border-color: var(--c, var(--primary));
+  background: color-mix(in srgb, var(--c, var(--primary)) 8%, var(--card-bg));
+  color: var(--text-main);
+}
+
+.political-catalog-page .catalog-filter-drawer {
+  margin: 0 var(--catalog-content-gutter) 1.25rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card-bg);
+  box-shadow: 0 8px 26px rgb(0 0 0 / 5%);
+}
+
+.political-catalog-page .catalog-drawer-head,
+.political-catalog-page .catalog-drawer-subhead,
+.political-catalog-page .catalog-drawer-foot {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.political-catalog-page .catalog-drawer-head {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.political-catalog-page .catalog-drawer-eyebrow {
+  color: var(--primary);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.political-catalog-page .catalog-drawer-head h2,
+.political-catalog-page .catalog-drawer-subhead h3 {
+  margin: .3rem 0;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+.political-catalog-page .catalog-drawer-head p,
+.political-catalog-page .catalog-drawer-subhead p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .78rem;
+  line-height: 1.6;
+}
+
+.political-catalog-page .catalog-drawer-actions {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+}
+
+.political-catalog-page .catalog-drawer-clear,
+.political-catalog-page .catalog-drawer-close,
+.political-catalog-page .catalog-active-clear {
+  min-height: 36px;
+  padding: .4rem .65rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--bg-container);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: .72rem;
+  cursor: pointer;
+}
+
+.political-catalog-page .catalog-drawer-close {
+  width: 36px;
+  padding: 0;
+  font-size: 1rem;
+}
+
+.political-catalog-page .catalog-drawer-clear:hover,
+.political-catalog-page .catalog-drawer-close:hover,
+.political-catalog-page .catalog-active-clear:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.political-catalog-page .catalog-drawer-subhead {
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.political-catalog-page .catalog-drawer-subhead h3 {
+  font-size: 1rem;
+}
+
+.political-catalog-page .catalog-intensity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .55rem .8rem;
+  color: var(--text-muted);
+  font-size: .72rem;
+}
+
+.political-catalog-page .catalog-intensity-label {
+  font-weight: 800;
+}
+
+.political-catalog-page .catalog-intensity-option {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  cursor: pointer;
+}
+
+.political-catalog-page .catalog-intensity-option input {
+  accent-color: var(--primary);
+}
+
+.political-catalog-page .catalog-axis-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .6rem;
+}
+
+.political-catalog-page .catalog-axis-card {
+  display: grid;
+  gap: .55rem;
+  min-width: 0;
+  padding: .75rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg-container);
+}
+
+.political-catalog-page .catalog-axis-title {
+  color: var(--text-main);
+  font-size: .76rem;
+  font-weight: 800;
+}
+
+.political-catalog-page .catalog-axis-poles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .35rem;
+}
+
+.political-catalog-page .catalog-axis-pole {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  min-width: 0;
+  min-height: 34px;
+  padding: .35rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: .66rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.political-catalog-page .catalog-axis-pole svg {
+  flex: none;
+}
+
+.political-catalog-page .catalog-axis-pole-name {
+  overflow-wrap: anywhere;
+}
+
+.political-catalog-page .catalog-axis-pole[aria-pressed="true"] {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 9%, var(--card-bg));
+  color: var(--primary);
+}
+
+.political-catalog-page .catalog-drawer-foot {
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.political-catalog-page .catalog-drawer-result {
+  color: var(--text-muted);
+  font-size: .78rem;
+}
+
+.political-catalog-page .catalog-drawer-result b {
+  color: var(--text-main);
+}
+
+.political-catalog-page .catalog-active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+  margin: 0 var(--catalog-content-gutter) 1rem;
+}
+
+.political-catalog-page .catalog-active-label {
+  color: var(--text-muted);
+  font-size: .72rem;
+  font-weight: 800;
+}
+
+.political-catalog-page .catalog-active-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+}
+
+.political-catalog-page .catalog-active-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .3rem .5rem;
+  border: 1px solid color-mix(in srgb, var(--c) 45%, var(--border));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--c) 8%, var(--card-bg));
+  color: var(--text-main);
+  font-size: .68rem;
+}
+
+.political-catalog-page .catalog-active-pill button {
+  display: grid;
+  width: 19px;
+  height: 19px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.political-catalog-page .catalog-result-info,
+.political-catalog-page .catalog-method-note,
+.political-catalog-page .catalog-dna-note,
+.political-catalog-page .catalog-legend {
+  margin-right: var(--catalog-content-gutter);
+  margin-left: var(--catalog-content-gutter);
+}
+
+.political-catalog-page .catalog-result-info {
+  margin-top: 0;
+  margin-bottom: .65rem;
+  color: var(--text-muted);
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.political-catalog-page .catalog-method-note,
+.political-catalog-page .catalog-dna-note {
+  padding: .8rem 1rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  font-size: .75rem;
+  line-height: 1.65;
+}
+
+.political-catalog-page .catalog-method-note {
+  margin-bottom: .8rem;
+}
+
+.political-catalog-page .catalog-dna-note {
+  margin-top: 0;
+  margin-bottom: .8rem;
+}
+
+.political-catalog-page .catalog-legend {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .45rem;
+  padding: 0;
+  list-style: none;
+}
+
+.political-catalog-page .catalog-legend li {
+  display: grid;
+  gap: .3rem;
+  min-width: 0;
+  padding: .55rem .65rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--card-bg);
+}
+
+.political-catalog-page .catalog-legend-name {
+  color: var(--text-main);
+  font-size: .68rem;
+  font-weight: 800;
+}
+
+.political-catalog-page .catalog-legend-poles {
+  display: flex;
+  justify-content: space-between;
+  gap: .4rem;
+}
+
+.political-catalog-page .catalog-legend-pole {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  min-width: 0;
+  color: var(--text-muted);
+  font-size: .62rem;
+}
+
+.political-catalog-page .catalog-legend-pole span {
+  overflow-wrap: anywhere;
+}
+
+.political-catalog-page .catalog-sections {
+  display: grid;
+  gap: 1.5rem;
+  margin: 1.25rem var(--catalog-content-gutter) 2.5rem;
+}
+
+.political-catalog-page .catalog-group {
+  min-width: 0;
+  padding: 1.1rem;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--c, var(--primary));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--c, var(--primary)) 2.5%, var(--card-bg));
+}
+
+.political-catalog-page .catalog-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: .9rem;
+}
+
+.political-catalog-page .catalog-group-title {
+  display: flex;
+  align-items: flex-start;
+  gap: .65rem;
+  min-width: 0;
+}
+
+.political-catalog-page .catalog-group-mark {
+  width: 11px;
+  height: 11px;
+  margin-top: .55rem;
+}
+
+.political-catalog-page .catalog-group-title h2,
+.political-catalog-page .catalog-part-head h2 {
+  margin: 0;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.25rem;
+}
+
+.political-catalog-page .catalog-group-title p,
+.political-catalog-page .catalog-part-head p {
+  margin: .25rem 0 0;
+  color: var(--text-muted);
+  font-size: .75rem;
+  line-height: 1.55;
+}
+
+.political-catalog-page .catalog-group-count {
+  flex: none;
+  color: var(--text-muted);
+  font-size: .7rem;
+}
+
+.political-catalog-page .catalog-group-count b {
+  color: var(--text-main);
+  font-size: .9rem;
+}
+
+.political-catalog-page .catalog-ideas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.political-catalog-page .catalog-idea-card {
+  min-width: 0;
+  border: 1px solid var(--card-border, var(--border));
+  border-radius: 9px;
+  background: var(--card-bg);
+  box-shadow: 0 2px 7px rgb(0 0 0 / 3%);
+  transition: border-color 160ms ease, box-shadow 180ms ease, transform 160ms ease;
+}
+
+.political-catalog-page .catalog-idea-card:hover {
+  border-color: color-mix(in srgb, var(--c) 60%, var(--border));
+  box-shadow: 0 7px 18px rgb(0 0 0 / 7%);
+  transform: translateY(-2px);
+}
+
+.political-catalog-page .catalog-idea-card > a {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: .9rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.political-catalog-page .catalog-idea-kind {
+  align-self: flex-start;
+  padding: .2rem .45rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--c) 10%, var(--card-bg));
+  color: var(--c);
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.political-catalog-page .catalog-idea-card h3 {
+  margin: .55rem 0 .35rem;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.political-catalog-page .catalog-idea-summary {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .74rem;
+  line-height: 1.6;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.political-catalog-page .catalog-idea-foot {
+  display: grid;
+  gap: .55rem;
+  margin-top: auto;
+  padding-top: .75rem;
+}
+
+.political-catalog-page .catalog-dna {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2px;
+  min-height: 19px;
+  color: var(--c, var(--primary));
+}
+
+.political-catalog-page .catalog-dna svg {
+  width: 14px;
+  height: 14px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.political-catalog-page .catalog-dna-dot {
+  width: 8px;
+  height: 8px;
+  flex: 1 1 0;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.political-catalog-page .catalog-idea-go {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  color: var(--c, var(--primary));
+  font-size: .7rem;
+  font-weight: 800;
+}
+
+.political-catalog-page .catalog-part-head {
+  padding: .25rem 0 .5rem;
+}
+
+.political-catalog-page .catalog-empty,
+.political-catalog-page .catalog-loading {
+  display: grid;
+  justify-items: center;
+  gap: .6rem;
+  padding: 2rem 1rem;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.political-catalog-page .catalog-empty strong {
+  color: var(--text-main);
+}
+
+.political-catalog-page .catalog-quiz-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 0 var(--catalog-content-gutter) 2rem;
+  padding: 1.4rem;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 12px;
+  background: var(--card-bg);
+}
+
+.political-catalog-page .catalog-quiz-cta h2 {
+  margin: .25rem 0;
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+.political-catalog-page .catalog-quiz-cta p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .8rem;
+  line-height: 1.6;
+}
+
+.political-catalog-page .catalog-disclaimer {
+  margin: 0 var(--catalog-content-gutter);
+  padding: .9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg-body);
+  color: var(--text-muted);
+  font-size: .72rem;
+  line-height: 1.65;
+}
+
+/* Generic tabs share the Atlas components, with catalog-specific spacing. */
+.political-catalog-page .catalog-controls {
+  margin-bottom: 1.5rem;
+}
+
+.political-catalog-page .catalog-featured,
+.political-catalog-page .catalog-section {
+  margin-bottom: 2rem;
+}
+
+.political-catalog-page .catalog-notice {
+  margin: 0 var(--catalog-content-gutter) 1rem;
+  padding: .8rem 1rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  font-size: .75rem;
+  line-height: 1.6;
+}
+
+.political-catalog-page .catalog-more-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.political-catalog-page .catalog-country-spectrum,
+.political-catalog-page .catalog-personality-spectrum,
+.political-catalog-page .catalog-party-spectrum {
+  margin: 0 var(--catalog-content-gutter) 1.2rem;
+}
+
+/* Native profile dialog: keep the shared black backdrop from components.css. */
+.political-catalog-page .catalog-dialog {
+  width: min(1040px, calc(100vw - 2rem));
+  max-width: 1040px;
+  max-height: min(92vh, 1040px);
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--kn-component-border);
+  border-radius: 14px;
+  background: var(--kn-component-surface);
+  color: var(--text-main);
+  box-shadow: var(--kn-component-shadow);
+}
+
+.political-catalog-page .catalog-dialog::backdrop {
+  background: var(--kn-component-overlay);
+  backdrop-filter: blur(var(--kn-component-overlay-blur));
+}
+
+.political-catalog-page .catalog-profile-shell {
+  position: relative;
+  max-height: min(92vh, 1040px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--bg-container);
+  color: var(--text-main);
+}
+
+.political-catalog-page .catalog-profile-content {
+  display: grid;
+  gap: 1.15rem;
+  padding: 1.25rem;
+}
+
+.political-catalog-page .catalog-profile-back {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  margin: 1rem 1.25rem 0;
+  padding: .4rem .6rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: .72rem;
+  cursor: pointer;
+}
+
+.political-catalog-page .catalog-profile-back:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.political-catalog-page .catalog-profile-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 260px);
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--profile-color, var(--primary));
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--profile-color, var(--primary)) 5%, var(--card-bg));
+}
+
+.political-catalog-page .catalog-profile-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+}
+
+.political-catalog-page .catalog-profile-tags > * {
+  padding: .2rem .5rem;
+  border: 1px solid color-mix(in srgb, var(--profile-color, var(--primary)) 35%, var(--border));
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: .65rem;
+}
+
+.political-catalog-page .catalog-profile-hero h1 {
+  margin: .55rem 0;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  line-height: 1.12;
+}
+
+.political-catalog-page .catalog-profile-lead {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .84rem;
+  line-height: 1.7;
+}
+
+.political-catalog-page .catalog-profile-hero-media,
+.political-catalog-page .catalog-country-profile-media,
+.political-catalog-page .catalog-personality-profile-media,
+.political-catalog-page .catalog-party-profile-media {
+  display: grid;
+  min-height: 170px;
+  max-height: 260px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg-body);
+}
+
+.political-catalog-page .catalog-profile-hero-media img,
+.political-catalog-page .catalog-country-profile-media img,
+.political-catalog-page .catalog-personality-profile-media img,
+.political-catalog-page .catalog-party-profile-media img {
+  width: 100%;
+  height: 100%;
+  max-height: 260px;
+  object-fit: cover;
+}
+
+.political-catalog-page .catalog-profile-ref-initials {
+  display: grid;
+  width: 100%;
+  min-height: 170px;
+  place-items: center;
+  color: var(--profile-color, var(--primary));
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.political-catalog-page .catalog-profile-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  padding-bottom: .55rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.political-catalog-page .catalog-profile-tabs button {
+  min-height: 38px;
+  padding: .45rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: .72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.political-catalog-page .catalog-profile-tabs button[aria-selected="true"] {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 9%, var(--card-bg));
+  color: var(--primary);
+}
+
+.political-catalog-page .catalog-profile-tab-panel,
+.political-catalog-page .catalog-profile-distinction {
+  min-width: 0;
+}
+
+.political-catalog-page .catalog-profile-tab-panel h2,
+.political-catalog-page .catalog-profile-distinction h2 {
+  margin: 0 0 .75rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.2rem;
+}
+
+.political-catalog-page .catalog-profile-axis-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.political-catalog-page .catalog-profile-axis {
+  min-width: 0;
+}
+
+.political-catalog-page .catalog-profile-axis-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  color: var(--text-main);
+  font-size: .72rem;
+}
+
+.political-catalog-page .catalog-profile-axis-status {
+  color: var(--text-muted);
+  font-size: .65rem;
+}
+
+.political-catalog-page .catalog-profile-axis-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: .25rem;
+  border-radius: 50%;
+  background: var(--profile-color, var(--primary));
+}
+
+.political-catalog-page .catalog-profile-axis-bar {
+  display: grid;
+  gap: .3rem;
+  margin-top: .4rem;
+}
+
+.political-catalog-page .catalog-profile-poles {
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+  color: var(--text-muted);
+  font-size: .64rem;
+}
+
+.political-catalog-page .catalog-profile-track {
+  position: relative;
+  height: 7px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--profile-color, var(--primary)), color-mix(in srgb, var(--profile-color, var(--primary)) 22%, var(--border)));
+}
+
+.political-catalog-page .catalog-profile-marker {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--card-bg);
+  border-radius: 50%;
+  background: var(--text-main);
+  transform: translate(-50%, -50%);
+}
+
+.political-catalog-page .catalog-profile-axis-unknown {
+  padding: .55rem;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: .68rem;
+}
+
+.political-catalog-page .catalog-profile-distinction-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .65rem;
+}
+
+.political-catalog-page .catalog-profile-distinction-grid article {
+  padding: .85rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card-bg);
+}
+
+.political-catalog-page .catalog-profile-badge {
+  color: var(--profile-color, var(--primary));
+  font-size: .64rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.political-catalog-page .catalog-profile-badge.is-neutral {
+  color: var(--text-muted);
+}
+
+.political-catalog-page .catalog-profile-distinction-grid h3 {
+  margin: .35rem 0;
+  font-size: .9rem;
+}
+
+.political-catalog-page .catalog-profile-distinction-grid p,
+.political-catalog-page .catalog-profile-muted {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .74rem;
+  line-height: 1.6;
+}
+
+.political-catalog-page .catalog-profile-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 9px;
+  background: var(--card-bg);
+}
+
+.political-catalog-page .catalog-profile-cta h2 {
+  margin: .2rem 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.1rem;
+}
+
+.political-catalog-page .catalog-profile-cta p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .75rem;
+  line-height: 1.6;
+}
+
+.political-catalog-page .catalog-profile-reference,
+.political-catalog-page .atlas-nearby-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .65rem;
+  padding: .65rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.political-catalog-page .catalog-profile-reference:hover,
+.political-catalog-page .atlas-nearby-item:hover {
+  border-color: var(--primary);
+}
+
+.political-catalog-page .catalog-country-kpis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-top: .9rem;
+}
+
+.political-catalog-page .catalog-country-kpis > span {
+  display: grid;
+  gap: .15rem;
+  padding: .55rem .7rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--card-bg);
+}
+
+.political-catalog-page .catalog-country-kpis b {
+  color: var(--text-main);
+  font-size: .75rem;
+}
+
+.political-catalog-page .catalog-country-kpis small {
+  color: var(--text-muted);
+  font-size: .62rem;
+}
+
+.political-catalog-page .catalog-profile-phrase {
+  position: relative;
+  margin: 0;
+  padding: 1rem 1.2rem;
+  border-left: 3px solid var(--profile-color, var(--primary));
+  border-radius: 8px;
+  background: var(--bg-body);
+}
+
+.political-catalog-page .catalog-profile-phrase blockquote {
+  margin: .3rem 0;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.1rem;
+}
+
+.political-catalog-page .catalog-profile-phrase figcaption {
+  color: var(--text-muted);
+  font-size: .68rem;
+}
+
+.political-catalog-page .catalog-profile-quote {
+  color: var(--profile-color, var(--primary));
+  font-family: Georgia, serif;
+  font-size: 2rem;
+}
+
+.political-catalog-page .catalog-dialog:not([open]) {
+  display: none;
+}
+
+.political-catalog-page [hidden] {
+  display: none !important;
+}
+
+.political-catalog-page :is(
+  .catalog-search,
+  .catalog-filter-toggle,
+  .catalog-scope-button,
+  .catalog-chip,
+  .catalog-spectrum-seg,
+  .catalog-axis-pole,
+  .catalog-drawer-clear,
+  .catalog-drawer-close,
+  .catalog-active-clear,
+  .catalog-profile-tabs button,
+  .catalog-profile-back
+):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1000px) {
+  .political-catalog-page .catalog-tools-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .political-catalog-page .catalog-scope {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+
+  .political-catalog-page .catalog-ideas-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .political-catalog-page .catalog-legend {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .political-catalog-page .catalog-main {
+    --catalog-content-gutter: 1.25rem;
+  }
+
+  .political-catalog-page .catalog-breadcrumb {
+    margin-top: .9rem;
+    font-size: .68rem;
+  }
+
+  .political-catalog-page .catalog-hero {
+    padding: 2rem var(--catalog-content-gutter) 1.4rem;
+  }
+
+  .political-catalog-page .catalog-hero-links .atlas-button {
+    flex: 1 1 180px;
+  }
+
+  .political-catalog-page .catalog-tools-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .political-catalog-page .catalog-filter-drawer {
+    padding: .9rem;
+  }
+
+  .political-catalog-page .catalog-drawer-subhead {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .political-catalog-page .catalog-axis-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .political-catalog-page .catalog-legend {
+    grid-template-columns: 1fr;
+  }
+
+  .political-catalog-page .catalog-group {
+    padding: .8rem;
+  }
+
+  .political-catalog-page .catalog-ideas-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .political-catalog-page .catalog-quiz-cta,
+  .political-catalog-page .catalog-profile-cta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .political-catalog-page .catalog-profile-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .political-catalog-page .catalog-profile-hero-media,
+  .political-catalog-page .catalog-country-profile-media,
+  .political-catalog-page .catalog-personality-profile-media,
+  .political-catalog-page .catalog-party-profile-media {
+    max-height: 220px;
+  }
+}
+
+@media (max-width: 520px) {
+  .political-catalog-page .catalog-tools-row {
+    grid-template-columns: 1fr;
+  }
+
+  .political-catalog-page .catalog-filter-toggle {
+    justify-self: stretch;
+  }
+
+  .political-catalog-page .catalog-scope {
+    grid-column: auto;
+  }
+
+  .political-catalog-page .catalog-drawer-head,
+  .political-catalog-page .catalog-drawer-foot {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .political-catalog-page .catalog-drawer-actions {
+    justify-content: space-between;
+  }
+
+  .political-catalog-page .catalog-axis-grid,
+  .political-catalog-page .catalog-ideas-grid,
+  .political-catalog-page .catalog-profile-axis-list,
+  .political-catalog-page .catalog-profile-distinction-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .political-catalog-page .catalog-axis-poles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .political-catalog-page .catalog-group-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .political-catalog-page .catalog-stat {
+    flex: 1 1 calc(50% - .6rem);
+  }
+
+  .political-catalog-page .catalog-profile-content {
+    padding: .8rem;
+  }
+
+  .political-catalog-page .catalog-profile-back {
+    margin: .8rem .8rem 0;
+  }
+
+  .political-catalog-page .catalog-dialog {
+    width: calc(100vw - 1rem);
+    max-height: 94vh;
+  }
+
+  .political-catalog-page .catalog-profile-shell {
+    max-height: 94vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .political-catalog-page .catalog-spectrum-seg,
+  .political-catalog-page .catalog-idea-card,
+  .political-catalog-page .catalog-profile-tabs button {
+    transition: none;
+  }
+}
+
+
+/* Reference links inside ideology profile headers. */
+.political-catalog-page .catalog-profile-references {
+  display: grid;
+  gap: .5rem;
+  align-content: center;
+}
+
+.political-catalog-page .catalog-profile-reference {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: .65rem;
+}
+
+.political-catalog-page .catalog-profile-reference img,
+.political-catalog-page .catalog-profile-reference .catalog-profile-ref-initials {
+  width: 42px;
+  height: 42px;
+  min-height: 42px;
+  border-radius: 7px;
+  object-fit: cover;
+  font-family: "Inter", sans-serif;
+  font-size: .9rem;
+}
+
+.political-catalog-page .catalog-profile-reference > span:not(.catalog-profile-ref-initials) {
+  display: grid;
+  min-width: 0;
+  gap: .12rem;
+}
+
+.political-catalog-page .catalog-profile-reference small {
+  color: var(--text-muted);
+  font-size: .62rem;
+}
+
+.political-catalog-page .catalog-profile-reference b {
+  overflow: hidden;
+  color: var(--text-main);
+  font-size: .72rem;
+  text-overflow: ellipsis;
+}
+
+.political-catalog-page .catalog-profile-reference em {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: .62rem;
+  font-style: normal;
+  text-overflow: ellipsis;
+}
