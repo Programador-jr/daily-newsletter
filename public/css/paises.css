@@ -166,3 +166,78 @@
     margin-left: 1.25rem;
   }
 }
+
+
+/* Historical range follows the same contained editorial treatment as the personalities spectrum. */
+.dedicated-countries-page .catalog-country-spectrum {
+  display: grid;
+  gap: .65rem;
+  margin: 0 3rem 1.25rem;
+  padding: .9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--card-bg);
+}
+
+.dedicated-countries-page .catalog-country-spectrum .atlas-book-spectrum-label {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.dedicated-countries-page .catalog-country-spectrum .atlas-book-spectrum-bar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .45rem;
+}
+
+.dedicated-countries-page .catalog-country-spectrum .atlas-book-spectrum-segment {
+  min-height: 40px;
+  border-top: 2px solid var(--c, var(--primary));
+  border-radius: 7px;
+  background: var(--bg-container);
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.dedicated-countries-page .catalog-country-spectrum .atlas-book-spectrum-segment b {
+  color: var(--text-main);
+  font-size: .7rem;
+  font-weight: 650;
+}
+
+.dedicated-countries-page .catalog-country-spectrum .atlas-book-spectrum-segment em {
+  color: var(--text-muted);
+  font-size: .7rem;
+}
+
+@media (max-width: 1000px) {
+  .dedicated-countries-page .catalog-country-spectrum .atlas-book-spectrum-bar {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .dedicated-countries-page .catalog-country-spectrum {
+    margin-right: 1.25rem;
+    margin-left: 1.25rem;
+  }
+
+  .dedicated-countries-page .catalog-country-spectrum .atlas-book-spectrum-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .dedicated-countries-page .catalog-country-spectrum .atlas-book-spectrum-bar {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dedicated-countries-page .catalog-country-spectrum .atlas-book-spectrum-segment {
+    transition: none;
+  }
+}
