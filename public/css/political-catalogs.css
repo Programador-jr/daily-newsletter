@@ -664,11 +664,22 @@
   padding: 1.25rem;
 }
 
+.political-catalog-page .catalog-profile-sticky-head {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: grid;
+  gap: .75rem;
+  padding: 1rem 4rem .75rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-container);
+}
+
 .political-catalog-page .catalog-profile-back {
   display: inline-flex;
   align-items: center;
   gap: .45rem;
-  margin: 1rem 1.25rem 0;
+  margin: 0;
   padding: .4rem .6rem;
   border: 1px solid var(--border);
   border-radius: 7px;
@@ -1051,8 +1062,13 @@
     padding: .8rem;
   }
 
+  .political-catalog-page .catalog-profile-sticky-head {
+    padding: .8rem 3.5rem .65rem .8rem;
+    gap: .6rem;
+  }
+
   .political-catalog-page .catalog-profile-back {
-    margin: .8rem .8rem 0;
+    margin: 0;
   }
 
   .political-catalog-page .catalog-dialog {
