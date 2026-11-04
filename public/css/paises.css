@@ -147,3 +147,22 @@
     transition: none;
   }
 }
+
+
+/* Country catalog controls mirror the personalities search layout. */
+.dedicated-countries-page .catalog-generic-view .atlas-controls-shell {
+  margin-bottom: 1.6rem;
+}
+
+.dedicated-countries-page .catalog-generic-view .atlas-controls {
+  margin-right: 3rem;
+  margin-bottom: 1.5rem;
+  margin-left: 3rem;
+}
+
+@media (max-width: 768px) {
+  .dedicated-countries-page .catalog-generic-view .atlas-controls {
+    margin-right: 1.25rem;
+    margin-left: 1.25rem;
+  }
+}
