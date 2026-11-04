@@ -808,73 +808,6 @@
   list-style: none;
 }
 
-.political-catalog-page .catalog-profile-axis {
-  min-width: 0;
-}
-
-.political-catalog-page .catalog-profile-axis-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: .5rem;
-  color: var(--text-main);
-  font-size: .72rem;
-}
-
-.political-catalog-page .catalog-profile-axis-status {
-  color: var(--text-muted);
-  font-size: .65rem;
-}
-
-.political-catalog-page .catalog-profile-axis-dot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  margin-right: .25rem;
-  border-radius: 50%;
-  background: var(--profile-color, var(--primary));
-}
-
-.political-catalog-page .catalog-profile-axis-bar {
-  display: grid;
-  gap: .3rem;
-  margin-top: .4rem;
-}
-
-.political-catalog-page .catalog-profile-poles {
-  display: flex;
-  justify-content: space-between;
-  gap: .5rem;
-  color: var(--text-muted);
-  font-size: .64rem;
-}
-
-.political-catalog-page .catalog-profile-track {
-  position: relative;
-  height: 7px;
-  border-radius: 99px;
-  background: linear-gradient(90deg, var(--profile-color, var(--primary)), color-mix(in srgb, var(--profile-color, var(--primary)) 22%, var(--border)));
-}
-
-.political-catalog-page .catalog-profile-marker {
-  position: absolute;
-  top: 50%;
-  width: 12px;
-  height: 12px;
-  border: 2px solid var(--card-bg);
-  border-radius: 50%;
-  background: var(--text-main);
-  transform: translate(-50%, -50%);
-}
-
-.political-catalog-page .catalog-profile-axis-unknown {
-  padding: .55rem;
-  border: 1px dashed var(--border);
-  border-radius: 6px;
-  color: var(--text-muted);
-  font-size: .68rem;
-}
-
 .political-catalog-page .catalog-profile-distinction-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1213,7 +1146,6 @@
 .political-catalog-page .catalog-dialog :is(
   .atlas-dialog-section h3,
   .atlas-axis-row-head,
-  .catalog-profile-axis-head,
   .catalog-profile-tab-panel h2,
   .catalog-profile-distinction h2
 ) {
@@ -1235,7 +1167,6 @@
   .atlas-dialog-list,
   .atlas-dialog-footer p,
   .catalog-profile-lead,
-  .catalog-profile-axis-status,
   .catalog-profile-distinction-grid p,
   .catalog-profile-muted,
   .catalog-profile-cta p,
@@ -1333,14 +1264,6 @@
   background: var(--marker, var(--text-main));
 }
 
-.political-catalog-page .catalog-dialog .catalog-profile-axis-head h3 {
-  display: inline-flex;
-  align-items: center;
-  gap: .45rem;
-  margin: 0;
-  font: inherit;
-}
-
 .political-catalog-page .catalog-dialog :is(a, button):focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 3px;
@@ -1379,7 +1302,3 @@
   color: var(--cb, var(--text-muted));
 }
 
-.political-catalog-page .catalog-dialog .catalog-profile-axis-head h3 .axis-icon {
-  flex: 0 0 auto;
-  color: var(--axis-color, var(--profile-color, var(--primary)));
-}
