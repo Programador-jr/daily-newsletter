@@ -1950,25 +1950,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const row = el("li", { class: "catalog-profile-axis atlas-axis-row" });
     if (value == null) {
       row.append(
-        el(
-          "div",
-          { class: "catalog-profile-axis-head" },
-          el("h3", { text: axis.name }),
-          el("span", { class: "catalog-profile-axis-status", text: "Sem posição definida" })
+        el("div", { class: "catalog-profile-axis-head" },
+          el("h3", {}, axisSvg(axis, "a", 16), el("span", { text: axis.name })),
+          el("span", { class: "catalog-profile-axis-status text-muted", text: "Sem posição definida" })
         ),
-        el("div", { class: "catalog-profile-axis-unknown", text: "Este eixo não foi avaliado para este conceito." })
+        el("div", { class: "catalog-profile-axis-unknown text-muted", text: "Este eixo não foi avaliado para este conceito." })
       );
       return row;
     }
     const strength = Math.max(value, 100 - value);
+    const pole = value >= 50 ? "a" : "b";
     const direction = value >= 50 ? axis.a : axis.b;
     const level = strength >= 75 ? "Muito forte" : strength >= 60 ? "Forte" : strength > 50 ? "Inclinado" : "Equilibrado";
-    row.style.setProperty("--axis-color", `var(--ax-${axis.id}-${value >= 50 ? "a" : "b"})`);
+    row.style.setProperty("--axis-color", `var(--ax-${axis.id}-${pole})`);
     row.append(
-      el(
-        "div",
-        { class: "catalog-profile-axis-head" },
-        el("h3", { text: axis.name }),
+      el("div", { class: "catalog-profile-axis-head" },
+        el("h3", {}, axisSvg(axis, pole, 16), el("span", { text: axis.name })),
         el("span", { class: "catalog-profile-axis-status" }, el("i", { class: "catalog-profile-axis-dot" }), `${level} · ${direction}`)
       ),
       el(
