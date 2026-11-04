@@ -1700,7 +1700,11 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     section.hidden = false;
-    grid.replaceChildren(...items.map((item) => state.tab === "personalidades" ? makePersonalityCard(item) : makeCard(item, config, true)));
+    grid.replaceChildren(...items.map((item) => {
+      if (state.tab === "personalidades") return makePersonalityCard(item);
+      if (state.tab === "partidos") return makePartyCard(item);
+      return makeCard(item, config, true);
+    }));
     const label = section.querySelector("[data-catalog-featured-label]");
     if (label) label.textContent = config.featuredLabel || `Seleção editorial de ${config.plural}`;
     const note = section.querySelector("[data-catalog-featured-note]");
