@@ -485,15 +485,6 @@ document.addEventListener("DOMContentLoaded", () => {
           label: "Período",
           options: ["Antiguidade", "Idade Média", "Idade Moderna", "Século XIX", "Séculos XX e XXI"].map((period) => ({ value: period, label: period })),
           get: (item) => periodBucket(item)
-        },
-        {
-          key: "origem",
-          label: "Vetor",
-          options: [
-            { value: "atlas", label: "Vetor atlas" },
-            { value: "12axes", label: "12axes convertido" }
-          ],
-          get: (item) => item.vectorSource
         }
       ],
       catalogCta: "Ver perfil do país"
