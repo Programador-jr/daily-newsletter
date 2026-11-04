@@ -1763,45 +1763,40 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!Array.isArray(item.vetor) || item.vetor.length !== 12) return null;
     const list = el("ul", { class: "atlas-axis-list" });
     DATA.axes.forEach((axis, index) => {
+      const poles = el(
+        "div",
+        { class: "atlas-axis-poles-row" },
+        el("span", { class: "atlas-axis-pole-label" }, axisSvg(axis, "a", 15), el("span", { text: axis.a })),
+        el("span", { class: "atlas-axis-pole-label" }, el("span", { text: axis.b }), axisSvg(axis, "b", 15))
+      );
       if (!isAxisKnown(item, axis.id)) {
         const unknown = el("li", { class: "atlas-axis-row is-unknown" });
         unknown.append(
-          el(
-            "div",
-            { class: "atlas-axis-row-head" },
-            el("span", { text: axis.name }),
-            el("strong", { text: "Sem posição definida" })
+          el("div", { class: "atlas-axis-row-head" },
+            el("span", { class: "atlas-axis-name" }, axisSvg(axis, "a", 16), el("span", { text: axis.name })),
+            el("strong", { class: "text-muted", text: "Sem posição definida" })
           ),
           el("div", { class: "atlas-axis-track is-empty" }),
-          el(
-            "div",
-            { class: "atlas-axis-poles-row" },
-            el("span", { text: axis.a }),
-            el("span", { text: axis.b })
-          )
+          poles
         );
         list.append(unknown);
         return;
       }
       const value = Math.max(0, Math.min(100, Number(item.vetor[index]) || 0));
-      const pole = value >= 50 ? axis.a : axis.b;
+      const poleKey = value >= 50 ? "a" : "b";
       const row = el("li", { class: "atlas-axis-row" });
       row.style.setProperty("--ca", `var(--ax-${axis.id}-a)`);
       row.style.setProperty("--cb", `var(--ax-${axis.id}-b)`);
-      row.style.setProperty("--marker", `var(--ax-${axis.id}-${value >= 50 ? "a" : "b"})`);
+      row.style.setProperty("--marker", `var(--ax-${axis.id}-${poleKey})`);
       row.append(
-        el(
-          "div",
-          { class: "atlas-axis-row-head" },
-          el("span", { text: axis.name }),
-          el("strong", { text: `${Math.round(Math.max(value, 100 - value))}% ${pole}` })
+        el("div", { class: "atlas-axis-row-head" },
+          el("span", { class: "atlas-axis-name" }, axisSvg(axis, poleKey, 16), el("span", { text: axis.name })),
+          el("strong", { text: `${Math.round(Math.max(value, 100 - value))}% ${poleKey === "a" ? axis.a : axis.b}` })
         ),
-        el("div", { class: "atlas-axis-track" }, el("span", { class: "atlas-axis-marker" }))
+        el("div", { class: "atlas-axis-track" }, el("span", { class: "atlas-axis-marker" })),
+        poles
       );
-      row.querySelector(".atlas-axis-marker").style.setProperty("--p", String(100 - value));
-      row.append(
-        el("div", { class: "atlas-axis-poles-row" }, el("span", { text: axis.a }), el("span", { text: axis.b }))
-      );
+      row.querySelector(".atlas-axis-marker").style.setProperty("--position", `${100 - value}%`);
       list.append(row);
     });
     return list;
