@@ -1341,15 +1341,6 @@
   font: inherit;
 }
 
-.political-catalog-page .catalog-dialog .catalog-profile-axis-head h3::before {
-  content: "";
-  width: .55rem;
-  height: .55rem;
-  flex: 0 0 .55rem;
-  border-radius: 50%;
-  background: var(--axis-color, var(--profile-color, var(--primary)));
-}
-
 .political-catalog-page .catalog-dialog :is(a, button):focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 3px;
@@ -1373,7 +1364,7 @@
 }
 
 .political-catalog-page .catalog-dialog .text-muted {
-  color: var(--text-muted) !important;
+  color: var(--text-muted);
 }
 
 .political-catalog-page .catalog-dialog .atlas-axis-name > .axis-icon {
