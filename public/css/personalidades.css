@@ -169,14 +169,14 @@
   border-top: 1px solid var(--border);
 }
 
-.dedicated-personalities-page .catalog-filter-group {
+.dedicated-personalities-page .atlas-filter-group {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: .35rem;
 }
 
-.dedicated-personalities-page .catalog-filter-label {
+.dedicated-personalities-page .atlas-filter-label {
   margin-right: .2rem;
   color: var(--text-muted);
   font-size: .7rem;
@@ -222,7 +222,7 @@
   margin: 0 var(--catalog-content-gutter) 2.25rem;
 }
 
-.dedicated-personalities-page .catalog-featured-head,
+.dedicated-personalities-page .atlas-featured-head,
 .dedicated-personalities-page .catalog-section .section-heading {
   display: flex;
   align-items: flex-end;
@@ -231,7 +231,7 @@
   margin-bottom: 1rem;
 }
 
-.dedicated-personalities-page .catalog-featured-head h2,
+.dedicated-personalities-page .atlas-featured-head h2,
 .dedicated-personalities-page .catalog-section .section-heading h2 {
   margin: .3rem 0 0;
   color: var(--text-main);
@@ -240,7 +240,7 @@
   line-height: 1.2;
 }
 
-.dedicated-personalities-page .catalog-featured-head > p,
+.dedicated-personalities-page .atlas-featured-head > p,
 .dedicated-personalities-page .catalog-section-note {
   max-width: 360px;
   margin: 0;
@@ -506,7 +506,7 @@
     grid-column: auto;
   }
 
-  .dedicated-personalities-page .catalog-featured-head,
+  .dedicated-personalities-page .atlas-featured-head,
   .dedicated-personalities-page .catalog-section .section-heading {
     align-items: flex-start;
     flex-direction: column;
