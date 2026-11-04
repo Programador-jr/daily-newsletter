@@ -35,54 +35,7 @@
     background: var(--card-bg);
     font-size: .8rem;
 }
-.atlas-controls {
-  display: grid;
-  grid-template-columns: minmax(220px, 1fr) auto;
-  gap: 0.75rem 1rem;
-  margin: 0 3rem 2rem;
-  padding: 0.9rem;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--card-bg);
-}
-.atlas-search {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  min-height: 42px;
-  padding: 0 0.8rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  width: 100%!important;
-}
-.atlas-search:focus-within {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
-}
-.atlas-search input {
-  width: 100%;
-  min-width: 0;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  color: var(--text-main);
-  font: inherit;
-}
-.atlas-sort {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--text-muted);
-  font-size: 0.8rem;
-}
-.atlas-sort select {
-  min-height: 38px;
-  padding: 0.4rem 0.65rem;
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  background: var(--bg-container);
-  color: var(--text-main);
-}
+/* Os controles de catálogo têm uma única definição na seção global abaixo. */
 .atlas-filters,
 .atlas-chips-row {
   display: flex;
@@ -436,9 +389,6 @@
     margin-right: 1.25rem;
     margin-left: 1.25rem;
   }
-  .atlas-controls {
-    grid-template-columns: 1fr;
-  }
   .atlas-grid,
   .atlas-featured-grid {
     grid-template-columns: 1fr;
@@ -695,9 +645,22 @@
 /* Pesquisa — largura fixa como na página História */
 .atlas-search {
   position: relative;
+  display: flex;
+  align-items: center;
   width: min(300px, 100%);
   flex: 300px;
   min-width: 0;
+  min-height: 42px;
+  padding: 0 .8rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-container);
+  box-sizing: border-box;
+}
+
+.atlas-search:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
 }
 
 @media (max-width: 420px) {
@@ -738,10 +701,12 @@
 
 .atlas-search input {
   width: 100%;
+  min-width: 0;
   padding: .68rem .9rem .68rem 2.4rem;
+  border: 0;
   border-radius: 8px;
   outline: none;
-  background: var(--bg-container);
+  background: transparent;
   color: var(--text-main);
   font: inherit;
   font-size: .82rem;
