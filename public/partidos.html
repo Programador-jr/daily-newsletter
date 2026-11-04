@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR" class="history-document">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,18 +11,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="/css/historia.css">
   <link rel="stylesheet" href="/css/components.css">
-  <link rel="stylesheet" href="/css/ideologias.css">
   <link rel="stylesheet" href="/css/atlas.css">
   <link rel="stylesheet" href="/css/political-catalogs.css">
   <link rel="stylesheet" href="/css/partidos.css">
-  <link rel="stylesheet" href="/css/page-patterns.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="/css/ui-kit.css">
   <script src="/js/vercel-observability.js" defer></script>
 </head>
-<body class="history-page ideologies-page political-catalog-page atlas-catalog-page dedicated-catalog-page dedicated-parties-page" data-catalog-default="partidos">
+<body class="political-catalog-page atlas-catalog-page dedicated-catalog-page dedicated-parties-page" data-catalog-default="partidos">
   <a class="skip-link" href="#catalog-main">Pular para o conteúdo</a>
   <div class="container">
     <header class="site-header">
@@ -40,17 +37,17 @@
       <nav class="catalog-breadcrumb" aria-label="Trilha de navegação">
         <a href="/politica">Política</a><span aria-hidden="true">/</span>
         <a href="/catalogo-politico">Catálogo político</a><span aria-hidden="true">/</span>
-        <span id="catalog-breadcrumb-current">Ideologias e valores</span>
+        <span id="catalog-breadcrumb-current">Partidos</span>
       </nav>
 
-      <section class="history-hero ideology-hero catalog-hero atlas-hero">
-        <span class="eyebrow" id="catalog-eyebrow">Catálogo político · Ideologias e valores</span>
-        <h1 id="catalog-title">Ideologias e valores em doze dimensões.</h1>
-        <p id="catalog-description">Correntes e conceitos que disputam o poder, a economia e os costumes. Cada ficha reúne contexto, origem do vetor e uma impressão digital de doze eixos independentes.</p>
+      <section class="catalog-hero atlas-hero">
+        <span class="eyebrow" id="catalog-eyebrow">Catálogo político · Partidos</span>
+        <h1 id="catalog-title">Partidos e movimentos em doze dimensões.</h1>
+        <p id="catalog-description">Organizações que disputam eleições, constroem bases e ocupam instituições. Cada ficha reúne trajetória, país, corrente associada e o perfil nos doze eixos políticos.</p>
         <div class="catalog-hero-links">
           <a class="atlas-button" href="/teste-politico"><i class="fas fa-list-check" aria-hidden="true"></i> Fazer o quiz político</a>
           <a class="atlas-button atlas-button-ghost" href="/comparar"><i class="fas fa-code-compare" aria-hidden="true"></i> Comparar perfis</a>
-          <a class="atlas-button atlas-button-ghost" href="/ideologias"><i class="fas fa-scale-balanced" aria-hidden="true"></i> Guia de ideologias</a>
+          <a class="atlas-button atlas-button-ghost" href="/paises"><i class="fas fa-globe-americas" aria-hidden="true"></i> Explorar países</a>
         </div>
         <div class="catalog-stats atlas-hero-stats" id="catalog-stats" aria-label="Resumo do catálogo"></div>
         <div class="catalog-spectrum" id="catalog-spectrum" aria-label="Distribuição do catálogo por famílias e grupos"></div>
@@ -145,21 +142,34 @@
         <div class="catalog-country-spectrum" id="catalog-country-spectrum" hidden></div>
         <div class="catalog-personality-spectrum" id="catalog-personality-spectrum" hidden></div>
         <div class="catalog-party-spectrum" id="catalog-party-spectrum" hidden></div>
-        <section class="atlas-controls catalog-controls" aria-label="Busca, ordenação e filtros">
-          <label class="atlas-search">
-            <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
-            <input id="catalog-generic-search" type="search" autocomplete="off" placeholder="Buscar neste catálogo" aria-label="Buscar neste catálogo">
-          </label>
-          <div class="catalog-subfilters" id="catalog-generic-subfilters">
-            <label class="atlas-sort" for="catalog-generic-sort">Ordenar <select id="catalog-generic-sort"></select></label>
-          </div>
-          <div class="atlas-filters" id="catalog-generic-filters" aria-label="Filtrar catálogo"></div>
-        </section>
+        <div class="atlas-controls-shell">
+          <section class="atlas-controls" aria-label="Pesquisa, filtros e ordenação">
+            <details class="atlas-filter-accordion" id="catalog-generic-filter-accordion">
+              <summary><span><i class="fas fa-sliders" aria-hidden="true"></i><b>Filtros</b></span><i class="fas fa-chevron-down atlas-filter-chevron" aria-hidden="true"></i></summary>
+              <div class="atlas-filters catalog-generic-filters" id="catalog-generic-filters"></div>
+            </details>
+            <div class="atlas-search-dock" role="search">
+              <label class="atlas-search">
+                <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+                <input id="catalog-generic-search" type="search" autocomplete="off" placeholder="Buscar partido, sigla, país ou corrente..." aria-label="Buscar partidos e movimentos">
+              </label>
+            </div>
+            <div class="atlas-sort" id="catalog-generic-sort">
+              <button class="atlas-sort-trigger" id="catalog-generic-sort-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="catalog-generic-sort-menu">
+                <i class="fas fa-arrow-down-wide-short" aria-hidden="true"></i>
+                <span class="atlas-sort-label"></span>
+                <span class="atlas-sort-value" id="catalog-generic-sort-value">Ordem editorial</span>
+                <i class="fas fa-chevron-down atlas-sort-chevron" aria-hidden="true"></i>
+              </button>
+              <ul class="atlas-sort-menu" id="catalog-generic-sort-menu" role="listbox" aria-label="Ordenar partidos" hidden></ul>
+            </div>
+          </section>
+        </div>
 
         <section class="atlas-featured" id="catalog-featured" aria-labelledby="catalog-featured-title">
           <div class="atlas-featured-head">
-            <div><span class="eyebrow" data-catalog-featured-label>Seleção editorial de ideologias</span><h2 id="catalog-featured-title">Comece por estas fichas</h2></div>
-            <p data-catalog-featured-note>Três recortes para começar.</p>
+            <div><span class="eyebrow" data-catalog-featured-label>Seleção editorial de partidos</span><h2 id="catalog-featured-title">Partidos em destaque</h2></div>
+            <p data-catalog-featured-note>Uma seleção para explorar diferentes trajetórias e correntes.</p>
           </div>
           <div class="atlas-featured-grid" id="catalog-featured-grid"></div>
         </section>
