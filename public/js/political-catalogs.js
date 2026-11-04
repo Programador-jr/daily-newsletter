@@ -1488,6 +1488,7 @@ document.addEventListener("DOMContentLoaded", () => {
       search?.focus();
     });
     container.append(clear);
+    container.append(el("p", { class: "atlas-filters-count", id: "catalog-generic-filter-count", "aria-live": "polite" }));
   };
 
   const sortItems = (items) => {
@@ -1746,6 +1747,13 @@ document.addEventListener("DOMContentLoaded", () => {
       count.textContent = state.filtered.length
         ? `Exibindo ${shown.length} de ${state.filtered.length} ${config.plural}.`
         : "Nenhum resultado encontrado.";
+    }
+    const filterCount = document.getElementById("catalog-generic-filter-count");
+    if (filterCount) {
+      const total = config.items.length;
+      filterCount.textContent = state.filtered.length === total
+        ? `${total} ${config.plural}`
+        : `${state.filtered.length} de ${total} ${config.plural}`;
     }
     const loadMore = document.getElementById("catalog-generic-load-more");
     if (loadMore) {
