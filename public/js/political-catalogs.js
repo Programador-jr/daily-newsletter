@@ -433,15 +433,6 @@ document.addEventListener("DOMContentLoaded", () => {
           label: "Área",
           options: DATA.areas.map((area) => ({ value: area.id, label: area.rotulo })),
           get: (item) => item.area
-        },
-        {
-          key: "origem",
-          label: "Vetor",
-          options: [
-            { value: "atlas", label: "Vetor atlas" },
-            { value: "12axes", label: "12axes convertido" }
-          ],
-          get: (item) => item.vectorSource
         }
       ],
       catalogCta: "Ver trajetória"
@@ -1858,37 +1849,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const url = isLogo ? item.logoSourceUrl : item.imageSourceUrl;
     const note = isLogo ? item.logoNote : item.imageNote;
     if (!credit && !url && !note && !isUnverifiedImage(item)) return null;
-    const list = el("ul", { class: "atlas-dialog-list" });
+    const lines = el("div", { class: "catalog-dialog-credit" });
     if (credit) {
-      const line = el("li", {}, `Imagem: ${credit}`);
+      const line = el("p", {}, `Imagem: ${credit}`);
       if (url) {
         line.append(
           document.createTextNode(" · "),
           el("a", { href: url, target: "_blank", rel: "noopener noreferrer", text: "ver origem" })
         );
       }
-      list.append(line);
+      lines.append(line);
     } else if (url) {
-      list.append(el("li", {}, el("a", { href: url, target: "_blank", rel: "noopener noreferrer", text: "Ver origem da imagem" })));
+      lines.append(el("p", {}, el("a", { href: url, target: "_blank", rel: "noopener noreferrer", text: "Ver origem da imagem" })));
     }
-    if (note) list.append(el("li", { text: note }));
+    if (note) lines.append(el("p", { text: note }));
     if (isUnverifiedImage(item)) {
-      list.append(
-        el("li", {
+      lines.append(
+        el("p", {
           text: "O retrato não é exibido no catálogo porque a licença ainda não foi verificada."
         })
       );
     }
-    return list;
+    return lines;
   };
 
   const sourceNode = (item) => {
-    const list = el("ul", { class: "atlas-dialog-list" });
-    list.append(el("li", { text: `Vetor: ${vectorSourceLabel(item)}.` }));
+    const lines = el("div", { class: "catalog-dialog-credit" });
+    lines.append(el("p", { text: `Vetor: ${vectorSourceLabel(item)}.` }));
     if (item.source) {
-      list.append(
+      lines.append(
         el(
-          "li",
+          "p",
           {},
           "Fonte e contexto: ",
           el("a", {
@@ -1901,15 +1892,15 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     }
     if (item.vectorSource === "atlas") {
-      list.append(el("li", { text: "Perfil curado pelo atlas político do King's Newsletter." }));
+      lines.append(el("p", { text: "Perfil curado pelo atlas político do King's Newsletter." }));
     } else {
-      list.append(
-        el("li", {
+      lines.append(
+        el("p", {
           text: "Perfil do 12 Axes convertido para a régua do atlas: 100 corresponde ao primeiro polo local."
         })
       );
     }
-    return list;
+    return lines;
   };
 
   const buildNearby = (item) => {
@@ -2081,7 +2072,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const ideologyPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "ideologias", hidden: true }, el("h2", { text: "Ideologias relacionadas" }), buildNearby(item) || el("p", { class: "catalog-profile-muted", text: "Nenhuma ideologia próxima disponível." }));
     const distinctions = el("section", { class: "catalog-profile-distinction" }, el("h2", { text: "O que distingue esta ideologia" }), el("div", { class: "catalog-profile-distinction-grid" }, el("article", {}, el("span", { class: "catalog-profile-badge", text: "Posições mais fortes" }), el("h3", { text: DATA.axes.slice().sort((a, b) => (Math.max(...[axisValue(item, b.id) || 50, 100 - (axisValue(item, b.id) || 50)]) - 50) - (Math.max(...[axisValue(item, a.id) || 50, 100 - (axisValue(item, a.id) || 50)]) - 50))[0]?.name || "Perfil" }), el("p", { text: "Os eixos mais distantes do centro mostram onde esta corrente assume posições mais definidas." })), el("article", {}, el("span", { class: "catalog-profile-badge is-neutral", text: "Leitura do perfil" }), el("h3", { text: family?.rotulo || "Ideologia" }), el("p", { text: item.ideia || item.resumo || "Uma síntese editorial do perfil político." }))));
     const cta = el("section", { class: "catalog-profile-cta" }, el("div", {}, el("span", { class: "eyebrow", text: "Teste político" }), el("h2", { text: "E você, onde está no espectro?" }), el("p", { text: `Responda ao quiz e veja sua compatibilidade com ${item.nome} e outras ideologias nos 12 eixos.` })), el("a", { class: "atlas-button", href: "/teste-politico" }, el("span", { text: "Fazer o teste" }), icon("fa-arrow-right")));
-    shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, hero, close), el("div", { class: "atlas-dialog-body catalog-profile-content" }, phrase, tabs, axesPanel, peoplePanel, placesPanel, ideologyPanel, distinctions, cta));
+    shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, close), hero, el("div", { class: "atlas-dialog-body catalog-profile-content" }, phrase, tabs, axesPanel, peoplePanel, placesPanel, ideologyPanel, distinctions, cta));
     return shell;
   };
 
@@ -2125,7 +2116,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const countryPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "paises", hidden: true }, el("h2", { text: item.tipo === "regime" ? "Regimes e países parecidos" : "Países parecidos" }), chipsFor("paises", nearbyCountries.map((entry) => entry.id), "fa-flag") || el("p", { class: "catalog-profile-muted", text: "Nenhum perfil parecido foi encontrado." }));
     const distinction = el("section", { class: "catalog-profile-distinction" }, el("h2", { text: `O que distingue ${item.nome}` }), el("div", { class: "catalog-profile-distinction-grid" }, el("article", {}, el("span", { class: "catalog-profile-badge", text: "Configuração política" }), el("h3", { text: item.categoria || item.tipo }), el("p", { text: item.resumo || item.description })), el("article", {}, el("span", { class: "catalog-profile-badge is-neutral", text: "Leitura territorial" }), el("h3", { text: item.regiao || "Perfil nacional" }), el("p", { text: item.periodo || "Perfil contemporâneo" }))));
     const cta = el("section", { class: "catalog-profile-cta" }, el("div", {}, el("span", { class: "eyebrow", text: "Teste político" }), el("h2", { text: "Você viveria bem aqui?" }), el("p", { text: `Responda ao quiz e veja sua compatibilidade com ${item.nome} e outros países e regimes.` })), el("a", { class: "atlas-button", href: "/teste-politico" }, el("span", { text: "Fazer o teste" }), icon("fa-arrow-right")));
-    shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, hero, close), el("div", { class: "atlas-dialog-body catalog-profile-content" }, tabs, axesPanel, ideologyPanel, peoplePanel, countryPanel, distinction, cta));
+    shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, close), hero, el("div", { class: "atlas-dialog-body catalog-profile-content" }, tabs, axesPanel, ideologyPanel, peoplePanel, countryPanel, distinction, cta));
     return shell;
   };
 
@@ -2196,11 +2187,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const distinction = el("section", { class: "catalog-profile-distinction" }, el("h2", { text: `O que distingue ${item.nome}` }), el("div", { class: "catalog-profile-distinction-grid" }, el("article", {}, el("span", { class: "catalog-profile-badge", text: "Área de atuação" }), el("h3", { text: item.areaLabel || areaOf(item)?.rotulo || "Política" }), el("p", { text: item.resumo || item.description })), el("article", {}, el("span", { class: "catalog-profile-badge is-neutral", text: "Vetor" }), el("h3", { text: vectorSourceLabel(item) }), el("p", { text: "Uma leitura editorial aproximada da posição desta personalidade nos 12 eixos." }))));
     const cta = el("section", { class: "catalog-profile-cta" }, el("div", {}, el("span", { class: "eyebrow", text: "Teste político" }), el("h2", { text: "E você, com quem se parece?" }), el("p", { text: `Responda ao quiz e veja sua compatibilidade com ${item.nome}, ideologias e países nos 12 eixos.` })), el("a", { class: "atlas-button", href: "/teste-politico" }, el("span", { text: "Fazer o teste" }), icon("fa-arrow-right")));
     const body = el("div", { class: "atlas-dialog-body catalog-profile-content" }, tabs, panels, distinction, cta);
-    const credits = creditNode(item);
-    const sources = sourceNode(item);
-    if (credits) addSection(body, "Crédito do retrato", "fa-camera", credits);
-    if (sources) addSection(body, "Fontes e metodologia", "fa-book-open", sources);
-    shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, hero, close), body);
+    shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, close), hero, body);
     return shell;
   };
 
@@ -2244,7 +2231,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const partyPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "partidos", hidden: true }, el("h2", { text: "Partidos e organizações parecidos" }), chipsFor("partidos", parties.map((entry) => entry.id), "fa-flag") || el("p", { class: "catalog-profile-muted", text: "Nenhum perfil parecido foi encontrado." }));
     const distinction = el("section", { class: "catalog-profile-distinction" }, el("h2", { text: `O que distingue ${item.nome}` }), el("div", { class: "catalog-profile-distinction-grid" }, el("article", {}, el("span", { class: "catalog-profile-badge", text: "Trajetória" }), el("h3", { text: item.orientacao || item.category || "Organização política" }), el("p", { text: (item.marcos || []).join(" ") || item.resumo || item.description })), el("article", {}, el("span", { class: "catalog-profile-badge is-neutral", text: "Vetor" }), el("h3", { text: vectorSourceLabel(item) }), el("p", { text: item.vectorCalibrated ? "Leitura editorial recalibrada para refletir a trajetória e o programa do partido." : "Leitura editorial da posição do partido nos 12 eixos." }))));
     const cta = el("section", { class: "catalog-profile-cta" }, el("div", {}, el("span", { class: "eyebrow", text: "Teste político" }), el("h2", { text: "Você se identifica com este perfil?" }), el("p", { text: `Responda ao quiz e veja sua compatibilidade com ${item.nome} e outros partidos nos 12 eixos.` })), el("a", { class: "atlas-button", href: "/teste-politico" }, el("span", { text: "Fazer o teste" }), icon("fa-arrow-right")));
-    shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, hero, close), el("div", { class: "atlas-dialog-body catalog-profile-content" }, tabs, axesPanel, ideologyPanel, peoplePanel, partyPanel, distinction, cta));
+    shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, close), hero, el("div", { class: "atlas-dialog-body catalog-profile-content" }, tabs, axesPanel, ideologyPanel, peoplePanel, partyPanel, distinction, cta));
     return shell;
   };
 

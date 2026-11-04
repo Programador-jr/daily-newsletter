@@ -181,6 +181,11 @@
   font-size: 0.76rem;
   font-weight: 700;
 }
+/* Entrada compartilhada pelos cards de catálogo (livros e personalidades). */
+@keyframes atlas-card-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .atlas-fp {
   display: flex;
   gap: 2px;

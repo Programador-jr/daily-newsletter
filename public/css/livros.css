@@ -254,7 +254,7 @@
   background: linear-gradient(90deg, color-mix(in srgb, var(--fam, var(--primary)) 5%, var(--card-bg)), var(--card-bg) 1.2rem);
   box-shadow: 2px 0 0 color-mix(in srgb, var(--border) 55%, transparent), 0 3px 8px rgb(0 0 0 / 8%);
   transform-origin: left center;
-  animation: book-card-enter 320ms ease-out both;
+  animation: atlas-card-enter 320ms ease-out both;
   transition: border-color 180ms ease, box-shadow 220ms ease, transform 220ms cubic-bezier(.2,.8,.2,1);
 }
 
@@ -603,11 +603,6 @@ html body.books-page dialog.atlas-dialog-book {
 .atlas-dialog-book .atlas-readmore:hover {
   border-color: var(--primary);
   background: color-mix(in srgb, var(--primary) 7%, var(--card-bg));
-}
-
-@keyframes book-card-enter {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes atlas-book-dialog-enter {

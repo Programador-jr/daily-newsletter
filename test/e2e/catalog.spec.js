@@ -133,7 +133,8 @@ test('abas genéricas', async ({ page }) => {
   await expect(page.locator('#catalog-generic-grid .catalog-card')).toHaveCount(36);
   await expect(page.locator('#catalog-generic-count')).toContainText('Exibindo 36 de 667');
 
-  await page.locator('#catalog-generic-sort').selectOption('az');
+  await page.locator('#catalog-generic-sort-trigger').click();
+  await page.locator('#catalog-generic-sort-menu .atlas-sort-option[data-value="az"]').click();
   await page.locator('#catalog-generic-load-more').click();
   await expect(page.locator('#catalog-generic-grid .catalog-card')).toHaveCount(72);
 
