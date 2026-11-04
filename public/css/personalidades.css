@@ -113,102 +113,7 @@
   font-size: .7rem;
 }
 
-/* Search, sorting and area filters. */
-.dedicated-personalities-page .catalog-controls {
-  grid-template-columns: minmax(220px, 1fr) auto;
-  gap: .75rem;
-  margin: 0 var(--catalog-content-gutter) 1.6rem;
-  padding: .9rem;
-  border: 1px solid var(--border);
-  border-radius: 11px;
-  background: var(--card-bg);
-  box-shadow: 0 3px 12px rgb(0 0 0 / 3%);
-}
-
-.dedicated-personalities-page .catalog-controls .atlas-search {
-  min-height: 44px;
-  border-radius: 8px;
-  background: var(--bg-container);
-}
-
-.dedicated-personalities-page .catalog-controls .atlas-search input {
-  min-height: 40px;
-  font-size: .82rem;
-}
-
-.dedicated-personalities-page .catalog-subfilters {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: .6rem;
-}
-
-.dedicated-personalities-page .catalog-controls .atlas-sort {
-  gap: .55rem;
-  font-size: .72rem;
-  font-weight: 700;
-}
-
-.dedicated-personalities-page .catalog-controls .atlas-sort select {
-  min-height: 42px;
-  max-width: 220px;
-  border-radius: 8px;
-  background: var(--bg-container);
-  font: inherit;
-  font-size: .76rem;
-}
-
-.dedicated-personalities-page .catalog-controls .atlas-filters {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: .55rem .85rem;
-  margin: 0;
-  padding-top: .65rem;
-  border-top: 1px solid var(--border);
-}
-
-.dedicated-personalities-page .atlas-filter-group {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: .35rem;
-}
-
-.dedicated-personalities-page .atlas-filter-label {
-  margin-right: .2rem;
-  color: var(--text-muted);
-  font-size: .7rem;
-  font-weight: 800;
-}
-
-.dedicated-personalities-page .catalog-controls .atlas-chip,
-.dedicated-personalities-page .catalog-controls .atlas-clear {
-  min-height: 33px;
-  padding: .35rem .65rem;
-  border-radius: 999px;
-  background: var(--bg-container);
-  font-size: .69rem;
-}
-
-.dedicated-personalities-page .catalog-controls .atlas-chip[aria-pressed="true"],
-.dedicated-personalities-page .catalog-controls .atlas-chip.active {
-  border-color: var(--primary);
-  background: color-mix(in srgb, var(--primary) 9%, var(--card-bg));
-  color: var(--primary);
-}
-
-.dedicated-personalities-page .catalog-controls .atlas-clear {
-  border-color: transparent;
-  color: var(--primary);
-  font-weight: 750;
-}
-
-.dedicated-personalities-page .catalog-controls .atlas-clear:hover {
-  border-color: var(--primary);
-}
-
+/* Search, filters and sorting use the shared Atlas controls from political-catalogs.css. */
 .dedicated-personalities-page #catalog-generic-count {
   color: var(--text-muted);
   font-size: .76rem;
@@ -440,9 +345,9 @@
 
 .dedicated-personalities-page :is(
   .catalog-personality-card,
-  .catalog-controls .atlas-chip,
-  .catalog-controls .atlas-clear,
-  .catalog-controls .atlas-sort select,
+  .atlas-filter-accordion .atlas-chip,
+  .atlas-filter-accordion .atlas-clear,
+  .atlas-sort-trigger,
   .catalog-profile-tabs button,
   .catalog-profile-back
 ):focus-visible {
@@ -486,23 +391,10 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .dedicated-personalities-page .catalog-controls,
   .dedicated-personalities-page #catalog-featured,
   .dedicated-personalities-page .catalog-section {
     margin-right: var(--catalog-content-gutter);
     margin-left: var(--catalog-content-gutter);
-  }
-
-  .dedicated-personalities-page .catalog-controls {
-    grid-template-columns: 1fr;
-  }
-
-  .dedicated-personalities-page .catalog-subfilters {
-    justify-content: flex-start;
-  }
-
-  .dedicated-personalities-page .catalog-controls .atlas-filters {
-    grid-column: auto;
   }
 
   .dedicated-personalities-page .atlas-featured-head,
@@ -541,20 +433,6 @@
   .dedicated-personalities-page #catalog-generic-grid,
   .dedicated-personalities-page .catalog-profile-dialog .catalog-profile-axis-list {
     grid-template-columns: 1fr;
-  }
-
-  .dedicated-personalities-page .catalog-subfilters {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .dedicated-personalities-page .catalog-controls .atlas-sort {
-    justify-content: space-between;
-  }
-
-  .dedicated-personalities-page .catalog-controls .atlas-sort select {
-    flex: 1;
-    max-width: none;
   }
 
   .dedicated-personalities-page .catalog-personality-portrait {
