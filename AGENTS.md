@@ -2,6 +2,8 @@
 
 ## Required order for frontend and CSS work
 
+For CSS implementation, read `.github/skills/css-architecture/SKILL.md`. For cross-page visual or component changes, also read `.github/skills/frontend-audit/SKILL.md` before editing.
+
 Before changing frontend presentation or behavior, follow this sequence:
 
 1. **Inspect** the current branch, working changes, page entry point, imported assets, and runtime behavior.
