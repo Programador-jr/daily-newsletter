@@ -176,9 +176,484 @@
   min-width: 0;
 }
 
-/* Page-specific spacing for global controls */
-.political-catalog-page .catalog-controls {
-  margin: 0 var(--catalog-content-gutter) 1.5rem;
+/* Search, filters and sorting — same layout rules as the Books page. */
+.political-catalog-page .atlas-controls {
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 14px rgb(25 31 40 / 3%);
+}
+
+.political-catalog-page .atlas-controls-shell {
+  display: contents;
+}
+
+.political-catalog-page .atlas-sort {
+  position: relative;
+  display: block;
+  min-width: 0;
+}
+
+.political-catalog-page .atlas-sort-trigger {
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  align-items: center;
+  gap: .5rem;
+  padding: 0 .85rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  font: inherit;
+  font-size: .8rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.political-catalog-page .atlas-sort-trigger:hover,
+.political-catalog-page .atlas-sort[data-open="true"] .atlas-sort-trigger {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.political-catalog-page .atlas-sort-label,
+.political-catalog-page .atlas-sort-chevron {
+  color: var(--text-muted);
+}
+
+.political-catalog-page .atlas-sort-value {
+  font-weight: 700;
+}
+
+.political-catalog-page .atlas-sort-chevron {
+  font-size: .7rem;
+  transition: transform 180ms ease;
+}
+
+.political-catalog-page .atlas-sort[data-open="true"] .atlas-sort-chevron {
+  transform: rotate(180deg);
+}
+
+.political-catalog-page .atlas-sort-menu {
+  position: absolute;
+  top: calc(100% + .4rem);
+  right: 0;
+  left: auto;
+  z-index: 20;
+  display: grid;
+  width: max-content;
+  min-width: 15rem;
+  max-width: min(20rem, calc(100vw - 2.5rem));
+  margin: 0;
+  padding: .35rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card-bg);
+  box-shadow: 0 12px 28px rgb(24 37 34 / 16%);
+  list-style: none;
+}
+
+.political-catalog-page .atlas-sort-menu[hidden] {
+  display: none;
+}
+
+.political-catalog-page .atlas-sort-option {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .55rem .6rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-main);
+  font: inherit;
+  font-size: .78rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.political-catalog-page .atlas-sort-option i {
+  color: var(--primary);
+  font-size: .72rem;
+  opacity: 0;
+}
+
+.political-catalog-page .atlas-sort-option:hover,
+.political-catalog-page .atlas-sort-option:focus-visible {
+  outline: none;
+  background: color-mix(in srgb, var(--primary) 8%, var(--card-bg));
+  color: var(--primary);
+}
+
+.political-catalog-page .atlas-sort-option[aria-selected="true"] {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.political-catalog-page .atlas-sort-option[aria-selected="true"] i {
+  opacity: 1;
+}
+
+.political-catalog-page .atlas-filter-accordion .atlas-clear {
+  align-self: center;
+  height: 34px;
+  min-height: 34px;
+  padding: .4rem .7rem;
+  color: var(--text-muted);
+  font-size: .75rem;
+  font-weight: 600;
+}
+
+.political-catalog-page .atlas-filter-accordion .atlas-clear:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.political-catalog-page .atlas-search-dock {
+  position: sticky;
+  top: 5.5rem;
+  z-index: 10;
+  margin: 0 3rem .75rem;
+  padding: .65rem 0;
+  background: var(--bg-container);
+}
+
+.political-catalog-page .atlas-search-dock .atlas-search {
+  position: relative;
+}
+
+.political-catalog-page .atlas-search-dock .atlas-search i {
+  position: absolute;
+  top: 50%;
+  left: .9rem;
+  color: var(--text-muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: .85rem;
+  transition: color 180ms ease;
+}
+
+.political-catalog-page .atlas-search-dock .atlas-search input {
+  width: 100%;
+  padding: .68rem .9rem .68rem 2.4rem;
+  border-radius: 8px;
+  outline: none;
+  background: var(--bg-container);
+  color: var(--text-main);
+  font: inherit;
+  font-size: .82rem;
+  box-sizing: border-box;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.political-catalog-page .atlas-search-dock .atlas-search:focus-within i {
+  color: var(--primary);
+}
+
+.political-catalog-page .atlas-filter-accordion {
+  min-width: 0;
+}
+
+.political-catalog-page .atlas-filter-accordion > summary {
+  display: none;
+}
+
+.political-catalog-page .atlas-filter-chevron {
+  transition: transform 180ms ease;
+}
+
+.political-catalog-page .atlas-filter-accordion[open] .atlas-filter-chevron {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .political-catalog-page .atlas-controls-shell {
+    position: sticky;
+    top: 4.75rem;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+    align-items: center;
+    gap: .5rem;
+    margin: 0 1.25rem .65rem;
+    padding: .55rem 0;
+    background: var(--bg-container);
+  }
+
+  .political-catalog-page .atlas-search-dock {
+    position: static;
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    padding: 0;
+  }
+
+  .political-catalog-page .atlas-search-dock .atlas-search {
+    width: 100%;
+  }
+
+  .political-catalog-page .atlas-controls {
+    display: contents;
+  }
+
+  .political-catalog-page .atlas-filter-accordion,
+  .political-catalog-page .atlas-sort {
+    grid-row: 1;
+  }
+
+  .political-catalog-page .atlas-filter-accordion {
+    grid-column: 1;
+    overflow: visible;
+    border: 0;
+    background: transparent;
+  }
+
+  .political-catalog-page .atlas-filter-accordion > summary {
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    place-items: center;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-container);
+    color: var(--text-main);
+    cursor: pointer;
+    list-style: none;
+    transition: border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
+  }
+
+  .political-catalog-page .atlas-filter-accordion > summary:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .political-catalog-page .atlas-filter-accordion > summary:focus-visible {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
+  }
+
+  .political-catalog-page .atlas-filter-accordion > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .political-catalog-page .atlas-filter-accordion > summary span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .political-catalog-page .atlas-filter-accordion > summary span i {
+    color: var(--primary);
+    font-size: 1rem;
+  }
+
+  .political-catalog-page .atlas-filter-accordion > summary span b,
+  .political-catalog-page .atlas-filter-accordion > summary > .atlas-filter-chevron {
+    display: none;
+  }
+
+  .political-catalog-page .atlas-filter-accordion[open] > summary {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--bg-container);
+  }
+
+  .political-catalog-page .atlas-filter-accordion .atlas-filters {
+    position: absolute;
+    top: calc(100% + .4rem);
+    left: 0;
+    right: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: .85rem;
+    max-height: min(60vh, 26rem);
+    margin: 0;
+    padding: .85rem;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--card-bg);
+    box-shadow: 0 12px 28px rgb(24 37 34 / 16%);
+  }
+
+  .political-catalog-page .atlas-filter-accordion .atlas-filter-group {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: .45rem;
+  }
+
+  .political-catalog-page .atlas-filter-accordion .atlas-chips-row {
+    gap: .4rem;
+  }
+
+  .political-catalog-page .atlas-filter-accordion .atlas-chip,
+  .political-catalog-page .atlas-filter-accordion .atlas-clear {
+    min-height: 38px;
+  }
+
+  .political-catalog-page .atlas-sort {
+    grid-column: 3;
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .political-catalog-page .atlas-sort-trigger {
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    min-height: 0;
+    place-items: center;
+    padding: 0;
+    border-radius: 8px;
+    background: var(--bg-container);
+    color: var(--primary);
+    font-size: 1rem;
+  }
+
+  .political-catalog-page .atlas-sort-label,
+  .political-catalog-page .atlas-sort-value {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .political-catalog-page .atlas-sort-chevron {
+    display: none;
+  }
+
+  .political-catalog-page .atlas-sort-menu {
+    right: 0;
+    width: min(15rem, calc(100vw - 2.5rem));
+  }
+}
+
+@media (min-width: 769px) {
+  .political-catalog-page .atlas-controls-shell {
+    position: sticky;
+    top: 5.5rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    margin: 0 3rem .75rem;
+    padding: .65rem 0;
+    background: var(--bg-container);
+  }
+
+  .political-catalog-page .atlas-search-dock {
+    position: static;
+    top: auto;
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+  }
+
+  .political-catalog-page .atlas-controls {
+    display: contents;
+  }
+
+  .political-catalog-page details#catalog-generic-filter-accordion {
+    position: static;
+    flex: none;
+    min-width: 0;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .political-catalog-page details#catalog-generic-filter-accordion > summary {
+    display: flex;
+    height: 42px;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: 0 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-container);
+    color: var(--text-main);
+    font-size: .8rem;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    list-style: none;
+    transition: border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
+  }
+
+  .political-catalog-page details#catalog-generic-filter-accordion > summary:hover,
+  .political-catalog-page details#catalog-generic-filter-accordion[open] > summary {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .political-catalog-page details#catalog-generic-filter-accordion > summary:focus-visible {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
+  }
+
+  .political-catalog-page details#catalog-generic-filter-accordion > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .political-catalog-page details#catalog-generic-filter-accordion > summary span {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+  }
+
+  .political-catalog-page details#catalog-generic-filter-accordion > summary span i {
+    color: var(--primary);
+  }
+
+  .political-catalog-page .atlas-filter-accordion .atlas-filters {
+    position: absolute;
+    top: calc(100% + .4rem);
+    right: 0;
+    left: 0;
+    z-index: 2;
+    max-height: min(60vh, 26rem);
+    margin: 0;
+    padding: .85rem;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--card-bg);
+    box-shadow: 0 12px 28px rgb(24 37 34 / 16%);
+  }
+
+  .political-catalog-page .atlas-sort {
+    flex: none;
+  }
+
+  .political-catalog-page .atlas-sort-trigger {
+    height: 42px;
+    min-height: 42px;
+    padding: 0 1rem 0 .9rem;
+    border-radius: 8px;
+    background: var(--bg-container);
+    font-size: .8rem;
+  }
+}
+
+/* Accordion dropdown and controls stay above the catalog cards. */
+.political-catalog-page .atlas-controls-shell,
+.political-catalog-page .atlas-filter-accordion {
+  min-width: 0;
 }
 
 /* Accordion filter content - page-specific layout for chips inside */
