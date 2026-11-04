@@ -785,36 +785,35 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     ];
     spectrum.replaceChildren(
-      el("h2", { class: "catalog-spectrum-title", text: "Distribuição por famílias e grupos" }),
-      ...rows.map((row) => {
-        const bar = el("div", { class: "catalog-spectrum-bar" });
-        row.items.forEach((meta) => {
-          const total = row.count(meta.id);
-          const pressed = state.family === meta.id && state.familyType === row.kind;
-          const segment = el("button", {
-            class: "catalog-spectrum-seg",
-            type: "button",
-            style: { "--n": String(total), "--c": meta.cor },
-            "aria-pressed": String(pressed),
-            "aria-label": `${meta.rotulo}: ${total} ${row.kind === "valor" ? "valores" : "ideologias"}`,
-            title: `${meta.rotulo}: ${total} ${row.kind === "valor" ? "valores" : "ideologias"}`
-          });
-          segment.append(el("b", { text: meta.rotulo }), el("em", { text: String(total) }));
-          segment.addEventListener("click", () => toggleFamily(meta.id, row.kind));
-          bar.append(segment);
-        });
-        return el(
+      el("span", { class: "atlas-book-spectrum-label", text: "Distribuição por famílias e grupos" }),
+      ...rows.map((row) =>
+        el(
           "div",
-          { class: "catalog-spectrum-row" },
+          { class: "atlas-book-spectrum-row" },
           el(
             "div",
-            { class: "catalog-spectrum-head" },
+            { class: "atlas-book-spectrum-head" },
             el("strong", { text: row.label }),
             el("span", { text: `${row.items.length} ${row.kind === "valor" ? "grupos" : "famílias"}` })
           ),
-          bar
-        );
-      })
+          el(
+            "div",
+            { class: "atlas-book-spectrum-bar" },
+            ...row.items.map((meta) =>
+              el(
+                "span",
+                {
+                  class: "atlas-book-spectrum-segment",
+                  style: { "--c": meta.cor },
+                  title: `${meta.rotulo}: ${row.count(meta.id)} ${row.kind === "valor" ? "valores" : "ideologias"}`
+                },
+                el("b", { text: meta.rotulo }),
+                el("em", { text: String(row.count(meta.id)) })
+              )
+            )
+          )
+        )
+      )
     );
   };
 
@@ -833,7 +832,7 @@ document.addEventListener("DOMContentLoaded", () => {
     container.replaceChildren(
       ...options.map((option) => {
         const button = el("button", {
-          class: "catalog-scope-button",
+          class: "atlas-scope-btn catalog-scope-button",
           type: "button",
           "aria-pressed": String(state.scope === option.value),
           "aria-label": `${option.label}: ${option.count} fichas`
@@ -881,21 +880,28 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const renderChips = () => {
-    const container = document.getElementById("catalog-chips");
+    const container = document.getElementById("catalog-filters");
     if (!container) return;
     const entries = [];
+    let totalCount = 0;
     if (state.scope !== "valores") {
       DATA.families.forEach((meta) => {
-        entries.push({ meta, kind: "ideologia", count: familyCount(meta.id) });
+        const count = familyCount(meta.id);
+        entries.push({ meta, kind: "ideologia", count });
+        totalCount += count;
       });
     }
     if (state.scope !== "ideologias") {
       (DATA.valueGroups || []).forEach((group) => {
         const meta = groupMeta(group.id);
-        if (meta) entries.push({ meta, kind: "valor", count: groupCount(meta.id) });
+        if (meta) {
+          const count = groupCount(meta.id);
+          entries.push({ meta, kind: "valor", count });
+          totalCount += count;
+        }
       });
     }
-    container.replaceChildren(
+    const chipRow = el("div", { class: "atlas-chips-row" },
       ...entries.map(({ meta, kind, count }) => {
         const pressed = state.family === meta.id && state.familyType === kind;
         const chip = el("button", {
@@ -906,7 +912,6 @@ document.addEventListener("DOMContentLoaded", () => {
           title: `${meta.rotulo}: ${count} ${kind === "valor" ? "valores" : "ideologias"}`
         });
         chip.append(
-          el("span", { class: "catalog-chip-dot" }),
           el("span", { text: meta.rotulo }),
           el("em", { text: String(count) })
         );
@@ -914,6 +919,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return chip;
       })
     );
+    container.querySelector(".atlas-chips-row")?.replaceWith(chipRow);
+    if (!container.querySelector(".atlas-chips-row")) {
+      container.append(chipRow);
+    }
+    const countEl = document.getElementById("catalog-filters-count");
+    if (countEl) countEl.textContent = `${entries.length} filtros · ${totalCount} itens`;
   };
 
   const renderLegend = () => {
@@ -1193,8 +1204,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderMethodNote();
     renderSections();
     renderActiveFilters();
-    renderDrawerResult();
-    updateFilterCount();
   };
 
   const renderActiveFilters = () => {
@@ -1239,7 +1248,6 @@ document.addEventListener("DOMContentLoaded", () => {
             input.checked = input.value === "any";
           });
           applyIdeaFilters();
-          syncDrawerState();
         }
       });
     }
@@ -1252,7 +1260,6 @@ document.addEventListener("DOMContentLoaded", () => {
         onRemove: () => {
           delete state.axes[axisId];
           applyIdeaFilters();
-          syncDrawerState();
         }
       });
     });
@@ -1271,97 +1278,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   };
 
-  const renderDrawerResult = () => {
-    const node = document.getElementById("catalog-drawer-result");
-    if (!node) return;
-    const count = state.filteredIdeas.length;
-    node.replaceChildren(
-      el("b", { text: String(count) }),
-      document.createTextNode(count === 1 ? " resultado" : " resultados")
-    );
-  };
-
-  const updateFilterCount = () => {
-    const badge = document.getElementById("catalog-filter-count");
-    if (!badge) return;
-    const count = Object.keys(state.axes).length + (state.intensity === "strong" ? 1 : 0);
-    badge.hidden = count === 0;
-    badge.textContent = String(count);
-  };
-
-  const renderDrawer = () => {
-    const grid = document.getElementById("catalog-axis-grid");
-    if (!grid) return;
-    grid.replaceChildren(
-      ...DATA.axes.map((axis) => {
-        const card = el("div", { class: "catalog-axis-card" });
-        card.append(el("span", { class: "catalog-axis-title", text: axis.name }));
-        const poles = el("div", { class: "catalog-axis-poles" });
-        ["a", "b"].forEach((pole) => {
-          const button = el("button", {
-            class: "catalog-axis-pole",
-            type: "button",
-            "aria-pressed": String(state.axes[axis.id] === pole),
-            "data-axis": axis.id,
-            "data-pole": pole,
-            "aria-label": `${axis.name}: ${poleName(axis, pole)}`
-          });
-          button.append(axisSvg(axis, pole, 14), el("span", { class: "catalog-axis-pole-name", text: poleName(axis, pole) }));
-          button.addEventListener("click", () => toggleAxis(axis.id, pole));
-          poles.append(button);
-        });
-        card.append(poles);
-        return card;
-      })
-    );
-    syncDrawerState();
-  };
-
-  const syncDrawerState = () => {
-    document.querySelectorAll(".catalog-axis-pole").forEach((button) => {
-      button.setAttribute(
-        "aria-pressed",
-        String(state.axes[button.dataset.axis] === button.dataset.pole)
-      );
-    });
-    document.querySelectorAll('input[name="catalog-intensity"]').forEach((input) => {
-      input.checked = input.value === state.intensity;
-    });
-    renderDrawerResult();
-    updateFilterCount();
-  };
-
-  const toggleAxis = (axisId, pole) => {
-    if (state.axes[axisId] === pole) delete state.axes[axisId];
-    else state.axes[axisId] = pole;
-    applyIdeaFilters();
-    syncDrawerState();
-  };
-
-  const openDrawer = () => {
-    const drawer = document.getElementById("catalog-filter-drawer");
-    const toggle = document.getElementById("catalog-filter-toggle");
-    if (!drawer) return;
-    renderDrawer();
-    drawer.hidden = false;
-    toggle?.setAttribute("aria-expanded", "true");
-    const offset = Number.parseFloat(getComputedStyle(main).getPropertyValue("--catalog-sticky-top")) || 0;
-    const drawerTop = drawer.getBoundingClientRect().top + window.scrollY - offset - 8;
-    if (drawerTop < window.scrollY || drawer.getBoundingClientRect().bottom > window.innerHeight) {
-      window.scrollTo({ top: Math.max(0, drawerTop), behavior: "smooth" });
-    }
-    drawer.querySelector(".catalog-drawer-close")?.focus({ preventScroll: true });
-  };
-
-  const closeDrawer = () => {
-    const drawer = document.getElementById("catalog-filter-drawer");
-    const toggle = document.getElementById("catalog-filter-toggle");
-    if (!drawer || drawer.hidden) return;
-    drawer.hidden = true;
-    toggle?.setAttribute("aria-expanded", "false");
-    toggle?.focus({ preventScroll: true });
-  };
-
   const clearIdeaFilters = () => {
     state.query = "";
     state.queryText = "";
@@ -1371,12 +1287,8 @@ document.addEventListener("DOMContentLoaded", () => {
     state.intensity = "any";
     const search = document.getElementById("catalog-search");
     if (search) search.value = "";
-    document.querySelectorAll('input[name="catalog-intensity"]').forEach((input) => {
-      input.checked = input.value === "any";
-    });
     refreshScopeControls();
     applyIdeaFilters();
-    syncDrawerState();
   };
 
   const renderNotice = () => {
@@ -2548,7 +2460,6 @@ document.addEventListener("DOMContentLoaded", () => {
       renderSpectrum();
       renderScope();
       renderChips();
-      renderDrawer();
       applyIdeaFilters();
     } else {
       renderSpectrum();
@@ -2567,7 +2478,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (state.tab === "ideologias") {
       renderScope();
       renderChips();
-      renderDrawer();
       applyIdeaFilters();
     } else {
       renderNotice();
@@ -2594,8 +2504,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const dialog = document.getElementById("catalog-dialog");
     if (dialog?.open) return;
     if (event.key === "Escape") {
-      const drawer = document.getElementById("catalog-filter-drawer");
-      if (drawer && !drawer.hidden) closeDrawer();
       return;
     }
     if (event.key !== "/" || event.metaKey || event.ctrlKey || event.altKey) return;
@@ -2644,19 +2552,6 @@ document.addEventListener("DOMContentLoaded", () => {
         applyIdeaFilters();
       });
 
-      document.getElementById("catalog-filter-toggle")?.addEventListener("click", () => {
-        const drawer = document.getElementById("catalog-filter-drawer");
-        if (drawer?.hidden) openDrawer();
-        else closeDrawer();
-      });
-      document.getElementById("catalog-drawer-close")?.addEventListener("click", closeDrawer);
-      document.getElementById("catalog-drawer-apply")?.addEventListener("click", closeDrawer);
-      document.getElementById("catalog-drawer-clear")?.addEventListener("click", () => {
-        state.axes = {};
-        state.intensity = "any";
-        applyIdeaFilters();
-        syncDrawerState();
-      });
       document.getElementById("catalog-active-clear")?.addEventListener("click", clearIdeaFilters);
 
       document.querySelectorAll('input[name="catalog-intensity"]').forEach((input) => {
@@ -2664,7 +2559,6 @@ document.addEventListener("DOMContentLoaded", () => {
           if (!input.checked) return;
           state.intensity = input.value;
           applyIdeaFilters();
-          syncDrawerState();
         });
       });
 
@@ -2704,10 +2598,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if (genericFilterAccordion) {
         genericFilterAccordion.open = false;
       }
-      const ideaFilterAccordion = document.getElementById("atlas-filter-accordion");
+      const ideaFilterAccordion = document.getElementById("catalog-filter-accordion");
       if (ideaFilterAccordion) {
         ideaFilterAccordion.open = false;
       }
+
+      // Close filter accordion when clicking outside
+      document.addEventListener("click", (event) => {
+        const accordion = document.getElementById("catalog-filter-accordion");
+        if (accordion && accordion.open && !accordion.contains(event.target)) {
+          accordion.open = false;
+        }
+      });
 
       const id = hashId();
       if (id) {

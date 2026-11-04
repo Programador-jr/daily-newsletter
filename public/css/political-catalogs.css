@@ -88,85 +88,87 @@
 }
 
 .political-catalog-page .catalog-spectrum {
+  margin-top: 1.25rem;
+}
+
+.political-catalog-page .catalog-spectrum .atlas-book-spectrum-label {
+  display: block;
+  margin-bottom: .6rem;
+  color: var(--text-muted);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.political-catalog-page .catalog-spectrum .atlas-book-spectrum-row {
   display: grid;
-  gap: .9rem;
-  margin-top: 1.35rem;
-  padding: 1rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--card-bg);
+  gap: .6rem;
+  margin-top: .8rem;
 }
 
-.political-catalog-page .catalog-spectrum-title {
-  margin: 0;
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 1.05rem;
-}
-
-.political-catalog-page .catalog-spectrum-row {
-  display: grid;
-  gap: .45rem;
-}
-
-.political-catalog-page .catalog-spectrum-head {
+.political-catalog-page .catalog-spectrum .atlas-book-spectrum-head {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.political-catalog-page .catalog-spectrum .atlas-book-spectrum-head strong {
+  color: var(--text-main);
+}
+
+.political-catalog-page .catalog-spectrum .atlas-book-spectrum-head span {
   color: var(--text-muted);
   font-size: .72rem;
 }
 
-.political-catalog-page .catalog-spectrum-head strong {
-  color: var(--text-main);
+.political-catalog-page .catalog-spectrum .atlas-book-spectrum-bar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .5rem;
 }
 
-.political-catalog-page .catalog-spectrum-bar {
+.political-catalog-page .catalog-spectrum .atlas-book-spectrum-segment {
   display: flex;
-  flex-wrap: wrap;
-  gap: .4rem;
-}
-
-.political-catalog-page .catalog-spectrum-seg {
-  display: flex;
-  flex: 1 1 130px;
+  min-width: 0;
   align-items: center;
   justify-content: space-between;
-  gap: .6rem;
-  min-width: 0;
-  min-height: 38px;
-  padding: .45rem .65rem;
+  gap: .5rem;
+  padding: .55rem .65rem;
   border: 1px solid var(--border);
-  border-top: 3px solid var(--c, var(--primary));
+  border-top: 2px solid var(--c);
   border-radius: 7px;
-  background: var(--bg-container);
+  background: var(--card-bg);
   color: var(--text-main);
-  font: inherit;
-  font-size: .72rem;
-  text-align: left;
-  cursor: pointer;
-  transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease;
+  font-size: .73rem;
 }
 
-.political-catalog-page .catalog-spectrum-seg:hover,
-.political-catalog-page .catalog-spectrum-seg[aria-pressed="true"] {
-  border-color: var(--c, var(--primary));
-  background: color-mix(in srgb, var(--c, var(--primary)) 8%, var(--card-bg));
-}
-
-.political-catalog-page .catalog-spectrum-seg[aria-pressed="true"] {
-  box-shadow: inset 0 0 0 1px var(--c, var(--primary));
-}
-
-.political-catalog-page .catalog-spectrum-seg b {
+.political-catalog-page .catalog-spectrum .atlas-book-spectrum-segment b {
   overflow: hidden;
+  font-weight: 600;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.political-catalog-page .catalog-spectrum-seg em {
+.political-catalog-page .catalog-spectrum .atlas-book-spectrum-segment em {
   flex: none;
   color: var(--text-muted);
   font-style: normal;
   font-variant-numeric: tabular-nums;
+}
+
+/* Responsivo do spectrum */
+@media (max-width: 768px) {
+  .political-catalog-page .catalog-spectrum .atlas-book-spectrum-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .political-catalog-page .catalog-spectrum .atlas-book-spectrum-bar {
+    grid-template-columns: 1fr;
+  }
 }
 
 .political-catalog-page .catalog-ideology-view,
@@ -174,140 +176,38 @@
   min-width: 0;
 }
 
-.political-catalog-page .catalog-tools {
-  display: grid;
-  gap: .8rem;
-  margin: 0 var(--catalog-content-gutter) 1.4rem;
-  padding: .9rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--card-bg);
-  box-shadow: 0 3px 12px rgb(0 0 0 / 3%);
+/* Page-specific spacing for global controls */
+.political-catalog-page .catalog-controls {
+  margin: 0 var(--catalog-content-gutter) 1.5rem;
 }
 
-.political-catalog-page .catalog-tools-row {
-  display: grid;
-  grid-template-columns: minmax(220px, 1fr) auto minmax(220px, auto);
-  align-items: center;
-  gap: .65rem;
-}
-
-.political-catalog-page .catalog-search,
-.political-catalog-page .atlas-search {
+/* Accordion filter content - page-specific layout for chips inside */
+/* Layout is now handled by global .atlas-filter-accordion .atlas-filters in atlas.css */
+.political-catalog-page .catalog-filters-header {
   display: flex;
   align-items: center;
-  gap: .65rem;
-  min-width: 0;
-  min-height: 44px;
-  padding: 0 .85rem;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  background: var(--bg-container);
-  color: var(--text-muted);
-  transition: border-color 160ms ease, box-shadow 160ms ease;
-}
-
-.political-catalog-page .catalog-search:focus-within,
-.political-catalog-page .atlas-search:focus-within {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
-}
-
-.political-catalog-page .catalog-search input,
-.political-catalog-page .atlas-search input {
-  width: 100%;
-  min-width: 0;
-  min-height: 40px;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  color: var(--text-main);
-  font: inherit;
-  font-size: .82rem;
-}
-
-.political-catalog-page .catalog-search kbd {
-  flex: none;
-  padding: .12rem .4rem;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--text-muted);
-  font: inherit;
-  font-size: .7rem;
-}
-
-.political-catalog-page .catalog-filter-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: .5rem;
-  min-height: 44px;
-  padding: .5rem .85rem;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  background: var(--bg-container);
-  color: var(--text-main);
-  font: inherit;
-  font-size: .78rem;
+  margin-bottom: .65rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.political-catalog-page .catalog-filters-title {
+  font-size: .7rem;
   font-weight: 700;
-  cursor: pointer;
-}
-
-.political-catalog-page .catalog-filter-toggle:hover,
-.political-catalog-page .catalog-filter-toggle[aria-expanded="true"] {
-  border-color: var(--primary);
-  color: var(--primary);
-}
-
-.political-catalog-page .catalog-filter-count {
-  display: inline-grid;
-  min-width: 20px;
-  height: 20px;
-  place-items: center;
-  padding: 0 .3rem;
-  border-radius: 99px;
-  background: var(--primary);
-  color: #fff;
-  font-size: .68rem;
-  font-weight: 800;
-}
-
-.political-catalog-page .catalog-scope {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: .3rem;
-  padding: .25rem;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  background: var(--bg-body);
-}
-
-.political-catalog-page .catalog-scope-button {
-  min-height: 34px;
-  padding: .4rem .7rem;
-  border: 0;
-  border-radius: 7px;
-  background: transparent;
+  letter-spacing: .08em;
+  text-transform: uppercase;
   color: var(--text-muted);
-  font: inherit;
-  font-size: .72rem;
-  font-weight: 700;
-  cursor: pointer;
 }
 
-.political-catalog-page .catalog-scope-button[aria-pressed="true"] {
-  background: var(--card-bg);
-  color: var(--primary);
-  box-shadow: 0 1px 4px rgb(0 0 0 / 8%);
+.political-catalog-page .catalog-filters-count {
+  font-size: .65rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
 }
 
-.political-catalog-page .catalog-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .45rem;
-}
-
+/* Chips (family/group filters) - page-specific adjustments */
 .political-catalog-page .catalog-chip {
   display: inline-flex;
   align-items: center;
@@ -321,15 +221,7 @@
   font: inherit;
   font-size: .7rem;
   cursor: pointer;
-}
-
-.political-catalog-page .catalog-chip-dot,
-.political-catalog-page .catalog-group-mark {
-  width: 8px;
-  height: 8px;
-  flex: none;
-  border-radius: 50%;
-  background: var(--c, var(--primary));
+  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
 }
 
 .political-catalog-page .catalog-chip em {
@@ -345,191 +237,15 @@
   color: var(--text-main);
 }
 
-.political-catalog-page .catalog-filter-drawer {
-  margin: 0 var(--catalog-content-gutter) 1.25rem;
-  padding: 1.25rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--card-bg);
-  box-shadow: 0 8px 26px rgb(0 0 0 / 5%);
-}
-
-.political-catalog-page .catalog-drawer-head,
-.political-catalog-page .catalog-drawer-subhead,
-.political-catalog-page .catalog-drawer-foot {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.political-catalog-page .catalog-drawer-head {
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.political-catalog-page .catalog-drawer-eyebrow {
-  color: var(--primary);
-  font-size: .68rem;
-  font-weight: 800;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.political-catalog-page .catalog-drawer-head h2,
-.political-catalog-page .catalog-drawer-subhead h3 {
-  margin: .3rem 0;
+.political-catalog-page .catalog-chip[aria-pressed="true"] em {
   color: var(--text-main);
-  font-family: "Playfair Display", Georgia, serif;
 }
 
-.political-catalog-page .catalog-drawer-head p,
-.political-catalog-page .catalog-drawer-subhead p {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: .78rem;
-  line-height: 1.6;
-}
-
-.political-catalog-page .catalog-drawer-actions {
-  display: flex;
-  align-items: center;
-  gap: .45rem;
-}
-
-.political-catalog-page .catalog-drawer-clear,
-.political-catalog-page .catalog-drawer-close,
-.political-catalog-page .catalog-active-clear {
-  min-height: 36px;
-  padding: .4rem .65rem;
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  background: var(--bg-container);
-  color: var(--text-muted);
-  font: inherit;
-  font-size: .72rem;
-  cursor: pointer;
-}
-
-.political-catalog-page .catalog-drawer-close {
-  width: 36px;
-  padding: 0;
-  font-size: 1rem;
-}
-
-.political-catalog-page .catalog-drawer-clear:hover,
-.political-catalog-page .catalog-drawer-close:hover,
-.political-catalog-page .catalog-active-clear:hover {
-  border-color: var(--primary);
-  color: var(--primary);
-}
-
-.political-catalog-page .catalog-drawer-subhead {
-  align-items: center;
-  margin: 1rem 0;
-}
-
-.political-catalog-page .catalog-drawer-subhead h3 {
-  font-size: 1rem;
-}
-
-.political-catalog-page .catalog-intensity {
+/* Chips row layout inside accordion */
+.political-catalog-page .catalog-filters .atlas-chips-row {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: .55rem .8rem;
-  color: var(--text-muted);
-  font-size: .72rem;
-}
-
-.political-catalog-page .catalog-intensity-label {
-  font-weight: 800;
-}
-
-.political-catalog-page .catalog-intensity-option {
-  display: inline-flex;
-  align-items: center;
-  gap: .35rem;
-  cursor: pointer;
-}
-
-.political-catalog-page .catalog-intensity-option input {
-  accent-color: var(--primary);
-}
-
-.political-catalog-page .catalog-axis-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .6rem;
-}
-
-.political-catalog-page .catalog-axis-card {
-  display: grid;
-  gap: .55rem;
-  min-width: 0;
-  padding: .75rem;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  background: var(--bg-container);
-}
-
-.political-catalog-page .catalog-axis-title {
-  color: var(--text-main);
-  font-size: .76rem;
-  font-weight: 800;
-}
-
-.political-catalog-page .catalog-axis-poles {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: .35rem;
-}
-
-.political-catalog-page .catalog-axis-pole {
-  display: flex;
-  align-items: center;
-  gap: .35rem;
-  min-width: 0;
-  min-height: 34px;
-  padding: .35rem;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--card-bg);
-  color: var(--text-muted);
-  font: inherit;
-  font-size: .66rem;
-  text-align: left;
-  cursor: pointer;
-}
-
-.political-catalog-page .catalog-axis-pole svg {
-  flex: none;
-}
-
-.political-catalog-page .catalog-axis-pole-name {
-  overflow-wrap: anywhere;
-}
-
-.political-catalog-page .catalog-axis-pole[aria-pressed="true"] {
-  border-color: var(--primary);
-  background: color-mix(in srgb, var(--primary) 9%, var(--card-bg));
-  color: var(--primary);
-}
-
-.political-catalog-page .catalog-drawer-foot {
-  align-items: center;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
-}
-
-.political-catalog-page .catalog-drawer-result {
-  color: var(--text-muted);
-  font-size: .78rem;
-}
-
-.political-catalog-page .catalog-drawer-result b {
-  color: var(--text-main);
+  gap: .45rem;
 }
 
 .political-catalog-page .catalog-active-filters {
@@ -1303,13 +1019,10 @@
 
 .political-catalog-page :is(
   .catalog-search,
-  .catalog-filter-toggle,
-  .catalog-scope-button,
+  .catalog-filter-accordion > summary,
+  .atlas-scope-btn,
   .catalog-chip,
-  .catalog-spectrum-seg,
   .catalog-axis-pole,
-  .catalog-drawer-clear,
-  .catalog-drawer-close,
   .catalog-active-clear,
   .catalog-profile-tabs button,
   .catalog-profile-back
@@ -1319,15 +1032,6 @@
 }
 
 @media (max-width: 1000px) {
-  .political-catalog-page .catalog-tools-row {
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
-
-  .political-catalog-page .catalog-scope {
-    grid-column: 1 / -1;
-    justify-content: flex-start;
-  }
-
   .political-catalog-page .catalog-ideas-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1353,19 +1057,6 @@
 
   .political-catalog-page .catalog-hero-links .atlas-button {
     flex: 1 1 180px;
-  }
-
-  .political-catalog-page .catalog-tools-row {
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
-
-  .political-catalog-page .catalog-filter-drawer {
-    padding: .9rem;
-  }
-
-  .political-catalog-page .catalog-drawer-subhead {
-    align-items: flex-start;
-    flex-direction: column;
   }
 
   .political-catalog-page .catalog-axis-grid {
@@ -1403,28 +1094,6 @@
 }
 
 @media (max-width: 520px) {
-  .political-catalog-page .catalog-tools-row {
-    grid-template-columns: 1fr;
-  }
-
-  .political-catalog-page .catalog-filter-toggle {
-    justify-self: stretch;
-  }
-
-  .political-catalog-page .catalog-scope {
-    grid-column: auto;
-  }
-
-  .political-catalog-page .catalog-drawer-head,
-  .political-catalog-page .catalog-drawer-foot {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .political-catalog-page .catalog-drawer-actions {
-    justify-content: space-between;
-  }
-
   .political-catalog-page .catalog-axis-grid,
   .political-catalog-page .catalog-ideas-grid,
   .political-catalog-page .catalog-profile-axis-list,
@@ -1464,7 +1133,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .political-catalog-page .catalog-spectrum-seg,
   .political-catalog-page .catalog-idea-card,
   .political-catalog-page .catalog-profile-tabs button {
     transition: none;
