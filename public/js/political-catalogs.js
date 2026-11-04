@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const PAGE_SIZE = 36;
   const VALUE_ID_PREFIX = "valor-";
   const STRONG_THRESHOLD = 60;
+  const RELATED_PROFILE_THRESHOLD = 72;
   const SVG_NS = "http://www.w3.org/2000/svg";
   const REGION_COLORS = {
     "América do Sul": "#3f7c5a",
@@ -278,6 +279,15 @@ document.addEventListener("DOMContentLoaded", () => {
       .sort((first, second) => second.score - first.score)
       .map(({ entry }) => entry);
 
+  const nearestByVectorAbove = (item, entries, threshold = RELATED_PROFILE_THRESHOLD, limit = 6) =>
+    entries
+      .filter((entry) => Array.isArray(entry.vetor) && entry.vetor.length === 12)
+      .map((entry) => ({ entry, score: matchScore(item.vetor, entry.vetor) }))
+      .filter(({ score }) => score >= threshold)
+      .sort((first, second) => second.score - first.score)
+      .slice(0, limit)
+      .map(({ entry }) => entry);
+
   const referenceFiguresFor = (item) => {
     const related = unique([...(item.pensadores || []), ...(MAPS.ideologyFigures.get(item.id) || [])])
       .map((id) => MAPS.figures.get(id))
@@ -411,7 +421,11 @@ document.addEventListener("DOMContentLoaded", () => {
           item.periodo,
           item.resumo,
           item.summary,
-          ideologyName(item.ideologia)
+          areaOf(item)?.rotulo,
+          ideologyName(item.ideologia),
+          relatedNames(item.obras, bookName),
+          item.imageCredit,
+          item.imageSourceName
         ].join(" "),
       filters: [
         {
@@ -1645,9 +1659,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const portrait = el("div", { class: "catalog-personality-portrait" });
     if (media?.path && !isUnverifiedImage(item)) {
       const image = el("img", { src: media.path, alt: media.alt, loading: "lazy", decoding: "async" });
-      image.addEventListener("error", () => { image.remove(); portrait.textContent = initials(item.nome); }, { once: true });
+      image.addEventListener("error", () => {
+        image.remove();
+        portrait.replaceChildren(el("span", { text: initials(item.nome) }));
+        portrait.classList.add("is-fallback");
+      }, { once: true });
       portrait.append(image);
     } else {
+      portrait.classList.add("is-fallback");
       portrait.append(el("span", { text: initials(item.nome) }));
     }
     const tags = el("div", { class: "catalog-country-tags" }, makeTag(item.areaLabel || areaOf(item)?.rotulo || "Personalidade", color), item.periodo ? makeTag(item.periodo) : null);
@@ -1685,7 +1704,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const section = document.getElementById("catalog-featured");
     const grid = document.getElementById("catalog-featured-grid");
     if (!section || !grid) return;
-    if (state.tab === "ideologias" || state.tab === "paises" || state.tab === "personalidades") {
+    if (state.tab === "ideologias" || state.tab === "paises") {
       section.hidden = true;
       return;
     }
@@ -1698,7 +1717,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     section.hidden = false;
-    grid.replaceChildren(...items.map((item) => makeCard(item, config, true)));
+    grid.replaceChildren(...items.map((item) => state.tab === "personalidades" ? makePersonalityCard(item) : makeCard(item, config, true)));
     const label = section.querySelector("[data-catalog-featured-label]");
     if (label) label.textContent = config.featuredLabel || `Seleção editorial de ${config.plural}`;
     const note = section.querySelector("[data-catalog-featured-note]");
@@ -2106,16 +2125,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const config = TABS.personalidades;
     const color = config.colorOf(item);
     const ideology = item.ideologia ? MAPS.ideologies.get(item.ideologia) : null;
-    const ideologies = ideology ? [ideology] : nearestByVector(item, DATA.profiles.ideologies).slice(0, 3);
-    const countries = nearestByVector(item, MAPS.placeList).slice(0, 1);
-    const people = nearestByVector(item, MAPS.figureList.filter((entry) => entry.id !== item.id)).slice(0, 6);
+    const ideologies = ideology ? [ideology] : nearestByVectorAbove(item, DATA.profiles.ideologies, 68, 3);
+    const countries = nearestByVectorAbove(item, MAPS.placeList, RELATED_PROFILE_THRESHOLD, 1);
+    const people = nearestByVectorAbove(item, MAPS.figureList.filter((entry) => entry.id !== item.id), RELATED_PROFILE_THRESHOLD, 6);
     const shell = el("div", { class: "atlas-dialog-shell catalog-profile-shell", style: { "--profile-color": color } });
     const close = el("button", { class: "atlas-dialog-close catalog-profile-close", type: "button", "aria-label": "Fechar ficha" }, icon("fa-xmark"));
     close.addEventListener("click", () => closeDialog());
     const back = el("button", { class: "catalog-profile-back", type: "button" }, icon("fa-arrow-left"), el("span", { text: "Voltar ao catálogo" }));
     back.addEventListener("click", () => closeDialog());
     const media = mediaFor(item, "personalidades");
-    const portrait = media?.path && !isUnverifiedImage(item) ? el("img", { src: media.path, alt: media.alt, loading: "lazy", decoding: "async" }) : el("span", { class: "catalog-profile-ref-initials", text: initials(item.nome) });
+    const portrait = media?.path && !isUnverifiedImage(item)
+      ? el("img", { src: media.path, alt: media.alt, loading: "lazy", decoding: "async" })
+      : el("span", { class: "catalog-profile-ref-initials", text: initials(item.nome) });
+    if (portrait.tagName === "IMG") portrait.addEventListener("error", () => {
+      portrait.replaceWith(el("span", { class: "catalog-profile-ref-initials is-fallback", text: initials(item.nome) }));
+    }, { once: true });
     const hero = el("section", { class: "catalog-profile-hero catalog-personality-profile-hero" },
       el("div", { class: "catalog-profile-hero-copy" },
         el("div", { class: "catalog-profile-tags" }, makeTag(item.areaLabel || areaOf(item)?.rotulo || "Personalidade", color), item.periodo ? makeTag(item.periodo) : null),
@@ -2126,23 +2150,49 @@ document.addEventListener("DOMContentLoaded", () => {
       ),
       el("aside", { class: "catalog-personality-profile-media" }, portrait)
     );
+    const labels = ["Eixos", "Ideologias", "Personalidades", "Países"];
+    const panelId = (name) => `personality-${item.id}-panel-${name}`;
+    const tabId = (name) => `personality-${item.id}-tab-${name}`;
     const tabs = el("div", { class: "catalog-profile-tabs", role: "tablist", "aria-label": "Seções da personalidade" });
-    ["Eixos", "Ideologias", "Personalidades", "Países"].forEach((label, index) => {
-      const tab = el("button", { type: "button", role: "tab", "aria-selected": String(index === 0), text: label });
+    const panels = [];
+    const definitions = [
+      { name: "eixos", content: [el("span", { class: "eyebrow", text: "Eixos políticos" }), el("h2", { text: "Perfil nos 12 eixos" }), el("ul", { class: "catalog-profile-axis-list" }, DATA.axes.map((axis) => profileAxisRow(item, axis)))] },
+      { name: "ideologias", content: [el("h2", { text: "Ideologias mais próximas" }), chipsFor("ideologias", ideologies.map((entry) => entry.id), "fa-scale-balanced") || el("p", { class: "catalog-profile-muted", text: "Nenhuma ideologia com proximidade suficiente foi encontrada." })] },
+      { name: "personalidades", content: [el("h2", { text: "Personalidades mais próximas" }), chipsFor("personalidades", people.map((entry) => entry.id), "fa-user") || el("p", { class: "catalog-profile-muted", text: "Nenhuma personalidade com proximidade suficiente foi encontrada." })] },
+      { name: "paises", content: [el("h2", { text: "Países mais próximos" }), chipsFor("paises", countries.map((entry) => entry.id), "fa-flag") || el("p", { class: "catalog-profile-muted", text: "Nenhum país com proximidade suficiente foi encontrado." })] }
+    ];
+    definitions.forEach((definition, index) => {
+      const name = definition.name;
+      const tab = el("button", { id: tabId(name), type: "button", role: "tab", "aria-selected": String(index === 0), "aria-controls": panelId(name), tabindex: index === 0 ? "0" : "-1", text: labels[index] });
+      const panel = el("section", { id: panelId(name), class: "catalog-profile-tab-panel", role: "tabpanel", "aria-labelledby": tabId(name), tabindex: "0", "data-panel": name, hidden: index !== 0 }, definition.content);
       tab.addEventListener("click", () => {
-        const panelId = normalize(label);
-        tabs.querySelectorAll("button").forEach((button) => button.setAttribute("aria-selected", String(button === tab)));
-        shell.querySelectorAll(".catalog-profile-tab-panel").forEach((panel) => { panel.hidden = panel.dataset.panel !== panelId; });
+        tabs.querySelectorAll('[role="tab"]').forEach((button) => {
+          const selected = button === tab;
+          button.setAttribute("aria-selected", String(selected));
+          button.tabIndex = selected ? 0 : -1;
+        });
+        panels.forEach((entry) => { entry.hidden = entry !== panel; });
+      });
+      tab.addEventListener("keydown", (event) => {
+        if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        const nodes = [...tabs.querySelectorAll('[role="tab"]')];
+        const current = nodes.indexOf(tab);
+        const next = event.key === "Home" ? 0 : event.key === "End" ? nodes.length - 1 : (current + (event.key === "ArrowRight" ? 1 : -1) + nodes.length) % nodes.length;
+        nodes[next].focus();
+        nodes[next].click();
       });
       tabs.append(tab);
+      panels.push(panel);
     });
-    const axesPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "eixos" }, el("span", { class: "eyebrow", text: "Eixos políticos" }), el("h2", { text: "Perfil nos 12 eixos" }), el("ul", { class: "catalog-profile-axis-list" }, DATA.axes.map((axis) => profileAxisRow(item, axis))));
-    const ideologyPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "ideologias", hidden: true }, el("h2", { text: "Ideologias mais próximas" }), chipsFor("ideologias", ideologies.map((entry) => entry.id), "fa-scale-balanced") || el("p", { class: "catalog-profile-muted", text: "Nenhuma ideologia próxima foi encontrada." }));
-    const peoplePanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "personalidades", hidden: true }, el("h2", { text: "Personalidades mais próximas" }), chipsFor("personalidades", people.map((entry) => entry.id), "fa-user") || el("p", { class: "catalog-profile-muted", text: "Nenhuma personalidade próxima foi encontrada." }));
-    const countryPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "paises", hidden: true }, el("h2", { text: "País mais próximo" }), chipsFor("paises", countries.map((entry) => entry.id), "fa-flag") || el("p", { class: "catalog-profile-muted", text: "Nenhum país próximo foi encontrado." }));
     const distinction = el("section", { class: "catalog-profile-distinction" }, el("h2", { text: `O que distingue ${item.nome}` }), el("div", { class: "catalog-profile-distinction-grid" }, el("article", {}, el("span", { class: "catalog-profile-badge", text: "Área de atuação" }), el("h3", { text: item.areaLabel || areaOf(item)?.rotulo || "Política" }), el("p", { text: item.resumo || item.description })), el("article", {}, el("span", { class: "catalog-profile-badge is-neutral", text: "Vetor" }), el("h3", { text: vectorSourceLabel(item) }), el("p", { text: "Uma leitura editorial aproximada da posição desta personalidade nos 12 eixos." }))));
     const cta = el("section", { class: "catalog-profile-cta" }, el("div", {}, el("span", { class: "eyebrow", text: "Teste político" }), el("h2", { text: "E você, com quem se parece?" }), el("p", { text: `Responda ao quiz e veja sua compatibilidade com ${item.nome}, ideologias e países nos 12 eixos.` })), el("a", { class: "atlas-button", href: "/teste-politico" }, el("span", { text: "Fazer o teste" }), icon("fa-arrow-right")));
-    shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, hero, close), el("div", { class: "atlas-dialog-body catalog-profile-content" }, tabs, axesPanel, ideologyPanel, peoplePanel, countryPanel, distinction, cta));
+    const body = el("div", { class: "atlas-dialog-body catalog-profile-content" }, tabs, panels, distinction, cta);
+    const credits = creditNode(item);
+    const sources = sourceNode(item);
+    if (credits) addSection(body, "Crédito do retrato", "fa-camera", credits);
+    if (sources) addSection(body, "Fontes e metodologia", "fa-book-open", sources);
+    shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, hero, close), body);
     return shell;
   };
 
@@ -2457,6 +2507,11 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       renderSpectrum();
       renderNotice();
+      const genericSearch = document.getElementById("catalog-generic-search");
+      if (genericSearch) {
+        genericSearch.placeholder = currentConfig().searchPlaceholder || "Buscar no catálogo...";
+        genericSearch.setAttribute("aria-label", `Buscar ${currentConfig().plural}`);
+      }
       renderSort();
       renderFilters();
       renderFeatured();
@@ -2474,6 +2529,11 @@ document.addEventListener("DOMContentLoaded", () => {
       applyIdeaFilters();
     } else {
       renderNotice();
+      const genericSearch = document.getElementById("catalog-generic-search");
+      if (genericSearch) {
+        genericSearch.placeholder = currentConfig().searchPlaceholder || "Buscar no catálogo...";
+        genericSearch.setAttribute("aria-label", `Buscar ${currentConfig().plural}`);
+      }
       renderSort();
       renderFilters();
       renderFeatured();
