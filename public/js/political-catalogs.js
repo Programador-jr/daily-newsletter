@@ -1927,53 +1927,54 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   };
 
-  const profilePole = (axis, value, side) => {
-    const pole = side === "left" ? "a" : "b";
-    const percentage = side === "left" ? value : 100 - value;
-    const active = percentage >= 50;
-    const node = el("div", {
-      class: `catalog-profile-pole ${side}${active ? " is-active" : ""}`
-    });
-    const label = el(
-      "span",
-      {},
-      el("b", { text: poleName(axis, pole) }),
-      el("em", { text: `${Math.round(percentage)}%` })
-    );
-    if (side === "left") node.append(axisSvg(axis, pole, 18), label);
-    else node.append(label, axisSvg(axis, pole, 18));
-    return node;
-  };
-
   const profileAxisRow = (item, axis) => {
     const value = axisValue(item, axis.id);
-    const row = el("li", { class: "catalog-profile-axis atlas-axis-row" });
-    if (value == null) {
+    const unknown = value == null;
+    const row = el("li", { class: `atlas-axis-row${unknown ? " is-unknown" : ""}` });
+    row.style.setProperty("--ca", `var(--ax-${axis.id}-a)`);
+    row.style.setProperty("--cb", `var(--ax-${axis.id}-b)`);
+
+    const pole = unknown ? "a" : value >= 50 ? "a" : "b";
+    row.style.setProperty("--marker", `var(--ax-${axis.id}-${pole})`);
+
+    const name = el(
+      "span",
+      { class: "atlas-axis-name" },
+      axisSvg(axis, pole, 16),
+      el("span", { text: axis.name })
+    );
+
+    if (unknown) {
       row.append(
-        el("div", { class: "catalog-profile-axis-head" },
-          el("h3", {}, axisSvg(axis, "a", 16), el("span", { text: axis.name })),
-          el("span", { class: "catalog-profile-axis-status text-muted", text: "Sem posição definida" })
+        el(
+          "div",
+          { class: "atlas-axis-row-head" },
+          name,
+          el("span", { class: "text-muted", text: "Sem posição definida" })
         ),
-        el("div", { class: "catalog-profile-axis-unknown text-muted", text: "Este eixo não foi avaliado para este conceito." })
+        el("p", { class: "text-muted", text: "Este eixo não foi avaliado para este conceito." })
       );
       return row;
     }
+
     const strength = Math.max(value, 100 - value);
-    const pole = value >= 50 ? "a" : "b";
     const direction = value >= 50 ? axis.a : axis.b;
     const level = strength >= 75 ? "Muito forte" : strength >= 60 ? "Forte" : strength > 50 ? "Inclinado" : "Equilibrado";
-    row.style.setProperty("--axis-color", `var(--ax-${axis.id}-${pole})`);
+
+    row.style.setProperty("--position", `${100 - value}%`);
     row.append(
-      el("div", { class: "catalog-profile-axis-head" },
-        el("h3", {}, axisSvg(axis, pole, 16), el("span", { text: axis.name })),
-        el("span", { class: "catalog-profile-axis-status" }, el("i", { class: "catalog-profile-axis-dot" }), `${level} · ${direction}`)
-      ),
       el(
         "div",
-        { class: "catalog-profile-axis-bar", role: "img", "aria-label": `${axis.name}: ${axis.a} ${Math.round(value)}%, ${axis.b} ${Math.round(100 - value)}%` },
-        profilePole(axis, value, "left"),
-        el("div", { class: "catalog-profile-track" }, el("span", { class: "catalog-profile-marker", style: { left: `${value}%` } })),
-        profilePole(axis, value, "right")
+        { class: "atlas-axis-row-head" },
+        name,
+        el("strong", { text: `${level} · ${direction}` })
+      ),
+      el("div", { class: "atlas-axis-track" }, el("span", { class: "atlas-axis-marker" })),
+      el(
+        "div",
+        { class: "atlas-axis-poles-row" },
+        el("span", { class: "atlas-axis-pole-label" }, axisSvg(axis, "a", 14), el("span", { text: axis.a })),
+        el("span", { class: "atlas-axis-pole-label" }, axisSvg(axis, "b", 14), el("span", { text: axis.b }))
       )
     );
     return row;
