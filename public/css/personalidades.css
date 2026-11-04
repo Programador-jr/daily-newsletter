@@ -113,9 +113,18 @@
   font-size: .7rem;
 }
 
+/* Header behavior retained locally after removing the history stylesheet. */
+.dedicated-personalities-page .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
 /* Search, sorting and area filters. */
 .dedicated-personalities-page .catalog-controls {
-  grid-template-columns: minmax(220px, 1fr) auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
   gap: .75rem;
   margin: 0 var(--catalog-content-gutter) 1.6rem;
   padding: .9rem;
@@ -126,6 +135,9 @@
 }
 
 .dedicated-personalities-page .catalog-controls .atlas-search {
+  width: 100%;
+  min-width: 0;
+  flex: none;
   min-height: 44px;
   border-radius: 8px;
   background: var(--bg-container);
@@ -494,7 +506,11 @@
   }
 
   .dedicated-personalities-page .catalog-controls {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dedicated-personalities-page .catalog-controls .atlas-search {
+    width: 100%;
   }
 
   .dedicated-personalities-page .catalog-subfilters {
@@ -544,8 +560,16 @@
   }
 
   .dedicated-personalities-page .catalog-subfilters {
-    align-items: stretch;
-    flex-direction: column;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .dedicated-personalities-page .catalog-controls .atlas-sort {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
   }
 
   .dedicated-personalities-page .catalog-controls .atlas-sort {
