@@ -433,6 +433,13 @@ document.addEventListener("DOMContentLoaded", () => {
           label: "Área",
           options: DATA.areas.map((area) => ({ value: area.id, label: area.rotulo })),
           get: (item) => item.area
+        },
+        {
+          key: "ideologia",
+          label: "Ideologia",
+          options: [...new Set(DATA.profiles.figures.map((item) => item.ideologia).filter(Boolean))]
+            .map((id) => ({ value: id, label: ideologyName(id) || id })),
+          get: (item) => item.ideologia
         }
       ],
       catalogCta: "Ver trajetória"
@@ -485,6 +492,13 @@ document.addEventListener("DOMContentLoaded", () => {
           label: "Período",
           options: ["Antiguidade", "Idade Média", "Idade Moderna", "Século XIX", "Séculos XX e XXI"].map((period) => ({ value: period, label: period })),
           get: (item) => periodBucket(item)
+        },
+        {
+          key: "ideologia",
+          label: "Ideologia",
+          options: [...new Set(DATA.profiles.countries.concat(DATA.profiles.regimes).flatMap((item) => item.ideologias || []).filter(Boolean))]
+            .map((id) => ({ value: id, label: ideologyName(id) || id })),
+          get: (item) => item.ideologias || []
         }
       ],
       catalogCta: "Ver perfil do país"
@@ -550,6 +564,13 @@ document.addEventListener("DOMContentLoaded", () => {
             { value: "12axes", label: "12axes convertido" }
           ],
           get: (item) => item.vectorSource
+        },
+        {
+          key: "ideologia",
+          label: "Ideologia",
+          options: [...new Set(DATA.profiles.parties.map((item) => item.ideologia).filter(Boolean))]
+            .map((id) => ({ value: id, label: ideologyName(id) || id })),
+          get: (item) => item.ideologia
         }
       ],
       catalogCta: "Ver trajetória"
@@ -1493,7 +1514,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return config.filters.every((filter) => {
       const active = state.filters[filter.key];
       if (!active) return true;
-      return normalize(filter.get(item)) === normalize(active);
+      const value = filter.get(item);
+      return Array.isArray(value)
+        ? value.some((entry) => normalize(entry) === normalize(active))
+        : normalize(value) === normalize(active);
     });
   };
 
