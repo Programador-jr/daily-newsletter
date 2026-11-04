@@ -1371,3 +1371,24 @@
     grid-template-columns: 1fr;
   }
 }
+
+.political-catalog-page .catalog-dialog .text-muted {
+  color: var(--text-muted) !important;
+}
+
+.political-catalog-page .catalog-dialog .atlas-axis-name > .axis-icon {
+  color: var(--marker, var(--primary));
+}
+
+.political-catalog-page .catalog-dialog .atlas-axis-poles-row > .atlas-axis-pole-label:first-child .axis-icon {
+  color: var(--ca, var(--text-muted));
+}
+
+.political-catalog-page .catalog-dialog .atlas-axis-poles-row > .atlas-axis-pole-label:last-child .axis-icon {
+  color: var(--cb, var(--text-muted));
+}
+
+.political-catalog-page .catalog-dialog .catalog-profile-axis-head h3 .axis-icon {
+  flex: 0 0 auto;
+  color: var(--axis-color, var(--profile-color, var(--primary)));
+}
