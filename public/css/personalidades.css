@@ -217,7 +217,7 @@
 }
 
 /* Editorial selection and complete catalog. */
-.dedicated-personalities-page .catalog-featured,
+.dedicated-personalities-page #catalog-featured,
 .dedicated-personalities-page .catalog-section {
   margin: 0 var(--catalog-content-gutter) 2.25rem;
 }
@@ -249,8 +249,8 @@
   line-height: 1.6;
 }
 
-.dedicated-personalities-page .catalog-featured-grid,
-.dedicated-personalities-page .catalog-generic-grid {
+.dedicated-personalities-page #catalog-featured-grid,
+.dedicated-personalities-page #catalog-generic-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: stretch;
@@ -460,8 +460,8 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .dedicated-personalities-page .catalog-featured-grid,
-  .dedicated-personalities-page .catalog-generic-grid {
+  .dedicated-personalities-page #catalog-featured-grid,
+  .dedicated-personalities-page #catalog-generic-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -488,7 +488,7 @@
   }
 
   .dedicated-personalities-page .catalog-controls,
-  .dedicated-personalities-page .catalog-featured,
+  .dedicated-personalities-page #catalog-featured,
   .dedicated-personalities-page .catalog-section {
     margin-right: var(--catalog-content-gutter);
     margin-left: var(--catalog-content-gutter);
@@ -512,8 +512,8 @@
     flex-direction: column;
   }
 
-  .dedicated-personalities-page .catalog-featured-grid,
-  .dedicated-personalities-page .catalog-generic-grid {
+  .dedicated-personalities-page #catalog-featured-grid,
+  .dedicated-personalities-page #catalog-generic-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: .7rem;
   }
@@ -538,8 +538,8 @@
 
 @media (max-width: 520px) {
   .dedicated-personalities-page .catalog-personality-spectrum .atlas-book-spectrum-bar,
-  .dedicated-personalities-page .catalog-featured-grid,
-  .dedicated-personalities-page .catalog-generic-grid,
+  .dedicated-personalities-page #catalog-featured-grid,
+  .dedicated-personalities-page #catalog-generic-grid,
   .dedicated-personalities-page .catalog-profile-dialog .catalog-profile-axis-list {
     grid-template-columns: 1fr;
   }
