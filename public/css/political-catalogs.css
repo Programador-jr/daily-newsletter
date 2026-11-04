@@ -1079,10 +1079,6 @@
     padding: .8rem;
   }
 
-  .political-catalog-page .catalog-ideas-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .political-catalog-page .catalog-quiz-cta,
   .political-catalog-page .catalog-profile-cta {
     align-items: flex-start;
@@ -1129,10 +1125,6 @@
   .political-catalog-page .catalog-profile-sticky-head {
     padding: .8rem 3.5rem .65rem .8rem;
     gap: .6rem;
-  }
-
-  .political-catalog-page .catalog-profile-back {
-    margin: 0;
   }
 
   .political-catalog-page .catalog-dialog {
@@ -1350,11 +1342,6 @@
 }
 
 @media (max-width: 640px) {
-  .political-catalog-page .catalog-dialog {
-    width: calc(100vw - 1rem);
-    max-height: 94vh;
-  }
-
   .political-catalog-page .catalog-dialog .atlas-dialog-head,
   .political-catalog-page .catalog-dialog .atlas-dialog-body {
     padding: 1rem;
