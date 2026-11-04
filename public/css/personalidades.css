@@ -1,6 +1,576 @@
-/* Personalidades: camada própria sobre tokens e componentes comuns. */
-.dedicated-personalities-page .catalog-hero { border-bottom:1px solid var(--border); }
-.dedicated-personalities-page .catalog-personality-card { display:flex; flex-direction:column; min-height:100%; }
-.dedicated-personalities-page .catalog-personality-card .catalog-personality-portrait { display:grid; place-items:center; width:100%; aspect-ratio:4/3; overflow:hidden; border-radius:8px; background:color-mix(in srgb,var(--primary) 8%,var(--card-bg)); color:var(--primary); font-family:"Playfair Display",Georgia,serif; font-size:2rem; }
-.dedicated-personalities-page .catalog-personality-card .catalog-personality-portrait img { width:100%; height:100%; object-fit:cover; object-position:center 20%; }
-.dedicated-personalities-page .catalog-personality-spectrum { margin:0 0 1.25rem; }
+/*
+ * Dedicated personalities catalog.
+ * Shared primitives remain in components.css, atlas.css and
+ * political-catalogs.css. This file only adjusts the personalities page.
+ */
+
+.dedicated-personalities-page .catalog-main {
+  --catalog-content-gutter: 3rem;
+  padding-bottom: 3rem;
+}
+
+.dedicated-personalities-page .catalog-hero {
+  max-width: none;
+  padding: 3rem var(--catalog-content-gutter) 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.dedicated-personalities-page .catalog-hero h1 {
+  max-width: 17ch;
+  margin: .45rem 0 .9rem;
+  font-size: clamp(2.35rem, 5vw, 3.8rem);
+  line-height: 1.06;
+  letter-spacing: -.045em;
+}
+
+.dedicated-personalities-page .catalog-hero > p {
+  max-width: 740px;
+  color: var(--text-muted);
+  font-size: .94rem;
+  line-height: 1.8;
+}
+
+.dedicated-personalities-page .catalog-hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin-top: 1.35rem;
+}
+
+.dedicated-personalities-page .catalog-hero-links .atlas-button {
+  min-height: 42px;
+}
+
+.dedicated-personalities-page .catalog-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin-top: 1.5rem;
+}
+
+.dedicated-personalities-page .catalog-stat {
+  display: grid;
+  gap: .12rem;
+  min-width: 112px;
+  padding: .7rem .85rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card-bg);
+}
+
+.dedicated-personalities-page .catalog-stat strong {
+  color: var(--primary);
+  font-size: 1.2rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.dedicated-personalities-page .catalog-stat-label {
+  color: var(--text-muted);
+  font-size: .7rem;
+}
+
+.dedicated-personalities-page .catalog-personality-spectrum {
+  display: grid;
+  gap: .65rem;
+  margin: 0 var(--catalog-content-gutter) 1.25rem;
+  padding: .9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--card-bg);
+}
+
+.dedicated-personalities-page .catalog-personality-spectrum .atlas-book-spectrum-label {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.dedicated-personalities-page .catalog-personality-spectrum .atlas-book-spectrum-bar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .45rem;
+}
+
+.dedicated-personalities-page .catalog-personality-spectrum .atlas-book-spectrum-segment {
+  min-height: 40px;
+  border-top: 2px solid var(--c, var(--primary));
+  border-radius: 7px;
+  background: var(--bg-container);
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.dedicated-personalities-page .catalog-personality-spectrum .atlas-book-spectrum-segment b {
+  color: var(--text-main);
+  font-size: .7rem;
+  font-weight: 650;
+}
+
+.dedicated-personalities-page .catalog-personality-spectrum .atlas-book-spectrum-segment em {
+  color: var(--text-muted);
+  font-size: .7rem;
+}
+
+/* Search, sorting and area filters. */
+.dedicated-personalities-page .catalog-controls {
+  grid-template-columns: minmax(220px, 1fr) auto;
+  gap: .75rem;
+  margin: 0 var(--catalog-content-gutter) 1.6rem;
+  padding: .9rem;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--card-bg);
+  box-shadow: 0 3px 12px rgb(0 0 0 / 3%);
+}
+
+.dedicated-personalities-page .catalog-controls .atlas-search {
+  min-height: 44px;
+  border-radius: 8px;
+  background: var(--bg-container);
+}
+
+.dedicated-personalities-page .catalog-controls .atlas-search input {
+  min-height: 40px;
+  font-size: .82rem;
+}
+
+.dedicated-personalities-page .catalog-subfilters {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .6rem;
+}
+
+.dedicated-personalities-page .catalog-controls .atlas-sort {
+  gap: .55rem;
+  font-size: .72rem;
+  font-weight: 700;
+}
+
+.dedicated-personalities-page .catalog-controls .atlas-sort select {
+  min-height: 42px;
+  max-width: 220px;
+  border-radius: 8px;
+  background: var(--bg-container);
+  font: inherit;
+  font-size: .76rem;
+}
+
+.dedicated-personalities-page .catalog-controls .atlas-filters {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .55rem .85rem;
+  margin: 0;
+  padding-top: .65rem;
+  border-top: 1px solid var(--border);
+}
+
+.dedicated-personalities-page .catalog-filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .35rem;
+}
+
+.dedicated-personalities-page .catalog-filter-label {
+  margin-right: .2rem;
+  color: var(--text-muted);
+  font-size: .7rem;
+  font-weight: 800;
+}
+
+.dedicated-personalities-page .catalog-controls .atlas-chip,
+.dedicated-personalities-page .catalog-controls .atlas-clear {
+  min-height: 33px;
+  padding: .35rem .65rem;
+  border-radius: 999px;
+  background: var(--bg-container);
+  font-size: .69rem;
+}
+
+.dedicated-personalities-page .catalog-controls .atlas-chip[aria-pressed="true"],
+.dedicated-personalities-page .catalog-controls .atlas-chip.active {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 9%, var(--card-bg));
+  color: var(--primary);
+}
+
+.dedicated-personalities-page .catalog-controls .atlas-clear {
+  border-color: transparent;
+  color: var(--primary);
+  font-weight: 750;
+}
+
+.dedicated-personalities-page .catalog-controls .atlas-clear:hover {
+  border-color: var(--primary);
+}
+
+.dedicated-personalities-page .catalog-filters-count,
+.dedicated-personalities-page #catalog-generic-count {
+  color: var(--text-muted);
+  font-size: .76rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Editorial selection and complete catalog. */
+.dedicated-personalities-page .catalog-featured,
+.dedicated-personalities-page .catalog-section {
+  margin: 0 var(--catalog-content-gutter) 2.25rem;
+}
+
+.dedicated-personalities-page .catalog-featured-head,
+.dedicated-personalities-page .catalog-section .section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.dedicated-personalities-page .catalog-featured-head h2,
+.dedicated-personalities-page .catalog-section .section-heading h2 {
+  margin: .3rem 0 0;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.dedicated-personalities-page .catalog-featured-head > p,
+.dedicated-personalities-page .catalog-section-note {
+  max-width: 360px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .74rem;
+  line-height: 1.6;
+}
+
+.dedicated-personalities-page .catalog-featured-grid,
+.dedicated-personalities-page .catalog-generic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: .9rem;
+}
+
+.dedicated-personalities-page .catalog-personality-card {
+  display: flex;
+  min-width: 0;
+  min-height: 100%;
+  flex-direction: column;
+  gap: .65rem;
+  padding: .85rem;
+  overflow: hidden;
+  border: 1px solid var(--card-border, var(--border));
+  border-radius: 11px;
+  background: var(--card-bg);
+  box-shadow: 0 2px 8px rgb(24 37 34 / 4%);
+  transition: border-color 160ms ease, box-shadow 180ms ease, transform 160ms ease;
+}
+
+.dedicated-personalities-page .catalog-personality-card:hover,
+.dedicated-personalities-page .catalog-personality-card:focus-visible {
+  border-color: color-mix(in srgb, var(--fam, var(--primary)) 65%, var(--border));
+  box-shadow: 0 8px 22px rgb(24 37 34 / 8%);
+  transform: translateY(-2px);
+}
+
+.dedicated-personalities-page .catalog-personality-portrait {
+  position: relative;
+  display: grid;
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--fam, var(--primary)) 12%, var(--card-bg)), var(--bg-container));
+  color: var(--fam, var(--primary));
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.dedicated-personalities-page .catalog-personality-portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  transition: transform 220ms ease;
+}
+
+.dedicated-personalities-page .catalog-personality-card:hover .catalog-personality-portrait img {
+  transform: scale(1.025);
+}
+
+.dedicated-personalities-page .catalog-personality-card .catalog-country-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  min-height: 23px;
+}
+
+.dedicated-personalities-page .catalog-personality-card .atlas-tag {
+  border-color: color-mix(in srgb, var(--fam, var(--primary)) 28%, var(--border));
+  background: color-mix(in srgb, var(--fam, var(--primary)) 6%, var(--card-bg));
+  color: var(--text-muted);
+  font-size: .64rem;
+}
+
+.dedicated-personalities-page .catalog-personality-card h3 {
+  margin: 0;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.12rem;
+  line-height: 1.25;
+}
+
+.dedicated-personalities-page .catalog-personality-card .catalog-card-summary {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .75rem;
+  line-height: 1.65;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.dedicated-personalities-page .catalog-personality-card .catalog-card-foot {
+  display: grid;
+  gap: .55rem;
+  margin-top: auto;
+  padding-top: .55rem;
+}
+
+.dedicated-personalities-page .catalog-personality-card .atlas-fp {
+  height: 25px;
+  margin: .15rem 0;
+}
+
+.dedicated-personalities-page .catalog-personality-card .catalog-card-cta {
+  margin-top: 0;
+  padding-top: .55rem;
+  border-top: 1px solid var(--border);
+  color: var(--fam, var(--primary));
+  font-size: .72rem;
+}
+
+.dedicated-personalities-page .catalog-notice {
+  margin: 0 var(--catalog-content-gutter) 1rem;
+  padding: .8rem 1rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  font-size: .75rem;
+  line-height: 1.6;
+}
+
+.dedicated-personalities-page .catalog-more-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.15rem;
+}
+
+.dedicated-personalities-page .catalog-load-more {
+  min-width: 190px;
+}
+
+.dedicated-personalities-page .catalog-disclaimer {
+  margin: 0 var(--catalog-content-gutter);
+}
+
+/* Personality profile dialog: editorial portrait and compact metadata. */
+.dedicated-personalities-page .catalog-profile-dialog .catalog-personality-profile-hero {
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 280px);
+  align-items: stretch;
+}
+
+.dedicated-personalities-page .catalog-personality-profile-media {
+  min-height: 250px;
+  max-height: 340px;
+  border-radius: 9px;
+  background: var(--bg-body);
+}
+
+.dedicated-personalities-page .catalog-personality-profile-media img {
+  width: 100%;
+  height: 100%;
+  max-height: 340px;
+  object-fit: cover;
+  object-position: center 18%;
+}
+
+.dedicated-personalities-page .catalog-profile-dialog .catalog-country-kpis {
+  align-items: stretch;
+}
+
+.dedicated-personalities-page .catalog-profile-dialog .catalog-country-kpis > span {
+  min-width: 110px;
+  max-width: 100%;
+}
+
+.dedicated-personalities-page .catalog-profile-dialog .catalog-country-kpis b {
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+}
+
+.dedicated-personalities-page .catalog-profile-dialog .catalog-profile-tab-panel {
+  scroll-margin-top: 1rem;
+}
+
+.dedicated-personalities-page .catalog-profile-dialog .catalog-profile-axis-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.dedicated-personalities-page .catalog-profile-dialog .catalog-profile-cta {
+  border-left-color: var(--profile-color, var(--primary));
+}
+
+.dedicated-personalities-page .catalog-profile-dialog .catalog-profile-cta .atlas-button {
+  flex: none;
+}
+
+.dedicated-personalities-page :is(
+  .catalog-personality-card,
+  .catalog-controls .atlas-chip,
+  .catalog-controls .atlas-clear,
+  .catalog-controls .atlas-sort select,
+  .catalog-profile-tabs button,
+  .catalog-profile-back
+):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.dedicated-personalities-page [hidden] {
+  display: none !important;
+}
+
+@media (max-width: 1000px) {
+  .dedicated-personalities-page .catalog-personality-spectrum .atlas-book-spectrum-bar {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .dedicated-personalities-page .catalog-featured-grid,
+  .dedicated-personalities-page .catalog-generic-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .dedicated-personalities-page .catalog-main {
+    --catalog-content-gutter: 1.25rem;
+  }
+
+  .dedicated-personalities-page .catalog-hero {
+    padding: 2rem var(--catalog-content-gutter) 1.4rem;
+  }
+
+  .dedicated-personalities-page .catalog-hero h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .dedicated-personalities-page .catalog-hero-links .atlas-button {
+    flex: 1 1 180px;
+  }
+
+  .dedicated-personalities-page .catalog-personality-spectrum .atlas-book-spectrum-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dedicated-personalities-page .catalog-controls,
+  .dedicated-personalities-page .catalog-featured,
+  .dedicated-personalities-page .catalog-section {
+    margin-right: var(--catalog-content-gutter);
+    margin-left: var(--catalog-content-gutter);
+  }
+
+  .dedicated-personalities-page .catalog-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .dedicated-personalities-page .catalog-subfilters {
+    justify-content: flex-start;
+  }
+
+  .dedicated-personalities-page .catalog-controls .atlas-filters {
+    grid-column: auto;
+  }
+
+  .dedicated-personalities-page .catalog-featured-head,
+  .dedicated-personalities-page .catalog-section .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dedicated-personalities-page .catalog-featured-grid,
+  .dedicated-personalities-page .catalog-generic-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .7rem;
+  }
+
+  .dedicated-personalities-page .catalog-personality-card {
+    padding: .65rem;
+  }
+
+  .dedicated-personalities-page .catalog-profile-dialog .catalog-personality-profile-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .dedicated-personalities-page .catalog-personality-profile-media {
+    min-height: 190px;
+    max-height: 260px;
+  }
+
+  .dedicated-personalities-page .catalog-personality-profile-media img {
+    max-height: 260px;
+  }
+}
+
+@media (max-width: 520px) {
+  .dedicated-personalities-page .catalog-personality-spectrum .atlas-book-spectrum-bar,
+  .dedicated-personalities-page .catalog-featured-grid,
+  .dedicated-personalities-page .catalog-generic-grid,
+  .dedicated-personalities-page .catalog-profile-dialog .catalog-profile-axis-list {
+    grid-template-columns: 1fr;
+  }
+
+  .dedicated-personalities-page .catalog-subfilters {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .dedicated-personalities-page .catalog-controls .atlas-sort {
+    justify-content: space-between;
+  }
+
+  .dedicated-personalities-page .catalog-controls .atlas-sort select {
+    flex: 1;
+    max-width: none;
+  }
+
+  .dedicated-personalities-page .catalog-personality-portrait {
+    aspect-ratio: 16 / 10;
+  }
+
+  .dedicated-personalities-page .catalog-personality-card h3 {
+    font-size: 1.05rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dedicated-personalities-page .catalog-personality-card,
+  .dedicated-personalities-page .catalog-personality-portrait img,
+  .dedicated-personalities-page .catalog-personality-spectrum .atlas-book-spectrum-segment {
+    transition: none;
+  }
+}
