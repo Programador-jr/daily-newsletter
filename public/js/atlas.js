@@ -752,7 +752,7 @@
         ),
         el("div", { class: "atlas-axis-track" }, el("span", { class: "atlas-axis-marker" }))
       );
-      row.querySelector(".atlas-axis-marker").style.setProperty("--position", `${100 - value}%`);
+      row.querySelector(".atlas-axis-marker").style.setProperty("--p", String(100 - value));
       row.append(
         el(
           "div",

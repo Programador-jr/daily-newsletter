@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const PAGE_SIZE = 36;
   const VALUE_ID_PREFIX = "valor-";
   const STRONG_THRESHOLD = 60;
-  const RELATED_PROFILE_THRESHOLD = 72;
   const SVG_NS = "http://www.w3.org/2000/svg";
   const REGION_COLORS = {
     "América do Sul": "#3f7c5a",
@@ -279,15 +278,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .sort((first, second) => second.score - first.score)
       .map(({ entry }) => entry);
 
-  const nearestByVectorAbove = (item, entries, threshold = RELATED_PROFILE_THRESHOLD, limit = 6) =>
-    entries
-      .filter((entry) => Array.isArray(entry.vetor) && entry.vetor.length === 12)
-      .map((entry) => ({ entry, score: matchScore(item.vetor, entry.vetor) }))
-      .filter(({ score }) => score >= threshold)
-      .sort((first, second) => second.score - first.score)
-      .slice(0, limit)
-      .map(({ entry }) => entry);
-
   const referenceFiguresFor = (item) => {
     const related = unique([...(item.pensadores || []), ...(MAPS.ideologyFigures.get(item.id) || [])])
       .map((id) => MAPS.figures.get(id))
@@ -421,11 +411,7 @@ document.addEventListener("DOMContentLoaded", () => {
           item.periodo,
           item.resumo,
           item.summary,
-          areaOf(item)?.rotulo,
-          ideologyName(item.ideologia),
-          relatedNames(item.obras, bookName),
-          item.imageCredit,
-          item.imageSourceName
+          ideologyName(item.ideologia)
         ].join(" "),
       filters: [
         {
@@ -799,35 +785,36 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     ];
     spectrum.replaceChildren(
-      el("span", { class: "atlas-book-spectrum-label", text: "Distribuição por famílias e grupos" }),
-      ...rows.map((row) =>
-        el(
+      el("h2", { class: "catalog-spectrum-title", text: "Distribuição por famílias e grupos" }),
+      ...rows.map((row) => {
+        const bar = el("div", { class: "catalog-spectrum-bar" });
+        row.items.forEach((meta) => {
+          const total = row.count(meta.id);
+          const pressed = state.family === meta.id && state.familyType === row.kind;
+          const segment = el("button", {
+            class: "catalog-spectrum-seg",
+            type: "button",
+            style: { "--n": String(total), "--c": meta.cor },
+            "aria-pressed": String(pressed),
+            "aria-label": `${meta.rotulo}: ${total} ${row.kind === "valor" ? "valores" : "ideologias"}`,
+            title: `${meta.rotulo}: ${total} ${row.kind === "valor" ? "valores" : "ideologias"}`
+          });
+          segment.append(el("b", { text: meta.rotulo }), el("em", { text: String(total) }));
+          segment.addEventListener("click", () => toggleFamily(meta.id, row.kind));
+          bar.append(segment);
+        });
+        return el(
           "div",
-          { class: "atlas-book-spectrum-row" },
+          { class: "catalog-spectrum-row" },
           el(
             "div",
-            { class: "atlas-book-spectrum-head" },
+            { class: "catalog-spectrum-head" },
             el("strong", { text: row.label }),
             el("span", { text: `${row.items.length} ${row.kind === "valor" ? "grupos" : "famílias"}` })
           ),
-          el(
-            "div",
-            { class: "atlas-book-spectrum-bar" },
-            ...row.items.map((meta) =>
-              el(
-                "span",
-                {
-                  class: "atlas-book-spectrum-segment",
-                  style: { "--c": meta.cor },
-                  title: `${meta.rotulo}: ${row.count(meta.id)} ${row.kind === "valor" ? "valores" : "ideologias"}`
-                },
-                el("b", { text: meta.rotulo }),
-                el("em", { text: String(row.count(meta.id)) })
-              )
-            )
-          )
-        )
-      )
+          bar
+        );
+      })
     );
   };
 
@@ -846,7 +833,7 @@ document.addEventListener("DOMContentLoaded", () => {
     container.replaceChildren(
       ...options.map((option) => {
         const button = el("button", {
-          class: "atlas-scope-btn catalog-scope-button",
+          class: "catalog-scope-button",
           type: "button",
           "aria-pressed": String(state.scope === option.value),
           "aria-label": `${option.label}: ${option.count} fichas`
@@ -894,28 +881,21 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const renderChips = () => {
-    const container = document.getElementById("catalog-filters");
+    const container = document.getElementById("catalog-chips");
     if (!container) return;
     const entries = [];
-    let totalCount = 0;
     if (state.scope !== "valores") {
       DATA.families.forEach((meta) => {
-        const count = familyCount(meta.id);
-        entries.push({ meta, kind: "ideologia", count });
-        totalCount += count;
+        entries.push({ meta, kind: "ideologia", count: familyCount(meta.id) });
       });
     }
     if (state.scope !== "ideologias") {
       (DATA.valueGroups || []).forEach((group) => {
         const meta = groupMeta(group.id);
-        if (meta) {
-          const count = groupCount(meta.id);
-          entries.push({ meta, kind: "valor", count });
-          totalCount += count;
-        }
+        if (meta) entries.push({ meta, kind: "valor", count: groupCount(meta.id) });
       });
     }
-    const chipRow = el("div", { class: "atlas-chips-row" },
+    container.replaceChildren(
       ...entries.map(({ meta, kind, count }) => {
         const pressed = state.family === meta.id && state.familyType === kind;
         const chip = el("button", {
@@ -926,6 +906,7 @@ document.addEventListener("DOMContentLoaded", () => {
           title: `${meta.rotulo}: ${count} ${kind === "valor" ? "valores" : "ideologias"}`
         });
         chip.append(
+          el("span", { class: "catalog-chip-dot" }),
           el("span", { text: meta.rotulo }),
           el("em", { text: String(count) })
         );
@@ -933,12 +914,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return chip;
       })
     );
-    container.querySelector(".atlas-chips-row")?.replaceWith(chipRow);
-    if (!container.querySelector(".atlas-chips-row")) {
-      container.append(chipRow);
-    }
-    const countEl = document.getElementById("catalog-filters-count");
-    if (countEl) countEl.textContent = `${entries.length} filtros · ${totalCount} itens`;
   };
 
   const renderLegend = () => {
@@ -1218,6 +1193,8 @@ document.addEventListener("DOMContentLoaded", () => {
     renderMethodNote();
     renderSections();
     renderActiveFilters();
+    renderDrawerResult();
+    updateFilterCount();
   };
 
   const renderActiveFilters = () => {
@@ -1262,6 +1239,7 @@ document.addEventListener("DOMContentLoaded", () => {
             input.checked = input.value === "any";
           });
           applyIdeaFilters();
+          syncDrawerState();
         }
       });
     }
@@ -1274,6 +1252,7 @@ document.addEventListener("DOMContentLoaded", () => {
         onRemove: () => {
           delete state.axes[axisId];
           applyIdeaFilters();
+          syncDrawerState();
         }
       });
     });
@@ -1292,6 +1271,97 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   };
 
+  const renderDrawerResult = () => {
+    const node = document.getElementById("catalog-drawer-result");
+    if (!node) return;
+    const count = state.filteredIdeas.length;
+    node.replaceChildren(
+      el("b", { text: String(count) }),
+      document.createTextNode(count === 1 ? " resultado" : " resultados")
+    );
+  };
+
+  const updateFilterCount = () => {
+    const badge = document.getElementById("catalog-filter-count");
+    if (!badge) return;
+    const count = Object.keys(state.axes).length + (state.intensity === "strong" ? 1 : 0);
+    badge.hidden = count === 0;
+    badge.textContent = String(count);
+  };
+
+  const renderDrawer = () => {
+    const grid = document.getElementById("catalog-axis-grid");
+    if (!grid) return;
+    grid.replaceChildren(
+      ...DATA.axes.map((axis) => {
+        const card = el("div", { class: "catalog-axis-card" });
+        card.append(el("span", { class: "catalog-axis-title", text: axis.name }));
+        const poles = el("div", { class: "catalog-axis-poles" });
+        ["a", "b"].forEach((pole) => {
+          const button = el("button", {
+            class: "catalog-axis-pole",
+            type: "button",
+            "aria-pressed": String(state.axes[axis.id] === pole),
+            "data-axis": axis.id,
+            "data-pole": pole,
+            "aria-label": `${axis.name}: ${poleName(axis, pole)}`
+          });
+          button.append(axisSvg(axis, pole, 14), el("span", { class: "catalog-axis-pole-name", text: poleName(axis, pole) }));
+          button.addEventListener("click", () => toggleAxis(axis.id, pole));
+          poles.append(button);
+        });
+        card.append(poles);
+        return card;
+      })
+    );
+    syncDrawerState();
+  };
+
+  const syncDrawerState = () => {
+    document.querySelectorAll(".catalog-axis-pole").forEach((button) => {
+      button.setAttribute(
+        "aria-pressed",
+        String(state.axes[button.dataset.axis] === button.dataset.pole)
+      );
+    });
+    document.querySelectorAll('input[name="catalog-intensity"]').forEach((input) => {
+      input.checked = input.value === state.intensity;
+    });
+    renderDrawerResult();
+    updateFilterCount();
+  };
+
+  const toggleAxis = (axisId, pole) => {
+    if (state.axes[axisId] === pole) delete state.axes[axisId];
+    else state.axes[axisId] = pole;
+    applyIdeaFilters();
+    syncDrawerState();
+  };
+
+  const openDrawer = () => {
+    const drawer = document.getElementById("catalog-filter-drawer");
+    const toggle = document.getElementById("catalog-filter-toggle");
+    if (!drawer) return;
+    renderDrawer();
+    drawer.hidden = false;
+    toggle?.setAttribute("aria-expanded", "true");
+    const offset = Number.parseFloat(getComputedStyle(main).getPropertyValue("--catalog-sticky-top")) || 0;
+    const drawerTop = drawer.getBoundingClientRect().top + window.scrollY - offset - 8;
+    if (drawerTop < window.scrollY || drawer.getBoundingClientRect().bottom > window.innerHeight) {
+      window.scrollTo({ top: Math.max(0, drawerTop), behavior: "smooth" });
+    }
+    drawer.querySelector(".catalog-drawer-close")?.focus({ preventScroll: true });
+  };
+
+  const closeDrawer = () => {
+    const drawer = document.getElementById("catalog-filter-drawer");
+    const toggle = document.getElementById("catalog-filter-toggle");
+    if (!drawer || drawer.hidden) return;
+    drawer.hidden = true;
+    toggle?.setAttribute("aria-expanded", "false");
+    toggle?.focus({ preventScroll: true });
+  };
+
   const clearIdeaFilters = () => {
     state.query = "";
     state.queryText = "";
@@ -1301,8 +1371,12 @@ document.addEventListener("DOMContentLoaded", () => {
     state.intensity = "any";
     const search = document.getElementById("catalog-search");
     if (search) search.value = "";
+    document.querySelectorAll('input[name="catalog-intensity"]').forEach((input) => {
+      input.checked = input.value === "any";
+    });
     refreshScopeControls();
     applyIdeaFilters();
+    syncDrawerState();
   };
 
   const renderNotice = () => {
@@ -1488,7 +1562,6 @@ document.addEventListener("DOMContentLoaded", () => {
       search?.focus();
     });
     container.append(clear);
-    container.append(el("p", { class: "atlas-filters-count", id: "catalog-generic-filter-count", "aria-live": "polite" }));
   };
 
   const sortItems = (items) => {
@@ -1660,14 +1733,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const portrait = el("div", { class: "catalog-personality-portrait" });
     if (media?.path && !isUnverifiedImage(item)) {
       const image = el("img", { src: media.path, alt: media.alt, loading: "lazy", decoding: "async" });
-      image.addEventListener("error", () => {
-        image.remove();
-        portrait.replaceChildren(el("span", { text: initials(item.nome) }));
-        portrait.classList.add("is-fallback");
-      }, { once: true });
+      image.addEventListener("error", () => { image.remove(); portrait.textContent = initials(item.nome); }, { once: true });
       portrait.append(image);
     } else {
-      portrait.classList.add("is-fallback");
       portrait.append(el("span", { text: initials(item.nome) }));
     }
     const tags = el("div", { class: "catalog-country-tags" }, makeTag(item.areaLabel || areaOf(item)?.rotulo || "Personalidade", color), item.periodo ? makeTag(item.periodo) : null);
@@ -1705,7 +1773,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const section = document.getElementById("catalog-featured");
     const grid = document.getElementById("catalog-featured-grid");
     if (!section || !grid) return;
-    if (state.tab === "ideologias" || state.tab === "paises") {
+    if (state.tab === "ideologias" || state.tab === "paises" || state.tab === "personalidades") {
       section.hidden = true;
       return;
     }
@@ -1718,7 +1786,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     section.hidden = false;
-    grid.replaceChildren(...items.map((item) => state.tab === "personalidades" ? makePersonalityCard(item) : makeCard(item, config, true)));
+    grid.replaceChildren(...items.map((item) => makeCard(item, config, true)));
     const label = section.querySelector("[data-catalog-featured-label]");
     if (label) label.textContent = config.featuredLabel || `Seleção editorial de ${config.plural}`;
     const note = section.querySelector("[data-catalog-featured-note]");
@@ -1747,13 +1815,6 @@ document.addEventListener("DOMContentLoaded", () => {
       count.textContent = state.filtered.length
         ? `Exibindo ${shown.length} de ${state.filtered.length} ${config.plural}.`
         : "Nenhum resultado encontrado.";
-    }
-    const filterCount = document.getElementById("catalog-generic-filter-count");
-    if (filterCount) {
-      const total = config.items.length;
-      filterCount.textContent = state.filtered.length === total
-        ? `${total} ${config.plural}`
-        : `${state.filtered.length} de ${total} ${config.plural}`;
     }
     const loadMore = document.getElementById("catalog-generic-load-more");
     if (loadMore) {
@@ -1790,40 +1851,45 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!Array.isArray(item.vetor) || item.vetor.length !== 12) return null;
     const list = el("ul", { class: "atlas-axis-list" });
     DATA.axes.forEach((axis, index) => {
-      const poles = el(
-        "div",
-        { class: "atlas-axis-poles-row" },
-        el("span", { class: "atlas-axis-pole-label" }, axisSvg(axis, "a", 15), el("span", { text: axis.a })),
-        el("span", { class: "atlas-axis-pole-label" }, el("span", { text: axis.b }), axisSvg(axis, "b", 15))
-      );
       if (!isAxisKnown(item, axis.id)) {
         const unknown = el("li", { class: "atlas-axis-row is-unknown" });
         unknown.append(
-          el("div", { class: "atlas-axis-row-head" },
-            el("span", { class: "atlas-axis-name" }, axisSvg(axis, "a", 16), el("span", { text: axis.name })),
-            el("strong", { class: "text-muted", text: "Sem posição definida" })
+          el(
+            "div",
+            { class: "atlas-axis-row-head" },
+            el("span", { text: axis.name }),
+            el("strong", { text: "Sem posição definida" })
           ),
           el("div", { class: "atlas-axis-track is-empty" }),
-          poles
+          el(
+            "div",
+            { class: "atlas-axis-poles-row" },
+            el("span", { text: axis.a }),
+            el("span", { text: axis.b })
+          )
         );
         list.append(unknown);
         return;
       }
       const value = Math.max(0, Math.min(100, Number(item.vetor[index]) || 0));
-      const poleKey = value >= 50 ? "a" : "b";
+      const pole = value >= 50 ? axis.a : axis.b;
       const row = el("li", { class: "atlas-axis-row" });
       row.style.setProperty("--ca", `var(--ax-${axis.id}-a)`);
       row.style.setProperty("--cb", `var(--ax-${axis.id}-b)`);
-      row.style.setProperty("--marker", `var(--ax-${axis.id}-${poleKey})`);
+      row.style.setProperty("--marker", `var(--ax-${axis.id}-${value >= 50 ? "a" : "b"})`);
       row.append(
-        el("div", { class: "atlas-axis-row-head" },
-          el("span", { class: "atlas-axis-name" }, axisSvg(axis, poleKey, 16), el("span", { text: axis.name })),
-          el("strong", { text: `${Math.round(Math.max(value, 100 - value))}% ${poleKey === "a" ? axis.a : axis.b}` })
+        el(
+          "div",
+          { class: "atlas-axis-row-head" },
+          el("span", { text: axis.name }),
+          el("strong", { text: `${Math.round(Math.max(value, 100 - value))}% ${pole}` })
         ),
-        el("div", { class: "atlas-axis-track" }, el("span", { class: "atlas-axis-marker" })),
-        poles
+        el("div", { class: "atlas-axis-track" }, el("span", { class: "atlas-axis-marker" }))
       );
-      row.querySelector(".atlas-axis-marker").style.setProperty("--position", `${100 - value}%`);
+      row.querySelector(".atlas-axis-marker").style.setProperty("--p", String(100 - value));
+      row.append(
+        el("div", { class: "atlas-axis-poles-row" }, el("span", { text: axis.a }), el("span", { text: axis.b }))
+      );
       list.append(row);
     });
     return list;
@@ -1954,54 +2020,56 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   };
 
+  const profilePole = (axis, value, side) => {
+    const pole = side === "left" ? "a" : "b";
+    const percentage = side === "left" ? value : 100 - value;
+    const active = percentage >= 50;
+    const node = el("div", {
+      class: `catalog-profile-pole ${side}${active ? " is-active" : ""}`
+    });
+    const label = el(
+      "span",
+      {},
+      el("b", { text: poleName(axis, pole) }),
+      el("em", { text: `${Math.round(percentage)}%` })
+    );
+    if (side === "left") node.append(axisSvg(axis, pole, 18), label);
+    else node.append(label, axisSvg(axis, pole, 18));
+    return node;
+  };
+
   const profileAxisRow = (item, axis) => {
     const value = axisValue(item, axis.id);
-    const unknown = value == null;
-    const row = el("li", { class: `atlas-axis-row${unknown ? " is-unknown" : ""}` });
-    row.style.setProperty("--ca", `var(--ax-${axis.id}-a)`);
-    row.style.setProperty("--cb", `var(--ax-${axis.id}-b)`);
-
-    const pole = unknown ? "a" : value >= 50 ? "a" : "b";
-    row.style.setProperty("--marker", `var(--ax-${axis.id}-${pole})`);
-
-    const name = el(
-      "span",
-      { class: "atlas-axis-name" },
-      axisSvg(axis, pole, 16),
-      el("span", { text: axis.name })
-    );
-
-    if (unknown) {
+    const row = el("li", { class: "catalog-profile-axis atlas-axis-row" });
+    if (value == null) {
       row.append(
         el(
           "div",
-          { class: "atlas-axis-row-head" },
-          name,
-          el("span", { class: "text-muted", text: "Sem posição definida" })
+          { class: "catalog-profile-axis-head" },
+          el("h3", { text: axis.name }),
+          el("span", { class: "catalog-profile-axis-status", text: "Sem posição definida" })
         ),
-        el("p", { class: "text-muted", text: "Este eixo não foi avaliado para este conceito." })
+        el("div", { class: "catalog-profile-axis-unknown", text: "Este eixo não foi avaliado para este conceito." })
       );
       return row;
     }
-
     const strength = Math.max(value, 100 - value);
     const direction = value >= 50 ? axis.a : axis.b;
     const level = strength >= 75 ? "Muito forte" : strength >= 60 ? "Forte" : strength > 50 ? "Inclinado" : "Equilibrado";
-
-    row.style.setProperty("--position", `${100 - value}%`);
+    row.style.setProperty("--axis-color", `var(--ax-${axis.id}-${value >= 50 ? "a" : "b"})`);
     row.append(
       el(
         "div",
-        { class: "atlas-axis-row-head" },
-        name,
-        el("strong", { text: `${level} · ${direction}` })
+        { class: "catalog-profile-axis-head" },
+        el("h3", { text: axis.name }),
+        el("span", { class: "catalog-profile-axis-status" }, el("i", { class: "catalog-profile-axis-dot" }), `${level} · ${direction}`)
       ),
-      el("div", { class: "atlas-axis-track" }, el("span", { class: "atlas-axis-marker" })),
       el(
         "div",
-        { class: "atlas-axis-poles-row" },
-        el("span", { class: "atlas-axis-pole-label" }, axisSvg(axis, "a", 14), el("span", { text: axis.a })),
-        el("span", { class: "atlas-axis-pole-label" }, axisSvg(axis, "b", 14), el("span", { text: axis.b }))
+        { class: "catalog-profile-axis-bar", role: "img", "aria-label": `${axis.name}: ${axis.a} ${Math.round(value)}%, ${axis.b} ${Math.round(100 - value)}%` },
+        profilePole(axis, value, "left"),
+        el("div", { class: "catalog-profile-track" }, el("span", { class: "catalog-profile-marker", style: { left: `${value}%` } })),
+        profilePole(axis, value, "right")
       )
     );
     return row;
@@ -2037,7 +2105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const family = familyOf(item);
     const figures = referenceFiguresFor(item);
     const places = referencePlacesFor(item);
-    const shell = el("div", { class: "atlas-dialog-shell catalog-profile-shell", style: { "--profile-color": color } });
+    const shell = el("div", { class: "catalog-profile-shell", style: { "--profile-color": color } });
     const close = el("button", { class: "atlas-dialog-close catalog-profile-close", type: "button", "aria-label": "Fechar ficha" }, icon("fa-xmark"));
     close.addEventListener("click", () => closeDialog());
     const back = el("button", { class: "catalog-profile-back", type: "button" }, icon("fa-arrow-left"), el("span", { text: "Voltar ao catálogo" }));
@@ -2081,7 +2149,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const ideologyPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "ideologias", hidden: true }, el("h2", { text: "Ideologias relacionadas" }), buildNearby(item) || el("p", { class: "catalog-profile-muted", text: "Nenhuma ideologia próxima disponível." }));
     const distinctions = el("section", { class: "catalog-profile-distinction" }, el("h2", { text: "O que distingue esta ideologia" }), el("div", { class: "catalog-profile-distinction-grid" }, el("article", {}, el("span", { class: "catalog-profile-badge", text: "Posições mais fortes" }), el("h3", { text: DATA.axes.slice().sort((a, b) => (Math.max(...[axisValue(item, b.id) || 50, 100 - (axisValue(item, b.id) || 50)]) - 50) - (Math.max(...[axisValue(item, a.id) || 50, 100 - (axisValue(item, a.id) || 50)]) - 50))[0]?.name || "Perfil" }), el("p", { text: "Os eixos mais distantes do centro mostram onde esta corrente assume posições mais definidas." })), el("article", {}, el("span", { class: "catalog-profile-badge is-neutral", text: "Leitura do perfil" }), el("h3", { text: family?.rotulo || "Ideologia" }), el("p", { text: item.ideia || item.resumo || "Uma síntese editorial do perfil político." }))));
     const cta = el("section", { class: "catalog-profile-cta" }, el("div", {}, el("span", { class: "eyebrow", text: "Teste político" }), el("h2", { text: "E você, onde está no espectro?" }), el("p", { text: `Responda ao quiz e veja sua compatibilidade com ${item.nome} e outras ideologias nos 12 eixos.` })), el("a", { class: "atlas-button", href: "/teste-politico" }, el("span", { text: "Fazer o teste" }), icon("fa-arrow-right")));
-    shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, hero, close), el("div", { class: "atlas-dialog-body catalog-profile-content" }, phrase, tabs, axesPanel, peoplePanel, placesPanel, ideologyPanel, distinctions, cta));
+    shell.append(back, el("div", { class: "catalog-profile-content" }, hero, phrase, tabs, axesPanel, peoplePanel, placesPanel, ideologyPanel, distinctions, cta), close);
     return shell;
   };
 
@@ -2092,7 +2160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nearestIdeologies = relatedIdeologies.length ? relatedIdeologies : nearestByVector(item, DATA.profiles.ideologies).slice(0, 3);
     const nearestFigures = nearestByVector(item, MAPS.figureList).slice(0, 1);
     const nearbyCountries = nearestByVector(item, MAPS.placeList.filter((entry) => entry.id !== item.id)).slice(0, 6);
-    const shell = el("div", { class: "atlas-dialog-shell catalog-profile-shell", style: { "--profile-color": color } });
+    const shell = el("div", { class: "catalog-profile-shell", style: { "--profile-color": color } });
     const close = el("button", { class: "atlas-dialog-close catalog-profile-close", type: "button", "aria-label": "Fechar ficha" }, icon("fa-xmark"));
     close.addEventListener("click", () => closeDialog());
     const back = el("button", { class: "catalog-profile-back", type: "button" }, icon("fa-arrow-left"), el("span", { text: "Voltar ao catálogo" }));
@@ -2125,7 +2193,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const countryPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "paises", hidden: true }, el("h2", { text: item.tipo === "regime" ? "Regimes e países parecidos" : "Países parecidos" }), chipsFor("paises", nearbyCountries.map((entry) => entry.id), "fa-flag") || el("p", { class: "catalog-profile-muted", text: "Nenhum perfil parecido foi encontrado." }));
     const distinction = el("section", { class: "catalog-profile-distinction" }, el("h2", { text: `O que distingue ${item.nome}` }), el("div", { class: "catalog-profile-distinction-grid" }, el("article", {}, el("span", { class: "catalog-profile-badge", text: "Configuração política" }), el("h3", { text: item.categoria || item.tipo }), el("p", { text: item.resumo || item.description })), el("article", {}, el("span", { class: "catalog-profile-badge is-neutral", text: "Leitura territorial" }), el("h3", { text: item.regiao || "Perfil nacional" }), el("p", { text: item.periodo || "Perfil contemporâneo" }))));
     const cta = el("section", { class: "catalog-profile-cta" }, el("div", {}, el("span", { class: "eyebrow", text: "Teste político" }), el("h2", { text: "Você viveria bem aqui?" }), el("p", { text: `Responda ao quiz e veja sua compatibilidade com ${item.nome} e outros países e regimes.` })), el("a", { class: "atlas-button", href: "/teste-politico" }, el("span", { text: "Fazer o teste" }), icon("fa-arrow-right")));
-    shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, hero, close), el("div", { class: "atlas-dialog-body catalog-profile-content" }, tabs, axesPanel, ideologyPanel, peoplePanel, countryPanel, distinction, cta));
+    shell.append(back, el("div", { class: "catalog-profile-content" }, hero, tabs, axesPanel, ideologyPanel, peoplePanel, countryPanel, distinction, cta), close);
     return shell;
   };
 
@@ -2133,21 +2201,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const config = TABS.personalidades;
     const color = config.colorOf(item);
     const ideology = item.ideologia ? MAPS.ideologies.get(item.ideologia) : null;
-    const ideologies = ideology ? [ideology] : nearestByVectorAbove(item, DATA.profiles.ideologies, 68, 3);
-    const countries = nearestByVectorAbove(item, MAPS.placeList, RELATED_PROFILE_THRESHOLD, 1);
-    const people = nearestByVectorAbove(item, MAPS.figureList.filter((entry) => entry.id !== item.id), RELATED_PROFILE_THRESHOLD, 6);
-    const shell = el("div", { class: "atlas-dialog-shell catalog-profile-shell", style: { "--profile-color": color } });
+    const ideologies = ideology ? [ideology] : nearestByVector(item, DATA.profiles.ideologies).slice(0, 3);
+    const countries = nearestByVector(item, MAPS.placeList).slice(0, 1);
+    const people = nearestByVector(item, MAPS.figureList.filter((entry) => entry.id !== item.id)).slice(0, 6);
+    const shell = el("div", { class: "catalog-profile-shell", style: { "--profile-color": color } });
     const close = el("button", { class: "atlas-dialog-close catalog-profile-close", type: "button", "aria-label": "Fechar ficha" }, icon("fa-xmark"));
     close.addEventListener("click", () => closeDialog());
     const back = el("button", { class: "catalog-profile-back", type: "button" }, icon("fa-arrow-left"), el("span", { text: "Voltar ao catálogo" }));
     back.addEventListener("click", () => closeDialog());
     const media = mediaFor(item, "personalidades");
-    const portrait = media?.path && !isUnverifiedImage(item)
-      ? el("img", { src: media.path, alt: media.alt, loading: "lazy", decoding: "async" })
-      : el("span", { class: "catalog-profile-ref-initials", text: initials(item.nome) });
-    if (portrait.tagName === "IMG") portrait.addEventListener("error", () => {
-      portrait.replaceWith(el("span", { class: "catalog-profile-ref-initials is-fallback", text: initials(item.nome) }));
-    }, { once: true });
+    const portrait = media?.path && !isUnverifiedImage(item) ? el("img", { src: media.path, alt: media.alt, loading: "lazy", decoding: "async" }) : el("span", { class: "catalog-profile-ref-initials", text: initials(item.nome) });
     const hero = el("section", { class: "catalog-profile-hero catalog-personality-profile-hero" },
       el("div", { class: "catalog-profile-hero-copy" },
         el("div", { class: "catalog-profile-tags" }, makeTag(item.areaLabel || areaOf(item)?.rotulo || "Personalidade", color), item.periodo ? makeTag(item.periodo) : null),
@@ -2158,49 +2221,23 @@ document.addEventListener("DOMContentLoaded", () => {
       ),
       el("aside", { class: "catalog-personality-profile-media" }, portrait)
     );
-    const labels = ["Eixos", "Ideologias", "Personalidades", "Países"];
-    const panelId = (name) => `personality-${item.id}-panel-${name}`;
-    const tabId = (name) => `personality-${item.id}-tab-${name}`;
     const tabs = el("div", { class: "catalog-profile-tabs", role: "tablist", "aria-label": "Seções da personalidade" });
-    const panels = [];
-    const definitions = [
-      { name: "eixos", content: [el("span", { class: "eyebrow", text: "Eixos políticos" }), el("h2", { text: "Perfil nos 12 eixos" }), el("ul", { class: "catalog-profile-axis-list" }, DATA.axes.map((axis) => profileAxisRow(item, axis)))] },
-      { name: "ideologias", content: [el("h2", { text: "Ideologias mais próximas" }), chipsFor("ideologias", ideologies.map((entry) => entry.id), "fa-scale-balanced") || el("p", { class: "catalog-profile-muted", text: "Nenhuma ideologia com proximidade suficiente foi encontrada." })] },
-      { name: "personalidades", content: [el("h2", { text: "Personalidades mais próximas" }), chipsFor("personalidades", people.map((entry) => entry.id), "fa-user") || el("p", { class: "catalog-profile-muted", text: "Nenhuma personalidade com proximidade suficiente foi encontrada." })] },
-      { name: "paises", content: [el("h2", { text: "Países mais próximos" }), chipsFor("paises", countries.map((entry) => entry.id), "fa-flag") || el("p", { class: "catalog-profile-muted", text: "Nenhum país com proximidade suficiente foi encontrado." })] }
-    ];
-    definitions.forEach((definition, index) => {
-      const name = definition.name;
-      const tab = el("button", { id: tabId(name), type: "button", role: "tab", "aria-selected": String(index === 0), "aria-controls": panelId(name), tabindex: index === 0 ? "0" : "-1", text: labels[index] });
-      const panel = el("section", { id: panelId(name), class: "catalog-profile-tab-panel", role: "tabpanel", "aria-labelledby": tabId(name), tabindex: "0", "data-panel": name, hidden: index !== 0 }, definition.content);
+    ["Eixos", "Ideologias", "Personalidades", "Países"].forEach((label, index) => {
+      const tab = el("button", { type: "button", role: "tab", "aria-selected": String(index === 0), text: label });
       tab.addEventListener("click", () => {
-        tabs.querySelectorAll('[role="tab"]').forEach((button) => {
-          const selected = button === tab;
-          button.setAttribute("aria-selected", String(selected));
-          button.tabIndex = selected ? 0 : -1;
-        });
-        panels.forEach((entry) => { entry.hidden = entry !== panel; });
-      });
-      tab.addEventListener("keydown", (event) => {
-        if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) return;
-        event.preventDefault();
-        const nodes = [...tabs.querySelectorAll('[role="tab"]')];
-        const current = nodes.indexOf(tab);
-        const next = event.key === "Home" ? 0 : event.key === "End" ? nodes.length - 1 : (current + (event.key === "ArrowRight" ? 1 : -1) + nodes.length) % nodes.length;
-        nodes[next].focus();
-        nodes[next].click();
+        const panelId = normalize(label);
+        tabs.querySelectorAll("button").forEach((button) => button.setAttribute("aria-selected", String(button === tab)));
+        shell.querySelectorAll(".catalog-profile-tab-panel").forEach((panel) => { panel.hidden = panel.dataset.panel !== panelId; });
       });
       tabs.append(tab);
-      panels.push(panel);
     });
+    const axesPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "eixos" }, el("span", { class: "eyebrow", text: "Eixos políticos" }), el("h2", { text: "Perfil nos 12 eixos" }), el("ul", { class: "catalog-profile-axis-list" }, DATA.axes.map((axis) => profileAxisRow(item, axis))));
+    const ideologyPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "ideologias", hidden: true }, el("h2", { text: "Ideologias mais próximas" }), chipsFor("ideologias", ideologies.map((entry) => entry.id), "fa-scale-balanced") || el("p", { class: "catalog-profile-muted", text: "Nenhuma ideologia próxima foi encontrada." }));
+    const peoplePanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "personalidades", hidden: true }, el("h2", { text: "Personalidades mais próximas" }), chipsFor("personalidades", people.map((entry) => entry.id), "fa-user") || el("p", { class: "catalog-profile-muted", text: "Nenhuma personalidade próxima foi encontrada." }));
+    const countryPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "paises", hidden: true }, el("h2", { text: "País mais próximo" }), chipsFor("paises", countries.map((entry) => entry.id), "fa-flag") || el("p", { class: "catalog-profile-muted", text: "Nenhum país próximo foi encontrado." }));
     const distinction = el("section", { class: "catalog-profile-distinction" }, el("h2", { text: `O que distingue ${item.nome}` }), el("div", { class: "catalog-profile-distinction-grid" }, el("article", {}, el("span", { class: "catalog-profile-badge", text: "Área de atuação" }), el("h3", { text: item.areaLabel || areaOf(item)?.rotulo || "Política" }), el("p", { text: item.resumo || item.description })), el("article", {}, el("span", { class: "catalog-profile-badge is-neutral", text: "Vetor" }), el("h3", { text: vectorSourceLabel(item) }), el("p", { text: "Uma leitura editorial aproximada da posição desta personalidade nos 12 eixos." }))));
     const cta = el("section", { class: "catalog-profile-cta" }, el("div", {}, el("span", { class: "eyebrow", text: "Teste político" }), el("h2", { text: "E você, com quem se parece?" }), el("p", { text: `Responda ao quiz e veja sua compatibilidade com ${item.nome}, ideologias e países nos 12 eixos.` })), el("a", { class: "atlas-button", href: "/teste-politico" }, el("span", { text: "Fazer o teste" }), icon("fa-arrow-right")));
-    const body = el("div", { class: "atlas-dialog-body catalog-profile-content" }, tabs, panels, distinction, cta);
-    const credits = creditNode(item);
-    const sources = sourceNode(item);
-    if (credits) addSection(body, "Crédito do retrato", "fa-camera", credits);
-    if (sources) addSection(body, "Fontes e metodologia", "fa-book-open", sources);
-    shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, hero, close), body);
+    shell.append(back, el("div", { class: "catalog-profile-content" }, hero, tabs, axesPanel, ideologyPanel, peoplePanel, countryPanel, distinction, cta), close);
     return shell;
   };
 
@@ -2211,7 +2248,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const ideologies = ideology ? [ideology, ...nearestByVector(item, DATA.profiles.ideologies).filter((entry) => entry.id !== ideology.id)] : nearestByVector(item, DATA.profiles.ideologies);
     const people = nearestByVector(item, MAPS.figureList).slice(0, 6);
     const parties = nearestByVector(item, MAPS.partyList.filter((entry) => entry.id !== item.id)).slice(0, 6);
-    const shell = el("div", { class: "atlas-dialog-shell catalog-profile-shell", style: { "--profile-color": color } });
+    const shell = el("div", { class: "catalog-profile-shell", style: { "--profile-color": color } });
     const close = el("button", { class: "atlas-dialog-close catalog-profile-close", type: "button", "aria-label": "Fechar ficha" }, icon("fa-xmark"));
     close.addEventListener("click", () => closeDialog());
     const back = el("button", { class: "catalog-profile-back", type: "button" }, icon("fa-arrow-left"), el("span", { text: "Voltar ao catálogo" }));
@@ -2244,7 +2281,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const partyPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "partidos", hidden: true }, el("h2", { text: "Partidos e organizações parecidos" }), chipsFor("partidos", parties.map((entry) => entry.id), "fa-flag") || el("p", { class: "catalog-profile-muted", text: "Nenhum perfil parecido foi encontrado." }));
     const distinction = el("section", { class: "catalog-profile-distinction" }, el("h2", { text: `O que distingue ${item.nome}` }), el("div", { class: "catalog-profile-distinction-grid" }, el("article", {}, el("span", { class: "catalog-profile-badge", text: "Trajetória" }), el("h3", { text: item.orientacao || item.category || "Organização política" }), el("p", { text: (item.marcos || []).join(" ") || item.resumo || item.description })), el("article", {}, el("span", { class: "catalog-profile-badge is-neutral", text: "Vetor" }), el("h3", { text: vectorSourceLabel(item) }), el("p", { text: item.vectorCalibrated ? "Leitura editorial recalibrada para refletir a trajetória e o programa do partido." : "Leitura editorial da posição do partido nos 12 eixos." }))));
     const cta = el("section", { class: "catalog-profile-cta" }, el("div", {}, el("span", { class: "eyebrow", text: "Teste político" }), el("h2", { text: "Você se identifica com este perfil?" }), el("p", { text: `Responda ao quiz e veja sua compatibilidade com ${item.nome} e outros partidos nos 12 eixos.` })), el("a", { class: "atlas-button", href: "/teste-politico" }, el("span", { text: "Fazer o teste" }), icon("fa-arrow-right")));
-    shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, hero, close), el("div", { class: "atlas-dialog-body catalog-profile-content" }, tabs, axesPanel, ideologyPanel, peoplePanel, partyPanel, distinction, cta));
+    shell.append(back, el("div", { class: "catalog-profile-content" }, hero, tabs, axesPanel, ideologyPanel, peoplePanel, partyPanel, distinction, cta), close);
     return shell;
   };
 
@@ -2511,15 +2548,11 @@ document.addEventListener("DOMContentLoaded", () => {
       renderSpectrum();
       renderScope();
       renderChips();
+      renderDrawer();
       applyIdeaFilters();
     } else {
       renderSpectrum();
       renderNotice();
-      const genericSearch = document.getElementById("catalog-generic-search");
-      if (genericSearch) {
-        genericSearch.placeholder = currentConfig().searchPlaceholder || "Buscar no catálogo...";
-        genericSearch.setAttribute("aria-label", `Buscar ${currentConfig().plural}`);
-      }
       renderSort();
       renderFilters();
       renderFeatured();
@@ -2534,14 +2567,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (state.tab === "ideologias") {
       renderScope();
       renderChips();
+      renderDrawer();
       applyIdeaFilters();
     } else {
       renderNotice();
-      const genericSearch = document.getElementById("catalog-generic-search");
-      if (genericSearch) {
-        genericSearch.placeholder = currentConfig().searchPlaceholder || "Buscar no catálogo...";
-        genericSearch.setAttribute("aria-label", `Buscar ${currentConfig().plural}`);
-      }
       renderSort();
       renderFilters();
       renderFeatured();
@@ -2565,6 +2594,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const dialog = document.getElementById("catalog-dialog");
     if (dialog?.open) return;
     if (event.key === "Escape") {
+      const drawer = document.getElementById("catalog-filter-drawer");
+      if (drawer && !drawer.hidden) closeDrawer();
       return;
     }
     if (event.key !== "/" || event.metaKey || event.ctrlKey || event.altKey) return;
@@ -2613,6 +2644,19 @@ document.addEventListener("DOMContentLoaded", () => {
         applyIdeaFilters();
       });
 
+      document.getElementById("catalog-filter-toggle")?.addEventListener("click", () => {
+        const drawer = document.getElementById("catalog-filter-drawer");
+        if (drawer?.hidden) openDrawer();
+        else closeDrawer();
+      });
+      document.getElementById("catalog-drawer-close")?.addEventListener("click", closeDrawer);
+      document.getElementById("catalog-drawer-apply")?.addEventListener("click", closeDrawer);
+      document.getElementById("catalog-drawer-clear")?.addEventListener("click", () => {
+        state.axes = {};
+        state.intensity = "any";
+        applyIdeaFilters();
+        syncDrawerState();
+      });
       document.getElementById("catalog-active-clear")?.addEventListener("click", clearIdeaFilters);
 
       document.querySelectorAll('input[name="catalog-intensity"]').forEach((input) => {
@@ -2620,6 +2664,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (!input.checked) return;
           state.intensity = input.value;
           applyIdeaFilters();
+          syncDrawerState();
         });
       });
 
@@ -2659,18 +2704,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (genericFilterAccordion) {
         genericFilterAccordion.open = false;
       }
-      const ideaFilterAccordion = document.getElementById("catalog-filter-accordion");
+      const ideaFilterAccordion = document.getElementById("atlas-filter-accordion");
       if (ideaFilterAccordion) {
         ideaFilterAccordion.open = false;
       }
-
-      // Close filter accordion when clicking outside
-      document.addEventListener("click", (event) => {
-        const accordion = document.getElementById("catalog-filter-accordion");
-        if (accordion && accordion.open && !accordion.contains(event.target)) {
-          accordion.open = false;
-        }
-      });
 
       const id = hashId();
       if (id) {
