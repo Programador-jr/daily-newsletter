@@ -1190,3 +1190,184 @@
   font-style: normal;
   text-overflow: ellipsis;
 }
+
+
+/* Catalog dialog refinements: centered composition and shared component tokens. */
+.political-catalog-page .catalog-dialog {
+  margin: auto;
+  color: var(--text-main);
+}
+
+.political-catalog-page .catalog-dialog .atlas-dialog-shell,
+.political-catalog-page .catalog-dialog .catalog-profile-shell {
+  width: 100%;
+  margin-inline: auto;
+}
+
+.political-catalog-page .catalog-dialog .atlas-dialog-head,
+.political-catalog-page .catalog-dialog .atlas-dialog-body,
+.political-catalog-page .catalog-dialog .catalog-profile-content {
+  text-align: left;
+}
+
+.political-catalog-page .catalog-dialog :is(
+  .atlas-dialog-section h3,
+  .atlas-axis-row-head,
+  .catalog-profile-axis-head,
+  .catalog-profile-tab-panel h2,
+  .catalog-profile-distinction h2
+) {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+}
+
+.political-catalog-page .catalog-dialog .atlas-dialog-section h3 > i {
+  display: inline-grid;
+  width: 1.25rem;
+  flex: 0 0 1.25rem;
+  place-items: center;
+  color: var(--primary);
+}
+
+.political-catalog-page .catalog-dialog :is(
+  .atlas-dialog-section p,
+  .atlas-dialog-list,
+  .atlas-dialog-footer p,
+  .catalog-profile-lead,
+  .catalog-profile-axis-status,
+  .catalog-profile-distinction-grid p,
+  .catalog-profile-muted,
+  .catalog-profile-cta p,
+  .catalog-profile-phrase figcaption,
+  .catalog-profile-reference small,
+  .catalog-profile-reference em
+) {
+  color: var(--text-muted);
+}
+
+.political-catalog-page .catalog-dialog :is(.atlas-dialog-list, .atlas-related, .atlas-nearby) {
+  display: grid;
+  gap: .55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.political-catalog-page .catalog-dialog .atlas-dialog-list a,
+.political-catalog-page .catalog-dialog .atlas-related a,
+.political-catalog-page .catalog-dialog .atlas-nearby-item,
+.political-catalog-page .catalog-dialog .catalog-profile-reference {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: .6rem;
+  padding: .65rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+.political-catalog-page .catalog-dialog .atlas-dialog-list a:hover,
+.political-catalog-page .catalog-dialog .atlas-related a:hover,
+.political-catalog-page .catalog-dialog .atlas-nearby-item:hover,
+.political-catalog-page .catalog-dialog .catalog-profile-reference:hover {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+  color: var(--primary);
+}
+
+.political-catalog-page .catalog-dialog .atlas-related a > i {
+  flex: 0 0 auto;
+  color: var(--primary);
+}
+
+.political-catalog-page .catalog-dialog .atlas-axis-row-head {
+  justify-content: space-between;
+  gap: .75rem;
+}
+
+.political-catalog-page .catalog-dialog .atlas-axis-name {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: .5rem;
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.political-catalog-page .catalog-dialog .atlas-axis-name .axis-icon,
+.political-catalog-page .catalog-dialog .atlas-axis-pole-label .axis-icon {
+  flex: 0 0 auto;
+  color: var(--axis-pole-color, var(--primary));
+}
+
+.political-catalog-page .catalog-dialog .atlas-axis-poles-row {
+  display: flex;
+  justify-content: space-between;
+  gap: .75rem;
+  color: var(--text-muted);
+  font-size: .68rem;
+}
+
+.political-catalog-page .catalog-dialog .atlas-axis-pole-label {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: .35rem;
+}
+
+.political-catalog-page .catalog-dialog .atlas-axis-row.is-unknown .atlas-axis-track {
+  opacity: .35;
+}
+
+.political-catalog-page .catalog-dialog .atlas-axis-row.is-unknown .atlas-axis-name {
+  color: var(--text-muted);
+}
+
+.political-catalog-page .catalog-dialog .atlas-axis-marker {
+  left: var(--position, 50%);
+  background: var(--marker, var(--text-main));
+}
+
+.political-catalog-page .catalog-dialog .catalog-profile-axis-head h3 {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  margin: 0;
+  font: inherit;
+}
+
+.political-catalog-page .catalog-dialog .catalog-profile-axis-head h3::before {
+  content: "";
+  width: .55rem;
+  height: .55rem;
+  flex: 0 0 .55rem;
+  border-radius: 50%;
+  background: var(--axis-color, var(--profile-color, var(--primary)));
+}
+
+.political-catalog-page .catalog-dialog :is(a, button):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .political-catalog-page .catalog-dialog {
+    width: calc(100vw - 1rem);
+    max-height: 94vh;
+  }
+
+  .political-catalog-page .catalog-dialog .atlas-dialog-head,
+  .political-catalog-page .catalog-dialog .atlas-dialog-body {
+    padding: 1rem;
+  }
+
+  .political-catalog-page .catalog-dialog .atlas-axis-list,
+  .political-catalog-page .catalog-dialog .catalog-profile-axis-list {
+    grid-template-columns: 1fr;
+  }
+}
