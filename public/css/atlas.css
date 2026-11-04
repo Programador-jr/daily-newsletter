@@ -53,7 +53,7 @@
   padding: 0 0.8rem;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: var(--bg-container);
+  width: 100%!important;
 }
 .atlas-search:focus-within {
   border-color: var(--primary);
@@ -465,6 +465,469 @@
   .atlas-button {
     transition: none;
   }
+}
+
+/* ==========================================================================
+   CONTROLES GLOBAIS DE CATÁLOGO — Busca, Filtros, Ordenação, Escopo
+   Estilo unificado inspirado na página História/Livros
+   Classes: .atlas-controls, .atlas-filters, .atlas-filter,
+            .atlas-search, .atlas-sort-trigger, .atlas-scope, .atlas-scope-btn
+   Uso: funcionar em qualquer página .atlas-page / .atlas-catalog-page
+   ========================================================================== */
+
+/* Container dos controles — estilo card como na página História */
+.atlas-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin: 0 3rem 1.5rem;
+  padding: .85rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  flex-direction: row-reverse;
+}
+
+@media (max-width: 768px) {
+  .atlas-controls {
+    margin: 0 1.25rem 1rem;
+    padding: .7rem;
+    gap: .5rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .atlas-controls {
+    gap: .4rem;
+    padding: .6rem;
+  }
+
+  .atlas-filter-btn,
+  .atlas-filter-accordion > summary {
+    padding: 0 .5rem;
+    font-size: .7rem;
+  }
+
+  .atlas-filter-btn span b,
+  .atlas-filter-accordion > summary span b {
+    display: none;
+  }
+
+  .atlas-scope-btn {
+    padding: 0 .5rem;
+    font-size: .65rem;
+  }
+}
+
+/* Grupo de filtros */
+.atlas-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+
+/* Botão de filtro individual — fundo transparente como na página História */
+.atlas-filter {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  gap: .4rem;
+  padding: 0 .7rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-main);
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease;
+}
+
+.atlas-filter:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.atlas-filter[aria-pressed="true"],
+.atlas-filter.active {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--bg-body);
+}
+
+/* Botão Filtros (accordion summary) — mesmo estilo do .atlas-filter */
+.atlas-filter-btn,
+.atlas-filter-accordion > summary {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  gap: .4rem;
+  padding: 0 .7rem;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-main);
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  transition: border-color 180ms ease, color 180ms ease;
+}
+
+.atlas-filter-btn::-webkit-details-marker,
+.atlas-filter-accordion > summary::-webkit-details-marker {
+  display: none;
+}
+
+.atlas-filter-btn:hover,
+.atlas-filter-accordion > summary:hover,
+.atlas-filter-accordion[open] > .atlas-filter-btn,
+.atlas-filter-accordion[open] > summary {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.atlas-filter-btn:focus-visible,
+.atlas-filter-accordion > summary:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.atlas-filter-btn span,
+.atlas-filter-accordion > summary span {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.atlas-filter-btn span i,
+.atlas-filter-accordion > summary span i {
+  color: var(--primary);
+  font-size: .9rem;
+  transition: color 180ms ease;
+}
+
+/* Chevron do accordion */
+.atlas-filter-chevron {
+  transition: transform 180ms ease;
+  color: var(--text-muted);
+}
+
+.atlas-filter-accordion[open] .atlas-filter-chevron {
+  transform: rotate(180deg);
+}
+
+/* Dropdown de filtros (conteúdo do accordion) */
+.atlas-filter-accordion {
+  position: relative;
+}
+
+.atlas-filter-accordion .atlas-filters {
+  position: absolute;
+  top: calc(100% + .4rem);
+  right: 0;
+  left: 0;
+  z-index: 2;
+  max-height: min(60vh, 26rem);
+  overflow-y: auto;
+  padding: .85rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card-bg);
+  box-shadow: 0 12px 28px rgb(24 37 34 / 16%);
+  min-width: 220px;
+  display: none;
+}
+
+.atlas-filter-accordion[open] .atlas-filters {
+  display: flex;
+  flex-direction: column;
+}
+
+.atlas-filter-accordion .atlas-filters-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  margin-bottom: .65rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.atlas-filter-accordion .atlas-filters-title {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.atlas-filter-accordion .atlas-filters-count {
+  font-size: .65rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 768px) {
+  .atlas-filter-accordion .atlas-filters {
+    right: 0;
+    left: -1rem;
+    min-width: calc(100vw - 2.5rem);
+    max-width: calc(100vw - 2.5rem);
+  }
+}
+
+@media (max-width: 420px) {
+  .atlas-filter-accordion .atlas-filters {
+    left: -1.25rem;
+    min-width: calc(100vw - 1.5rem);
+    max-width: calc(100vw - 1.5rem);
+    border-radius: 0 0 9px 9px;
+    border-left: none;
+    border-right: none;
+  }
+}
+
+/* Pesquisa — largura fixa como na página História */
+.atlas-search {
+  position: relative;
+  width: min(300px, 100%);
+  flex: 300px;
+  min-width: 0;
+}
+
+@media (max-width: 420px) {
+  .atlas-search {
+    width: 100%;
+    flex: 1 1 auto;
+    order: 3;
+  }
+
+  .atlas-controls {
+    flex-wrap: wrap;
+  }
+
+  .atlas-filter-accordion {
+    order: 1;
+  }
+
+  .atlas-scope {
+    order: 2;
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: .4rem;
+    padding-top: .4rem;
+    border-top: 1px solid var(--border);
+  }
+}
+
+.atlas-search i {
+  position: absolute;
+  top: 50%;
+  left: .9rem;
+  color: var(--text-muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: .85rem;
+  transition: color 180ms ease;
+}
+
+.atlas-search input {
+  width: 100%;
+  padding: .68rem .9rem .68rem 2.4rem;
+  border-radius: 8px;
+  outline: none;
+  background: var(--bg-container);
+  color: var(--text-main);
+  font: inherit;
+  font-size: .82rem;
+  box-sizing: border-box;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.atlas-search:focus-within i,
+.atlas-search input:focus + i {
+  color: var(--primary);
+}
+
+/* Botão Ordenar — mesmo estilo do .atlas-filter */
+.atlas-sort {
+  position: relative;
+  display: block;
+  min-width: 0;
+}
+
+.atlas-sort-trigger {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  gap: .5rem;
+  padding: 0 .7rem 0 .6rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-main);
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease;
+}
+
+.atlas-sort-trigger:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.atlas-sort-trigger:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.atlas-sort[data-open="true"] .atlas-sort-trigger {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.atlas-sort-label {
+  font-weight: 600;
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--text-muted);
+  transition: color 180ms ease;
+}
+
+.atlas-sort-trigger:hover .atlas-sort-label,
+.atlas-sort[data-open="true"] .atlas-sort-label {
+  color: var(--primary);
+}
+
+.atlas-sort-value {
+  font-weight: 600;
+  font-size: .78rem;
+}
+
+.atlas-sort-chevron {
+  color: var(--text-muted);
+  font-size: .65rem;
+  transition: transform 200ms cubic-bezier(.2,.8,.2,1), color 180ms ease;
+}
+
+.atlas-sort-trigger:hover .atlas-sort-chevron,
+.atlas-sort[data-open="true"] .atlas-sort-chevron {
+  color: var(--primary);
+}
+
+.atlas-sort[data-open="true"] .atlas-sort-chevron {
+  transform: rotate(180deg);
+}
+
+/* Menu de ordenação */
+.atlas-sort-menu {
+  position: absolute;
+  top: calc(100% + .4rem);
+  right: 0;
+  left: auto;
+  z-index: 20;
+  display: grid;
+  width: max-content;
+  min-width: 15rem;
+  max-width: min(20rem, calc(100vw - 2.5rem));
+  margin: 0;
+  padding: .35rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card-bg);
+  box-shadow: 0 12px 28px rgb(24 37 34 / 16%);
+  list-style: none;
+}
+
+.atlas-sort-menu[hidden] {
+  display: none;
+}
+
+.atlas-sort-option {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .55rem .6rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-main);
+  font: inherit;
+  font-size: .78rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.atlas-sort-option i {
+  color: var(--primary);
+  font-size: .72rem;
+  opacity: 0;
+}
+
+.atlas-sort-option:hover,
+.atlas-sort-option:focus-visible {
+  background: color-mix(in srgb, var(--primary) 8%, var(--card-bg));
+  color: var(--primary);
+  outline: none;
+}
+
+.atlas-sort-option[aria-selected="true"] {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.atlas-sort-option[aria-selected="true"] i {
+  opacity: 1;
+}
+
+/* Botões de escopo (Tudo/Ideologias/Valores) — mesmo estilo do .atlas-filter */
+.atlas-scope {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem;
+}
+
+.atlas-scope-btn {
+  min-height: 36px;
+  padding: 0 .7rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: .72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease;
+}
+
+.atlas-scope-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.atlas-scope-btn:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.atlas-scope-btn[aria-pressed="true"] {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--bg-body);
 }
 
 /* ==========================================================================
