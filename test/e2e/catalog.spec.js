@@ -64,6 +64,129 @@ test('escopos, chips e busca', async ({ page }) => {
   await expect(page.locator('#catalog-search')).toBeFocused();
 });
 
+test('filtros do catálogo seguem o padrão de livros', async ({ page }) => {
+  await page.goto('/livros');
+  const booksFilterButton = page.locator('#atlas-filter-accordion > summary');
+  await expect(booksFilterButton).toHaveCSS('height', '42px');
+  await expect(booksFilterButton).toHaveCSS('border-radius', '8px');
+
+  await page.goto('/catalogo-politico');
+  const filter = page.locator('#catalog-filter-accordion');
+  const filterButton = filter.locator(':scope > summary');
+  await expect(filterButton).toHaveCSS('height', '42px');
+  await expect(filterButton).toHaveCSS('border-radius', '8px');
+
+  await filterButton.click();
+  await expect(filter.locator('.atlas-filters')).toBeVisible();
+  await expect(filter).not.toContainText('filtros ·');
+  await page.locator('#catalog-title').click();
+  await expect(filter).toHaveAttribute('open', '');
+  await filterButton.click();
+  await expect(filter.locator('.atlas-filters')).toBeHidden();
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(filterButton).toHaveCSS('width', '44px');
+  await expect(filterButton.locator('b')).toBeHidden();
+
+  await page.goto('/livros');
+  await expect(booksFilterButton).toHaveCSS('width', '44px');
+
+  await page.goto('/catalogo-politico?catalogo=personalidades');
+  const genericFilter = page.locator('#catalog-generic-filter-accordion');
+  const genericFilterButton = genericFilter.locator(':scope > summary');
+  await expect(genericFilterButton).toBeVisible();
+  await expect(genericFilterButton).toHaveCSS('width', '44px');
+  await expect(genericFilterButton.locator('b')).toBeHidden();
+});
+
+test('cards do catálogo seguem o padrão de livros', async ({ page }) => {
+  const cardStyle = async (card, summary, cta) => card.evaluate((element, selectors) => {
+    const style = window.getComputedStyle(element);
+    const summaryStyle = window.getComputedStyle(element.querySelector(selectors.summary));
+    const ctaStyle = window.getComputedStyle(element.querySelector(selectors.cta));
+
+    return {
+      borderLeftWidth: style.borderLeftWidth,
+      borderRadius: style.borderRadius,
+      boxShadow: style.boxShadow,
+      summary: {
+        fontSize: summaryStyle.fontSize,
+        lineHeight: summaryStyle.lineHeight,
+        margin: summaryStyle.margin,
+        minHeight: summaryStyle.minHeight,
+        lineClamp: summaryStyle.webkitLineClamp,
+      },
+      cta: {
+        borderRadius: ctaStyle.borderRadius,
+        fontSize: ctaStyle.fontSize,
+        minHeight: ctaStyle.minHeight,
+        padding: ctaStyle.padding,
+      },
+    };
+  }, { summary, cta });
+  const cardFrame = card => card.evaluate(element => {
+    const style = window.getComputedStyle(element);
+    return {
+      borderLeftWidth: style.borderLeftWidth,
+      borderRadius: style.borderRadius,
+      boxShadow: style.boxShadow,
+    };
+  });
+
+  await page.goto('/livros');
+  const bookCard = page.locator('.books-page .atlas-grid .atlas-card').first();
+  await expect(bookCard).toBeVisible();
+  const bookStyle = await cardStyle(bookCard, '.atlas-card-summary', '.atlas-card-cta');
+
+  await page.goto('/catalogo-politico');
+  const ideaCard = page.locator('.catalog-idea-card').first();
+  await expect(ideaCard).toBeVisible();
+  await expect(ideaCard.locator(':scope > a')).toHaveCSS('padding', '16px');
+  expect(await cardStyle(ideaCard, '.catalog-idea-summary', '.catalog-idea-go')).toEqual(bookStyle);
+
+  await page.goto('/catalogo-politico?catalogo=personalidades');
+  const genericCard = page.locator('.catalog-generic-view .atlas-card').first();
+  await expect(genericCard).toBeVisible();
+  expect(await cardStyle(genericCard, '.catalog-card-summary', '.catalog-card-cta')).toEqual(bookStyle);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/livros');
+  const mobileBookCard = page.locator('.books-page .atlas-grid .atlas-card').first();
+  await expect(mobileBookCard).toBeVisible();
+  const mobileBookFrame = await cardFrame(mobileBookCard);
+
+  await page.goto('/catalogo-politico');
+  const mobileIdeaCard = page.locator('.catalog-idea-card').first();
+  expect(await cardFrame(mobileIdeaCard)).toEqual(mobileBookFrame);
+  await expect(mobileIdeaCard.locator(':scope > a')).toHaveCSS('padding', '12px');
+
+  await page.goto('/catalogo-politico?catalogo=personalidades');
+  const mobileGenericCard = page.locator('.catalog-generic-view .atlas-card').first();
+  expect(await cardFrame(mobileGenericCard)).toEqual(mobileBookFrame);
+  await expect(mobileGenericCard).toHaveCSS('padding', '12px');
+});
+
+test('busca e filtros permanecem fixos durante a rolagem', async ({ page }) => {
+  for (const viewport of [
+    { width: 1280, height: 800, top: 88 },
+    { width: 390, height: 844, top: 76 },
+  ]) {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+
+    for (const catalog of [
+      { url: '/catalogo-politico', selector: '.catalog-ideology-view .catalog-controls' },
+      { url: '/catalogo-politico?catalogo=personalidades', selector: '.catalog-generic-view .atlas-controls-shell' },
+    ]) {
+      await page.goto(catalog.url);
+      const controls = page.locator(catalog.selector);
+      await expect(controls).toHaveCSS('position', 'sticky');
+      await expect(controls).toHaveCSS('top', `${viewport.top}px`);
+      await page.evaluate(() => window.scrollTo(0, 3000));
+      await expect.poll(async () => (await controls.boundingBox()).y).toBeCloseTo(viewport.top, 0);
+    }
+  }
+});
+
 test('drawer de eixos', async ({ page }) => {
   await page.goto('/catalogo-politico');
   await page.locator('#catalog-filter-toggle').click();

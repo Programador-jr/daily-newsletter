@@ -899,9 +899,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const renderChips = () => {
     const container = document.getElementById("catalog-filters");
     if (!container || !DATA) return;
-
     const entries = [];
-    let totalCount = 0;
 
     if (state.scope !== "valores") {
       (Array.isArray(DATA.families) ? DATA.families : []).forEach((family) => {
@@ -917,7 +915,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const meta = { id: family.id, rotulo: label, cor: color };
         const count = familyCount(family.id);
         entries.push({ meta, kind: "ideologia", count });
-        totalCount += count;
       });
     }
 
@@ -932,7 +929,6 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         const count = groupCount(group.id);
         entries.push({ meta, kind: "valor", count });
-        totalCount += count;
       });
     }
 
@@ -958,8 +954,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     container.replaceChildren(chipRow);
-    const countEl = document.getElementById("catalog-filters-count");
-    if (countEl) countEl.textContent = `${entries.length} filtros · ${totalCount} itens`;
   };
 
   const renderLegend = () => {
@@ -2687,14 +2681,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (ideaFilterAccordion) {
         ideaFilterAccordion.open = false;
       }
-
-      // Close filter accordion when clicking outside
-      document.addEventListener("click", (event) => {
-        const accordion = document.getElementById("catalog-filter-accordion");
-        if (accordion && accordion.open && !accordion.contains(event.target)) {
-          accordion.open = false;
-        }
-      });
 
       const id = hashId();
       if (id) {

@@ -162,7 +162,11 @@ body.history-modal-open {
 /* Shared editorial cards, controls, and disclosure components. */
 
 html body main article,
-html body main :is([class~="card"], [class$="-card"], [class*="-card "]):not([class*="-cards"]):not([class*="-card-"]) {
+html body main :is([class~="card"], [class$="-card"], [class*="-card "]):not([class*="-cards"]):not([class*="-card-"]):not(:where(
+  .books-page .atlas-card,
+  .political-catalog-page .catalog-idea-card,
+  .political-catalog-page .atlas-card
+)) {
   border: 1px solid var(--card-border);
   border-radius: 12px;
   background: linear-gradient(135deg, var(--card-bg), color-mix(in srgb, var(--primary) 3%, var(--card-bg)));
@@ -171,7 +175,11 @@ html body main :is([class~="card"], [class$="-card"], [class*="-card "]):not([cl
 }
 
 html body main article:is(:hover, :focus-within),
-html body main :is([class~="card"], [class$="-card"], [class*="-card "]):not([class*="-cards"]):not([class*="-card-"]):is(:hover, :focus-within) {
+html body main :is([class~="card"], [class$="-card"], [class*="-card "]):not([class*="-cards"]):not([class*="-card-"]):not(:where(
+  .books-page .atlas-card,
+  .political-catalog-page .catalog-idea-card,
+  .political-catalog-page .atlas-card
+)):is(:hover, :focus-within) {
   border-color: color-mix(in srgb, var(--primary) 48%, var(--card-border));
   box-shadow: 0 8px 22px rgba(16, 36, 32, 0.075);
 }
