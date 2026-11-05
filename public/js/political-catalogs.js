@@ -898,27 +898,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const renderChips = () => {
     const container = document.getElementById("catalog-filters");
-    if (!container) return;
+    if (!container || !DATA) return;
+
     const entries = [];
     let totalCount = 0;
+
     if (state.scope !== "valores") {
-      DATA.families.forEach((meta) => {
-        const count = familyCount(meta.id);
+      (Array.isArray(DATA.families) ? DATA.families : []).forEach((family) => {
+        if (!family?.id) return;
+        const source = familyMeta(family.id) || family;
+        const label =
+          source.rotulo || source.label || source.nome || source.name ||
+          family.rotulo || family.label || family.nome || family.name ||
+          String(family.id).replace(/[-_]/g, " ");
+        const color =
+          source.cor || source.color || source.corHex ||
+          family.cor || family.color || family.corHex || "var(--primary)";
+        const meta = { id: family.id, rotulo: label, cor: color };
+        const count = familyCount(family.id);
         entries.push({ meta, kind: "ideologia", count });
         totalCount += count;
       });
     }
+
     if (state.scope !== "ideologias") {
-      (DATA.valueGroups || []).forEach((group) => {
-        const meta = groupMeta(group.id);
-        if (meta) {
-          const count = groupCount(meta.id);
-          entries.push({ meta, kind: "valor", count });
-          totalCount += count;
-        }
+      (Array.isArray(DATA.valueGroups) ? DATA.valueGroups : []).forEach((group) => {
+        const source = groupMeta(group.id);
+        if (!source) return;
+        const meta = {
+          id: source.id,
+          rotulo: source.rotulo || source.label || String(source.id).replace(/[-_]/g, " "),
+          cor: source.cor || source.color || "var(--primary)"
+        };
+        const count = groupCount(group.id);
+        entries.push({ meta, kind: "valor", count });
+        totalCount += count;
       });
     }
-    const chipRow = el("div", { class: "atlas-chips-row" },
+
+    const chipRow = el(
+      "div",
+      { class: "atlas-chips-row" },
       ...entries.map(({ meta, kind, count }) => {
         const pressed = state.family === meta.id && state.familyType === kind;
         const chip = el("button", {
@@ -936,10 +956,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return chip;
       })
     );
-    container.querySelector(".atlas-chips-row")?.replaceWith(chipRow);
-    if (!container.querySelector(".atlas-chips-row")) {
-      container.append(chipRow);
-    }
+
+    container.replaceChildren(chipRow);
     const countEl = document.getElementById("catalog-filters-count");
     if (countEl) countEl.textContent = `${entries.length} filtros · ${totalCount} itens`;
   };
