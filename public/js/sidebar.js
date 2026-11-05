@@ -454,6 +454,8 @@ const initializeNavigation = () => {
   };
   const catalogTabFromLocation = () => {
     const path = currentCanonicalPath();
+    const dedicatedTab = path.replace(/^\//, "");
+    if (sidebarCatalogTabs.has(dedicatedTab)) return dedicatedTab;
     if (path === "/valores") return "ideologias";
     if (path !== "/catalogo-politico") return null;
     const requested = new URLSearchParams(window.location.search).get("catalogo");
