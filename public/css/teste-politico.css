@@ -281,6 +281,34 @@
   margin: 1rem 0;
 }
 
+.quiz-axis-method,
+.quiz-axis-limit,
+.quiz-axis-risk {
+  display: grid;
+  gap: .2rem;
+  margin-top: .7rem;
+  padding-top: .7rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: .74rem;
+  line-height: 1.6;
+}
+
+.quiz-axis-method strong,
+.quiz-axis-limit strong,
+.quiz-axis-risk strong {
+  color: var(--text-main);
+  font-size: .72rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.quiz-axis-method span,
+.quiz-axis-limit span,
+.quiz-axis-risk span {
+  display: block;
+}
+
 .quiz-button {
   display: inline-flex;
   min-height: 42px;

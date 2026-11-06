@@ -1,8 +1,8 @@
 {
   "meta": {
-    "generatedAt": "2026-10-27T23:10:49.289Z",
+    "generatedAt": "2026-11-05T21:38:47.054Z",
     "catalogGeneratedAt": "2026-10-27T23:10:49.098Z",
-    "calibrationVersion": 1,
+    "calibrationVersion": null,
     "scoreFormula": "matchScore de /comparar e do quiz",
     "thresholds": {
       "leaderParty": "definido por par",
@@ -49,27 +49,9 @@
       ]
     },
     "calibration": {
-      "declared": 154,
-      "applied": 154,
-      "meta": {
-        "version": 1,
-        "updatedAt": "2026-10-27",
-        "note": "Camada de calibração editorial aplicada sobre os vetores do atlas e do 12axes. Cada override mantém a origem original em vectorSource e registra o vetor anterior em vectorBase e o rótulo em vectorLabel. Os livros são ajustados a partir do autor para refletir a ênfase própria da obra.",
-        "axisOrder": [
-          "estrutura",
-          "representacao",
-          "poder",
-          "imigracao",
-          "diplomacia",
-          "intervencao",
-          "economia",
-          "controle",
-          "comercio",
-          "religiao",
-          "moral",
-          "tecnologia"
-        ]
-      }
+      "declared": 0,
+      "applied": 0,
+      "meta": null
     },
     "sanity": {
       "items": 1579,
@@ -4526,29 +4508,29 @@
     ],
     "coverage": {
       "ideologias": {
-        "declared": 2,
+        "declared": 0,
         "total": 283,
-        "share": 0.7
+        "share": 0
       },
       "personalidades": {
-        "declared": 36,
+        "declared": 0,
         "total": 667,
-        "share": 5.4
+        "share": 0
       },
       "paises": {
-        "declared": 45,
+        "declared": 0,
         "total": 194,
-        "share": 23.2
+        "share": 0
       },
       "regimes": {
-        "declared": 2,
+        "declared": 0,
         "total": 114,
-        "share": 1.8
+        "share": 0
       },
       "partidos": {
-        "declared": 29,
+        "declared": 0,
         "total": 211,
-        "share": 13.7
+        "share": 0
       },
       "valores": {
         "declared": 0,
@@ -4556,9 +4538,9 @@
         "share": 0
       },
       "livros": {
-        "declared": 43,
+        "declared": 0,
         "total": 43,
-        "share": 100
+        "share": 0
       }
     }
   }

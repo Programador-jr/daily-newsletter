@@ -200,17 +200,43 @@ document.addEventListener("DOMContentLoaded", () => {
       const low = document.createElement("span");
       const lowIcon = axisIconNode(axis, "a");
       if (lowIcon) low.append(lowIcon);
-      low.append(document.createTextNode(axis.a));
+      low.append(document.createTextNode(axis.a || axis.low));
       const arrow = document.createElement("span");
       arrow.textContent = "↔";
       const high = document.createElement("span");
       const highIcon = axisIconNode(axis, "b");
       if (highIcon) high.append(highIcon);
-      high.append(document.createTextNode(axis.b));
+      high.append(document.createTextNode(axis.b || axis.high));
       poles.append(low, arrow, high);
       const description = document.createElement("p");
       description.textContent = axis.aDesc || axis.description || "Compara duas formas de organizar a vida política.";
-      card.append(number, title, poles, description);
+
+      const methodology = axis.methodology || {};
+      const construct = document.createElement("div");
+      construct.className = "quiz-axis-method";
+      const constructLabel = document.createElement("strong");
+      constructLabel.textContent = "Constructo:";
+      const constructText = document.createElement("span");
+      constructText.textContent = methodology.construct || "Dimensão política específica do questionário.";
+      construct.append(constructLabel, constructText);
+
+      const limit = document.createElement("div");
+      limit.className = "quiz-axis-limit";
+      const limitLabel = document.createElement("strong");
+      limitLabel.textContent = "Não mede:";
+      const limitText = document.createElement("span");
+      limitText.textContent = methodology.notMeasured || "Outras dimensões do teste em conjunto.";
+      limit.append(limitLabel, limitText);
+
+      const risk = document.createElement("div");
+      risk.className = "quiz-axis-risk";
+      const riskLabel = document.createElement("strong");
+      riskLabel.textContent = "Risco:";
+      const riskText = document.createElement("span");
+      riskText.textContent = methodology.risk || "Interpretar o eixo como ciência definitiva seria inadequado.";
+      risk.append(riskLabel, riskText);
+
+      card.append(number, title, poles, description, construct, limit, risk);
       return card;
     }));
   };
