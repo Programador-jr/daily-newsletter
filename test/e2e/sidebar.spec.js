@@ -55,15 +55,15 @@ test('sidebar is persistent and complete on every desktop screen', async ({ page
   expect(hoverBackground).not.toBe(normalBackground);
 });
 
-test('os atalhos antigos redirecionam para o catálogo', async ({ page }) => {
-  const redirects = [
+test('os atalhos de catálogo abrem as páginas dedicadas', async ({ page }) => {
+  const dedicatedPages = [
     ['/personalidades', 'personalidades', 'Personalidades'],
     ['/paises', 'paises', 'Países e regimes'],
     ['/partidos', 'partidos', 'Partidos']
   ];
-  for (const [from, tab, label] of redirects) {
-    await page.goto(from);
-    await expect(page).toHaveURL(new RegExp(`/catalogo-politico\\?catalogo=${tab}$`));
+  for (const [path, tab, label] of dedicatedPages) {
+    await page.goto(path);
+    await expect(page).toHaveURL(new RegExp(`${path}$`));
     const activeLink = page.locator(`#site-sidebar a[data-sidebar-catalog="${tab}"]`);
     await expect(activeLink).toContainText(label);
     await expect(activeLink).toHaveAttribute('aria-current', 'page');
