@@ -50,3 +50,18 @@ test('mobile history page has no horizontal overflow and retains usable accordio
   await expect(page.locator('#economia-sociedade .history-topic-accordion summary').first()).toBeVisible();
   await expect(page.locator('#cultura .history-topic-accordion summary').first()).toBeVisible();
 });
+
+test('presidents timeline shows the bundled portrait with its credit', async ({ page }) => {
+  const externalRequests = [];
+  page.on('request', request => {
+    if (/wikimedia\.org/.test(new URL(request.url()).hostname)) externalRequests.push(request.url());
+  });
+  await page.goto('/presidentes');
+
+  const portrait = page.locator('.mandate-portrait-image');
+  await expect(portrait).toBeVisible();
+  await expect(portrait).toHaveAttribute('src', /^\/presidents\/portraits\/[a-z-]+\.(jpg|png)$/);
+  await expect.poll(() => portrait.evaluate(image => image.naturalWidth)).toBeGreaterThan(0);
+  await expect(page.locator('.mandate-portrait-credit')).toContainText('Foto:');
+  expect(externalRequests).toEqual([]);
+});

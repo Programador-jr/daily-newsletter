@@ -180,18 +180,7 @@ const criticalOpinion=m=>m.controversies.length?"Uma leitura crítica pode desta
 
 const timeline=document.getElementById("mandates-timeline"),searchInput=document.getElementById("mandates-search"),filters=document.getElementById("mandates-filters"),count=document.getElementById("mandates-count");let activeFilter="Todos";
 function renderFilters(){filters.innerHTML=filterDefinitions.map(([label])=>'<button class="history-filter '+(label===activeFilter?"active":"")+'" type="button" data-filter="'+escapeHtml(label)+'">'+escapeHtml(label)+"</button>").join("");filters.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{activeFilter=b.dataset.filter;renderFilters();renderMandates()}))}
-const portraitCache=new Map();
-function portraitText(value){const parsed=new DOMParser().parseFromString(String(value||""),"text/html");return parsed.body.textContent.replace(/\s+/g," ").trim()}
-function reusablePortrait(license){const value=portraitText(license).toLowerCase();return !/\b(nc|nd)\b/.test(value)&&(value.includes("public domain")||value.includes("cc0")||/\bcc by(?:-sa)?\b/.test(value))}
-async function fetchPresidentPortrait(m){
-  if(portraitCache.has(m.name)) return portraitCache.get(m.name);
-  const url=new URL("https://commons.wikimedia.org/w/api.php");
-  url.search=new URLSearchParams({action:"query",generator:"search",gsrsearch:'filetype:bitmap "'+m.name+'"',gsrnamespace:"6",gsrlimit:"15",prop:"imageinfo",iiprop:"url|extmetadata",iiurlwidth:"440",format:"json",origin:"*"});
-  const promise=fetch(url).then(r=>{if(!r.ok)throw new Error("Commons respondeu com HTTP "+r.status);return r.json()}).then(data=>{
-    const candidates=Object.values(data?.query?.pages||{}).map(page=>{const image=page.imageinfo?.[0],meta=image?.extmetadata||{};if(!image)return null;const title=portraitText(page.title.replace(/^File:/,"")).toLowerCase();const desc=portraitText(meta.ImageDescription?.value).toLowerCase();const combined=title+" "+desc;const words=m.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").split(/\s+/).filter(w=>w.length>2);const normalizedCombined=combined.normalize("NFD").replace(/[\u0300-\u036f]/g,"");if(!words.every(w=>normalizedCombined.includes(w))||!/portrait|retrato|president|presidente|photograph|fotografia/.test(combined)||/signature|assinatura|logo|coat of arms|brasao/.test(title)||!reusablePortrait(meta.LicenseShortName?.value)||!/^https:\/\/(thumb\.wikimedia\.org|upload\.wikimedia\.org)/.test(image.thumburl||"")||!/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(image.descriptionurl||""))return null;return {url:image.thumburl,file:image.descriptionurl,creator:portraitText(meta.Artist?.value).replace(/(Unknown author)\1/i,"$1"),license:portraitText(meta.LicenseShortName?.value),licenseUrl:/^https:\/\/creativecommons\.org\/(licenses|publicdomain)\//.test(meta.LicenseUrl?.value||"")?meta.LicenseUrl.value:""} }).filter(Boolean);return candidates[0]||null});
-  portraitCache.set(m.name,promise);return promise;
-}
-async function loadSelectedPortrait(m){
+function loadSelectedPortrait(m){
   const figure=timeline.querySelector(".mandate-portrait");
   if(!figure||figure.dataset.presidentName!==m.name)return;
   const image=figure.querySelector(".mandate-portrait-image");
@@ -199,16 +188,7 @@ async function loadSelectedPortrait(m){
   const credit=figure.querySelector(".mandate-portrait-credit");
   if(!image||!placeholder||!credit)return;
 
-  let portrait;
-  try{
-    portrait=await fetchPresidentPortrait(m);
-  }catch(error){
-    portraitCache.delete(m.name);
-    console.error("Não foi possível consultar o retrato de "+m.name+" no Wikimedia Commons.",error);
-    if(figure.isConnected)placeholder.querySelector("span").textContent="Não foi possível carregar o retrato agora";
-    return;
-  }
-  if(!figure.isConnected||figure.dataset.presidentName!==m.name)return;
+  const portrait=globalThis.PresidentPortraits?.[m.name];
   if(!portrait){
     placeholder.querySelector("span").textContent="Retrato com licença reutilizável não localizado";
     return;
@@ -222,20 +202,20 @@ async function loadSelectedPortrait(m){
     image.hidden=true;
     placeholder.hidden=false;
     placeholder.querySelector("span").textContent="Retrato indisponível";
-    console.error("O arquivo de retrato do Wikimedia Commons não pôde ser carregado para "+m.name+".",portrait.file);
+    console.error("O retrato de "+m.name+" não pôde ser carregado.",portrait.src);
   },{once:true});
 
   const licenseLink=portrait.license
-    ? '<a href="'+escapeHtml(portrait.licenseUrl||portrait.file)+'" target="_blank" rel="noopener noreferrer">'+escapeHtml(portrait.license)+'</a>'
+    ? '<a href="'+escapeHtml(portrait.licenseUrl||portrait.fileUrl)+'" target="_blank" rel="noopener noreferrer">'+escapeHtml(portrait.license)+'</a>'
     : "";
-  credit.innerHTML='<a href="'+escapeHtml(portrait.file)+'" target="_blank" rel="noopener noreferrer">Foto: '+escapeHtml(portrait.creator||"Wikimedia Commons")+'</a>'+(licenseLink?" · "+licenseLink:"");
+  credit.innerHTML='<a href="'+escapeHtml(portrait.fileUrl)+'" target="_blank" rel="noopener noreferrer">Foto: '+escapeHtml(portrait.creator||"Wikimedia Commons")+'</a>'+(licenseLink?" · "+licenseLink:"");
   credit.hidden=false;
-  figure.dataset.source=portrait.file;
-  image.alt="Retrato de "+m.name;
+  figure.dataset.source=portrait.fileUrl;
+  image.alt=(/junta/i.test(m.name)?"Fotografia histórica de ":"Retrato de ")+m.name;
   image.title="Fonte: Wikimedia Commons";
   image.loading="eager";
   image.hidden=false;
-  image.src=portrait.url;
+  image.src=portrait.src;
   if(image.complete&&image.naturalWidth>0){
     image.hidden=false;
     placeholder.hidden=true;
