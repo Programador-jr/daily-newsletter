@@ -9,7 +9,6 @@ const grid = document.querySelector("#news-grid"),
 let currentStories = [];
 let currentFilter = 'all';
 let currentSearch = '';
-let currentEditionDate = null;
 let searchInput = null;
 let searchInputBound = false;
 
@@ -56,6 +55,37 @@ const createLoadingState = (message, className = '') => {
   spinner.setAttribute('aria-hidden', 'true');
   wrapper.append(spinner, createElement('span', '', message));
   return wrapper;
+};
+
+const renderEditionSnapshot = (data, stories) => {
+  if (currentPage !== '/') return;
+  const snapshot = document.getElementById('edition-snapshot');
+  if (!snapshot) return;
+
+  const issueNumber = Number(data?.issueNumber);
+  const issue = Number.isFinite(issueNumber) && issueNumber > 0
+    ? `#${String(issueNumber).padStart(3, '0')}`
+    : '';
+  const date = formatDate(data?.date);
+  if (!issue && !date) return;
+
+  const categories = [...new Set(
+    (Array.isArray(stories) ? stories : [])
+      .map(story => asText(story?.category).trim())
+      .filter(Boolean)
+  )];
+
+  const setText = (id, value) => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = value;
+  };
+
+  setText('snapshot-issue', issue || '#—');
+  setText('snapshot-date', date || '—');
+  setText('snapshot-count', String(Array.isArray(stories) ? stories.length : 0));
+  setText('snapshot-editors', String(categories.length));
+  setText('snapshot-topics', categories.slice(0, 4).join(' · ') || '—');
+  snapshot.hidden = false;
 };
 
 const showMessage = (container, title, message) => {
@@ -128,7 +158,6 @@ fetch("/api/news")
   .then((data) => {
     setLoadingState(false);
     const stories = Array.isArray(data?.stories) ? data.stories : [];
-    currentEditionDate = asText(data?.date);
 
     if (isEditionsPage) {
       const editionTitle = document.querySelector('#edition-title');
@@ -142,6 +171,7 @@ fetch("/api/news")
     }
 
     document.title = `King's Newsletter — ${formatDate(data?.date)}`;
+    renderEditionSnapshot(data, stories);
 
     if (currentPage === '/') {
       if (featuredNews && stories.length > 0) {
@@ -319,6 +349,10 @@ function createStoryCard(story, featured = false, index = 0) {
     image.loading = 'lazy';
     image.decoding = 'async';
     image.referrerPolicy = 'strict-origin-when-cross-origin';
+    image.addEventListener('error', () => {
+      image.remove();
+      article.classList.add('has-no-image');
+    }, { once: true });
     article.append(image);
   }
 

@@ -3,9 +3,13 @@ const Subscriber = require('../lib/subscriber');
 const { hashToken } = require('../lib/tokens');
 
 module.exports = async function handler(req, res) {
+  if (req.method !== 'GET') {
+    res.setHeader('Allow', 'GET');
+    return res.status(405).json({ error: 'Método não permitido.' });
+  }
   const token = String(req.query?.token || '');
 
-  if (!token) {
+  if (!token || token.length > 256) {
     return res.redirect('/subscription-status?status=invalid');
   }
 

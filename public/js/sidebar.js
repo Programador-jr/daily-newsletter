@@ -434,6 +434,7 @@ const initializeNavigation = () => {
   const openButton = document.getElementById("sidebar-toggle");
   const closeButton = document.getElementById("site-sidebar-close");
   const sidebarNav = sidebar?.querySelector(".site-sidebar-nav");
+  const sidebarScrollKey = "site-sidebar-scroll-top";
   const header = document.querySelector(".site-header");
   const sidebarPreferences = sidebar?.querySelector(".site-sidebar-preferences");
   const preferencesLabel = sidebarPreferences?.querySelector(".site-sidebar-label");
@@ -443,19 +444,45 @@ const initializeNavigation = () => {
 
   if (!sidebar || !backdrop || !openButton || !sidebarNav || !headerNav) return;
 
+  const saveSidebarScroll = () => {
+    try {
+      sessionStorage.setItem(sidebarScrollKey, String(Math.round(sidebar.scrollTop)));
+    } catch { /* storage indisponível não impede a navegação */ }
+  };
+  const restoreSidebarScroll = () => {
+    try {
+      const saved = Number(sessionStorage.getItem(sidebarScrollKey));
+      if (!Number.isFinite(saved) || saved <= 0) return;
+      sidebar.scrollTop = saved;
+      requestAnimationFrame(() => {
+        sidebar.scrollTop = saved;
+      });
+    } catch { /* storage indisponível não impede a navegação */ }
+  };
+  sidebar.addEventListener("scroll", saveSidebarScroll, { passive: true });
+
   if (canonicalPath !== "/editions") initializeBackToTop();
   document.getElementById("shared-nav-search")?.toggleAttribute("hidden", canonicalPath !== "/editions");
   if (canonicalPath === "/editions") headerNav.classList.add("header-main-nav-editions");
 
-  [headerLinks, sidebarNav].forEach(container => {
-    container?.querySelectorAll("a[href]").forEach(link => {
-      const href = link.getAttribute("href").replace(/\/+$/, "") || "/";
-      const isCurrentPage = href === canonicalPath;
-      link.classList.toggle("active", isCurrentPage);
-      if (isCurrentPage) link.setAttribute("aria-current", "page");
-      else link.removeAttribute("aria-current");
+  const currentCanonicalPath = () => {
+    const path = window.location.pathname.replace(/\/+$/, "") || "/";
+    return path === "/index.html" ? "/" : path.replace(/\.html$/, "");
+  };
+  const syncActiveLinks = () => {
+    const activePath = currentCanonicalPath();
+    [headerLinks, sidebarNav].forEach(container => {
+      container?.querySelectorAll("a[href]").forEach(link => {
+        const href = (link.getAttribute("href") || "/").split(/[?#]/)[0].replace(/\/+$/, "") || "/";
+        const isCurrentPage = href === activePath;
+        link.classList.toggle("active", isCurrentPage);
+        if (isCurrentPage) link.setAttribute("aria-current", "page");
+        else link.removeAttribute("aria-current");
+      });
     });
-  });
+  };
+  syncActiveLinks();
+  window.addEventListener("site:catalog-change", syncActiveLinks);
 
   const headerActions = header?.querySelector(".header-nav-actions");
   const topPreferences = document.createElement("div");
@@ -516,6 +543,7 @@ const initializeNavigation = () => {
   void initializeUpdateNotice(headerActions);
   desktopSidebar.addEventListener("change", syncThemeToggleLocation);
   syncSidebarLayout();
+  restoreSidebarScroll();
   desktopSidebar.addEventListener("change", syncSidebarLayout);
   openButton.addEventListener("click", () => {
     setOpen(desktopSidebar.matches ? !sidebar.classList.contains("is-open") : true);
@@ -527,7 +555,10 @@ const initializeNavigation = () => {
       setOpen(false);
     }
   });
-  sidebar.querySelectorAll("a").forEach(link => link.addEventListener("click", () => setOpen(false)));
+  sidebar.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+    saveSidebarScroll();
+    setOpen(false);
+  }));
 };
 
 const mountSharedNavigation = async () => {

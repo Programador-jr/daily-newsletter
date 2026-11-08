@@ -1,0 +1,882 @@
+/*
+ * Ficha de perfil do catálogo político.
+ * Diálogo nativo compartilhado pelas páginas do catálogo e por qualquer página
+ * que abra uma ficha em pop-up (comparador, resultados do teste).
+ * Carregue este arquivo depois de atlas.css.
+ */
+
+
+
+/* Native profile dialog: keep the shared black backdrop from components.css. */
+.catalog-dialog{
+  width: min(1040px, calc(100vw - 2rem));
+  max-width: 1040px;
+  max-height: min(92vh, 1040px);
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--kn-component-border);
+  border-radius: 14px;
+  background: var(--kn-component-surface);
+  color: var(--text-main);
+  box-shadow: var(--kn-component-shadow);
+}
+
+.catalog-dialog::backdrop{
+  background: var(--kn-component-overlay);
+  backdrop-filter: blur(var(--kn-component-overlay-blur));
+}
+
+.catalog-profile-shell{
+  position: relative;
+  max-height: min(92vh, 1040px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--bg-container);
+  color: var(--text-main);
+}
+
+.catalog-profile-content{
+  display: grid;
+  gap: 1.15rem;
+  padding: 1.25rem;
+}
+
+.catalog-profile-sticky-head{
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .6rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg-container) 86%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.catalog-profile-back{
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: .45rem;
+  margin: 0;
+  padding: 0 .7rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: .72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease;
+}
+
+.catalog-profile-back:hover{
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 6%, var(--card-bg));
+  color: var(--primary);
+}
+
+.catalog-profile-close{
+  position: static;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 7px;
+  background: var(--card-bg);
+  font-size: .85rem;
+  transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease;
+}
+
+.catalog-profile-close:hover{
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 6%, var(--card-bg));
+  color: var(--primary);
+}
+
+.catalog-profile-hero{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 260px);
+  align-items: stretch;
+  gap: 1.5rem;
+  margin: 1.15rem 1.25rem 0;
+  padding: 1.35rem;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--profile-color, var(--primary));
+  border-radius: 12px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--profile-color, var(--primary)) 7%, var(--card-bg)), var(--card-bg) 62%);
+}
+
+.catalog-profile-hero-copy{
+  display: grid;
+  align-content: center;
+  gap: .55rem;
+  min-width: 0;
+}
+
+.catalog-profile-tags{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+}
+
+.catalog-profile-tags > *{
+  padding: .2rem .5rem;
+  border: 1px solid color-mix(in srgb, var(--profile-color, var(--primary)) 35%, var(--border));
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: .65rem;
+}
+
+.catalog-profile-hero h1{
+  margin: 0;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.catalog-profile-lead{
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .84rem;
+  line-height: 1.7;
+}
+
+/* Hero facts (região/configuração, papel/período, país/orientação). */
+.catalog-country-kpis{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: .6rem;
+  margin-top: 0;
+}
+
+.catalog-country-kpis > span{
+  display: grid;
+  gap: .15rem;
+  min-width: 110px;
+  max-width: 100%;
+  padding: .55rem .7rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--card-bg);
+}
+
+.catalog-country-kpis b{
+  color: var(--text-main);
+  font-size: .75rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.catalog-country-kpis small{
+  color: var(--text-muted);
+  font-size: .62rem;
+}
+
+.catalog-profile-hero-media,
+.catalog-country-profile-media,
+.catalog-personality-profile-media,
+.catalog-party-profile-media{
+  display: grid;
+  min-height: 170px;
+  max-height: 260px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-body);
+  box-shadow: 0 10px 24px rgb(0 0 0 / 12%);
+}
+
+.catalog-profile-hero-media img,
+.catalog-country-profile-media img,
+.catalog-personality-profile-media img,
+.catalog-party-profile-media img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 260px;
+  object-fit: cover;
+}
+
+.catalog-profile-ref-initials{
+  display: grid;
+  width: 100%;
+  min-height: 170px;
+  place-items: center;
+  color: var(--profile-color, var(--primary));
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.catalog-profile-tabs{
+  display: flex;
+  max-width: 100%;
+  flex-wrap: nowrap;
+  gap: .2rem;
+  width: fit-content;
+  overflow-x: auto;
+  padding: .22rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--bg-body) 60%, var(--card-bg));
+  scrollbar-width: none;
+}
+
+.catalog-profile-tabs::-webkit-scrollbar{
+  display: none;
+}
+
+.catalog-profile-tabs button{
+  flex: none;
+  min-height: 34px;
+  padding: 0 .85rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: .74rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
+}
+
+.catalog-profile-tabs button:hover{
+  color: var(--primary);
+}
+
+.catalog-profile-tabs button[aria-selected="true"]{
+  border-color: var(--border);
+  background: var(--card-bg);
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 8%);
+}
+
+.catalog-profile-tab-panel,
+.catalog-profile-distinction{
+  min-width: 0;
+}
+
+.catalog-profile-tab-panel[role="tabpanel"]:focus-visible{
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+  border-radius: 7px;
+}
+
+.catalog-profile-tab-panel h2,
+.catalog-profile-distinction h2{
+  margin: 0 0 .75rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.2rem;
+}
+
+/* Related profile cards (tab panels and "perfis próximos" sections). */
+.catalog-related-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr));
+  gap: .6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.catalog-related-grid > li{
+  display: flex;
+  min-width: 0;
+}
+
+.catalog-related-card{
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .75rem;
+  padding: .6rem .75rem .6rem .6rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--related-color, var(--primary));
+  border-radius: 10px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.catalog-related-card:hover{
+  border-color: color-mix(in srgb, var(--related-color, var(--primary)) 55%, var(--border));
+  background: color-mix(in srgb, var(--related-color, var(--primary)) 5%, var(--card-bg));
+  box-shadow: 0 6px 16px rgb(0 0 0 / 8%);
+  transform: translateY(-1px);
+}
+
+.catalog-related-thumb{
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-body);
+}
+
+.catalog-related-thumb img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.catalog-related-thumb.is-portrait img{
+  object-position: center 18%;
+}
+
+.catalog-related-thumb.is-logo{
+  padding: .3rem;
+}
+
+.catalog-related-thumb.is-logo img{
+  object-fit: contain;
+}
+
+.catalog-related-thumb.is-mark{
+  border-color: color-mix(in srgb, var(--related-color, var(--primary)) 30%, var(--border));
+  background: color-mix(in srgb, var(--related-color, var(--primary)) 14%, var(--card-bg));
+  color: var(--related-color, var(--primary));
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.catalog-related-body{
+  display: grid;
+  min-width: 0;
+  gap: .18rem;
+}
+
+.catalog-related-kind{
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.catalog-related-name{
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--text-main);
+  font-size: .8rem;
+  line-height: 1.3;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.catalog-related-score{
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  color: var(--text-muted);
+  font-size: .62rem;
+}
+
+.catalog-related-meter{
+  position: relative;
+  width: 3.25rem;
+  height: 4px;
+  flex: none;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text-muted) 20%, transparent);
+}
+
+.catalog-related-meter > span{
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--score, 0%);
+  border-radius: inherit;
+  background: var(--related-color, var(--primary));
+}
+
+.catalog-related-go{
+  color: var(--text-muted);
+  font-size: .72rem;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.catalog-related-card:hover .catalog-related-go{
+  color: var(--related-color, var(--primary));
+  transform: translateX(2px);
+}
+
+.catalog-related-card:hover .catalog-related-name{
+  color: var(--related-color, var(--primary));
+}
+
+.catalog-profile-axis-list{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.catalog-profile-distinction-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: .65rem;
+}
+
+.catalog-profile-distinction-grid article{
+  padding: .85rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card-bg);
+}
+
+.catalog-profile-badge{
+  color: var(--profile-color, var(--primary));
+  font-size: .64rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.catalog-profile-badge.is-neutral{
+  color: var(--text-muted);
+}
+
+.catalog-profile-distinction-grid h3{
+  margin: .35rem 0;
+  font-size: .9rem;
+}
+
+.catalog-profile-distinction-grid p,
+.catalog-profile-muted{
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .74rem;
+  line-height: 1.6;
+}
+
+.catalog-profile-cta{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--profile-color, var(--primary));
+  border-radius: 10px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--profile-color, var(--primary)) 6%, var(--card-bg)), var(--card-bg) 55%);
+}
+
+.catalog-profile-cta .atlas-button{
+  flex: none;
+  min-height: 42px;
+  padding: 0 1.1rem;
+  border-radius: 8px;
+}
+
+.catalog-dialog .catalog-dialog-credit{
+  display: grid;
+  gap: .3rem;
+}
+
+.catalog-dialog .catalog-dialog-credit p{
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .78rem;
+  line-height: 1.65;
+}
+
+.catalog-dialog .catalog-dialog-credit a{
+  border-bottom: 1px solid color-mix(in srgb, var(--primary) 40%, transparent);
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.catalog-dialog .catalog-dialog-credit a:hover{
+  border-color: var(--primary);
+  color: var(--primary-hover);
+}
+
+.catalog-profile-cta h2{
+  margin: .2rem 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.1rem;
+}
+
+.catalog-profile-cta p{
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .75rem;
+  line-height: 1.6;
+}
+
+.catalog-profile-reference{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .65rem;
+  padding: .65rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.catalog-profile-reference:hover{
+  border-color: var(--primary);
+}
+
+.catalog-profile-phrase{
+  position: relative;
+  margin: 0;
+  padding: 1rem 1.2rem;
+  border-left: 3px solid var(--profile-color, var(--primary));
+  border-radius: 8px;
+  background: var(--bg-body);
+}
+
+.catalog-profile-phrase blockquote{
+  margin: .3rem 0;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.1rem;
+}
+
+.catalog-profile-phrase figcaption{
+  color: var(--text-muted);
+  font-size: .68rem;
+}
+
+.catalog-profile-quote{
+  color: var(--profile-color, var(--primary));
+  font-family: Georgia, serif;
+  font-size: 2rem;
+}
+
+.catalog-dialog:not([open]){
+  display: none;
+}
+
+:is(
+  .catalog-search,
+  .catalog-filter-accordion > summary,
+  .atlas-scope-btn,
+  .catalog-chip,
+  .catalog-axis-pole,
+  .catalog-active-clear,
+  .catalog-profile-tabs button,
+  .catalog-profile-back
+):focus-visible{
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px){
+
+  .catalog-quiz-cta,
+.catalog-profile-cta{
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .catalog-profile-hero{
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+    margin: .9rem 1rem 0;
+    padding: 1.1rem;
+  }
+
+  .catalog-profile-hero-media,
+.catalog-country-profile-media,
+.catalog-personality-profile-media,
+.catalog-party-profile-media{
+    max-height: 240px;
+  }
+}
+
+@media (max-width: 520px){
+  .catalog-axis-grid,
+.catalog-ideas-grid,
+.catalog-profile-axis-list,
+.catalog-profile-distinction-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-profile-content{
+    padding: .8rem;
+  }
+
+  .catalog-profile-sticky-head{
+    padding: .55rem .8rem;
+  }
+
+  .catalog-profile-hero{
+    margin: .8rem .8rem 0;
+    padding: 1rem;
+  }
+
+  .catalog-dialog{
+    width: calc(100vw - 1rem);
+    max-height: 94vh;
+  }
+
+  .catalog-profile-shell{
+    max-height: 94vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .catalog-idea-card,
+.catalog-profile-tabs button,
+.catalog-related-card,
+.catalog-related-go{
+    transition: none;
+  }
+
+  .catalog-related-card:hover,
+  .catalog-related-card:hover .catalog-related-go{
+    transform: none;
+  }
+}
+
+
+/* Reference links inside ideology profile headers. */
+.catalog-profile-references{
+  display: grid;
+  gap: .5rem;
+  align-content: center;
+}
+
+.catalog-profile-reference{
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: .65rem;
+}
+
+.catalog-profile-reference img,
+.catalog-profile-reference .catalog-profile-ref-initials{
+  width: 42px;
+  height: 42px;
+  min-height: 42px;
+  border-radius: 7px;
+  object-fit: cover;
+  font-family: "Inter", sans-serif;
+  font-size: .9rem;
+}
+
+.catalog-profile-reference > span:not(.catalog-profile-ref-initials){
+  display: grid;
+  min-width: 0;
+  gap: .12rem;
+}
+
+.catalog-profile-reference small{
+  color: var(--text-muted);
+  font-size: .62rem;
+}
+
+.catalog-profile-reference b{
+  overflow: hidden;
+  color: var(--text-main);
+  font-size: .72rem;
+  text-overflow: ellipsis;
+}
+
+.catalog-profile-reference em{
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: .62rem;
+  font-style: normal;
+  text-overflow: ellipsis;
+}
+
+
+/* Catalog dialog refinements: centered composition and shared component tokens. */
+.catalog-dialog{
+  margin: auto;
+  color: var(--text-main);
+}
+
+.catalog-dialog .atlas-dialog-shell,
+.catalog-dialog .catalog-profile-shell{
+  width: 100%;
+  margin-inline: auto;
+}
+
+.catalog-dialog .atlas-dialog-head,
+.catalog-dialog .atlas-dialog-body,
+.catalog-dialog .catalog-profile-content{
+  text-align: left;
+}
+
+.catalog-dialog :is(
+  .atlas-dialog-section h3,
+  .atlas-axis-row-head,
+  .catalog-profile-tab-panel h2,
+  .catalog-profile-distinction h2
+){
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+}
+
+.catalog-dialog .atlas-dialog-section h3 > i{
+  display: inline-grid;
+  width: 1.25rem;
+  flex: 0 0 1.25rem;
+  place-items: center;
+  color: var(--primary);
+}
+
+.catalog-dialog :is(
+  .atlas-dialog-section p,
+  .atlas-dialog-list,
+  .atlas-dialog-footer p,
+  .catalog-profile-lead,
+  .catalog-profile-distinction-grid p,
+  .catalog-profile-muted,
+  .catalog-profile-cta p,
+  .catalog-profile-phrase figcaption,
+  .catalog-profile-reference small,
+  .catalog-profile-reference em
+){
+  color: var(--text-muted);
+}
+
+.catalog-dialog .atlas-dialog-list{
+  width: fit-content;
+  display: flex;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.catalog-dialog .atlas-dialog-list a,
+.catalog-dialog .catalog-profile-reference{
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: .6rem;
+  padding: .65rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+.catalog-dialog .atlas-dialog-list a:hover,
+.catalog-dialog .catalog-profile-reference:hover{
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+  color: var(--primary);
+}
+
+.catalog-dialog .atlas-axis-row-head{
+  justify-content: space-between;
+  gap: .75rem;
+}
+
+.catalog-dialog .atlas-axis-name{
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: .5rem;
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.catalog-dialog .atlas-axis-name .axis-icon,
+.catalog-dialog .atlas-axis-pole-label .axis-icon{
+  flex: 0 0 auto;
+  color: var(--axis-pole-color, var(--primary));
+}
+
+.catalog-dialog .atlas-axis-poles-row{
+  display: flex;
+  justify-content: space-between;
+  gap: .75rem;
+  color: var(--text-muted);
+  font-size: .68rem;
+}
+
+.catalog-dialog .atlas-axis-pole-label{
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: .35rem;
+}
+
+.catalog-dialog .atlas-axis-row.is-unknown .atlas-axis-track{
+  opacity: .35;
+}
+
+.catalog-dialog .atlas-axis-row.is-unknown .atlas-axis-name{
+  color: var(--text-muted);
+}
+
+.catalog-dialog .atlas-axis-marker{
+  left: var(--position, 50%);
+  background: var(--marker, var(--text-main));
+}
+
+.catalog-dialog :is(a, button):focus-visible{
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px){
+  .catalog-dialog .atlas-dialog-head,
+.catalog-dialog .atlas-dialog-body{
+    padding: 1rem;
+  }
+
+  .catalog-dialog .atlas-axis-list,
+.catalog-dialog .catalog-profile-axis-list{
+    grid-template-columns: 1fr;
+  }
+}
+
+.catalog-dialog .text-muted{
+  color: var(--text-muted);
+}
+
+.catalog-dialog .atlas-axis-name > .axis-icon{
+  color: var(--marker, var(--primary));
+}
+
+.catalog-dialog .atlas-axis-poles-row > .atlas-axis-pole-label:first-child .axis-icon{
+  color: var(--ca, var(--text-muted));
+}
+
+.catalog-dialog .atlas-axis-poles-row > .atlas-axis-pole-label:last-child .axis-icon{
+  color: var(--cb, var(--text-muted));
+}
+/* Mantém os painéis de aba escondidos dentro da ficha. */
+.catalog-dialog [hidden] {
+  display: none !important;
+}

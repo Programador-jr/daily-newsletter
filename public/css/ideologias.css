@@ -10,6 +10,38 @@
   max-width: 860px;
 }
 
+.ideology-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.35rem;
+}
+
+.ideology-hero-actions .atlas-button {
+  text-decoration: none;
+}
+
+.fascim-link {
+  display: inline-block;
+  margin-top: 0.8rem;
+  color: var(--primary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  padding: 0.45rem 0.75rem;
+  margin-left: 0.15rem;
+}
+
+.atlas-hero-stats strong {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.fascim-link:hover {
+  color: var(--primary-hover);
+}
+
 /* MÉTODO */
 
 .ideology-method {
@@ -67,6 +99,18 @@
   font-family: "Playfair Display", serif;
   font-size: 1.8rem;
   line-height: 1.2;
+}
+
+#atalhos .section-heading {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+#atalhos .section-heading > p {
+  margin: 0.25rem 0 0;
+  color: var(--text-muted);
+  line-height: 1.7;
 }
 
 .ideology-prose {
@@ -791,4 +835,50 @@
   color: var(--text-muted);
   font-size: 0.76rem;
   line-height: 1.6;
+}
+
+/* GUIA — grade dos doze eixos */
+.axis-grid-12 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+.ideology-axes-detail {
+  width: 100%;
+  margin: 1rem 0;
+}
+.ideology-axes-detail > summary {
+  grid-template-columns: minmax(0, 1fr) 24px;
+}
+.ideology-axes-detail > .accordion-content {
+  padding: 1rem;
+}
+.axis-grid-12 article {
+  padding: 0.95rem;
+}
+.axis-grid-12 strong {
+  font-size: 0.8rem;
+}
+.axis-grid-12 p {
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+.axis-grid-footnote {
+  margin: 1rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+.axis-grid-footnote a {
+  color: var(--primary);
+  font-weight: 700;
+}
+@media (max-width: 900px) {
+  .axis-grid-12 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 620px) {
+  .axis-grid-12 {
+    grid-template-columns: 1fr;
+  }
 }

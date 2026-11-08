@@ -9,7 +9,7 @@ test('runtime validation accepts a valid full configuration', () => {
     MONGODB_URI: 'mongodb://localhost/newsletter',
     EMAIL_USER: 'sender@example.com',
     EMAIL_PASS: 'smtp-password',
-    NOTIFY_SECRET: 'notify-secret'
+    NOTIFY_SECRET: 'notify-secret-with-at-least-32-characters'
   });
 
   assert.deepEqual(result.warnings, []);

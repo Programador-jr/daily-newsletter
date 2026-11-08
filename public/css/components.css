@@ -1,0 +1,635 @@
+/*
+ * Shared component design tokens.
+ * Page-specific styles consume these values during the modal migration.
+ */
+:root {
+  --kn-component-overlay: #edf4f1;
+  --kn-component-overlay-blur: 3px;
+  --kn-component-surface: var(--card-bg, var(--bg-container));
+  --kn-component-border: var(--border);
+  --kn-component-radius: 12px;
+  --kn-component-shadow: 0 20px 60px rgba(255, 255, 255, 0.18);
+  --kn-component-transition: 180ms ease;
+  --kn-component-enter-transition: 220ms cubic-bezier(.2, .75, .25, 1);
+}
+
+[data-theme="dark"] {
+  --kn-component-overlay: rgb(0 0 0 / 100%);
+  --kn-component-shadow: 0 20px 60px rgb(0 0 0 / 18%);
+}
+
+/*
+ * Shared text and focus treatment for native dialogs.
+ * Layout and content remain controlled by each page until its migration step.
+ */
+:where(
+  dialog.atlas-dialog,
+  dialog.catalog-dialog,
+  dialog.quiz-main-dialog,
+  dialog.quiz-help-dialog,
+  dialog.quiz-result-help
+) {
+  color: var(--text-main);
+}
+
+:where(
+  dialog.atlas-dialog,
+  dialog.catalog-dialog,
+  dialog.quiz-main-dialog,
+  dialog.quiz-help-dialog,
+  dialog.quiz-result-help
+):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --kn-component-transition: 0ms;
+    --kn-component-enter-transition: 0ms;
+  }
+}
+
+.source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1.1rem;
+}
+
+.source-list a {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.source-list a:hover {
+  border-color: var(--primary);
+  background-color: color-mix(in srgb, var(--primary) 5%, var(--bg-container));
+}
+
+/* Shared modal shell used by editorial detail panels. */
+html:has(body.history-modal-open),
+html:has(body.subscription-popup-open) {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body.history-modal-open {
+  position: fixed;
+  top: var(--history-scroll-lock-top);
+  left: 0;
+  right: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.history-detail {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 2rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  transition: opacity var(--kn-component-transition), visibility var(--kn-component-transition);
+}
+
+.history-detail.open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.history-detail-backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--kn-component-overlay);
+  opacity: 0;
+  transition: opacity var(--kn-component-transition);
+}
+
+.history-detail.open .history-detail-backdrop {
+  opacity: 1;
+}
+
+.history-detail-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(920px, 100%);
+  max-height: min(86vh, 900px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 2rem;
+  border: 1px solid var(--kn-component-border);
+  border-radius: var(--kn-component-radius);
+  background: var(--kn-component-surface);
+  color: var(--text-main);
+  box-shadow: var(--kn-component-shadow);
+  box-sizing: border-box;
+  transform: translateY(12px) scale(0.985);
+  transition: transform var(--kn-component-enter-transition);
+}
+
+.history-detail.open .history-detail-dialog {
+  transform: translateY(0) scale(1);
+}
+
+/* Native dialog defaults; page-specific layouts may override these values. */
+:where(dialog, [role="dialog"], .history-detail-dialog) {
+  border: 1px solid var(--kn-component-border);
+  border-radius: var(--kn-component-radius);
+  background: var(--kn-component-surface);
+  color: var(--text-main);
+  box-shadow: var(--kn-component-shadow);
+}
+
+:where(dialog)::backdrop {
+  background: var(--kn-component-overlay);
+  backdrop-filter: blur(var(--kn-component-overlay-blur));
+}
+
+@media (max-width: 768px) {
+  .history-detail {
+    padding: 1rem;
+  }
+
+  .history-detail-dialog {
+    width: 100%;
+    max-height: 90vh;
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 520px) {
+  .history-detail {
+    padding: 0.65rem;
+  }
+
+  .history-detail-dialog {
+    max-height: 92vh;
+    padding: 1rem;
+  }
+}
+
+
+/* Shared editorial cards, controls, and disclosure components. */
+
+html body main article,
+html body main :is([class~="card"], [class$="-card"], [class*="-card "]):not([class*="-cards"]):not([class*="-card-"]):not(:where(
+  .books-page .atlas-card,
+  .political-catalog-page .catalog-idea-card,
+  .political-catalog-page .atlas-card
+)) {
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--card-bg), color-mix(in srgb, var(--primary) 3%, var(--card-bg)));
+  box-shadow: 0 2px 8px rgba(16, 36, 32, 0.035);
+  transition: border-color 180ms ease, box-shadow 220ms ease, background-color 180ms ease;
+}
+
+html body main article:is(:hover, :focus-within),
+html body main :is([class~="card"], [class$="-card"], [class*="-card "]):not([class*="-cards"]):not([class*="-card-"]):not(:where(
+  .books-page .atlas-card,
+  .political-catalog-page .catalog-idea-card,
+  .political-catalog-page .atlas-card
+)):is(:hover, :focus-within) {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--card-border));
+  box-shadow: 0 8px 22px rgba(16, 36, 32, 0.075);
+}
+
+html body main :is(button, .cta-button, .button, [class~="btn"]) {
+  border-radius: 8px;
+  font-family: inherit;
+  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+html body main :is(button, .cta-button, .button, [class~="btn"]):focus-visible,
+html body main summary:focus-visible,
+html body :is(dialog, [role="dialog"]):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+html body main .cta-button {
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: var(--bg-body);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+html body main .cta-button:hover {
+  border-color: var(--primary-hover);
+  background: var(--primary-hover);
+  color: var(--bg-body);
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion) {
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: var(--card-bg);
+  box-shadow: 0 2px 8px rgba(16, 36, 32, 0.035);
+  transition: border-color 180ms ease, box-shadow 220ms ease;
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion):is(:hover, [open]) {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion)[open] {
+  box-shadow: 0 7px 20px rgba(16, 36, 32, 0.075);
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion) > summary {
+  padding: 0.95rem 1.1rem;
+  border-radius: inherit;
+  color: var(--text-main);
+  font-weight: 700;
+  line-height: 1.45;
+  cursor: pointer;
+  transition: background-color 180ms ease;
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion) > summary:hover,
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion)[open] > summary {
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion)[open] > summary {
+  border-bottom: 1px solid var(--border);
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion) > summary::-webkit-details-marker {
+  display: none;
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion) > summary:not(:has(i, svg, [class*="icon"]))::after {
+  content: "⌄";
+  margin-left: 1rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+  transition: transform 180ms ease, color 180ms ease;
+}
+
+html body main details:not(.history-accordion-item):not(.constitution-accordion):not(.history-topic-accordion)[open] > summary:not(:has(i, svg, [class*="icon"]))::after {
+  color: var(--primary);
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body main :is(button, .cta-button, .button, [class~="btn"]),
+  html body main details,
+  html body main details > summary {
+    transition-duration: 0.01ms;
+  }
+}
+
+/* Subscription feedback component. */
+body.subscription-popup-open {
+  overflow: hidden;
+}
+
+.subscription-form button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-width: 145px;
+}
+
+.subscription-spinner {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: subscription-spin 0.75s linear infinite;
+}
+
+@keyframes subscription-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.subscription-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.subscription-popup[aria-hidden="false"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.subscription-popup-backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--kn-component-overlay);
+  backdrop-filter: blur(var(--kn-component-overlay-blur));
+}
+
+.subscription-popup-card {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 430px);
+  padding: 2rem;
+  border: 1px solid var(--kn-component-border);
+  border-radius: var(--kn-component-radius);
+  background: var(--kn-component-surface);
+  color: var(--text-main);
+  box-shadow: var(--kn-component-shadow);
+  text-align: center;
+  transform: translateY(12px) scale(0.98);
+  transition: transform 0.2s ease;
+}
+
+.subscription-popup[aria-hidden="false"] .subscription-popup-card {
+  transform: translateY(0) scale(1);
+}
+
+.subscription-popup-icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1.25rem;
+}
+
+.subscription-popup.success .subscription-popup-icon {
+  background: color-mix(in srgb, var(--primary) 14%, var(--card-bg));
+  color: var(--primary);
+}
+
+.subscription-popup.error .subscription-popup-icon {
+  background: rgba(180, 35, 24, 0.1);
+  color: #b42318;
+}
+
+.subscription-popup-card h3 {
+  margin-bottom: 0.65rem;
+  font-size: 1.35rem;
+}
+
+.subscription-popup-card p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.subscription-popup-card button {
+  width: 100%;
+  margin-top: 1.35rem;
+  padding: 0.85rem 1rem;
+  border: 0;
+  border-radius: 8px;
+  background: var(--primary);
+  color: var(--bg-body);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.subscription-popup-card button:hover {
+  background: var(--primary-hover);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .subscription-spinner,
+  .subscription-popup,
+  .subscription-popup-card {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Release-notes dialog component. */
+.site-update-overlay {
+  position: fixed;
+  z-index: 10000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: var(--kn-component-overlay);
+  backdrop-filter: blur(var(--kn-component-overlay-blur));
+  animation: site-update-fade 0.18s ease-out;
+}
+.site-update-dialog {
+  position: relative;
+  width: min(590px, 100%);
+  padding: 30px;
+  border: 1px solid var(--kn-component-border);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--kn-component-radius);
+  background: var(--kn-component-surface);
+  color: var(--text-main);
+  box-shadow: var(--kn-component-shadow);
+  animation: site-update-rise 0.2s ease-out;
+}
+.site-update-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-container);
+  color: var(--text-muted);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.site-update-close:hover {
+  border-color: var(--primary);
+}
+.site-update-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 44px 22px 0;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border);
+}
+.site-update-mark {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: var(--primary);
+  color: #fff;
+}
+.site-update-mark i {
+  font-size: 15px;
+}
+.site-update-brand-copy {
+  display: grid;
+  gap: 3px;
+}
+.site-update-brand-copy strong {
+  color: var(--text-main);
+  font:
+    700 11px Inter,
+    sans-serif;
+  letter-spacing: 0.07em;
+}
+.site-update-brand-copy small {
+  color: var(--text-muted);
+  font:
+    700 9px Inter,
+    sans-serif;
+  letter-spacing: 0.12em;
+}
+.site-update-eyebrow {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--primary);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.site-update-dialog h2 {
+  max-width: calc(100% - 5px);
+  margin: 0 0 17px;
+  color: var(--text-main);
+  font:
+    700 clamp(24px, 5vw, 32px)/1.17 "Playfair Display",
+    serif;
+  letter-spacing: -0.025em;
+}
+.site-update-changes {
+  display: grid;
+  gap: 11px;
+  margin: 0 0 24px;
+  padding: 0;
+  list-style: none;
+}
+.site-update-changes li {
+  position: relative;
+  padding-left: 21px;
+  color: var(--text-muted);
+  font:
+    400 14px/1.65 Inter,
+    sans-serif;
+}
+.site-update-changes li:before {
+  position: absolute;
+  top: 0.58em;
+  left: 2px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary);
+  content: "";
+}
+.site-update-acknowledge {
+  min-height: 42px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--primary);
+  color: var(--bg-body);
+  font:
+    700 12px Inter,
+    sans-serif;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+.site-update-acknowledge:hover {
+  background: var(--primary-hover);
+}
+@keyframes site-update-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes site-update-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@media (max-width: 480px) {
+  .site-update-dialog {
+    padding: 23px 19px;
+  }
+  .site-update-brand {
+    margin-bottom: 18px;
+  }
+  .site-update-changes {
+    gap: 9px;
+  }
+  .site-update-acknowledge {
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-update-overlay,
+  .site-update-dialog {
+    animation: none;
+  }
+}
+
+
+/* Shared form-control defaults; page styles retain control over sizing and layout. */
+main :is(input, select, textarea, button) {
+  font: inherit;
+}
+
+main :is(input, select, textarea) {
+  color: var(--text-main);
+  background-color: var(--bg-container);
+  border-color: var(--border);
+  border-radius: 8px;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+main :is(a, button, input, select, textarea):focus-visible {
+  outline-color: color-mix(in srgb, var(--primary) 65%, transparent);
+}
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--primary) 72%, transparent);
+  outline-offset: 2px;
+}

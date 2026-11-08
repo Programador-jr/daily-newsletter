@@ -1,0 +1,9 @@
+/* Primitivos compartilhados. Valores semânticos são definidos em styles.css. */
+:where(.ui-card,.surface-card) { border:1px solid var(--card-border,var(--border)); border-radius:10px; background:var(--card-bg); color:var(--text-main); }
+:where(.ui-button,.button,button) { font-family:inherit; }
+:where(.ui-button,.button) { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; min-height:40px; padding:.55rem .9rem; border:1px solid var(--border); border-radius:7px; background:var(--card-bg); color:var(--text-main); font-weight:650; text-decoration:none; cursor:pointer; }
+:where(.ui-button-primary,.button-primary) { border-color:var(--primary); background:var(--primary); color:var(--bg-container); }
+:where(.ui-button-primary,.button-primary):hover { border-color:var(--primary-hover); background:var(--primary-hover); }
+:where(.ui-button-quiet,.button-quiet) { background:transparent; }
+:where(.ui-dialog,dialog) { color:var(--text-main); }
+:where(input,select,textarea) { accent-color:var(--primary); }

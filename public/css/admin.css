@@ -249,3 +249,53 @@ html,body{background:#090909!important;background-image:none!important}
 #test-email-button{width:100%;margin-top:6px}
 #test-email-message{overflow-wrap:anywhere}
 .test-email-label{display:block;margin:5px 0 4px;color:#a9baad;font-size:11px}.test-email-input{width:100%;min-height:39px;margin:0 0 10px;padding:0 11px;border:1px solid #ffffff20;border-radius:8px;background:#0b0a08;color:#e9e5d9}.test-email-input:focus{outline:2px solid #f5c51866;border-color:#f5c51880}
+
+/* Mantém o painel escuro, mas aproxima cards, ações e diálogos do padrão de História. */
+html body :is(.overview-card, .metric-card, .update-card, .update-stats article, .panel, .section-block, .dispatch-box, .delivery-overview) {
+  border-radius: 12px !important;
+  transition: border-color 180ms ease, background-color 180ms ease, box-shadow 220ms ease !important;
+}
+
+html body :is(.button, button) {
+  border-radius: 8px;
+}
+
+html body :is(.confirm-modal, .update-editor-dialog) {
+  border-radius: 12px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45) !important;
+}
+
+html body :is(.overview-card, .metric-card, .update-card):hover {
+  border-color: color-mix(in srgb, var(--green) 48%, var(--line)) !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24) !important;
+}
+
+html body details {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+html body details > summary {
+  padding: 0.95rem 1.1rem;
+  border-radius: inherit;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+html body details[open] > summary {
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--green) 7%, var(--surface));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body :is(.overview-card, .metric-card, .update-card, .button, button, details) {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Atalho de teclado (admin.html n�o carrega styles.css). */
+.skip-link{position:absolute;top:0;left:0;z-index:100;padding:.7rem 1.1rem;border-radius:0 0 10px 0;background:var(--green);color:#10100c;font:650 12px 'DM Sans',Inter,sans-serif;text-decoration:none;transform:translateY(-120%);transition:transform .16s ease}
+.skip-link:focus{transform:translateY(0);outline:2px solid var(--ink);outline-offset:2px}
+main[tabindex="-1"]:focus{outline:none}

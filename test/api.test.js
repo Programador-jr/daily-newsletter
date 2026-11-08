@@ -49,6 +49,11 @@ const modules = {
 
       return { lean: async () => state.latestNews };
     },
+    findOne: () => ({
+      select: () => ({
+        lean: async () => null
+      })
+    }),
     aggregate: async pipeline => {
       const all = [...state.historyNews, ...state.latestNews];
       const parse = value => {

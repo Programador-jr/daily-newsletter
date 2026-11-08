@@ -3,6 +3,7 @@ const News = require('../lib/news');
 const Edition = require('../lib/edition');
 const { ensureEdition } = require('../lib/edition-numbering');
 const { uploadImageFromUrl } = require('../lib/r2');
+const { isBearerAuthorized } = require('../lib/bearer-auth');
 
 function parseDate(value) {
   if (typeof value !== 'string') return null;
@@ -31,28 +32,6 @@ function parseDate(value) {
 
 function isValidDate(value) {
   return typeof value === 'string' && /^\d{2}\/\d{2}\/\d{4}$/.test(value) && Boolean(parseDate(value));
-}
-
-function calendarDateKey(value) {
-  if (typeof value !== 'string') return null;
-  const dayFirst = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-  if (dayFirst) {
-    if (!parseDate(value)) return null;
-    return `${dayFirst[3]}-${dayFirst[2].padStart(2, '0')}-${dayFirst[1].padStart(2, '0')}`;
-  }
-
-  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-    const date = new Date(`${value}T00:00:00.000Z`);
-    return Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== value ? null : value;
-  }
-
-  const timestamp = Date.parse(value);
-  if (Number.isNaN(timestamp)) return null;
-  const parts = new Intl.DateTimeFormat('en', {
-    timeZone: 'America/Rio_Branco', year: 'numeric', month: '2-digit', day: '2-digit'
-  }).formatToParts(new Date(timestamp));
-  const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
-  return `${values.year}-${values.month}-${values.day}`;
 }
 
 function publishedDateStages() {
@@ -176,7 +155,7 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ date, issueNumber: edition?.issueNumber ?? null, stories });
     }
 
-    if (!process.env.NOTIFY_SECRET || req.headers.authorization !== `Bearer ${process.env.NOTIFY_SECRET}`) {
+    if (!isBearerAuthorized(req, process.env.NOTIFY_SECRET)) {
       return res.status(401).json({ error: 'Não autorizado.' });
     }
 
