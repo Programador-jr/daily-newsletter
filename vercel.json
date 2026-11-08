@@ -55,6 +55,7 @@
       "destination": "/api/public-data?source=gastometro"
     },
     { "source": "/editions", "destination": "/editions.html" },
+    { "source": "/weekly", "destination": "/weekly.html" },
     { "source": "/historia", "destination": "/historia.html" },
     { "source": "/presidentes", "destination": "/presidentes.html" },
     { "source": "/ideologias", "destination": "/ideologias.html" },
