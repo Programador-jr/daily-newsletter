@@ -54,6 +54,8 @@ app.get('/api/camara-deputados', require('./lib/api-handlers/public-data/camara-
 app.get('/api/camara-despesas', require('./lib/api-handlers/public-data/camara-despesas'));
 app.get('/api/camara-ceap', require('./lib/api-handlers/public-data/camara-ceap'));
 app.get('/api/transferegov-emendas', require('./lib/api-handlers/public-data/transferegov-emendas'));
+app.get('/api/impostometro', require('./lib/api-handlers/public-data/impostometro'));
+app.get('/api/gastometro', require('./lib/api-handlers/public-data/gastometro'));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
@@ -147,8 +149,17 @@ app.get('/gastos-publicos', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/gastos-publicos.html'));
 });
 
+app.get('/impostometro', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/impostometro.html'));
+});
+
+app.get('/gastometro', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/gastometro.html'));
+});
+
+// A antiga página combinada virou duas: Impostômetro e Gastômetro.
 app.get('/impostos-gastos', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/impostos-gastos.html'));
+  res.redirect(301, '/gastometro');
 });
 
 app.get('/gastos-parlamentares', (req, res) => {

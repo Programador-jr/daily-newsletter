@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="pt-BR" class="history-document">
+<head>
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Gastômetro em tempo real: gasto público pago pela União, estados e municípios, com previdência, despesa com pessoal por Poder e consulta por estado e município.">
+  <title>Gastômetro - King's Newsletter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/historia.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/arrecadacao.css">
+  <link rel="stylesheet" href="/css/meters.css">
+  <link rel="stylesheet" href="/css/impostometro.css">
+  <link rel="stylesheet" href="/css/gastometro.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="/js/vercel-observability.js" defer></script>
+</head>
+<body class="history-page finance-page meters-page tax-meter-page spend-meter-page">
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div class="container">
+    <header class="site-header">
+      <a class="logo" href="/" aria-label="Página inicial"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></a>
+      <nav class="header-main-nav" aria-label="Navegação principal">
+        <div class="header-primary-links"></div>
+        <div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div>
+      </nav>
+    </header>
+    <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+      <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
+      <nav class="site-sidebar-nav" aria-label="Páginas principais"></nav>
+      <div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false"><span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div>
+    </aside>
+    <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
+
+    <main id="main" tabindex="-1">
+      <section class="history-hero finance-hero meters-hero">
+        <span class="eyebrow">Dados públicos · Gasto público em tempo real</span>
+        <h1>Gastômetro</h1>
+        <p>Quanto a União, os estados e os municípios já pagaram em despesas neste ano. Os valores são estimativas do Ga$to Brasil, calculadas a partir dos pagamentos informados ao Tesouro Nacional e projetadas segundo a segundo.</p>
+      </section>
+
+      <section class="meter-stack" aria-label="Gasto público total">
+        <article class="meter-card tax-meter-card tax-meter-card-primary spend-meter-total" id="meter-total" aria-labelledby="meter-total-title" aria-busy="true">
+          <div class="meter-card-heading">
+            <span class="meter-icon" aria-hidden="true"><i class="fas fa-building-columns"></i></span>
+            <div><span class="eyebrow">União + estados + municípios</span><h2 id="meter-total-title">Gasto público pago no Brasil em <span data-meter-year>—</span></h2></div>
+            <span class="meter-status" data-meter-status><i aria-hidden="true"></i> <span>Carregando</span></span>
+          </div>
+          <p class="tax-meter-value" data-meter-value aria-live="off"><span class="tax-meter-placeholder">R$ —</span></p>
+          <p class="tax-meter-compact" data-meter-compact></p>
+          <dl class="tax-meter-rates spend-meter-rates">
+            <div><dt>Por segundo</dt><dd data-meter-rate="second">—</dd></div>
+            <div><dt>Por minuto</dt><dd data-meter-rate="minute">—</dd></div>
+            <div><dt>Por hora</dt><dd data-meter-rate="hour">—</dd></div>
+            <div><dt>Por dia</dt><dd data-meter-rate="day">—</dd></div>
+          </dl>
+          <div class="spend-composition" id="spend-composition" hidden>
+            <div class="spend-composition-bar" aria-hidden="true"></div>
+            <ul class="spend-composition-legend"></ul>
+          </div>
+          <div class="meter-meta"><span><strong>Fonte:</strong> Ga$to Brasil, com dados da Secretaria do Tesouro Nacional</span><a href="https://www.gastobrasil.com.br/" target="_blank" rel="noopener noreferrer">gastobrasil.com.br <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+        </article>
+      </section>
+
+      <section class="finance-section spend-spheres-section" aria-labelledby="spheres-title">
+        <div class="section-heading"><div><span class="eyebrow">Quem gasta</span><h2 id="spheres-title">Gasto por esfera de governo</h2></div></div>
+        <div class="spend-spheres">
+          <article class="meter-card tax-meter-card spend-sphere" data-sphere="1" aria-labelledby="sphere-uniao-title" aria-busy="true">
+            <div class="spend-sphere-heading"><span class="meter-icon" aria-hidden="true"><i class="fas fa-landmark"></i></span><div><h3 id="sphere-uniao-title">União</h3><span class="meter-status" data-meter-status><i aria-hidden="true"></i> <span>Carregando</span></span></div></div>
+            <p class="tax-meter-value" data-meter-value aria-live="off"><span class="tax-meter-placeholder">R$ —</span></p>
+            <p class="tax-meter-compact" data-meter-compact></p>
+            <p class="spend-sphere-share" data-share></p>
+          </article>
+          <article class="meter-card tax-meter-card spend-sphere" data-sphere="2" aria-labelledby="sphere-estados-title" aria-busy="true">
+            <div class="spend-sphere-heading"><span class="meter-icon" aria-hidden="true"><i class="fas fa-map-location-dot"></i></span><div><h3 id="sphere-estados-title">Estados e DF</h3><span class="meter-status" data-meter-status><i aria-hidden="true"></i> <span>Carregando</span></span></div></div>
+            <p class="tax-meter-value" data-meter-value aria-live="off"><span class="tax-meter-placeholder">R$ —</span></p>
+            <p class="tax-meter-compact" data-meter-compact></p>
+            <p class="spend-sphere-share" data-share></p>
+          </article>
+          <article class="meter-card tax-meter-card spend-sphere" data-sphere="3" aria-labelledby="sphere-municipios-title" aria-busy="true">
+            <div class="spend-sphere-heading"><span class="meter-icon" aria-hidden="true"><i class="fas fa-city"></i></span><div><h3 id="sphere-municipios-title">Municípios</h3><span class="meter-status" data-meter-status><i aria-hidden="true"></i> <span>Carregando</span></span></div></div>
+            <p class="tax-meter-value" data-meter-value aria-live="off"><span class="tax-meter-placeholder">R$ —</span></p>
+            <p class="tax-meter-compact" data-meter-compact></p>
+            <p class="spend-sphere-share" data-share></p>
+          </article>
+        </div>
+
+        <article class="meter-card tax-meter-card spend-pension" id="meter-pension" aria-labelledby="pension-title" aria-busy="true">
+          <div class="meter-card-heading">
+            <span class="meter-icon" aria-hidden="true"><i class="fas fa-person-cane"></i></span>
+            <div><span class="eyebrow">Maior despesa</span><h3 id="pension-title">Previdência e benefícios previdenciários</h3></div>
+            <span class="meter-status" data-meter-status><i aria-hidden="true"></i> <span>Carregando</span></span>
+          </div>
+          <div class="spend-pension-body">
+            <div>
+              <p class="tax-meter-value" data-meter-value aria-live="off"><span class="tax-meter-placeholder">R$ —</span></p>
+              <p class="tax-meter-compact" data-meter-compact></p>
+            </div>
+            <div class="spend-pension-share" data-pension-share hidden>
+              <div class="spend-ring" aria-hidden="true"><span></span></div>
+              <p><strong data-pension-percent>—</strong> de todo o gasto público, somando o regime geral (INSS) e os regimes próprios dos servidores.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="finance-section tax-meter-explorer" aria-labelledby="explorer-title">
+        <div class="section-heading"><div><span class="eyebrow">Explore os dados</span><h2 id="explorer-title">Gasto do seu estado ou município</h2></div></div>
+        <p class="finance-prose">Escolha um estado ou município para ver o gasto acumulado no ano, o peso da previdência e a despesa com pessoal de cada Poder.</p>
+
+        <form class="tax-meter-filters" id="explorer-form" novalidate>
+          <fieldset class="tax-meter-scope">
+            <legend>Recorte</legend>
+            <div class="tax-meter-segmented">
+              <label><input type="radio" name="escopo" value="estado" checked><i class="fas fa-map-location-dot" aria-hidden="true"></i> Estado</label>
+              <label><input type="radio" name="escopo" value="municipio"><i class="fas fa-city" aria-hidden="true"></i> Município</label>
+            </div>
+          </fieldset>
+          <label data-filter="uf"><span class="tax-field-label">Estado</span><span class="tax-select"><i class="fas fa-map-location-dot tax-select-icon" aria-hidden="true"></i><select id="explorer-uf" name="uf" data-search-placeholder="Buscar estado ou sigla"></select><i class="fas fa-chevron-down tax-select-chevron" aria-hidden="true"></i></span></label>
+          <label data-filter="municipio" hidden><span class="tax-field-label">Município</span><span class="tax-select"><i class="fas fa-city tax-select-icon" aria-hidden="true"></i><select id="explorer-city" name="municipio" data-search-placeholder="Buscar município" disabled><option value="">Carregando…</option></select><i class="fas fa-chevron-down tax-select-chevron" aria-hidden="true"></i></span></label>
+        </form>
+
+        <article class="meter-card tax-meter-card tax-meter-result spend-result" id="meter-explorer" aria-labelledby="meter-explorer-title" aria-busy="true">
+          <div class="meter-card-heading">
+            <span class="meter-icon" aria-hidden="true"><i class="fas fa-location-dot"></i></span>
+            <div><span class="eyebrow" data-explorer-kind>Estado</span><h3 id="meter-explorer-title" data-explorer-title>—</h3></div>
+            <span class="meter-status" data-meter-status><i aria-hidden="true"></i> <span>Carregando</span></span>
+          </div>
+          <p class="tax-meter-value" data-meter-value aria-live="off"><span class="tax-meter-placeholder">R$ —</span></p>
+          <p class="tax-meter-compact" data-meter-compact></p>
+          <dl class="tax-meter-rates">
+            <div><dt>Por segundo</dt><dd data-meter-rate="second">—</dd></div>
+            <div><dt>Por hora</dt><dd data-meter-rate="hour">—</dd></div>
+            <div><dt>Por dia</dt><dd data-meter-rate="day">—</dd></div>
+          </dl>
+          <ul class="spend-result-facts" data-explorer-facts hidden></ul>
+          <div class="spend-powers" data-explorer-powers hidden>
+            <h4>Despesa com pessoal por Poder</h4>
+            <p class="spend-powers-note">Salários e encargos pagos por cada Poder no ano. É uma parte do gasto total, não a soma dele.</p>
+            <table>
+              <caption>Despesa com pessoal por Poder, acumulada no ano</caption>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="finance-section meter-method">
+        <div class="section-heading"><div><span class="eyebrow">Como ler os números</span><h2>O que o Gastômetro mede</h2></div></div>
+        <ul class="tax-meter-notes">
+          <li><strong>Despesa primária paga.</strong> Entram salários, benefícios, custeio, investimentos e transferências efetivamente pagos. Os juros da dívida pública ficam de fora.</li>
+          <li><strong>É uma estimativa.</strong> Estados e municípios informam os pagamentos ao Tesouro Nacional por bimestre e com atraso. O Ga$to Brasil corrige lacunas e projeta o valor do dia com modelos estatísticos; a animação contínua não significa que cada pagamento seja registrado na hora.</li>
+          <li><strong>A soma das esferas pode repetir dinheiro.</strong> Parte do gasto da União são transferências a estados e municípios, que voltam a aparecer quando esses governos as gastam. O total é a soma divulgada pela fonte, sem eliminar essa dupla contagem.</li>
+          <li><strong>União inclui o Banco Central.</strong> Os números federais seguem o conceito de Governo Central usado pela fonte.</li>
+          <li><strong>Gasto não se subtrai da arrecadação.</strong> O Impostômetro e o Gastômetro usam bases e métodos diferentes; a diferença entre os dois não é o déficit público.</li>
+        </ul>
+        <div class="source-list"><a href="/impostometro">Impostômetro em tempo real</a><a href="/gastos-publicos">Entenda os gastos públicos</a><a href="/gastos-parlamentares">Gastos parlamentares</a><a href="https://www.gastobrasil.com.br/" target="_blank" rel="noopener noreferrer">Ga$to Brasil</a></div>
+      </section>
+    </main>
+    <div id="footer"></div>
+  </div>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/footer.js"></script>
+  <script src="/js/option-picker.js"></script>
+  <script src="/js/live-counter.js"></script>
+  <script src="/js/gastometro.js"></script>
+</body>
+</html>

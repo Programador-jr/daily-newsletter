@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="pt-BR" class="history-document">
+<head>
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Impostômetro em tempo real: arrecadação de tributos no Brasil, por estado, município e tributo, com as fontes e metodologias de cada contador.">
+  <title>Impostômetro - King's Newsletter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/historia.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/arrecadacao.css">
+  <link rel="stylesheet" href="/css/meters.css">
+  <link rel="stylesheet" href="/css/impostometro.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="/js/vercel-observability.js" defer></script>
+</head>
+<body class="history-page finance-page meters-page tax-meter-page">
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div class="container">
+    <header class="site-header">
+      <a class="logo" href="/" aria-label="Página inicial"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></a>
+      <nav class="header-main-nav" aria-label="Navegação principal">
+        <div class="header-primary-links"></div>
+        <div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div>
+      </nav>
+    </header>
+    <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+      <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
+      <nav class="site-sidebar-nav" aria-label="Páginas principais"></nav>
+      <div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false"><span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div>
+    </aside>
+    <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
+
+    <main id="main" tabindex="-1">
+      <section class="history-hero finance-hero meters-hero">
+        <span class="eyebrow">Dados públicos · Arrecadação em tempo real</span>
+        <h1>Impostômetro</h1>
+        <p>Quanto o Brasil já pagou em tributos neste ano, segundo duas fontes públicas. Os valores são estimativas: cada contador parte do último dado disponível e projeta a arrecadação segundo a segundo.</p>
+      </section>
+
+      <section class="meter-stack tax-meter-grid" aria-label="Contadores de arrecadação">
+        <article class="meter-card tax-meter-card tax-meter-card-primary" id="meter-acsp" aria-labelledby="meter-acsp-title" aria-busy="true">
+          <div class="meter-card-heading">
+            <span class="meter-icon" aria-hidden="true"><i class="fas fa-coins"></i></span>
+            <div><span class="eyebrow">Federal + estadual + municipal</span><h2 id="meter-acsp-title">Tributos pagos no Brasil em <span data-meter-year>—</span></h2></div>
+            <span class="meter-status" data-meter-status><i aria-hidden="true"></i> <span>Carregando</span></span>
+          </div>
+          <p class="tax-meter-value" data-meter-value aria-live="off"><span class="tax-meter-placeholder">R$ —</span></p>
+          <p class="tax-meter-compact" data-meter-compact></p>
+          <dl class="tax-meter-rates">
+            <div><dt>Por segundo</dt><dd data-meter-rate="second">—</dd></div>
+            <div><dt>Por hora</dt><dd data-meter-rate="hour">—</dd></div>
+            <div><dt>Por dia</dt><dd data-meter-rate="day">—</dd></div>
+          </dl>
+          <div class="meter-meta"><span><strong>Fonte:</strong> Associação Comercial de São Paulo (ACSP) e IBPT</span><a href="https://impostometro.com.br/" target="_blank" rel="noopener noreferrer">impostometro.com.br <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+        </article>
+
+        <article class="meter-card tax-meter-card" id="meter-org" aria-labelledby="meter-org-title" aria-busy="true">
+          <div class="meter-card-heading">
+            <span class="meter-icon" aria-hidden="true"><i class="fas fa-landmark"></i></span>
+            <div><span class="eyebrow">Somente União</span><h2 id="meter-org-title">Arrecadação federal em <span data-meter-year>—</span></h2></div>
+            <span class="meter-status" data-meter-status><i aria-hidden="true"></i> <span>Carregando</span></span>
+          </div>
+          <p class="tax-meter-value" data-meter-value aria-live="off"><span class="tax-meter-placeholder">R$ —</span></p>
+          <p class="tax-meter-compact" data-meter-compact></p>
+          <dl class="tax-meter-rates">
+            <div><dt>Por segundo</dt><dd data-meter-rate="second">—</dd></div>
+            <div><dt>Por hora</dt><dd data-meter-rate="hour">—</dd></div>
+            <div><dt>Por dia</dt><dd data-meter-rate="day">—</dd></div>
+          </dl>
+          <div class="meter-meta"><span><strong>Fonte:</strong> Impostômetro.org, com base na Receita Federal</span><a href="https://impostometro.org/" target="_blank" rel="noopener noreferrer">impostometro.org <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+        </article>
+      </section>
+
+      <section class="finance-section tax-meter-why" aria-labelledby="why-title">
+        <div class="section-heading"><div><span class="eyebrow">Por que os números são diferentes</span><h2 id="why-title">Mesmo nome, recortes diferentes</h2></div></div>
+        <div class="tax-meter-compare">
+          <div>
+            <h3>impostometro.com.br</h3>
+            <p>Mantido pela ACSP com cálculos do IBPT. Soma <strong>todos os tributos</strong> pagos à União, aos estados e aos municípios: impostos, taxas e contribuições, incluindo previdência e FGTS. A projeção usa a arrecadação já publicada e a tendência de cada tributo.</p>
+          </div>
+          <div>
+            <h3>impostometro.org</h3>
+            <p>Projeto independente que mede apenas a <strong>arrecadação federal</strong> administrada pela Receita Federal. O contador parte de um valor-base e soma um incremento fixo por segundo, recalibrado quando a Receita divulga novos resultados.</p>
+          </div>
+        </div>
+        <div class="finance-callout"><strong>Não some nem subtraia os dois contadores.</strong> O valor federal já está contido no total da ACSP. A diferença entre eles corresponde, grosso modo, aos tributos estaduais (como ICMS e IPVA) e municipais (como ISS e IPTU), além de diferenças de método.</div>
+      </section>
+
+      <section class="finance-section tax-meter-explorer" aria-labelledby="explorer-title">
+        <div class="section-heading"><div><span class="eyebrow">Explore os dados</span><h2 id="explorer-title">Arrecadação por estado, município ou tributo</h2></div></div>
+        <p class="finance-prose">Consulta direta à base do impostometro.com.br. Escolha o recorte e o ano; anos encerrados mostram o total consolidado.</p>
+
+        <form class="tax-meter-filters" id="explorer-form" novalidate>
+          <fieldset class="tax-meter-scope">
+            <legend>Recorte</legend>
+            <div class="tax-meter-segmented">
+              <label><input type="radio" name="escopo" value="estado" checked><i class="fas fa-map-location-dot" aria-hidden="true"></i> Estado</label>
+              <label><input type="radio" name="escopo" value="municipio"><i class="fas fa-city" aria-hidden="true"></i> Município</label>
+              <label><input type="radio" name="escopo" value="tributo"><i class="fas fa-receipt" aria-hidden="true"></i> Tributo</label>
+            </div>
+          </fieldset>
+          <label data-filter="ano"><span class="tax-field-label">Ano</span><span class="tax-select"><i class="fas fa-calendar-days tax-select-icon" aria-hidden="true"></i><select id="explorer-year" name="ano" data-search-placeholder="Buscar ano"></select><i class="fas fa-chevron-down tax-select-chevron" aria-hidden="true"></i></span></label>
+          <label data-filter="uf"><span class="tax-field-label">Estado</span><span class="tax-select"><i class="fas fa-map-location-dot tax-select-icon" aria-hidden="true"></i><select id="explorer-uf" name="uf" data-search-placeholder="Buscar estado ou sigla"></select><i class="fas fa-chevron-down tax-select-chevron" aria-hidden="true"></i></span></label>
+          <label data-filter="municipio" hidden><span class="tax-field-label">Município</span><span class="tax-select"><i class="fas fa-city tax-select-icon" aria-hidden="true"></i><select id="explorer-city" name="municipio" data-search-placeholder="Buscar município" disabled><option value="">Carregando…</option></select><i class="fas fa-chevron-down tax-select-chevron" aria-hidden="true"></i></span></label>
+          <label data-filter="esfera" hidden><span class="tax-field-label">Esfera</span><span class="tax-select"><i class="fas fa-layer-group tax-select-icon" aria-hidden="true"></i><select id="explorer-sphere" name="esfera">
+            <option value="federal">Federal</option>
+            <option value="estadual">Estadual</option>
+            <option value="municipal">Municipal</option>
+          </select><i class="fas fa-chevron-down tax-select-chevron" aria-hidden="true"></i></span></label>
+          <label data-filter="tributo" hidden><span class="tax-field-label">Tributo</span><span class="tax-select"><i class="fas fa-receipt tax-select-icon" aria-hidden="true"></i><select id="explorer-tax" name="tributo" data-search-placeholder="Buscar tributo" disabled><option value="">Carregando…</option></select><i class="fas fa-chevron-down tax-select-chevron" aria-hidden="true"></i></span></label>
+        </form>
+
+        <article class="meter-card tax-meter-card tax-meter-result" id="meter-explorer" aria-labelledby="meter-explorer-title" aria-busy="true">
+          <div class="meter-card-heading">
+            <span class="meter-icon" aria-hidden="true"><i class="fas fa-location-dot"></i></span>
+            <div><span class="eyebrow" data-explorer-kind>Estado</span><h3 id="meter-explorer-title" data-explorer-title>—</h3></div>
+            <span class="meter-status" data-meter-status><i aria-hidden="true"></i> <span>Carregando</span></span>
+          </div>
+          <p class="tax-meter-value" data-meter-value aria-live="off"><span class="tax-meter-placeholder">R$ —</span></p>
+          <p class="tax-meter-compact" data-meter-compact></p>
+          <p class="tax-meter-share" data-explorer-share hidden></p>
+        </article>
+      </section>
+
+      <section class="finance-section tax-meter-history" aria-labelledby="history-title">
+        <div class="section-heading"><div><span class="eyebrow">Série histórica</span><h2 id="history-title">Total arrecadado por ano</h2></div></div>
+        <p class="finance-prose">Totais anuais do impostometro.com.br para todo o Brasil, em <strong>valores nominais</strong> (sem correção pela inflação). Parte do crescimento reflete a alta de preços, não um aumento real da carga tributária.</p>
+        <div class="tax-history" id="tax-history" aria-busy="true"><p class="tax-history-status">Carregando série histórica…</p></div>
+      </section>
+
+      <section class="finance-section meter-method">
+        <div class="section-heading"><div><span class="eyebrow">Como ler os números</span><h2>Contador não é extrato</h2></div></div>
+        <ul class="tax-meter-notes">
+          <li><strong>É uma estimativa.</strong> Os órgãos oficiais publicam a arrecadação com semanas de atraso. Os contadores projetam o valor do dia; a animação contínua não significa que cada tributo seja registrado instantaneamente.</li>
+          <li><strong>Atualização.</strong> Esta página consulta as fontes a cada 10 minutos e calcula o avanço entre as consultas com o ritmo informado por cada uma.</li>
+          <li><strong>Arrecadação não é despesa.</strong> Para acompanhar quanto o poder público gasta, veja o <a href="/gastometro">Gastômetro</a>.</li>
+        </ul>
+        <div class="source-list"><a href="/arrecadacao">Entenda a arrecadação pública</a><a href="/gastometro">Gastômetro em tempo real</a><a href="https://impostometro.com.br/home/metodologiaimpostometro" target="_blank" rel="noopener noreferrer">Metodologia ACSP/IBPT</a><a href="https://impostometro.org/sobre/" target="_blank" rel="noopener noreferrer">Sobre o Impostômetro.org</a></div>
+      </section>
+    </main>
+    <div id="footer"></div>
+  </div>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/footer.js"></script>
+  <script src="/js/option-picker.js"></script>
+  <script src="/js/live-counter.js"></script>
+  <script src="/js/impostometro.js"></script>
+</body>
+</html>

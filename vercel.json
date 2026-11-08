@@ -2,6 +2,8 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     { "source": "/valores", "destination": "/catalogo-politico?catalogo=valores", "permanent": true },
+    { "source": "/impostos-gastos", "destination": "/gastometro", "permanent": true },
+    { "source": "/impostos-gastos.html", "destination": "/gastometro", "permanent": true },
     { "source": "/catalogo-politico", "has": [{ "type": "query", "key": "catalogo", "value": "personalidades" }], "destination": "/personalidades", "permanent": true },
     { "source": "/catalogo-politico", "has": [{ "type": "query", "key": "catalogo", "value": "paises" }], "destination": "/paises", "permanent": true },
     { "source": "/catalogo-politico", "has": [{ "type": "query", "key": "catalogo", "value": "partidos" }], "destination": "/partidos", "permanent": true }
@@ -17,6 +19,8 @@
     { "source": "/api/updates/active", "destination": "/api/control?route=updates/active" },
     { "source": "/api/worker/config", "destination": "/api/control?route=worker/config" },
     { "source": "/api/worker/heartbeat", "destination": "/api/control?route=worker/heartbeat" },
+    { "source": "/api/impostometro", "destination": "/api/public-data?source=impostometro" },
+    { "source": "/api/gastometro", "destination": "/api/public-data?source=gastometro" },
     { "source": "/editions", "destination": "/editions.html" },
     { "source": "/historia", "destination": "/historia.html" },
     { "source": "/presidentes", "destination": "/presidentes.html" },
@@ -39,7 +43,8 @@
     { "source": "/estado-brasileiro", "destination": "/estado-brasileiro.html" },
     { "source": "/arrecadacao", "destination": "/arrecadacao.html" },
     { "source": "/gastos-publicos", "destination": "/gastos-publicos.html" },
-    { "source": "/impostos-gastos", "destination": "/impostos-gastos.html" },
+    { "source": "/impostometro", "destination": "/impostometro.html" },
+    { "source": "/gastometro", "destination": "/gastometro.html" },
     { "source": "/gastos-parlamentares", "destination": "/gastos-parlamentares.html" },
     { "source": "/como-fiscalizar", "destination": "/como-fiscalizar.html" },
     { "source": "/about", "destination": "/about.html" },

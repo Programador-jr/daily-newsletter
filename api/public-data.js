@@ -2,6 +2,8 @@ const handlers = {
   'camara-ceap': require('../lib/api-handlers/public-data/camara-ceap'),
   'camara-deputados': require('../lib/api-handlers/public-data/camara-deputados'),
   'camara-despesas': require('../lib/api-handlers/public-data/camara-despesas'),
+  gastometro: require('../lib/api-handlers/public-data/gastometro'),
+  impostometro: require('../lib/api-handlers/public-data/impostometro'),
   'transferegov-emendas': require('../lib/api-handlers/public-data/transferegov-emendas')
 };
 
