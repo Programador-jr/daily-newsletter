@@ -1534,13 +1534,15 @@ async function loadPresidentPortrait(card) {
   const placeholder = card.querySelector(".president-portrait-placeholder");
   const image = card.querySelector(".president-portrait-image");
   const credit = card.querySelector(".president-image-credit");
+  const localPortrait = globalThis.PresidentPortraits?.[president.name];
   let portrait;
   try {
     portrait = await fetchCommonsPortrait(president);
   } catch (error) {
     console.error("Não foi possível consultar os retratos do Wikimedia Commons para " + president.name + ".", error);
     if (card.isConnected) placeholder.querySelector("span").textContent = "Não foi possível validar retrato e licença agora";
-    return;
+    if (!localPortrait) return;
+    portrait = { ...localPortrait, imageUrl: localPortrait.src };
   }
   if (!card.isConnected) return;
   if (!portrait) {
@@ -1561,7 +1563,7 @@ async function loadPresidentPortrait(card) {
   }, { once: true });
   image.hidden = false;
   image.loading = "eager";
-  image.src = portrait.imageUrl;
+  image.src = typeof globalThis.mediaUrl === "function" ? globalThis.mediaUrl(portrait.imageUrl) : portrait.imageUrl;
   if (image.complete && image.naturalWidth > 0) showPortrait();
   const licenseHref = portrait.licenseUrl || portrait.fileUrl;
   const licenseLink = '<a href="' + escapeHtml(licenseHref) + '" target="_blank" rel="noopener noreferrer">' +

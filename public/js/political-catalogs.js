@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const PAGE_TAB = CATALOG_PATHS[document.body.dataset.catalogDefault]
     ? document.body.dataset.catalogDefault
     : "ideologias";
+  const resolveMediaPath = (value) => typeof globalThis.mediaUrl === "function" ? globalThis.mediaUrl(value) : value;
 
   // Old /catalogo-politico?catalogo=<categoria> URLs now live on dedicated pages.
   if (main && PAGE_TAB === "ideologias") {
@@ -126,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
             node.style.setProperty(property, propertyValue);
           }
         } else if (value === true) node.setAttribute(key, "");
+        else if (tag === "img" && key === "src") node.setAttribute(key, resolveMediaPath(value));
         else node.setAttribute(key, value);
       }
     }
