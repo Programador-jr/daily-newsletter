@@ -1,0 +1,199 @@
+/* GASTÔMETRO — reaproveita os contadores do Impostômetro (impostometro.css) */
+
+.spend-meter-page {
+  /* Tons da cor primária: funcionam em qualquer paleta e nos dois temas. */
+  --spend-uniao: var(--primary);
+  --spend-estados: color-mix(in srgb, var(--primary) 58%, var(--card-bg));
+  --spend-municipios: color-mix(in srgb, var(--primary) 30%, var(--card-bg));
+}
+
+.spend-meter-rates { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* Composição do total por esfera */
+
+.spend-composition { margin: 1.1rem 0 .2rem; }
+.spend-composition[hidden] { display: none; }
+
+.spend-composition-bar {
+  display: flex;
+  gap: 2px;
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--border);
+}
+
+.spend-composition-bar span { display: block; min-width: 2px; height: 100%; }
+
+.spend-composition-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem 1.2rem;
+  margin: .7rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.spend-composition-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  color: var(--text-muted);
+  font-size: .8rem;
+}
+
+.spend-composition-legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  border: 1px solid color-mix(in srgb, var(--primary) 35%, transparent);
+}
+
+.spend-composition-legend strong { color: var(--text-main); font-variant-numeric: tabular-nums; }
+
+/* Esferas */
+
+.spend-spheres-section,
+.spend-spheres-section + .tax-meter-explorer { margin-bottom: 2.5rem; }
+
+.spend-spheres {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.spend-sphere { padding: 1.1rem 1.2rem; }
+
+.spend-sphere-heading {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.spend-sphere-heading > div {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .4rem .6rem;
+  min-width: 0;
+}
+
+.spend-sphere-heading .meter-icon { flex-basis: 40px; width: 40px; height: 40px; }
+.spend-sphere .meter-status { font-size: .66rem; padding: .28rem .5rem; }
+.spend-sphere .tax-meter-value { margin-top: 1rem; font-size: clamp(1.1rem, 1.9vw, 1.5rem); }
+.spend-sphere .tax-meter-compact { margin-bottom: .6rem; }
+
+.spend-sphere-share {
+  margin: auto 0 0;
+  padding-top: .7rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: .8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.spend-sphere[data-sphere="1"] { border-top: 3px solid var(--spend-uniao); }
+.spend-sphere[data-sphere="2"] { border-top: 3px solid var(--spend-estados); }
+.spend-sphere[data-sphere="3"] { border-top: 3px solid var(--spend-municipios); }
+
+/* Previdência */
+
+.spend-pension { margin-top: 1rem; }
+
+.spend-pension-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.spend-pension-share {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-container);
+}
+
+.spend-pension-share[hidden] { display: none; }
+.spend-pension-share p { margin: 0; color: var(--text-muted); font-size: .86rem; line-height: 1.55; }
+.spend-pension-share strong { color: var(--text-main); font-size: 1.05rem; }
+
+.spend-ring {
+  --share: 0;
+  position: relative;
+  flex: 0 0 58px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: conic-gradient(var(--primary) calc(var(--share) * 360deg), var(--border) 0);
+}
+
+.spend-ring span {
+  position: absolute;
+  inset: 9px;
+  border-radius: 50%;
+  background: var(--bg-container);
+}
+
+/* Resultado do explorador */
+
+.spend-result-facts {
+  display: grid;
+  gap: .45rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.spend-result-facts[hidden] { display: none; }
+
+.spend-result-facts li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .25rem 1rem;
+  padding: .55rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-container);
+  font-size: .84rem;
+}
+
+.spend-result-facts span { color: var(--text-muted); font-weight: 600; }
+.spend-result-facts strong { color: var(--text-main); font-variant-numeric: tabular-nums; }
+
+.spend-powers {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.spend-powers[hidden] { display: none; }
+.spend-powers h4 { margin: 0; color: var(--text-main); font-size: .95rem; }
+.spend-powers-note { margin: .3rem 0 .8rem; color: var(--text-muted); font-size: .8rem; }
+.spend-powers table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.spend-powers caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.spend-powers th,
+.spend-powers td { padding: .32rem 0; font-size: .84rem; vertical-align: middle; }
+.spend-powers th { width: 9.5rem; padding-right: .8rem; color: var(--text-main); font-weight: 600; text-align: left; }
+.spend-powers td.tax-history-value { width: 6.5rem; padding-left: .8rem; color: var(--text-main); font-weight: 600; text-align: right; white-space: nowrap; }
+
+@media (max-width: 1180px) {
+  .spend-meter-rates { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
+  .spend-spheres { grid-template-columns: 1fr; }
+  .spend-pension-body { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .spend-meter-rates { grid-template-columns: 1fr; }
+  .spend-powers th { width: 7rem; font-size: .78rem; }
+  .spend-powers td.tax-history-value { width: 5.2rem; font-size: .78rem; }
+}
