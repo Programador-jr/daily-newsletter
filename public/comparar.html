@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR" class="history-document">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,16 +11,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="/css/historia.css">
   <link rel="stylesheet" href="/css/components.css">
-  <link rel="stylesheet" href="/css/ideologias.css">
-  <link rel="stylesheet" href="/css/page-patterns.css">
-  <link rel="stylesheet" href="/css/political-compare.css">
+  <link rel="stylesheet" href="/css/atlas.css">
+  <link rel="stylesheet" href="/css/catalog-ficha.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="/css/ui-kit.css">
+  <link rel="stylesheet" href="/css/political-compare.css">
   <script src="/js/vercel-observability.js" defer></script>
 </head>
-<body class="history-page ideologies-page compare-page">
+<body class="compare-page">
   <a class="skip-link" href="#compare-main">Pular para o conteúdo</a>
   <div class="container">
     <header class="site-header">
@@ -36,29 +35,26 @@
 
     <main class="compare-main" id="compare-main" tabindex="-1">
       <nav class="compare-breadcrumb" aria-label="Trilha de navegação">
-        <a href="/politica">Política</a><span aria-hidden="true">/</span>
-        <a href="/catalogo-politico">Catálogo político</a><span aria-hidden="true">/</span>
-        <span>Comparar perfis</span>
       </nav>
 
-      <section class="history-hero ideology-hero compare-hero">
-        <div class="compare-hero-copy">
-          <h1><span class="compare-title-line">Três perfis.</span> <span class="compare-title-line">Doze eixos.</span> <em class="compare-title-line">Nenhum veredito.</em></h1>
-          <p class="compare-deck">Escolha até três perfis do catálogo para ver onde as posições convergem, onde se afastam e o que muda a leitura. A comparação é uma ferramenta de contexto, não uma nota de identidade.</p>
-          <div class="compare-hero-links">
-            <a class="atlas-button" href="/catalogo-politico"><i class="fas fa-table-cells-large" aria-hidden="true"></i> Explorar o catálogo</a>
-            <a class="atlas-button atlas-button-ghost" href="/teste-politico"><i class="fas fa-list-check" aria-hidden="true"></i> Fazer o teste político</a>
-          </div>
+      <header class="compare-hero">
+        <span class="eyebrow">Comparação de perfis · 12 eixos</span>
+        <h1>Três perfis. Doze eixos. <em>Nenhum veredito.</em></h1>
+        <p class="compare-hero-lead">Escolha até três perfis do catálogo para ver onde as posições convergem, onde se afastam e o que muda a leitura. A comparação é uma ferramenta de contexto, não uma nota de identidade.</p>
+        <div class="compare-hero-links">
+          <a class="atlas-button" href="/catalogo-politico"><i class="fas fa-table-cells-large" aria-hidden="true"></i> Explorar o catálogo</a>
+          <a class="atlas-button atlas-button-ghost" href="/teste-politico"><i class="fas fa-list-check" aria-hidden="true"></i> Fazer o teste político</a>
         </div>
-        <aside class="compare-hero-aside" aria-label="Como ler a comparação">
-          <p class="compare-aside-title">Como ler esta página</p>
-          <ul class="compare-aside-list">
-            <li><strong>O encontro</strong><span>Onde as posições dos perfis coincidem.</span></li>
-            <li><strong>O atrito</strong><span>Onde os vetores se afastam e qual eixo explica a distância.</span></li>
-            <li><strong>O contexto</strong><span>O que o percentual não diz sobre identidade, filiação ou voto.</span></li>
-          </ul>
+      </header>
+
+      <section class="compare-method-block" aria-labelledby="compare-method-title">
+        <div class="compare-method-icon"><i class="fas fa-code-compare" aria-hidden="true"></i></div>
+        <div class="compare-method-copy">
+          <span class="eyebrow">Como ler esta comparação</span>
+          <h2 id="compare-method-title">Convergência não significa equivalência.</h2>
+          <p>O encontro mostra onde as posições coincidem; o atrito, onde os vetores se afastam. Os percentuais descrevem posições nos eixos, não identidade, filiação ou voto.</p>
           <div class="compare-stats" id="compare-stats" aria-label="Escopo do comparador"></div>
-        </aside>
+        </div>
       </section>
 
       <section class="compare-workbench" id="compare-workbench" aria-labelledby="compare-selection-title" aria-busy="true">
@@ -66,7 +62,7 @@
           <div>
             <h2 id="compare-selection-title">Perfis na comparação</h2>
           </div>
-          <button class="compare-clear" id="compare-clear" type="button" hidden><i class="fas fa-rotate-left" aria-hidden="true"></i> Limpar seleção</button>
+          <button class="compare-clear atlas-button atlas-button-ghost" id="compare-clear" type="button" hidden><i class="fas fa-rotate-left" aria-hidden="true"></i> Limpar seleção</button>
         </div>
 
         <div class="compare-selected" id="compare-selected"></div>
@@ -123,14 +119,16 @@
           <div id="compare-ideology-content"></div>
         </section>
 
-        <div class="compare-axes-head">
-          <div>
-            <h3>As posições de cada perfil</h3>
+        <section class="compare-section compare-axes-section" aria-labelledby="compare-axes-title">
+          <div class="compare-section-head">
+            <div>
+              <h3 id="compare-axes-title">As posições de cada perfil</h3>
+            </div>
+            <div class="compare-legend" id="compare-legend"></div>
           </div>
-          <div class="compare-legend" id="compare-legend"></div>
-        </div>
-        <div class="compare-axes" id="compare-axes"></div>
-        <div class="compare-readout" id="compare-readout"></div>
+          <div class="compare-axes" id="compare-axes"></div>
+          <div class="compare-readout" id="compare-readout"></div>
+        </section>
 
         <section class="compare-section compare-countries" id="compare-countries-section" aria-labelledby="compare-countries-title">
           <div class="compare-section-head">
@@ -190,7 +188,7 @@
           <div id="compare-compass-content"></div>
         </section>
 
-        <p class="compare-method">A compatibilidade usa o mesmo cálculo de proximidade do quiz: combina a semelhança eixo a eixo, a direção geral dos vetores e a intensidade das posições. As seções de proximidade aplicam esse cálculo aos demais perfis do catálogo; valores usam apenas os eixos que declaram. A barra dos 12 eixos segue a convenção do catálogo: o polo à esquerda corresponde a 100 e o polo à direita, a 0. A amplitude mostra a distância entre a maior e a menor posição do conjunto naquele eixo. Alguns perfis usam o vetor curado do atlas; por isso, os percentuais podem diferir dos exibidos no 12 Axes.</p>
+        <p class="compare-method">A compatibilidade usa o mesmo cálculo de proximidade do quiz: combina a semelhança eixo a eixo, a direção geral dos vetores e a intensidade das posições. As seções de proximidade aplicam esse cálculo aos demais perfis do catálogo; valores usam apenas os eixos que declaram. A barra dos 12 eixos segue a convenção do catálogo: o polo à esquerda corresponde a 100 e o polo à direita, a 0. A amplitude mostra a distância entre a maior e a menor posição do conjunto naquele eixo.</p>
       </section>
 
       <section class="compare-explainer" aria-labelledby="compare-explainer-title">
@@ -214,23 +212,24 @@
             <p>Dois perfis podem coincidir em um eixo e divergir em outro. Leia o conjunto, a ficha e as fontes antes de tirar conclusões.</p>
           </article>
         </div>
-        <p class="compare-explainer-links"><a href="/teste-politico">Fazer o teste e comparar com o seu perfil</a> <a href="/catalogo-politico">Voltar ao catálogo político</a></p>
-      </section>
-
-      <section class="atlas-sources compare-credit" aria-labelledby="compare-credit-title">
-        <h2 id="compare-credit-title">Uma adaptação autorizada de 12 Axes</h2>
-        <p>Os perfis, vetores, descrições e recomendações de leitura deste catálogo foram reproduzidos do projeto <a href="https://12axes.vercel.app/" target="_blank" rel="noopener noreferrer">12 Axes</a>, criado por Enzo Xavier Santos, com autorização escrita do autor. A interface, a navegação e a redação de apresentação foram adaptadas à King's Newsletter.</p>
-        <p>As posições nos doze eixos são sínteses editoriais aproximadas. Não representam apoio, filiação, recomendação de voto nem uma descrição definitiva de pessoas, partidos ou sociedades. Conceitos com perfil parcial são comparados apenas nos eixos em que há posição definida.</p>
-        <p class="compare-credit-links"><a href="https://github.com/RomanCypherpunk/12axes" target="_blank" rel="noopener noreferrer">Repositório e documentação de 12 Axes</a> <a href="/teste-politico">Fazer o quiz político</a></p>
+        <div class="source-list">
+          <a href="/teste-politico" rel="noopener noreferrer">Fazer o teste e comparar com o seu perfil</a>
+          <a href="/catalogo-politico" rel="noopener noreferrer">Voltar ao catálogo político</a>
+        </div>
       </section>
     </main>
 
     <div id="footer"></div>
   </div>
 
+  <dialog class="atlas-dialog catalog-dialog" id="catalog-dialog" aria-labelledby="catalog-dialog-title"></dialog>
+  <dialog class="compare-axis-dialog" id="compare-axis-dialog" aria-labelledby="compare-axis-dialog-title"></dialog>
+
   <script src="/js/accordion-motion.js"></script>
   <script src="/js/sidebar.js"></script>
   <script src="/js/footer.js"></script>
+  <script src="/js/axis-icons.js"></script>
+  <script src="/js/political-catalogs.js"></script>
   <script src="/js/political-compare.js"></script>
 </body>
 </html>

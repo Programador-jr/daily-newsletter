@@ -8,24 +8,15 @@
     .ideology-hero,
     .atlas-hero,
     .catalog-hero,
-    .compare-hero,
     .quiz-hero
   ) {
   max-width: 860px;
-}
-.history-page .section-heading {
-  display: flex;
-  justify-content: space-evenly;
-  gap: 1rem;
-  flex-wrap: wrap-reverse;
-  flex-direction: column;
 }
 .history-page
   :is(
     .civic-section,
     .ideology-section,
     .atlas-section,
-    .compare-section,
     .quiz-section
   ) {
   margin-bottom: 3rem;

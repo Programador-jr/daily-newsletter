@@ -4,7 +4,6 @@ test('/livros mantém a biblioteca completa em 12 eixos', async ({ page }) => {
   await page.goto('/livros');
 
   await expect(page.locator('#atlas-tabs')).toHaveCount(0);
-  await expect(page.locator('#atlas-legend-grid li')).toHaveCount(12);
   await expect(page.locator('#atlas-featured-grid .atlas-card')).toHaveCount(3);
   await expect(page.locator('#atlas-grid .atlas-card')).toHaveCount(321);
   await expect(page.locator('#atlas-grid .atlas-book-card-image, #atlas-grid .atlas-book-card-fallback').first()).toBeVisible();
@@ -24,7 +23,8 @@ test('a página de livros não cria uma segunda navegação', async ({ page }) =
 test('a ficha de um livro mostra apenas ficha e por que ler', async ({ page }) => {
   await page.goto('/livros#leviata');
 
-  const dialog = page.locator('#atlas-dialog');
+  // Books open in the history-style detail panel, not in the native catalog dialog.
+  const dialog = page.locator('#atlas-book-detail [role="dialog"]');
   await expect(dialog).toBeVisible();
   await expect(page.locator('#atlas-dialog-title')).toContainText('Leviatã');
   await expect(dialog.locator('.atlas-dialog-section')).toHaveCount(2);

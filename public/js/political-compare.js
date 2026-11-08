@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const MAX_PROFILES = 3;
   const SERIES = ["a", "b", "c"];
+  const axisIcons = globalThis.AxisIcons;
   const GROUP_ALIASES = {
     personality: "personalidades",
     personalities: "personalidades",
@@ -122,7 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let valueGroupsById = new Map();
   let ideologyNameById = new Map();
   let placeNameById = new Map();
-  let placeById = new Map();
   let optionButtons = [];
   let elements;
 
@@ -156,6 +156,16 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const icon = (name) => el("i", { class: `fas ${name}`, "aria-hidden": "true" });
+
+  // Same **bold** convention used by the axis explanations in the 12 Axes result dialog.
+  const richText = (text) => {
+    const value = String(text ?? "");
+    const normalized = /^[a-zà-ÿ]/.test(value) ? value.charAt(0).toLocaleUpperCase("pt-BR") + value.slice(1) : value;
+    return normalized
+      .split(/(\*\*[^*]+\*\*)/g)
+      .filter(Boolean)
+      .map((part) => (part.startsWith("**") && part.endsWith("**") ? el("strong", { text: part.slice(2, -2) }) : part));
+  };
 
   const initials = (name) => {
     const words = String(name || "")
@@ -495,11 +505,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const id = encodeURIComponent(entry.item.id);
     if (entry.group === "ideologias") return `/catalogo-politico#${id}`;
     if (entry.group === "valores") return `/catalogo-politico?catalogo=valores#valor-${id}`;
-    if (entry.group === "personalidades") return `/catalogo-politico?catalogo=personalidades#${id}`;
-    if (entry.group === "paises") return `/catalogo-politico?catalogo=paises#${id}`;
-    if (entry.group === "regimes") return `/catalogo-politico?catalogo=paises#${id}`;
-    return `/catalogo-politico?catalogo=partidos#${id}`;
+    if (entry.group === "personalidades") return `/personalidades#${id}`;
+    if (entry.group === "paises") return `/paises#${id}`;
+    if (entry.group === "regimes") return `/paises#${id}`;
+    return `/partidos#${id}`;
   };
+
+  const axisInfoButton = (axis, text, className = "compare-axis-info-trigger") =>
+    el("button", {
+      class: className,
+      type: "button",
+      "data-axis-info": axis.id,
+      "aria-label": `Ver explicação do eixo ${axis.name}`,
+      text
+    });
 
   const buildGroups = () => [
     {
@@ -805,7 +824,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }),
         `Perfil ${index + 1}`
       ),
-      el("a", { class: "compare-profile-link", href: catalogUrlFor(entry), text: "Ficha no catálogo" })
+      el(
+        "a",
+        { class: "compare-profile-link", href: catalogUrlFor(entry) },
+        el("span", { text: "Ver ficha" }),
+        icon("fa-arrow-right")
+      )
     );
 
     card.append(remove, main, foot);
@@ -919,7 +943,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const createCard = ({ kicker, heading, text, values, className, href }) => {
       const card = el("article", { class: `compare-readout-card${className ? ` ${className}` : ""}` });
       const title = el("h4");
-      if (href) title.append(el("a", { href, text: heading }));
+       if (href) title.append(axisInfoButton({ id: href.split("#eixo-")[1], name: heading }, heading, "compare-readout-axis-trigger"));
       else title.textContent = heading;
       card.append(el("span", { class: "compare-kicker", text: kicker }), title, el("p", { text }));
       if (values?.length) {
@@ -937,7 +961,7 @@ document.addEventListener("DOMContentLoaded", () => {
         heading: agreement.axis.name,
         text: `A amplitude entre as posições é de ${formatPoints(agreement.spread)} neste eixo.`,
         values: agreement.points.map((point) => ({ ...point, entry: point.entry })),
-        href: `/teste-politico#eixo-${agreement.axis.id}`
+         href: `/teste-politico#eixo-${agreement.axis.id}`
       }));
     }
     if (divergence) {
@@ -946,7 +970,7 @@ document.addEventListener("DOMContentLoaded", () => {
         heading: divergence.axis.name,
         text: `A amplitude entre as posições é de ${formatPoints(divergence.spread)} neste eixo.`,
         values: divergence.points.map((point) => ({ ...point, entry: point.entry })),
-        href: `/teste-politico#eixo-${divergence.axis.id}`
+         href: `/teste-politico#eixo-${divergence.axis.id}`
       }));
     }
     readoutCards.push(createCard({
@@ -965,15 +989,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const renderAxes = (stats) => {
     elements.axes.replaceChildren();
     stats.forEach((stat) => {
-      const row = el("div", { class: `compare-axis${stat.opposite ? " is-opposite" : ""}` });
+      const row = el("article", { class: `compare-axis${stat.opposite ? " is-opposite" : ""}` });
+      row.dataset.axis = stat.axis.id;
+      row.style.setProperty("--axis-color", "var(--primary)");
+      row.style.setProperty("--axis-a-color", stat.axis.aColor || "var(--primary)");
+      row.style.setProperty("--axis-b-color", stat.axis.bColor || "var(--compare-b)");
       const note = stat.spread == null
         ? "Comparação parcial"
       : `${formatPoints(stat.spread)} de amplitude${stat.opposite ? ", em lados opostos" : ""}`;
       const head = el(
         "div",
         { class: "compare-axis-head" },
-        el("h4", {}, el("a", { href: `/teste-politico#eixo-${stat.axis.id}`, text: stat.axis.name })),
-        el("span", { text: note })
+        el("span", { class: "compare-axis-name" },
+          el("strong", {}, axisInfoButton(stat.axis, stat.axis.name, "compare-axis-name-trigger")),
+          axisInfoButton(stat.axis, "?", "compare-axis-help")
+        ),
+        el("span", { class: "compare-axis-note", text: note })
       );
 
       const track = el("div", {
@@ -992,7 +1023,7 @@ document.addEventListener("DOMContentLoaded", () => {
           class: `compare-marker is-series-${point.index}`,
           title: `${point.entry.name}: ${formatPercent(point.value)}`
         });
-        marker.style.setProperty("--marker", `var(--compare-${SERIES[point.index]})`);
+        marker.style.setProperty("--axis-color", `var(--compare-${SERIES[point.index]})`);
         marker.style.setProperty("left", `${100 - point.value}%`);
         marker.setAttribute("aria-hidden", "true");
         track.append(marker);
@@ -1002,8 +1033,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const poles = el(
         "div",
         { class: "compare-poles" },
-        el("span", { text: stat.axis.a }),
-        el("span", { text: stat.axis.b })
+        ...["a", "b"].map((pole) => {
+          const node = el("span", {});
+          if (axisIcons?.create) node.append(axisIcons.create(stat.axis.id, pole, 14));
+          node.append(document.createTextNode(stat.axis[pole]));
+          return node;
+        })
       );
 
       const values = el("div", { class: "compare-values" });
@@ -1063,49 +1098,78 @@ document.addEventListener("DOMContentLoaded", () => {
     el("span", {}, "Mais perto de ", el("strong", { text: entry.name }))
   );
 
-  const partyFlag = (entry) => {
-    if (entry.group !== "partidos") return null;
-    const place = placeById.get(entry.item.paisId);
-    if (!place?.imagePath) return null;
-    return el("img", {
-      class: "compare-near-flag",
-      src: place.imagePath,
-      alt: `Bandeira de ${nameOf(place)}`,
-      loading: "lazy"
-    });
-  };
-
-  const nearCard = (target, ranked, targetIndex, kind) => {
+  const nearCard = (target, ranked, kind) => {
     const [top, ...also] = ranked;
     if (!top) return null;
     const card = el("article", { class: `compare-near-card is-${kind}` });
-    card.style.setProperty("--target-color", `var(--compare-${SERIES[targetIndex]})`);
+    const image = imageInfoFor(top.entry);
+    const item = top.entry.item;
+
+    if (image.path) {
+      const visual = el("figure", {
+        class: `compare-near-visual${image.variant ? ` ${image.variant}` : ""}`
+      });
+      const imageElement = el("img", {
+        src: image.path,
+        alt: image.alt,
+        loading: "lazy",
+        decoding: "async"
+      });
+      if (item.imageNote) imageElement.title = item.imageNote;
+      imageElement.addEventListener("error", () => visual.remove(), { once: true });
+      visual.append(imageElement);
+
+      const isLogo = Boolean(item.logoPath);
+      const credit = isLogo ? item.logoSourceName : item.imageCredit;
+      const creditUrl = isLogo ? item.logoSourceUrl : item.imageSourceUrl;
+      if (credit) {
+        const caption = el("figcaption", {}, `Imagem: ${credit}`);
+        if (creditUrl) {
+          caption.append(
+            document.createTextNode(" · "),
+            el("a", {
+              href: creditUrl,
+              target: "_blank",
+              rel: "noopener noreferrer",
+              text: "origem"
+            })
+          );
+        }
+        visual.append(caption);
+      }
+      card.append(visual);
+    } else if (isUnverifiedImage(item)) {
+      const note = el(
+        "p",
+        { class: "compare-image-note" },
+        "Imagem não exibida: licença não verificada."
+      );
+      if (item.imageSourceUrl) {
+        note.append(
+          document.createTextNode(" "),
+          el("a", {
+            href: item.imageSourceUrl,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            text: "Ver origem"
+          })
+        );
+      }
+      card.append(note);
+    }
 
     const info = el(
       "div",
       { class: "compare-near-info" },
       el(
-        "span",
-        { class: "compare-near-tags" },
-        partyFlag(top.entry),
-        el("span", {
-          class: "compare-match-pill",
-          text: `${formatMatchPercent(top.score)} match`
-        })
+        "div",
+        { class: "compare-near-title" },
+        el("h4", {}, el("a", { href: catalogUrlFor(top.entry), text: top.entry.name })),
+        el("span", { text: `${formatMatchPercent(top.score)} de proximidade` })
       ),
-      el("h4", {}, el("a", { href: catalogUrlFor(top.entry), text: top.entry.name })),
       el("span", { class: "compare-near-meta", text: nearMetaFor(top.entry) })
     );
-
-    const main = el(
-      "div",
-      { class: "compare-near-main" },
-      el("div", { class: "compare-near-visual" }, avatarFor(top.entry)),
-      info,
-      matchRing(top.score, top.entry.color, "sm")
-    );
-
-    card.append(nearWho(target), main);
+    card.append(nearWho(target), info);
 
     if (also.length) {
       const list = el("ol", { class: "compare-near-list" });
@@ -1117,7 +1181,7 @@ document.addEventListener("DOMContentLoaded", () => {
           el("span", { text: formatMatchPercent(score) })
         ));
       });
-      card.append(
+      info.append(
         el(
           "div",
           { class: "compare-near-also" },
@@ -1126,15 +1190,26 @@ document.addEventListener("DOMContentLoaded", () => {
         )
       );
     }
+
+    info.append(
+      el(
+        "div",
+        { class: "compare-near-actions" },
+        el("a", {
+          class: "compare-near-link catalog-card-cta",
+          href: catalogUrlFor(top.entry),
+        }, el("span", { text: "Ver ficha" }), icon("fa-arrow-right"))
+      )
+    );
     return card;
   };
 
   const renderNearCards = (host, pool, kind) => {
     host.replaceChildren();
     const available = pool.filter((entry) => !isSelected(entry.key));
-    state.selected.forEach((target, index) => {
+    state.selected.forEach((target) => {
       const ranked = rankEntries(target, available, 3);
-      const card = nearCard(target, ranked, index, kind);
+      const card = nearCard(target, ranked, kind);
       if (card) host.append(card);
     });
     if (!host.children.length) {
@@ -1306,7 +1381,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "aria-hidden": "true"
     });
     marker.style.setProperty("--marker", `var(--compare-${SERIES[index]})`);
-    marker.style.setProperty("--compass-color", compass.region?.base || "#4B5058");
     const { path, alt, variant } = imageInfoFor(entry);
     const fallback = el("span", {
       class: "compare-compass-initials",
@@ -1359,8 +1433,8 @@ document.addEventListener("DOMContentLoaded", () => {
     );
     compasses.forEach(({ entry, index, compass }) => {
       const marker = compassMarker(entry, index, compass);
-      marker.style.left = `${clamp(4, 96, compass.right)}%`;
-      marker.style.top = `${clamp(4, 96, 100 - compass.authoritarian)}%`;
+      marker.style.left = `${clamp(7, 93, compass.right)}%`;
+      marker.style.top = `${clamp(7, 93, 100 - compass.authoritarian)}%`;
       marker.style.zIndex = String(3 + index);
       grid.append(marker);
     });
@@ -1420,7 +1494,6 @@ document.addEventListener("DOMContentLoaded", () => {
     compasses.forEach(({ entry, index, compass }) => {
       const marker = compassMarker(entry, index, compass, "is-strip");
       marker.style.left = `${clamp(4, 96, compass.traditional)}%`;
-      marker.style.background = compass.socialColor;
       marker.style.zIndex = String(3 + index);
       strip.append(marker);
     });
@@ -1435,7 +1508,7 @@ document.addEventListener("DOMContentLoaded", () => {
       })
     );
 
-    host.append(el("div", { class: "compare-compass-layout" }, chart, read));
+    host.append(el("div", { class: "compare-compass-body" }, chart, read));
   };
 
   const renderResults = () => {
@@ -1473,6 +1546,56 @@ document.addEventListener("DOMContentLoaded", () => {
     elements.input.removeAttribute("aria-activedescendant");
     state.activeIndex = -1;
     optionButtons.forEach((button) => button.classList.remove("is-active"));
+  };
+
+  const openAxisInfo = (axisId) => {
+    const dialog = elements.axisDialog;
+    const axis = data?.axes?.find((item) => item.id === axisId);
+    if (!dialog || !axis) return;
+    const close = el("button", {
+      class: "compare-axis-dialog-close",
+      type: "button",
+      "aria-label": "Fechar explicação do eixo"
+    }, el("i", { class: "fas fa-xmark", "aria-hidden": "true" }));
+    close.addEventListener("click", () => dialog.close());
+    const block = (heading, content) =>
+      el("section", { class: "compare-axis-dialog-block" }, el("h3", {}, icon("fa-circle-info"), el("span", { text: heading })), content);
+    const pole = (key) => {
+      const name = el("strong", {});
+      if (axisIcons?.create) name.append(axisIcons.create(axis.id, key, 16));
+      name.append(document.createTextNode(axis[key]));
+      return el("article", {}, name, axis[`${key}Desc`] ? el("p", { text: axis[`${key}Desc`] }) : null);
+    };
+    const body = el(
+      "div",
+      { class: "compare-axis-dialog-body" },
+      block("O que mede", el("p", {}, richText(axis.description || "Este eixo compara duas formas de organizar a vida política."))),
+      block("Os dois polos", el("div", { class: "compare-axis-dialog-poles" }, pole("a"), pole("b"))),
+      axis.explanation?.topics ? block("Temas avaliados", el("p", {}, richText(axis.explanation.topics))) : null,
+      axis.explanation?.operationalization
+        ? block("Como as afirmações medem o eixo", el("p", {}, richText(axis.explanation.operationalization)))
+        : null,
+      el(
+        "div",
+        { class: "compare-axis-dialog-footer" },
+        el(
+          "a",
+          { class: "compare-axis-dialog-link", href: `/teste-politico#eixo-${encodeURIComponent(axis.id)}` },
+          "Ver no guia dos 12 eixos",
+          icon("fa-arrow-right")
+        )
+      )
+    );
+    const heading = el(
+      "div",
+      { class: "compare-axis-dialog-heading" },
+      el("span", { class: "eyebrow", text: "Eixo político" }),
+      el("h2", { id: "compare-axis-dialog-title", text: axis.name }),
+      axis.pergunta ? el("p", { class: "compare-axis-dialog-subtitle", text: axis.pergunta }) : null
+    );
+    dialog.replaceChildren(el("div", { class: "compare-axis-dialog-shell" }, el("div", { class: "compare-axis-dialog-head" }, heading, close), body));
+    if (!dialog.open) dialog.showModal();
+    close.focus({ preventScroll: true });
   };
 
   const setActive = (index) => {
@@ -1735,6 +1858,15 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const bindEvents = () => {
+    document.addEventListener("click", (event) => {
+      const trigger = event.target.closest?.("[data-axis-info]");
+      if (!trigger) return;
+      event.preventDefault();
+      openAxisInfo(trigger.dataset.axisInfo);
+    });
+    elements.axisDialog.addEventListener("click", (event) => {
+      if (event.target === elements.axisDialog) elements.axisDialog.close();
+    });
     elements.input.addEventListener("input", () => {
       state.query = elements.input.value;
       renderSuggestions();
@@ -1802,7 +1934,8 @@ document.addEventListener("DOMContentLoaded", () => {
       partyTabs: document.getElementById("compare-party-tabs"),
       parties: document.getElementById("compare-parties"),
       values: document.getElementById("compare-values"),
-      compass: document.getElementById("compare-compass-content")
+      compass: document.getElementById("compare-compass-content"),
+      axisDialog: document.getElementById("compare-axis-dialog")
     };
   };
 
@@ -1824,10 +1957,6 @@ document.addEventListener("DOMContentLoaded", () => {
       placeNameById = new Map(
         [...(data.profiles.countries || []), ...(data.profiles.regimes || [])]
           .map((place) => [place.id, nameOf(place)])
-      );
-      placeById = new Map(
-        [...(data.profiles.countries || []), ...(data.profiles.regimes || [])]
-          .map((place) => [place.id, place])
       );
       groups = buildGroups();
       buildEntries();

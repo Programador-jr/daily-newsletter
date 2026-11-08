@@ -12,7 +12,6 @@
 .dedicated-personalities-page .catalog-hero {
   max-width: none;
   padding: 3rem var(--catalog-content-gutter) 2rem;
-  border-bottom: 1px solid var(--border);
 }
 
 .dedicated-personalities-page .catalog-hero h1 {
@@ -71,12 +70,8 @@
 
 .dedicated-personalities-page .catalog-personality-spectrum {
   display: grid;
-  gap: .65rem;
-  margin: 0 var(--catalog-content-gutter) 1.25rem;
-  padding: .9rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 11px;
-  background: var(--card-bg);
+  gap: .6rem;
+  margin-top: .8rem;
 }
 
 .dedicated-personalities-page .catalog-personality-spectrum .atlas-book-spectrum-label {
@@ -140,10 +135,10 @@
 .dedicated-personalities-page .atlas-featured-head,
 .dedicated-personalities-page .catalog-section .section-heading {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1rem;
+  flex-wrap: wrap-reverse;
+  flex-direction: column;
 }
 
 .dedicated-personalities-page .atlas-featured-head h2,
@@ -254,28 +249,6 @@
   margin: 0;
 }
 
-.dedicated-personalities-page .catalog-personality-card .catalog-card-cta {
-  display: flex;
-  min-height: 2.6rem;
-  align-items: center;
-  justify-content: center;
-  gap: .5rem;
-  margin: 0;
-  padding: .6rem .8rem;
-  border: 1px solid var(--primary);
-  border-radius: 6px;
-  background: transparent;
-  color: var(--primary);
-  font-size: .76rem;
-  font-weight: 700;
-  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
-}
-
-.dedicated-personalities-page .catalog-personality-card:hover .catalog-card-cta,
-.dedicated-personalities-page .catalog-personality-card:focus-visible .catalog-card-cta {
-  background: color-mix(in srgb, var(--primary) 10%, transparent);
-}
-
 .dedicated-personalities-page .catalog-notice {
   margin: 0 var(--catalog-content-gutter) 1rem;
   padding: .8rem 1rem;
@@ -319,20 +292,6 @@
   max-height: 340px;
   object-fit: cover;
   object-position: center 18%;
-}
-
-.dedicated-personalities-page .catalog-profile-dialog .catalog-country-kpis {
-  align-items: stretch;
-}
-
-.dedicated-personalities-page .catalog-profile-dialog .catalog-country-kpis > span {
-  min-width: 110px;
-  max-width: 100%;
-}
-
-.dedicated-personalities-page .catalog-profile-dialog .catalog-country-kpis b {
-  overflow-wrap: anywhere;
-  line-height: 1.4;
 }
 
 .dedicated-personalities-page .catalog-profile-dialog .catalog-profile-tab-panel {

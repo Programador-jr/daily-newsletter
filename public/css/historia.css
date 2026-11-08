@@ -1886,7 +1886,7 @@
 .constitution-highlight > p {
   max-width: 850px;
   margin: .4rem 0 .85rem;
-  color: var(--text-main);
+  color: var(--text-muted);
   font-size: .9rem;
   line-height: 1.7;
 }

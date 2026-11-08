@@ -1,7 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
-    { "source": "/valores", "destination": "/catalogo-politico?catalogo=valores", "permanent": true }
+    { "source": "/valores", "destination": "/catalogo-politico?catalogo=valores", "permanent": true },
+    { "source": "/catalogo-politico", "has": [{ "type": "query", "key": "catalogo", "value": "personalidades" }], "destination": "/personalidades", "permanent": true },
+    { "source": "/catalogo-politico", "has": [{ "type": "query", "key": "catalogo", "value": "paises" }], "destination": "/paises", "permanent": true },
+    { "source": "/catalogo-politico", "has": [{ "type": "query", "key": "catalogo", "value": "partidos" }], "destination": "/partidos", "permanent": true }
   ],
   "rewrites": [
     { "source": "/api/admin/login", "destination": "/api/control?route=admin/login" },

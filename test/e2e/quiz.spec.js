@@ -394,7 +394,7 @@ test('o resultado aponta para o catálogo completo sem expandir os perfis', asyn
   const figuresGroup = page.locator('.quiz-match-group').nth(1);
   await expect(figuresGroup.locator('.quiz-all-matches')).toHaveCount(0);
   await expect(figuresGroup.locator('.quiz-match-grid').first().locator('.quiz-match-card')).toHaveCount(3);
-  await expect(figuresGroup.getByRole('link', { name: 'Ver os 667 no catálogo completo' })).toHaveAttribute('href', '/catalogo-politico?catalogo=personalidades');
+  await expect(figuresGroup.getByRole('link', { name: 'Ver os 667 no catálogo completo' })).toHaveAttribute('href', '/personalidades');
 });
 
 test('o guia explica os doze eixos políticos', async ({ page }) => {

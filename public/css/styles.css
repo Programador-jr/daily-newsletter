@@ -540,7 +540,7 @@ main h4 {
 }
 
 .story .context {
-  color: var(--text-main);
+  color: var(--text-muted);
   font-size: 0.9rem;
 }
 
@@ -1747,9 +1747,6 @@ body.sidebar-open {
   gap: 0.65rem;
   min-width: 0;
 }
-.header-main-nav-editions {
-  gap: 0.8rem;
-}
 .site-header .header-main-nav .theme-toggle {
   display: inline-flex;
   align-items: center;
@@ -1820,9 +1817,6 @@ body.sidebar-open {
   }
   .site-header .header-main-nav {
     display: flex;
-  }
-  .site-header .nav-search {
-    display: none;
   }
 }
 @media (max-width: 480px) {
@@ -2013,12 +2007,28 @@ body.sidebar-open {
     padding-inline: 0.55rem;
   }
 
+  /* Em Edições a busca ocupa o espaço livre entre a marca e o menu. */
+  .site-header:has(> .header-main-nav-editions) {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
   .header-main-nav-editions .nav-search {
-    display: none;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 420px;
   }
 }
 
 @media (max-width: 680px) {
+  .header-main-nav-editions .nav-search input {
+    padding-left: 2.25rem;
+    font-size: 1rem;
+  }
+
+  .header-main-nav-editions .nav-search i {
+    left: 0.85rem;
+  }
+
   .header-primary-links {
     display: none;
   }

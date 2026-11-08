@@ -39,7 +39,7 @@ test('sidebar is persistent and complete on every desktop screen', async ({ page
     const headerLinks = page.locator('.header-primary-links a');
 
     await expect(sidebar, route).toBeVisible();
-    await expect(sidebar.locator('a')).toHaveCount(24);
+    await expect(sidebar.locator('a')).toHaveCount(25);
     await expect(headerLinks, route).toHaveCount(0);
     await expect(page.locator('.header-nav-actions #theme-toggle')).toBeVisible();
     await expect(sidebar.locator('#theme-toggle')).toHaveCount(0);
@@ -57,14 +57,15 @@ test('sidebar is persistent and complete on every desktop screen', async ({ page
 
 test('os atalhos de catálogo abrem as páginas dedicadas', async ({ page }) => {
   const dedicatedPages = [
-    ['/personalidades', 'personalidades', 'Personalidades'],
-    ['/paises', 'paises', 'Países e regimes'],
-    ['/partidos', 'partidos', 'Partidos']
+    ['/personalidades', 'Personalidades'],
+    ['/paises', 'Países e regimes'],
+    ['/partidos', 'Partidos'],
+    ['/comparar', 'Comparar perfis']
   ];
-  for (const [path, tab, label] of dedicatedPages) {
+  for (const [path, label] of dedicatedPages) {
     await page.goto(path);
     await expect(page).toHaveURL(new RegExp(`${path}$`));
-    const activeLink = page.locator(`#site-sidebar a[data-sidebar-catalog="${tab}"]`);
+    const activeLink = page.locator(`#site-sidebar a[href="${path}"]`);
     await expect(activeLink).toContainText(label);
     await expect(activeLink).toHaveAttribute('aria-current', 'page');
     await expect(page.locator('#site-sidebar a[href="/catalogo-politico"]')).not.toHaveAttribute('aria-current', 'page');
@@ -94,6 +95,21 @@ test('sidebar remains a drawer on small screens', async ({ page }) => {
     await expect(sidebar, route).toBeHidden();
     await expect(openButton, route).toHaveAttribute('aria-expanded', 'false');
   }
+});
+
+test('editions search stays visible on small screens and only on editions', async ({ page }) => {
+  for (const width of [320, 390, 768, 1024]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('/editions', { waitUntil: 'domcontentloaded' });
+    const search = page.locator('#search-input');
+    await expect(search, `${width}px`).toBeVisible();
+    await expect(page.locator('#sidebar-toggle'), `${width}px`).toBeVisible();
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow, `${width}px`).toBeLessThanOrEqual(0);
+  }
+
+  await page.goto('/comparar', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#search-input')).toBeHidden();
 });
 
 test('theme choice is available in the desktop header and persists across pages', async ({ page }) => {

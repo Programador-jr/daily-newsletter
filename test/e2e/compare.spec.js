@@ -15,7 +15,10 @@ test('comparação direta mostra os 12 eixos e a compatibilidade par a par', asy
   await expect(page.locator('#compare-results')).toBeVisible();
   await expect(page.locator('.compare-axis')).toHaveCount(12);
   await expect(page.locator('.compare-axis .compare-marker')).toHaveCount(36);
+  await expect(page.locator('.compare-axis .compare-poles .axis-icon')).toHaveCount(24);
+  await expect(page.locator('.compare-axis .compare-axis-help')).toHaveCount(12);
   await expect(page.locator('.compare-axis .compare-value')).toHaveCount(36);
+  await expect(page.locator('#compare-compass .compare-compass-body')).toHaveCount(1);
   await expect(page.locator('.compare-pair')).toHaveCount(3);
   await expect(page.locator('.compare-pair-score')).toHaveCount(3);
   await expect(page.locator('#compare-summary')).toContainText('Social-democracia');
@@ -81,22 +84,22 @@ test('fichas do catálogo apontam para o comparador', async ({ page }) => {
       shell: '.catalog-profile-shell'
     },
     {
-      url: '/catalogo-politico?catalogo=paises#brasil',
+      url: '/paises#brasil',
       token: 'paises:brasil',
       shell: '.catalog-profile-shell'
     },
     {
-      url: '/catalogo-politico?catalogo=paises#uniao-sovietica',
+      url: '/paises#uniao-sovietica',
       token: 'regimes:uniao-sovietica',
       shell: '.catalog-profile-shell'
     },
     {
-      url: '/catalogo-politico?catalogo=personalidades#angela-davis',
+      url: '/personalidades#angela-davis',
       token: 'personalidades:angela-davis',
       shell: '.catalog-profile-shell'
     },
     {
-      url: '/catalogo-politico?catalogo=partidos#pt',
+      url: '/partidos#pt',
       token: 'partidos:pt',
       shell: '.catalog-profile-shell'
     },
@@ -122,6 +125,34 @@ test('fichas do catálogo apontam para o comparador', async ({ page }) => {
   await expect(page).toHaveURL(/\/comparar\?perfis=ideologias:social-democracia/);
   await expect(page.locator('.compare-profile')).toHaveCount(1);
   await expect(page.locator('#compare-empty')).toBeVisible();
+});
+
+test('fichas de proximidade abrem sem sair da comparação', async ({ page }) => {
+  await page.goto('/comparar?perfis=ideologias:social-democracia,personalidades:angela-davis');
+
+  const link = page.locator('#compare-personalities .compare-near-link').first();
+  await expect(link).toBeVisible();
+  const currentUrl = page.url();
+  await link.click();
+
+  await expect(page).toHaveURL(currentUrl);
+  await expect(page.locator('#catalog-dialog')).toBeVisible();
+  await expect(page.locator('#catalog-dialog .catalog-profile-shell')).toBeVisible();
+  await expect(page.locator('#catalog-dialog h1')).not.toHaveText('');
+  await page.locator('#catalog-dialog .catalog-profile-close').click();
+  await expect(page.locator('#catalog-dialog')).toBeHidden();
+  await expect(page.locator('#compare-personalities .compare-near-link').first()).toHaveText('Ver ficha');
+});
+
+test('explicação de cada eixo abre na própria comparação', async ({ page }) => {
+  await page.goto('/comparar?perfis=ideologias:social-democracia,personalidades:angela-davis');
+
+  await page.locator('.compare-axis-help').first().click();
+  await expect(page).toHaveURL(/comparar\?perfis=/);
+  await expect(page.locator('#compare-axis-dialog')).toBeVisible();
+  await expect(page.locator('#compare-axis-dialog-title')).toHaveText('Estrutura');
+  await expect(page.locator('.compare-axis-dialog-poles')).toContainText('Federal');
+  await expect(page.locator('.compare-axis-dialog-poles')).toContainText('Unitário');
 });
 
 test('links no formato do 12 Axes abrem a mesma comparação', async ({ page }) => {
@@ -195,6 +226,9 @@ test('seções de proximidade mostram ideologia, países, personalidades e parti
   const currentCountries = page.locator('#compare-countries .compare-near-info h4');
   await expect(currentCountries).toHaveText(['Ucrânia', 'África do Sul']);
   await expect(page.locator('#compare-countries .compare-near-also')).toHaveCount(2);
+  await expect(page.locator('#compare-countries.compare-near-grid .compare-near-card')).toHaveCount(2);
+  await expect(page.locator('#compare-personalities.compare-near-grid .compare-near-card')).toHaveCount(2);
+  await expect(page.locator('#compare-parties.compare-near-grid .compare-near-card')).toHaveCount(2);
 
   await page.locator('#compare-country-tabs [data-mode="historical"]').click();
   await expect(page.locator('#compare-country-tabs [data-mode="historical"]')).toHaveAttribute(

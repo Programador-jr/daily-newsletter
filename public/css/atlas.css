@@ -217,6 +217,35 @@
   margin-top: auto;
   padding-top: 0.65rem;
 }
+/* Card call to action ("Ver perfil", "Ver ficha"): catalog cards and the comparator. */
+.catalog-card-cta {
+  display: flex;
+  min-height: 2.6rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--primary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+.catalog-card-cta:hover,
+.catalog-card-cta:focus-visible,
+.atlas-card:hover .catalog-card-cta,
+.atlas-card:focus-visible .catalog-card-cta {
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .catalog-card-cta {
+    transition: none;
+  }
+}
 .atlas-dialog {
   width: min(980px, calc(100vw - 2rem));
   max-height: min(92vh, 1000px);
@@ -439,7 +468,6 @@
   gap: .75rem;
   margin: 0 3rem 1.5rem;
   padding: .85rem;
-  border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--card-bg);
   flex-direction: row-reverse;
@@ -652,7 +680,6 @@
   position: relative;
   display: flex;
   align-items: center;
-  width: min(300px, 100%);
   flex: 300px;
   min-width: 0;
   min-height: 42px;

@@ -98,7 +98,12 @@ app.get('/resultado-politico', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/results-12axes.html'));
 });
 
+// Personalidades, países e partidos têm páginas próprias; links antigos do catálogo são redirecionados.
+const DEDICATED_CATALOG_PAGES = new Set(['personalidades', 'paises', 'partidos']);
+
 app.get('/catalogo-politico', (req, res) => {
+  const legacyTab = typeof req.query.catalogo === 'string' ? req.query.catalogo : '';
+  if (DEDICATED_CATALOG_PAGES.has(legacyTab)) return res.redirect(301, `/${legacyTab}`);
   res.sendFile(path.join(__dirname, 'public/catalogo-politico.html'));
 });
 

@@ -636,10 +636,19 @@ document.addEventListener("DOMContentLoaded", () => {
     values: "valores"
   };
 
-  const catalogProfileUrl = (group, item) => {
-    const tab = CATALOG_TABS[group] || "ideologias";
-    return `/catalogo-politico?catalogo=${tab}#${encodeURIComponent(item.id)}`;
+  // Ideologias e valores ficam no catálogo político; as demais categorias têm página própria.
+  const CATALOG_PAGES = {
+    ideologias: "/catalogo-politico?catalogo=ideologias",
+    valores: "/catalogo-politico?catalogo=valores",
+    personalidades: "/personalidades",
+    paises: "/paises",
+    partidos: "/partidos"
   };
+
+  const catalogPageUrl = (tab) => CATALOG_PAGES[tab] || CATALOG_PAGES.ideologias;
+
+  const catalogProfileUrl = (group, item) =>
+    `${catalogPageUrl(CATALOG_TABS[group])}#${encodeURIComponent(item.id)}`;
 
   const appendRichText = (container, text) => {
     const value = String(text ?? "");
@@ -2035,7 +2044,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!options.compact && ranked.length > 3) {
       const catalogLink = document.createElement("a");
       catalogLink.className = "quiz-catalog-link";
-      catalogLink.href = `/catalogo-politico?catalogo=${options.catalogKey}`;
+      catalogLink.href = catalogPageUrl(options.catalogKey);
       catalogLink.textContent = `Ver os ${ranked.length} no catálogo completo`;
       section.append(catalogLink);
     }

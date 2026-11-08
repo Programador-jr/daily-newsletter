@@ -3,14 +3,19 @@
  * Page-specific styles consume these values during the modal migration.
  */
 :root {
-  --kn-component-overlay: rgb(0 0 0 / 100%);
+  --kn-component-overlay: #edf4f1;
   --kn-component-overlay-blur: 3px;
   --kn-component-surface: var(--card-bg, var(--bg-container));
   --kn-component-border: var(--border);
   --kn-component-radius: 12px;
-  --kn-component-shadow: 0 20px 60px rgb(0 0 0 / 18%);
+  --kn-component-shadow: 0 20px 60px rgba(255, 255, 255, 0.18);
   --kn-component-transition: 180ms ease;
   --kn-component-enter-transition: 220ms cubic-bezier(.2, .75, .25, 1);
+}
+
+[data-theme="dark"] {
+  --kn-component-overlay: rgb(0 0 0 / 100%);
+  --kn-component-shadow: 0 20px 60px rgb(0 0 0 / 18%);
 }
 
 /*
@@ -43,6 +48,29 @@
     --kn-component-transition: 0ms;
     --kn-component-enter-transition: 0ms;
   }
+}
+
+.source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1.1rem;
+}
+
+.source-list a {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.source-list a:hover {
+  border-color: var(--primary);
+  background-color: color-mix(in srgb, var(--primary) 5%, var(--bg-container));
 }
 
 /* Shared modal shell used by editorial detail panels. */

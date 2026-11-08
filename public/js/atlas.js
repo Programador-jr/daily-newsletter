@@ -16,9 +16,9 @@
 
   const COLECOES = {
     ideologias: { caminho: "/catalogo-politico?catalogo=ideologias", rotulo: "Ideologia", plural: "Ideologias" },
-    personalidades: { caminho: "/catalogo-politico?catalogo=personalidades", rotulo: "Personalidade", plural: "Personalidades" },
-    paises: { caminho: "/catalogo-politico?catalogo=paises", rotulo: "País", plural: "Países e regimes" },
-    partidos: { caminho: "/catalogo-politico?catalogo=partidos", rotulo: "Partido", plural: "Partidos" },
+    personalidades: { caminho: "/personalidades", rotulo: "Personalidade", plural: "Personalidades" },
+    paises: { caminho: "/paises", rotulo: "País", plural: "Países e regimes" },
+    partidos: { caminho: "/partidos", rotulo: "Partido", plural: "Partidos" },
     livros: { caminho: "/livros", rotulo: "Livro", plural: "Livros" }
   };
 
@@ -839,7 +839,7 @@
               "a",
               {
                 class: "atlas-inline-link",
-                href: "/catalogo-politico?catalogo=personalidades#" + encodeURIComponent(item.autorId)
+                href: "/personalidades#" + encodeURIComponent(item.autorId)
               },
               el("span", { text: item.autor })
             )

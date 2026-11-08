@@ -1,16 +1,36 @@
 /**
  * Catálogo político — base unificada em 12 eixos.
  *
- * A página carrega /data/political-catalog.json e monta a listagem de
- * ideologias e valores inspirada no 12 Axes, além das categorias genéricas
- * de personalidades, países e regimes e partidos. A categoria vem da URL
- * (?catalogo=...) e a navegação entre elas é feita pela barra lateral
- * compartilhada. Os cartões, a impressão digital e a ficha reutilizam a
- * linguagem visual do atlas político.
+ * Cada categoria tem página própria e independente: /catalogo-politico
+ * (ideologias e valores), /personalidades, /paises e /partidos. A página
+ * declara a sua categoria em <body data-catalog-default> e só monta essa
+ * listagem. Fichas de outras categorias abrem sobre a página atual, sem
+ * trocar o catálogo de fundo. Os cartões, a impressão digital e a ficha
+ * reutilizam a linguagem visual do atlas político.
  */
 document.addEventListener("DOMContentLoaded", () => {
   const main = document.getElementById("catalog-main");
-  if (!main) return;
+  const profileDialog = document.getElementById("catalog-dialog");
+  if (!main && !profileDialog) return;
+
+  const CATALOG_PATHS = {
+    ideologias: "/catalogo-politico",
+    personalidades: "/personalidades",
+    paises: "/paises",
+    partidos: "/partidos"
+  };
+  const PAGE_TAB = CATALOG_PATHS[document.body.dataset.catalogDefault]
+    ? document.body.dataset.catalogDefault
+    : "ideologias";
+
+  // Old /catalogo-politico?catalogo=<categoria> URLs now live on dedicated pages.
+  if (main && PAGE_TAB === "ideologias") {
+    const legacyTab = new URLSearchParams(window.location.search).get("catalogo");
+    if (legacyTab && legacyTab !== "ideologias" && CATALOG_PATHS[legacyTab]) {
+      window.location.replace(CATALOG_PATHS[legacyTab] + window.location.hash);
+      return;
+    }
+  }
 
   const PAGE_SIZE = 36;
   const VALUE_ID_PREFIX = "valor-";
@@ -396,7 +416,7 @@ document.addEventListener("DOMContentLoaded", () => {
       label: "Personalidades",
       singular: "personalidade",
       plural: "personalidades",
-      eyebrow: "Catálogo político · Personalidades",
+      eyebrow: "Política · Personalidades",
       title: "Trajetórias em doze dimensões.",
       description:
         "Pensadores, líderes e militantes que marcaram a política. A ficha contextualiza a trajetória, mostra o retrato com crédito e compara o perfil em doze eixos.",
@@ -449,7 +469,7 @@ document.addEventListener("DOMContentLoaded", () => {
       label: "Países e regimes",
       singular: "perfil",
       plural: "perfis",
-      eyebrow: "Catálogo político · Países e regimes",
+      eyebrow: "Política · Países e regimes",
       title: "Países e regimes em doze dimensões.",
       description:
         "Estados contemporâneos e experiências históricas. Bandeiras, período, instituições e correntes associadas ajudam a ler cada configuração política sem reduzir tudo a um rótulo.",
@@ -508,7 +528,7 @@ document.addEventListener("DOMContentLoaded", () => {
       label: "Partidos",
       singular: "partido",
       plural: "partidos",
-      eyebrow: "Catálogo político · Partidos",
+      eyebrow: "Política · Partidos",
       title: "Partidos e movimentos em doze dimensões.",
       description:
         "Organizações que disputam eleições, constroem bases e ocupam instituições. A ficha reúne trajetória, país, corrente associada e o vetor de doze eixos.",
@@ -579,35 +599,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const currentConfig = () => TABS[state.tab];
 
+  // Each page owns exactly one catalog: the page tab never changes at runtime.
   const locationState = () => {
+    if (PAGE_TAB !== "ideologias") return { tab: PAGE_TAB, scope: "tudo" };
     const requested = new URLSearchParams(window.location.search).get("catalogo");
-    const dedicated = document.body.dataset.catalogDefault;
-    if (dedicated && TABS[dedicated]) return { tab: dedicated, scope: "tudo" };
-    if (window.location.pathname === "/personalidades") return { tab: "personalidades", scope: "tudo" };
-    if (window.location.pathname === "/paises") return { tab: "paises", scope: "tudo" };
-    if (window.location.pathname === "/partidos") return { tab: "partidos", scope: "tudo" };
     if (requested === "valores") return { tab: "ideologias", scope: "valores" };
     if (requested === "ideologias") return { tab: "ideologias", scope: "ideologias" };
-    if (TABS && TABS[requested] && requested !== "ideologias") return { tab: requested, scope: "tudo" };
     return { tab: "ideologias", scope: "tudo" };
   };
 
   const buildUrl = (tab, hash, scope) => {
     const url = new URL(window.location.href);
-    const dedicatedPath = (tab === "personalidades" && window.location.pathname === "/personalidades") ||
-      (tab === "paises" && window.location.pathname === "/paises") ||
-      (tab === "partidos" && window.location.pathname === "/partidos");
-    url.pathname = dedicatedPath ? window.location.pathname : "/catalogo-politico";
+    url.pathname = CATALOG_PATHS[tab] || CATALOG_PATHS.ideologias;
     url.search = "";
-    if (tab !== "ideologias" && !dedicatedPath) {
-      url.searchParams.set("catalogo", tab);
-    } else if (scope === "valores") {
-      url.searchParams.set("catalogo", "valores");
-    } else if (scope === "ideologias") {
-      url.searchParams.set("catalogo", "ideologias");
+    if (tab === "ideologias" && (scope === "valores" || scope === "ideologias")) {
+      url.searchParams.set("catalogo", scope);
     }
     url.hash = hash ? encodeURIComponent(hash) : "";
     return url.pathname + url.search + url.hash;
+  };
+
+  const tabFromCatalogUrl = (url) => {
+    const pathTab = Object.keys(CATALOG_PATHS).find((tab) => CATALOG_PATHS[tab] === url.pathname);
+    if (!pathTab) return null;
+    if (pathTab !== "ideologias") return pathTab;
+    // Legacy /catalogo-politico?catalogo=<categoria> links still resolve.
+    const requested = url.searchParams.get("catalogo");
+    return requested && requested !== "valores" && CATALOG_PATHS[requested] ? requested : "ideologias";
   };
 
   const hashId = () => {
@@ -698,12 +716,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (title) title.textContent = isIdeologies ? IDEA_TITLE : config.title;
     if (description) description.textContent = isIdeologies ? IDEA_DESCRIPTION : config.description;
     if (crumb) crumb.textContent = isIdeologies ? scopeLabel() : config.label;
-    const dedicatedPage = document.body.dataset.catalogDefault === state.tab;
-    document.title = dedicatedPage
-      ? `${config.label} | King's Newsletter`
-      : `${isIdeologies ? scopeLabel() : config.label} · Catálogo político | King's Newsletter`;
-    document.getElementById("catalog-ideology-view").hidden = !isIdeologies;
-    document.getElementById("catalog-generic-view").hidden = isIdeologies;
+    document.title = isIdeologies
+      ? `${scopeLabel()} · Catálogo político | King's Newsletter`
+      : `${config.label} | King's Newsletter`;
     const genericSearch = document.getElementById("catalog-generic-search");
     if (genericSearch && config.searchPlaceholder) genericSearch.placeholder = isCountries ? "Buscar país ou regime..." : config.searchPlaceholder;
     const genericTitle = document.getElementById("catalog-generic-grid-title");
@@ -1744,7 +1759,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const label = section.querySelector("[data-catalog-featured-label]");
     if (label) label.textContent = config.featuredLabel || `Seleção editorial de ${config.plural}`;
     const note = section.querySelector("[data-catalog-featured-note]");
-    if (note) note.textContent = items.length > 3 ? "Seis recortes para começar." : "Três recortes para começar.";
+    if (note) {
+      const count = ["", "Um recorte", "Dois recortes", "Três recortes", "Quatro recortes", "Cinco recortes", "Seis recortes"][items.length] || `${items.length} recortes`;
+      note.textContent = `${count} para começar.`;
+    }
   };
 
   const renderGrid = () => {
@@ -1851,25 +1869,87 @@ document.addEventListener("DOMContentLoaded", () => {
     return list;
   };
 
-  const relatedChip = (tab, id, iconName) => {
-    const target = MAPS.byTab[tab]?.get(id);
-    if (!target) return null;
-    const link = el("a", { href: buildUrl(tab, id, "tudo") }, iconName ? icon(iconName) : null, el("span", { text: target.nome }));
+  // Fichas relacionadas abrem sobre a página atual (ver openItem). O href
+  // aponta para a página própria da categoria, para abrir em nova aba.
+  const profileHref = (tab, id) =>
+    main && tab === state.tab ? buildUrl(state.tab, id, state.scope) : buildUrl(tab, id);
+
+  // Cartões relacionados das fichas (abas Ideologias, Personalidades, Países e
+  // Partidos e seções de perfis próximos): miniatura, contexto e proximidade.
+  const RELATED_FALLBACK_ICONS = {
+    ideologias: "fa-scale-balanced",
+    personalidades: "fa-user",
+    paises: "fa-flag",
+    partidos: "fa-landmark-flag"
+  };
+
+  const relatedContext = (target, tab) => {
+    if (tab === "ideologias") {
+      if (itemKind(target) === "valor") return ["Valor", groupMeta(target.groupId)?.rotulo];
+      return ["Ideologia", familyOf(target)?.rotulo];
+    }
+    if (tab === "personalidades") return [target.areaLabel || areaOf(target)?.rotulo || "Personalidade", target.periodo];
+    if (tab === "paises") return [target.tipo === "regime" ? "Regime histórico" : "País", target.tipo === "regime" ? target.periodo : target.regiao];
+    if (tab === "partidos") return [target.sigla || "Partido", placeName(target.paisId)];
+    return [];
+  };
+
+  const relatedThumb = (target, tab) => {
+    const media = mediaFor(target, tab);
+    const fallback = () =>
+      el(
+        "span",
+        { class: "catalog-related-thumb is-mark", "aria-hidden": "true" },
+        tab === "ideologias" ? el("span", { text: initials(target.nome) }) : icon(RELATED_FALLBACK_ICONS[tab] || "fa-circle")
+      );
+    if (!media?.path || isUnverifiedImage(target)) return fallback();
+    const image = el("img", { src: media.path, alt: "", loading: "lazy", decoding: "async" });
+    const thumb = el("span", { class: `catalog-related-thumb is-${media.kind}`, "aria-hidden": "true" }, image);
+    image.addEventListener("error", () => thumb.replaceWith(fallback()), { once: true });
+    return thumb;
+  };
+
+  const relatedCard = (tab, target, source) => {
+    const score = source && source.id !== target.id ? matchScore(source.vetor, target.vetor) : 0;
+    const [kind, detail] = relatedContext(target, tab);
+    const link = el(
+      "a",
+      {
+        class: "catalog-related-card",
+        href: profileHref(tab, target.id),
+        style: { "--related-color": colorFor(target, tab) }
+      },
+      relatedThumb(target, tab),
+      el(
+        "span",
+        { class: "catalog-related-body" },
+        el("small", { class: "catalog-related-kind", text: [kind, detail].filter(Boolean).join(" · ") }),
+        el("b", { class: "catalog-related-name", text: target.nome }),
+        score
+          ? el(
+              "span",
+              { class: "catalog-related-score" },
+              el("span", { class: "catalog-related-meter", "aria-hidden": "true" }, el("span", { style: { "--score": `${score}%` } })),
+              el("span", { text: `${score}% de proximidade` })
+            )
+          : null
+      ),
+      icon("fa-arrow-right", "catalog-related-go")
+    );
     link.addEventListener("click", (event) => {
       event.preventDefault();
       openItem(target, tab);
     });
-    return link;
+    return el("li", {}, link);
   };
 
-  const chipsFor = (tab, ids, iconName) => {
+  const relatedCards = (tab, ids, source) => {
     if (!Array.isArray(ids) || ids.length === 0) return null;
-    const wrap = el("div", { class: "atlas-related" });
-    [...new Set(ids)].forEach((id) => {
-      const chip = relatedChip(tab, id, iconName);
-      if (chip) wrap.append(chip);
-    });
-    return wrap.childElementCount ? wrap : null;
+    const cards = [...new Set(ids)]
+      .map((id) => MAPS.byTab[tab]?.get(id))
+      .filter(Boolean)
+      .map((target) => relatedCard(tab, target, source));
+    return cards.length ? el("ul", { class: "catalog-related-grid" }, cards) : null;
   };
 
   const unique = (values) => [...new Set((values || []).filter(Boolean))];
@@ -1934,9 +2014,9 @@ document.addEventListener("DOMContentLoaded", () => {
     return lines;
   };
 
-  const buildNearby = (item) => {
+  const buildNearby = (item, tab) => {
     const isValue = itemKind(item) === "valor";
-    const items = MAPS.byTab[state.tab];
+    const items = MAPS.byTab[tab];
     const matchesList = [...items.values()]
       .filter(
         (entry) =>
@@ -1947,25 +2027,11 @@ document.addEventListener("DOMContentLoaded", () => {
       .map((entry) => ({ item: entry, score: matchScore(item.vetor, entry.vetor) }))
       .sort((first, second) => second.score - first.score)
       .slice(0, 4);
-    if (!matchesList.length) return null;
-    const wrap = el("div", { class: "atlas-nearby" });
-    matchesList.forEach(({ item: entry, score }) => {
-      const link = el("a", { class: "atlas-nearby-item", href: buildUrl(state.tab, entry.id, state.scope) });
-      link.append(
-        el("span", { class: "atlas-nearby-name", text: entry.nome }),
-        el("span", { class: "atlas-nearby-score", text: `${score}%` })
-      );
-      link.addEventListener("click", (event) => {
-        event.preventDefault();
-        openItem(entry, state.tab);
-      });
-      wrap.append(link);
-    });
-    return wrap;
+    return relatedCards(tab, matchesList.map(({ item: entry }) => entry.id), item);
   };
 
-  const dialogMedia = (item, config) => {
-    const media = mediaFor(item, state.tab);
+  const dialogMedia = (item, config, tab) => {
+    const media = mediaFor(item, tab);
     if (!media || !media.path || isUnverifiedImage(item)) {
       return el("div", { class: "catalog-dialog-media is-empty" }, el("span", { text: config.mark(item) }));
     }
@@ -2035,7 +2101,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const image = media && media.path && !isUnverifiedImage(item)
       ? el("img", { src: media.path, alt: media.alt, loading: "lazy", decoding: "async" })
       : el("span", { class: "catalog-profile-ref-initials", text: initials(item.nome) });
-    const link = el("a", { class: "catalog-profile-reference", href: buildUrl(tab, item.id, "tudo") });
+    const link = el("a", { class: "catalog-profile-reference", href: profileHref(tab, item.id) });
     link.append(
       image,
       el(
@@ -2098,9 +2164,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const axesPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "eixos" }, el("span", { class: "eyebrow", text: "Eixos políticos" }), el("h2", { text: "Perfil nos 12 eixos" }), el("ul", { class: "catalog-profile-axis-list" }, DATA.axes.map((axis) => profileAxisRow(item, axis))));
     const figureIds = figures.map((figure) => figure.id);
     const placeIds = places.map((place) => place.id);
-    const peoplePanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "personalidades", hidden: true }, el("h2", { text: "Personalidades" }), chipsFor("personalidades", figureIds, "fa-user") || el("p", { class: "catalog-profile-muted", text: "Nenhuma personalidade de referência foi encontrada." }));
-    const placesPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "paises", hidden: true }, el("h2", { text: "Países" }), chipsFor("paises", placeIds, "fa-flag") || el("p", { class: "catalog-profile-muted", text: "Nenhum país de referência foi encontrado." }));
-    const ideologyPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "ideologias", hidden: true }, el("h2", { text: "Ideologias relacionadas" }), buildNearby(item) || el("p", { class: "catalog-profile-muted", text: "Nenhuma ideologia próxima disponível." }));
+    const peoplePanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "personalidades", hidden: true }, el("h2", { text: "Personalidades" }), relatedCards("personalidades", figureIds, item) || el("p", { class: "catalog-profile-muted", text: "Nenhuma personalidade de referência foi encontrada." }));
+    const placesPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "paises", hidden: true }, el("h2", { text: "Países" }), relatedCards("paises", placeIds, item) || el("p", { class: "catalog-profile-muted", text: "Nenhum país de referência foi encontrado." }));
+    const ideologyPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "ideologias", hidden: true }, el("h2", { text: "Ideologias relacionadas" }), buildNearby(item, "ideologias") || el("p", { class: "catalog-profile-muted", text: "Nenhuma ideologia próxima disponível." }));
     const distinctions = el("section", { class: "catalog-profile-distinction" }, el("h2", { text: "O que distingue esta ideologia" }), el("div", { class: "catalog-profile-distinction-grid" }, el("article", {}, el("span", { class: "catalog-profile-badge", text: "Posições mais fortes" }), el("h3", { text: DATA.axes.slice().sort((a, b) => (Math.max(...[axisValue(item, b.id) || 50, 100 - (axisValue(item, b.id) || 50)]) - 50) - (Math.max(...[axisValue(item, a.id) || 50, 100 - (axisValue(item, a.id) || 50)]) - 50))[0]?.name || "Perfil" }), el("p", { text: "Os eixos mais distantes do centro mostram onde esta corrente assume posições mais definidas." })), el("article", {}, el("span", { class: "catalog-profile-badge is-neutral", text: "Leitura do perfil" }), el("h3", { text: family?.rotulo || "Ideologia" }), el("p", { text: item.ideia || item.resumo || "Uma síntese editorial do perfil político." }))));
     const cta = el("section", { class: "catalog-profile-cta" }, el("div", {}, el("span", { class: "eyebrow", text: "Teste político" }), el("h2", { text: "E você, onde está no espectro?" }), el("p", { text: `Responda ao quiz e veja sua compatibilidade com ${item.nome} e outras ideologias nos 12 eixos.` })), el("a", { class: "atlas-button", href: "/teste-politico" }, el("span", { text: "Fazer o teste" }), icon("fa-arrow-right")));
     shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, close), hero, el("div", { class: "atlas-dialog-body catalog-profile-content" }, phrase, tabs, axesPanel, peoplePanel, placesPanel, ideologyPanel, distinctions, cta));
@@ -2142,9 +2208,9 @@ document.addEventListener("DOMContentLoaded", () => {
       tabs.append(tab);
     });
     const axesPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "eixos" }, el("span", { class: "eyebrow", text: "Eixos políticos" }), el("h2", { text: "Perfil nos 12 eixos" }), el("ul", { class: "catalog-profile-axis-list" }, DATA.axes.map((axis) => profileAxisRow(item, axis))));
-    const ideologyPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "ideologias", hidden: true }, el("h2", { text: "Proximidade ideológica" }), chipsFor("ideologias", nearestIdeologies.map((entry) => entry.id), "fa-scale-balanced") || el("p", { class: "catalog-profile-muted", text: "Nenhuma ideologia relacionada foi encontrada." }));
-    const peoplePanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "personalidades", hidden: true }, el("h2", { text: "Personalidade mais próxima" }), chipsFor("personalidades", nearestFigures.map((entry) => entry.id), "fa-user") || el("p", { class: "catalog-profile-muted", text: "Nenhuma personalidade próxima foi encontrada." }));
-    const countryPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "paises", hidden: true }, el("h2", { text: item.tipo === "regime" ? "Regimes e países parecidos" : "Países parecidos" }), chipsFor("paises", nearbyCountries.map((entry) => entry.id), "fa-flag") || el("p", { class: "catalog-profile-muted", text: "Nenhum perfil parecido foi encontrado." }));
+    const ideologyPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "ideologias", hidden: true }, el("h2", { text: "Proximidade ideológica" }), relatedCards("ideologias", nearestIdeologies.map((entry) => entry.id), item) || el("p", { class: "catalog-profile-muted", text: "Nenhuma ideologia relacionada foi encontrada." }));
+    const peoplePanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "personalidades", hidden: true }, el("h2", { text: "Personalidade mais próxima" }), relatedCards("personalidades", nearestFigures.map((entry) => entry.id), item) || el("p", { class: "catalog-profile-muted", text: "Nenhuma personalidade próxima foi encontrada." }));
+    const countryPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "paises", hidden: true }, el("h2", { text: item.tipo === "regime" ? "Regimes e países parecidos" : "Países parecidos" }), relatedCards("paises", nearbyCountries.map((entry) => entry.id), item) || el("p", { class: "catalog-profile-muted", text: "Nenhum perfil parecido foi encontrado." }));
     const distinction = el("section", { class: "catalog-profile-distinction" }, el("h2", { text: `O que distingue ${item.nome}` }), el("div", { class: "catalog-profile-distinction-grid" }, el("article", {}, el("span", { class: "catalog-profile-badge", text: "Configuração política" }), el("h3", { text: item.categoria || item.tipo }), el("p", { text: item.resumo || item.description })), el("article", {}, el("span", { class: "catalog-profile-badge is-neutral", text: "Leitura territorial" }), el("h3", { text: item.regiao || "Perfil nacional" }), el("p", { text: item.periodo || "Perfil contemporâneo" }))));
     const cta = el("section", { class: "catalog-profile-cta" }, el("div", {}, el("span", { class: "eyebrow", text: "Teste político" }), el("h2", { text: "Você viveria bem aqui?" }), el("p", { text: `Responda ao quiz e veja sua compatibilidade com ${item.nome} e outros países e regimes.` })), el("a", { class: "atlas-button", href: "/teste-politico" }, el("span", { text: "Fazer o teste" }), icon("fa-arrow-right")));
     shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, close), hero, el("div", { class: "atlas-dialog-body catalog-profile-content" }, tabs, axesPanel, ideologyPanel, peoplePanel, countryPanel, distinction, cta));
@@ -2187,9 +2253,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const panels = [];
     const definitions = [
       { name: "eixos", content: [el("span", { class: "eyebrow", text: "Eixos políticos" }), el("h2", { text: "Perfil nos 12 eixos" }), el("ul", { class: "catalog-profile-axis-list" }, DATA.axes.map((axis) => profileAxisRow(item, axis)))] },
-      { name: "ideologias", content: [el("h2", { text: "Ideologias mais próximas" }), chipsFor("ideologias", ideologies.map((entry) => entry.id), "fa-scale-balanced") || el("p", { class: "catalog-profile-muted", text: "Nenhuma ideologia com proximidade suficiente foi encontrada." })] },
-      { name: "personalidades", content: [el("h2", { text: "Personalidades mais próximas" }), chipsFor("personalidades", people.map((entry) => entry.id), "fa-user") || el("p", { class: "catalog-profile-muted", text: "Nenhuma personalidade com proximidade suficiente foi encontrada." })] },
-      { name: "paises", content: [el("h2", { text: "Países mais próximos" }), chipsFor("paises", countries.map((entry) => entry.id), "fa-flag") || el("p", { class: "catalog-profile-muted", text: "Nenhum país com proximidade suficiente foi encontrado." })] }
+      { name: "ideologias", content: [el("h2", { text: "Ideologias mais próximas" }), relatedCards("ideologias", ideologies.map((entry) => entry.id), item) || el("p", { class: "catalog-profile-muted", text: "Nenhuma ideologia com proximidade suficiente foi encontrada." })] },
+      { name: "personalidades", content: [el("h2", { text: "Personalidades mais próximas" }), relatedCards("personalidades", people.map((entry) => entry.id), item) || el("p", { class: "catalog-profile-muted", text: "Nenhuma personalidade com proximidade suficiente foi encontrada." })] },
+      { name: "paises", content: [el("h2", { text: "Países mais próximos" }), relatedCards("paises", countries.map((entry) => entry.id), item) || el("p", { class: "catalog-profile-muted", text: "Nenhum país com proximidade suficiente foi encontrado." })] }
     ];
     definitions.forEach((definition, index) => {
       const name = definition.name;
@@ -2215,7 +2281,7 @@ document.addEventListener("DOMContentLoaded", () => {
       tabs.append(tab);
       panels.push(panel);
     });
-    const distinction = el("section", { class: "catalog-profile-distinction" }, el("h2", { text: `O que distingue ${item.nome}` }), el("div", { class: "catalog-profile-distinction-grid" }, el("article", {}, el("span", { class: "catalog-profile-badge", text: "Área de atuação" }), el("h3", { text: item.areaLabel || areaOf(item)?.rotulo || "Política" }), el("p", { text: item.resumo || item.description })), el("article", {}, el("span", { class: "catalog-profile-badge is-neutral", text: "Vetor" }), el("h3", { text: vectorSourceLabel(item) }), el("p", { text: "Uma leitura editorial aproximada da posição desta personalidade nos 12 eixos." }))));
+    const distinction = el("section", { class: "catalog-profile-distinction" }, el("h2", { text: `O que distingue ${item.nome}` }), el("div", { class: "catalog-profile-distinction-grid" }, el("article", {}, el("span", { class: "catalog-profile-badge", text: "Área de atuação" }), el("h3", { text: item.areaLabel || areaOf(item)?.rotulo || "Política" }), el("p", { text: item.resumo || item.description }))));
     const cta = el("section", { class: "catalog-profile-cta" }, el("div", {}, el("span", { class: "eyebrow", text: "Teste político" }), el("h2", { text: "E você, com quem se parece?" }), el("p", { text: `Responda ao quiz e veja sua compatibilidade com ${item.nome}, ideologias e países nos 12 eixos.` })), el("a", { class: "atlas-button", href: "/teste-politico" }, el("span", { text: "Fazer o teste" }), icon("fa-arrow-right")));
     const body = el("div", { class: "atlas-dialog-body catalog-profile-content" }, tabs, panels, distinction, cta);
     shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, close), hero, body);
@@ -2257,38 +2323,38 @@ document.addEventListener("DOMContentLoaded", () => {
       tabs.append(tab);
     });
     const axesPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "eixos" }, el("span", { class: "eyebrow", text: "Eixos políticos" }), el("h2", { text: "Perfil nos 12 eixos" }), el("ul", { class: "catalog-profile-axis-list" }, DATA.axes.map((axis) => profileAxisRow(item, axis))));
-    const ideologyPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "ideologias", hidden: true }, el("h2", { text: "Ideologias mais próximas" }), chipsFor("ideologias", ideologies.slice(0, 3).map((entry) => entry.id), "fa-scale-balanced") || el("p", { class: "catalog-profile-muted", text: "Nenhuma ideologia próxima foi encontrada." }));
-    const peoplePanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "personalidades", hidden: true }, el("h2", { text: "Personalidades mais próximas" }), chipsFor("personalidades", people.map((entry) => entry.id), "fa-user") || el("p", { class: "catalog-profile-muted", text: "Nenhuma personalidade próxima foi encontrada." }));
-    const partyPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "partidos", hidden: true }, el("h2", { text: "Partidos e organizações parecidos" }), chipsFor("partidos", parties.map((entry) => entry.id), "fa-flag") || el("p", { class: "catalog-profile-muted", text: "Nenhum perfil parecido foi encontrado." }));
-    const distinction = el("section", { class: "catalog-profile-distinction" }, el("h2", { text: `O que distingue ${item.nome}` }), el("div", { class: "catalog-profile-distinction-grid" }, el("article", {}, el("span", { class: "catalog-profile-badge", text: "Trajetória" }), el("h3", { text: item.orientacao || item.category || "Organização política" }), el("p", { text: (item.marcos || []).join(" ") || item.resumo || item.description })), el("article", {}, el("span", { class: "catalog-profile-badge is-neutral", text: "Vetor" }), el("h3", { text: vectorSourceLabel(item) }), el("p", { text: item.vectorCalibrated ? "Leitura editorial recalibrada para refletir a trajetória e o programa do partido." : "Leitura editorial da posição do partido nos 12 eixos." }))));
+    const ideologyPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "ideologias", hidden: true }, el("h2", { text: "Ideologias mais próximas" }), relatedCards("ideologias", ideologies.slice(0, 3).map((entry) => entry.id), item) || el("p", { class: "catalog-profile-muted", text: "Nenhuma ideologia próxima foi encontrada." }));
+    const peoplePanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "personalidades", hidden: true }, el("h2", { text: "Personalidades mais próximas" }), relatedCards("personalidades", people.map((entry) => entry.id), item) || el("p", { class: "catalog-profile-muted", text: "Nenhuma personalidade próxima foi encontrada." }));
+    const partyPanel = el("section", { class: "catalog-profile-tab-panel", "data-panel": "partidos", hidden: true }, el("h2", { text: "Partidos e organizações parecidos" }), relatedCards("partidos", parties.map((entry) => entry.id), item) || el("p", { class: "catalog-profile-muted", text: "Nenhum perfil parecido foi encontrado." }));
+    const distinction = el("section", { class: "catalog-profile-distinction" }, el("h2", { text: `O que distingue ${item.nome}` }), el("div", { class: "catalog-profile-distinction-grid" }, el("article", {}, el("span", { class: "catalog-profile-badge", text: "Trajetória" }), el("h3", { text: item.orientacao || item.category || "Organização política" }), el("p", { text: (item.marcos || []).join(" ") || item.resumo || item.description }))));
     const cta = el("section", { class: "catalog-profile-cta" }, el("div", {}, el("span", { class: "eyebrow", text: "Teste político" }), el("h2", { text: "Você se identifica com este perfil?" }), el("p", { text: `Responda ao quiz e veja sua compatibilidade com ${item.nome} e outros partidos nos 12 eixos.` })), el("a", { class: "atlas-button", href: "/teste-politico" }, el("span", { text: "Fazer o teste" }), icon("fa-arrow-right")));
     shell.append(el("div", { class: "catalog-profile-sticky-head" }, back, close), hero, el("div", { class: "atlas-dialog-body catalog-profile-content" }, tabs, axesPanel, ideologyPanel, peoplePanel, partyPanel, distinction, cta));
     return shell;
   };
 
-  const renderDialog = (item) => {
+  const renderDialog = (item, tab) => {
     const dialog = document.getElementById("catalog-dialog");
     if (!dialog) return;
-    const config = currentConfig();
-    if (itemKind(item) === "ideologia" && state.tab === "ideologias") {
+    const config = TABS[tab];
+    if (itemKind(item) === "ideologia" && tab === "ideologias") {
       dialog.classList.add("catalog-profile-dialog");
       dialog.style.setProperty("--fam", config.colorOf(item));
       dialog.replaceChildren(buildProfileView(item));
       return;
     }
-    if (state.tab === "paises") {
+    if (tab === "paises") {
       dialog.classList.add("catalog-profile-dialog");
       dialog.style.setProperty("--fam", config.colorOf(item));
       dialog.replaceChildren(buildCountryProfileView(item));
       return;
     }
-    if (state.tab === "personalidades") {
+    if (tab === "personalidades") {
       dialog.classList.add("catalog-profile-dialog");
       dialog.style.setProperty("--fam", config.colorOf(item));
       dialog.replaceChildren(buildPersonalityProfileView(item));
       return;
     }
-    if (state.tab === "partidos") {
+    if (tab === "partidos") {
       dialog.classList.add("catalog-profile-dialog");
       dialog.style.setProperty("--fam", config.colorOf(item));
       dialog.replaceChildren(buildPartyProfileView(item));
@@ -2310,7 +2376,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const head = el(
       "div",
       { class: "atlas-dialog-head" },
-      dialogMedia(item, config),
+      dialogMedia(item, config, tab),
       el("div", { class: "atlas-dialog-title" }, tags, title, el("p", { text: subtitleParts.join(" · ") }), compareProfileAction(item)),
       close
     );
@@ -2336,25 +2402,25 @@ document.addEventListener("DOMContentLoaded", () => {
           })
         );
       }
-    } else if (state.tab === "ideologias") {
+    } else if (tab === "ideologias") {
       addSection(body, "Tensões internas", "fa-scale-unbalanced", bulletList(item.tensoes));
       addSection(
         body,
         "Pensadores e referências",
         "fa-user-pen",
-        chipsFor(
+        relatedCards(
           "personalidades",
           unique([...(item.pensadores || []), ...(MAPS.ideologyFigures.get(item.id) || [])]),
-          "fa-user"
+          item
         )
       );
       addSection(
         body,
         "Partidos associados",
         "fa-flag",
-        chipsFor("partidos", unique([...(item.partidos || []), ...(MAPS.ideologyParties.get(item.id) || [])]), "fa-flag")
+        relatedCards("partidos", unique([...(item.partidos || []), ...(MAPS.ideologyParties.get(item.id) || [])]), item)
       );
-      addSection(body, "Países onde aparece", "fa-earth-americas", chipsFor("paises", MAPS.ideologyPlaces.get(item.id), "fa-flag"));
+      addSection(body, "Países onde aparece", "fa-earth-americas", relatedCards("paises", MAPS.ideologyPlaces.get(item.id), item));
       addSection(
         body,
         "Para ler",
@@ -2369,8 +2435,8 @@ document.addEventListener("DOMContentLoaded", () => {
             )
           : null
       );
-    } else if (state.tab === "personalidades") {
-      addSection(body, "Corrente associada", "fa-scale-balanced", chipsFor("ideologias", [item.ideologia], "fa-scale-balanced"));
+    } else if (tab === "personalidades") {
+      addSection(body, "Corrente associada", "fa-scale-balanced", relatedCards("ideologias", [item.ideologia], item));
       addSection(
         body,
         "Obras no catálogo",
@@ -2386,23 +2452,23 @@ document.addEventListener("DOMContentLoaded", () => {
           : null
       );
       addSection(body, "Onde se posiciona", "fa-compass", bulletList(item.marcas));
-    } else if (state.tab === "paises") {
+    } else if (tab === "paises") {
       addSection(body, "Como se organiza", "fa-landmark", bulletList(item.caracteristicas));
-      addSection(body, "Correntes associadas", "fa-scale-balanced", chipsFor("ideologias", item.ideologias, "fa-scale-balanced"));
+      addSection(body, "Correntes associadas", "fa-scale-balanced", relatedCards("ideologias", item.ideologias, item));
       addSection(
         body,
         "Partidos no catálogo",
         "fa-flag",
-        chipsFor("partidos", unique([...(item.partidos || []), ...(MAPS.countryParties.get(item.id) || [])]), "fa-flag")
+        relatedCards("partidos", unique([...(item.partidos || []), ...(MAPS.countryParties.get(item.id) || [])]), item)
       );
-    } else if (state.tab === "partidos") {
+    } else if (tab === "partidos") {
       addSection(body, "Trajetória e posições", "fa-timeline", bulletList(item.marcos));
-      addSection(body, "Corrente associada", "fa-scale-balanced", chipsFor("ideologias", [item.ideologia], "fa-scale-balanced"));
-      addSection(body, "País de origem", "fa-earth-americas", chipsFor("paises", [item.paisId], "fa-flag"));
+      addSection(body, "Corrente associada", "fa-scale-balanced", relatedCards("ideologias", [item.ideologia], item));
+      addSection(body, "País de origem", "fa-earth-americas", relatedCards("paises", [item.paisId], item));
     }
 
     addSection(body, "Retrato em 12 eixos", "fa-chart-simple", buildAxes(item));
-    addSection(body, "Perfis próximos", "fa-diagram-project", buildNearby(item));
+    addSection(body, "Perfis próximos", "fa-diagram-project", buildNearby(item, tab));
     addSection(body, "Imagem e créditos", "fa-camera", creditNode(item));
     addSection(body, "Fonte e vetor", "fa-link", sourceNode(item));
 
@@ -2427,22 +2493,20 @@ document.addEventListener("DOMContentLoaded", () => {
     dialog.replaceChildren(el("div", { class: "atlas-dialog-shell" }, head, body));
   };
 
+  // A ficha (de qualquer categoria) abre sobre a página atual sem trocar o
+  // catálogo de fundo: cada página continua dona da sua própria listagem.
   const openItem = (item, tab = state.tab, options) => {
     const dialog = document.getElementById("catalog-dialog");
     if (!item || !dialog) return false;
-    if (tab && tab !== state.tab && TABS[tab]) {
-      const scope = tab === "ideologias" ? (itemKind(item) === "valor" ? "valores" : "ideologias") : "tudo";
-      setTab(tab, { updateUrl: false, scope });
-    }
     if (!dialog.open) lastFocus = document.activeElement;
-    renderDialog(item);
+    renderDialog(item, TABS[tab] ? tab : state.tab);
     if (typeof dialog.showModal === "function") {
       if (!dialog.open) dialog.showModal();
     } else {
       dialog.setAttribute("open", "");
     }
     document.documentElement.classList.add("catalog-modal-open");
-    if (!options || options.updateUrl !== false) {
+    if (main && (!options || options.updateUrl !== false)) {
       window.history.replaceState(null, "", buildUrl(state.tab, item.id, state.scope));
       notifyCatalogChange();
     }
@@ -2456,7 +2520,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof dialog.close === "function") dialog.close();
     else dialog.removeAttribute("open");
     document.documentElement.classList.remove("catalog-modal-open");
-    if (!options || options.clearHash !== false) {
+    if (main && (!options || options.clearHash !== false)) {
       window.history.replaceState(null, "", buildUrl(state.tab, null, state.scope));
       notifyCatalogChange();
     }
@@ -2465,6 +2529,8 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const findItemByHash = (id) => {
+    const ownItems = MAPS.byTab[state.tab];
+    if (ownItems?.has(id)) return { tab: state.tab, item: ownItems.get(id) };
     for (const [tab, items] of Object.entries(MAPS.byTab)) {
       if (items.has(id)) return { tab, item: items.get(id) };
     }
@@ -2475,9 +2541,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const handleLocation = () => {
     const loc = locationState();
-    if (loc.tab !== state.tab) {
-      setTab(loc.tab, { updateUrl: false, scope: loc.scope });
-    } else if (loc.tab === "ideologias" && loc.scope !== state.scope) {
+    if (loc.tab === "ideologias" && loc.scope !== state.scope) {
       state.scope = loc.scope;
       refreshScopeControls();
       applyIdeaFilters();
@@ -2491,58 +2555,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const found = findItemByHash(id);
     if (found) openItem(found.item, found.tab, { updateUrl: false });
     notifyCatalogChange();
-  };
-
-  const setTab = (tab, options) => {
-    const next = TABS[tab] ? tab : "ideologias";
-    const changed = next !== state.tab;
-    state.tab = next;
-    if (options?.scope) state.scope = options.scope;
-    else if (next !== "ideologias") state.scope = "tudo";
-    state.query = "";
-    state.queryText = "";
-    state.filters = {};
-    state.sort = "curadoria";
-    state.visible = PAGE_SIZE;
-    if (changed) {
-      state.family = "";
-      state.familyType = "";
-      state.axes = {};
-      state.intensity = "any";
-    }
-    const search = document.getElementById("catalog-search");
-    if (search) search.value = "";
-    const genericSearch = document.getElementById("catalog-generic-search");
-    if (genericSearch) genericSearch.value = "";
-    const genericSort = document.getElementById("catalog-generic-sort");
-    if (genericSort) genericSort.value = "curadoria";
-    document.querySelectorAll('input[name="catalog-intensity"]').forEach((input) => {
-      input.checked = input.value === "any";
-    });
-    if (options?.updateUrl !== false) {
-      window.history.replaceState(null, "", buildUrl(next, null, state.scope));
-      notifyCatalogChange();
-    }
-    renderHero();
-    if (next === "ideologias") {
-      renderLegend();
-      renderSpectrum();
-      renderScope();
-      renderChips();
-      applyIdeaFilters();
-    } else {
-      renderSpectrum();
-      renderNotice();
-      const genericSearch = document.getElementById("catalog-generic-search");
-      if (genericSearch) {
-        genericSearch.placeholder = currentConfig().searchPlaceholder || "Buscar no catálogo...";
-        genericSearch.setAttribute("aria-label", `Buscar ${currentConfig().plural}`);
-      }
-      renderSort();
-      renderFilters();
-      renderFeatured();
-      applyFilters(true);
-    }
   };
 
   const renderAll = () => {
@@ -2620,6 +2632,49 @@ document.addEventListener("DOMContentLoaded", () => {
       const ideaItems = buildIdeaItems(DATA);
       MAPS = buildMaps(DATA, ideaItems);
       TABS = buildTabs(ideaItems);
+
+      // Reuse the catalog ficha on pages that do not render a catalog grid.
+      globalThis.CatalogProfileDialog = {
+        open: ({ tab, id }) => {
+          const target = MAPS.byTab[tab]?.get(id);
+          if (!target || !profileDialog) return false;
+          return openItem(target, tab, { updateUrl: false });
+        }
+      };
+      document.addEventListener("click", (event) => {
+        // Links with their own handler (e.g. result cards opening "Sobre") keep it.
+        if (event.defaultPrevented) return;
+        const link = event.target.closest?.("a[href]");
+        if (!link || link.target === "_blank") return;
+        let url;
+        try {
+          url = new URL(link.href, window.location.origin);
+        } catch {
+          return;
+        }
+        if (url.origin !== window.location.origin) return;
+        const tab = tabFromCatalogUrl(url);
+        if (!tab || !url.hash) return;
+        let id;
+        try {
+          id = decodeURIComponent(url.hash.slice(1));
+        } catch {
+          return;
+        }
+        if (tab === "ideologias" && url.searchParams.get("catalogo") === "valores") {
+          id = `${VALUE_ID_PREFIX}${id.replace(/^valor-/, "")}`;
+        }
+        if (!MAPS.byTab[tab]?.has(id)) return;
+        event.preventDefault();
+        globalThis.CatalogProfileDialog.open({ tab, id });
+      });
+      document.addEventListener("catalog-profile-open", (event) => {
+        globalThis.CatalogProfileDialog.open(event.detail || {});
+      });
+
+      // Dialog-only pages do not need catalog controls or URL synchronization.
+      if (!main) return;
+
       const loc = locationState();
       state.tab = loc.tab;
       state.scope = loc.scope;

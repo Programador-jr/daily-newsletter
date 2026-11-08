@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Catálogo político em 12 eixos: ideologias, personalidades, países, regimes, partidos e valores com contexto, imagens e fontes.">
+  <meta name="description" content="Catálogo político em 12 eixos: ideologias e valores com contexto, definições, pensadores associados e fontes.">
   <title>Catálogo político | King's Newsletter</title>
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="/css/ideologias.css">
   <link rel="stylesheet" href="/css/atlas.css">
   <link rel="stylesheet" href="/css/political-catalogs.css">
+  <link rel="stylesheet" href="/css/catalog-ficha.css">
   <link rel="stylesheet" href="/css/page-patterns.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="/css/ui-kit.css">
@@ -84,58 +85,7 @@
         </aside>
       </div>
 
-      <div class="catalog-generic-view" id="catalog-generic-view" hidden>
-        <div class="catalog-country-spectrum" id="catalog-country-spectrum" hidden></div>
-        <div class="catalog-personality-spectrum" id="catalog-personality-spectrum" hidden></div>
-        <div class="catalog-party-spectrum" id="catalog-party-spectrum" hidden></div>
-
-        <div class="atlas-controls-shell">
-          <section class="atlas-controls" aria-label="Pesquisa, filtros e ordenação">
-            <details class="atlas-filter-accordion" id="catalog-generic-filter-accordion">
-              <summary><span><i class="fas fa-sliders" aria-hidden="true"></i><b>Filtros</b></span><i class="fas fa-chevron-down atlas-filter-chevron" aria-hidden="true"></i></summary>
-              <div class="atlas-filters catalog-generic-filters" id="catalog-generic-filters"></div>
-            </details>
-            <div class="atlas-search-dock" role="search">
-              <label class="atlas-search">
-                <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
-                <input type="search" id="catalog-generic-search" autocomplete="off" placeholder="Buscar nome, área, país ou corrente..." aria-label="Buscar perfis do catálogo">
-              </label>
-            </div>
-            <div class="atlas-sort" id="catalog-generic-sort">
-              <button class="atlas-sort-trigger" id="catalog-generic-sort-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="catalog-generic-sort-menu">
-                <i class="fas fa-arrow-down-wide-short" aria-hidden="true"></i>
-                <span class="atlas-sort-label"></span>
-                <span class="atlas-sort-value" id="catalog-generic-sort-value">Ordem editorial</span>
-                <i class="fas fa-chevron-down atlas-sort-chevron" aria-hidden="true"></i>
-              </button>
-              <ul class="atlas-sort-menu" id="catalog-generic-sort-menu" role="listbox" aria-label="Ordenar perfis" hidden></ul>
-            </div>
-          </section>
-        </div>
-
-        <section class="atlas-featured" id="catalog-featured" aria-labelledby="catalog-featured-title">
-          <div class="atlas-featured-head">
-            <div><span class="eyebrow" data-catalog-featured-label>Seleção editorial de ideologias</span><h2 id="catalog-featured-title">Comece por estas fichas</h2></div>
-            <p data-catalog-featured-note>Três recortes para começar.</p>
-          </div>
-          <div class="atlas-featured-grid" id="catalog-featured-grid"></div>
-        </section>
-
-        <div class="catalog-notice" id="catalog-generic-notice" hidden></div>
-
-        <section class="atlas-section catalog-section" id="catalogo" aria-labelledby="catalog-generic-grid-title">
-          <div class="section-heading">
-            <div><span class="eyebrow">Catálogo completo</span><h2 id="catalog-generic-grid-title">Explore as fichas</h2></div>
-            <p class="atlas-section-note" id="catalog-generic-count" role="status" aria-live="polite"></p>
-          </div>
-          <div class="atlas-grid" id="catalog-generic-grid" aria-label="Perfis do catálogo"></div>
-          <div class="catalog-more-row">
-            <button class="atlas-button catalog-load-more" id="catalog-generic-load-more" type="button" hidden>Carregar mais perfis</button>
-          </div>
-        </section>
-      </div>
-
-      <p class="catalog-disclaimer">Os perfis são sínteses editoriais e comparações didáticas. Não representam apoio, filiação, recomendação de voto ou uma descrição definitiva de qualquer pessoa, partido ou sociedade.</p>
+      <p class="catalog-disclaimer">As fichas são sínteses editoriais e comparações didáticas. Não representam apoio, filiação, recomendação de voto ou uma descrição definitiva de qualquer corrente ou conceito.</p>
     </main>
 
     <div id="footer"></div>
