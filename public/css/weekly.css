@@ -1,0 +1,493 @@
+/* A Semana em Foco — estilos exclusivos; tokens e componentes vêm do CSS global. */
+
+.weekly-masthead {
+  position: relative;
+  overflow: hidden;
+  margin: 2rem 3rem 0;
+  padding: 2rem 2.25rem 2.1rem;
+  border-radius: 14px;
+  background: #064e46;
+  color: #fff;
+}
+
+.weekly-masthead::after {
+  position: absolute;
+  right: -3rem;
+  bottom: -7rem;
+  width: 20rem;
+  height: 20rem;
+  border: 1px solid rgb(245 197 24 / 18%);
+  border-radius: 50%;
+  content: "";
+  box-shadow: 0 0 0 2.5rem rgb(245 197 24 / 5%), 0 0 0 5rem rgb(245 197 24 / 3%);
+  pointer-events: none;
+}
+
+.weekly-masthead-top,
+.weekly-masthead-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.weekly-brand,
+.weekly-kicker {
+  color: #f5c518;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.weekly-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.weekly-brand i {
+  font-size: 1rem;
+}
+
+.weekly-kicker {
+  padding: 0.45rem 0.65rem;
+  border: 1px solid rgb(245 197 24 / 45%);
+  border-radius: 4px;
+}
+
+.weekly-masthead-content {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  padding: 3.1rem 0 2.2rem;
+}
+
+.weekly-masthead .eyebrow {
+  margin-bottom: 0.8rem;
+  color: #f5c518;
+}
+
+.weekly-masthead h1 {
+  margin: 0;
+  color: #fff;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2.6rem, 6vw, 4.8rem);
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+
+.weekly-masthead h1 span {
+  color: #f5c518;
+}
+
+.weekly-deck {
+  max-width: 660px;
+  margin: 1.2rem 0 1.5rem;
+  color: rgb(255 255 255 / 82%);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.weekly-masthead-meta {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  color: rgb(255 255 255 / 78%);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.weekly-masthead-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.weekly-masthead-meta i {
+  color: #f5c518;
+}
+
+.weekly-masthead-rule {
+  position: relative;
+  z-index: 1;
+  height: 3px;
+  background: linear-gradient(90deg, #f5c518 0 22%, rgb(245 197 24 / 25%) 22% 100%);
+}
+
+.weekly-content {
+  padding-top: 3.25rem;
+}
+
+.weekly-section-heading {
+  margin-bottom: 1.5rem;
+}
+
+.weekly-section-heading h2 {
+  color: var(--text-main);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+}
+
+.weekly-section-heading > p {
+  max-width: 540px;
+}
+
+.weekly-status {
+  display: flex;
+  min-height: 150px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.weekly-status[hidden] {
+  display: none;
+}
+
+.weekly-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: weekly-spin 0.8s linear infinite;
+}
+
+@keyframes weekly-spin {
+  to { transform: rotate(360deg); }
+}
+
+.weekly-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.weekly-edition-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 1.35rem;
+}
+
+.weekly-card-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-bottom: 0.9rem;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.weekly-card-number {
+  color: var(--primary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.weekly-card-period {
+  padding-left: 0.6rem;
+  border-left: 1px solid var(--border);
+}
+
+.weekly-edition-card h3 {
+  margin: 0 0 0.65rem;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+.weekly-edition-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+
+.weekly-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1.15rem;
+}
+
+.weekly-topic-count {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.weekly-read-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.weekly-empty-state {
+  grid-column: 1 / -1;
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  padding: 3rem 1.5rem;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.weekly-empty-state > i {
+  color: var(--primary);
+  font-size: 1.6rem;
+}
+
+.weekly-empty-state h3 {
+  margin: 0;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.25rem;
+}
+
+.weekly-empty-state p {
+  max-width: 480px;
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+
+.weekly-article {
+  padding: 0 0 1rem;
+}
+
+.weekly-article[hidden] {
+  display: none;
+}
+
+.weekly-article-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.weekly-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.weekly-article-header .eyebrow {
+  margin-bottom: 0.6rem;
+}
+
+.weekly-article-header h2 {
+  margin: 0 0 0.75rem;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.12;
+}
+
+.weekly-article-intro {
+  max-width: 780px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.weekly-article-section {
+  margin: 0 0 2.2rem;
+}
+
+.weekly-article-section h3 {
+  margin: 0 0 1rem;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.5rem;
+}
+
+.weekly-story-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.weekly-story {
+  padding: 1.15rem 1.25rem;
+  border-left: 3px solid var(--primary);
+  border-radius: 0 10px 10px 0;
+  background: color-mix(in srgb, var(--primary) 4%, var(--card-bg));
+}
+
+.weekly-story h4 {
+  margin: 0 0 0.45rem;
+  color: var(--text-main);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.weekly-story p {
+  margin: 0.45rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.weekly-story-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.weekly-analysis {
+  margin-top: 2rem;
+  padding: 1.4rem;
+  border: 1px solid var(--border);
+  border-top: 3px solid #f5c518;
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+.weekly-analysis h3 {
+  margin: 0 0 0.65rem;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.3rem;
+}
+
+.weekly-analysis p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+.weekly-method-note {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 3rem 3rem;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--primary) 4%, var(--card-bg));
+}
+
+.weekly-method-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  place-items: center;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--primary) 10%, var(--card-bg));
+  color: var(--primary);
+}
+
+.weekly-method-note strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--text-main);
+  font-size: 0.84rem;
+}
+
+.weekly-method-note p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .weekly-masthead {
+    margin: 1.25rem 1rem 0;
+    padding: 1.4rem 1.25rem 1.5rem;
+  }
+
+  .weekly-masthead-content {
+    padding: 2.5rem 0 1.7rem;
+  }
+
+  .weekly-masthead-meta {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .weekly-content {
+    padding-top: 2.5rem;
+  }
+
+  .weekly-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .weekly-method-note {
+    margin: 0 1rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .weekly-masthead {
+    margin: 0.75rem 0.75rem 0;
+    border-radius: 10px;
+  }
+
+  .weekly-masthead-top {
+    align-items: flex-start;
+  }
+
+  .weekly-brand,
+  .weekly-kicker {
+    font-size: 0.58rem;
+  }
+
+  .weekly-kicker {
+    padding: 0.35rem 0.45rem;
+  }
+
+  .weekly-masthead h1 {
+    font-size: clamp(2.25rem, 12vw, 3.1rem);
+  }
+
+  .weekly-deck {
+    font-size: 0.9rem;
+  }
+
+  .weekly-content {
+    padding: 2rem 1rem 0;
+  }
+
+  .weekly-card-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .weekly-method-note {
+    align-items: flex-start;
+    margin-inline: 1rem;
+    padding: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .weekly-spinner {
+    animation: none;
+  }
+}
