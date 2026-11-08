@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
 "functions": {
   "api/public-data.js": {
-    "regions": ["iad1"]
+    "regions": ["gru1"]
   }
 },
   "rewrites": [
