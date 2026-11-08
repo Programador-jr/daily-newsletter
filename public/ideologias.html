@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR" class="history-document">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,30 +11,32 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="/css/historia.css">
+  <link rel="stylesheet" href="/css/editorial.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/ideologias.css">
   <link rel="stylesheet" href="/css/atlas.css">
-  <link rel="stylesheet" href="/css/page-patterns.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="/js/vercel-observability.js" defer></script>
 </head>
-<body class="history-page ideologies-page">
+<body class="editorial-page ideologies-page">
   <a class="skip-link" href="#main">Pular para o conteúdo</a>
 <div class="container">
   <header class="site-header">
-    <a class="logo" href="/" aria-label="Página inicial"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></a>
-    <nav class="header-main-nav" aria-label="Navegação principal"><div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div></nav>
-  </header>
-  <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
-    <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
-    <nav class="site-sidebar-nav" aria-label="Páginas principais"><div class="site-sidebar-group"></div></nav>
-    <div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false"><span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div>
-  </aside>
-  <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
+      <a class="logo" href="/" aria-label="Página inicial"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></a>
+      <nav class="header-main-nav" aria-label="Navegação principal">
+        <div class="header-primary-links"></div>
+        <div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div>
+      </nav>
+    </header>
+    <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+      <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
+      <nav class="site-sidebar-nav" aria-label="Páginas principais"></nav>
+      <div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false"><span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div>
+    </aside>
+    <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
 
   <main id="main" tabindex="-1">
-    <section class="history-hero ideology-hero">
+    <section class="page-hero">
       <span class="eyebrow">Política · Guia de ideologias</span>
       <h1>Entenda as ideias antes de escolher os rótulos.</h1>
       <p>Um guia para compreender correntes políticas, conceitos e diferenças entre posições que muitas vezes são colocadas no mesmo lugar. A proposta é apresentar definições, contexto histórico e pontos de divergência sem dizer ao leitor o que pensar.</p>
@@ -49,8 +51,8 @@
       </div>
     </section>
 
-    <section class="ideology-method" aria-label="Como o guia se organiza">
-      <div class="ideology-method-icon"><i class="fas fa-diagram-project" aria-hidden="true"></i></div>
+    <section class="method-card" aria-label="Como o guia se organiza">
+      <div class="method-icon"><i class="fas fa-diagram-project" aria-hidden="true"></i></div>
       <div>
         <span class="eyebrow">Doze eixos, não um rótulo</span>
         <h2>Uma régua comum para comparar posições diferentes.</h2>
@@ -58,7 +60,7 @@
       </div>
     </section>
 
-    <section class="ideology-section" id="atalhos">
+    <section class="page-section" id="atalhos">
       <div class="section-heading">
         <div>
           <span class="eyebrow">Continue explorando</span>
@@ -75,16 +77,16 @@
       </div>
     </section>
 
-    <section class="ideology-section" id="conceitos-basicos">
+    <section class="page-section" id="conceitos-basicos">
       <div class="section-heading"><div><span class="eyebrow">Ponto de partida</span><h2>O que são política e ideologia?</h2></div></div>
-      <div class="ideology-prose">
+      <div class="page-prose">
         <p><strong>Política</strong> é o processo pelo qual grupos organizam decisões coletivas, distribuem poder e negociam conflitos sobre regras, recursos e prioridades comuns. Ela acontece nas instituições, nos partidos e também na vida pública cotidiana.</p>
         <p><strong>Ideologia</strong> é um conjunto de ideias e valores sobre como a sociedade e o poder devem ser organizados. Esquerda e direita não são sinônimos de “bom” e “ruim”: são referências históricas amplas, cujos sentidos variam por país, período e tema. Um partido ou uma pessoa pode combinar posições diferentes em economia, costumes e instituições.</p>
       </div>
     </section>
 
-    <section class="ideology-method">
-      <div class="ideology-method-icon"><i class="fas fa-book-open"></i></div>
+    <section class="method-card">
+      <div class="method-icon"><i class="fas fa-book-open"></i></div>
       <div>
         <span class="eyebrow">Como ler esta seção</span>
         <h2>Ideologia não é sinônimo de partido, governo ou pessoa.</h2>
@@ -92,15 +94,15 @@
       </div>
     </section>
 
-    <section class="ideology-section" id="esquerda-direita">
+    <section class="page-section" id="esquerda-direita">
       <div class="section-heading">
         <div><span class="eyebrow">Primeiro conceito</span><h2>Esquerda e direita</h2></div>
       </div>
-      <div class="ideology-prose">
+      <div class="page-prose">
         <p>Os termos <strong>esquerda</strong> e <strong>direita</strong> surgiram na política parlamentar francesa do fim do século XVIII, a partir da disposição dos grupos no plenário. Com o tempo, passaram a representar famílias de posições políticas, mas seus significados variam conforme o país e a época.</p>
         <p>Em linhas gerais, a esquerda costuma estar associada a maior ênfase na igualdade social e econômica e a diferentes graus de intervenção pública. A direita costuma estar associada a maior ênfase na propriedade, na continuidade de instituições e tradições ou em menor intervenção econômica do Estado. Essas associações são históricas, não definições universais.</p>
         <p>Por isso o catálogo não reduz uma posição a um único ponto. Ele compara cada perfil em doze eixos independentes, que vão de instituições e economia a costumes e política externa.</p>
-        <details class="history-accordion-item ideology-axes-detail">
+        <details class="accordion-item ideology-axes-detail">
           <summary><span class="accordion-title"><strong>Conheça os doze eixos</strong></span><span class="accordion-icon"><i class="fas fa-chevron-down" aria-hidden="true"></i></span></summary>
           <div class="accordion-content">
             <div class="axis-grid axis-grid-12" id="guide-axis-grid"></div>
@@ -110,7 +112,7 @@
       </div>
     </section>
 
-    <section class="ideology-section" id="correntes">
+    <section class="page-section" id="correntes">
       <div class="section-heading"><div><span class="eyebrow">Mapa de ideias</span><h2>Principais correntes políticas</h2></div></div>
       <div class="ideology-grid">
         <article class="ideology-card"><span class="ideology-tag">Centro</span><h3>Posições intermediárias e combinações</h3><p>“Centro” pode indicar posições próximas ao meio em uma escala, moderação em determinados temas ou combinações entre propostas. O termo não descreve uma ideologia única e depende dos critérios e do contexto usados.</p></article>
@@ -132,7 +134,7 @@
       </div>
     </section>
 
-    <section class="ideology-section" id="libertario-anarquista">
+    <section class="page-section" id="libertario-anarquista">
       <div class="section-heading"><div><span class="eyebrow">Duas tradições frequentemente confundidas</span><h2>Libertarianismo e anarquismo</h2></div></div>
       <div class="comparison-grid">
         <article><h3>Libertarianismo</h3><p>Em muitas correntes libertárias, a pergunta central é como maximizar a liberdade individual e limitar a coerção. Há vertentes que aceitam um Estado mínimo para proteger direitos, enquanto outras chegam a posições próximas do anarquismo.</p><ul><li>ênfase em autonomia individual;</li><li>forte proteção de direitos de propriedade em muitas vertentes;</li><li>ceticismo em relação à expansão do poder estatal;</li><li>grande diversidade interna.</li></ul></article>
@@ -141,15 +143,15 @@
       <div class="callout"><strong>Importante:</strong> libertarianismo e anarquismo podem compartilhar críticas ao poder estatal, mas não são sinônimos e divergem profundamente sobre Estado, propriedade, mercado e organização econômica dependendo da corrente analisada.</div>
     </section>
 
-    <section class="ideology-section" id="fascismo-nazismo">
+    <section class="page-section" id="fascismo-nazismo">
       <div class="section-heading"><div><span class="eyebrow">História política</span><h2>Fascismo e nazismo</h2></div></div>
-      <div class="ideology-prose">
+      <div class="page-prose">
         <p>Fascismo italiano e nazismo alemão foram movimentos e regimes históricos específicos. Embora compartilhassem ultranacionalismo, ditadura, propaganda e violência política, o racismo biológico e o antissemitismo ocuparam um lugar central no nazismo.</p>
         <div class="callout"><strong>Compare os dois regimes.</strong> A página histórica reúne uma comparação por temas, uma linha do tempo de 1918 a 1945 e fontes para aprofundar cada assunto. <a class="fascim-link" href="/fascismo-nazismo">Explorar fascismo e nazismo</a></div>
       </div>
     </section>
 
-    <section class="ideology-section" id="termos">
+    <section class="page-section" id="termos">
       <div class="section-heading"><div><span class="eyebrow">Precisão conceitual</span><h2>Termos que não são sinônimos</h2></div></div>
       <div class="term-table-wrap">
         <table class="term-table"><thead><tr><th>Termo</th><th>O que descreve</th><th>Não significa automaticamente</th></tr></thead><tbody>
@@ -164,7 +166,7 @@
       </div>
     </section>
 
-    <section class="ideology-section ideology-sources" id="fontes">
+    <section class="page-section sources-section" id="fontes">
       <span class="eyebrow">Fontes e referências</span>
       <h2>Para continuar estudando</h2>
       <p>Esta página é uma introdução. Conceitos políticos possuem debates acadêmicos e diferentes interpretações; as fontes abaixo ajudam a aprofundar a pesquisa.</p>

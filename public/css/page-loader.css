@@ -1,15 +1,18 @@
+/* CARREGAMENTO GLOBAL — só a coroa do ícone, sem textos (o nome acessível fica no aria-label do overlay). */
+
 #page-loading-overlay {
+  --page-loading-green: #0a5048;
+  --page-loading-gold: #f4c61b;
+
   position: fixed;
   z-index: 2000;
   inset: 0;
   display: grid;
   place-items: center;
-  padding: 1.5rem;
   background: color-mix(in srgb, var(--bg-container, #f7faf8) 94%, #0d332c 6%);
-  color: var(--text-main, #263632);
   opacity: 1;
   visibility: visible;
-  transition: opacity 180ms ease, visibility 180ms ease;
+  transition: opacity 220ms ease, visibility 220ms ease;
 }
 
 #page-loading-overlay.is-hidden {
@@ -18,113 +21,139 @@
   pointer-events: none;
 }
 
-.page-loading-card {
-  display: grid;
-  justify-items: center;
-  gap: 1rem;
-  width: min(100%, 21rem);
-  padding: 1.5rem;
-  text-align: center;
-}
-
-.page-loading-brand {
-  display: grid;
-  justify-items: center;
-  color: var(--primary, #064e46);
-  animation: page-loading-brand-in 500ms ease-out both;
-}
-
 .page-loading-mark {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 3.25rem;
-  height: 3.25rem;
-  margin-bottom: 0.65rem;
-  border: 1px solid color-mix(in srgb, var(--primary, #064e46) 42%, transparent);
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--primary, #064e46) 10%, transparent);
-  font-size: 1.7rem;
-  line-height: 1;
-  animation: page-loading-mark-pulse 1.8s ease-in-out infinite;
+  width: 8.5rem;
+  aspect-ratio: 1;
+  animation: page-loading-in 420ms cubic-bezier(.2, .8, .2, 1) both;
 }
 
-.page-loading-brand-top {
-  font-family: "Playfair Display", serif;
-  font-size: clamp(2rem, 8vw, 2.5rem);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  line-height: 1;
-}
-
-.page-loading-brand-bottom {
-  margin-top: 0.4rem;
-  color: var(--text-muted, #667772);
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.36em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.page-loading-progress {
-  position: relative;
-  width: min(12rem, 78vw);
-  height: 2px;
-  overflow: hidden;
-  margin-top: 0.4rem;
-  border-radius: 2px;
-  background: color-mix(in srgb, var(--primary, #064e46) 15%, transparent);
-}
-
-.page-loading-progress::after {
+/* Brilho dourado que respira atrás da coroa. */
+.page-loading-mark::before {
   position: absolute;
   inset: 0;
-  width: 42%;
-  border-radius: inherit;
-  background: var(--primary, #064e46);
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--page-loading-gold) 30%, transparent) 0%, transparent 68%);
   content: "";
-  transform: translateX(-120%);
-  animation: page-loading-progress 1.35s ease-in-out infinite;
+  animation: page-loading-glow 1.8s ease-in-out infinite;
 }
 
-.page-loading-title {
-  font-size: 0.95rem;
-  font-weight: 700;
+.page-loading-crown {
+  position: relative;
+  width: 5.5rem;
+  height: auto;
+  overflow: visible;
+  animation: page-loading-float 1.8s ease-in-out infinite;
 }
 
-.page-loading-detail {
-  color: var(--text-muted, #667772);
-  font-size: 0.78rem;
-  line-height: 1.45;
+.page-loading-crown-body {
+  fill: var(--page-loading-green);
+  stroke: var(--page-loading-gold);
+  stroke-width: 66;
+  stroke-linejoin: round;
+}
+
+.page-loading-crown-jewel {
+  fill: var(--page-loading-gold);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: page-loading-jewel 1.8s ease-in-out infinite;
+}
+
+.page-loading-crown-jewel:nth-of-type(2) {
+  animation-delay: 150ms;
+}
+
+.page-loading-crown-jewel:nth-of-type(3) {
+  animation-delay: 300ms;
+}
+
+/* A base da coroa funciona como barra de progresso. */
+.page-loading-crown-track,
+.page-loading-crown-progress {
+  fill: none;
+  stroke: var(--page-loading-gold);
+  stroke-width: 66;
+  stroke-linecap: round;
+}
+
+.page-loading-crown-track {
+  opacity: .28;
+}
+
+.page-loading-crown-progress {
+  stroke-dasharray: 34 100;
+  animation: page-loading-progress 1.4s cubic-bezier(.45, 0, .25, 1) infinite;
 }
 
 html.page-loader-active {
   overflow: hidden;
 }
 
-@keyframes page-loading-spin {
-  to { transform: rotate(360deg); }
+@keyframes page-loading-in {
+  from {
+    opacity: 0;
+    transform: scale(.92);
+  }
 }
 
-@keyframes page-loading-brand-in {
-  from { opacity: 0; transform: translateY(0.5rem) scale(0.97); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes page-loading-glow {
+  0%,
+  100% {
+    opacity: .55;
+    transform: scale(.88);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
 }
 
-@keyframes page-loading-mark-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary, #064e46) 22%, transparent); }
-  50% { box-shadow: 0 0 0 0.55rem transparent; }
+@keyframes page-loading-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes page-loading-jewel {
+  0%,
+  60%,
+  100% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.18);
+  }
 }
 
 @keyframes page-loading-progress {
-  0% { transform: translateX(-120%); }
-  55%, 100% { transform: translateX(300%); }
+  from {
+    stroke-dashoffset: 34;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #page-loading-overlay { transition: none; }
-  .page-loading-brand,
+  #page-loading-overlay {
+    transition: none;
+  }
+
   .page-loading-mark,
-  .page-loading-progress::after { animation: none; }
+  .page-loading-mark::before,
+  .page-loading-crown,
+  .page-loading-crown-jewel {
+    animation: none;
+  }
+
+  .page-loading-crown-progress {
+    animation-duration: 2.4s;
+  }
 }

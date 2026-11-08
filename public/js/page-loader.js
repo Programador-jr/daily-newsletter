@@ -1,8 +1,12 @@
 (() => {
   const OVERLAY_ID = "page-loading-overlay";
   const FALLBACK_TIMEOUT = 12000;
+  // A navegação mostra o overlay antes de a página sair. Se ela não sair
+  // (download, navegação cancelada, link tratado por JS), o overlay some sozinho.
+  const NAVIGATION_TIMEOUT = 8000;
   let initialLoadFinished = false;
   let fallbackTimer = null;
+  let navigationTimer = null;
   let windowLoadFinished = document.readyState === "complete";
   let pendingFetches = 0;
   let skeletonRefreshQueued = false;
@@ -16,36 +20,44 @@
     overlay.setAttribute("role", "status");
     overlay.setAttribute("aria-live", "polite");
     overlay.setAttribute("aria-label", "Carregando página");
+    // Coroa do ícone (assets/icons/kings-newsletter-icon.png) redesenhada em SVG:
+    // aparece sem esperar download e permite animar joias e base.
     overlay.innerHTML = `
-      <div class="page-loading-card">
-        <div class="page-loading-brand" aria-hidden="true">
-          <span class="page-loading-mark">♛</span>
-          <span class="page-loading-brand-top">KING'S</span>
-          <span class="page-loading-brand-bottom">Newsletter</span>
-        </div>
-        <strong class="page-loading-title">Carregando sua edição</strong>
-        <span class="page-loading-progress" aria-hidden="true"></span>
-        <span class="page-loading-detail">Preparando o conteúdo…</span>
+      <div class="page-loading-mark" aria-hidden="true">
+        <svg class="page-loading-crown" viewBox="200 320 1530 1280" focusable="false">
+          <path class="page-loading-crown-body" d="M340 670 648 940 896 461 1178 940 1591 635 1452 1400H478Z"/>
+          <circle class="page-loading-crown-jewel" cx="340" cy="670" r="120"/>
+          <circle class="page-loading-crown-jewel" cx="896" cy="461" r="120"/>
+          <circle class="page-loading-crown-jewel" cx="1591" cy="635" r="120"/>
+          <path class="page-loading-crown-track" d="M513 1540H1418"/>
+          <path class="page-loading-crown-progress" d="M513 1540H1418" pathLength="100"/>
+        </svg>
       </div>`;
 
     (document.body || document.documentElement).append(overlay);
     return overlay;
   };
 
-  const setDetail = detail => {
-    const element = getOverlay().querySelector(".page-loading-detail");
-    if (element) element.textContent = detail;
-  };
-
-  const show = detail => {
+  const show = () => {
     const overlay = getOverlay();
-    if (detail) setDetail(detail);
     overlay.classList.remove("is-hidden");
     overlay.setAttribute("aria-hidden", "false");
     document.documentElement.classList.add("page-loader-active");
   };
 
+  const clearNavigationTimer = () => {
+    if (navigationTimer) window.clearTimeout(navigationTimer);
+    navigationTimer = null;
+  };
+
+  const showForNavigation = () => {
+    show();
+    clearNavigationTimer();
+    navigationTimer = window.setTimeout(hide, NAVIGATION_TIMEOUT);
+  };
+
   const hide = () => {
+    clearNavigationTimer();
     const overlay = getOverlay();
     overlay.classList.add("is-hidden");
     overlay.setAttribute("aria-hidden", "true");
@@ -171,11 +183,20 @@
     if (!(event.target instanceof Element)) return;
 
     const anchor = event.target.closest("a");
-    if (isNavigableInternalLink(anchor)) show("Abrindo a próxima página…");
+    if (!isNavigableInternalLink(anchor)) return;
+    // Decide depois que todos os handlers rodaram: cards e fichas usam links
+    // reais, mas abrem o conteúdo na própria página com preventDefault().
+    window.setTimeout(() => {
+      if (!event.defaultPrevented) showForNavigation();
+    }, 0);
   }, true);
 
-  window.addEventListener("beforeunload", () => show("Abrindo a próxima página…"));
-  window.addEventListener("pageshow", () => finishInitialLoad());
+  window.addEventListener("beforeunload", showForNavigation);
+  window.addEventListener("pageshow", event => {
+    // Voltar/avançar pode restaurar a página do cache com o overlay da saída.
+    if (event.persisted) hide();
+    finishInitialLoad();
+  });
   window.addEventListener("load", () => {
     windowLoadFinished = true;
     finishInitialLoad();
@@ -183,10 +204,7 @@
 
   if (document.readyState === "complete") finishInitialLoad();
   fallbackTimer = window.setTimeout(() => {
-    if (!initialLoadFinished) {
-      setDetail("O conteúdo continua carregando, mas você já pode navegar.");
-      finishInitialLoad();
-    }
+    if (!initialLoadFinished) finishInitialLoad(true);
   }, FALLBACK_TIMEOUT);
 
   window.pageLoader = Object.freeze({ show, hide, ready: finishInitialLoad });

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR" class="history-document">
+<html lang="pt-BR">
 <head>
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
@@ -12,14 +12,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="/css/historia.css">
+  <link rel="stylesheet" href="/css/editorial.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/economia.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="/js/vercel-observability.js" defer></script>
   <script src="/js/economia.js" defer></script>
 </head>
-<body class="history-page economy-page">
+<body class="editorial-page economy-page">
   <a class="skip-link" href="#main">Pular para o conteúdo</a>
   <div class="container">
     <header class="site-header">
@@ -32,19 +32,19 @@
     <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
       <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
       <nav class="site-sidebar-nav" aria-label="Páginas principais"></nav>
-      <div class="site-sidebar-preferences"></div>
+      <div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false"><span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div>
     </aside>
     <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
 
     <main id="main" tabindex="-1">
-      <section class="history-hero economy-hero">
+      <section class="page-hero">
         <span class="eyebrow">Economia · Brasil</span>
         <h1>Entenda os números da economia.</h1>
         <p>Indicadores econômicos ajudam a explicar preços, crédito, emprego e contas públicas. Nesta página, cada conceito é explicado em linguagem direta; as fontes oficiais ficam disponíveis para conferir os dados publicados.</p>
       </section>
 
-      <section class="economy-section" aria-labelledby="economy-indicators-title">
-        <div class="section-heading">
+      <section class="page-section" aria-labelledby="economy-indicators-title">
+        <div class="section-heading stacked">
           <div><span class="eyebrow">01 · Indicadores</span><h2 id="economy-indicators-title">Os números mais recentes</h2></div>
           <p>Valores carregados de séries oficiais do Banco Central. Cada cartão informa o período da última observação disponível.</p>
         </div>
@@ -83,8 +83,8 @@
         <p class="economy-source-note" id="economy-indicators-updated">Consultando séries oficiais do Banco Central. Se os dados não carregarem, use o link de consulta no detalhamento de cada indicador.</p>
       </section>
 
-      <section class="economy-section" aria-labelledby="economy-fiscal-title">
-        <div class="section-heading">
+      <section class="page-section" aria-labelledby="economy-fiscal-title">
+        <div class="section-heading stacked">
           <div><span class="eyebrow">02 · Regras fiscais</span><h2 id="economy-fiscal-title">Como funciona o arcabouço fiscal?</h2></div>
         </div>
         <div class="economy-fiscal-intro">
@@ -100,8 +100,8 @@
 
 
 
-      <section class="economy-section" aria-labelledby="economy-lab-title">
-        <div class="section-heading">
+      <section class="page-section" aria-labelledby="economy-lab-title">
+        <div class="section-heading stacked">
           <div><span class="eyebrow">03 · Laboratório interativo</span><h2 id="economy-lab-title">Explore a economia na prática</h2></div>
           <p>Altere valores, siga o caminho do dinheiro público e observe séries oficiais. Os exemplos de preços são fictícios e editáveis; não representam uma pesquisa de mercado.</p>
         </div>
@@ -112,9 +112,9 @@
             <table class="economy-price-table">
               <thead><tr><th scope="col">Produto</th><th scope="col">Preço anterior (R$)</th><th scope="col">Preço atual (R$)</th><th scope="col">Variação</th></tr></thead>
               <tbody>
-                <tr><th scope="row">Arroz (5 kg)</th><td><label class="visually-hidden" for="price-rice-before">Preço anterior do arroz</label><input id="price-rice-before" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="25.00"></td><td><label class="visually-hidden" for="price-rice-now">Preço atual do arroz</label><input id="price-rice-now" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="29.00"></td><td id="price-rice-change">—</td></tr>
-                <tr><th scope="row">Leite (1 L)</th><td><label class="visually-hidden" for="price-milk-before">Preço anterior do leite</label><input id="price-milk-before" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="4.50"></td><td><label class="visually-hidden" for="price-milk-now">Preço atual do leite</label><input id="price-milk-now" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="5.20"></td><td id="price-milk-change">—</td></tr>
-                <tr><th scope="row">Óleo (900 ml)</th><td><label class="visually-hidden" for="price-oil-before">Preço anterior do óleo</label><input id="price-oil-before" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="6.00"></td><td><label class="visually-hidden" for="price-oil-now">Preço atual do óleo</label><input id="price-oil-now" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="6.80"></td><td id="price-oil-change">—</td></tr>
+                <tr><th scope="row">Arroz (5 kg)</th><td><label class="sr-only" for="price-rice-before">Preço anterior do arroz</label><input id="price-rice-before" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="25.00"></td><td><label class="sr-only" for="price-rice-now">Preço atual do arroz</label><input id="price-rice-now" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="29.00"></td><td id="price-rice-change">—</td></tr>
+                <tr><th scope="row">Leite (1 L)</th><td><label class="sr-only" for="price-milk-before">Preço anterior do leite</label><input id="price-milk-before" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="4.50"></td><td><label class="sr-only" for="price-milk-now">Preço atual do leite</label><input id="price-milk-now" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="5.20"></td><td id="price-milk-change">—</td></tr>
+                <tr><th scope="row">Óleo (900 ml)</th><td><label class="sr-only" for="price-oil-before">Preço anterior do óleo</label><input id="price-oil-before" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="6.00"></td><td><label class="sr-only" for="price-oil-now">Preço atual do óleo</label><input id="price-oil-now" class="economy-price-input" type="number" min="0" max="100000" step="0.01" value="6.80"></td><td id="price-oil-change">—</td></tr>
               </tbody>
             </table>
           </div>
@@ -150,8 +150,8 @@
         </article>
       </section>
 
-      <section class="economy-section" aria-labelledby="economy-examples-title">
-        <div class="section-heading">
+      <section class="page-section" aria-labelledby="economy-examples-title">
+        <div class="section-heading stacked">
           <div><span class="eyebrow">04 · Decisões de crédito</span><h2 id="economy-examples-title">Como a Selic afeta seu bolso?</h2></div>
           <p>Comece pela ideia principal e depois experimente os exemplos. Os resultados são ilustrativos, não previsões nem ofertas financeiras.</p>
         </div>
@@ -194,9 +194,9 @@
         <p class="economy-source-note">Simulações educativas com fórmulas simplificadas. A aplicação real do arcabouço depende da legislação vigente, da base de cálculo, de exceções e da apuração oficial das metas.</p>
       </section>
 
-      <div class="history-detail economy-detail" id="economy-modal" aria-live="polite"></div>
+      <div class="detail-panel economy-detail" id="economy-modal" aria-live="polite"></div>
 
-      <section class="economy-related" aria-label="Conteúdo relacionado">
+      <section class="cta-banner" aria-label="Conteúdo relacionado">
         <div><span class="eyebrow">Conteúdo relacionado</span><h2>Dinheiro público e orçamento</h2><p>Entenda de onde vêm as receitas do Estado, como os tributos são distribuídos e como as despesas públicas são registradas.</p></div>
         <a class="cta-button" href="/arrecadacao">Ler sobre dinheiro público</a>
       </section>

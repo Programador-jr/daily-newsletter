@@ -5,8 +5,9 @@ test('exibe e encerra o carregamento global da página', async ({ page }) => {
 
   const overlay = page.locator('#page-loading-overlay');
   await expect(overlay).toHaveCount(1);
-  await expect(overlay.locator('.page-loading-brand-top')).toHaveText("KING'S");
-  await expect(overlay.locator('.page-loading-brand-bottom')).toHaveText('Newsletter');
+  await expect(overlay).toHaveAttribute('aria-label', 'Carregando página');
+  await expect(overlay.locator('svg.page-loading-crown .page-loading-crown-jewel')).toHaveCount(3);
+  await expect(overlay).toHaveText('');
   await expect(overlay).toHaveAttribute('aria-hidden', 'true');
   await expect(overlay).toHaveCSS('visibility', 'hidden');
   await expect(page.locator('html')).not.toHaveClass(/page-loader-active/);
@@ -19,12 +20,63 @@ test('reativa o carregamento antes de uma navegação interna', async ({ page })
   await page.goto('/historia');
 
   await page.evaluate(() => {
-    window.pageLoader.show('Abrindo a próxima página…');
+    window.pageLoader.show();
   });
 
   await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'false');
-  await expect(page.locator('#page-loading-overlay')).toContainText('Abrindo a próxima página');
   await expect(page.locator('html')).toHaveClass(/page-loader-active/);
+});
+
+test('não prende o carregamento em links tratados na própria página', async ({ page }) => {
+  await page.goto('/historia');
+  await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'true');
+
+  await page.evaluate(() => {
+    const link = document.createElement('a');
+    link.href = '?perfil=teste';
+    link.id = 'link-em-pagina';
+    link.textContent = 'abrir ficha';
+    link.addEventListener('click', event => event.preventDefault());
+    document.body.append(link);
+    link.click();
+  });
+
+  await page.waitForTimeout(300);
+  await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'true');
+});
+
+test('esconde o carregamento ao voltar pelo cache do navegador', async ({ page }) => {
+  await page.goto('/historia');
+  await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'true');
+
+  await page.evaluate(() => {
+    window.pageLoader.show();
+    window.dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true }));
+  });
+
+  await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'true');
+});
+
+test('esconde o carregamento quando a saída da página não acontece', async ({ page }) => {
+  await page.clock.install();
+  await page.goto('/historia');
+  await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'true');
+
+  await page.evaluate(() => window.dispatchEvent(new Event('beforeunload')));
+  await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'false');
+
+  await page.clock.runFor(8500);
+  await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'true');
+});
+
+test('libera a página após o limite mesmo com requisição travada', async ({ page }) => {
+  await page.clock.install();
+  await page.route('**/api/**', () => {});
+  await page.goto('/gastometro', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'false');
+
+  await page.clock.runFor(12500);
+  await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'true');
 });
 
 test('prepara skeletons para imagens remotas e dados externos', async ({ page }) => {

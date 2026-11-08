@@ -133,7 +133,7 @@
 
   function renderFilters() {
     filterContainer.innerHTML = periods.map(period =>
-      '<button class="history-filter' + (activePeriod === period.id ? ' active' : '') + '" type="button" data-period="' + escapeHtml(period.id) + '" aria-pressed="' + (activePeriod === period.id) + '">' + escapeHtml(period.label) + '</button>'
+      '<button class="filter-chip' + (activePeriod === period.id ? ' active' : '') + '" type="button" data-period="' + escapeHtml(period.id) + '" aria-pressed="' + (activePeriod === period.id) + '">' + escapeHtml(period.label) + '</button>'
     ).join("");
   }
 
@@ -152,7 +152,7 @@
   function closeDetail() {
     detail.classList.remove("open");
     detail.innerHTML = "";
-    document.body.classList.remove("history-detail-open");
+    document.body.classList.remove("detail-panel-open");
     const trigger = returnFocusYear && timeline.querySelector('[data-event-year="' + CSS.escape(returnFocusYear) + '"]');
     if (trigger) trigger.focus();
     returnFocusYear = null;
@@ -161,12 +161,12 @@
   function openDetail(event) {
     activeKey = event.year;
     renderTimeline();
-    detail.innerHTML = '<div class="history-detail-backdrop" data-close-detail aria-hidden="true"></div>' +
-      '<article class="history-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="fascism-detail-title">' +
-      '<header class="history-accordion-header"><div><span class="detail-kicker">Marco histórico · ' + escapeHtml(event.year) + '</span><h2 id="fascism-detail-title">' + escapeHtml(event.title) + '</h2><span class="detail-years">' + escapeHtml(event.year) + '</span></div><button class="accordion-close" type="button" aria-label="Fechar detalhes"><i class="fas fa-times" aria-hidden="true"></i></button></header>' +
-      '<div class="history-accordion-lead"><p>' + escapeHtml(event.summary) + '</p></div><div class="fascism-event-content">' + event.detail.map(paragraph => '<p>' + escapeHtml(paragraph) + '</p>').join('') + '</div></article>';
+    detail.innerHTML = '<div class="detail-panel-backdrop" data-close-detail aria-hidden="true"></div>' +
+      '<article class="detail-panel-dialog" role="dialog" aria-modal="true" aria-labelledby="fascism-detail-title">' +
+      '<header class="detail-header"><div><span class="detail-kicker">Marco histórico · ' + escapeHtml(event.year) + '</span><h2 id="fascism-detail-title">' + escapeHtml(event.title) + '</h2><span class="detail-years">' + escapeHtml(event.year) + '</span></div><button class="accordion-close" type="button" aria-label="Fechar detalhes"><i class="fas fa-times" aria-hidden="true"></i></button></header>' +
+      '<div class="detail-lead"><p>' + escapeHtml(event.summary) + '</p></div><div class="fascism-event-content">' + event.detail.map(paragraph => '<p>' + escapeHtml(paragraph) + '</p>').join('') + '</div></article>';
     detail.classList.add("open");
-    document.body.classList.add("history-detail-open");
+    document.body.classList.add("detail-panel-open");
     detail.querySelector(".accordion-close").focus();
   }
 
@@ -197,7 +197,7 @@
       return;
     }
     if (event.key !== "Tab") return;
-    const dialog = detail.querySelector(".history-detail-dialog");
+    const dialog = detail.querySelector(".detail-panel-dialog");
     const focusable = dialog ? Array.from(dialog.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex="-1"])')) : [];
     if (!focusable.length) {
       event.preventDefault();

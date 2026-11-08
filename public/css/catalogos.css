@@ -1,0 +1,292 @@
+/*
+ * PÁGINAS DEDICADAS DE CATÁLOGO — estrutura comum a Partidos, Personalidades e Países.
+ * Cada página mantém no próprio CSS apenas o que é exclusivo do seu tipo de cartão.
+ */
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-hero h1 {
+  margin: .45rem 0 .9rem;
+  font-size: clamp(2.35rem, 5vw, 3.8rem);
+  line-height: 1.06;
+  letter-spacing: -.045em;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .atlas-featured-head,
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-section .section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-direction: column;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-main {
+  --catalog-content-gutter: 3rem;
+  padding-bottom: 3rem;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-hero {
+  max-width: none;
+  padding: 3rem var(--catalog-content-gutter) 2rem;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-hero > p {
+  max-width: 740px;
+  color: var(--text-muted);
+  font-size: .94rem;
+  line-height: 1.8;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin-top: 1.35rem;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-hero-links .atlas-button {
+  min-height: 42px;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin-top: 1.5rem;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-stat {
+  display: grid;
+  gap: .12rem;
+  min-width: 112px;
+  padding: .7rem .85rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card-bg);
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-stat strong {
+  color: var(--primary);
+  font-size: 1.2rem;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-stat-label {
+  color: var(--text-muted);
+  font-size: .7rem;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-spectrum-panel {
+  display: grid;
+  gap: .6rem;
+  margin-top: .8rem;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-spectrum-panel .atlas-book-spectrum-label {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-spectrum-panel .atlas-book-spectrum-bar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .45rem;
+}
+
+.dedicated-catalog-page .catalog-spectrum-panel .atlas-book-spectrum-segment {
+  min-height: 40px;
+  border-top: 2px solid var(--c, var(--primary));
+  border-radius: 7px;
+  background: var(--bg-container);
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-spectrum-panel .atlas-book-spectrum-segment b {
+  color: var(--text-main);
+  font-size: .7rem;
+  font-weight: 650;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-spectrum-panel .atlas-book-spectrum-segment em {
+  color: var(--text-muted);
+  font-size: .7rem;
+}
+
+.dedicated-catalog-page .catalog-generic-view .atlas-controls-shell {
+  margin-bottom: 1.6rem;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) #catalog-generic-count {
+  color: var(--text-muted);
+  font-size: .76rem;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) #catalog-featured,
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-section {
+  margin: 0 var(--catalog-content-gutter) 2.25rem;
+}
+
+.dedicated-catalog-page .atlas-featured-head h2,
+.dedicated-catalog-page .catalog-section .section-heading h2 {
+  margin: .3rem 0 0;
+  color: var(--text-main);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .atlas-featured-head > p,
+:is(.dedicated-parties-page, .dedicated-personalities-page) .atlas-section-note {
+  max-width: 360px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .74rem;
+  line-height: 1.6;
+}
+
+.dedicated-catalog-page #catalog-featured-grid,
+.dedicated-catalog-page #catalog-generic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 18rem));
+  grid-auto-rows: 1fr;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1.25rem;
+}
+
+.dedicated-catalog-page .catalog-card h3 {
+  min-height: 2.5em;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.dedicated-catalog-page .catalog-card .catalog-card-summary {
+  display: -webkit-box;
+  min-height: 6em;
+  overflow: hidden;
+  margin: 0;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  line-height: 1.5;
+}
+
+.dedicated-catalog-page .catalog-card .atlas-fp {
+  margin: 0;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-notice {
+  margin: 0 var(--catalog-content-gutter) 1rem;
+  padding: .8rem 1rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  font-size: .75rem;
+  line-height: 1.6;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-more-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.15rem;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-load-more {
+  min-width: 190px;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-disclaimer {
+  margin: 0 var(--catalog-content-gutter);
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-profile-dialog .catalog-profile-tab-panel {
+  scroll-margin-top: 1rem;
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-profile-dialog .catalog-profile-axis-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+:is(.dedicated-parties-page, .dedicated-personalities-page) [hidden] {
+  display: none !important;
+}
+
+@media (max-width: 1000px) {
+  .dedicated-catalog-page .catalog-spectrum-panel .atlas-book-spectrum-bar {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  :is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-main {
+    --catalog-content-gutter: 1.25rem;
+  }
+
+  :is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-hero {
+    padding: 2rem var(--catalog-content-gutter) 1.4rem;
+  }
+
+  :is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-hero h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  :is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-hero-links .atlas-button {
+    flex: 1 1 180px;
+  }
+
+  .dedicated-catalog-page .catalog-spectrum-panel .atlas-book-spectrum-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  :is(.dedicated-parties-page, .dedicated-personalities-page) #catalog-featured,
+  :is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-section {
+    margin-right: var(--catalog-content-gutter);
+    margin-left: var(--catalog-content-gutter);
+  }
+
+  .dedicated-catalog-page #catalog-featured-grid,
+  .dedicated-catalog-page #catalog-generic-grid {
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 18rem));
+  }
+}
+
+@media (max-width: 640px) {
+  :is(.dedicated-parties-page, .dedicated-personalities-page) .catalog-profile-dialog .catalog-profile-axis-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  :is(.dedicated-parties-page, .dedicated-countries-page) .catalog-spectrum-panel .atlas-book-spectrum-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .dedicated-catalog-page #catalog-featured-grid,
+  .dedicated-catalog-page #catalog-generic-grid {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }
+
+  .dedicated-catalog-page .catalog-card {
+    width: 100%;
+    max-width: 22rem;
+  }
+}
+
+:is(.dedicated-personalities-page, .dedicated-countries-page) .catalog-card:hover,
+:is(.dedicated-personalities-page, .dedicated-countries-page) .catalog-card:focus-visible {
+  transform: translateY(-7px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.dedicated-personalities-page, .dedicated-countries-page) .catalog-card {
+    animation: none;
+    transition: none;
+  }
+}

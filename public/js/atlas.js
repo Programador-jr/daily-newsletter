@@ -885,7 +885,7 @@
       const panel = el(
         "article",
         {
-          class: "history-detail-dialog atlas-dialog-book",
+          class: "detail-panel-dialog atlas-dialog-book",
           role: "dialog",
           "aria-modal": "true",
           "aria-labelledby": "atlas-dialog-title"
@@ -893,7 +893,7 @@
         el("div", { class: "atlas-dialog-shell" }, head, body)
       );
       if (color) panel.style.setProperty("--fam", color);
-      const backdrop = el("div", { class: "history-detail-backdrop", "aria-hidden": "true" });
+      const backdrop = el("div", { class: "detail-panel-backdrop", "aria-hidden": "true" });
       backdrop.addEventListener("click", () => closeDialog());
       backdrop.addEventListener("wheel", (event) => {
         window.scrollBy({ left: event.deltaX, top: event.deltaY, behavior: "auto" });

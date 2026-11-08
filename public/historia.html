@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR" class="history-document">
+<html lang="pt-BR">
 <head>
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
@@ -11,62 +11,32 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="/css/historia.css">
+  <link rel="stylesheet" href="/css/editorial.css">
   <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/timeline.css">
+  <link rel="stylesheet" href="/css/historia.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="/js/vercel-observability.js" defer></script>
 </head>
-<body class="history-page">
+<body class="editorial-page">
   <a class="skip-link" href="#main">Pular para o conteúdo</a>
   <div class="container">
     <header class="site-header">
-      <a class="logo" href="/" aria-label="Página inicial">
-        <div class="logo-top"><i class="fas fa-crown"></i> KING'S</div>
-        <div class="logo-bottom">Newsletter</div></a>
+      <a class="logo" href="/" aria-label="Página inicial"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></a>
       <nav class="header-main-nav" aria-label="Navegação principal">
-        <div class="header-primary-links">
-          <a href="/">Jornal Diário</a>
-          <a href="/editions">Edições</a>
-          <a href="/historia" class="active" aria-current="page">História</a>
-          <a href="/presidentes">Presidentes</a><a href="/ideologias">Ideologias</a><a href="/politicas-publicas">Políticas Públicas</a><a href="/tres-poderes"><i class="fas fa-building-columns" aria-hidden="true"></i><span>Três Poderes</span></a><a href="/cargos-publicos"><i class="fas fa-id-card" aria-hidden="true"></i><span>Cargos Públicos</span></a><a href="/arrecadacao"><i class="fas fa-coins" aria-hidden="true"></i><span>Dinheiro Público</span></a>
-        </div>
-        <div class="header-nav-actions">
-          <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu">
-            <span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span>
-          </button>
-          
-        </div>
+        <div class="header-primary-links"></div>
+        <div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div>
       </nav>
     </header>
-
-<aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
-  <div class="site-sidebar-header">
-    <div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div>
-    <button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button>
-  </div>
-  <nav class="site-sidebar-nav" aria-label="Páginas principais">
-    <div class="site-sidebar-group">
-      <span class="site-sidebar-label">Páginas principais</span>
-      <a href="/" data-sidebar-link="home"><i class="fas fa-newspaper" aria-hidden="true"></i><span>Jornal Diário</span></a>
-      <a href="/editions" data-sidebar-link="editions"><i class="fas fa-clock-rotate-left" aria-hidden="true"></i><span>Edições</span></a>
-      <a href="/historia" class="active" aria-current="page"><i class="fas fa-landmark" aria-hidden="true"></i><span>História</span></a>
-      <a href="/presidentes"><i class="fas fa-user-tie" aria-hidden="true"></i><span>Presidentes</span></a><a href="/ideologias"><i class="fas fa-scale-balanced" aria-hidden="true"></i><span>Ideologias</span></a><a href="/politicas-publicas"><i class="fas fa-list-check" aria-hidden="true"></i><span>Políticas Públicas</span></a>
-    </div>
-  </nav>
-  <div class="site-sidebar-preferences">
-    <span class="site-sidebar-label">Preferências</span>
-    <button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false">
-      <span class="theme-switch-track" aria-hidden="true">
-        <i class="fas fa-moon" id="theme-icon"></i>
-      </span>
-      <span>Tema</span>
-    </button>
-  </div>
-</aside>
-<div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
+    <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+      <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
+      <nav class="site-sidebar-nav" aria-label="Páginas principais"></nav>
+      <div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false"><span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div>
+    </aside>
+    <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
 
     <main id="main" tabindex="-1">
-      <section class="history-hero">
+      <section class="page-hero">
         <span class="eyebrow">História do Brasil</span>
         <h1>Do período colonial à República contemporânea.</h1>
         <p>Uma narrativa cronológica para entender como o Brasil foi formado, como seu Estado mudou e como diferentes governos, conflitos, leis e transformações sociais moldaram o país.</p>
@@ -82,8 +52,8 @@
         </div>
       </section>
 
-      <section class="history-guide-card" aria-label="Como usar a linha do tempo">
-        <div class="history-guide-icon" aria-hidden="true">
+      <section class="method-card" aria-label="Como usar a linha do tempo">
+        <div class="method-icon" aria-hidden="true">
           <i class="fas fa-book-open"></i>
         </div>
         <div>
@@ -93,11 +63,11 @@
         </div>
       </section>
 
-      <section class="history-controls" aria-label="Controles da linha do tempo">
-        <div class="history-filters" id="history-filters"></div>
-        <label class="history-search">
+      <section class="page-controls" aria-label="Controles da linha do tempo">
+        <div class="filter-group" id="filter-group"></div>
+        <label class="search-field">
           <i class="fas fa-search" aria-hidden="true"></i>
-          <input id="history-search" type="search" placeholder="Buscar período ou governante..." autocomplete="off">
+          <input id="search-field" type="search" placeholder="Buscar período ou governante..." autocomplete="off">
         </label>
       </section>
 
@@ -118,7 +88,7 @@
         <div class="timeline" id="timeline"></div>
       </section>
 
-      <section class="history-detail" id="history-detail" aria-live="polite"></section>
+      <section class="detail-panel" id="detail-panel" aria-live="polite"></section>
 
       
       <section class="history-section history-reference-grid" id="governos" aria-labelledby="governos-title">
@@ -230,7 +200,7 @@
         </div>
       </section>
 
-      <section class="history-sources" id="fontes">
+      <section class="sources-section" id="fontes">
         <span class="eyebrow">Fontes e metodologia</span>
         <h2>Conteúdo baseado em documentação histórica</h2>
         <p>As narrativas são sínteses para consulta, não substituem pesquisa historiográfica. Use os acervos e referências acadêmicas abaixo para conferir datas e contexto.</p>

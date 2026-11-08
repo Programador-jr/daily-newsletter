@@ -1,171 +1,7 @@
-/*
- * Dedicated parties catalog.
- * Shared primitives remain in components.css, atlas.css and
- * political-catalogs.css. This file only adjusts the parties page.
- */
-
-.dedicated-parties-page .catalog-main {
-  --catalog-content-gutter: 3rem;
-  padding-bottom: 3rem;
-}
-
-.dedicated-parties-page .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-}
-
-.dedicated-parties-page .catalog-hero {
-  max-width: none;
-  padding: 3rem var(--catalog-content-gutter) 2rem;
-}
+/* PARTIDOS — logotipo, ficha e cartões de partidos. A estrutura comum vem de catalogos.css. */
 
 .dedicated-parties-page .catalog-hero h1 {
   max-width: 18ch;
-  margin: .45rem 0 .9rem;
-  font-size: clamp(2.35rem, 5vw, 3.8rem);
-  line-height: 1.06;
-  letter-spacing: -.045em;
-}
-
-.dedicated-parties-page .catalog-hero > p {
-  max-width: 740px;
-  color: var(--text-muted);
-  font-size: .94rem;
-  line-height: 1.8;
-}
-
-.dedicated-parties-page .catalog-hero-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .55rem;
-  margin-top: 1.35rem;
-}
-
-.dedicated-parties-page .catalog-hero-links .atlas-button {
-  min-height: 42px;
-}
-
-.dedicated-parties-page .catalog-stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .55rem;
-  margin-top: 1.5rem;
-}
-
-.dedicated-parties-page .catalog-stat {
-  display: grid;
-  gap: .12rem;
-  min-width: 112px;
-  padding: .7rem .85rem;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  background: var(--card-bg);
-}
-
-.dedicated-parties-page .catalog-stat strong {
-  color: var(--primary);
-  font-size: 1.2rem;
-  font-variant-numeric: tabular-nums;
-}
-
-.dedicated-parties-page .catalog-stat-label {
-  color: var(--text-muted);
-  font-size: .7rem;
-}
-
-.dedicated-parties-page .catalog-party-spectrum {
-  display: grid;
-  gap: .6rem;
-  margin-top: .8rem;
-}
-
-.dedicated-parties-page .catalog-party-spectrum .atlas-book-spectrum-label {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: .68rem;
-  font-weight: 800;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.dedicated-parties-page .catalog-party-spectrum .atlas-book-spectrum-bar {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: .45rem;
-}
-
-.dedicated-parties-page .catalog-party-spectrum .atlas-book-spectrum-segment {
-  min-height: 40px;
-  border-top: 2px solid var(--c, var(--primary));
-  border-radius: 7px;
-  background: var(--bg-container);
-  transition: border-color 160ms ease, background-color 160ms ease;
-}
-
-.dedicated-parties-page .catalog-party-spectrum .atlas-book-spectrum-segment b {
-  color: var(--text-main);
-  font-size: .7rem;
-  font-weight: 650;
-}
-
-.dedicated-parties-page .catalog-party-spectrum .atlas-book-spectrum-segment em {
-  color: var(--text-muted);
-  font-size: .7rem;
-}
-
-.dedicated-parties-page .catalog-generic-view .atlas-controls-shell {
-  margin-bottom: 1.6rem;
-}
-
-.dedicated-parties-page #catalog-generic-count {
-  color: var(--text-muted);
-  font-size: .76rem;
-  font-variant-numeric: tabular-nums;
-}
-
-.dedicated-parties-page #catalog-featured,
-.dedicated-parties-page .catalog-section {
-  margin: 0 var(--catalog-content-gutter) 2.25rem;
-}
-
-.dedicated-parties-page .atlas-featured-head,
-.dedicated-parties-page .catalog-section .section-heading {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  flex-direction: column;
-  flex-wrap: wrap-reverse;
-}
-
-.dedicated-parties-page .atlas-featured-head h2,
-.dedicated-parties-page .catalog-section .section-heading h2 {
-  margin: .3rem 0 0;
-  color: var(--text-main);
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 1.5rem;
-  line-height: 1.2;
-}
-
-.dedicated-parties-page .atlas-featured-head > p,
-.dedicated-parties-page .atlas-section-note {
-  max-width: 360px;
-  margin: 0;
-  color: var(--text-muted);
-  font-size: .74rem;
-  line-height: 1.6;
-}
-
-.dedicated-parties-page #catalog-featured-grid,
-.dedicated-parties-page #catalog-generic-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 18rem));
-  grid-auto-rows: 1fr;
-  justify-content: center;
-  align-items: stretch;
-  gap: 1.25rem;
 }
 
 .dedicated-parties-page .catalog-party-card {
@@ -232,27 +68,6 @@
   margin: 0;
 }
 
-.dedicated-parties-page .catalog-party-card h3 {
-  min-height: 2.5em;
-  margin: 0;
-  line-height: 1.25;
-}
-
-.dedicated-parties-page .catalog-party-card .catalog-card-summary {
-  display: -webkit-box;
-  min-height: 6em;
-  overflow: hidden;
-  margin: 0;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  line-clamp: 4;
-  line-height: 1.5;
-}
-
-.dedicated-parties-page .catalog-party-card .atlas-fp {
-  margin: 0;
-}
-
 .dedicated-parties-page .catalog-party-card .catalog-card-foot {
   display: grid;
   gap: .55rem;
@@ -268,33 +83,8 @@
   outline-offset: 3px;
 }
 
-.dedicated-parties-page .catalog-notice {
-  margin: 0 var(--catalog-content-gutter) 1rem;
-  padding: .8rem 1rem;
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--primary);
-  border-radius: 8px;
-  background: var(--card-bg);
-  color: var(--text-muted);
-  font-size: .75rem;
-  line-height: 1.6;
-}
-
-.dedicated-parties-page .catalog-more-row {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.15rem;
-}
-
-.dedicated-parties-page .catalog-load-more {
-  min-width: 190px;
-}
-
-.dedicated-parties-page .catalog-disclaimer {
-  margin: 0 var(--catalog-content-gutter);
-}
-
 /* Party profile: keep the logo fully visible instead of cropping it. */
+
 .dedicated-parties-page .catalog-profile-dialog .catalog-party-profile-hero {
   grid-template-columns: minmax(0, 1fr) minmax(190px, 280px);
   align-items: stretch;
@@ -313,65 +103,10 @@
   object-fit: contain;
 }
 
-.dedicated-parties-page .catalog-profile-dialog .catalog-profile-tab-panel {
-  scroll-margin-top: 1rem;
-}
-
-.dedicated-parties-page .catalog-profile-dialog .catalog-profile-axis-list {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.dedicated-parties-page [hidden] {
-  display: none !important;
-}
-
-@media (max-width: 1000px) {
-  .dedicated-parties-page .catalog-party-spectrum .atlas-book-spectrum-bar {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 768px) {
-  .dedicated-parties-page .catalog-main {
-    --catalog-content-gutter: 1.25rem;
-  }
-
-  .dedicated-parties-page .catalog-hero {
-    padding: 2rem var(--catalog-content-gutter) 1.4rem;
-  }
-
-  .dedicated-parties-page .catalog-hero h1 {
-    font-size: clamp(2rem, 8vw, 3rem);
-  }
-
-  .dedicated-parties-page .catalog-hero-links .atlas-button {
-    flex: 1 1 180px;
-  }
-
-  .dedicated-parties-page .catalog-party-spectrum .atlas-book-spectrum-bar {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .dedicated-parties-page .catalog-party-spectrum {
     margin-right: var(--catalog-content-gutter);
     margin-left: var(--catalog-content-gutter);
-  }
-
-  .dedicated-parties-page #catalog-featured,
-  .dedicated-parties-page .catalog-section {
-    margin-right: var(--catalog-content-gutter);
-    margin-left: var(--catalog-content-gutter);
-  }
-
-  .dedicated-parties-page .atlas-featured-head,
-  .dedicated-parties-page .catalog-section .section-heading {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .dedicated-parties-page #catalog-featured-grid,
-  .dedicated-parties-page #catalog-generic-grid {
-    grid-template-columns: repeat(auto-fill, minmax(14rem, 18rem));
   }
 
   .dedicated-parties-page .catalog-profile-dialog .catalog-party-profile-hero {
@@ -381,23 +116,6 @@
   .dedicated-parties-page .catalog-profile-dialog .catalog-party-profile-media {
     min-height: 190px;
     max-height: 260px;
-  }
-}
-
-@media (max-width: 520px) {
-  .dedicated-parties-page .catalog-party-spectrum .atlas-book-spectrum-bar {
-    grid-template-columns: 1fr;
-  }
-
-  .dedicated-parties-page #catalog-featured-grid,
-  .dedicated-parties-page #catalog-generic-grid {
-    grid-template-columns: minmax(0, 1fr);
-    justify-items: center;
-  }
-
-  .dedicated-parties-page .catalog-party-card {
-    width: 100%;
-    max-width: 22rem;
   }
 }
 

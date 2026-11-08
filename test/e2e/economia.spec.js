@@ -93,10 +93,10 @@ test('indicadores abrem explicações em pop-up acessível', async ({ page }) =>
   await page.goto('/economia');
   const firstIndicatorButton = page.getByRole('button', { name: /Entenda o indicador/ }).first();
   await firstIndicatorButton.click();
-  await expect(page.locator('#economy-modal')).toHaveClass(/history-detail/);
+  await expect(page.locator('#economy-modal')).toHaveClass(/detail-panel/);
   await expect(page.getByRole('dialog')).toBeVisible();
   await expect(page.getByRole('dialog').getByRole('heading', { name: 'Taxa Selic' })).toBeVisible();
-  await expect(page.locator('.history-detail-dialog')).toBeVisible();
+  await expect(page.locator('.detail-panel-dialog')).toBeVisible();
   await page.getByRole('button', { name: 'Fechar explicação' }).click();
   await expect(page.getByRole('dialog')).not.toBeVisible();
   await firstIndicatorButton.click();

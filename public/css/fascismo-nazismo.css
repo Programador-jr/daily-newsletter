@@ -1,4 +1,343 @@
+/* FASCISMO E NAZISMO — linha do tempo, galeria e comparação entre regimes. */
+
+.civic-sources .source-list {
+  margin-top: 1rem;
+}
+
+.civic-sources .section-heading {
+  margin-bottom: 0.8rem;
+}
+
+/* CONTEXTO HISTÓRICO — linha do tempo fascismo e nazismo */
+
+.historical-context .section-heading {
+  align-items: end;
+}
+
+.timeline-intro {
+  max-width: 900px;
+  margin: 0 0 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.timeline-note {
+  margin-top: 1.25rem;
+  padding: 1rem 1.15rem;
+  border-left: 3px solid var(--primary);
+  border-radius: 0 8px 8px 0;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+
+.timeline-note strong {
+  color: var(--text-main);
+}
+
+/* Linha do tempo interativa de fascismo e nazismo: reutiliza os modos da História do Brasil. */
+
+.civic-timeline-controls {
+  margin: 0 0 1.1rem;
+}
+
+.historical-context .timeline {
+  margin-bottom: 1.25rem;
+}
+
+.historical-context .timeline-card {
+  text-align: left;
+}
+
+.historical-context .timeline-card span:last-child {
+  font-weight: 400;
+}
+
+/* Overlay, moldura e botão de fechar vêm do painel de detalhe compartilhado (components.css). */
+
+.fascism-timeline-detail .detail-panel-dialog {
+  width: min(760px, 100%);
+}
+
+.fascism-timeline-detail .detail-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.fascism-timeline-detail .detail-header h2 {
+  margin: 0.4rem 0;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.25;
+}
+
+.fascism-timeline-detail .detail-kicker,
+.fascism-timeline-detail .detail-years {
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.fascism-timeline-detail .detail-lead {
+  margin: 1.2rem 0;
+  padding: 0.9rem 1rem;
+  border-left: 3px solid var(--primary);
+  background: var(--card-bg);
+  color: var(--text-main);
+}
+
+.fascism-event-content p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+body.detail-panel-open {
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .civic-timeline-controls {
+    margin: 0 0 1rem;
+    padding: 0.75rem;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .civic-timeline-controls .search-field {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+
+  .historical-context .timeline.mode-globe {
+    padding-right: 0.4rem;
+    padding-left: 0.4rem;
+  }
+
+  .historical-context .timeline.mode-globe::before {
+    left: 72px;
+  }
+
+  .historical-context .timeline.mode-globe .timeline-item {
+    grid-template-columns: 55px 26px minmax(0, 1fr);
+  }
+
+  .historical-context .timeline.mode-globe .timeline-year {
+    font-size: 0.62rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .historical-context .timeline.mode-globe .timeline-card {
+    padding: 0.8rem;
+  }
+
+  .historical-context .timeline.mode-globe .timeline-card strong {
+    font-size: 1rem;
+  }
+
+  .historical-context .timeline.mode-globe .timeline-card span:last-child {
+    font-size: 0.76rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .historical-context .timeline.mode-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .historical-context .timeline.mode-list .timeline-item {
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 0.55rem;
+  }
+
+  .historical-context .timeline.mode-list .timeline-year {
+    font-size: 0.65rem;
+  }
+
+  .historical-context .timeline.mode-globe {
+    height: 250px;
+    min-height: 250px;
+  }
+}
+
+.historical-context .timeline-card {
+  gap: 0.35rem;
+}
+
+.historical-context .timeline-card small {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: var(--primary);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.historical-context .timeline-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.historical-context .timeline-more i {
+  font-size: 0.65rem;
+  transition: transform 160ms ease;
+}
+
+.historical-context .timeline-item:hover .timeline-more i,
+.historical-context .timeline-item:focus-visible .timeline-more i {
+  transform: translateX(3px);
+}
+
+.fascism-event-content p + p {
+  margin-top: 1rem;
+}
+
+/* Comparação interativa entre fascismo italiano e nazismo alemão. */
+
+.fascism-comparison .section-heading {
+  align-items: end;
+}
+
+.comparison-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+}
+
+.comparison-tabs [role="tab"] {
+  min-height: 42px;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.comparison-tabs [role="tab"][aria-selected="true"] {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, var(--card-bg));
+  color: var(--primary);
+}
+
+.comparison-tabs [role="tab"]:focus-visible,
+.comparison-panel:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--primary) 48%, transparent);
+  outline-offset: 3px;
+}
+
+.comparison-panel {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--primary) 3%, var(--card-bg));
+}
+
+.comparison-regimes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.comparison-regime {
+  min-width: 0;
+  padding: 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+.comparison-regime .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.comparison-regime h3 {
+  margin: 0.35rem 0 0.55rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.2rem;
+}
+
+.comparison-regime p,
+.comparison-takeaway {
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+
+.comparison-takeaway {
+  margin: 0.9rem 0 0;
+  padding: 0.8rem 0.9rem;
+  border-left: 3px solid var(--primary);
+  border-radius: 0 7px 7px 0;
+  background: var(--card-bg);
+}
+
+.comparison-takeaway strong {
+  color: var(--text-main);
+}
+
+.comparison-sources {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.45rem 0.9rem;
+  margin-top: 0.9rem;
+  font-size: 0.76rem;
+}
+
+.comparison-sources > span {
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.comparison-sources a {
+  color: var(--primary);
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .comparison-tabs {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-tabs [role="tab"] {
+    width: 100%;
+    text-align: left;
+  }
+
+  .comparison-panel {
+    padding: 0.75rem;
+  }
+
+  .comparison-regimes {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-regime {
+    padding: 0.95rem;
+  }
+}
+
 /* Interactive historical comparison */
+
 .fascism-comparison-section .section-heading > p,
 .human-consequences .section-heading > p,
 .primary-sources-section .section-heading > p {
@@ -7,12 +346,14 @@
   font-size: 0.84rem;
   line-height: 1.65;
 }
+
 .comparison-widget {
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 14px;
   background: var(--card-bg);
 }
+
 .comparison-tabs {
   display: flex;
   gap: 0.45rem;
@@ -21,6 +362,7 @@
   border-bottom: 1px solid var(--border);
   background: color-mix(in srgb, var(--primary) 4%, var(--card-bg));
 }
+
 .comparison-tabs [role="tab"] {
   min-height: 42px;
   padding: 0.65rem 0.85rem;
@@ -32,33 +374,36 @@
   font-size: 0.78rem;
   font-weight: 650;
   cursor: pointer;
-  transition:
-    background-color 160ms ease,
-    border-color 160ms ease,
-    color 160ms ease;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
 }
+
 .comparison-tabs [role="tab"]:hover {
   border-color: var(--primary);
   color: var(--text-main);
 }
+
 .comparison-tabs [role="tab"][aria-selected="true"] {
   border-color: var(--primary);
   background: var(--primary);
   color: var(--bg-body);
 }
+
 .comparison-tabs [role="tab"]:focus-visible,
 .comparison-panel:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 3px;
 }
+
 .comparison-panel {
   padding: 1.2rem;
 }
+
 .comparison-regimes {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 }
+
 .comparison-regime {
   min-width: 0;
   padding: 1.15rem;
@@ -66,12 +411,15 @@
   border-radius: 10px;
   background: var(--card-bg);
 }
+
 .comparison-italy {
   border-top: 3px solid #b45309;
 }
+
 .comparison-germany {
   border-top: 3px solid #475569;
 }
+
 .comparison-country {
   display: block;
   margin-bottom: 0.4rem;
@@ -81,12 +429,14 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
+
 .comparison-regime h3 {
   margin: 0.2rem 0 0.65rem;
   color: var(--text-main);
   font-family: "Playfair Display", serif;
   font-size: 1.25rem;
 }
+
 .comparison-regime p,
 .comparison-insight p {
   margin: 0;
@@ -94,6 +444,7 @@
   font-size: 0.85rem;
   line-height: 1.75;
 }
+
 .comparison-insight {
   display: grid;
   grid-template-columns: 28px minmax(0, 1fr);
@@ -104,17 +455,20 @@
   border-radius: 10px;
   background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
 }
+
 .comparison-insight > i {
   margin-top: 0.15rem;
   color: var(--primary);
   font-size: 1.15rem;
 }
+
 .comparison-insight strong {
   display: block;
   margin-bottom: 0.25rem;
   color: var(--text-main);
   font-size: 0.85rem;
 }
+
 .comparison-keyboard-hint {
   display: flex;
   align-items: center;
@@ -123,11 +477,13 @@
   color: var(--text-muted);
   font-size: 0.72rem;
 }
+
 .human-consequences-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.85rem;
 }
+
 .human-consequences-grid article,
 .primary-source-list article {
   padding: 1.1rem;
@@ -135,6 +491,7 @@
   border-radius: 10px;
   background: var(--card-bg);
 }
+
 .consequence-icon {
   display: grid;
   place-items: center;
@@ -145,12 +502,14 @@
   background: color-mix(in srgb, var(--primary) 9%, var(--card-bg));
   color: var(--primary);
 }
+
 .human-consequences-grid h3,
 .primary-source-list h3 {
   margin: 0.2rem 0 0.5rem;
   color: var(--text-main);
   font-size: 1rem;
 }
+
 .human-consequences-grid p,
 .primary-source-list p,
 .human-consequences-note,
@@ -159,9 +518,11 @@
   font-size: 0.82rem;
   line-height: 1.7;
 }
+
 .human-consequences-grid p {
   margin: 0;
 }
+
 .human-consequences-note,
 .primary-source-method {
   margin: 1rem 0 0;
@@ -170,15 +531,18 @@
   border-radius: 0 8px 8px 0;
   background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
 }
+
 .human-consequences-note strong,
 .primary-source-method strong {
   color: var(--text-main);
 }
+
 .primary-source-list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.85rem;
 }
+
 .source-date {
   display: block;
   margin-bottom: 0.5rem;
@@ -188,6 +552,7 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
+
 .primary-source-list a {
   display: flex;
   align-items: baseline;
@@ -199,54 +564,66 @@
   line-height: 1.5;
   text-decoration: none;
 }
+
 .primary-source-list a:hover {
   text-decoration: underline;
 }
+
 .primary-source-list a:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 3px;
 }
+
 @media (max-width: 900px) {
   .primary-source-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
 @media (max-width: 700px) {
   .comparison-tabs {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     padding: 0.75rem;
   }
+
   .comparison-tabs [role="tab"] {
     min-width: 0;
     text-align: left;
     font-size: 0.74rem;
     padding: 0.6rem;
   }
+
   .comparison-panel {
     padding: 0.8rem;
   }
+
   .comparison-regimes,
   .human-consequences-grid,
   .primary-source-list {
     grid-template-columns: 1fr;
   }
+
   .comparison-regime {
     padding: 1rem;
   }
+
   .comparison-regime h3 {
     font-size: 1.1rem;
   }
+
   .comparison-keyboard-hint {
     align-items: flex-start;
     line-height: 1.5;
   }
+
   .fascism-comparison-section .section-heading > p,
   .human-consequences .section-heading > p,
   .primary-sources-section .section-heading > p {
     max-width: none;
   }
 }
+
 @media (prefers-reduced-motion: reduce) {
   .comparison-tabs [role="tab"] {
     transition: none;
@@ -254,12 +631,14 @@
 }
 
 /* Historical source gallery */
+
 .historical-gallery-section .section-heading > p {
   max-width: 430px;
   color: var(--text-muted);
   font-size: 0.84rem;
   line-height: 1.65;
 }
+
 .gallery-content-warning {
   display: flex;
   align-items: flex-start;
@@ -273,19 +652,23 @@
   font-size: 0.8rem;
   line-height: 1.65;
 }
+
 .gallery-content-warning > i {
   margin-top: 0.2rem;
   color: #b45309;
 }
+
 .gallery-content-warning strong {
   color: var(--text-main);
 }
+
 .gallery-filters {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   margin: 1rem 0;
 }
+
 .gallery-filters button {
   display: inline-flex;
   align-items: center;
@@ -301,11 +684,13 @@
   font-weight: 700;
   cursor: pointer;
 }
+
 .gallery-filters button[aria-pressed="true"] {
   border-color: var(--primary);
   background: var(--primary);
   color: var(--bg-body);
 }
+
 .gallery-filters button:focus-visible,
 .gallery-item-open:focus-visible,
 .gallery-viewer-close:focus-visible,
@@ -313,15 +698,18 @@
   outline: 2px solid var(--primary);
   outline-offset: 3px;
 }
+
 .gallery-filters button span {
   font-size: 0.7rem;
   opacity: 0.8;
 }
+
 .historical-gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
+
 .historical-gallery-card {
   min-width: 0;
   overflow: hidden;
@@ -329,9 +717,11 @@
   border-radius: 11px;
   background: var(--card-bg);
 }
+
 .historical-gallery-card[hidden] {
   display: none;
 }
+
 .gallery-item-open {
   display: flex;
   width: 100%;
@@ -344,6 +734,7 @@
   text-align: left;
   cursor: pointer;
 }
+
 .gallery-image-wrap {
   position: relative;
   display: block;
@@ -351,6 +742,7 @@
   aspect-ratio: 4/3;
   background: color-mix(in srgb, var(--primary) 7%, var(--card-bg));
 }
+
 .gallery-image-wrap img {
   display: block;
   width: 100%;
@@ -358,9 +750,11 @@
   object-fit: cover;
   transition: transform 180ms ease;
 }
+
 .gallery-item-open:hover .gallery-image-wrap img {
   transform: scale(1.025);
 }
+
 .gallery-zoom {
   position: absolute;
   right: 0.6rem;
@@ -375,6 +769,7 @@
   font-size: 0.7rem;
   font-weight: 700;
 }
+
 .gallery-card-body {
   display: flex;
   flex: 1;
@@ -383,6 +778,7 @@
   gap: 0.45rem;
   padding: 1rem;
 }
+
 .gallery-card-meta {
   display: block;
   color: var(--primary);
@@ -391,16 +787,19 @@
   letter-spacing: 0.035em;
   text-transform: uppercase;
 }
+
 .gallery-card-body strong {
   color: var(--text-main);
   font-size: 0.98rem;
   line-height: 1.35;
 }
+
 .gallery-card-body > span:last-child {
   color: var(--text-muted);
   font-size: 0.8rem;
   line-height: 1.55;
 }
+
 .gallery-method-note {
   margin: 1rem 0 0;
   padding: 1rem 1.1rem;
@@ -411,9 +810,11 @@
   font-size: 0.8rem;
   line-height: 1.7;
 }
+
 .gallery-method-note strong {
   color: var(--text-main);
 }
+
 .gallery-viewer {
   position: fixed;
   inset: 50% auto auto 50%;
@@ -430,10 +831,12 @@
   color: var(--text-main);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
 }
+
 .gallery-viewer::backdrop {
   background: rgba(10, 15, 25, 0.78);
   backdrop-filter: blur(3px);
 }
+
 .gallery-viewer-header {
   position: sticky;
   top: 0;
@@ -446,6 +849,7 @@
   border-bottom: 1px solid var(--border);
   background: var(--card-bg);
 }
+
 .gallery-viewer-close {
   display: inline-flex;
   align-items: center;
@@ -471,9 +875,11 @@
   gap: 1.25rem;
   padding: 1rem;
 }
+
 .gallery-viewer-image-wrap {
   min-width: 0;
 }
+
 .gallery-viewer-image-wrap img {
   display: block;
   width: 100%;
@@ -482,12 +888,14 @@
   border-radius: 8px;
   background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
 }
+
 .gallery-viewer-credit {
   margin: 0.6rem 0 0;
   color: var(--text-muted);
   font-size: 0.72rem;
   line-height: 1.55;
 }
+
 .gallery-viewer-copy h2 {
   margin: 0.45rem 0 0.8rem;
   color: var(--text-main);
@@ -495,11 +903,13 @@
   font-size: 1.4rem;
   line-height: 1.25;
 }
+
 .gallery-viewer-copy p {
   color: var(--text-muted);
   font-size: 0.86rem;
   line-height: 1.75;
 }
+
 .gallery-viewer-copy a {
   display: inline-flex;
   align-items: center;
@@ -510,42 +920,58 @@
   font-weight: 750;
   text-decoration: none;
 }
+
 .gallery-viewer-copy a:hover {
   text-decoration: underline;
 }
+
 @media (max-width: 900px) {
   .historical-gallery-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
 @media (max-width: 650px) {
   .historical-gallery-grid {
     grid-template-columns: 1fr;
   }
+
   .gallery-viewer {
     width: calc(100% - 1rem);
     max-height: calc(100dvh - 1rem);
   }
+
   .gallery-viewer-layout {
     grid-template-columns: 1fr;
     gap: 0.9rem;
     padding: 0.75rem;
   }
+
   .gallery-viewer-image-wrap img {
     max-height: 40dvh;
   }
+
   .gallery-viewer-copy h2 {
     font-size: 1.2rem;
   }
+
   .gallery-viewer-header {
     padding: 0.75rem;
   }
+
   .gallery-content-warning {
     font-size: 0.76rem;
   }
 }
+
 @media (prefers-reduced-motion: reduce) {
   .gallery-image-wrap img {
     transition: none;
   }
+}
+
+.civic-sources > p {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.65;
 }

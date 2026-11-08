@@ -1,0 +1,35 @@
+/* SOBRE — página institucional. */
+
+/* ABOUT */
+
+.about {
+  padding: 2rem 3rem 4rem;
+  border-top: 1px solid var(--border);
+}
+
+.about-content {
+  max-width: 650px;
+}
+
+.about p {
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0 0 1rem;
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 2rem 1.25rem 2.5rem;
+  }
+}
+
+/* Títulos principais das páginas Sobre e Edições */
+
+.about h1 {
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+.about h1 {
+  font-size: 2rem;
+  margin: 0.5rem 0 1rem;
+}
