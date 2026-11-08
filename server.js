@@ -33,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/data', express.static(path.join(__dirname, 'data'), { dotfiles: 'deny', index: false }));
 
 app.get('/api/news', require('./api/news'));
+app.get('/api/weekly-editions', require('./api/weekly-editions'));
 app.post('/api/news', require('./api/news'));
 app.post('/api/subscribe', require('./api/subscribe'));
 app.get('/api/confirm', require('./api/confirm'));
@@ -63,6 +64,10 @@ app.get('/', (req, res) => {
 
 app.get('/editions', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/editions.html'));
+});
+
+app.get('/weekly', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/weekly.html'));
 });
 
 app.get('/historia', (req, res) => {
