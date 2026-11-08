@@ -1250,9 +1250,9 @@ const timelineEntries = [
 
 const filters = ["Todos", "Colônia", "Império", "República"];
 const timeline = document.getElementById("timeline");
-const detail = document.getElementById("history-detail");
-const filterContainer = document.getElementById("history-filters");
-const search = document.getElementById("history-search");
+const detail = document.getElementById("detail-panel");
+const filterContainer = document.getElementById("filter-group");
+const search = document.getElementById("search-field");
 const count = document.getElementById("timeline-count");
 const timelineViewButtons = document.querySelectorAll("[data-timeline-view]");
 const timelineViews = ["globe", "reel", "list", "grid"];
@@ -1390,13 +1390,13 @@ function renderPresidentCard(president) {
           '<a class="president-source" href="https://biblioteca.presidencia.gov.br/presidencia/ex-presidentes" target="_blank" rel="noopener noreferrer">Biblioteca da Presidência</a>' +
           '<a class="president-source" href="https://presidentes.an.gov.br/" target="_blank" rel="noopener noreferrer">Arquivo Nacional — acervo presidencial</a>' +
         '</div></section>' +
-      '<details class="history-accordion-item president-facts">' +
+      '<details class="accordion-item president-facts">' +
         '<summary><span class="accordion-title"><strong>Medidas e atuação</strong><small>Principais decisões e iniciativas do mandato.</small></span><span class="accordion-icon"><i class="fas fa-chevron-down" aria-hidden="true"></i></span></summary>' +
         '<div class="accordion-content"><ul>' +
           president.achievements.map(item => '<li>' + escapeHtml(item) + '</li>').join("") +
         '</ul></div>' +
       '</details>' +
-      '<details class="history-accordion-item president-facts">' +
+      '<details class="accordion-item president-facts">' +
         '<summary><span class="accordion-title"><strong>Conflitos e controvérsias</strong><small>Crises, disputas e temas controversos do período.</small></span><span class="accordion-icon"><i class="fas fa-chevron-down" aria-hidden="true"></i></span></summary>' +
         '<div class="accordion-content"><ul>' +
           president.controversies.map(item => '<li>' + escapeHtml(item) + '</li>').join("") +
@@ -1595,7 +1595,7 @@ function presidentMatchesFilter(president) {
 
 function renderPresidentFilters() {
   presidentFilterContainer.innerHTML = presidentFilters.map(filter =>
-    '<button class="history-filter ' + (filter === activePresidentFilter ? "active" : "") + '" type="button" data-president-filter="' + escapeHtml(filter) + '">' +
+    '<button class="filter-chip ' + (filter === activePresidentFilter ? "active" : "") + '" type="button" data-president-filter="' + escapeHtml(filter) + '">' +
       escapeHtml(filter) +
     '</button>'
   ).join("");
@@ -1677,10 +1677,10 @@ function filteredEntries() {
 
 function renderFilters() {
   filterContainer.innerHTML = filters.map(filter =>
-    '<button class="history-filter ' + (filter === activeFilter ? "active" : "") + '" data-filter="' + escapeHtml(filter) + '">' + escapeHtml(filter) + '</button>'
+    '<button class="filter-chip ' + (filter === activeFilter ? "active" : "") + '" data-filter="' + escapeHtml(filter) + '">' + escapeHtml(filter) + '</button>'
   ).join("");
 
-  filterContainer.querySelectorAll(".history-filter").forEach(button => {
+  filterContainer.querySelectorAll(".filter-chip").forEach(button => {
     button.addEventListener("click", () => {
       activeFilter = button.dataset.filter;
       renderFilters();
@@ -1723,7 +1723,7 @@ function renderTimeline() {
   count.textContent = visible.length + (visible.length === 1 ? " entrada" : " entradas");
 
   if (!visible.length) {
-    timeline.innerHTML = '<div class="history-no-results"><h3>Nenhuma história encontrada</h3><p>Tente outro termo ou filtro.</p></div>';
+    timeline.innerHTML = '<div class="empty-state"><h3>Nenhuma história encontrada</h3><p>Tente outro termo ou filtro.</p></div>';
     return;
   }
 
@@ -1913,11 +1913,11 @@ function centerActiveEntry() {
 function lockPageScroll() {
   lockedScrollY = window.scrollY;
   document.body.style.setProperty("--history-scroll-lock-top", "-" + lockedScrollY + "px");
-  document.body.classList.add("history-modal-open");
+  document.body.classList.add("modal-open");
 }
 
 function unlockPageScroll() {
-  document.body.classList.remove("history-modal-open");
+  document.body.classList.remove("modal-open");
   document.body.style.removeProperty("--history-scroll-lock-top");
   window.scrollTo(0, lockedScrollY);
 }
@@ -1993,7 +1993,7 @@ function buildMilestoneAccordion(entries) {
   return '<section class="history-accordion-section"><div class="detail-section-title"><span>Marcos importantes</span><small>' + entries.length + ' acontecimentos</small></div><div class="history-accordion-list">' +
     entries.map(entry => {
       const isOpen = activeEntry === entry.key ? " open" : "";
-      return '<details class="history-accordion-item"' + isOpen + ' data-accordion-key="' + escapeHtml(entry.key) + '">' +
+      return '<details class="accordion-item"' + isOpen + ' data-accordion-key="' + escapeHtml(entry.key) + '">' +
         '<summary><span class="accordion-year">' + escapeHtml(entry.year) + '</span><span class="accordion-title"><strong>' + escapeHtml(entry.title) + '</strong><small>' + escapeHtml(entry.summary) + '</small></span><span class="accordion-icon"><i class="fas fa-chevron-down"></i></span></summary>' +
         '<div class="accordion-content">' +
           '<div class="accordion-intro"><p>' + escapeHtml(entry.summary) + '</p></div>' +
@@ -2015,14 +2015,14 @@ function openEntry(key, { syncTimeline = true } = {}) {
   const milestoneEntriesForPeriod = periodMilestoneMap[entry.period] || [];
 
   detail.innerHTML =
-    '<div class="history-detail-backdrop" aria-hidden="true"></div>' +
-    '<div class="history-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="history-detail-title">' +
-    '<div class="history-accordion-header">' +
+    '<div class="detail-panel-backdrop" aria-hidden="true"></div>' +
+    '<div class="detail-panel-dialog" role="dialog" aria-modal="true" aria-labelledby="history-detail-title">' +
+    '<div class="detail-header">' +
       '<div><span class="detail-kicker">' + escapeHtml(period.era) + '</span>' +
       '<h2 id="history-detail-title">' + escapeHtml(entry.title) + '</h2><span class="detail-years">' + escapeHtml(entry.year) + '</span></div>' +
       '<button class="accordion-close" type="button" aria-label="Fechar história"><i class="fas fa-times"></i></button>' +
     '</div>' +
-    '<div class="history-accordion-lead"><p>' + escapeHtml(entry.type === "event" ? entry.summary : entry.lead) + '</p></div>' +
+    '<div class="detail-lead"><p>' + escapeHtml(entry.type === "event" ? entry.summary : entry.lead) + '</p></div>' +
     (entry.type === "chapter"
       ? buildSections(entry.sections) + buildLeaderCards(period) + buildMilestoneAccordion(milestoneEntriesForPeriod) + buildSources(entry)
       : buildSections(entry.sections) + buildSources(entry)) +
@@ -2032,7 +2032,7 @@ function openEntry(key, { syncTimeline = true } = {}) {
   lockPageScroll();
 
   detail.querySelector(".accordion-close").addEventListener("click", resetDetail);
-  detail.querySelector(".history-detail-backdrop").addEventListener("click", resetDetail);
+  detail.querySelector(".detail-panel-backdrop").addEventListener("click", resetDetail);
 
   detail.querySelectorAll("details[data-accordion-key]").forEach(item => {
     item.addEventListener("click", event => {
@@ -2055,8 +2055,8 @@ function openEntry(key, { syncTimeline = true } = {}) {
       requestAnimationFrame(() => requestAnimationFrame(() => {
         if (!item.open) return;
 
-        const dialog = detail.querySelector(".history-detail-dialog");
-        const header = detail.querySelector(".history-accordion-header");
+        const dialog = detail.querySelector(".detail-panel-dialog");
+        const header = detail.querySelector(".detail-header");
         if (!dialog) return;
 
         const dialogRect = dialog.getBoundingClientRect();

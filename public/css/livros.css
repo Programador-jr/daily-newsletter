@@ -1,52 +1,5 @@
-/* Biblioteca: mesma geometria editorial das páginas de Ideologias e História. */
-.books-page .atlas-hero {
-  max-width: 860px;
-  padding: 4rem 3rem 2.5rem;
-}
-
-.books-page main > .atlas-method {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-  padding: 1.15rem 1.25rem;
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--primary);
-  border-radius: 10px;
-  background: var(--card-bg);
-  box-shadow: 0 4px 14px rgb(25 31 40 / 4%);
-}
-
 .atlas-related {
   margin-top: 1.25rem;
-}
-
-.books-page .ideology-method-icon {
-  display: grid;
-  width: 42px;
-  height: 42px;
-  place-items: center;
-  border-radius: 9px;
-  background: color-mix(in srgb, var(--primary) 9%, var(--bg-container));
-  color: var(--primary);
-  font-size: 1rem;
-}
-
-.books-page .atlas-method h2 {
-  margin: 0 0 .25rem;
-  color: var(--text-main);
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 1.05rem;
-  line-height: 1.3;
-}
-
-.books-page .atlas-method p {
-  max-width: 850px;
-  margin: 0;
-  color: var(--text-muted);
-  font-size: .82rem;
-  line-height: 1.6;
 }
 
 .books-page .atlas-hero-stats > span {
@@ -218,21 +171,14 @@
 }
 
 @media (max-width: 768px) {
-  .books-page .atlas-hero {
-    padding: 2rem 1.25rem 1.4rem;
-  }
-
   .books-page .atlas-legend {
     width: calc(100% - 2.5rem);
   }
 
-  .books-page main > .atlas-method {
-    grid-template-columns: 1fr;
-    align-items: start;
-  }
 }
 
 /* As capas ficam alinhadas à esquerda como uma estante de leitura. */
+
 .books-page .atlas-featured-grid,
 .books-page .atlas-grid {
   grid-template-columns: repeat(auto-fill, minmax(15rem, 18rem));
@@ -413,18 +359,6 @@
 }
 
 /* Ficha do livro: capa, contexto editorial e leitura em uma composição só. */
-html body.books-page dialog.atlas-dialog-book {
-  position: fixed;
-  inset: 0;
-  width: min(820px, calc(100vw - 2rem));
-  max-width: calc(100vw - 2rem);
-  max-height: min(90vh, 900px);
-  margin: auto;
-  overflow: hidden;
-  box-sizing: border-box;
-  border-radius: 14px;
-  box-shadow: 0 24px 80px rgb(0 0 0 / 35%);
-}
 
 .atlas-dialog-book .atlas-dialog-title .atlas-card-tags {
   gap: .4rem;
@@ -569,6 +503,40 @@ html body.books-page dialog.atlas-dialog-book {
   line-height: 1.7;
 }
 
+.atlas-dialog-book .atlas-dialog-label {
+  margin: 1.25rem 0 .55rem;
+  color: var(--text-main);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.atlas-dialog-book .atlas-related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin: 0;
+}
+
+.atlas-dialog-book .atlas-related a {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  min-height: 36px;
+  padding: .4rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card-bg);
+  font-size: .82rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.atlas-dialog-book .atlas-related a:hover {
+  border-color: var(--primary);
+}
+
 .atlas-dialog-book .atlas-dialog-footer {
   align-items: center;
   justify-content: space-between;
@@ -606,8 +574,14 @@ html body.books-page dialog.atlas-dialog-book {
 }
 
 @keyframes atlas-book-dialog-enter {
-  from { opacity: 0; transform: translateY(10px) scale(.985); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @media (max-width: 768px) {
@@ -617,10 +591,10 @@ html body.books-page dialog.atlas-dialog-book {
     justify-content: center;
   }
 
-.atlas-dialog-book .atlas-dialog-footer {
+  .atlas-dialog-book .atlas-dialog-footer {
     align-items: flex-start;
     flex-direction: column;
-    padding: 1rem;
+    padding: 1rem 0 0;
   }
 }
 
@@ -678,6 +652,7 @@ html body.books-page dialog.atlas-dialog-book {
 }
 
 /* Usa o overlay, backdrop e painel de detalhes da página História. */
+
 .books-page main > section.books-detail {
   width: auto;
   max-width: none;
@@ -730,10 +705,10 @@ html body.books-page dialog.atlas-dialog-book {
   position: relative;
   top: auto;
   right: auto;
-  width: 36px;
-  height: 36px;
+  width: var(--kn-modal-close-size);
+  height: var(--kn-modal-close-size);
   flex: 0 0 auto;
-  border-radius: 7px;
+  border-radius: 8px;
   background: transparent;
   color: var(--text-muted);
 }
@@ -781,8 +756,9 @@ html body.books-page dialog.atlas-dialog-book {
   }
 }
 
-/* LIVROS · duas colunas em telas pequenas */
 @media (max-width: 768px) {
+  /* LIVROS · duas colunas em telas pequenas */
+
   .books-page .atlas-featured-grid,
   .books-page .atlas-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -818,6 +794,9 @@ html body.books-page dialog.atlas-dialog-book {
   .books-page .atlas-book-cover h3 {
     display: -webkit-box;
     overflow: hidden;
+    font-size: 1.05rem;
+    overflow-wrap: anywhere;
+    hyphens: auto;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     line-clamp: 2;
@@ -839,12 +818,14 @@ html body.books-page dialog.atlas-dialog-book {
 }
 
 /* FICHA DO LIVRO · subtítulos discretos */
+
 .atlas-dialog-book .atlas-dialog-title > p,
 .atlas-dialog-book .atlas-dialog-summary {
   color: var(--text-muted);
 }
 
 /* ORDENAÇÃO · controle customizado */
+
 .books-page .atlas-sort {
   position: relative;
   display: block;
@@ -970,6 +951,7 @@ html body.books-page dialog.atlas-dialog-book {
 }
 
 /* CONTROLES MOBILE · filtros, pesquisa e ordenação na mesma barra */
+
 .books-page .atlas-controls-shell {
   display: contents;
 }
@@ -996,10 +978,6 @@ html body.books-page dialog.atlas-dialog-book {
     padding: 0;
   }
 
-  .books-page .atlas-search-dock .atlas-search {
-    width: 100%;
-  }
-
   .books-page .atlas-controls {
     display: contents;
   }
@@ -1015,8 +993,8 @@ html body.books-page dialog.atlas-dialog-book {
     border: 0;
     background: transparent;
   }
-
   /* Botão Filtros mobile — mesmo estilo da barra de pesquisa */
+
   .books-page .atlas-filter-accordion > summary {
     display: grid;
     width: 2.75rem;
@@ -1041,10 +1019,6 @@ html body.books-page dialog.atlas-dialog-book {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
-  }
-
-  .books-page .atlas-filter-accordion > summary::-webkit-details-marker {
-    display: none;
   }
 
   .books-page .atlas-filter-accordion > summary span {
@@ -1088,8 +1062,8 @@ html body.books-page dialog.atlas-dialog-book {
     background: var(--card-bg);
     box-shadow: 0 12px 28px rgb(24 37 34 / 16%);
   }
-
   /* Botão Ordenar mobile — mesmo estilo da barra de pesquisa */
+
   .books-page .atlas-sort {
     grid-column: 3;
     width: 2.75rem;
@@ -1148,6 +1122,7 @@ html body.books-page dialog.atlas-dialog-book {
 }
 
 /* Pesquisa — estilo inspirado na página História, mas com tamanho próprio */
+
 .books-page .atlas-search-dock {
   position: sticky;
   top: 5.5rem;
@@ -1191,12 +1166,6 @@ html body.books-page dialog.atlas-dialog-book {
 }
 
 @media (max-width: 768px) {
-  .books-page .atlas-search-dock {
-    top: 4.75rem;
-    margin: 0 1.25rem .65rem;
-    padding: .55rem 0;
-  }
-
   .books-page .atlas-search-dock .atlas-search {
     width: 100%;
   }
@@ -1321,8 +1290,9 @@ html body.books-page dialog.atlas-dialog-book {
   }
 }
 
-/* CONTROLES DESKTOP · pesquisa, filtros e ordenação na mesma barra */
 @media (min-width: 769px) {
+  /* CONTROLES DESKTOP · pesquisa, filtros e ordenação na mesma barra */
+
   .books-page .atlas-controls-shell {
     position: sticky;
     top: 5.5rem;
@@ -1359,8 +1329,8 @@ html body.books-page dialog.atlas-dialog-book {
     background: transparent;
     box-shadow: none;
   }
-
   /* Botão Filtros — mesmo estilo da barra de pesquisa */
+
   .books-page details#atlas-filter-accordion > summary {
     display: flex;
     height: 42px;
@@ -1434,8 +1404,8 @@ html body.books-page dialog.atlas-dialog-book {
     background: var(--card-bg);
     box-shadow: 0 12px 28px rgb(24 37 34 / 16%);
   }
-
   /* Botão Ordenar — mesmo estilo da barra de pesquisa */
+
   .books-page .atlas-sort {
     flex: none;
   }
@@ -1502,5 +1472,30 @@ html body.books-page dialog.atlas-dialog-book {
 
   .books-page .atlas-sort[data-open="true"] .atlas-sort-chevron {
     transform: rotate(180deg);
+  }
+}
+
+/* Livros segue a leitura em coluna das páginas editoriais. */
+
+.books-page main > section:not(.page-hero, .detail-panel) {
+  width: auto;
+  max-width: none;
+  margin-right: 3rem;
+  margin-left: 3rem;
+}
+
+.books-page .atlas-hero {
+  max-width: 860px;
+  padding: 4rem 3rem 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .books-page main > section:not(.page-hero, .detail-panel) {
+    margin-right: 1.25rem;
+    margin-left: 1.25rem;
+  }
+
+  .books-page .atlas-hero {
+    padding: 2rem 1.25rem 1.4rem;
   }
 }

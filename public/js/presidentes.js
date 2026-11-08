@@ -180,7 +180,7 @@ const positiveOpinion=m=>m.achievements.length?"Uma leitura favorável pode dest
 const criticalOpinion=m=>m.controversies.length?"Uma leitura crítica pode destacar "+m.controversies.slice(0,2).join("; ")+".":"Não há elementos suficientes nesta síntese para formular uma crítica específica.";
 
 const timeline=document.getElementById("mandates-timeline"),searchInput=document.getElementById("mandates-search"),filters=document.getElementById("mandates-filters"),count=document.getElementById("mandates-count");let activeFilter="Todos";
-function renderFilters(){filters.innerHTML=filterDefinitions.map(([label])=>'<button class="history-filter '+(label===activeFilter?"active":"")+'" type="button" data-filter="'+escapeHtml(label)+'">'+escapeHtml(label)+"</button>").join("");filters.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{activeFilter=b.dataset.filter;renderFilters();renderMandates()}))}
+function renderFilters(){filters.innerHTML=filterDefinitions.map(([label])=>'<button class="filter-chip '+(label===activeFilter?"active":"")+'" type="button" data-filter="'+escapeHtml(label)+'">'+escapeHtml(label)+"</button>").join("");filters.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{activeFilter=b.dataset.filter;renderFilters();renderMandates()}))}
 function loadSelectedPortrait(m){
   const figure=timeline.querySelector(".mandate-portrait");
   if(!figure||figure.dataset.presidentName!==m.name)return;
@@ -239,10 +239,10 @@ function renderMandate(m){
       '</div>'+
       '<div class="mandate-context"><strong>Contexto</strong><p>'+escapeHtml(m.context)+'</p></div>'+
       '<div class="mandate-accordions">'+
-        '<details class="history-accordion-item mandate-accordion"><summary><span class="accordion-title"><strong>Projetos e medidas</strong><small>O que o governo fez ou colocou em prática.</small></span><span class="accordion-icon"><i class="fas fa-chevron-down"></i></span></summary><div class="accordion-content">'+list(m.achievements)+'</div></details>'+
-        '<details class="history-accordion-item mandate-accordion"><summary><span class="accordion-title"><strong>Prós — leitura analítica</strong><small>Argumentos que podem sustentar uma avaliação favorável.</small></span><span class="accordion-icon"><i class="fas fa-chevron-down"></i></span></summary><div class="accordion-content"><p class="opinion-text positive">'+escapeHtml(positiveOpinion(m))+'</p></div></details>'+
-        '<details class="history-accordion-item mandate-accordion"><summary><span class="accordion-title"><strong>Contras — leitura analítica</strong><small>Argumentos usados em avaliações críticas do mandato.</small></span><span class="accordion-icon"><i class="fas fa-chevron-down"></i></span></summary><div class="accordion-content"><p class="opinion-text critical">'+escapeHtml(criticalOpinion(m))+'</p></div></details>'+
-        '<details class="history-accordion-item mandate-accordion"><summary><span class="accordion-title"><strong>Controvérsias e limites</strong><small>Crises, conflitos e problemas documentados.</small></span><span class="accordion-icon"><i class="fas fa-chevron-down"></i></span></summary><div class="accordion-content">'+list(m.controversies)+'</div></details>'+
+        '<details class="accordion-item mandate-accordion"><summary><span class="accordion-title"><strong>Projetos e medidas</strong><small>O que o governo fez ou colocou em prática.</small></span><span class="accordion-icon"><i class="fas fa-chevron-down"></i></span></summary><div class="accordion-content">'+list(m.achievements)+'</div></details>'+
+        '<details class="accordion-item mandate-accordion"><summary><span class="accordion-title"><strong>Prós — leitura analítica</strong><small>Argumentos que podem sustentar uma avaliação favorável.</small></span><span class="accordion-icon"><i class="fas fa-chevron-down"></i></span></summary><div class="accordion-content"><p class="opinion-text positive">'+escapeHtml(positiveOpinion(m))+'</p></div></details>'+
+        '<details class="accordion-item mandate-accordion"><summary><span class="accordion-title"><strong>Contras — leitura analítica</strong><small>Argumentos usados em avaliações críticas do mandato.</small></span><span class="accordion-icon"><i class="fas fa-chevron-down"></i></span></summary><div class="accordion-content"><p class="opinion-text critical">'+escapeHtml(criticalOpinion(m))+'</p></div></details>'+
+        '<details class="accordion-item mandate-accordion"><summary><span class="accordion-title"><strong>Controvérsias e limites</strong><small>Crises, conflitos e problemas documentados.</small></span><span class="accordion-icon"><i class="fas fa-chevron-down"></i></span></summary><div class="accordion-content">'+list(m.controversies)+'</div></details>'+
       '</div>'+
       '<footer class="mandate-card-footer"><span><i class="fas fa-clock"></i> '+escapeHtml(m.years)+'</span><a href="/historia#linha-do-tempo">Ver contexto histórico geral</a></footer>'+
     '</div></article>';
@@ -269,7 +269,7 @@ function bindTimeline(){
 function renderMandates(){
   const q=normalized(searchInput.value),pred=filterDefinitions.find(([l])=>l===activeFilter)?.[1]||(()=>true),visible=mandates.filter(m=>pred(m)&&normalized([m.name,m.years,m.role,m.era,m.context,m.achievements.join(" "),m.controversies.join(" ")].join(" ")).includes(q));
   count.textContent=visible.length+(visible.length===1?" mandato":" mandatos");
-  if(!visible.length){timeline.innerHTML='<div class="history-no-results"><h3>Nenhum mandato encontrado</h3><p>Tente outro termo ou filtro.</p></div>';return;}
+  if(!visible.length){timeline.innerHTML='<div class="empty-state"><h3>Nenhum mandato encontrado</h3><p>Tente outro termo ou filtro.</p></div>';return;}
   if(!visible.some(m=>m.id===selectedMandateId)) selectedMandateId=visible[0].id;
   const selected=visible.find(m=>m.id===selectedMandateId)||visible[0];
   timeline.innerHTML=renderTimelineNavigator(visible)+'<div class="mandate-detail" id="mandate-detail">'+renderMandate(selected)+'</div>';

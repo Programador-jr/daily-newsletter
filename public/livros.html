@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR" class="history-document">
+<html lang="pt-BR">
 <head>
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
@@ -11,29 +11,31 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/editorial.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/atlas.css">
-  <link rel="stylesheet" href="/css/page-patterns.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/ui-kit.css">
   <link rel="stylesheet" href="/css/livros.css">
   <script src="/js/vercel-observability.js" defer></script>
 </head>
-<body class="history-page atlas-page books-page" data-atlas-page="livros">
+<body class="editorial-page atlas-page books-page" data-atlas-page="livros">
   <a class="skip-link" href="#main">Pular para o conteúdo</a>
   <div class="container">
     <header class="site-header">
       <a class="logo" href="/" aria-label="Página inicial"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></a>
-      <nav class="header-main-nav" aria-label="Navegação principal"><div class="header-primary-links"></div><div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div></nav>
+      <nav class="header-main-nav" aria-label="Navegação principal">
+        <div class="header-primary-links"></div>
+        <div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div>
+      </nav>
     </header>
     <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
       <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
-      <nav class="site-sidebar-nav" aria-label="Páginas principais"><div class="site-sidebar-group"></div></nav>
+      <nav class="site-sidebar-nav" aria-label="Páginas principais"></nav>
       <div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false"><span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div>
     </aside>
     <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
     <main id="main" tabindex="-1">
-      <section class="history-hero atlas-hero">
+      <section class="page-hero atlas-hero">
         <span class="eyebrow">Política · Livros</span>
         <h1>Uma biblioteca para pensar a política.</h1>
         <p>Clássicos e obras contemporâneas que ajudam a entender ideias, instituições e conflitos. Cada livro traz uma ficha editorial, uma nota sobre por que importa e uma imagem do livro ou de seu autor.</p>
@@ -45,8 +47,8 @@
         <div class="atlas-book-spectrum" id="atlas-book-spectrum" aria-label="Distribuição das obras por área"></div>
       </section>
 
-      <section class="ideology-method atlas-method" aria-label="Nota metodológica">
-        <div class="ideology-method-icon"><i class="fas fa-book-open" aria-hidden="true"></i></div>
+      <section class="method-card" aria-label="Nota metodológica">
+        <div class="method-icon"><i class="fas fa-book-open" aria-hidden="true"></i></div>
         <div>
           <span class="eyebrow">Como usar a biblioteca</span>
           <h2>Uma ficha para conhecer a obra, seu contexto e as ideias do autor.</h2>
@@ -108,7 +110,7 @@
         </div>
       </section>
 
-      <section class="history-detail books-detail" id="atlas-book-detail" aria-live="polite"></section>
+      <section class="detail-panel books-detail" id="atlas-book-detail" aria-live="polite"></section>
     </main>
     <div id="footer"></div>
   </div>

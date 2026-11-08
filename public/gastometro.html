@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR" class="history-document">
+<html lang="pt-BR">
 <head>
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
@@ -11,16 +11,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="/css/historia.css">
+  <link rel="stylesheet" href="/css/editorial.css">
   <link rel="stylesheet" href="/css/components.css">
-  <link rel="stylesheet" href="/css/arrecadacao.css">
   <link rel="stylesheet" href="/css/meters.css">
-  <link rel="stylesheet" href="/css/impostometro.css">
   <link rel="stylesheet" href="/css/gastometro.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="/js/vercel-observability.js" defer></script>
 </head>
-<body class="history-page finance-page meters-page tax-meter-page spend-meter-page">
+<body class="editorial-page spend-meter-page">
   <a class="skip-link" href="#main">Pular para o conteúdo</a>
   <div class="container">
     <header class="site-header">
@@ -38,7 +36,7 @@
     <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
 
     <main id="main" tabindex="-1">
-      <section class="history-hero finance-hero meters-hero">
+      <section class="page-hero meters-hero">
         <span class="eyebrow">Dados públicos · Gasto público em tempo real</span>
         <h1>Gastômetro</h1>
         <p>Quanto a União, os estados e os municípios já pagaram em despesas neste ano. Os valores são estimativas do Ga$to Brasil, calculadas a partir dos pagamentos informados ao Tesouro Nacional e projetadas segundo a segundo.</p>
@@ -67,7 +65,7 @@
         </article>
       </section>
 
-      <section class="finance-section spend-spheres-section" aria-labelledby="spheres-title">
+      <section class="page-section spend-spheres-section" aria-labelledby="spheres-title">
         <div class="section-heading"><div><span class="eyebrow">Quem gasta</span><h2 id="spheres-title">Gasto por esfera de governo</h2></div></div>
         <div class="spend-spheres">
           <article class="meter-card tax-meter-card spend-sphere" data-sphere="1" aria-labelledby="sphere-uniao-title" aria-busy="true">
@@ -109,9 +107,9 @@
         </article>
       </section>
 
-      <section class="finance-section tax-meter-explorer" aria-labelledby="explorer-title">
+      <section class="page-section tax-meter-explorer" aria-labelledby="explorer-title">
         <div class="section-heading"><div><span class="eyebrow">Explore os dados</span><h2 id="explorer-title">Gasto do seu estado ou município</h2></div></div>
-        <p class="finance-prose">Escolha um estado ou município para ver o gasto acumulado no ano, o peso da previdência e a despesa com pessoal de cada Poder.</p>
+        <p class="page-prose">Escolha um estado ou município para ver o gasto acumulado no ano, o peso da previdência e a despesa com pessoal de cada Poder.</p>
 
         <form class="tax-meter-filters" id="explorer-form" novalidate>
           <fieldset class="tax-meter-scope">
@@ -150,7 +148,7 @@
         </article>
       </section>
 
-      <section class="finance-section meter-method">
+      <section class="page-section meter-method">
         <div class="section-heading"><div><span class="eyebrow">Como ler os números</span><h2>O que o Gastômetro mede</h2></div></div>
         <ul class="tax-meter-notes">
           <li><strong>Despesa primária paga.</strong> Entram salários, benefícios, custeio, investimentos e transferências efetivamente pagos. Os juros da dívida pública ficam de fora.</li>

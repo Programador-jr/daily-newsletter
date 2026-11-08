@@ -390,10 +390,10 @@
   const lockModalPageScroll = () => {
     modalScrollY = window.scrollY;
     document.body.style.setProperty('--history-scroll-lock-top', '-' + modalScrollY + 'px');
-    document.body.classList.add('history-modal-open');
+    document.body.classList.add('modal-open');
   };
   const unlockModalPageScroll = () => {
-    document.body.classList.remove('history-modal-open');
+    document.body.classList.remove('modal-open');
     document.body.style.removeProperty('--history-scroll-lock-top');
     window.scrollTo(0, modalScrollY);
   };
@@ -410,18 +410,18 @@
     if (!item || !modal) return;
     modalReturnFocus = trigger;
     modal.innerHTML =
-      '<div class="history-detail-backdrop" aria-hidden="true"></div>' +
-      '<div class="history-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="economy-modal-title">' +
-        '<div class="history-accordion-header">' +
+      '<div class="detail-panel-backdrop" aria-hidden="true"></div>' +
+      '<div class="detail-panel-dialog" role="dialog" aria-modal="true" aria-labelledby="economy-modal-title">' +
+        '<div class="detail-header">' +
           '<div><span class="detail-kicker">Guia de economia</span><h2 id="economy-modal-title">' + item.title + '</h2></div>' +
           '<button class="accordion-close" type="button" aria-label="Fechar explicação"><i class="fas fa-times" aria-hidden="true"></i></button>' +
         '</div>' +
-        '<div class="history-accordion-lead economy-modal-body">' + item.body + '</div>' +
+        '<div class="detail-lead economy-modal-body">' + item.body + '</div>' +
         '<div class="economy-modal-footer"><a href="' + item.source + '" target="_blank" rel="noopener noreferrer">Consultar fonte oficial <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a><button type="button" class="cta-button economy-modal-done">Fechar</button></div>' +
       '</div>';
     lockModalPageScroll();
     modal.classList.add('open');
-    modal.querySelector('.history-detail-backdrop')?.addEventListener('click', closeModal);
+    modal.querySelector('.detail-panel-backdrop')?.addEventListener('click', closeModal);
     modal.querySelector('.accordion-close')?.addEventListener('click', closeModal);
     modal.querySelector('.economy-modal-done')?.addEventListener('click', closeModal);
     modal.querySelector('.accordion-close')?.focus();

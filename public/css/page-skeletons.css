@@ -1,12 +1,8 @@
 /* Shared placeholders for remote images and data-driven regions. */
+
 .page-skeleton-image.is-loading {
   color: transparent;
-  background: linear-gradient(
-    105deg,
-    color-mix(in srgb, var(--border, #d2ddda) 48%, transparent) 18%,
-    color-mix(in srgb, var(--card-bg, #fff) 90%, var(--primary, #064e46)) 42%,
-    color-mix(in srgb, var(--border, #d2ddda) 48%, transparent) 66%
-  );
+  background: linear-gradient( 105deg, color-mix(in srgb, var(--border, #d2ddda) 48%, transparent) 18%, color-mix(in srgb, var(--card-bg, #fff) 90%, var(--primary, #064e46)) 42%, color-mix(in srgb, var(--border, #d2ddda) 48%, transparent) 66% );
   background-size: 220% 100%;
   opacity: 0.82;
   animation: page-skeleton-shimmer 1.4s linear infinite;
@@ -54,12 +50,7 @@
   min-height: 0.85em;
   border-radius: 0.25rem;
   color: transparent !important;
-  background: linear-gradient(
-    105deg,
-    color-mix(in srgb, var(--border, #d2ddda) 54%, transparent) 18%,
-    color-mix(in srgb, var(--card-bg, #fff) 92%, var(--primary, #064e46)) 42%,
-    color-mix(in srgb, var(--border, #d2ddda) 54%, transparent) 66%
-  );
+  background: linear-gradient( 105deg, color-mix(in srgb, var(--border, #d2ddda) 54%, transparent) 18%, color-mix(in srgb, var(--card-bg, #fff) 92%, var(--primary, #064e46)) 42%, color-mix(in srgb, var(--border, #d2ddda) 54%, transparent) 66% );
   background-size: 220% 100%;
   animation: page-skeleton-shimmer 1.4s linear infinite;
 }
@@ -75,12 +66,7 @@
 .page-skeleton-chart {
   min-height: 16rem;
   border-radius: 0.5rem;
-  background: linear-gradient(
-    105deg,
-    color-mix(in srgb, var(--card-bg, #fff) 84%, var(--primary, #064e46)) 18%,
-    color-mix(in srgb, var(--border, #d2ddda) 72%, transparent) 42%,
-    color-mix(in srgb, var(--card-bg, #fff) 84%, var(--primary, #064e46)) 66%
-  );
+  background: linear-gradient( 105deg, color-mix(in srgb, var(--card-bg, #fff) 84%, var(--primary, #064e46)) 18%, color-mix(in srgb, var(--border, #d2ddda) 72%, transparent) 42%, color-mix(in srgb, var(--card-bg, #fff) 84%, var(--primary, #064e46)) 66% );
   background-size: 220% 100%;
   animation: page-skeleton-shimmer 1.4s linear infinite;
 }
@@ -90,7 +76,9 @@
 }
 
 @keyframes page-skeleton-shimmer {
-  to { background-position: -220% 0; }
+  to {
+    background-position: -220% 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

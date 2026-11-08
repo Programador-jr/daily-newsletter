@@ -1,0 +1,747 @@
+/*
+ * PADRÃO EDITORIAL — estrutura global das páginas de conteúdo.
+ * Componentes repetidos entre páginas ficam aqui; cada página mantém no
+ * próprio CSS apenas o que é exclusivo dela. Tokens e tipografia base vêm
+ * de styles.css.
+ */
+
+/* PÁGINA */
+
+:where(.editorial-page) main {
+  padding-bottom: 2rem;
+}
+
+/* HERO */
+
+.page-hero {
+  max-width: 860px;
+  padding: 4rem 3rem 2.5rem;
+}
+
+.page-hero h1 {
+  margin: 0.35rem 0 1rem;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2.25rem, 5vw, 3.7rem);
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+}
+
+.page-hero > p:not(.eyebrow) {
+  max-width: 720px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+/* SEÇÕES */
+
+.page-section {
+  margin: 0 3rem 3.5rem;
+  scroll-margin-top: 1.5rem;
+}
+
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-heading > div {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.section-heading h2,
+.page-section h2,
+.sources-section h2 {
+  margin: 0.35rem 0 0;
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+/* Título empilhado sobre um parágrafo de apoio */
+
+.section-heading.stacked {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 1.35rem;
+}
+
+:where(.section-heading) > p {
+  max-width: 720px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.page-prose > p,
+.section-intro {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* CARTÃO DE MÉTODO — "como ler esta página".
+   Borda, raio e fundo vêm do tratamento global de cartões (components.css). */
+
+.method-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  margin: 0 3rem 2.25rem;
+  padding: 1.15rem 1.25rem;
+}
+
+.method-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--primary) 9%, var(--bg-container));
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.method-card .eyebrow {
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.method-card h2 {
+  margin: 0 0 0.25rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.05rem;
+}
+
+.method-card p {
+  max-width: 850px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+/* CHAMADA PARA OUTRA PÁGINA */
+
+.cta-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin: 0 3rem 3rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+}
+
+.cta-banner h2 {
+  margin: 0.25rem 0 0.45rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.35rem;
+}
+
+.cta-banner p {
+  max-width: 780px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.cta-banner .cta-button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+/* GRADE DE CARTÕES */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Logo após o título da seção, o espaço já vem do .section-heading. */
+
+.section-heading + :is(.card-grid, .step-list, .table-wrap) {
+  margin-top: 0;
+}
+
+.card-grid.cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.card-grid.cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.card-grid.cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.card-grid > article {
+  min-width: 0;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  transition: border-color 180ms ease;
+}
+
+.card-grid > article:hover {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+}
+
+.card-grid > article > span {
+  display: block;
+  color: var(--primary);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.card-grid > article > i {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.card-grid h3 {
+  margin: 0.45rem 0 0.55rem;
+  color: var(--text-main);
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.card-grid > article > strong {
+  display: block;
+  margin: 0.45rem 0;
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+.card-grid p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.card-grid > article > a {
+  display: inline-block;
+  margin-top: 0.85rem;
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* PASSO A PASSO */
+
+.step-list {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.step-list article {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.15rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+.step-list article > span {
+  display: grid;
+  flex: 0 0 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.step-list h3 {
+  margin: 0 0 0.35rem;
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+.step-list p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+/* NOTAS — destaque tracejado (callout) e nota com filete lateral (accent-note) */
+
+.callout,
+.accent-note {
+  margin-top: 1.25rem;
+  border-radius: 10px;
+  font-size: 0.86rem;
+  line-height: 1.65;
+}
+
+.callout {
+  padding: 1rem 1.2rem;
+  border: 1px dashed var(--primary);
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+  color: var(--text-muted);
+}
+
+.accent-note {
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  background: var(--card-bg);
+  color: var(--text-muted);
+}
+
+.callout strong,
+.accent-note strong {
+  color: var(--text-main);
+}
+
+.accent-note > strong:first-child:has(+ :is(p, ul, ol)) {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.05rem;
+}
+
+.accent-note p {
+  margin: 0;
+}
+
+.accent-note ul {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding-left: 1.15rem;
+  font-size: 0.84rem;
+}
+
+/* TABELAS */
+
+.table-wrap {
+  overflow-x: auto;
+  margin-top: 1.5rem;
+}
+
+.data-table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  text-align: left;
+}
+
+.data-table th {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+/* ACORDEÃO DE TÓPICOS — perguntas e aprofundamentos recolhíveis.
+   O visual base de <details> vem de components.css; aqui ficam ícone e conteúdo. */
+
+.topic-accordions {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.topic-accordion {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.topic-accordion:hover,
+.topic-accordion[open] {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+}
+
+.topic-accordion[open] {
+  box-shadow: 0 7px 20px rgb(25 31 40 / 7%);
+}
+
+.topic-accordion summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 68px;
+  padding: 0.85rem 1rem;
+  color: var(--text-main);
+  font-weight: 700;
+  list-style: none;
+  cursor: pointer;
+}
+
+.topic-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.topic-accordion summary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -3px;
+}
+
+.topic-accordion summary i {
+  color: var(--text-muted);
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.topic-accordion[open] summary {
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+}
+
+.topic-accordion[open] summary i {
+  color: var(--primary);
+  transform: rotate(180deg);
+}
+
+.topic-accordion > div {
+  padding: 1rem 1.25rem 1.2rem;
+}
+
+.topic-accordion p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.topic-accordion > div p + p {
+  margin-top: 0.8rem;
+}
+
+/* CONTROLES — filtros e busca */
+
+.page-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 3rem 3rem;
+  padding: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.filter-chip {
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-main);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.filter-chip:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.filter-chip.active {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--bg-body);
+}
+
+.search-field {
+  position: relative;
+  width: min(300px, 100%);
+  flex: 0 1 300px;
+}
+
+.search-field i {
+  position: absolute;
+  top: 50%;
+  left: 0.9rem;
+  color: var(--text-muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.search-field input {
+  width: 100%;
+  padding: 0.68rem 0.9rem 0.68rem 2.4rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  background: var(--bg-container);
+  color: var(--text-main);
+  font: inherit;
+  font-size: 0.82rem;
+  box-sizing: border-box;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.search-field input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.empty-state {
+  padding: 2.5rem;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* FONTES */
+
+.sources-section {
+  margin: 0 3rem 3.5rem;
+  padding: 2rem 0 0;
+  border-top: 1px solid var(--border);
+}
+
+.sources-section h2 {
+  margin-bottom: 0.65rem;
+}
+
+.sources-section > p:not(.eyebrow) {
+  max-width: 800px;
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+  margin-top: 1.1rem;
+}
+
+.source-list a {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.source-list a:hover {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 5%, var(--bg-container));
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 1100px) {
+  .card-grid.cols-4 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .card-grid.cols-5 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .card-grid.cols-3,
+  .card-grid.cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .card-grid.cols-5 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .page-hero {
+    padding: 2.75rem 1.25rem 2rem;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2rem, 9vw, 2.7rem);
+  }
+
+  .page-section,
+  .method-card,
+  .cta-banner {
+    margin-inline: 1.25rem;
+  }
+
+  .cta-banner {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .cta-banner .cta-button {
+    text-align: center;
+  }
+
+  .page-section {
+    margin-bottom: 2.75rem;
+  }
+
+  .page-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .method-card {
+    align-items: start;
+    margin-bottom: 2rem;
+    padding: 1rem;
+  }
+
+  .card-grid,
+  .card-grid.cols-3,
+  .card-grid.cols-4,
+  .card-grid.cols-5 {
+    grid-template-columns: 1fr;
+  }
+
+  .page-controls {
+    margin: 0 1.25rem 2.25rem;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-field {
+    width: 100%;
+    flex-basis: auto;
+  }
+
+  .sources-section {
+    margin: 0 1.25rem 2.75rem;
+    padding-top: 1.5rem;
+  }
+}
+
+/* Tabelas viram cartões empilhados: cada célula mostra o rótulo da coluna (data-label). */
+@media (max-width: 640px) {
+  .table-wrap {
+    overflow: visible;
+  }
+
+  .data-table {
+    min-width: 0;
+  }
+
+  .data-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .data-table,
+  .data-table tbody,
+  .data-table tr,
+  .data-table td {
+    display: block;
+  }
+
+  .data-table tr {
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card-bg);
+  }
+
+  .data-table tr + tr {
+    margin-top: 0.75rem;
+  }
+
+  .data-table td {
+    padding: 0.35rem 0 0;
+    border: 0;
+  }
+
+  .data-table td:first-child {
+    padding: 0 0 0.25rem;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .data-table td:not(:first-child)[data-label]::before {
+    display: block;
+    margin-bottom: 0.1rem;
+    color: var(--primary);
+    content: attr(data-label);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-group {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.2rem;
+  }
+
+  .filter-chip {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-grid > article,
+  .topic-accordion,
+  .topic-accordion summary i,
+  .filter-chip,
+  .search-field input,
+  .source-list a {
+    transition: none !important;
+  }
+}

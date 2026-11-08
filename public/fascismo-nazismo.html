@@ -1,107 +1,41 @@
 <!doctype html>
 <html lang="pt-BR">
   <head>
-    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Contexto histórico, características e diferenças entre fascismo italiano e nazismo alemão."
-    />
-    <title>King's Newsletter - Fascismo e Nazismo</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/css/styles.css" />
-    <link rel="stylesheet" href="/css/historia.css" />
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Contexto histórico, características e diferenças entre fascismo italiano e nazismo alemão.">
+  <title>King's Newsletter - Fascismo e Nazismo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/editorial.css">
   <link rel="stylesheet" href="/css/components.css">
-    <link rel="stylesheet" href="/css/politica.css" />
-    <link rel="stylesheet" href="/css/fascismo-nazismo.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <script src="/js/vercel-observability.js" defer></script>
-  </head>
-  <body class="history-page civic-page">
+  <link rel="stylesheet" href="/css/timeline.css">
+  <link rel="stylesheet" href="/css/fascismo-nazismo.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="/js/vercel-observability.js" defer></script>
+</head>
+  <body class="editorial-page">
     <a class="skip-link" href="#main">Pular para o conteúdo</a>
     <div class="container">
       <header class="site-header">
-        <a class="logo" href="/" aria-label="Página inicial"
-          ><div class="logo-top">
-            <i class="fas fa-crown" aria-hidden="true"></i> KING'S
-          </div>
-          <div class="logo-bottom">Newsletter</div></a
-        >
-        <nav class="header-main-nav" aria-label="Navegação principal">
-          <div class="header-primary-links"></div>
-          <div class="header-nav-actions">
-            <button
-              class="sidebar-toggle"
-              id="sidebar-toggle"
-              type="button"
-              aria-label="Abrir menu de navegação"
-              aria-controls="site-sidebar"
-              aria-expanded="false"
-              title="Abrir menu"
-            >
-              <span class="hamburger-icon" aria-hidden="true"
-                ><span></span><span></span><span></span
-              ></span>
-            </button>
-          </div>
-        </nav>
-      </header>
-      <aside
-        class="site-sidebar"
-        id="site-sidebar"
-        aria-label="Navegação principal"
-        aria-hidden="true"
-      >
-        <div class="site-sidebar-header">
-          <div>
-            <span class="eyebrow">King's Newsletter</span
-            ><strong>Navegação</strong>
-          </div>
-          <button
-            class="site-sidebar-close"
-            id="site-sidebar-close"
-            type="button"
-            aria-label="Fechar navegação"
-          >
-            <i class="fas fa-xmark" aria-hidden="true"></i>
-          </button>
-        </div>
-        <nav class="site-sidebar-nav" aria-label="Páginas principais">
-          <div class="site-sidebar-group"></div>
-        </nav>
-        <div class="site-sidebar-preferences">
-          <span class="site-sidebar-label">Preferências</span
-          ><button
-            class="sidebar-theme-toggle"
-            id="theme-toggle"
-            type="button"
-            aria-label="Ativar tema escuro"
-            title="Ativar tema escuro"
-            aria-pressed="false"
-          >
-            <span class="theme-switch-track" aria-hidden="true"
-              ><i class="fas fa-moon" id="theme-icon"></i></span
-            ><span>Tema</span>
-          </button>
-        </div>
-      </aside>
-      <div
-        class="site-sidebar-backdrop"
-        id="site-sidebar-backdrop"
-        aria-hidden="true"
-      ></div>
+      <a class="logo" href="/" aria-label="Página inicial"><div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div><div class="logo-bottom">Newsletter</div></a>
+      <nav class="header-main-nav" aria-label="Navegação principal">
+        <div class="header-primary-links"></div>
+        <div class="header-nav-actions"><button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu"><span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div>
+      </nav>
+    </header>
+    <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+      <div class="site-sidebar-header"><div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div><button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button></div>
+      <nav class="site-sidebar-nav" aria-label="Páginas principais"></nav>
+      <div class="site-sidebar-preferences"><span class="site-sidebar-label">Preferências</span><button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false"><span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span><span>Tema</span></button></div>
+    </aside>
+    <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
       <main id="main" tabindex="-1">
-        <section class="history-hero civic-hero">
+        <section class="page-hero">
           <span class="eyebrow">Política · História</span>
           <h1>Fascismo e Nazismo: conceitos com contexto histórico.</h1>
           <p>
@@ -111,22 +45,22 @@
             como insultos genéricos.
           </p>
         </section>
-        <section class="civic-section historical-context" id="linha-do-tempo" aria-labelledby="timeline-title">
-          <div class="section-heading">
+        <section class="page-section historical-context" id="linha-do-tempo" aria-labelledby="timeline-title">
+          <div class="section-heading stacked">
             <div><span class="eyebrow">Europa entre guerras · 1918–1945</span><h2 id="timeline-title">Como esses regimes chegaram ao poder</h2></div>
             <p id="timeline-count" aria-live="polite">13 acontecimentos históricos</p>
           </div>
           <p class="timeline-intro">A Primeira Guerra Mundial deixou sociedades marcadas por perdas humanas, tensões sociais e disputas sobre a ordem política. Na Itália, setores nacionalistas exploraram a insatisfação com os resultados da guerra e o medo de revoluções. Na Alemanha, a derrota, as condições do pós-guerra e a fragilidade da República de Weimar alimentaram conflitos. A Grande Depressão, a partir de 1929, agravou a crise econômica e política alemã. Esses fatores criaram oportunidades para movimentos extremistas, mas não tornaram sua vitória inevitável: decisões de partidos, elites, autoridades e eleitores também tiveram importância.</p>
-          <section class="history-controls civic-timeline-controls" aria-label="Filtros da linha do tempo">
-            <div class="history-filters" id="fascism-timeline-filters" role="group" aria-label="Filtrar por período"></div>
-            <label class="history-search"><i class="fas fa-search" aria-hidden="true"></i><input id="fascism-timeline-search" type="search" aria-label="Buscar data ou acontecimento na linha do tempo" placeholder="Buscar data ou acontecimento..." autocomplete="off"></label>
+          <section class="page-controls civic-timeline-controls" aria-label="Filtros da linha do tempo">
+            <div class="filter-group" id="fascism-timeline-filters" role="group" aria-label="Filtrar por período"></div>
+            <label class="search-field"><i class="fas fa-search" aria-hidden="true"></i><input id="fascism-timeline-search" type="search" aria-label="Buscar data ou acontecimento na linha do tempo" placeholder="Buscar data ou acontecimento..." autocomplete="off"></label>
           </section>
           <div class="timeline mode-globe" id="fascism-timeline" aria-label="Acontecimentos históricos de 1918 a 1945"></div>
-          <section class="history-detail fascism-timeline-detail" id="fascism-timeline-detail" aria-live="polite"></section>
+          <section class="detail-panel fascism-timeline-detail" id="fascism-timeline-detail" aria-live="polite"></section>
           <p class="timeline-note"><strong>Como interpretar a cronologia:</strong> crises econômicas e sociais ajudam a explicar o contexto, mas não justificam a perseguição nem explicam sozinhas a ascensão dos regimes. O papel das instituições, das escolhas políticas, da propaganda e da violência precisa ser considerado em conjunto.</p>
         </section>
-        <section class="civic-principle">
-          <span class="civic-principle-mark"
+        <section class="method-card">
+          <span class="method-icon"
             ><i class="fas fa-circle-exclamation" aria-hidden="true"></i
           ></span>
           <div>
@@ -142,7 +76,7 @@
           </div>
         </section>
         <section
-          class="civic-section fascism-comparison-section"
+          class="page-section fascism-comparison-section"
           id="comparacao"
         >
           <div class="section-heading">
@@ -283,14 +217,14 @@
             </div>
           </div>
         </section>
-        <section class="civic-section">
-          <div class="section-heading">
+        <section class="page-section">
+          <div class="section-heading stacked">
             <div>
               <span class="eyebrow">Como o poder foi consolidado</span>
               <h2>Etapas e mecanismos</h2>
             </div>
           </div>
-          <div class="history-process-grid">
+          <div class="card-grid cols-4">
             <article>
               <span>01</span>
               <h3>Crise e mobilização</h3>
@@ -332,14 +266,14 @@
             </article>
           </div>
         </section>
-        <section class="civic-section">
-          <div class="section-heading">
+        <section class="page-section">
+          <div class="section-heading stacked">
             <div>
               <span class="eyebrow">Distinções úteis</span>
               <h2>Termos relacionados não são equivalentes</h2>
             </div>
           </div>
-          <div class="history-terms-grid">
+          <div class="card-grid cols-4">
             <article>
               <h3>Autoritarismo</h3>
               <p>
@@ -372,8 +306,8 @@
             </article>
           </div>
         </section>
-        <section class="civic-section human-consequences" id="consequencias">
-          <div class="section-heading">
+        <section class="page-section human-consequences" id="consequencias">
+          <div class="section-heading stacked">
             <div>
               <span class="eyebrow">Pessoas e memória histórica</span>
               <h2>As consequências humanas</h2>
@@ -442,7 +376,7 @@
           </p>
         </section>
         <section
-          class="civic-section primary-sources-section"
+          class="page-section primary-sources-section"
           id="fontes-primarias"
         >
           <div class="section-heading">
@@ -536,7 +470,7 @@
         </section>
 
         <section
-          class="civic-section historical-gallery-section"
+          class="page-section historical-gallery-section"
           id="galeria-historica"
         >
           <div class="section-heading">
@@ -1068,8 +1002,8 @@
           </div>
         </dialog>
 
-        <section class="civic-section civic-sources">
-          <div class="section-heading">
+        <section class="page-section civic-sources">
+          <div class="section-heading stacked">
             <div>
               <span class="eyebrow">Fontes para aprofundar</span>
               <h2>História documentada</h2>
@@ -1110,7 +1044,7 @@
             >
           </div>
         </section>
-        <section class="civic-history-link">
+        <section class="cta-banner">
           <div>
             <span class="eyebrow">Continue aprendendo</span>
             <h2>Explore outras ideias políticas.</h2>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR" class="history-document">
+<html lang="pt-BR">
 <head>
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
@@ -11,15 +11,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="/css/historia.css">
+  <link rel="stylesheet" href="/css/editorial.css">
   <link rel="stylesheet" href="/css/components.css">
-  <link rel="stylesheet" href="/css/arrecadacao.css">
   <link rel="stylesheet" href="/css/meters.css">
   <link rel="stylesheet" href="/css/impostometro.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="/js/vercel-observability.js" defer></script>
 </head>
-<body class="history-page finance-page meters-page tax-meter-page">
+<body class="editorial-page">
   <a class="skip-link" href="#main">Pular para o conteúdo</a>
   <div class="container">
     <header class="site-header">
@@ -37,7 +36,7 @@
     <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
 
     <main id="main" tabindex="-1">
-      <section class="history-hero finance-hero meters-hero">
+      <section class="page-hero meters-hero">
         <span class="eyebrow">Dados públicos · Arrecadação em tempo real</span>
         <h1>Impostômetro</h1>
         <p>Quanto o Brasil já pagou em tributos neste ano, segundo duas fontes públicas. Os valores são estimativas: cada contador parte do último dado disponível e projeta a arrecadação segundo a segundo.</p>
@@ -77,7 +76,7 @@
         </article>
       </section>
 
-      <section class="finance-section tax-meter-why" aria-labelledby="why-title">
+      <section class="page-section tax-meter-why" aria-labelledby="why-title">
         <div class="section-heading"><div><span class="eyebrow">Por que os números são diferentes</span><h2 id="why-title">Mesmo nome, recortes diferentes</h2></div></div>
         <div class="tax-meter-compare">
           <div>
@@ -89,12 +88,12 @@
             <p>Projeto independente que mede apenas a <strong>arrecadação federal</strong> administrada pela Receita Federal. O contador parte de um valor-base e soma um incremento fixo por segundo, recalibrado quando a Receita divulga novos resultados.</p>
           </div>
         </div>
-        <div class="finance-callout"><strong>Não some nem subtraia os dois contadores.</strong> O valor federal já está contido no total da ACSP. A diferença entre eles corresponde, grosso modo, aos tributos estaduais (como ICMS e IPVA) e municipais (como ISS e IPTU), além de diferenças de método.</div>
+        <div class="callout"><strong>Não some nem subtraia os dois contadores.</strong> O valor federal já está contido no total da ACSP. A diferença entre eles corresponde, grosso modo, aos tributos estaduais (como ICMS e IPVA) e municipais (como ISS e IPTU), além de diferenças de método.</div>
       </section>
 
-      <section class="finance-section tax-meter-explorer" aria-labelledby="explorer-title">
+      <section class="page-section tax-meter-explorer" aria-labelledby="explorer-title">
         <div class="section-heading"><div><span class="eyebrow">Explore os dados</span><h2 id="explorer-title">Arrecadação por estado, município ou tributo</h2></div></div>
-        <p class="finance-prose">Consulta direta à base do impostometro.com.br. Escolha o recorte e o ano; anos encerrados mostram o total consolidado.</p>
+        <p class="page-prose">Consulta direta à base do impostometro.com.br. Escolha o recorte e o ano; anos encerrados mostram o total consolidado.</p>
 
         <form class="tax-meter-filters" id="explorer-form" novalidate>
           <fieldset class="tax-meter-scope">
@@ -128,13 +127,13 @@
         </article>
       </section>
 
-      <section class="finance-section tax-meter-history" aria-labelledby="history-title">
+      <section class="page-section tax-meter-history" aria-labelledby="history-title">
         <div class="section-heading"><div><span class="eyebrow">Série histórica</span><h2 id="history-title">Total arrecadado por ano</h2></div></div>
-        <p class="finance-prose">Totais anuais do impostometro.com.br para todo o Brasil, em <strong>valores nominais</strong> (sem correção pela inflação). Parte do crescimento reflete a alta de preços, não um aumento real da carga tributária.</p>
+        <p class="page-prose">Totais anuais do impostometro.com.br para todo o Brasil, em <strong>valores nominais</strong> (sem correção pela inflação). Parte do crescimento reflete a alta de preços, não um aumento real da carga tributária.</p>
         <div class="tax-history" id="tax-history" aria-busy="true"><p class="tax-history-status">Carregando série histórica…</p></div>
       </section>
 
-      <section class="finance-section meter-method">
+      <section class="page-section meter-method">
         <div class="section-heading"><div><span class="eyebrow">Como ler os números</span><h2>Contador não é extrato</h2></div></div>
         <ul class="tax-meter-notes">
           <li><strong>É uma estimativa.</strong> Os órgãos oficiais publicam a arrecadação com semanas de atraso. Os contadores projetam o valor do dia; a animação contínua não significa que cada tributo seja registrado instantaneamente.</li>

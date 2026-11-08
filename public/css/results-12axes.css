@@ -2031,12 +2031,7 @@
   height: 6px;
   margin: 0.6rem 0 0.3rem;
   border-radius: 999px;
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--compare-a) 22%, var(--border)),
-    var(--border) 50%,
-    color-mix(in srgb, var(--compare-b) 22%, var(--border))
-  );
+  background: linear-gradient( 90deg, color-mix(in srgb, var(--compare-a) 22%, var(--border)), var(--border) 50%, color-mix(in srgb, var(--compare-b) 22%, var(--border)) );
 }
 
 .quiz-compare-marker {
@@ -2845,11 +2840,11 @@
 .results-page .quiz-help-dialog-header button {
   display: grid;
   flex: 0 0 auto;
-  width: 36px;
-  height: 36px;
+  width: var(--kn-modal-close-size);
+  height: var(--kn-modal-close-size);
   place-items: center;
   border: 1px solid var(--border);
-  border-radius: 7px;
+  border-radius: 8px;
   background: transparent;
   color: var(--text-muted);
   font-size: 1.25rem;
@@ -2971,7 +2966,6 @@
     opacity: 0;
     transform: translateY(10px) scale(0.99);
   }
-
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -2979,34 +2973,6 @@
 }
 
 @media (max-width: 768px) {
-  .results-page .quiz-result-help {
-    width: calc(100vw - 1.5rem);
-    max-height: 90vh;
-  }
-
-  .results-page .quiz-result-help .quiz-help-dialog-shell {
-    max-height: 90vh;
-  }
-
-  .results-page .quiz-help-dialog-header {
-    gap: 0.75rem;
-    padding: 1.25rem 1.25rem 1rem;
-  }
-
-  .results-page .quiz-help-dialog-header h2 {
-    font-size: 1.55rem;
-  }
-
-  .results-page .quiz-help-dialog-header button {
-    width: 32px;
-    height: 32px;
-    font-size: 1.1rem;
-  }
-
-  #result-help-content {
-    padding: 0 1.25rem 1.5rem;
-  }
-
   .results-page .quiz-help-block {
     padding: 1rem 0;
   }
@@ -3498,12 +3464,7 @@ body.quiz-modal-open {
 .results-page .quiz-compare-track {
   height: 7px;
   border-radius: 999px;
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--axis-color, var(--compare-a, var(--primary))) 22%, var(--border)),
-    var(--border) 50%,
-    color-mix(in srgb, var(--axis-color, var(--compare-b, var(--primary))) 22%, var(--border))
-  );
+  background: linear-gradient( 90deg, color-mix(in srgb, var(--axis-color, var(--compare-a, var(--primary))) 22%, var(--border)), var(--border) 50%, color-mix(in srgb, var(--axis-color, var(--compare-b, var(--primary))) 22%, var(--border)) );
 }
 
 .results-page .quiz-distinction-bar {
@@ -3566,11 +3527,6 @@ body.quiz-modal-open {
   text-align: right;
 }
 
-.results-page .quiz-axis-comparison-row > span {
-  color: var(--text-muted);
-  font-size: 0.68rem;
-}
-
 .results-page .quiz-axis-comparison-scale {
   position: relative;
   margin-top: 0.25rem;
@@ -3593,11 +3549,6 @@ body.quiz-modal-open {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-}
-
-.results-page .quiz-user-mark {
-  z-index: 2;
-  background: var(--primary);
 }
 
 .results-page .quiz-profile-mark {
@@ -3634,6 +3585,11 @@ body.quiz-modal-open {
   animation: result-help-in 180ms ease-out;
 }
 
+/* O diálogo já tem o recuo; o conteúdo fica alinhado ao título. */
+.results-page #result-help-content {
+  padding: 0;
+}
+
 .results-page .quiz-help-dialog-shell {
   max-height: calc(86vh - 4rem);
   overflow-y: auto;
@@ -3662,11 +3618,34 @@ body.quiz-modal-open {
 }
 
 .results-page .quiz-help-dialog-header button {
-  width: 36px;
-  height: 36px;
-  border-radius: 7px;
+  width: var(--kn-modal-close-size);
+  height: var(--kn-modal-close-size);
+  border-radius: 8px;
   background: transparent;
   color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .results-page .quiz-result-help {
+    width: calc(100vw - 2 * var(--kn-modal-gap));
+    max-height: var(--kn-modal-max-height);
+    padding: 1.25rem;
+  }
+
+  .results-page .quiz-help-dialog-shell {
+    max-height: calc(var(--kn-modal-max-height) - 2.5rem);
+  }
+
+  .results-page .quiz-help-dialog-header {
+    top: -1.25rem;
+    gap: 0.75rem;
+    margin: -1.25rem -1.25rem 1rem;
+    padding: 1.25rem 1.25rem 1rem;
+  }
+
+  .results-page .quiz-help-dialog-header h2 {
+    font-size: 1.55rem;
+  }
 }
 
 .results-page .quiz-help-dialog-header button:hover,
@@ -3756,9 +3735,9 @@ body.quiz-modal-open {
   outline-offset: 2px;
 }
 
-/* RESPONSIVO */
-
 @media (max-width: 980px) {
+  /* RESPONSIVO */
+
   .results-toc,
   .results-empty,
   .results-quiz {
@@ -4032,11 +4011,7 @@ body.quiz-modal-open {
   position: relative;
   isolation: isolate;
   border-color: color-mix(in srgb, var(--primary) 38%, var(--border));
-  background:
-    linear-gradient(135deg,
-      color-mix(in srgb, var(--primary) 19%, var(--card-bg)) 0%,
-      color-mix(in srgb, var(--primary-hover) 11%, var(--card-bg)) 58%,
-      color-mix(in srgb, var(--primary) 6%, var(--card-bg)) 100%);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 19%, var(--card-bg)) 0%, color-mix(in srgb, var(--primary-hover) 11%, var(--card-bg)) 58%, color-mix(in srgb, var(--primary) 6%, var(--card-bg)) 100%);
   box-shadow: 0 20px 48px -34px color-mix(in srgb, var(--primary) 72%, transparent);
   backdrop-filter: blur(12px) saturate(115%);
 }
@@ -4079,11 +4054,7 @@ body.quiz-modal-open {
 
 [data-theme="dark"] .results-page .quiz-profile-affinity {
   border-color: color-mix(in srgb, var(--primary) 58%, var(--border));
-  background:
-    linear-gradient(135deg,
-      color-mix(in srgb, var(--primary) 31%, var(--card-bg)) 0%,
-      color-mix(in srgb, var(--primary-hover) 20%, var(--card-bg)) 58%,
-      color-mix(in srgb, var(--primary) 13%, var(--card-bg)) 100%);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 31%, var(--card-bg)) 0%, color-mix(in srgb, var(--primary-hover) 20%, var(--card-bg)) 58%, color-mix(in srgb, var(--primary) 13%, var(--card-bg)) 100%);
 }
 
 .results-page .quiz-profile-ring {
@@ -4129,9 +4100,7 @@ body.quiz-modal-open {
 /* SEÇÃO 04 · linha do tempo ideológica */
 
 .results-page #analise-completa .quiz-analysis-module:nth-child(4) {
-  background: linear-gradient(135deg,
-    color-mix(in srgb, var(--primary) 5%, var(--card-bg)),
-    var(--card-bg) 42%);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 5%, var(--card-bg)), var(--card-bg) 42%);
 }
 
 .results-page #analise-completa .quiz-analysis-module:nth-child(4) .quiz-analysis-head {
@@ -4351,9 +4320,7 @@ body.quiz-modal-open {
 /* SEÇÃO 03 · seu governo ideal */
 
 .results-page #analise-completa .quiz-analysis-module:nth-child(3) {
-  background: linear-gradient(135deg,
-    color-mix(in srgb, var(--primary) 7%, var(--card-bg)),
-    var(--card-bg) 48%);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 7%, var(--card-bg)), var(--card-bg) 48%);
 }
 
 .results-page #analise-completa .quiz-analysis-module:nth-child(3) .quiz-analysis-head {
