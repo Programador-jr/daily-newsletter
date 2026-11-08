@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A Semana em Foco: os acontecimentos mais importantes da semana, com contexto e análise da King's Newsletter.">
+  <meta name="theme-color" content="#064e46">
+  <title>A Semana em Foco | King's Newsletter</title>
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/editorial.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/weekly.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="/js/vercel-observability.js" defer></script>
+</head>
+<body class="editorial-page weekly-page">
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div class="container">
+    <header class="site-header">
+      <a class="logo" href="/" aria-label="Página inicial">
+        <div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div>
+        <div class="logo-bottom">Newsletter</div>
+      </a>
+      <nav class="header-main-nav" aria-label="Navegação principal">
+        <div class="header-primary-links"></div>
+        <div class="header-nav-actions">
+          <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu">
+            <span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+      <div class="site-sidebar-header">
+        <div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div>
+        <button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button>
+      </div>
+      <nav class="site-sidebar-nav" aria-label="Páginas principais"></nav>
+      <div class="site-sidebar-preferences">
+        <span class="site-sidebar-label">Preferências</span>
+        <button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false">
+          <span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span>
+          <span>Tema</span>
+        </button>
+      </div>
+    </aside>
+    <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
+
+    <main id="main" tabindex="-1">
+      <section class="weekly-masthead" aria-labelledby="weekly-title">
+        <div class="weekly-masthead-top">
+          <span class="weekly-brand"><i class="fas fa-crown" aria-hidden="true"></i> KING'S NEWSLETTER</span>
+          <span class="weekly-kicker">PUBLICAÇÃO SEMANAL</span>
+        </div>
+        <div class="weekly-masthead-content">
+          <p class="eyebrow">Os acontecimentos que merecem contexto</p>
+          <h1 id="weekly-title">A Semana <span>em Foco</span></h1>
+          <p class="weekly-deck">Uma leitura organizada dos fatos que marcaram os últimos dias. Menos ruído, mais contexto para entender o que aconteceu e por que importa.</p>
+          <div class="weekly-masthead-meta">
+            <span><i class="fas fa-newspaper" aria-hidden="true"></i> Política, economia e mundo</span>
+            <span><i class="fas fa-book-open" aria-hidden="true"></i> Análise e contexto</span>
+          </div>
+        </div>
+        <div class="weekly-masthead-rule" aria-hidden="true"></div>
+      </section>
+
+      <section class="page-section weekly-content" aria-labelledby="weekly-section-title">
+        <div class="section-heading stacked weekly-section-heading">
+          <div>
+            <p class="eyebrow" id="weekly-overline">Arquivo editorial</p>
+            <h2 id="weekly-section-title">Edições semanais</h2>
+          </div>
+          <p id="weekly-section-description">As principais histórias reunidas em uma publicação, com fontes originais e análise editorial.</p>
+        </div>
+        <div id="weekly-status" class="weekly-status" role="status" aria-live="polite">
+          <span class="weekly-spinner" aria-hidden="true"></span>
+          <span>Carregando publicações...</span>
+        </div>
+        <div id="weekly-list" class="weekly-list" aria-live="polite"></div>
+        <article id="weekly-article" class="weekly-article" hidden></article>
+      </section>
+
+      <section class="weekly-method-note" aria-label="Critério editorial">
+        <span class="weekly-method-icon"><i class="fas fa-scale-balanced" aria-hidden="true"></i></span>
+        <div>
+          <strong>Informação com contexto</strong>
+          <p>As publicações semanais organizam os acontecimentos por tema, preservam os links das fontes e distinguem fatos, contexto e análise.</p>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer"></div>
+  </div>
+  <script src="/js/accordion-motion.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/footer.js"></script>
+  <script src="/js/weekly.js"></script>
+</body>
+</html>
