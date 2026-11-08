@@ -33,7 +33,7 @@
       day: '2-digit',
       month: 'long',
       year: 'numeric',
-      timeZone: 'America/Rio_Branco'
+      timeZone: 'UTC'
     }).format(date);
   };
 
