@@ -60,7 +60,7 @@ test('presidents timeline shows the bundled portrait with its credit', async ({ 
 
   const portrait = page.locator('.mandate-portrait-image');
   await expect(portrait).toBeVisible();
-  await expect(portrait).toHaveAttribute('src', /^\/presidents\/portraits\/[a-z-]+\.(jpg|png)$/);
+  await expect(portrait).toHaveAttribute('src', /\/presidents\/portraits\/[a-z-]+\.(jpg|png)$/);
   await expect.poll(() => portrait.evaluate(image => image.naturalWidth)).toBeGreaterThan(0);
   await expect(page.locator('.mandate-portrait-credit')).toContainText('Foto:');
   expect(externalRequests).toEqual([]);

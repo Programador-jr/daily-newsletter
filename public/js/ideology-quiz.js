@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
   const axisIcons = globalThis.AxisIcons;
   const axisPillHost = axisIcon ? axisIcon.parentElement : null;
+  const resolveMediaPath = (value) => typeof globalThis.mediaUrl === "function" ? globalThis.mediaUrl(value) : value;
 
   // Ícones dos polos do eixo; usa o sprite 12 Axes quando disponível.
   const axisIconNode = (axis, pole, size = 15, fallback = "fa-compass") => {
@@ -1191,7 +1192,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fallback.setAttribute("aria-hidden", "true");
         if (entry.item.imagePath && !isUnverifiedImage(entry.item)) {
           const image = document.createElement("img");
-          image.src = entry.item.imagePath;
+          image.src = resolveMediaPath(entry.item.imagePath);
           image.alt = `Retrato de ${entry.item.name}`;
           image.loading = "lazy";
           image.decoding = "async";
@@ -1859,7 +1860,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const visual = document.createElement("figure");
       visual.className = `quiz-match-visual${isFlag ? " quiz-match-flag" : ""}${isLogo ? " quiz-match-logo" : ""}`;
       const image = document.createElement("img");
-      image.src = imagePath;
+      image.src = resolveMediaPath(imagePath);
       image.alt = isLogo ? `Símbolo de ${item.name}` : isFlag ? `Bandeira ou símbolo de ${item.name}` : `Retrato de ${item.name}`;
       image.loading = "lazy";
       image.decoding = "async";
@@ -2158,7 +2159,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (imagePath && !isUnverifiedImage(figure)) {
         const image = document.createElement("img");
         image.className = "quiz-book-cover-image";
-        image.src = imagePath;
+        image.src = resolveMediaPath(imagePath);
         image.alt = figure.imageAlt || `Retrato de ${figure.name}`;
         image.loading = "lazy";
         image.decoding = "async";
@@ -2441,7 +2442,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const imagePath = entry.group === "figures" && isUnverifiedImage(item) ? "" : item.imagePath;
       if (imagePath) {
         const image = document.createElement("img");
-        image.src = imagePath;
+        image.src = resolveMediaPath(imagePath);
         image.alt = isCountry ? `Bandeira de ${entry.name}` : `Retrato de ${entry.name}`;
         image.loading = "lazy";
         image.decoding = "async";
@@ -3324,7 +3325,7 @@ document.addEventListener("DOMContentLoaded", () => {
       fallback.setAttribute("aria-hidden", "true");
       if (item.imagePath && !isUnverifiedImage(item)) {
         const image = document.createElement("img");
-        image.src = item.imagePath;
+        image.src = resolveMediaPath(item.imagePath);
         image.alt = `Retrato de ${item.name}`;
         image.loading = "lazy";
         image.decoding = "async";
@@ -3385,7 +3386,7 @@ document.addEventListener("DOMContentLoaded", () => {
       fallback.setAttribute("aria-hidden", "true");
       if (item.imagePath && !isUnverifiedImage(item)) {
         const image = document.createElement("img");
-        image.src = item.imagePath;
+        image.src = resolveMediaPath(item.imagePath);
         image.alt = item.imageType === "flag" ? `Bandeira ou símbolo de ${item.name}` : `Símbolo de ${item.name}`;
         image.loading = "lazy";
         image.decoding = "async";

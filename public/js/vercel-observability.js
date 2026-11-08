@@ -1,4 +1,22 @@
 (() => {
+  const pageLoaderStyles = document.createElement("link");
+  pageLoaderStyles.rel = "stylesheet";
+  pageLoaderStyles.href = "/css/page-loader.css";
+  pageLoaderStyles.dataset.pageLoader = "true";
+  document.head.append(pageLoaderStyles);
+
+  const pageSkeletonStyles = document.createElement("link");
+  pageSkeletonStyles.rel = "stylesheet";
+  pageSkeletonStyles.href = "/css/page-skeletons.css";
+  pageSkeletonStyles.dataset.pageSkeletons = "true";
+  document.head.append(pageSkeletonStyles);
+
+  const pageLoaderScript = document.createElement("script");
+  pageLoaderScript.src = "/js/page-loader.js";
+  pageLoaderScript.dataset.pageLoader = "true";
+  pageLoaderScript.async = false;
+  document.head.append(pageLoaderScript);
+
   // Endereços locais e de rede privada (acesso por IP na LAN) não devem tentar
   // carregar os scripts de analytics, que só existem quando hospedado na Vercel.
   const LOCAL_HOST_PATTERNS = [

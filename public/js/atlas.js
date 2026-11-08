@@ -8,6 +8,7 @@
 (function () {
   const DATA = globalThis.AtlasData;
   if (!DATA || !Array.isArray(DATA.eixos)) return;
+  const resolveMediaPath = (value) => typeof globalThis.mediaUrl === "function" ? globalThis.mediaUrl(value) : value;
 
   const EIXOS = DATA.eixos;
   const FAMILIAS = DATA.familias || [];
@@ -661,7 +662,7 @@
 
     const bookImage = config.colecao === "livros"
       ? (item.imagePath
-        ? el("img", { class: "atlas-book-card-image", src: item.imagePath, alt: item.imageAlt || "Retrato de " + item.autor, loading: "lazy", decoding: "async" })
+        ? el("img", { class: "atlas-book-card-image", src: resolveMediaPath(item.imagePath), alt: item.imageAlt || "Retrato de " + item.autor, loading: "lazy", decoding: "async" })
         : el("div", { class: "atlas-book-card-fallback", role: "img", "aria-label": "Imagem não disponível; autor: " + item.autor }, initials(item.autor)))
       : null;
     if (bookImage?.tagName === "IMG") {
@@ -817,7 +818,7 @@
       if (item.imagePath) {
         const coverImage = el("img", {
           class: "atlas-dialog-book-image",
-          src: item.imagePath,
+          src: resolveMediaPath(item.imagePath),
           alt: item.imageAlt || "",
           loading: "lazy"
         });

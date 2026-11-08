@@ -1,0 +1,103 @@
+/* Shared placeholders for remote images and data-driven regions. */
+.page-skeleton-image.is-loading {
+  color: transparent;
+  background: linear-gradient(
+    105deg,
+    color-mix(in srgb, var(--border, #d2ddda) 48%, transparent) 18%,
+    color-mix(in srgb, var(--card-bg, #fff) 90%, var(--primary, #064e46)) 42%,
+    color-mix(in srgb, var(--border, #d2ddda) 48%, transparent) 66%
+  );
+  background-size: 220% 100%;
+  opacity: 0.82;
+  animation: page-skeleton-shimmer 1.4s linear infinite;
+}
+
+.page-skeleton-image.is-error {
+  opacity: 0.55;
+  animation: none;
+}
+
+.page-skeleton-block {
+  position: relative;
+  overflow: hidden;
+  color: transparent !important;
+  background: color-mix(in srgb, var(--card-bg, #fff) 88%, var(--primary, #064e46));
+}
+
+.page-skeleton-block > * {
+  visibility: hidden;
+}
+
+.page-skeleton-block::before,
+.page-skeleton-block::after {
+  display: block;
+  height: 0.8rem;
+  margin-inline: auto;
+  border-radius: 0.25rem;
+  background: color-mix(in srgb, var(--border, #d2ddda) 74%, transparent);
+  content: "";
+}
+
+.page-skeleton-block::before {
+  width: min(14rem, 72%);
+  margin-top: 2.25rem;
+}
+
+.page-skeleton-block::after {
+  width: min(10rem, 52%);
+  margin-top: 0.7rem;
+}
+
+.page-skeleton-line,
+.page-skeleton-value {
+  display: inline-block;
+  min-height: 0.85em;
+  border-radius: 0.25rem;
+  color: transparent !important;
+  background: linear-gradient(
+    105deg,
+    color-mix(in srgb, var(--border, #d2ddda) 54%, transparent) 18%,
+    color-mix(in srgb, var(--card-bg, #fff) 92%, var(--primary, #064e46)) 42%,
+    color-mix(in srgb, var(--border, #d2ddda) 54%, transparent) 66%
+  );
+  background-size: 220% 100%;
+  animation: page-skeleton-shimmer 1.4s linear infinite;
+}
+
+.page-skeleton-line {
+  min-width: 10rem;
+}
+
+.page-skeleton-value {
+  min-width: 6rem;
+}
+
+.page-skeleton-chart {
+  min-height: 16rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(
+    105deg,
+    color-mix(in srgb, var(--card-bg, #fff) 84%, var(--primary, #064e46)) 18%,
+    color-mix(in srgb, var(--border, #d2ddda) 72%, transparent) 42%,
+    color-mix(in srgb, var(--card-bg, #fff) 84%, var(--primary, #064e46)) 66%
+  );
+  background-size: 220% 100%;
+  animation: page-skeleton-shimmer 1.4s linear infinite;
+}
+
+.page-skeleton-chart > * {
+  visibility: hidden;
+}
+
+@keyframes page-skeleton-shimmer {
+  to { background-position: -220% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-skeleton-image.is-loading,
+  .page-skeleton-line,
+  .page-skeleton-value,
+  .page-skeleton-chart {
+    animation: none;
+  }
+}

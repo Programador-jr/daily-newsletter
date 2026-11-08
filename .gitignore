@@ -32,8 +32,8 @@ Thumbs.db
 .env*
 playwright-report/
 test-results/
-/.claude/
-/.opencode/
-/.agents/
-/.freebuff/
-/.github/skills/
+*.claude/
+*.opencode/
+*.agents/
+*.freebuff/
+*.github/skills/

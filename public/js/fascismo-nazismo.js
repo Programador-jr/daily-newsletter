@@ -115,7 +115,9 @@
 
     additionalSources.forEach(([type, title, date, context, credit, file, alt]) => {
       const fileUrl = `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(file).replaceAll('%20', '_')}`;
-      const imageUrl = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}`;
+      const imageUrl = typeof globalThis.externalMediaUrl === 'function'
+        ? globalThis.externalMediaUrl(file)
+        : `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}`;
       const card = document.createElement('article');
       card.className = 'historical-gallery-card';
       card.dataset.galleryType = type;

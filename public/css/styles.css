@@ -88,6 +88,18 @@ body {
   min-height: 100vh;
 }
 
+a {
+  color: var(--primary);
+  text-decoration: none;
+  animation: color-change 0.3s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: var(--primary-hover);
+  animation: color-change 0.3s ease;
+}
+
 .container {
   width: 100%;
   max-width: 1100px;

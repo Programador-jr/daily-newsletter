@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const MAX_PROFILES = 3;
   const SERIES = ["a", "b", "c"];
   const axisIcons = globalThis.AxisIcons;
+  const resolveMediaPath = (value) => typeof globalThis.mediaUrl === "function" ? globalThis.mediaUrl(value) : value;
   const GROUP_ALIASES = {
     personality: "personalidades",
     personalities: "personalidades",
@@ -757,7 +758,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alt = `Símbolo de ${entry.name}`;
       variant = "is-logo";
     }
-    return { path, alt, variant };
+    return { path: resolveMediaPath(path), alt, variant };
   };
 
   const avatarFor = (entry, small = false) => {

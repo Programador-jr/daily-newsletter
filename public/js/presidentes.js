@@ -1,3 +1,4 @@
+const resolveMediaPath = (value) => typeof globalThis.mediaUrl === "function" ? globalThis.mediaUrl(value) : value;
 const periods = [
   {
     id: "colonial",
@@ -215,7 +216,7 @@ function loadSelectedPortrait(m){
   image.title="Fonte: Wikimedia Commons";
   image.loading="eager";
   image.hidden=false;
-  image.src=portrait.src;
+  image.src=resolveMediaPath(portrait.src);
   if(image.complete&&image.naturalWidth>0){
     image.hidden=false;
     placeholder.hidden=true;
@@ -225,7 +226,7 @@ function loadSelectedPortrait(m){
 function renderMandate(m){
   const interim=/interin|junta|provisório|provisoria/i.test(m.role+" "+m.name);
   const photo=m.photo||"";
-  const photoHtml='<img class="mandate-portrait-image"'+(photo?' src="'+escapeHtml(photo)+'"':'')+' alt="Retrato de '+escapeHtml(m.name)+'" loading="lazy"'+(photo?'':' hidden')+'>'+
+  const photoHtml='<img class="mandate-portrait-image"'+(photo?' src="'+escapeHtml(resolveMediaPath(photo))+'"':'')+' alt="Retrato de '+escapeHtml(m.name)+'" loading="lazy"'+(photo?'':' hidden')+'>'+
     '<div class="mandate-portrait-placeholder"'+(photo?' hidden':'')+'><i class="fas fa-user-tie" aria-hidden="true"></i><span>Buscando retrato...</span></div>'+
     '<figcaption class="mandate-portrait-credit" hidden></figcaption>';
   const list=(items)=>items.length?'<ul>'+items.map(x=>"<li>"+escapeHtml(x)+"</li>").join("")+"</ul>":'<p class="mandate-empty">Não há itens específicos registrados nesta síntese.</p>';
