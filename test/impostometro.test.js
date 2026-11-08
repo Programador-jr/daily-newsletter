@@ -155,6 +155,51 @@ test('maps upstream redirects (error page) to 404 and outages to 502', async t =
   assert.equal(outage.statusCode, 502);
 });
 
+function networkError(code) {
+  const cause = Object.assign(new Error(`connect ${code} 167.249.156.37:443`), { code });
+  return new TypeError('fetch failed', { cause });
+}
+
+test('maps network failures to 502 and logs the underlying cause', async t => {
+  t.mock.method(globalThis, 'fetch', async () => { throw networkError('ECONNRESET'); });
+  const logged = [];
+  t.mock.method(console, 'error', message => logged.push(message));
+  const response = createResponse();
+
+  await handler({ query: {} }, response);
+
+  assert.equal(response.statusCode, 502);
+  assert.equal(response.body.erro, 'A fonte do Impostômetro está indisponível no momento.');
+  assert.equal(logged.length, 1);
+  const entry = JSON.parse(logged[0]);
+  assert.equal(entry.event, 'impostometro.fetch_failed');
+  assert.equal(entry.upstream, 'impostometro.com.br/Contador/Brasil');
+  assert.equal(entry.error.message, 'fetch failed');
+  assert.equal(entry.error.cause.code, 'ECONNRESET');
+});
+
+test('serves the last good counter as stale when the network fails', async t => {
+  const fetchMock = t.mock.method(globalThis, 'fetch', async () => ({ ok: true, status: 200, headers: new Headers(), text: async () => ORG_HTML }));
+  t.mock.method(console, 'error', () => {});
+  const realNow = Date.now;
+  t.after(() => { Date.now = realNow; });
+
+  const first = createResponse();
+  await handler({ query: { fonte: 'org' } }, first);
+  assert.equal(first.statusCode, 200);
+
+  // Vence o TTL de 10 min e derruba a rede.
+  const later = realNow() + 11 * 60 * 1000;
+  Date.now = () => later;
+  fetchMock.mock.mockImplementation(async () => { throw networkError('ECONNREFUSED'); });
+  const second = createResponse();
+  await handler({ query: { fonte: 'org' } }, second);
+
+  assert.equal(second.statusCode, 200);
+  assert.equal(second.body.desatualizado, true);
+  assert.equal(fetchMock.mock.callCount(), 2);
+});
+
 test('serves the impostometro.org counter and reuses the in-memory cache', async t => {
   const fetchMock = t.mock.method(globalThis, 'fetch', async () => ({ ok: true, status: 200, headers: new Headers(), text: async () => ORG_HTML }));
 
