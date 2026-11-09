@@ -1,0 +1,19 @@
+[
+  { "collection": "parties", "id": "nova-democracia", "wiki": "en:New Democracy (Greece)" },
+  { "collection": "parties", "id": "partido-trabalhista-israelense", "wiki": "en:Israeli Labor Party" },
+  { "collection": "parties", "id": "eff", "wiki": "en:Economic Freedom Fighters" },
+  { "collection": "parties", "id": "frente-ampla", "wiki": "en:Broad Front (Uruguay)" },
+  { "collection": "parties", "id": "partido-socialista-chile", "wiki": "en:Socialist Party of Chile" },
+  { "collection": "parties", "id": "partido-comunista-chile", "wiki": "en:Communist Party of Chile" },
+  { "collection": "parties", "id": "chile-vamos", "wiki": "en:Chile Vamos" },
+  { "collection": "parties", "id": "partido-bolchevique", "wiki": "en:Bolsheviks" },
+  { "collection": "figures", "id": "gustave-de-molinari", "wiki": "en:Gustave de Molinari" },
+  { "collection": "figures", "id": "friedrich-list", "wiki": "en:Friedrich List" },
+  { "collection": "figures", "id": "johannes-kaiser", "wiki": "es:Johannes Kaiser" },
+  { "collection": "figures", "id": "graciliano-ramos", "wiki": "pt:Graciliano Ramos" },
+  { "collection": "figures", "id": "raul-prebisch", "wiki": "en:Raúl Prebisch" },
+  { "collection": "figures", "id": "michal-kalecki", "wiki": "en:Michał Kalecki" },
+  { "collection": "figures", "id": "dmitry-medvedev", "wiki": "en:Dmitry Medvedev" },
+  { "collection": "figures", "id": "allan-kardec", "wiki": "en:Allan Kardec" },
+  { "collection": "figures", "id": "bezerra-de-menezes", "wiki": "pt:Bezerra de Menezes" }
+]

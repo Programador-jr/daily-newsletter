@@ -26,6 +26,17 @@
   let latestRequest = 0;
   let availableParliamentarians = [];
 
+  // Linha de status com ícone (info, loading, done, error).
+  const STATUS_ICONS = { info: 'fa-circle-info', loading: 'fa-clock', done: 'fa-check', error: 'fa-circle-exclamation' };
+  const setStatus = (text, state = 'info') => {
+    status.dataset.state = state;
+    const icon = status.querySelector('i');
+    const label = status.querySelector('span');
+    if (icon) icon.className = `fas ${STATUS_ICONS[state] || STATUS_ICONS.info}`;
+    if (label) label.textContent = text;
+    else status.textContent = text;
+  };
+
   const updateParliamentarians = names => {
     if (!parliamentarianSelect) return;
     const selected = parliamentarianSelect.value;
@@ -50,21 +61,19 @@
     tableBody.innerHTML = rows.length
       ? rows.map(row => `<tr>
           <td data-label="Parlamentar">${escapeHtml(row.parlamentar)}</td>
-          <td data-label="Beneficiário">${escapeHtml(row.beneficiario)}${row.cnpj ? `<small>CNPJ ${escapeHtml(row.cnpj)}</small>` : ''}</td>
-          <td data-label="UF">${escapeHtml(row.uf || '—')}</td>
+          <td data-label="Beneficiário">${escapeHtml(row.beneficiario)}${row.uf ? ` <span class="pix-uf">${escapeHtml(row.uf)}</span>` : ''}${row.cnpj ? `<small>CNPJ ${escapeHtml(row.cnpj)}</small>` : ''}</td>
           <td data-label="Emenda">${escapeHtml(row.codigo || row.numero || '—')}</td>
-          <td data-label="Objeto">${escapeHtml(row.objeto)}</td>
-          <td data-label="Situação"><span class="pix-situation">${escapeHtml(row.situacao)}</span></td>
-          <td data-label="Valor previsto" class="pix-value-cell">${currency.format(Number(row.totalPrevisto) || 0)}<small>Custeio ${currency.format(Number(row.custeio) || 0)} · Investimento ${currency.format(Number(row.investimento) || 0)}</small></td>
+          <td data-label="Objeto e situação">${escapeHtml(row.objeto)}<span class="pix-situation">${escapeHtml(row.situacao)}</span></td>
+          <td data-label="Valor previsto" class="pix-value-cell is-numeric">${currency.format(Number(row.totalPrevisto) || 0)}<small>Custeio ${currency.format(Number(row.custeio) || 0)}</small><small>Investimento ${currency.format(Number(row.investimento) || 0)}</small></td>
         </tr>`).join('')
-      : '<tr><td colspan="7">Nenhum plano de ação encontrado com esses filtros.</td></tr>';
+      : '<tr class="is-empty"><td colspan="5">Nenhum plano de ação encontrado com esses filtros.</td></tr>';
   };
 
   const search = async (page = 1) => {
     const requestId = ++latestRequest;
     currentPage = page;
     searchButton.disabled = true;
-    status.textContent = 'Consultando a base pública do Transferegov…';
+    setStatus('Consultando a base pública do Transferegov…', 'loading');
     window.searchFeedback?.loading('pix', 'Buscando planos de ação no Transferegov.');
     summary.hidden = true;
     tableWrap.hidden = true;
@@ -97,26 +106,42 @@
       const totalPages = Number(data.totalPaginas) || 0;
       pagination.hidden = totalPages <= 1;
       pageLabel.textContent = `Página ${data.pagina} de ${totalPages}`;
+      const resultsCount = resultsAccordion.querySelector('[data-results-count]');
+      if (resultsCount) {
+        const shown = Array.isArray(data.dados) ? data.dados.length : 0;
+        resultsCount.textContent = totalPages > 1
+          ? `${shown} nesta página · página ${data.pagina} de ${totalPages}`
+          : `${shown} ${shown === 1 ? 'plano' : 'planos'}`;
+      }
       previousButton.disabled = data.pagina <= 1;
       nextButton.disabled = data.pagina >= totalPages;
-      status.textContent = data.total
+      setStatus(data.total
         ? 'Resultados ordenados pelo maior valor previsto no plano.'
-        : 'A consulta não encontrou registros para os filtros selecionados.';
+        : 'A consulta não encontrou registros para os filtros selecionados.', 'done');
       window.searchFeedback?.clear('pix');
     } catch (error) {
       if (requestId !== latestRequest) return;
-      status.textContent = error.message || 'Não foi possível consultar os dados agora.';
-      window.searchFeedback?.error('pix', status.textContent);
+      const message = error.message || 'Não foi possível consultar os dados agora.';
+      setStatus(message, 'error');
+      window.searchFeedback?.error('pix', message);
       tableBody.replaceChildren();
     } finally {
       if (requestId === latestRequest) searchButton.disabled = false;
     }
   };
 
+  // O cabeçalho do painel mantém ícone e contagem; só o texto da ação muda.
+  const syncResultsAction = () => {
+    const action = resultsAccordion.querySelector('[data-results-action]');
+    const state = resultsAccordion.dataset.accordionState;
+    const open = state ? state === 'open' : resultsAccordion.open;
+    if (action) action.textContent = open ? 'Recolher' : 'Expandir';
+  };
   resultsAccordion.addEventListener('toggle', () => {
-    resultsAccordion.querySelector(':scope > summary').textContent =
-      resultsAccordion.open ? 'Recolher resultados' : 'Expandir resultados';
+    if (resultsAccordion.open) resultsAccordion.dataset.accordionState = 'open';
+    syncResultsAction();
   });
+  resultsAccordion.addEventListener('accordion:change', syncResultsAction);
 
   searchButton.addEventListener('click', () => search(1));
   stateSelect?.addEventListener('change', () => {

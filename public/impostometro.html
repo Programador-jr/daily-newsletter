@@ -7,15 +7,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Impostômetro em tempo real: arrecadação de tributos no Brasil, por estado, município e tributo, com as fontes e metodologias de cada contador.">
   <title>Impostômetro - King's Newsletter</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/playfair-display-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/fonts.css">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/editorial.css">
   <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/picker.css">
   <link rel="stylesheet" href="/css/meters.css">
   <link rel="stylesheet" href="/css/impostometro.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="/js/vercel-observability.js" defer></script>
 </head>
 <body class="editorial-page">
@@ -97,22 +97,22 @@
 
         <form class="tax-meter-filters" id="explorer-form" novalidate>
           <fieldset class="tax-meter-scope">
-            <legend>Recorte</legend>
+            <legend class="picker-label">Recorte</legend>
             <div class="tax-meter-segmented">
               <label><input type="radio" name="escopo" value="estado" checked><i class="fas fa-map-location-dot" aria-hidden="true"></i> Estado</label>
               <label><input type="radio" name="escopo" value="municipio"><i class="fas fa-city" aria-hidden="true"></i> Município</label>
               <label><input type="radio" name="escopo" value="tributo"><i class="fas fa-receipt" aria-hidden="true"></i> Tributo</label>
             </div>
           </fieldset>
-          <label data-filter="ano"><span class="tax-field-label">Ano</span><span class="tax-select"><i class="fas fa-calendar-days tax-select-icon" aria-hidden="true"></i><select id="explorer-year" name="ano" data-search-placeholder="Buscar ano"></select><i class="fas fa-chevron-down tax-select-chevron" aria-hidden="true"></i></span></label>
-          <label data-filter="uf"><span class="tax-field-label">Estado</span><span class="tax-select"><i class="fas fa-map-location-dot tax-select-icon" aria-hidden="true"></i><select id="explorer-uf" name="uf" data-search-placeholder="Buscar estado ou sigla"></select><i class="fas fa-chevron-down tax-select-chevron" aria-hidden="true"></i></span></label>
-          <label data-filter="municipio" hidden><span class="tax-field-label">Município</span><span class="tax-select"><i class="fas fa-city tax-select-icon" aria-hidden="true"></i><select id="explorer-city" name="municipio" data-search-placeholder="Buscar município" disabled><option value="">Carregando…</option></select><i class="fas fa-chevron-down tax-select-chevron" aria-hidden="true"></i></span></label>
-          <label data-filter="esfera" hidden><span class="tax-field-label">Esfera</span><span class="tax-select"><i class="fas fa-layer-group tax-select-icon" aria-hidden="true"></i><select id="explorer-sphere" name="esfera">
+          <label data-filter="ano"><span class="picker-label">Ano</span><span class="picker-select"><i class="fas fa-calendar-days picker-select-icon" aria-hidden="true"></i><select id="explorer-year" name="ano" data-search-placeholder="Buscar ano"></select><i class="fas fa-chevron-down picker-select-chevron" aria-hidden="true"></i></span></label>
+          <label data-filter="uf"><span class="picker-label">Estado</span><span class="picker-select"><i class="fas fa-map-location-dot picker-select-icon" aria-hidden="true"></i><select id="explorer-uf" name="uf" data-search-placeholder="Buscar estado ou sigla"></select><i class="fas fa-chevron-down picker-select-chevron" aria-hidden="true"></i></span></label>
+          <label data-filter="municipio" hidden><span class="picker-label">Município</span><span class="picker-select"><i class="fas fa-city picker-select-icon" aria-hidden="true"></i><select id="explorer-city" name="municipio" data-search-placeholder="Buscar município" disabled><option value="">Carregando…</option></select><i class="fas fa-chevron-down picker-select-chevron" aria-hidden="true"></i></span></label>
+          <label data-filter="esfera" hidden><span class="picker-label">Esfera</span><span class="picker-select"><i class="fas fa-layer-group picker-select-icon" aria-hidden="true"></i><select id="explorer-sphere" name="esfera">
             <option value="federal">Federal</option>
             <option value="estadual">Estadual</option>
             <option value="municipal">Municipal</option>
-          </select><i class="fas fa-chevron-down tax-select-chevron" aria-hidden="true"></i></span></label>
-          <label data-filter="tributo" hidden><span class="tax-field-label">Tributo</span><span class="tax-select"><i class="fas fa-receipt tax-select-icon" aria-hidden="true"></i><select id="explorer-tax" name="tributo" data-search-placeholder="Buscar tributo" disabled><option value="">Carregando…</option></select><i class="fas fa-chevron-down tax-select-chevron" aria-hidden="true"></i></span></label>
+          </select><i class="fas fa-chevron-down picker-select-chevron" aria-hidden="true"></i></span></label>
+          <label data-filter="tributo" hidden><span class="picker-label">Tributo</span><span class="picker-select"><i class="fas fa-receipt picker-select-icon" aria-hidden="true"></i><select id="explorer-tax" name="tributo" data-search-placeholder="Buscar tributo" disabled><option value="">Carregando…</option></select><i class="fas fa-chevron-down picker-select-chevron" aria-hidden="true"></i></span></label>
         </form>
 
         <article class="meter-card tax-meter-card tax-meter-result" id="meter-explorer" aria-labelledby="meter-explorer-title" aria-busy="true">

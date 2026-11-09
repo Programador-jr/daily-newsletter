@@ -193,7 +193,7 @@ const initializeUpdateNotice = async headerActions => {
   if (window.location.pathname === '/admin' || window.location.pathname === '/admin.html') return;
   if (!headerActions || headerActions.querySelector('.site-update-notice')) return;
   try {
-    const response = await fetch('/api/updates/active', { headers: { Accept: 'application/json' }, cache: 'no-store' });
+    const response = await fetch('/api/updates/active', { headers: { Accept: 'application/json' } });
     if (!response.ok) return;
     const { update } = await response.json();
     if (!update?.activationId || !Number.isInteger(update.maxDisplays) || update.maxDisplays < 1) return;
@@ -540,7 +540,11 @@ const initializeNavigation = () => {
   };
 
   syncThemeToggleLocation();
-  void initializeUpdateNotice(headerActions);
+  // O aviso não é necessário para a primeira pintura: espera o navegador ficar ocioso.
+  const scheduleIdle = typeof window.requestIdleCallback === "function"
+    ? (callback, options) => window.requestIdleCallback(callback, options)
+    : callback => window.setTimeout(callback, 1);
+  scheduleIdle(() => void initializeUpdateNotice(headerActions), { timeout: 2000 });
   desktopSidebar.addEventListener("change", syncThemeToggleLocation);
   syncSidebarLayout();
   restoreSidebarScroll();
@@ -563,7 +567,7 @@ const initializeNavigation = () => {
 
 const mountSharedNavigation = async () => {
   try {
-    const response = await fetch("/navigation.html", { cache: "no-cache" });
+    const response = await fetch("/navigation.html");
     if (!response.ok) throw new Error("Navegação compartilhada indisponível.");
     const template = document.createElement("template");
     template.innerHTML = await response.text();

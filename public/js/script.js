@@ -346,7 +346,9 @@ function createStoryCard(story, featured = false, index = 0) {
     const image = createElement('img', 'story-image');
     image.src = imageUrl;
     image.alt = asText(story?.image?.alt || story?.title || 'Imagem da notícia');
-    image.loading = 'lazy';
+    // A imagem em destaque é o maior elemento da home (LCP): baixa já, com prioridade.
+    if (featured) image.fetchPriority = 'high';
+    else image.loading = 'lazy';
     image.decoding = 'async';
     image.referrerPolicy = 'strict-origin-when-cross-origin';
     image.addEventListener('error', () => {

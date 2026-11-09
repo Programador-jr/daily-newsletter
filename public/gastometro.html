@@ -7,15 +7,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Gastômetro em tempo real: gasto público pago pela União, estados e municípios, com previdência, despesa com pessoal por Poder e consulta por estado e município.">
   <title>Gastômetro - King's Newsletter</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/playfair-display-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/fonts.css">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/editorial.css">
   <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/picker.css">
   <link rel="stylesheet" href="/css/meters.css">
   <link rel="stylesheet" href="/css/gastometro.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="/js/vercel-observability.js" defer></script>
 </head>
 <body class="editorial-page spend-meter-page">
@@ -113,14 +113,14 @@
 
         <form class="tax-meter-filters" id="explorer-form" novalidate>
           <fieldset class="tax-meter-scope">
-            <legend>Recorte</legend>
+            <legend class="picker-label">Recorte</legend>
             <div class="tax-meter-segmented">
               <label><input type="radio" name="escopo" value="estado" checked><i class="fas fa-map-location-dot" aria-hidden="true"></i> Estado</label>
               <label><input type="radio" name="escopo" value="municipio"><i class="fas fa-city" aria-hidden="true"></i> Município</label>
             </div>
           </fieldset>
-          <label data-filter="uf"><span class="tax-field-label">Estado</span><span class="tax-select"><i class="fas fa-map-location-dot tax-select-icon" aria-hidden="true"></i><select id="explorer-uf" name="uf" data-search-placeholder="Buscar estado ou sigla"></select><i class="fas fa-chevron-down tax-select-chevron" aria-hidden="true"></i></span></label>
-          <label data-filter="municipio" hidden><span class="tax-field-label">Município</span><span class="tax-select"><i class="fas fa-city tax-select-icon" aria-hidden="true"></i><select id="explorer-city" name="municipio" data-search-placeholder="Buscar município" disabled><option value="">Carregando…</option></select><i class="fas fa-chevron-down tax-select-chevron" aria-hidden="true"></i></span></label>
+          <label data-filter="uf"><span class="picker-label">Estado</span><span class="picker-select"><i class="fas fa-map-location-dot picker-select-icon" aria-hidden="true"></i><select id="explorer-uf" name="uf" data-search-placeholder="Buscar estado ou sigla"></select><i class="fas fa-chevron-down picker-select-chevron" aria-hidden="true"></i></span></label>
+          <label data-filter="municipio" hidden><span class="picker-label">Município</span><span class="picker-select"><i class="fas fa-city picker-select-icon" aria-hidden="true"></i><select id="explorer-city" name="municipio" data-search-placeholder="Buscar município" disabled><option value="">Carregando…</option></select><i class="fas fa-chevron-down picker-select-chevron" aria-hidden="true"></i></span></label>
         </form>
 
         <article class="meter-card tax-meter-card tax-meter-result spend-result" id="meter-explorer" aria-labelledby="meter-explorer-title" aria-busy="true">

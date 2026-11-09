@@ -12,6 +12,17 @@
     return `${base}/${normalized}`;
   };
 
+  // Mesma imagem, servida pelo próprio site (/media/* repassa ao R2). Serve para
+  // ler os bytes via fetch (o card do teste vira PNG), já que o R2 público não
+  // envia cabeçalhos CORS. Para exibir em <img>, use mediaUrl.
+  global.mediaProxyUrl = function mediaProxyUrl(value) {
+    if (typeof value !== 'string' || !value) return value;
+    if (/^(?:https?:)?\/\//i.test(value) || /^(?:data|blob):/i.test(value)) return value;
+    const normalized = value.replace(/^\/+/, '');
+    if (!mediaPrefixes.test(normalized)) return value;
+    return `/media/${normalized}`;
+  };
+
   global.externalMediaUrl = function externalMediaUrl(value) {
     if (typeof value !== 'string' || !value) return value;
     const match = value.match(/(?:Special:FilePath\/|external\/wikimedia\/)([^?#]+)$/i);

@@ -3454,7 +3454,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const cardImageData = (path) => {
     if (!path) return Promise.resolve(null);
     if (!cardImageCache.has(path)) {
-      const request = fetch(path, { cache: "force-cache" })
+      // As imagens ficam no R2; /media/* as entrega pelo próprio domínio para
+      // que o fetch possa ler os bytes (o R2 público não envia CORS).
+      const sameOriginPath = typeof globalThis.mediaProxyUrl === "function" ? globalThis.mediaProxyUrl(path) : path;
+      const request = fetch(sameOriginPath, { cache: "force-cache" })
         .then((response) => (response.ok ? response.blob() : null))
         .then((blob) => {
           if (!blob) return null;
@@ -4037,10 +4040,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // A página aparece antes de os dados chegarem: quem escolhe um tamanho de
+  // teste nesse intervalo começa assim que as perguntas estiverem carregadas.
+  let resolveCatalogReady;
+  const catalogReady = new Promise((resolve) => { resolveCatalogReady = resolve; });
+  const quizLengths = document.querySelector(".quiz-lengths");
+
   document.querySelectorAll(".quiz-lengths label").forEach((label) => {
     label.addEventListener("click", () => {
       const mode = label.querySelector('input[name="quiz-length"]')?.value || "short";
-      window.setTimeout(() => startQuiz(mode), 0);
+      if (catalog) {
+        window.setTimeout(() => startQuiz(mode), 0);
+        return;
+      }
+      quizLengths?.setAttribute("aria-busy", "true");
+      catalogReady.then(() => {
+        quizLengths?.removeAttribute("aria-busy");
+        startQuiz(mode);
+      });
     });
   });
 
@@ -4076,11 +4093,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  fetch("/data/political-catalog.json")
-    .then((response) => {
-      if (!response.ok) throw new Error("Quiz data unavailable");
-      return response.json();
-    })
+  // O teste usa as perguntas e compara o resultado com perfis de todas as seções.
+  globalThis.CatalogData.loadAll({ quiz: true })
     .then((data) => {
       const profiles = data.profiles || {};
       const collections = ["ideologies", "figures", "countries", "regimes", "parties", "values"];
@@ -4096,6 +4110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error("Quiz data invalid");
       }
       catalog = data;
+      resolveCatalogReady();
       renderAxisGuide(data.axes);
       if (window.location.hash) {
         const hashTarget = document.getElementById(window.location.hash.slice(1));

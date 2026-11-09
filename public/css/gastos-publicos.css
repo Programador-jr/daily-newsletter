@@ -1,4 +1,5 @@
-/* GASTOS PÚBLICOS — cartão de método dentro de seção. O padrão das seções vem de editorial.css. */
+/* GASTOS PÚBLICOS — etapas da despesa, laboratório e cartões. O padrão das seções vem de editorial.css
+   e os widgets interativos (lab-*) vêm de labs.css. */
 
 .page-section > .method-card {
   margin: 1rem 0 0;
@@ -15,4 +16,543 @@
 
 .civic-principle-inline a:hover {
   text-decoration: underline;
+}
+
+/* Etapas: Empenhado → Liquidado → Pago → Resultado */
+
+.spend-stages {
+  --stage-progress: 0;
+  padding: 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--lab-radius);
+  background: var(--card-bg);
+}
+
+.spend-stage-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .5rem;
+}
+
+/* Linha que liga os ícones; a parte preenchida acompanha a etapa escolhida. */
+.spend-stage-track::before,
+.spend-stage-track::after {
+  content: "";
+  position: absolute;
+  top: 27px;
+  left: 12.5%;
+  height: 3px;
+  border-radius: 999px;
+}
+
+.spend-stage-track::before {
+  right: 12.5%;
+  background: var(--border);
+}
+
+.spend-stage-track::after {
+  width: calc(75% * var(--stage-progress));
+  background: var(--primary);
+  transition: width 360ms cubic-bezier(.2, .8, .2, 1);
+}
+
+html body main .spend-stage-track button {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+  min-width: 0;
+  padding: .4rem .25rem .65rem;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  cursor: pointer;
+  text-align: center;
+}
+
+.spend-stage-track .lab-icon {
+  width: 46px;
+  height: 46px;
+  border: 3px solid var(--card-bg);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--border) 70%, var(--card-bg));
+  color: var(--text-muted);
+  transition: background-color 200ms ease, color 200ms ease, transform 200ms ease;
+}
+
+.spend-stage-track small {
+  color: var(--text-muted);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
+.spend-stage-track strong {
+  color: var(--text-main);
+  font-size: .9rem;
+}
+
+.spend-stage-track button.is-done .lab-icon {
+  background: var(--lab-tint-strong);
+  color: var(--primary);
+}
+
+.spend-stage-track button[aria-selected="true"] .lab-icon {
+  background: var(--primary);
+  color: var(--bg-body);
+  transform: scale(1.08);
+}
+
+.spend-stage-track button[aria-selected="true"] strong {
+  color: var(--primary);
+}
+
+html body main .spend-stage-track button:hover .lab-icon {
+  transform: scale(1.06);
+}
+
+.spend-stage-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 1rem 1.5rem;
+  margin-top: .9rem;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 25%, var(--border));
+  border-radius: 12px;
+  background: linear-gradient(160deg, var(--lab-tint), var(--card-bg) 80%);
+}
+
+.spend-stage-panel.is-changing {
+  animation: spend-fade-in 320ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.spend-stage-panel:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.spend-stage-copy p {
+  margin: 0;
+  color: var(--text-main);
+  font-size: .95rem;
+  line-height: 1.7;
+}
+
+.spend-stage-facts {
+  display: grid;
+  gap: .6rem;
+  margin: 0;
+}
+
+.spend-stage-facts div {
+  padding: .6rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-container);
+}
+
+.spend-stage-facts dt {
+  color: var(--text-muted);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.spend-stage-facts dd {
+  margin: .2rem 0 0;
+  color: var(--text-main);
+  font-size: .85rem;
+  line-height: 1.55;
+}
+
+@keyframes spend-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+}
+
+/* Siga uma despesa */
+
+.spend-presets {
+  margin-bottom: 1rem;
+}
+
+.spend-funnel {
+  display: grid;
+  gap: .5rem;
+  margin-top: auto;
+  padding-top: .6rem;
+}
+
+.spend-funnel > div {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr) 4.8rem;
+  align-items: center;
+  gap: .6rem;
+}
+
+.spend-funnel small {
+  color: var(--text-muted);
+  font-size: .75rem;
+  font-weight: 600;
+}
+
+.spend-funnel b {
+  color: var(--text-main);
+  font-size: .78rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.spend-funnel-track {
+  height: 14px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border) 55%, transparent);
+  overflow: hidden;
+}
+
+.spend-funnel-track span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--primary) 35%, var(--card-bg));
+  transition: width 320ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.spend-funnel > div:nth-child(2) .spend-funnel-track span {
+  background: var(--lab-gain);
+}
+
+.spend-funnel > div:nth-child(3) .spend-funnel-track span {
+  background: var(--primary);
+}
+
+.spend-follow-stats {
+  margin-bottom: 1rem;
+}
+
+/* Classifique o gasto */
+
+.spend-quiz {
+  display: grid;
+  gap: .8rem;
+}
+
+.spend-quiz-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .5rem;
+  color: var(--text-muted);
+  font-size: .8rem;
+  font-weight: 600;
+}
+
+.spend-quiz-score {
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.spend-quiz-track {
+  height: 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border) 60%, transparent);
+  overflow: hidden;
+}
+
+.spend-quiz-track span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--primary);
+  transition: width 320ms ease;
+}
+
+.spend-quiz-question {
+  margin: .2rem 0;
+  color: var(--text-main);
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.15rem, 2.6vw, 1.4rem);
+  line-height: 1.35;
+}
+
+.spend-quiz-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem;
+}
+
+html body main .spend-quiz-options button {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  min-height: 48px;
+  padding: .6rem .85rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-container);
+  color: var(--text-main);
+  font: inherit;
+  font-size: .86rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+html body main .spend-quiz-options button i {
+  width: 1.2rem;
+  color: var(--primary);
+  text-align: center;
+}
+
+html body main .spend-quiz-options button:hover:not(:disabled) {
+  border-color: var(--primary);
+  background: var(--lab-tint);
+}
+
+html body main .spend-quiz-options button:disabled {
+  cursor: default;
+  opacity: .55;
+}
+
+html body main .spend-quiz-options button[data-result] {
+  opacity: 1;
+}
+
+html body main .spend-quiz-options button[data-result="correct"] {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--bg-body);
+}
+
+html body main .spend-quiz-options button[data-result="correct"] i {
+  color: var(--bg-body);
+}
+
+html body main .spend-quiz-options button[data-result="wrong"] {
+  border-color: var(--lab-warm);
+  background: color-mix(in srgb, var(--lab-warm) 10%, var(--bg-container));
+}
+
+.spend-quiz-feedback {
+  padding: .8rem .95rem;
+  border-left: 3px solid var(--primary);
+  border-radius: 8px;
+  background: var(--lab-tint);
+  color: var(--text-main);
+  font-size: .88rem;
+  line-height: 1.6;
+  animation: spend-fade-in 260ms ease;
+}
+
+.spend-quiz-feedback[data-result="wrong"] {
+  border-left-color: var(--lab-warm);
+  background: color-mix(in srgb, var(--lab-warm) 8%, var(--card-bg));
+}
+
+.spend-quiz-feedback p {
+  margin: .4rem 0 0;
+  font-weight: 700;
+}
+
+.spend-quiz-actions:empty {
+  display: none;
+}
+
+/* Comparação por habitante */
+
+.spend-compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.spend-compare-entity {
+  display: grid;
+  gap: .7rem;
+  min-width: 0;
+  margin: 0;
+  padding: .9rem 1rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-container);
+}
+
+.spend-compare-entity + .spend-compare-entity {
+  border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+}
+
+.spend-compare-entity legend {
+  padding: 0 .3rem;
+}
+
+.spend-compare-entity legend input {
+  width: 100%;
+  max-width: 14rem;
+  padding: .25rem .4rem;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  font: inherit;
+  font-weight: 800;
+}
+
+.spend-compare-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.spend-compare-metric {
+  display: grid;
+  gap: .55rem;
+  min-width: 0;
+  padding: .9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: linear-gradient(160deg, var(--lab-tint), var(--card-bg) 80%);
+}
+
+.spend-compare-bars {
+  display: grid;
+  gap: .5rem;
+}
+
+.spend-compare-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 5.5rem) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .6rem;
+}
+
+.spend-compare-bar small {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: .76rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spend-compare-bar b {
+  color: var(--text-main);
+  font-size: .82rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.spend-compare-track {
+  height: 14px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border) 55%, transparent);
+  overflow: hidden;
+}
+
+.spend-compare-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--lab-gain);
+  transition: width 320ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.spend-compare-bar.is-second .spend-compare-track span {
+  background: var(--primary);
+}
+
+.spend-compare-verdict {
+  margin: 1rem 0 .6rem;
+  padding: .8rem .95rem;
+  border-left: 3px solid var(--primary);
+  border-radius: 8px;
+  background: var(--lab-tint);
+  color: var(--text-main);
+  font-size: .9rem;
+  line-height: 1.6;
+}
+
+/* Cartões de categoria e de fonte */
+
+.spend-sphere-grid {
+  margin-top: 1rem;
+}
+
+.spend-sphere-grid > article {
+  display: flex;
+  flex-direction: column;
+}
+
+.spend-sphere-grid > article > a {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  margin-top: auto;
+  padding-top: .8rem;
+  color: var(--primary);
+  font-size: .82rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.spend-sphere-grid > article > a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 860px) {
+  .spend-stage-panel,
+  .spend-compare,
+  .spend-compare-results {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .spend-stages {
+    padding: .85rem .6rem;
+  }
+
+  .spend-stage-track .lab-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .spend-stage-track::before,
+  .spend-stage-track::after {
+    top: 24px;
+  }
+
+  .spend-stage-track strong {
+    font-size: .76rem;
+  }
+
+  .spend-quiz-options {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .spend-funnel > div {
+    grid-template-columns: 4.6rem minmax(0, 1fr) 4.2rem;
+    gap: .45rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spend-stage-track::after,
+  .spend-stage-track .lab-icon,
+  .spend-funnel-track span,
+  .spend-quiz-track span,
+  .spend-compare-track span {
+    transition: none;
+  }
+
+  .spend-stage-panel.is-changing,
+  .spend-quiz-feedback {
+    animation: none;
+  }
 }

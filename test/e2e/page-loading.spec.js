@@ -63,20 +63,22 @@ test('esconde o carregamento quando a saída da página não acontece', async ({
   await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'true');
 
   await page.evaluate(() => window.dispatchEvent(new Event('beforeunload')));
+  // Navegações rápidas não chegam a mostrar a coroa.
+  await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'true');
+  await page.clock.runFor(200);
   await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'false');
 
   await page.clock.runFor(8500);
   await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'true');
 });
 
-test('libera a página após o limite mesmo com requisição travada', async ({ page }) => {
-  await page.clock.install();
+test('mostra o conteúdo sem esperar requisições travadas', async ({ page }) => {
   await page.route('**/api/**', () => {});
   await page.goto('/gastometro', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'false');
 
-  await page.clock.runFor(12500);
+  // A página aparece logo; só a área de dados fica em skeleton.
   await expect(page.locator('#page-loading-overlay')).toHaveAttribute('aria-hidden', 'true');
+  await expect(page.locator('[aria-busy="true"] [data-meter-value]').first()).toHaveClass(/page-skeleton-value/);
 });
 
 test('prepara skeletons para imagens remotas e dados externos', async ({ page }) => {

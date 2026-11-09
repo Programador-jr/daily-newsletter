@@ -1943,9 +1943,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const init = async () => {
     cacheElements();
     try {
-      const response = await fetch("/data/political-catalog.json");
-      if (!response.ok) throw new Error("Catálogo indisponível");
-      data = await response.json();
+      // O comparador cruza perfis de todas as seções: usa a base completa.
+      data = await globalThis.CatalogData.loadAll();
       if (!data.profiles || !Array.isArray(data.axes) || data.axes.length !== 12) {
         throw new Error("Base do catálogo inválida");
       }

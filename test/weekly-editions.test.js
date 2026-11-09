@@ -7,7 +7,9 @@ const state = {
   editions: [],
   selectedEdition: null,
   findCalls: [],
-  findOneCalls: []
+  findOneCalls: [],
+  selectCalls: [],
+  findOneSorts: []
 };
 
 const modules = {
@@ -20,17 +22,27 @@ const modules = {
   '../lib/weekly-edition': {
     find: query => {
       state.findCalls.push(query);
-      return {
-        sort: () => ({
-          limit: () => ({
-            lean: async () => state.editions
-          })
-        })
+      const chain = {
+        select: fields => {
+          state.selectCalls.push(fields);
+          return chain;
+        },
+        sort: () => chain,
+        limit: () => chain,
+        lean: async () => state.editions
       };
+      return chain;
     },
     findOne: query => {
       state.findOneCalls.push(query);
-      return { lean: async () => state.selectedEdition };
+      const chain = {
+        sort: order => {
+          state.findOneSorts.push(order);
+          return chain;
+        },
+        lean: async () => state.selectedEdition
+      };
+      return chain;
     }
   }
 };
@@ -78,6 +90,37 @@ function createRequest(overrides = {}) {
   return { method: 'GET', query: {}, ...overrides };
 }
 
+function storedEdition(overrides = {}) {
+  return {
+    _id: 'internal-id',
+    __v: 0,
+    slug: 'semana-01',
+    editionNumber: 1,
+    title: ' A semana em resumo ',
+    subtitle: 'EDIÇÃO ESPECIAL',
+    weekStart: new Date('2026-11-02T00:00:00.000Z'),
+    weekEnd: new Date('2026-11-08T23:59:59.000Z'),
+    publishedAt: new Date('2026-11-09T00:00:00.000Z'),
+    intro: 'Abertura.',
+    sections: [
+      {
+        title: '1. Política',
+        intro: 'Intro da seção.',
+        stories: [
+          { title: 'Fato', summary: 'Resumo.', context: 'Contexto.', source: 'Reuters', url: 'https://example.com' },
+          { title: 'Outro fato', summary: 'Resumo 2.' }
+        ]
+      },
+      { title: '2. Economia', stories: [{ title: 'Juros' }] }
+    ],
+    analysis: 'Análise.',
+    status: 'published',
+    createdAt: new Date('2026-11-08T22:05:06.000Z'),
+    updatedAt: '2026-11-09T00:10:00.000Z',
+    ...overrides
+  };
+}
+
 beforeEach(() => {
   state.databaseCalls = 0;
   state.databaseError = null;
@@ -85,6 +128,8 @@ beforeEach(() => {
   state.selectedEdition = null;
   state.findCalls = [];
   state.findOneCalls = [];
+  state.selectCalls = [];
+  state.findOneSorts = [];
 });
 
 test('rejects unsupported methods without connecting to the database', async () => {
@@ -104,33 +149,83 @@ test('rejects malformed slugs before querying MongoDB', async () => {
   assert.equal(state.databaseCalls, 0);
 });
 
-test('returns only the published editions collection query', async () => {
-  state.editions = [{ slug: 'semana-01', status: 'published' }];
+test('serves the latest published edition with the editions archive', async () => {
+  state.editions = [storedEdition()];
+  state.selectedEdition = storedEdition();
   const response = createResponse();
   await handler(createRequest(), response);
 
   assert.equal(response.statusCode, 200);
-  assert.deepEqual(response.body, { editions: state.editions });
   assert.deepEqual(state.findCalls, [{ status: 'published' }]);
+  assert.deepEqual(state.findOneCalls, [{ status: 'published' }]);
+  assert.deepEqual(state.findOneSorts, [{ weekStart: -1, publishedAt: -1 }]);
   assert.equal(response.headers['Cache-Control'], 'public, s-maxage=300, stale-while-revalidate=600');
+
+  assert.deepEqual(response.body.editions, [{
+    slug: 'semana-01',
+    editionNumber: 1,
+    title: 'A semana em resumo',
+    subtitle: 'EDIÇÃO ESPECIAL',
+    weekStart: '2026-11-02T00:00:00.000Z',
+    weekEnd: '2026-11-08T23:59:59.000Z',
+    publishedAt: '2026-11-09T00:00:00.000Z',
+    sectionCount: 2,
+    storyCount: 3
+  }]);
+  assert.equal(response.body.edition.slug, 'semana-01');
 });
 
-test('returns a published edition by slug', async () => {
-  state.selectedEdition = { slug: 'semana-01', status: 'published' };
+test('serves the summary text as written, without internal fields', async () => {
+  state.selectedEdition = storedEdition();
   const response = createResponse();
   await handler(createRequest({ query: { slug: 'SEMANA-01' } }), response);
 
+  const { edition } = response.body;
   assert.equal(response.statusCode, 200);
-  assert.deepEqual(response.body, { edition: state.selectedEdition });
   assert.deepEqual(state.findOneCalls, [{ slug: 'semana-01', status: 'published' }]);
+  assert.equal(edition.sections[0].title, '1. Política');
+  assert.equal(edition.sections[0].stories[0].context, 'Contexto.');
+  assert.equal(edition.sections[0].stories[1].context, '');
+  assert.equal(edition.analysis, 'Análise.');
+  for (const field of ['_id', '__v', 'status', 'createdAt', 'updatedAt']) {
+    assert.equal(field in edition, false, field + ' should not be public');
+  }
 });
 
-test('returns 404 when the requested edition is not published', async () => {
+test('lists only identification and counts in the archive', async () => {
+  await handler(createRequest(), createResponse());
+
+  assert.equal(state.selectCalls.length, 1);
+  const fields = state.selectCalls[0].split(' ');
+  assert.ok(fields.includes('sections.title'));
+  assert.ok(!fields.includes('sections.stories.summary'));
+  assert.ok(!fields.includes('analysis'));
+});
+
+test('accepts dates stored as strings', async () => {
+  state.selectedEdition = storedEdition({ weekStart: '2026-11-02T00:00:00.000Z', publishedAt: 'not a date' });
+  const response = createResponse();
+  await handler(createRequest({ query: { slug: 'semana-01' } }), response);
+
+  assert.equal(response.body.edition.weekStart, '2026-11-02T00:00:00.000Z');
+  assert.equal(response.body.edition.publishedAt, null);
+});
+
+test('returns an empty archive when nothing is published', async () => {
+  const response = createResponse();
+  await handler(createRequest(), response);
+
+  assert.equal(response.statusCode, 200);
+  assert.deepEqual(response.body, { edition: null, editions: [] });
+});
+
+test('returns 404 without caching when the requested edition is not published', async () => {
   const response = createResponse();
   await handler(createRequest({ query: { slug: 'semana-02' } }), response);
 
   assert.equal(response.statusCode, 404);
   assert.deepEqual(response.body, { error: 'Edição não encontrada.' });
+  assert.equal(response.headers['Cache-Control'], 'no-store');
 });
 
 test('converts database failures into a generic server error', async t => {

@@ -1,0 +1,593 @@
+/* LABS — widgets interativos compartilhados (Economia, Gastos públicos, Gastos parlamentares):
+   painéis de laboratório, controles segmentados, chips, sliders, painéis de resultado,
+   faixas de estatísticas e barras comparativas. Cada página carrega este arquivo antes do seu CSS. */
+
+:root {
+  --lab-tint: color-mix(in srgb, var(--primary) 9%, var(--card-bg));
+  --lab-tint-strong: color-mix(in srgb, var(--primary) 16%, var(--card-bg));
+  --lab-gain: color-mix(in srgb, var(--primary) 45%, var(--card-bg));
+  --lab-warm: #b4472f;
+  --lab-radius: 14px;
+}
+
+/* Ícone em chip, usado no topo de cartões e etapas. */
+.lab-icon {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: var(--lab-tint);
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+/* Dentro de .card-grid > article, o chip não herda o estilo de rótulo dos <span>. */
+.card-grid > article > .lab-icon {
+  display: grid;
+  margin-bottom: .85rem;
+  color: var(--primary);
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Botões dos labs usam display próprio; o atributo hidden precisa continuar valendo. */
+html body main :is(.lab-chip, .lab-ghost-button, .lab-segmented button)[hidden] {
+  display: none;
+}
+
+.lab-kicker {
+  display: block;
+  margin-bottom: .5rem;
+  color: var(--primary);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.lab-panel {
+  margin-top: 1.25rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card-bg);
+}
+
+.lab-heading {
+  max-width: 900px;
+  margin-bottom: 1rem;
+}
+
+.lab-heading h3 {
+  margin: 0 0 .5rem;
+  color: var(--text-main);
+  font-size: 1.2rem;
+}
+
+.lab-heading p,
+.lab-note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .84rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 760px) {
+  .lab-panel {
+    padding: 1rem;
+  }
+}
+
+.lab-panel {
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .lab-panel {
+    padding: .85rem;
+  }
+}
+
+.lab-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: .25rem;
+}
+
+.lab-index a {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  min-height: 36px;
+  padding: .35rem .85rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  font-size: .8rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+.lab-index a i {
+  color: var(--primary);
+  font-size: .8rem;
+}
+
+.lab-index a:hover,
+.lab-index a:focus-visible {
+  border-color: var(--primary);
+  background: var(--lab-tint);
+}
+
+.lab-heading h3 {
+  scroll-margin-top: 6rem;
+}
+
+html body .lab-panel {
+  border-radius: var(--lab-radius);
+}
+
+.lab-form-grid {
+  display: grid;
+  align-content: start;
+  gap: .9rem;
+  min-width: 0;
+}
+
+.lab-field {
+  display: grid;
+  gap: .35rem;
+  min-width: 0;
+}
+
+.lab-field label {
+  color: var(--text-main);
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.lab-field input:not([type="range"]),
+.lab-range-pair input[type="number"] {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: .55rem .7rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-container);
+  color: var(--text-main);
+  font: inherit;
+  font-size: .9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.lab-field input:focus-visible {
+  border-color: var(--primary);
+  outline: 2px solid color-mix(in srgb, var(--primary) 35%, transparent);
+  outline-offset: 1px;
+}
+
+.lab-range-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 6.2rem;
+  align-items: center;
+  gap: .75rem;
+  min-width: 0;
+}
+
+html body .lab-range-pair input[type="range"] {
+  --fill: 50%;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  height: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary) var(--fill), color-mix(in srgb, var(--border) 80%, transparent) var(--fill));
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.lab-range-pair input[type="range"]::-webkit-slider-thumb {
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--card-bg);
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 1px 5px rgb(0 0 0 / 25%);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.lab-range-pair input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: 3px solid var(--card-bg);
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 1px 5px rgb(0 0 0 / 25%);
+}
+
+.lab-range-pair input[type="range"]:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 6px;
+}
+
+.lab-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+
+html body main .lab-chip,
+html body main .lab-ghost-button {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  min-height: 34px;
+  padding: .3rem .8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-container);
+  color: var(--text-main);
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+html body main .lab-chip:hover,
+html body main .lab-ghost-button:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+html body main .lab-chip[aria-pressed="true"] {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--bg-body);
+}
+
+html body main .lab-ghost-button {
+  border-style: dashed;
+  border-radius: 8px;
+}
+
+html body main .lab-ghost-button span {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.lab-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 1.25rem;
+  align-items: stretch;
+  margin-bottom: 1rem;
+}
+
+.lab-result-panel {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  min-width: 0;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 25%, var(--border));
+  border-radius: 12px;
+  background: linear-gradient(160deg, var(--lab-tint), var(--card-bg) 75%);
+}
+
+.lab-result-label {
+  color: var(--text-muted);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.lab-result-value {
+  color: var(--text-main);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.lab-result-detail {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .84rem;
+  line-height: 1.6;
+}
+
+.lab-result-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .5rem;
+  margin: .2rem 0 .4rem;
+}
+
+.lab-result-stats div {
+  min-width: 0;
+  padding: .55rem .7rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg-container);
+}
+
+.lab-result-stats dt {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  color: var(--text-muted);
+  font-size: .72rem;
+}
+
+.lab-result-stats dd {
+  margin: .15rem 0 0;
+  color: var(--text-main);
+  font-size: .95rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.lab-swatch {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--primary);
+}
+
+.lab-swatch.is-gain {
+  background: var(--lab-gain);
+}
+
+.lab-compare-bars {
+  display: grid;
+  gap: .45rem;
+  margin-top: auto;
+  padding-top: .5rem;
+}
+
+.lab-compare-bars > div {
+  display: grid;
+  gap: .2rem;
+}
+
+.lab-compare-bars small {
+  color: var(--text-muted);
+  font-size: .72rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.lab-compare-bars span {
+  display: block;
+  width: 0;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--lab-gain);
+  transition: width 320ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.lab-compare-bars > div + div span {
+  background: var(--primary);
+}
+
+.lab-compare-bars.is-compact span {
+  height: 8px;
+}
+
+.lab-segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  justify-self: start;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--border) 35%, var(--card-bg));
+}
+
+html body main .lab-segmented button {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  min-height: 36px;
+  padding: 0 .95rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: .84rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+html body main .lab-segmented button:hover {
+  color: var(--text-main);
+}
+
+html body main .lab-segmented button[aria-selected="true"],
+html body main .lab-segmented button[aria-pressed="true"] {
+  background: var(--primary);
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--primary) 35%, transparent);
+  color: var(--bg-body);
+}
+
+.lab-split-bar {
+  display: flex;
+  height: 12px;
+  margin-top: .45rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border) 55%, transparent);
+}
+
+.lab-split-bar span {
+  display: block;
+  height: 100%;
+  transition: width 320ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.lab-split-bar .is-base {
+  background: var(--primary);
+}
+
+.lab-split-bar .is-gain {
+  background: var(--lab-gain);
+}
+
+.lab-split-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .25rem .75rem;
+  color: var(--text-muted);
+  font-size: .72rem;
+}
+
+.lab-split-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+}
+
+@media (max-width: 860px) {
+  .lab-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .lab-segmented {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    justify-self: stretch;
+  }
+
+  html body main .lab-segmented button {
+    flex-direction: column;
+    justify-content: center;
+    gap: .2rem;
+    min-height: 52px;
+    padding: .35rem .25rem;
+    font-size: .76rem;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .lab-result-stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lab-range-pair {
+    grid-template-columns: minmax(0, 1fr) 5.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-compare-bars span,
+  .lab-split-bar span {
+    animation: none;
+    transition: none;
+  }
+}
+
+html body main .lab-segmented.is-compact button {
+  min-height: 32px;
+  padding: 0 .75rem;
+  font-size: .78rem;
+}
+
+.lab-stats {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr));
+  gap: .6rem;
+  margin: 0 0 .9rem;
+}
+
+.lab-stats > div {
+  min-width: 0;
+  padding: .7rem .85rem;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--bg-container);
+}
+
+.lab-stats > div.is-main {
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+  background: linear-gradient(160deg, var(--lab-tint), var(--card-bg) 80%);
+}
+
+.lab-stats dt {
+  color: var(--text-muted);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.lab-stats dd {
+  margin: .2rem 0 0;
+  color: var(--text-main);
+  font-size: 1.05rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.lab-stats .is-main dd:not(.lab-stat-note) {
+  font-size: clamp(1.3rem, 3vw, 1.65rem);
+  letter-spacing: -.02em;
+}
+
+.lab-stats dd[data-direction="up"] {
+  color: var(--primary);
+}
+
+.lab-stats dd[data-direction="flat"] {
+  color: var(--text-muted);
+}
+
+.lab-stats dd.lab-stat-note {
+  margin-top: .1rem;
+  color: var(--text-muted);
+  font-size: .72rem;
+  font-weight: 500;
+}
+
+@media (max-width: 760px) {
+  .lab-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .lab-stats .is-main dd:not(.lab-stat-note) {
+    font-size: 1.15rem;
+  }
+
+  .lab-stats > div {
+    padding: .6rem .7rem;
+  }
+
+  .lab-stats dd {
+    font-size: .95rem;
+  }
+}

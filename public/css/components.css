@@ -204,7 +204,7 @@ html body main .cta-button:hover {
   color: var(--bg-body);
 }
 
-html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion) {
+html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion):not(:where(.weekly-toc-panel, .atlas-filter-accordion, .results-accordion)) {
   overflow: hidden;
   border: 1px solid var(--card-border);
   border-radius: 12px;
@@ -213,15 +213,15 @@ html body main details:not(.accordion-item):not(.constitution-accordion):not(.hi
   transition: border-color 180ms ease, box-shadow 220ms ease;
 }
 
-html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion):is(:hover, [open]) {
+html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion):not(:where(.weekly-toc-panel, .atlas-filter-accordion, .results-accordion)):is(:hover, [open]) {
   border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
 }
 
-html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion)[open] {
+html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion):not(:where(.weekly-toc-panel, .atlas-filter-accordion, .results-accordion))[open] {
   box-shadow: 0 7px 20px rgba(16, 36, 32, 0.075);
 }
 
-html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion) > summary {
+html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion):not(:where(.weekly-toc-panel, .atlas-filter-accordion, .results-accordion)) > summary {
   padding: 0.95rem 1.1rem;
   border-radius: inherit;
   color: var(--text-main);
@@ -231,20 +231,20 @@ html body main details:not(.accordion-item):not(.constitution-accordion):not(.hi
   transition: background-color 180ms ease;
 }
 
-html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion) > summary:hover,
-html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion)[open] > summary {
+html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion):not(:where(.weekly-toc-panel, .atlas-filter-accordion, .results-accordion)) > summary:hover,
+html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion):not(:where(.weekly-toc-panel, .atlas-filter-accordion, .results-accordion))[open] > summary {
   background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
 }
 
-html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion)[open] > summary {
+html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion):not(:where(.weekly-toc-panel, .atlas-filter-accordion, .results-accordion))[open] > summary {
   border-bottom: 1px solid var(--border);
 }
 
-html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion) > summary::-webkit-details-marker {
+html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion):not(:where(.weekly-toc-panel, .atlas-filter-accordion, .results-accordion)) > summary::-webkit-details-marker {
   display: none;
 }
 
-html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion) > summary:not(:has(i, svg, [class*="icon"]))::after {
+html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion):not(:where(.weekly-toc-panel, .atlas-filter-accordion, .results-accordion)) > summary:not(:has(i, svg, [class*="icon"]))::after {
   content: "⌄";
   margin-left: 1rem;
   color: var(--text-muted);
@@ -252,7 +252,7 @@ html body main details:not(.accordion-item):not(.constitution-accordion):not(.hi
   transition: transform 180ms ease, color 180ms ease;
 }
 
-html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion)[open] > summary:not(:has(i, svg, [class*="icon"]))::after {
+html body main details:not(.accordion-item):not(.constitution-accordion):not(.history-topic-accordion):not(:where(.weekly-toc-panel, .atlas-filter-accordion, .results-accordion))[open] > summary:not(:has(i, svg, [class*="icon"]))::after {
   color: var(--primary);
   transform: rotate(180deg);
 }
