@@ -5,7 +5,20 @@
     "regions": ["gru1"]
   }
 },
+  "headers": [
+    { "source": "/css/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=300, stale-while-revalidate=86400" }] },
+    { "source": "/js/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=300, stale-while-revalidate=86400" }] },
+    { "source": "/navigation.html", "headers": [{ "key": "Cache-Control", "value": "public, max-age=300, stale-while-revalidate=86400" }] },
+    { "source": "/footer.html", "headers": [{ "key": "Cache-Control", "value": "public, max-age=300, stale-while-revalidate=86400" }] },
+    { "source": "/data/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }] },
+    { "source": "/assets/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=2592000" }] },
+    { "source": "/fonts/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }
+  ],
   "rewrites": [
+    {
+      "source": "/media/:path*",
+      "destination": "https://pub-fcf4bc76fe3b4643b8c8b2c76bc61ad1.r2.dev/:path*"
+    },
     {
       "source": "/api/admin/login",
       "destination": "/api/control?route=admin/login"
@@ -55,6 +68,7 @@
       "destination": "/api/public-data?source=gastometro"
     },
     { "source": "/editions", "destination": "/editions.html" },
+    { "source": "/weekly", "destination": "/weekly.html" },
     { "source": "/historia", "destination": "/historia.html" },
     { "source": "/presidentes", "destination": "/presidentes.html" },
     { "source": "/ideologias", "destination": "/ideologias.html" },

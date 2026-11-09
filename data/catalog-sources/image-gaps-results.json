@@ -1,0 +1,183 @@
+[
+  {
+    "id": "nova-democracia",
+    "collection": "parties",
+    "qid": "Q223153",
+    "fields": {
+      "logoPath": "/parties/logos/nova-democracia.webp",
+      "logoSourceName": "Original by New Democracy Vectorized by ReneeWrites / Wikimedia Commons (Public domain)",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:New_Democracy_Logo_2018.svg",
+      "logoNote": "Imagem livre do Wikimedia Commons, licença Public domain."
+    }
+  },
+  {
+    "id": "partido-trabalhista-israelense",
+    "collection": "parties",
+    "qid": "Q210703",
+    "fields": {
+      "logoPath": "/parties/logos/partido-trabalhista-israelense.webp",
+      "logoSourceName": "רונאלדיניו המלך / Wikimedia Commons (Public domain)",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:HaAvoda_Logo.svg",
+      "logoNote": "Imagem livre do Wikimedia Commons, licença Public domain."
+    }
+  },
+  {
+    "id": "eff",
+    "collection": "parties",
+    "qid": "Q15613585",
+    "fields": {
+      "logoPath": "/parties/logos/eff.webp",
+      "logoSourceName": "BMots 7 / Wikimedia Commons (CC0)",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:EFF_Flag_HQ.jpg",
+      "logoNote": "Imagem livre do Wikimedia Commons, licença CC0."
+    }
+  },
+  {
+    "id": "frente-ampla",
+    "collection": "parties",
+    "qid": "Q1066799",
+    "fields": {
+      "logoPath": "/parties/logos/frente-ampla.webp",
+      "logoSourceName": "Frente Amplio / Wikimedia Commons (Public domain)",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Frente_Amplio_2025_logo.svg",
+      "logoNote": "Imagem livre do Wikimedia Commons, licença Public domain."
+    }
+  },
+  {
+    "id": "partido-socialista-chile",
+    "collection": "parties",
+    "qid": "Q823648",
+    "fields": {
+      "logoPath": "/parties/logos/partido-socialista-chile.webp",
+      "logoSourceName": "B1mbo / Wikimedia Commons (Public domain)",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Emblem_of_the_Socialist_Party_of_Chile.svg",
+      "logoNote": "Imagem livre do Wikimedia Commons, licença Public domain."
+    }
+  },
+  {
+    "id": "partido-comunista-chile",
+    "collection": "parties",
+    "qid": "Q317952",
+    "fields": {
+      "logoPath": "/parties/logos/partido-comunista-chile.webp",
+      "logoSourceName": "B1mbo / Wikimedia Commons (CC BY 3.0)",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Partido_Comunista_de_Chile.svg",
+      "logoNote": "Imagem livre do Wikimedia Commons, licença CC BY 3.0."
+    }
+  },
+  {
+    "id": "chile-vamos",
+    "collection": "parties",
+    "qid": "Q20859150",
+    "fields": {
+      "logoPath": "/parties/logos/chile-vamos.webp",
+      "logoSourceName": "Chile Vamos / Wikimedia Commons (Public domain)",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Chile_Vamos.png",
+      "logoNote": "Imagem livre do Wikimedia Commons, licença Public domain."
+    }
+  },
+  {
+    "id": "partido-bolchevique",
+    "collection": "parties",
+    "qid": "Q83372",
+    "fields": {
+      "logoPath": "/parties/logos/partido-bolchevique.webp",
+      "logoSourceName": "Boris Kustodiev / Wikimedia Commons (Public domain)",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Kustodiev_The_Bolshevik.jpg",
+      "logoNote": "Imagem livre do Wikimedia Commons, licença Public domain."
+    }
+  },
+  {
+    "id": "gustave-de-molinari",
+    "collection": "figures",
+    "qid": "Q468473",
+    "fields": {
+      "imagePath": "/personalities/portraits/gustave-de-molinari.webp",
+      "imageCredit": "Autor desconhecido / Wikimedia Commons (Public domain)",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Gustavedemolinari.jpg",
+      "imageNote": "Imagem livre do Wikimedia Commons, licença Public domain."
+    }
+  },
+  {
+    "id": "friedrich-list",
+    "collection": "figures",
+    "qid": "Q159917",
+    "fields": {
+      "imagePath": "/personalities/portraits/friedrich-list.webp",
+      "imageCredit": "Josef Kriehuber / Wikimedia Commons (Public domain)",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Friedrich_List_1845_crop.jpg",
+      "imageNote": "Imagem livre do Wikimedia Commons, licença Public domain."
+    }
+  },
+  {
+    "id": "johannes-kaiser",
+    "collection": "figures",
+    "skipped": "sem imagem no Wikidata"
+  },
+  {
+    "id": "graciliano-ramos",
+    "collection": "figures",
+    "qid": "Q1392121",
+    "fields": {
+      "imagePath": "/personalities/portraits/graciliano-ramos.webp",
+      "imageCredit": "Autor desconhecido / Wikimedia Commons (Public domain)",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Graciliano_Ramos,_1940.jpg",
+      "imageNote": "Imagem livre do Wikimedia Commons, licença Public domain."
+    }
+  },
+  {
+    "id": "raul-prebisch",
+    "collection": "figures",
+    "qid": "Q982374",
+    "fields": {
+      "imagePath": "/personalities/portraits/raul-prebisch.webp",
+      "imageCredit": "Autor desconhecido / Wikimedia Commons (Public domain)",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Raul_Prebisch_(cropped).tif",
+      "imageNote": "Imagem livre do Wikimedia Commons, licença Public domain."
+    }
+  },
+  {
+    "id": "michal-kalecki",
+    "collection": "figures",
+    "qid": "Q436745",
+    "fields": {
+      "imagePath": "/personalities/portraits/michal-kalecki.webp",
+      "imageCredit": "Manuel García Jódar / Wikimedia Commons (CC BY 2.5 es)",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Michal_Kalecki.jpg",
+      "imageNote": "Imagem livre do Wikimedia Commons, licença CC BY 2.5 es."
+    }
+  },
+  {
+    "id": "dmitry-medvedev",
+    "collection": "figures",
+    "qid": "Q23530",
+    "fields": {
+      "imagePath": "/personalities/portraits/dmitry-medvedev.webp",
+      "imageCredit": "Russian Government / Wikimedia Commons (CC BY 4.0)",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Dmitry_Medvedev_and_Li_Keqiang_20191101_(cropped-2).jpg",
+      "imageNote": "Imagem livre do Wikimedia Commons, licença CC BY 4.0."
+    }
+  },
+  {
+    "id": "allan-kardec",
+    "collection": "figures",
+    "qid": "Q240643",
+    "fields": {
+      "imagePath": "/personalities/portraits/allan-kardec.webp",
+      "imageCredit": "Autor desconhecido / Wikimedia Commons (Public domain)",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Photo_Kardec.jpg",
+      "imageNote": "Imagem livre do Wikimedia Commons, licença Public domain."
+    }
+  },
+  {
+    "id": "bezerra-de-menezes",
+    "collection": "figures",
+    "qid": "Q2900525",
+    "fields": {
+      "imagePath": "/personalities/portraits/bezerra-de-menezes.webp",
+      "imageCredit": "Autor desconhecido / Wikimedia Commons (Public domain)",
+      "imageSourceUrl": "https://commons.wikimedia.org/wiki/File:Bezerra-de_Menezes-50a-1881.jpg",
+      "imageNote": "Imagem livre do Wikimedia Commons, licença Public domain."
+    }
+  }
+]

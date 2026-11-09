@@ -6,6 +6,8 @@ const path = require('path');
 const { validateRuntimeEnvironment } = require('./lib/config');
 const { securityHeaders } = require('./lib/security-headers');
 const { errorHandler } = require('./lib/error-handler');
+const { staticCacheHeaders } = require('./lib/static-cache');
+const { createMediaProxy } = require('./lib/media-proxy');
 
 const { warnings } = validateRuntimeEnvironment();
 warnings.forEach(message => console.warn(`[config] ${message}`));
@@ -29,10 +31,14 @@ app.use(securityHeaders);
 app.use(express.json({ limit: '100kb' }));
 app.use(express.urlencoded({ extended: true, limit: '100kb' }));
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/data', express.static(path.join(__dirname, 'data'), { dotfiles: 'deny', index: false }));
+app.get('/media/*path', createMediaProxy());
+const publicRoot = path.join(__dirname, 'public');
+const dataRoot = path.join(__dirname, 'data');
+app.use(express.static(publicRoot, { setHeaders: staticCacheHeaders()(publicRoot) }));
+app.use('/data', express.static(dataRoot, { dotfiles: 'deny', index: false, setHeaders: staticCacheHeaders('/data')(dataRoot) }));
 
 app.get('/api/news', require('./api/news'));
+app.get('/api/weekly-editions', require('./api/weekly-editions'));
 app.post('/api/news', require('./api/news'));
 app.post('/api/subscribe', require('./api/subscribe'));
 app.get('/api/confirm', require('./api/confirm'));
@@ -63,6 +69,10 @@ app.get('/', (req, res) => {
 
 app.get('/editions', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/editions.html'));
+});
+
+app.get('/weekly', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/weekly.html'));
 });
 
 app.get('/historia', (req, res) => {

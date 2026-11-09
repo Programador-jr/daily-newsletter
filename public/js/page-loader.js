@@ -1,14 +1,18 @@
 (() => {
   const OVERLAY_ID = "page-loading-overlay";
-  const FALLBACK_TIMEOUT = 12000;
+  // O overlay inicial sai assim que o HTML estiver pronto: imagens, fontes e
+  // dados continuam chegando sob os skeletons de cada seção. O limite só
+  // protege contra um DOMContentLoaded que nunca chega.
+  const FALLBACK_TIMEOUT = 3000;
   // A navegação mostra o overlay antes de a página sair. Se ela não sair
   // (download, navegação cancelada, link tratado por JS), o overlay some sozinho.
   const NAVIGATION_TIMEOUT = 8000;
+  // Navegações rápidas trocam de página antes deste atraso, sem piscar a coroa.
+  const NAVIGATION_SHOW_DELAY = 150;
   let initialLoadFinished = false;
   let fallbackTimer = null;
   let navigationTimer = null;
-  let windowLoadFinished = document.readyState === "complete";
-  let pendingFetches = 0;
+  let navigationShowTimer = null;
   let skeletonRefreshQueued = false;
 
   const getOverlay = () => {
@@ -47,13 +51,18 @@
 
   const clearNavigationTimer = () => {
     if (navigationTimer) window.clearTimeout(navigationTimer);
+    if (navigationShowTimer) window.clearTimeout(navigationShowTimer);
     navigationTimer = null;
+    navigationShowTimer = null;
   };
 
   const showForNavigation = () => {
-    show();
     clearNavigationTimer();
-    navigationTimer = window.setTimeout(hide, NAVIGATION_TIMEOUT);
+    navigationShowTimer = window.setTimeout(() => {
+      navigationShowTimer = null;
+      show();
+      navigationTimer = window.setTimeout(hide, NAVIGATION_TIMEOUT);
+    }, NAVIGATION_SHOW_DELAY);
   };
 
   const hide = () => {
@@ -64,24 +73,12 @@
     document.documentElement.classList.remove("page-loader-active");
   };
 
-  const finishInitialLoad = (force = false) => {
+  const finishInitialLoad = () => {
     if (initialLoadFinished) return;
-    if (!force && (!windowLoadFinished || pendingFetches > 0)) return;
     initialLoadFinished = true;
     if (fallbackTimer) window.clearTimeout(fallbackTimer);
     hide();
   };
-
-  const nativeFetch = typeof window.fetch === "function" ? window.fetch.bind(window) : null;
-  if (nativeFetch) {
-    window.fetch = (...args) => {
-      pendingFetches += 1;
-      return nativeFetch(...args).finally(() => {
-        pendingFetches = Math.max(0, pendingFetches - 1);
-        finishInitialLoad();
-      });
-    };
-  }
 
   const isNavigableInternalLink = anchor => {
     if (!anchor || (anchor.target && anchor.target !== "_self")) return false;
@@ -163,10 +160,14 @@
     window.requestAnimationFrame(refreshSkeletons);
   };
 
-  // Create the overlay as soon as this shared script runs, before page scripts
-  // start their requests. The safety timeout prevents a missing asset from
-  // trapping the visitor behind a permanent overlay.
-  show();
+  // Só cobre a página enquanto o HTML ainda está sendo lido; depois disso o
+  // conteúdo aparece e os skeletons indicam o que ainda carrega.
+  if (document.readyState === "loading") {
+    show();
+    document.addEventListener("DOMContentLoaded", finishInitialLoad, { once: true });
+  } else {
+    finishInitialLoad();
+  }
   refreshSkeletons();
 
   const skeletonObserver = new MutationObserver(queueSkeletonRefresh);
@@ -197,15 +198,8 @@
     if (event.persisted) hide();
     finishInitialLoad();
   });
-  window.addEventListener("load", () => {
-    windowLoadFinished = true;
-    finishInitialLoad();
-  }, { once: true });
 
-  if (document.readyState === "complete") finishInitialLoad();
-  fallbackTimer = window.setTimeout(() => {
-    if (!initialLoadFinished) finishInitialLoad(true);
-  }, FALLBACK_TIMEOUT);
+  if (!initialLoadFinished) fallbackTimer = window.setTimeout(finishInitialLoad, FALLBACK_TIMEOUT);
 
   window.pageLoader = Object.freeze({ show, hide, ready: finishInitialLoad });
   window.pageSkeleton = Object.freeze({ refresh: refreshSkeletons });

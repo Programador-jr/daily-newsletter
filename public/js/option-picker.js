@@ -6,8 +6,8 @@
  * o select é refletido automaticamente (MutationObserver).
  *
  * Marcação esperada:
- *   <label><span class="tax-field-label">Estado</span>
- *     <span class="tax-select">…ícone…<select data-search-placeholder="Buscar estado"></select>…seta…</span>
+ *   <label><span class="picker-label">Estado</span>
+ *     <span class="picker-select">…ícone…<select data-search-placeholder="Buscar estado"></select>…seta…</span>
  *   </label>
  *
  * Atributos opcionais nas <option>: data-meta (texto auxiliar à direita).
@@ -35,7 +35,7 @@
   class OptionPicker {
     constructor(select) {
       this.select = select;
-      this.wrapper = select.closest('.tax-select');
+      this.wrapper = select.closest('.picker-select');
       this.id = `option-picker-${++uid}`;
       this.items = [];
       this.visible = [];
@@ -55,23 +55,23 @@
 
     build() {
       const label = this.select.closest('label');
-      const labelText = label?.querySelector('.tax-field-label');
+      const labelText = label?.querySelector('.picker-label');
       if (labelText && !labelText.id) labelText.id = `${this.id}-label`;
 
-      this.trigger = element('button', 'tax-picker-trigger', {
+      this.trigger = element('button', 'picker-trigger', {
         type: 'button',
         'aria-haspopup': 'listbox',
         'aria-expanded': 'false',
         'aria-controls': `${this.id}-panel`
       });
-      this.valueEl = element('span', 'tax-picker-value', { id: `${this.id}-value` });
+      this.valueEl = element('span', 'picker-value', { id: `${this.id}-value` });
       this.trigger.append(this.valueEl);
       if (labelText) this.trigger.setAttribute('aria-labelledby', `${labelText.id} ${this.valueEl.id}`);
 
-      this.panel = element('div', 'tax-picker-panel', { id: `${this.id}-panel` });
+      this.panel = element('div', 'picker-panel', { id: `${this.id}-panel` });
       this.panel.hidden = true;
 
-      this.searchBox = element('div', 'tax-picker-search');
+      this.searchBox = element('div', 'picker-search');
       this.searchInput = element('input', '', {
         type: 'search',
         autocomplete: 'off',
@@ -86,12 +86,12 @@
       const searchIcon = element('i', 'fas fa-magnifying-glass', { 'aria-hidden': 'true' });
       this.searchBox.append(searchIcon, this.searchInput);
 
-      this.list = element('ul', 'tax-picker-list', { id: `${this.id}-list`, role: 'listbox', tabindex: '-1' });
+      this.list = element('ul', 'picker-list', { id: `${this.id}-list`, role: 'listbox', tabindex: '-1' });
       if (labelText) this.list.setAttribute('aria-labelledby', labelText.id);
-      this.empty = element('p', 'tax-picker-empty');
+      this.empty = element('p', 'picker-empty');
       this.empty.textContent = 'Nenhum resultado.';
       this.empty.hidden = true;
-      this.status = element('p', 'tax-picker-status', { role: 'status', 'aria-live': 'polite' });
+      this.status = element('p', 'picker-status', { role: 'status', 'aria-live': 'polite' });
 
       this.panel.append(this.searchBox, this.list, this.empty, this.status);
       // O botão vem antes do select para que o <label> o tenha como alvo.
@@ -136,7 +136,7 @@
       this.wrapper.classList.toggle('is-disabled', disabled);
       this.valueEl.replaceChildren(document.createTextNode(selected?.text || '—'));
       if (selected?.meta) {
-        const meta = element('small', 'tax-picker-value-meta');
+        const meta = element('small', 'picker-value-meta');
         meta.textContent = selected.meta;
         this.valueEl.append(meta);
       }
@@ -206,21 +206,21 @@
       const selectedIndex = this.select.selectedIndex;
       this.list.replaceChildren(...this.visible.map(index => {
         const item = this.items[index];
-        const option = element('li', 'tax-picker-option', {
+        const option = element('li', 'picker-option', {
           id: `${this.id}-option-${index}`,
           role: 'option',
           'aria-selected': String(index === selectedIndex)
         });
         option.dataset.index = String(index);
-        const text = element('span', 'tax-picker-option-text');
+        const text = element('span', 'picker-option-text');
         text.textContent = item.text;
         option.append(text);
         if (item.meta) {
-          const meta = element('span', 'tax-picker-option-meta');
+          const meta = element('span', 'picker-option-meta');
           meta.textContent = item.meta;
           option.append(meta);
         }
-        option.append(element('i', 'fas fa-check tax-picker-check', { 'aria-hidden': 'true' }));
+        option.append(element('i', 'fas fa-check picker-check', { 'aria-hidden': 'true' }));
         return option;
       }));
 
@@ -324,7 +324,7 @@
 
   window.KingsOptionPicker = {
     enhance(root = document) {
-      return Array.from(root.querySelectorAll('.tax-select > select'))
+      return Array.from(root.querySelectorAll('.picker-select > select'))
         .filter(select => !select.closest('.is-enhanced'))
         .map(select => new OptionPicker(select));
     }

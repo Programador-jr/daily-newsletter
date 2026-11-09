@@ -139,6 +139,7 @@
       image.src = imageUrl;
       image.alt = alt;
       image.loading = 'lazy';
+      image.decoding = 'async';
       const zoom = document.createElement('span');
       zoom.className = 'gallery-zoom';
       const zoomIcon = document.createElement('i');

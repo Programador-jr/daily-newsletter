@@ -34,7 +34,7 @@
 
   /* ---------------------------------------------------- contadores do topo */
 
-  const acspMeter = new LiveMeter(document.getElementById('meter-acsp'));
+  const acspMeter = new LiveMeter(document.getElementById('meter-acsp'), { onRender: value => updateLiveYear(value) });
   const orgMeter = new LiveMeter(document.getElementById('meter-org'));
   let lastTopRefresh = 0;
   let currentYearTotal = null;
@@ -219,21 +219,97 @@
 
   const historyEl = document.getElementById('tax-history');
   let historySeries = null;
+  let historyAnimated = false;
+  // Ano em andamento: a barra cresce junto com o contador do topo.
+  let liveYear = null;
+
+  // Início e fim do ano no fuso de Brasília (UTC-3, sem horário de verão desde 2019).
+  const yearBounds = year => ({
+    start: Date.parse(`${year}-01-01T00:00:00-03:00`),
+    end: Date.parse(`${year + 1}-01-01T00:00:00-03:00`)
+  });
+
+  const projectYearEnd = data => {
+    const rate = Number(data.incrementoPorSegundo) || 0;
+    const reference = Date.parse(data.referencia);
+    if (!rate || !Number.isFinite(reference)) return null;
+    const { end } = yearBounds(data.periodo.ano);
+    return Number(data.valor) + rate * Math.max(0, (end - reference) / 1000);
+  };
+
+  function updateLiveYear(value) {
+    if (!liveYear || !liveYear.fill.isConnected) return;
+    const { fill, valueEl, cell, progressEl, progressBar, max, year } = liveYear;
+    fill.style.width = `${Math.min(100, Math.max(1, (value / max) * 100)).toFixed(3)}%`;
+    valueEl.textContent = brlInteger.format(value);
+    cell.textContent = compactBRL(value, { short: true });
+    const { start, end } = yearBounds(year);
+    const now = acspMeter.serverClock
+      ? acspMeter.serverClock.at + (performance.now() - acspMeter.serverClock.receivedAt)
+      : Date.now();
+    const elapsed = Math.min(1, Math.max(0, (now - start) / (end - start)));
+    progressEl.textContent = percent.format(elapsed);
+    progressBar.style.width = `${(elapsed * 100).toFixed(2)}%`;
+  }
+
+  const buildLiveStrip = (year, projection) => {
+    const strip = document.createElement('div');
+    strip.className = 'tax-history-live';
+
+    const head = document.createElement('p');
+    head.className = 'tax-history-live-head';
+    const dot = document.createElement('span');
+    dot.className = 'tax-history-live-dot';
+    dot.setAttribute('aria-hidden', 'true');
+    head.append(dot, document.createTextNode(`${year} em andamento`));
+
+    const value = document.createElement('p');
+    value.className = 'tax-history-live-value';
+    value.textContent = '—';
+
+    const progress = document.createElement('div');
+    progress.className = 'tax-history-live-progress';
+    const progressLabel = document.createElement('span');
+    const progressValue = document.createElement('strong');
+    progressLabel.append(progressValue, document.createTextNode(' do ano já decorrido'));
+    const track = document.createElement('div');
+    track.className = 'tax-history-live-track';
+    track.setAttribute('aria-hidden', 'true');
+    const trackFill = document.createElement('span');
+    track.append(trackFill);
+    progress.append(progressLabel, track);
+
+    strip.append(head, value, progress);
+    if (projection) {
+      const note = document.createElement('p');
+      note.className = 'tax-history-live-projection';
+      const swatch = document.createElement('span');
+      swatch.setAttribute('aria-hidden', 'true');
+      note.append(swatch, document.createTextNode(`Projeção para 31/12 no ritmo atual: ${compactBRL(projection)}`));
+      strip.append(note);
+    }
+    return { strip, valueEl: value, progressEl: progressValue, progressBar: trackFill };
+  };
 
   const renderHistory = () => {
     if (!historySeries) return;
     const rows = historySeries.map(item => ({ ...item, partial: false }));
-    if (currentYearTotal?.periodo?.emAndamento && !rows.some(item => item.ano === currentYearTotal.periodo.ano)) {
-      rows.push({ ano: currentYearTotal.periodo.ano, valor: currentYearTotal.valor, partial: true });
+    const live = currentYearTotal?.periodo?.emAndamento && !rows.some(item => item.ano === currentYearTotal.periodo.ano);
+    const projection = live ? projectYearEnd(currentYearTotal) : null;
+    if (live) {
+      rows.push({ ano: currentYearTotal.periodo.ano, valor: acspMeter.current() ?? currentYearTotal.valor, partial: true, projection });
     }
-    const max = Math.max(...rows.map(item => item.valor));
+    const max = Math.max(...rows.map(item => Math.max(item.valor, item.projection || 0)));
+    liveYear = null;
 
     const table = document.createElement('table');
     const caption = document.createElement('caption');
     caption.textContent = 'Total de tributos arrecadados no Brasil por ano, em valores nominais';
     const tbody = document.createElement('tbody');
-    rows.slice().reverse().forEach(item => {
+    let liveRefs = null;
+    rows.slice().reverse().forEach((item, index) => {
       const tr = document.createElement('tr');
+      tr.style.setProperty('--row', index);
       if (item.partial) tr.className = 'is-partial';
       const th = document.createElement('th');
       th.scope = 'row';
@@ -242,7 +318,14 @@
       const bar = document.createElement('div');
       bar.className = 'tax-history-bar';
       bar.setAttribute('aria-hidden', 'true');
+      if (item.projection) {
+        const ghost = document.createElement('span');
+        ghost.className = 'tax-history-projection';
+        ghost.style.width = `${Math.min(100, (item.projection / max) * 100).toFixed(2)}%`;
+        bar.append(ghost);
+      }
       const fill = document.createElement('span');
+      fill.className = 'tax-history-fill';
       fill.style.width = `${Math.max(1, (item.valor / max) * 100).toFixed(2)}%`;
       bar.append(fill);
       barCell.append(bar);
@@ -250,21 +333,45 @@
       valueCell.className = 'tax-history-value';
       valueCell.textContent = compactBRL(item.valor, { short: true });
       valueCell.title = brlInteger.format(item.valor);
+      if (item.partial) liveRefs = { fill, cell: valueCell };
       tr.append(th, barCell, valueCell);
       tbody.append(tr);
     });
     table.append(caption, tbody);
+    // A entrada animada roda só na primeira renderização; as atualizações a cada 10 min não repetem.
+    if (!historyAnimated) table.classList.add('is-entering');
+    historyAnimated = true;
 
-    const nodes = [table];
-    if (rows.some(item => item.partial)) {
+    const nodes = [];
+    if (liveRefs) {
+      const { strip, ...stripRefs } = buildLiveStrip(currentYearTotal.periodo.ano, projection);
+      nodes.push(strip);
+      liveYear = { ...liveRefs, ...stripRefs, max, year: currentYearTotal.periodo.ano };
+    }
+    nodes.push(table);
+    if (liveRefs) {
       const note = document.createElement('p');
       note.className = 'tax-history-note';
-      note.textContent = `* ${currentYearTotal.periodo.ano}: acumulado parcial até ${new Date(currentYearTotal.consultadoEm).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}.`;
+      note.textContent = `* ${currentYearTotal.periodo.ano}: acumulado parcial, atualizado ao vivo com o contador da ACSP. A área tracejada é uma projeção linear até o fim do ano, não um dado oficial.`;
       nodes.push(note);
     }
     historyEl.replaceChildren(...nodes);
     historyEl.removeAttribute('aria-busy');
+    const current = acspMeter.current();
+    if (current !== null) updateLiveYear(current);
   };
+
+  // As barras só começam a crescer quando a série entra na tela.
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      historyEl.classList.add('is-visible');
+      observer.disconnect();
+    }, { threshold: .2 });
+    observer.observe(historyEl);
+  } else {
+    historyEl.classList.add('is-visible');
+  }
 
   const loadHistory = async () => {
     historyEl.setAttribute('aria-busy', 'true');

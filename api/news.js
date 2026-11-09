@@ -4,6 +4,12 @@ const Edition = require('../lib/edition');
 const { ensureEdition } = require('../lib/edition-numbering');
 const { uploadImageFromUrl } = require('../lib/r2');
 const { isBearerAuthorized } = require('../lib/bearer-auth');
+const { setPublicCache } = require('../lib/public-cache');
+
+// Leituras públicas ficam na CDN: uma edição nova aparece em até 5 minutos,
+// e o Mongo deixa de ser consultado a cada visita da home e do arquivo.
+const NEWS_CDN_SECONDS = 300;
+const NEWS_STALE_SECONDS = 86400;
 
 function parseDate(value) {
   if (typeof value !== 'string') return null;
@@ -103,6 +109,7 @@ module.exports = async function handler(req, res) {
     await connectDatabase();
 
     if (req.method === 'GET') {
+      setPublicCache(res, NEWS_CDN_SECONDS, NEWS_STALE_SECONDS);
       const latestRows = await News.aggregate([
         { $addFields: { _editionSort: { $dateFromString: { dateString: '$editionDate', format: '%d/%m/%Y', onError: null, onNull: null } } } },
         { $match: { _editionSort: { $ne: null } } }, { $sort: { _editionSort: -1 } }, { $limit: 1 },
@@ -225,6 +232,8 @@ module.exports = async function handler(req, res) {
       notification: null
     });
   } catch (error) {
+    // Uma falha não pode ficar guardada na CDN no lugar da edição.
+    res.setHeader('Cache-Control', 'no-store');
     if (error?.code === 'R2_NOT_CONFIGURED') {
       return res.status(503).json({ error: 'O armazenamento de imagens ainda não está configurado.' });
     }

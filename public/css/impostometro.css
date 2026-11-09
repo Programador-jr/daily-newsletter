@@ -89,8 +89,186 @@
   white-space: nowrap;
 }
 
-.tax-history tr.is-partial .tax-history-bar span {
+.tax-history tr.is-partial .tax-history-fill {
+  overflow: hidden;
   background: repeating-linear-gradient(135deg, var(--primary) 0 6px, color-mix(in srgb, var(--primary) 60%, transparent) 6px 12px);
+  background-size: 17px 17px;
+  animation: tax-history-stripes 1.2s linear infinite;
+}
+
+/* Brilho que percorre a barra do ano em andamento. */
+.tax-history tr.is-partial .tax-history-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgb(255 255 255 / 45%) 50%, transparent 100%);
+  transform: translateX(-100%);
+  animation: tax-history-shine 2.8s ease-in-out infinite;
+}
+
+.tax-history tr.is-partial .tax-history-projection {
+  border: 1.5px dashed color-mix(in srgb, var(--primary) 70%, transparent);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  animation: tax-history-ghost 2.4s ease-in-out infinite;
+}
+
+.tax-history tr.is-partial th,
+.tax-history tr.is-partial td {
+  background: color-mix(in srgb, var(--primary) 6%, transparent);
+}
+
+.tax-history tr.is-partial th {
+  padding-left: .45rem;
+  border-radius: 6px 0 0 6px;
+}
+
+.tax-history tr.is-partial td.tax-history-value {
+  padding-right: .45rem;
+  border-radius: 0 6px 6px 0;
+  color: var(--primary);
+}
+
+/* Entrada: barras crescem uma a uma na primeira carga. */
+.tax-history table.is-entering .tax-history-bar > span {
+  transform-origin: left center;
+  animation: tax-history-grow .9s cubic-bezier(.2, .8, .2, 1) both;
+  animation-delay: calc(var(--row, 0) * 45ms);
+}
+
+.tax-history table.is-entering tr.is-partial .tax-history-fill {
+  animation: tax-history-grow .9s cubic-bezier(.2, .8, .2, 1) both, tax-history-stripes 1.2s linear infinite;
+}
+
+.tax-history table.is-entering tr.is-partial .tax-history-projection {
+  animation: tax-history-grow .9s cubic-bezier(.2, .8, .2, 1) both, tax-history-ghost 2.4s ease-in-out 1s infinite;
+}
+
+.tax-history:not(.is-visible) table.is-entering .tax-history-bar > span {
+  animation-play-state: paused;
+}
+
+@keyframes tax-history-grow {
+  from { transform: scaleX(0); }
+}
+
+@keyframes tax-history-stripes {
+  to { background-position: 17px 0; }
+}
+
+@keyframes tax-history-shine {
+  0%, 25% { transform: translateX(-100%); }
+  75%, 100% { transform: translateX(100%); }
+}
+
+@keyframes tax-history-ghost {
+  50% { opacity: .55; }
+}
+
+/* Destaque ao vivo do ano corrente */
+
+.tax-history-live {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: .35rem 1.25rem;
+  margin-bottom: 1rem;
+  padding: .9rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 35%, var(--border));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+}
+
+.tax-history-live p {
+  margin: 0;
+}
+
+.tax-history-live-head {
+  display: inline-flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: .5rem;
+  color: var(--primary);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.tax-history-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #34845b;
+  box-shadow: 0 0 0 0 rgb(52 132 91 / 45%);
+  animation: tax-meter-pulse 2s infinite;
+}
+
+.tax-history-live-value {
+  color: var(--text-main);
+  font-size: clamp(1.15rem, 3.2vw, 1.55rem);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.tax-history-live-progress {
+  display: grid;
+  gap: .35rem;
+  color: var(--text-muted);
+  font-size: .78rem;
+}
+
+.tax-history-live-progress strong {
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+}
+
+.tax-history-live-track {
+  position: relative;
+  height: 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border) 70%, transparent);
+  overflow: hidden;
+}
+
+.tax-history-live-track span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: var(--primary);
+}
+
+.tax-history-live-projection {
+  display: inline-flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: .45rem;
+  color: var(--text-muted);
+  font-size: .78rem;
+}
+
+.tax-history-live-projection span {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 10px;
+  border: 1.5px dashed color-mix(in srgb, var(--primary) 70%, transparent);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tax-history table.is-entering .tax-history-bar > span,
+  .tax-history tr.is-partial .tax-history-fill,
+  .tax-history tr.is-partial .tax-history-fill::after,
+  .tax-history tr.is-partial .tax-history-projection,
+  .tax-history-live-dot {
+    animation: none;
+  }
+
+  .tax-history tr.is-partial .tax-history-fill::after {
+    display: none;
+  }
 }
 
 .tax-history tr.is-partial th::after {
@@ -118,6 +296,12 @@
 @media (max-width: 768px) {
   .tax-meter-compare {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .tax-history-live {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

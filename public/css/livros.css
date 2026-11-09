@@ -1061,6 +1061,12 @@
     border-radius: 9px;
     background: var(--card-bg);
     box-shadow: 0 12px 28px rgb(24 37 34 / 16%);
+    /* Alinhado ao botão e com a mesma margem lateral da página, sem as larguras de atlas.css. */
+    right: auto;
+    width: calc(100vw - 2.5rem);
+    min-width: 0;
+    max-width: none;
+    margin: 0;
   }
   /* Botão Ordenar mobile — mesmo estilo da barra de pesquisa */
 

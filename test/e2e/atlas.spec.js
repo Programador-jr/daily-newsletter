@@ -38,6 +38,31 @@ test('a ficha de um livro mostra apenas ficha e por que ler', async ({ page }) =
   await expect(dialog).not.toBeVisible();
 });
 
+test.describe('filtros no celular', () => {
+  test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+
+  for (const path of ['/livros', '/partidos']) {
+    test(`${path} abre o painel de filtros visível e tocável`, async ({ page }) => {
+      await page.goto(path);
+      const toggle = page.locator('.atlas-filter-accordion > summary').filter({ visible: true }).first();
+      await toggle.scrollIntoViewIfNeeded();
+      await toggle.tap();
+
+      const panel = page.locator('.atlas-filter-accordion[open] .atlas-filters');
+      // O <details> não pode cortar o painel suspenso (antes a regra global de cards aplicava overflow: hidden).
+      await expect(page.locator('.atlas-filter-accordion[open]')).toHaveCSS('overflow', 'visible');
+      const box = await panel.boundingBox();
+      expect(box.height).toBeGreaterThan(100);
+      expect(box.x).toBeGreaterThanOrEqual(0);
+      expect(box.x + box.width).toBeLessThanOrEqual(390);
+
+      const option = panel.locator('button').nth(1);
+      await option.tap();
+      await expect(option).toHaveAttribute('aria-pressed', 'true');
+    });
+  }
+});
+
 test('/ideologias vira guia conceitual e aponta para o catálogo', async ({ page }) => {
   await page.goto('/ideologias');
 

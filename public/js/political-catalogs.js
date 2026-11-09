@@ -2495,13 +2495,42 @@ document.addEventListener("DOMContentLoaded", () => {
     dialog.replaceChildren(el("div", { class: "atlas-dialog-shell" }, head, body));
   };
 
+  // Os textos da ficha vêm do arquivo da seção do perfil. Perfis do core já
+  // recebem os campos ao carregar; os valores do catálogo de ideias são
+  // cópias (com id prefixado) e recebem aqui.
+  let pendingOpen = 0;
+  const applyItemDetails = (item) => {
+    if (!item.valueId) return;
+    const details = globalThis.CatalogData.detailsFor("values", item.valueId);
+    if (details) Object.assign(item, details);
+  };
+
   // A ficha (de qualquer categoria) abre sobre a página atual sem trocar o
   // catálogo de fundo: cada página continua dona da sua própria listagem.
   const openItem = (item, tab = state.tab, options) => {
     const dialog = document.getElementById("catalog-dialog");
     if (!item || !dialog) return false;
+    const dialogTab = TABS[tab] ? tab : state.tab;
+    const request = ++pendingOpen;
+    if (!globalThis.CatalogData.isLoaded(dialogTab)) {
+      const reopen = () => {
+        if (request === pendingOpen) openItem(item, tab, options);
+      };
+      globalThis.CatalogData.loadDetails(dialogTab).then(reopen, (error) => {
+        console.error(error);
+        // Sem os textos, a ficha ainda mostra nome, eixos e relações.
+        if (request === pendingOpen) showItem(item, dialogTab, options);
+      });
+      return true;
+    }
+    applyItemDetails(item);
+    return showItem(item, dialogTab, options);
+  };
+
+  const showItem = (item, dialogTab, options) => {
+    const dialog = document.getElementById("catalog-dialog");
     if (!dialog.open) lastFocus = document.activeElement;
-    renderDialog(item, TABS[tab] ? tab : state.tab);
+    renderDialog(item, dialogTab);
     if (typeof dialog.showModal === "function") {
       if (!dialog.open) dialog.showModal();
     } else {
@@ -2517,6 +2546,8 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const closeDialog = (options) => {
+    // Uma ficha ainda esperando os textos não deve abrir depois de fechada.
+    pendingOpen += 1;
     const dialog = document.getElementById("catalog-dialog");
     if (!dialog || !dialog.open) return;
     if (typeof dialog.close === "function") dialog.close();
@@ -2614,9 +2645,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const init = async () => {
     try {
-      const response = await fetch("/data/political-catalog.json");
-      if (!response.ok) throw new Error("Catálogo indisponível");
-      DATA = await response.json();
+      // O core traz todos os perfis (nome, vetor, imagem); os textos chegam por
+      // seção. A página baixa já os da própria seção, usados nos cards e na
+      // busca; os das outras, quando uma ficha delas é aberta.
+      DATA = main
+        ? await globalThis.CatalogData.loadDetails(PAGE_TAB)
+        : await globalThis.CatalogData.loadCore();
       if (!DATA.profiles || !Array.isArray(DATA.axes) || DATA.axes.length !== 12) {
         throw new Error("Base do catálogo inválida");
       }

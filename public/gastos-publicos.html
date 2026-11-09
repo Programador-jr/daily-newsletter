@@ -7,14 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Guia para interpretar despesas públicas, estágios do orçamento e fontes de dados oficiais no Brasil.">
   <title>King's Newsletter - Gastos Públicos</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/playfair-display-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/fonts.css">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/editorial.css">
   <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/labs.css">
   <link rel="stylesheet" href="/css/gastos-publicos.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="/js/vercel-observability.js" defer></script>
 </head>
 <body class="editorial-page">
@@ -36,23 +36,135 @@
   <main id="main" tabindex="-1">
     <section class="page-hero"><span class="eyebrow">Dados públicos · Orçamento</span><h1>Gastos públicos: siga o dinheiro até a entrega.</h1><p>Uma despesa anunciada, autorizada ou reservada não é necessariamente um serviço entregue ou um pagamento realizado. Entenda os estágios do orçamento, os tipos de gasto e onde consultar registros oficiais.</p></section>
     <section class="method-card"><span class="method-icon"><i class="fas fa-circle-info" aria-hidden="true"></i></span><div><span class="eyebrow">Como interpretar</span><h2>Empenhado → Liquidado → Pago</h2><p>São estágios diferentes da execução orçamentária. Compare valores do mesmo estágio, período, esfera de governo e critério contábil. O valor pago ajuda a responder quanto foi desembolsado; não mede sozinho a qualidade ou o resultado de uma política.</p></div></section>
-    <section class="page-section"><div class="section-heading stacked"><div><span class="eyebrow">Execução da despesa</span><h2>O que cada etapa informa</h2></div></div><div class="card-grid cols-4">
-      <article><span>01 · EMPENHADO</span><h3>Compromisso orçamentário</h3><p>Reserva do orçamento para uma obrigação identificada. Indica que há crédito comprometido, mas o bem ou serviço ainda pode não ter sido entregue.</p></article>
-      <article><span>02 · LIQUIDADO</span><h3>Entrega verificada</h3><p>Após verificar o direito do credor e a entrega do objeto, registra-se a liquidação. Ela antecede o pagamento.</p></article>
-      <article><span>03 · PAGO</span><h3>Desembolso realizado</h3><p>Pagamento da obrigação liquidada. Restos a pagar e regras contábeis podem afetar a leitura por exercício financeiro.</p></article>
-      <article><span>04 · RESULTADO</span><h3>Serviço e impacto</h3><p>Despesa paga não prova, por si só, que a política alcançou seus objetivos. Para avaliar resultado, consulte metas, entregas e indicadores.</p></article>
-    </div></section>
-    <section class="page-section"><div class="section-heading stacked"><div><span class="eyebrow">O orçamento em categorias</span><h2>Que tipo de despesa está sendo observado?</h2></div></div><div class="card-grid cols-4">
-      <article><h3>Pessoal e previdência</h3><p>Remunerações, encargos, benefícios e despesas previdenciárias, conforme a classificação consultada.</p></article>
-      <article><h3>Serviços públicos</h3><p>Saúde, educação, segurança, assistência social, habitação, transporte e outras políticas.</p></article>
-      <article><h3>Investimentos</h3><p>Obras, equipamentos e outras aquisições classificadas como investimento no orçamento.</p></article>
-      <article><h3>Transferências e juros</h3><p>Repasses entre entes, benefícios e encargos da dívida têm naturezas diferentes e exigem leitura própria.</p></article>
+
+    <section class="page-section" aria-labelledby="stages-title">
+      <div class="section-heading stacked"><div><span class="eyebrow">01 · Execução da despesa</span><h2 id="stages-title">O que cada etapa informa</h2></div><p>Toque em uma etapa para ver o que ela significa, que pergunta ela responde e onde o valor aparece nos portais oficiais.</p></div>
+      <div class="spend-stages">
+        <div class="spend-stage-track" role="tablist" aria-label="Etapas da execução da despesa">
+          <button type="button" role="tab" id="stage-tab-empenho" aria-controls="stage-panel" aria-selected="true" data-stage="empenho"><span class="lab-icon" aria-hidden="true"><i class="fas fa-file-signature"></i></span><small>01</small><strong>Empenhado</strong></button>
+          <button type="button" role="tab" id="stage-tab-liquidacao" aria-controls="stage-panel" aria-selected="false" tabindex="-1" data-stage="liquidacao"><span class="lab-icon" aria-hidden="true"><i class="fas fa-list-check"></i></span><small>02</small><strong>Liquidado</strong></button>
+          <button type="button" role="tab" id="stage-tab-pagamento" aria-controls="stage-panel" aria-selected="false" tabindex="-1" data-stage="pagamento"><span class="lab-icon" aria-hidden="true"><i class="fas fa-coins"></i></span><small>03</small><strong>Pago</strong></button>
+          <button type="button" role="tab" id="stage-tab-resultado" aria-controls="stage-panel" aria-selected="false" tabindex="-1" data-stage="resultado"><span class="lab-icon" aria-hidden="true"><i class="fas fa-chart-line"></i></span><small>04</small><strong>Resultado</strong></button>
+        </div>
+        <div class="spend-stage-panel" id="stage-panel" role="tabpanel" aria-labelledby="stage-tab-empenho" tabindex="0">
+          <div class="spend-stage-copy">
+            <span class="lab-kicker" id="stage-kicker">Compromisso orçamentário</span>
+            <p id="stage-body">Reserva do orçamento para uma obrigação identificada. Indica que há crédito comprometido, mas o bem ou serviço ainda pode não ter sido entregue.</p>
+          </div>
+          <dl class="spend-stage-facts">
+            <div><dt>Pergunta que responde</dt><dd id="stage-question">Quanto do orçamento já foi comprometido?</dd></div>
+            <div><dt>Onde aparece</dt><dd id="stage-where">“Valor empenhado” nos portais de transparência e no Siafi.</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section" aria-labelledby="spend-lab-title">
+      <div class="section-heading stacked"><div><span class="eyebrow">02 · Laboratório interativo</span><h2 id="spend-lab-title">Experimente os conceitos</h2></div><p>Exemplos fictícios para treinar a leitura dos dados. Os números não representam nenhum órgão ou contrato real.</p></div>
+
+      <nav class="lab-index" aria-label="Exemplos do laboratório">
+        <a href="#follow-title"><i class="fas fa-timeline" aria-hidden="true"></i> Siga uma despesa</a>
+        <a href="#classify-title"><i class="fas fa-layer-group" aria-hidden="true"></i> Classifique o gasto</a>
+        <a href="#percapita-title"><i class="fas fa-people-group" aria-hidden="true"></i> Compare por habitante</a>
+      </nav>
+
+      <article class="lab-panel" aria-labelledby="follow-title">
+        <div class="lab-heading"><span class="lab-kicker">01 · Siga uma despesa</span><h3 id="follow-title">Do empenho ao pagamento</h3><p>Imagine um contrato para reformar uma escola. Ajuste quanto já foi entregue e quanto já foi pago e veja como o mesmo gasto aparece de formas diferentes em cada estágio.</p></div>
+        <div class="lab-chip-group spend-presets" role="group" aria-label="Situações de exemplo">
+          <button type="button" class="lab-chip" data-follow-preset="0,0" aria-pressed="false">Recém-contratado</button>
+          <button type="button" class="lab-chip" data-follow-preset="60,75" aria-pressed="true">Obra em andamento</button>
+          <button type="button" class="lab-chip" data-follow-preset="100,100" aria-pressed="false">Concluído e quitado</button>
+        </div>
+        <div class="lab-split">
+          <div class="lab-form-grid">
+            <div class="lab-field"><label for="follow-committed">Valor empenhado (R$)</label><input id="follow-committed" type="number" min="0" max="1000000000000" step="1000" value="2000000" inputmode="decimal"></div>
+            <div class="lab-field"><label for="follow-delivered">Entregue e verificado (% do empenho)</label><div class="lab-range-pair"><input type="range" min="0" max="100" step="1" value="60" data-sync="follow-delivered" aria-label="Percentual entregue, controle deslizante"><input id="follow-delivered" type="number" min="0" max="100" step="1" value="60" inputmode="numeric"></div></div>
+            <div class="lab-field"><label for="follow-paid">Pago (% do que foi liquidado)</label><div class="lab-range-pair"><input type="range" min="0" max="100" step="1" value="75" data-sync="follow-paid" aria-label="Percentual pago, controle deslizante"><input id="follow-paid" type="number" min="0" max="100" step="1" value="75" inputmode="numeric"></div></div>
+          </div>
+          <div class="lab-result-panel" aria-live="polite">
+            <span class="lab-result-label">Já pago</span>
+            <strong class="lab-result-value" id="follow-paid-value">—</strong>
+            <p class="lab-result-detail" id="follow-summary">—</p>
+            <div class="spend-funnel" aria-hidden="true">
+              <div><small>Empenhado</small><span class="spend-funnel-track"><span id="follow-bar-committed"></span></span><b id="follow-label-committed">—</b></div>
+              <div><small>Liquidado</small><span class="spend-funnel-track"><span id="follow-bar-liquidated"></span></span><b id="follow-label-liquidated">—</b></div>
+              <div><small>Pago</small><span class="spend-funnel-track"><span id="follow-bar-paid"></span></span><b id="follow-label-paid">—</b></div>
+            </div>
+          </div>
+        </div>
+        <dl class="lab-stats spend-follow-stats">
+          <div class="is-main"><dt>Execução financeira</dt><dd id="follow-rate">—</dd><dd class="lab-stat-note">pago ÷ empenhado</dd></div>
+          <div><dt>Liquidado a pagar</dt><dd id="follow-processed">—</dd><dd class="lab-stat-note">viraria resto a pagar processado</dd></div>
+          <div><dt>Empenhado não liquidado</dt><dd id="follow-unprocessed">—</dd><dd class="lab-stat-note">viraria resto a pagar não processado</dd></div>
+          <div><dt>Entrega pendente</dt><dd id="follow-pending">—</dd><dd class="lab-stat-note">do valor contratado</dd></div>
+        </dl>
+        <p class="lab-note">Restos a pagar são despesas empenhadas e não pagas até 31 de dezembro; os “processados” já foram liquidados. Por isso, o pago de um ano pode incluir compromissos de anos anteriores.</p>
+      </article>
+
+      <article class="lab-panel" aria-labelledby="classify-title">
+        <div class="lab-heading"><span class="lab-kicker">02 · Classifique o gasto</span><h3 id="classify-title">Em que grupo cada despesa entra?</h3><p>Escolha a categoria de cada exemplo. A resposta explica o critério; na prática, a mesma despesa pode aparecer por função (como saúde), por órgão ou por natureza (como pessoal ou investimento).</p></div>
+        <div class="spend-quiz">
+          <div class="spend-quiz-head"><span id="quiz-progress">Exemplo 1 de 8</span><span class="spend-quiz-score" id="quiz-score">0 acertos</span></div>
+          <div class="spend-quiz-track" aria-hidden="true"><span id="quiz-bar"></span></div>
+          <p class="spend-quiz-question" id="quiz-question">—</p>
+          <div class="spend-quiz-options" role="group" aria-label="Categorias">
+            <button type="button" data-quiz-answer="pessoal"><i class="fas fa-users" aria-hidden="true"></i> Pessoal e previdência</button>
+            <button type="button" data-quiz-answer="servicos"><i class="fas fa-heart-pulse" aria-hidden="true"></i> Serviços públicos</button>
+            <button type="button" data-quiz-answer="investimentos"><i class="fas fa-road" aria-hidden="true"></i> Investimentos</button>
+            <button type="button" data-quiz-answer="transferencias"><i class="fas fa-arrow-right-arrow-left" aria-hidden="true"></i> Transferências e juros</button>
+          </div>
+          <div class="spend-quiz-feedback" id="quiz-feedback" aria-live="polite" hidden></div>
+          <div class="spend-quiz-actions"><button type="button" class="lab-ghost-button" id="quiz-next" hidden>Próximo exemplo</button><button type="button" class="lab-ghost-button" id="quiz-restart" hidden>Recomeçar</button></div>
+        </div>
+      </article>
+
+      <article class="lab-panel" aria-labelledby="percapita-title">
+        <div class="lab-heading"><span class="lab-kicker">03 · Comparação justa</span><h3 id="percapita-title">Quem gasta mais por habitante?</h3><p>Valores totais favorecem quem é maior. Dividir pela população mostra o gasto médio por pessoa. Os nomes e números iniciais são fictícios; troque pelos dados que você quer comparar.</p></div>
+        <div class="spend-compare">
+          <fieldset class="spend-compare-entity">
+            <legend><input type="text" id="pc-a-name" value="Cidade A" maxlength="40" aria-label="Nome do primeiro ente"></legend>
+            <div class="lab-field"><label for="pc-a-total">Gasto no período (R$)</label><input id="pc-a-total" type="number" min="0" step="1000000" value="1200000000" inputmode="decimal"></div>
+            <div class="lab-field"><label for="pc-a-pop">População</label><input id="pc-a-pop" type="number" min="1" step="1000" value="800000" inputmode="numeric"></div>
+          </fieldset>
+          <fieldset class="spend-compare-entity">
+            <legend><input type="text" id="pc-b-name" value="Cidade B" maxlength="40" aria-label="Nome do segundo ente"></legend>
+            <div class="lab-field"><label for="pc-b-total">Gasto no período (R$)</label><input id="pc-b-total" type="number" min="0" step="1000000" value="300000000" inputmode="decimal"></div>
+            <div class="lab-field"><label for="pc-b-pop">População</label><input id="pc-b-pop" type="number" min="1" step="1000" value="150000" inputmode="numeric"></div>
+          </fieldset>
+        </div>
+        <div class="spend-compare-results" aria-live="polite">
+          <div class="spend-compare-metric">
+            <span class="lab-result-label">Gasto total</span>
+            <div class="spend-compare-bars" id="pc-total-bars"></div>
+          </div>
+          <div class="spend-compare-metric">
+            <span class="lab-result-label">Gasto por habitante</span>
+            <div class="spend-compare-bars" id="pc-capita-bars"></div>
+          </div>
+        </div>
+        <p class="spend-compare-verdict" id="pc-verdict">—</p>
+        <p class="lab-note">Compare o mesmo período, a mesma esfera e o mesmo estágio da despesa (empenhado, liquidado ou pago). Populações costumam vir das estimativas do IBGE; serviços compartilhados entre cidades e transferências podem distorcer a comparação.</p>
+      </article>
+    </section>
+
+    <section class="page-section" aria-labelledby="categories-title"><div class="section-heading stacked"><div><span class="eyebrow">03 · O orçamento em categorias</span><h2 id="categories-title">Que tipo de despesa está sendo observado?</h2></div></div><div class="card-grid cols-4 spend-category-grid">
+      <article><span class="lab-icon" aria-hidden="true"><i class="fas fa-users"></i></span><h3>Pessoal e previdência</h3><p>Remunerações, encargos, benefícios e despesas previdenciárias, conforme a classificação consultada.</p></article>
+      <article><span class="lab-icon" aria-hidden="true"><i class="fas fa-heart-pulse"></i></span><h3>Serviços públicos</h3><p>Saúde, educação, segurança, assistência social, habitação, transporte e outras políticas.</p></article>
+      <article><span class="lab-icon" aria-hidden="true"><i class="fas fa-road"></i></span><h3>Investimentos</h3><p>Obras, equipamentos e outras aquisições classificadas como investimento no orçamento.</p></article>
+      <article><span class="lab-icon" aria-hidden="true"><i class="fas fa-arrow-right-arrow-left"></i></span><h3>Transferências e juros</h3><p>Repasses entre entes, benefícios e encargos da dívida têm naturezas diferentes e exigem leitura própria.</p></article>
     </div><div class="accent-note"><strong>Comparação justa:</strong> despesas podem ser apresentadas por função, órgão, programa ou natureza. Confira a classificação usada antes de comparar governos ou municípios.</div></section>
-    <section class="page-section"><div class="section-heading stacked"><div><span class="eyebrow">Esfera de governo</span><h2>Federal, estadual e municipal</h2></div></div><p class="civic-sources">Cada ente possui orçamento e sistemas de transparência próprios. Serviços compartilhados e transferências entre governos significam que a responsabilidade financeira ou pela execução pode envolver mais de uma esfera. Consulte a unidade responsável e evite somar repasses duas vezes.</p><div class="source-list"><a href="https://portaldatransparencia.gov.br/" target="_blank" rel="noopener noreferrer">União · Portal da Transparência</a><a href="https://siconfi.tesouro.gov.br/" target="_blank" rel="noopener noreferrer">Estados e municípios · Siconfi</a><a href="https://www.tesourotransparente.gov.br/" target="_blank" rel="noopener noreferrer">Tesouro Nacional · Tesouro Transparente</a></div></section>
-    <section class="page-section"><div class="section-heading stacked"><div><span class="eyebrow">Contadores e painéis</span><h2>Por que um “gastômetro” precisa de método</h2></div></div><div class="method-card civic-principle-inline"><span class="method-icon"><i class="fas fa-calculator" aria-hidden="true"></i></span><div><p>Um contador acumulado depende de uma fonte, de um período e da definição de despesa incluída. Sem isso, um número grande pode misturar empenhos com pagamentos, exercícios diferentes ou transferências entre esferas. Use o painel como porta de entrada e confira os dados oficiais.</p><a href="/arrecadacao">Leia também: arrecadação não é dinheiro disponível para livre uso.</a></div></div></section>
+
+    <section class="page-section" aria-labelledby="spheres-title"><div class="section-heading stacked"><div><span class="eyebrow">04 · Esfera de governo</span><h2 id="spheres-title">Federal, estadual e municipal</h2></div></div><p class="civic-sources">Cada ente possui orçamento e sistemas de transparência próprios. Serviços compartilhados e transferências entre governos significam que a responsabilidade financeira ou pela execução pode envolver mais de uma esfera. Consulte a unidade responsável e evite somar repasses duas vezes.</p>
+      <div class="card-grid cols-3 spend-sphere-grid">
+        <article><span class="lab-icon" aria-hidden="true"><i class="fas fa-landmark-flag"></i></span><span>União</span><h3>Portal da Transparência</h3><p>Despesas do Governo Federal por órgão, programa, favorecido e estágio.</p><a href="https://portaldatransparencia.gov.br/" target="_blank" rel="noopener noreferrer">Abrir portal <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></article>
+        <article><span class="lab-icon" aria-hidden="true"><i class="fas fa-city"></i></span><span>Estados e municípios</span><h3>Siconfi</h3><p>Relatórios fiscais e contábeis enviados por estados, Distrito Federal e municípios.</p><a href="https://siconfi.tesouro.gov.br/" target="_blank" rel="noopener noreferrer">Abrir Siconfi <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></article>
+        <article><span class="lab-icon" aria-hidden="true"><i class="fas fa-building-columns"></i></span><span>Tesouro Nacional</span><h3>Tesouro Transparente</h3><p>Painéis e dados abertos sobre resultado fiscal, dívida e execução orçamentária.</p><a href="https://www.tesourotransparente.gov.br/" target="_blank" rel="noopener noreferrer">Abrir painéis <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></article>
+      </div>
+    </section>
+    <section class="page-section"><div class="section-heading stacked"><div><span class="eyebrow">05 · Contadores e painéis</span><h2>Por que um “gastômetro” precisa de método</h2></div></div><div class="method-card civic-principle-inline"><span class="method-icon"><i class="fas fa-calculator" aria-hidden="true"></i></span><div><p>Um contador acumulado depende de uma fonte, de um período e da definição de despesa incluída. Sem isso, um número grande pode misturar empenhos com pagamentos, exercícios diferentes ou transferências entre esferas. Use o painel como porta de entrada e confira os dados oficiais.</p><a href="/gastometro">Ver o Gastômetro em tempo real</a> · <a href="/arrecadacao">Arrecadação não é dinheiro disponível para livre uso</a></div></div></section>
     <section class="cta-banner"><div><span class="eyebrow">Investigue despesas específicas</span><h2>Gastos e atividade parlamentar</h2><p>Consulte reembolsos parlamentares com dados e documentos de fontes oficiais.</p></div><a class="cta-button" href="/gastos-parlamentares">Abrir consulta</a></section>
   </main><div id="footer"></div>
 </div>
-<script src="/js/sidebar.js"></script><script src="/js/footer.js"></script>
+<script src="/js/sidebar.js"></script><script src="/js/footer.js"></script><script src="/js/gastos-publicos.js"></script>
 </body>
 </html>

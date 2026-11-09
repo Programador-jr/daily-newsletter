@@ -18,6 +18,12 @@
   function setOpen(details, open) {
     const summary = details.querySelector(":scope > summary");
     const content = summary && contentFor(details, summary);
+    // O estado-alvo fica disponível já no clique; o atributo `open` só muda no fim
+    // da animação de fechamento. Cabeçalhos podem reagir a isto sem esperar.
+    if (details.dataset.accordionState !== (open ? "open" : "closed")) {
+      details.dataset.accordionState = open ? "open" : "closed";
+      details.dispatchEvent(new CustomEvent("accordion:change", { detail: { open } }));
+    }
     if (!content) {
       details.open = open;
       return;

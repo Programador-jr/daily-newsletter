@@ -50,8 +50,8 @@
   {
     "id": "mao-zedong-olivrovermelho",
     "titulo": "O Livro Vermelho",
-    "autor": "mao-zedong",
-    "autorId": "mao-zedong",
+    "autor": "Mao Tsé-Tung",
+    "autorId": "mao",
     "ano": 1964,
     "area": "teoria-politica",
     "dificuldade": "intermediario",
@@ -63,8 +63,8 @@
     ],
     "link": "https://openlibrary.org/search?q=O%20Livro%20Vermelho%20",
     "vetor": null,
-    "imagePath": null,
-    "imageAlt": "Retrato de mao-zedong"
+    "imagePath": "/personalities/portraits/mao-zedong.jpg",
+    "imageAlt": "Retrato de Mao Tsé-Tung"
   },
   {
     "id": "trotsky-arevolucaotraida",
@@ -480,8 +480,8 @@
   {
     "id": "milton-friedman-capitalismoeliberdade",
     "titulo": "Capitalismo e Liberdade",
-    "autor": "milton-friedman",
-    "autorId": "milton-friedman",
+    "autor": "Milton Friedman",
+    "autorId": "friedman",
     "ano": 1962,
     "area": "empresariado",
     "dificuldade": "intermediario",
@@ -493,8 +493,8 @@
     ],
     "link": "https://openlibrary.org/search?q=Capitalismo%20e%20Liberdade%20",
     "vetor": null,
-    "imagePath": null,
-    "imageAlt": "Retrato de milton-friedman"
+    "imagePath": "/personalities/portraits/milton-friedman.jpg",
+    "imageAlt": "Retrato de Milton Friedman"
   },
   {
     "id": "ludwig-erhard-bemestarparatodos",
@@ -594,8 +594,8 @@
   {
     "id": "john-stuart-mill-sobrealiberdade",
     "titulo": "Sobre a Liberdade",
-    "autor": "john-stuart-mill",
-    "autorId": "john-stuart-mill",
+    "autor": "John Stuart Mill",
+    "autorId": "mill",
     "ano": 1859,
     "area": "teoria-politica",
     "dificuldade": "intermediario",
@@ -607,14 +607,14 @@
     ],
     "link": "https://openlibrary.org/search?q=Sobre%20a%20Liberdade%20",
     "vetor": null,
-    "imagePath": null,
-    "imageAlt": "Retrato de john-stuart-mill"
+    "imagePath": "/personalities/portraits/john-stuart-mill.jpg",
+    "imageAlt": "Retrato de John Stuart Mill"
   },
   {
     "id": "john-locke-segundotratadosobreogoverno",
     "titulo": "Segundo Tratado sobre o Governo",
-    "autor": "john-locke",
-    "autorId": "john-locke",
+    "autor": "John Locke",
+    "autorId": "locke",
     "ano": 1689,
     "area": "politica",
     "dificuldade": "avancado",
@@ -626,14 +626,14 @@
     ],
     "link": "https://openlibrary.org/search?q=Segundo%20Tratado%20sobre%20o%20Governo%20",
     "vetor": null,
-    "imagePath": null,
-    "imageAlt": "Retrato de john-locke"
+    "imagePath": "/personalities/portraits/john-locke.jpg",
+    "imageAlt": "Retrato de John Locke"
   },
   {
     "id": "robert-nozick-anarquiaestadoeutopia",
     "titulo": "Anarquia, Estado e Utopia",
-    "autor": "robert-nozick",
-    "autorId": "robert-nozick",
+    "autor": "Robert Nozick",
+    "autorId": "nozick",
     "ano": 1974,
     "area": "ativismo",
     "dificuldade": "intermediario",
@@ -645,8 +645,8 @@
     ],
     "link": "https://openlibrary.org/search?q=Anarquia%2C%20Estado%20e%20Utopia%20",
     "vetor": null,
-    "imagePath": null,
-    "imageAlt": "Retrato de robert-nozick"
+    "imagePath": "/personalities/portraits/robert-nozick.jpg",
+    "imageAlt": "Retrato de Robert Nozick"
   },
   {
     "id": "al-gore-umaverdadeinconveniente",
@@ -708,8 +708,8 @@
   {
     "id": "edmund-burke-reflexoessobrearevolucaonafranca",
     "titulo": "Reflexões sobre a Revolução na França",
-    "autor": "edmund-burke",
-    "autorId": "edmund-burke",
+    "autor": "Edmund Burke",
+    "autorId": "burke",
     "ano": 1790,
     "area": "ativismo",
     "dificuldade": "avancado",
@@ -721,8 +721,8 @@
     ],
     "link": "https://openlibrary.org/search?q=Reflex%C3%B5es%20sobre%20a%20Revolu%C3%A7%C3%A3o%20na%20Fran%C3%A7a%20",
     "vetor": null,
-    "imagePath": null,
-    "imageAlt": "Retrato de edmund-burke"
+    "imagePath": "/personalities/portraits/edmund-burke.jpg",
+    "imageAlt": "Retrato de Edmund Burke"
   },
   {
     "id": "o-caminho-da-servidao",
@@ -833,8 +833,8 @@
   {
     "id": "john-rawls-umateoriadajustica",
     "titulo": "Uma Teoria da Justiça",
-    "autor": "john-rawls",
-    "autorId": "john-rawls",
+    "autor": "John Rawls",
+    "autorId": "rawls",
     "ano": 1971,
     "area": "filosofia",
     "dificuldade": "intermediario",
@@ -846,8 +846,8 @@
     ],
     "link": "https://openlibrary.org/search?q=Uma%20Teoria%20da%20Justi%C3%A7a%20",
     "vetor": null,
-    "imagePath": null,
-    "imageAlt": "Retrato de john-rawls"
+    "imagePath": "/personalities/portraits/john-rawls.jpg",
+    "imageAlt": "Retrato de John Rawls"
   },
   {
     "id": "aldo-leopold-umalmanaquedesandcounty",
@@ -1367,8 +1367,8 @@
   {
     "id": "max-stirner-ounicoeasuapropriedade",
     "titulo": "O Único e a Sua Propriedade",
-    "autor": "max-stirner",
-    "autorId": "max-stirner",
+    "autor": "Max Stirner",
+    "autorId": "stirner",
     "ano": 1844,
     "area": "teoria-politica",
     "dificuldade": "intermediario",
@@ -1380,8 +1380,8 @@
     ],
     "link": "https://openlibrary.org/search?q=O%20%C3%9Anico%20e%20a%20Sua%20Propriedade%20",
     "vetor": null,
-    "imagePath": null,
-    "imageAlt": "Retrato de max-stirner"
+    "imagePath": "/personalities/portraits/max-stirner.jpg",
+    "imageAlt": "Retrato de Max Stirner"
   },
   {
     "id": "a-etica-da-liberdade",
@@ -1895,8 +1895,8 @@
   {
     "id": "frantz-fanon-oscondenadosdaterra",
     "titulo": "Os Condenados da Terra",
-    "autor": "frantz-fanon",
-    "autorId": "frantz-fanon",
+    "autor": "Frantz Fanon",
+    "autorId": "fanon",
     "ano": 1961,
     "area": "teoria-politica",
     "dificuldade": "intermediario",
@@ -1908,8 +1908,8 @@
     ],
     "link": "https://openlibrary.org/search?q=Os%20Condenados%20da%20Terra%20",
     "vetor": null,
-    "imagePath": null,
-    "imageAlt": "Retrato de frantz-fanon"
+    "imagePath": "/personalities/portraits/frantz-fanon.png",
+    "imageAlt": "Retrato de Frantz Fanon"
   },
   {
     "id": "nelson-mandela-longacaminhadaatealiberdade",
@@ -1954,8 +1954,8 @@
   {
     "id": "carl-schmitt-oconceitodopolitico",
     "titulo": "O Conceito do Político",
-    "autor": "carl-schmitt",
-    "autorId": "carl-schmitt",
+    "autor": "Carl Schmitt",
+    "autorId": "schmitt",
     "ano": 1932,
     "area": "politica",
     "dificuldade": "intermediario",
@@ -1967,8 +1967,8 @@
     ],
     "link": "https://openlibrary.org/search?q=O%20Conceito%20do%20Pol%C3%ADtico%20",
     "vetor": null,
-    "imagePath": null,
-    "imageAlt": "Retrato de carl-schmitt"
+    "imagePath": "/personalities/portraits/carl-schmitt.jpg",
+    "imageAlt": "Retrato de Carl Schmitt"
   },
   {
     "id": "confucio-osanalectos",
@@ -2511,8 +2511,8 @@
   {
     "id": "peron-acomunidadeorganizada",
     "titulo": "A Comunidade Organizada",
-    "autor": "peron",
-    "autorId": "peron",
+    "autor": "Juan Domingo Perón",
+    "autorId": "juan-peron",
     "ano": 1949,
     "area": "ativismo",
     "dificuldade": "intermediario",
@@ -2524,8 +2524,8 @@
     ],
     "link": "https://openlibrary.org/search?q=A%20Comunidade%20Organizada%20",
     "vetor": null,
-    "imagePath": null,
-    "imageAlt": "Retrato de peron"
+    "imagePath": "/personalities/portraits/peron.jpg",
+    "imageAlt": "Retrato de Juan Domingo Perón"
   },
   {
     "id": "satoshi-nakamoto-bitcoinumsistemadedinheiroeletronicopeertopeer",
@@ -4921,8 +4921,8 @@
   {
     "id": "kwame-nkrumah-neocolonialismooultimoestagiodoimperialismo",
     "titulo": "Neocolonialismo, o último estágio do imperialismo",
-    "autor": "kwame-nkrumah",
-    "autorId": "kwame-nkrumah",
+    "autor": "Kwame Nkrumah",
+    "autorId": "nkrumah",
     "ano": 1965,
     "area": "ativismo",
     "dificuldade": "intermediario",
@@ -4934,8 +4934,8 @@
     ],
     "link": "https://openlibrary.org/search?q=Neocolonialismo%2C%20o%20%C3%BAltimo%20est%C3%A1gio%20do%20imperialismo%20",
     "vetor": null,
-    "imagePath": null,
-    "imageAlt": "Retrato de kwame-nkrumah"
+    "imagePath": "/personalities/portraits/kwame-nkrumah.jpg",
+    "imageAlt": "Retrato de Kwame Nkrumah"
   },
   {
     "id": "amilcar-cabral-aarmadateoria",

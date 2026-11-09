@@ -227,6 +227,7 @@ test('news endpoint reports database failures as server errors', async t => {
 
   assert.equal(response.statusCode, 500);
   assert.equal(response.body.error, 'Não foi possível salvar as notícias.');
+  assert.equal(response.headers['Cache-Control'], 'no-store');
 });
 
 test('news endpoint rejects malformed and impossible edition dates', async () => {
@@ -255,6 +256,8 @@ test('news history groups editions and sorts dates newest first', async () => {
   await newsHandler(createRequest({ query: { history: 'true' } }), response);
 
   assert.equal(response.statusCode, 200);
+  // Leituras públicas são servidas pela CDN em vez de consultar o Mongo a cada visita.
+  assert.equal(response.headers['Cache-Control'], 'public, max-age=0, s-maxage=300, stale-while-revalidate=86400');
   assert.deepEqual(response.body, [
     { date: '06/10/2026', stories: 1, title: 'Edição de 06/10/2026', issueNumber: null },
     { date: '01/10/2026', stories: 2, title: 'Edição de 01/10/2026', issueNumber: null }

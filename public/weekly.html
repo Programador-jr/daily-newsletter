@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A Semana em Foco: os acontecimentos mais importantes da semana, com contexto e análise da King's Newsletter.">
+  <meta name="theme-color" content="#064e46">
+  <title>A Semana em Foco | King's Newsletter</title>
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico?v=20261020">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png?v=20261020">
+  <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/playfair-display-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/fonts.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/editorial.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/weekly.css">
+  <script src="/js/vercel-observability.js" defer></script>
+</head>
+<body class="editorial-page weekly-page">
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <div class="container">
+    <header class="site-header">
+      <a class="logo" href="/" aria-label="Página inicial">
+        <div class="logo-top"><i class="fas fa-crown" aria-hidden="true"></i> KING'S</div>
+        <div class="logo-bottom">Newsletter</div>
+      </a>
+      <nav class="header-main-nav" aria-label="Navegação principal">
+        <div class="header-primary-links"></div>
+        <div class="header-nav-actions">
+          <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Abrir menu de navegação" aria-controls="site-sidebar" aria-expanded="false" title="Abrir menu">
+            <span class="hamburger-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <aside class="site-sidebar" id="site-sidebar" aria-label="Navegação principal" aria-hidden="true">
+      <div class="site-sidebar-header">
+        <div><span class="eyebrow">King's Newsletter</span><strong>Navegação</strong></div>
+        <button class="site-sidebar-close" id="site-sidebar-close" type="button" aria-label="Fechar navegação"><i class="fas fa-xmark" aria-hidden="true"></i></button>
+      </div>
+      <nav class="site-sidebar-nav" aria-label="Páginas principais"></nav>
+      <div class="site-sidebar-preferences">
+        <span class="site-sidebar-label">Preferências</span>
+        <button class="sidebar-theme-toggle" id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro" aria-pressed="false">
+          <span class="theme-switch-track" aria-hidden="true"><i class="fas fa-moon" id="theme-icon"></i></span>
+          <span>Tema</span>
+        </button>
+      </div>
+    </aside>
+    <div class="site-sidebar-backdrop" id="site-sidebar-backdrop" aria-hidden="true"></div>
+
+    <main id="main" tabindex="-1" aria-busy="true">
+      <header class="page-hero weekly-hero">
+        <a class="weekly-back-link" id="weekly-back" href="/weekly" hidden><i class="fas fa-arrow-left" aria-hidden="true"></i> Todas as edições</a>
+        <span class="eyebrow" id="weekly-eyebrow">Publicação semanal · King's Newsletter</span>
+        <h1 id="weekly-title">A Semana em Foco</h1>
+        <p class="weekly-kicker" id="weekly-kicker" hidden></p>
+        <p id="weekly-deck">Os acontecimentos que marcaram a semana, com contexto e análise para entender o que aconteceu, por que aconteceu e quais podem ser as consequências.</p>
+        <ul class="weekly-hero-meta" id="weekly-hero-meta" hidden></ul>
+      </header>
+
+      <div id="weekly-status" class="weekly-status" role="status" aria-live="polite" hidden></div>
+
+      <div class="page-section weekly-skeleton" id="weekly-skeleton" aria-hidden="true">
+        <div class="weekly-skeleton-heading">
+          <span class="page-skeleton-line weekly-sk-eyebrow"></span>
+          <span class="page-skeleton-line weekly-sk-h2"></span>
+        </div>
+        <div class="weekly-skeleton-card">
+          <div class="weekly-skeleton-cover">
+            <span class="page-skeleton-line weekly-sk-brand"></span>
+            <span class="page-skeleton-line weekly-sk-number"></span>
+            <span class="page-skeleton-line weekly-sk-period"></span>
+          </div>
+          <div class="weekly-skeleton-body">
+            <span class="page-skeleton-line weekly-sk-meta"></span>
+            <span class="page-skeleton-line weekly-sk-title"></span>
+            <span class="page-skeleton-line weekly-sk-title is-short"></span>
+            <span class="page-skeleton-line weekly-sk-text"></span>
+            <span class="page-skeleton-line weekly-sk-text"></span>
+            <span class="page-skeleton-line weekly-sk-text is-short"></span>
+            <div class="weekly-skeleton-contents">
+              <span class="page-skeleton-line"></span><span class="page-skeleton-line"></span>
+              <span class="page-skeleton-line"></span><span class="page-skeleton-line"></span>
+              <span class="page-skeleton-line"></span><span class="page-skeleton-line"></span>
+              <span class="page-skeleton-line"></span><span class="page-skeleton-line"></span>
+            </div>
+            <div class="weekly-skeleton-footer">
+              <span class="page-skeleton-line weekly-sk-stats"></span>
+              <span class="page-skeleton-line weekly-sk-button"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="page-section" id="weekly-current" aria-labelledby="weekly-current-title" hidden>
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Mais recente</span>
+            <h2 id="weekly-current-title">Última edição</h2>
+          </div>
+        </div>
+        <div id="weekly-current-slot"></div>
+      </section>
+
+      <section class="page-section" id="weekly-archive" aria-labelledby="weekly-archive-title" hidden>
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Arquivo</span>
+            <h2 id="weekly-archive-title">Edições anteriores</h2>
+          </div>
+        </div>
+        <div id="weekly-archive-groups" class="weekly-archive"></div>
+      </section>
+
+      <div id="weekly-edition" class="page-section weekly-edition" hidden></div>
+
+      <section class="method-card" aria-labelledby="weekly-method-title">
+        <span class="method-icon" aria-hidden="true"><i class="fas fa-scale-balanced"></i></span>
+        <div>
+          <span class="eyebrow">Critério editorial</span>
+          <h2 id="weekly-method-title">Informação com contexto</h2>
+          <p>Cada edição reúne os acontecimentos mais relevantes da semana, elimina repetições e explica o que aconteceu, por que aconteceu e quais podem ser as consequências.</p>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer"></div>
+  </div>
+  <script src="/js/accordion-motion.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/footer.js"></script>
+  <script src="/js/media-url.js"></script>
+  <script src="/js/weekly.js"></script>
+</body>
+</html>

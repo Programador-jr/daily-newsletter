@@ -1,5 +1,6 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
 
@@ -14,8 +15,12 @@ test('uploads a local image to R2 with its content type and immutable cache', as
     R2_PUBLIC_BASE_URL: process.env.R2_PUBLIC_BASE_URL
   };
   const originalFetch = global.fetch;
-  const filePath = path.join(__dirname, '..', 'public', 'personalities', 'portraits', 'karl-marx.jpg');
-  const file = fs.readFileSync(filePath);
+  // As imagens não ficam mais no repositório (estão no R2): o teste usa um
+  // arquivo temporário com cabeçalho JPEG.
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'r2-test-'));
+  const filePath = path.join(directory, 'karl-marx.jpg');
+  const file = Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00, 0xff, 0xd9]);
+  fs.writeFileSync(filePath, file);
   let request;
 
   Object.assign(process.env, {
@@ -41,6 +46,7 @@ test('uploads a local image to R2 with its content type and immutable cache', as
     assert.equal(request.options.headers['Cache-Control'], 'public, max-age=31536000, immutable');
     assert.deepEqual(request.options.body, file);
   } finally {
+    fs.rmSync(directory, { recursive: true, force: true });
     global.fetch = originalFetch;
     for (const [name, value] of Object.entries(environment)) {
       if (value === undefined) delete process.env[name];
