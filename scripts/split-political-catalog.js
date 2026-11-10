@@ -57,7 +57,9 @@ const same = (a, b) => {
 
 function buildSplit(sourceText) {
   const source = JSON.parse(sourceText);
-  const version = crypto.createHash('sha256').update(sourceText).digest('hex').slice(0, 12);
+  // O checkout no Windows pode trazer CRLF; a versão não pode depender da quebra de linha.
+  const normalizedText = sourceText.replace(/\r\n/g, '\n');
+  const version = crypto.createHash('sha256').update(normalizedText).digest('hex').slice(0, 12);
   const collections = Object.keys(source.profiles);
 
   // Uma regra só vale para coleções em que todo perfil tem o campo; assim a
