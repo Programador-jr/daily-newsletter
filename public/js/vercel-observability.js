@@ -1,18 +1,18 @@
 (() => {
   const pageLoaderStyles = document.createElement("link");
   pageLoaderStyles.rel = "stylesheet";
-  pageLoaderStyles.href = "/css/page-loader.css";
+  pageLoaderStyles.href = "/css/page-loader.css?v=c5b99bc5bd";
   pageLoaderStyles.dataset.pageLoader = "true";
   document.head.append(pageLoaderStyles);
 
   const pageSkeletonStyles = document.createElement("link");
   pageSkeletonStyles.rel = "stylesheet";
-  pageSkeletonStyles.href = "/css/page-skeletons.css";
+  pageSkeletonStyles.href = "/css/page-skeletons.css?v=90bd7688fa";
   pageSkeletonStyles.dataset.pageSkeletons = "true";
   document.head.append(pageSkeletonStyles);
 
   const pageLoaderScript = document.createElement("script");
-  pageLoaderScript.src = "/js/page-loader.js";
+  pageLoaderScript.src = "/js/page-loader.js?v=9aac6034ad";
   pageLoaderScript.dataset.pageLoader = "true";
   pageLoaderScript.async = false;
   document.head.append(pageLoaderScript);

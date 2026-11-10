@@ -269,6 +269,8 @@ O script verifica se os resultados atuais das agregações correspondem à refer
 
 O projeto está configurado para a [Vercel](https://vercel.com/) e usa MongoDB para persistência dos dados. Antes de implantar, adicione as variáveis de ambiente necessárias nas configurações do projeto na Vercel. Defina `APP_URL` com a URL pública de produção para que os links dos e-mails apontem para o site correto.
 
+Depois de editar qualquer arquivo em `public/css` ou `public/js`, rode `npm run assets:stamp`. Ele acrescenta um hash do conteúdo (`?v=…`) a cada referência de CSS/JS nas páginas e nos scripts. O Cloudflare, na frente da Vercel, mantém CSS e JS no navegador de quem visita por 4 horas; sem uma URL nova, quem volta ao site receberia o HTML novo com estilos e scripts antigos. O `npm test` falha se alguma versão estiver desatualizada.
+
 ## Contribuição
 
 Relatos de bugs, ideias e melhorias são bem-vindos. Abra uma [issue](https://github.com/Programador-jr/daily-newsletter/issues) para discutir mudanças maiores antes de enviar um pull request. Execute `npm test` e `npm run lint` antes de submeter alterações.
