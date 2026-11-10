@@ -69,6 +69,11 @@
   text-underline-offset: 2px;
 }
 
+/* A tabela usa .table-wrap/.data-table do editorial.css; aqui só o respiro no texto corrido. */
+.legal .table-wrap {
+  margin: 1rem 0 1.25rem;
+}
+
 .legal-toc {
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -93,32 +98,6 @@
   break-inside: avoid;
 }
 
-.legal-table-wrap {
-  overflow-x: auto;
-  margin: 0 0 1rem;
-}
-
-.legal table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95rem;
-}
-
-.legal th,
-.legal td {
-  text-align: left;
-  vertical-align: top;
-  padding: 0.6rem 0.75rem;
-  border-bottom: 1px solid var(--border);
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-
-.legal th {
-  color: var(--text-main);
-  font-weight: 600;
-}
-
 @media (max-width: 768px) {
   .legal {
     padding: 2rem 1.25rem 2.5rem;
@@ -129,28 +108,3 @@
   }
 }
 
-@media (max-width: 600px) {
-  .legal thead {
-    display: none;
-  }
-
-  .legal tr {
-    display: block;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .legal td {
-    display: block;
-    padding: 0.2rem 0;
-    border: 0;
-  }
-
-  .legal td::before {
-    content: attr(data-label);
-    display: block;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--text-main);
-  }
-}
