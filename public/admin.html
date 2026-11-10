@@ -8,8 +8,9 @@
   <meta name="robots" content="noindex,nofollow">
   <meta name="theme-color" content="#0b0a08">
   <title>Painel administrativo — King's Newsletter</title>
-  <link rel="stylesheet" href="/css/admin.css">
-  <script src="/js/admin.js" defer></script>
+  <link rel="stylesheet" href="/css/fonts.css?v=20261109d">
+  <link rel="stylesheet" href="/css/admin.css?v=20261109h">
+  <script src="/js/admin.js?v=20261109h" defer></script>
   <script src="/js/vercel-observability.js" defer></script>
 </head>
 <body>
@@ -57,6 +58,7 @@
         <nav class="admin-page-nav" aria-label="Páginas administrativas">
           <a class="nav-item active" href="#overview" data-admin-page-link="overview"><span class="nav-icon">▦</span> Visão geral <span class="nav-active-dot"></span></a>
           <a class="nav-item" href="#operations" data-admin-page-link="operations"><span class="nav-icon">◷</span> Envios e worker</a>
+          <a class="nav-item" href="#digest" data-admin-page-link="digest"><span class="nav-icon">✉</span> Resumo diário</a>
           <a class="nav-item" href="#audience" data-admin-page-link="audience"><span class="nav-icon">◎</span> Audiência</a>
           <a class="nav-item" href="#activity" data-admin-page-link="activity"><span class="nav-icon">≡</span> Atividade e logs</a>
           <a class="nav-item" href="#updates" data-admin-page-link="updates"><span class="nav-icon">✦</span> Atualizações</a>
@@ -81,7 +83,7 @@
           <div class="section-heading"><div><div class="eyebrow">RESUMO</div><h2 id="overview-snapshot-title">Estado atual</h2></div><span class="section-caption">Dados atuais do painel</span></div>
           <div class="overview-cards">
             <article class="overview-card"><span class="overview-card-label">WORKER</span><div class="overview-card-main"><strong id="overview-worker-status">Carregando</strong><span id="overview-worker-indicator" class="status">—</span></div><p id="overview-worker-detail">Aguardando dados do worker</p><a href="#operations" data-admin-page-link="operations">Ver envios e frequência <span aria-hidden="true">→</span></a></article>
-            <article class="overview-card"><span class="overview-card-label">EDIÇÃO MAIS RECENTE</span><div class="overview-card-main"><strong id="overview-edition-date">—</strong><span id="overview-edition-indicator" class="status">—</span></div><p><b id="overview-news-count">0</b> notícias · <b id="overview-delivered-count">0</b> enviadas · <b id="overview-pending-count">0</b> pendentes</p><a href="#operations" data-admin-page-link="operations">Ver detalhes da edição <span aria-hidden="true">→</span></a></article>
+            <article class="overview-card"><span class="overview-card-label">EDIÇÃO MAIS RECENTE</span><div class="overview-card-main"><strong id="overview-edition-date">—</strong><span id="overview-edition-indicator" class="status">—</span></div><p><b id="overview-news-count">0</b> notícias · resumo do dia: <b id="overview-digest-status">—</b></p><a href="#operations" data-admin-page-link="operations">Ver detalhes da edição <span aria-hidden="true">→</span></a></article>
             <article class="overview-card"><span class="overview-card-label">AUDIÊNCIA</span><div class="overview-card-main"><strong id="overview-confirmed-count">0</strong><span class="overview-card-unit">assinantes confirmados</span></div><p><b id="overview-subscriber-total">0</b> inscrições no total</p><a href="#audience" data-admin-page-link="audience">Ver dados da audiência <span aria-hidden="true">→</span></a></article>
             <article class="overview-card"><span class="overview-card-label">E-MAILS ACEITOS PELO SMTP</span><div class="overview-card-main"><strong id="overview-accepted-count">0</strong><span id="overview-email-period" class="overview-card-unit">no período</span></div><p><b id="overview-failed-count">0</b> falhas registradas</p><a href="#activity" data-admin-page-link="activity">Ver atividade e logs <span aria-hidden="true">→</span></a></article>
           </div>
@@ -115,6 +117,9 @@
               <div class="schedule-control-heading"><div><strong>Frequência</strong><span>Intervalo entre as verificações</span></div></div>
               <label for="interval-hours">Repetir a cada</label>
               <div class="interval-input"><input id="interval-hours" name="intervalHours" type="number" min="1" max="168" step="1" value="3" required><span>horas</span></div>
+              <label for="digest-send-time">Horário do resumo diário</label>
+              <div class="interval-input"><input id="digest-send-time" name="digestSendTime" type="time" step="60"><span>Rio Branco</span></div>
+              <small class="schedule-hint">O resumo do dia é enviado nesse horário, mesmo que ainda esteja como rascunho. Deixe vazio para desligar o envio automático.</small>
               <label class="toggle-row" for="schedule-enabled"><span><strong>Agendamento automático</strong><small>Permitir que o worker execute sozinho</small></span><input id="schedule-enabled" name="enabled" type="checkbox" checked><i aria-hidden="true"></i></label>
               <button id="schedule-save" class="button button-primary schedule-save" type="submit">Salvar agendamento <span aria-hidden="true">→</span></button>
               <div id="schedule-message" class="schedule-message" role="status" aria-live="polite"></div>
@@ -128,13 +133,53 @@
             <div class="latest-content"><div id="latest-edition-date" class="edition-date">—</div>
               <div class="latest-metrics">
                 <div class="latest-metric"><span>Notícias na edição</span><strong id="latest-total-stories">0</strong><i class="metric-accent"></i></div>
-                <div class="latest-metric"><span>Já enviadas</span><strong id="latest-delivered-stories">0</strong><i class="metric-accent"></i></div>
-                <div class="latest-metric"><span>Aguardando envio</span><strong id="latest-pending-stories">0</strong><i class="metric-accent"></i></div>
+                <div class="latest-metric"><span>Resumo do dia</span><strong id="latest-delivered-stories">—</strong><i class="metric-accent"></i></div>
+                <div class="latest-metric"><span>Envio automático</span><strong id="latest-pending-stories">—</strong><i class="metric-accent"></i></div>
               </div>
               <p id="latest-run-summary" class="latest-run-summary">Sem execuções registradas.</p>
             </div>
-            <aside class="dispatch-box" aria-labelledby="dispatch-title"><div class="dispatch-icon" aria-hidden="true">↗</div><div class="eyebrow">AÇÃO MANUAL</div><h3 id="dispatch-title">Disparo imediato</h3><p>Envia as notícias pendentes aos assinantes com inscrição confirmada.</p><button id="dispatch-button" class="button button-dispatch" type="button">Enviar agora <span aria-hidden="true">→</span></button><div id="dispatch-message" class="dispatch-message" role="status" aria-live="polite"></div><div class="test-email-divider"></div><div class="eyebrow">PRÉVIA PRIVADA</div><h3>Testar layout do e-mail</h3><p>Informe o endereço que receberá a edição de teste. O envio não alcança os assinantes.</p><label class="test-email-label" for="test-email-recipient">E-mail para teste</label><input id="test-email-recipient" class="test-email-input" type="email" maxlength="254" autocomplete="email" placeholder="voce@exemplo.com" required><button id="test-email-button" class="button button-secondary" type="button">Enviar e-mail de teste <span aria-hidden="true">→</span></button><div id="test-email-message" class="dispatch-message" role="status" aria-live="polite"></div></aside>
+            <aside class="dispatch-box" aria-labelledby="dispatch-title"><div class="dispatch-icon" aria-hidden="true">✉</div><div class="eyebrow">ENVIO DIÁRIO</div><h3 id="dispatch-title">Resumo do dia</h3><p>As notícias ficam no site. Os assinantes recebem um único e-mail por dia, no horário definido ao lado ou quando você envia manualmente.</p><a class="button button-dispatch" href="#digest" data-admin-page-link="digest">Revisar resumos <span aria-hidden="true">→</span></a></aside>
           </div>
+        </section>
+
+        <section data-admin-page="digest" class="digest-page hidden" aria-label="Resumo diário">
+          <section class="section-block panel digest-list-panel" aria-labelledby="digest-list-title">
+            <div class="section-heading"><div><div class="eyebrow">FILA EDITORIAL</div><h2 id="digest-list-title">Resumos</h2></div><button id="digest-refresh" class="button button-quiet" type="button"><span class="refresh-icon" aria-hidden="true">↻</span> Recarregar</button></div>
+            <div id="digest-list" class="log-list digest-list" aria-live="polite"><div class="empty">Carregando…</div></div>
+          </section>
+          <section class="section-block panel digest-detail-panel" aria-labelledby="digest-detail-title">
+            <div class="section-heading"><div><div class="eyebrow">PRÉVIA</div><h2 id="digest-detail-title">Selecione um resumo</h2></div><span id="digest-status" class="status hidden"></span></div>
+            <p id="digest-meta" class="digest-meta">Escolha um resumo na lista para ver o e-mail como os assinantes vão receber.</p>
+            <div class="digest-detail-layout">
+              <aside class="dispatch-box digest-actions" aria-labelledby="digest-approve-title">
+                <div class="digest-action-block"><div class="dispatch-icon" aria-hidden="true">↗</div><div class="eyebrow">ENVIO</div><h3 id="digest-approve-title">Enviar agora</h3><p id="digest-schedule-note">O resumo do dia sai sozinho no horário configurado em Envios e worker. Use este botão para enviar antes. Cada assinante recebe no máximo um resumo por dia.</p>
+                <button id="dispatch-button" class="button button-dispatch" type="button" disabled>Selecione um resumo</button>
+                <div id="dispatch-message" class="dispatch-message" role="status" aria-live="polite"></div></div>
+                <div class="digest-action-block"><div class="eyebrow">PRÉVIA PRIVADA</div><h3>Enviar teste</h3><p>Manda este resumo só para o endereço informado. Os assinantes não recebem.</p>
+                <label class="test-email-label" for="test-email-recipient">E-mail para teste</label><input id="test-email-recipient" class="test-email-input" type="email" maxlength="254" autocomplete="email" placeholder="voce@exemplo.com" required>
+                <button id="test-email-button" class="button button-secondary" type="button" disabled>Enviar e-mail de teste <span aria-hidden="true">→</span></button>
+                <div id="test-email-message" class="dispatch-message" role="status" aria-live="polite"></div></div>
+              </aside>
+              <div class="digest-preview-frame"><iframe id="digest-preview" title="Prévia do e-mail do resumo" sandbox="" referrerpolicy="no-referrer"></iframe></div>
+            </div>
+          </section>
+          <section class="section-block panel banner-panel" aria-labelledby="banner-title">
+            <div class="section-heading"><div><div class="eyebrow">IDENTIDADE</div><h2 id="banner-title">Banner do e-mail</h2></div><span id="banner-source" class="status">Carregando</span></div>
+            <div class="banner-layout">
+              <div class="banner-current"><img id="banner-image" alt="" hidden><p id="banner-empty" class="empty">Carregando banner…</p></div>
+              <form id="banner-form" class="banner-form">
+                <fieldset class="banner-mode"><legend class="sr-only">Origem da imagem</legend>
+                  <label><input type="radio" name="banner-mode" value="upload" checked> Enviar arquivo</label>
+                  <label><input type="radio" name="banner-mode" value="link"> Usar link</label>
+                </fieldset>
+                <div id="banner-upload-field"><label class="test-email-label" for="banner-file">Imagem (PNG, JPG, GIF ou WebP, até 2 MB; ideal 1280 px de largura)</label><div class="file-picker"><input id="banner-file" class="file-picker-input" type="file" accept="image/png,image/jpeg,image/gif,image/webp"><label for="banner-file" class="button button-secondary file-picker-button">Escolher imagem</label><span id="banner-file-name" class="file-picker-name">Nenhum arquivo escolhido</span></div></div>
+                <div id="banner-link-field" hidden><label class="test-email-label" for="banner-url">Link https da imagem</label><input id="banner-url" class="test-email-input" type="url" maxlength="2048" placeholder="https://…/banner.png"></div>
+                <label class="test-email-label" for="banner-alt">Texto alternativo</label><input id="banner-alt" class="test-email-input" type="text" maxlength="200" placeholder="King's Newsletter">
+                <div class="banner-actions"><button id="banner-save" class="button button-primary" type="submit">Salvar banner</button><button id="banner-reset" class="button button-quiet" type="button">Restaurar padrão</button></div>
+                <div id="banner-message" class="dispatch-message" role="status" aria-live="polite"></div>
+              </form>
+            </div>
+          </section>
         </section>
 
         <section data-admin-page="audience" class="section-block" aria-labelledby="subscriber-title"><div class="section-heading"><div><div class="eyebrow">AUDIÊNCIA</div><h2 id="subscriber-title">Inscrições</h2></div><span class="section-caption">Visão geral dos assinantes</span></div><div id="subscriber-cards" class="metric-grid"></div></section>
@@ -177,7 +222,7 @@
     </form>
   </section></div>
   <div id="update-delete-modal" class="modal-backdrop hidden update-modal update-delete-layer" role="presentation"><section class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="update-delete-title" aria-describedby="update-delete-copy"><button id="update-delete-close" class="modal-close" type="button" aria-label="Fechar confirmação">×</button><div class="modal-symbol update-delete-symbol" aria-hidden="true">⌫</div><div class="eyebrow">EXCLUIR NOTA</div><h2 id="update-delete-title">Excluir esta nota?</h2><p id="update-delete-copy">Ela deixará de aparecer para os visitantes e será removida do histórico.</p><div class="modal-actions"><button id="update-delete-cancel" class="button button-secondary" type="button">Cancelar</button><button id="update-delete-confirm" class="button button-danger" type="button">Excluir nota</button></div></section></div>
-  <div id="dispatch-modal" class="modal-backdrop hidden" role="presentation"><section class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="dispatch-modal-title" aria-describedby="dispatch-modal-copy"><button id="close-dispatch-modal" class="modal-close" type="button" aria-label="Fechar">×</button><div class="modal-symbol" aria-hidden="true">↗</div><div class="eyebrow">CONFIRMAÇÃO DE AÇÃO</div><h2 id="dispatch-modal-title">Disparar esta edição?</h2><p id="dispatch-modal-copy">As notícias pendentes serão enviadas aos assinantes confirmados.</p><div class="confirm-summary"><div><span>Notícias pendentes</span><strong id="modal-pending-count">0</strong></div><div><span>Assinantes confirmados</span><strong id="modal-subscriber-count">0</strong></div></div><div class="modal-actions"><button id="cancel-dispatch" class="button button-secondary" type="button">Cancelar</button><button id="confirm-dispatch" class="button button-dispatch" type="button">Confirmar disparo <span aria-hidden="true">→</span></button></div></section></div>
-  <div id="test-email-modal" class="modal-backdrop hidden" role="presentation"><section class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="test-email-modal-title" aria-describedby="test-email-modal-copy"><button id="close-test-email-modal" class="modal-close" type="button" aria-label="Fechar confirmação">×</button><div class="modal-symbol" aria-hidden="true">✉</div><div class="eyebrow">PRÉVIA PRIVADA</div><h2 id="test-email-modal-title">Enviar e-mail de teste?</h2><p id="test-email-modal-copy">A edição será enviada somente para o endereço informado. Nenhum assinante receberá esta mensagem.</p><div class="modal-actions"><button id="cancel-test-email" class="button button-secondary" type="button">Cancelar</button><button id="confirm-test-email" class="button button-dispatch" type="button">Confirmar envio <span aria-hidden="true">→</span></button></div></section></div>
+  <div id="dispatch-modal" class="modal-backdrop hidden" role="presentation"><section class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="dispatch-modal-title" aria-describedby="dispatch-modal-copy"><button id="close-dispatch-modal" class="modal-close" type="button" aria-label="Fechar">×</button><div class="modal-symbol" aria-hidden="true">↗</div><div class="eyebrow">CONFIRMAÇÃO DE AÇÃO</div><h2 id="dispatch-modal-title">Enviar este resumo agora?</h2><p id="dispatch-modal-copy">O resumo será enviado agora aos assinantes confirmados. Esta ação não pode ser desfeita.</p><div class="confirm-summary"><div><span>Notícias no resumo</span><strong id="modal-pending-count">0</strong></div><div><span>Assinantes confirmados</span><strong id="modal-subscriber-count">0</strong></div></div><div class="modal-actions"><button id="cancel-dispatch" class="button button-secondary" type="button">Cancelar</button><button id="confirm-dispatch" class="button button-dispatch" type="button">Enviar agora <span aria-hidden="true">→</span></button></div></section></div>
+  <div id="test-email-modal" class="modal-backdrop hidden" role="presentation"><section class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="test-email-modal-title" aria-describedby="test-email-modal-copy"><button id="close-test-email-modal" class="modal-close" type="button" aria-label="Fechar confirmação">×</button><div class="modal-symbol" aria-hidden="true">✉</div><div class="eyebrow">PRÉVIA PRIVADA</div><h2 id="test-email-modal-title">Enviar e-mail de teste?</h2><p id="test-email-modal-copy">O resumo será enviado somente para o endereço informado. Nenhum assinante receberá esta mensagem.</p><div class="modal-actions"><button id="cancel-test-email" class="button button-secondary" type="button">Cancelar</button><button id="confirm-test-email" class="button button-dispatch" type="button">Confirmar envio <span aria-hidden="true">→</span></button></div></section></div>
 </body>
 </html>
