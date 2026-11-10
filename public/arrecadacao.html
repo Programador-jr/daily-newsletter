@@ -7,12 +7,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Guia sobre arrecadação pública, tributos, orçamento e financiamento do Estado no Brasil.">
   <title>King's Newsletter - Dinheiro Público</title>
+  <link rel="canonical" href="https://kingsnewsletter.com/arrecadacao">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="King's Newsletter">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="King's Newsletter - Dinheiro Público">
+  <meta property="og:description" content="Guia sobre arrecadação pública, tributos, orçamento e financiamento do Estado no Brasil.">
+  <meta property="og:url" content="https://kingsnewsletter.com/arrecadacao">
+  <meta property="og:image" content="https://kingsnewsletter.com/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/playfair-display-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/css/fonts.css">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/editorial.css">
   <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/labs.css">
+  <link rel="stylesheet" href="/css/arrecadacao.css">
   <script src="/js/vercel-observability.js" defer></script>
 </head>
 <body class="editorial-page">
@@ -37,6 +50,11 @@
         <span class="eyebrow">Economia · Finanças Públicas</span>
         <h1>De onde vem o dinheiro e como ele é gasto?</h1>
         <p>Entenda arrecadação, tributos, orçamento, transferências e execução das despesas sem confundir previsão, arrecadação e dinheiro efetivamente pago.</p>
+        <nav class="lab-index arrec-index" aria-label="Exemplos interativos da página">
+          <a href="#split-title"><i class="fas fa-chart-pie" aria-hidden="true"></i> Para onde vai o imposto</a>
+          <a href="#forecast-title"><i class="fas fa-calendar-check" aria-hidden="true"></i> Previsto × arrecadado</a>
+          <a href="#fiscal-title"><i class="fas fa-scale-balanced" aria-hidden="true"></i> Resultado fiscal</a>
+        </nav>
       </section>
 
       <section class="method-card">
@@ -60,10 +78,10 @@
         <div class="page-prose">
           <p>Os governos financiam suas atividades principalmente por receitas públicas. Tributos são uma parte importante, mas não são a única fonte: também existem receitas patrimoniais, transferências, operações de crédito e outras receitas previstas em lei.</p>
           <div class="card-grid cols-4">
-            <article><span>Tributos</span><h3>Impostos, taxas e contribuições</h3><p>A Constituição prevê diferentes espécies tributárias e competências para os entes federativos.</p></article>
-            <article><span>Patrimônio</span><h3>Receitas patrimoniais</h3><p>Incluem rendimentos e valores obtidos pela utilização ou exploração de patrimônio público, conforme as regras aplicáveis.</p></article>
-            <article><span>Crédito</span><h3>Empréstimos e operações de crédito</h3><p>Recursos obtidos por endividamento não são arrecadação tributária e criam obrigações financeiras.</p></article>
-            <article><span>Transferências</span><h3>Recursos recebidos de outros entes</h3><p>União, estados e municípios transferem recursos por mecanismos constitucionais, legais ou voluntários.</p></article>
+            <article><i class="fas fa-receipt" aria-hidden="true"></i><span>Tributos</span><h3>Impostos, taxas e contribuições</h3><p>A Constituição prevê diferentes espécies tributárias e competências para os entes federativos.</p></article>
+            <article><i class="fas fa-building-columns" aria-hidden="true"></i><span>Patrimônio</span><h3>Receitas patrimoniais</h3><p>Incluem rendimentos e valores obtidos pela utilização ou exploração de patrimônio público, conforme as regras aplicáveis.</p></article>
+            <article><i class="fas fa-file-contract" aria-hidden="true"></i><span>Crédito</span><h3>Empréstimos e operações de crédito</h3><p>Recursos obtidos por endividamento não são arrecadação tributária e criam obrigações financeiras.</p></article>
+            <article><i class="fas fa-arrow-right-arrow-left" aria-hidden="true"></i><span>Transferências</span><h3>Recursos recebidos de outros entes</h3><p>União, estados e municípios transferem recursos por mecanismos constitucionais, legais ou voluntários.</p></article>
           </div>
         </div>
       </section>
@@ -105,6 +123,41 @@
             </table>
           </div>
           <div class="accent-note"><strong>Atenção:</strong> quem arrecada não necessariamente fica com todo o valor arrecadado. A Constituição determina repartições de receitas.</div>
+          <article class="lab-panel" aria-labelledby="split-title">
+            <div class="lab-heading"><span class="lab-kicker">Exemplo interativo · Repartição</span><h3 id="split-title">Para onde vai cada real do imposto?</h3><p>Escolha um tributo e um valor arrecadado. A barra mostra como a Constituição divide esse dinheiro entre União, estados e municípios.</p></div>
+            <div class="lab-chip-group arrec-tax-picker" role="group" aria-label="Tributo">
+              <button type="button" class="lab-chip" data-tax="ir" aria-pressed="true">IR</button>
+              <button type="button" class="lab-chip" data-tax="ipi" aria-pressed="false">IPI</button>
+              <button type="button" class="lab-chip" data-tax="icms" aria-pressed="false">ICMS</button>
+              <button type="button" class="lab-chip" data-tax="ipva" aria-pressed="false">IPVA</button>
+              <button type="button" class="lab-chip" data-tax="itr" aria-pressed="false">ITR</button>
+              <button type="button" class="lab-chip" data-tax="iof" aria-pressed="false">IOF-ouro</button>
+            </div>
+            <div class="lab-split">
+              <div class="lab-form-grid">
+                <div class="lab-field"><label for="split-value">Valor arrecadado (R$)</label><input id="split-value" type="number" min="0" step="10" value="100" inputmode="decimal"></div>
+                <div class="lab-field arrec-itr-option" id="split-itr-option" hidden>
+                  <span class="picker-label">O município fiscaliza e cobra o ITR?</span>
+                  <div class="lab-segmented is-compact" role="group" aria-label="Convênio do ITR">
+                    <button type="button" data-itr="no" aria-pressed="true">Não · 50%</button>
+                    <button type="button" data-itr="yes" aria-pressed="false">Sim · 100%</button>
+                  </div>
+                </div>
+                <dl class="arrec-tax-facts">
+                  <div><dt>Quem arrecada</dt><dd id="split-collector">—</dd></div>
+                  <div><dt>Base constitucional</dt><dd id="split-basis">—</dd></div>
+                </dl>
+              </div>
+              <div class="lab-result-panel" aria-live="polite">
+                <span class="lab-result-label" id="split-name">—</span>
+                <strong class="lab-result-value" id="split-kept">—</strong>
+                <p class="lab-result-detail" id="split-summary">—</p>
+                <div class="arrec-stack" id="split-bar" aria-hidden="true"></div>
+                <ul class="arrec-legend" id="split-legend"></ul>
+              </div>
+            </div>
+            <p class="lab-note" id="split-note">—</p>
+          </article>
         </div>
       </section>
 
@@ -117,11 +170,35 @@
         </div>
         <div class="page-prose">
           <div class="card-grid cols-3">
-            <article><span>PPA</span><h3>Plano Plurianual</h3><p>Estabelece diretrizes, objetivos e metas da administração pública para um período plurianual.</p></article>
-            <article><span>LDO</span><h3>Lei de Diretrizes Orçamentárias</h3><p>Define prioridades e orienta a elaboração do orçamento anual.</p></article>
-            <article><span>LOA</span><h3>Lei Orçamentária Anual</h3><p>Estima receitas e fixa despesas do exercício.</p></article>
+            <article><i class="fas fa-calendar-days" aria-hidden="true"></i><span>PPA</span><h3>Plano Plurianual</h3><p>Estabelece diretrizes, objetivos e metas da administração pública para um período plurianual.</p></article>
+            <article><i class="fas fa-list-check" aria-hidden="true"></i><span>LDO</span><h3>Lei de Diretrizes Orçamentárias</h3><p>Define prioridades e orienta a elaboração do orçamento anual.</p></article>
+            <article><i class="fas fa-file-signature" aria-hidden="true"></i><span>LOA</span><h3>Lei Orçamentária Anual</h3><p>Estima receitas e fixa despesas do exercício.</p></article>
           </div>
           <div class="callout"><strong>Previsão não é execução.</strong> Receita estimada não é necessariamente receita realizada, e despesa autorizada não significa que o dinheiro já foi gasto.</div>
+          <article class="lab-panel" aria-labelledby="forecast-title">
+            <div class="lab-heading"><span class="lab-kicker">Exemplo interativo · Execução da receita</span><h3 id="forecast-title">Previsto na LOA × arrecadado</h3><p>Um município fictício estimou sua receita na Lei Orçamentária. Ajuste o valor arrecadado e os meses já decorridos para ver se a arrecadação está no ritmo da previsão.</p></div>
+            <div class="lab-split">
+              <div class="lab-form-grid">
+                <div class="lab-field"><label for="forecast-planned">Receita prevista na LOA (R$ milhões)</label><input id="forecast-planned" type="number" min="1" step="10" value="1200" inputmode="decimal"></div>
+                <div class="lab-field"><label for="forecast-collected">Arrecadado até agora (R$ milhões)</label><input id="forecast-collected" type="number" min="0" step="10" value="820" inputmode="decimal"></div>
+                <div class="lab-field"><label for="forecast-months">Meses decorridos</label><div class="lab-range-pair"><input type="range" min="1" max="12" step="1" value="8" data-sync="forecast-months" aria-label="Meses decorridos, controle deslizante"><input id="forecast-months" type="number" min="1" max="12" step="1" value="8" inputmode="numeric"></div></div>
+              </div>
+              <div class="lab-result-panel arrec-forecast-result" aria-live="polite">
+                <span class="lab-result-label">Previsão já realizada</span>
+                <strong class="lab-result-value" id="forecast-share">—</strong>
+                <p class="lab-result-detail" id="forecast-summary">—</p>
+                <div class="arrec-progress" aria-hidden="true"><span id="forecast-bar"></span><i id="forecast-expected"></i></div>
+                <small class="lab-split-legend"><span><i class="lab-swatch"></i>Arrecadado</span><span id="forecast-expected-label">Esperado no período</span></small>
+              </div>
+            </div>
+            <dl class="lab-stats">
+              <div class="is-main"><dt>Projeção para o ano</dt><dd id="forecast-projection">—</dd><dd class="lab-stat-note">no ritmo atual, de forma linear</dd></div>
+              <div><dt>Diferença projetada</dt><dd id="forecast-gap">—</dd><dd class="lab-stat-note" id="forecast-gap-note">—</dd></div>
+              <div><dt>Média mensal</dt><dd id="forecast-monthly">—</dd><dd class="lab-stat-note">arrecadado ÷ meses</dd></div>
+              <div><dt>Necessário por mês</dt><dd id="forecast-needed">—</dd><dd class="lab-stat-note">para cumprir a previsão</dd></div>
+            </dl>
+            <p class="lab-note">Projeção ilustrativa: a arrecadação real varia ao longo do ano (13º salário, IPVA e IPTU no início do ano, sazonalidade do comércio). Arrecadar menos que o previsto é chamado de frustração de receita; arrecadar mais, de excesso de arrecadação.</p>
+          </article>
         </div>
       </section>
 
@@ -151,9 +228,9 @@
         </div>
         <div class="page-prose">
           <div class="card-grid cols-4">
-            <article><span>FPM</span><h3>Fundo de Participação dos Municípios</h3><p>Recursos da União são repartidos aos municípios segundo regras constitucionais e legais.</p></article>
-            <article><span>FPE</span><h3>Fundo de Participação dos Estados</h3><p>Recursos da União são distribuídos aos estados e ao Distrito Federal segundo critérios legais.</p></article>
-            <article><span>Transferências</span><h3>Constitucionais, legais e voluntárias</h3><p>A origem, finalidade e condições devem ser verificadas em cada transferência.</p></article>
+            <article><i class="fas fa-city" aria-hidden="true"></i><span>FPM</span><h3>Fundo de Participação dos Municípios</h3><p>Recursos da União são repartidos aos municípios segundo regras constitucionais e legais.</p></article>
+            <article><i class="fas fa-map-location-dot" aria-hidden="true"></i><span>FPE</span><h3>Fundo de Participação dos Estados</h3><p>Recursos da União são distribuídos aos estados e ao Distrito Federal segundo critérios legais.</p></article>
+            <article><i class="fas fa-diagram-project" aria-hidden="true"></i><span>Transferências</span><h3>Constitucionais, legais e voluntárias</h3><p>A origem, finalidade e condições devem ser verificadas em cada transferência.</p></article>
           </div>
         </div>
       </section>
@@ -167,10 +244,39 @@
         </div>
         <div class="page-prose">
           <div class="card-grid cols-3">
-            <article><span>Superávit</span><h3>Resultado positivo</h3><p>Em termos gerais, receitas consideradas no indicador superam as despesas consideradas.</p></article>
-            <article><span>Déficit</span><h3>Resultado negativo</h3><p>Despesas consideradas superam as receitas consideradas no período ou conceito analisado.</p></article>
-            <article><span>Dívida</span><h3>Estoque de obrigações</h3><p>Dívida é um estoque de obrigações financeiras e não é sinônimo de déficit de um único período.</p></article>
+            <article><i class="fas fa-arrow-trend-up" aria-hidden="true"></i><span>Superávit</span><h3>Resultado positivo</h3><p>Em termos gerais, receitas consideradas no indicador superam as despesas consideradas.</p></article>
+            <article><i class="fas fa-arrow-trend-down" aria-hidden="true"></i><span>Déficit</span><h3>Resultado negativo</h3><p>Despesas consideradas superam as receitas consideradas no período ou conceito analisado.</p></article>
+            <article><i class="fas fa-scale-unbalanced" aria-hidden="true"></i><span>Dívida</span><h3>Estoque de obrigações</h3><p>Dívida é um estoque de obrigações financeiras e não é sinônimo de déficit de um único período.</p></article>
           </div>
+          <article class="lab-panel" aria-labelledby="fiscal-title">
+            <div class="lab-heading"><span class="lab-kicker">Exemplo interativo · Contas públicas</span><h3 id="fiscal-title">Monte o resultado fiscal</h3><p>Valores fictícios, em R$ bilhões. O resultado primário compara receitas e despesas sem os juros; o nominal inclui os juros da dívida.</p></div>
+            <div class="lab-chip-group" role="group" aria-label="Situações de exemplo">
+              <button type="button" class="lab-chip" data-fiscal-preset="1000,950,120,4000" aria-pressed="true">Superávit primário, déficit nominal</button>
+              <button type="button" class="lab-chip" data-fiscal-preset="1000,1050,120,4000" aria-pressed="false">Déficit primário e nominal</button>
+              <button type="button" class="lab-chip" data-fiscal-preset="1000,850,120,4000" aria-pressed="false">Superávit nos dois</button>
+            </div>
+            <div class="lab-split">
+              <div class="lab-form-grid">
+                <div class="lab-field"><label for="fiscal-revenue">Receitas primárias</label><input id="fiscal-revenue" type="number" min="0" step="10" value="1000" inputmode="decimal"></div>
+                <div class="lab-field"><label for="fiscal-spending">Despesas primárias</label><input id="fiscal-spending" type="number" min="0" step="10" value="950" inputmode="decimal"></div>
+                <div class="lab-field"><label for="fiscal-interest">Juros nominais da dívida</label><input id="fiscal-interest" type="number" min="0" step="10" value="120" inputmode="decimal"></div>
+                <div class="lab-field"><label for="fiscal-debt">Dívida no início do ano</label><input id="fiscal-debt" type="number" min="0" step="100" value="4000" inputmode="decimal"></div>
+              </div>
+              <div class="lab-result-panel" aria-live="polite">
+                <span class="lab-result-label">Resultado nominal</span>
+                <strong class="lab-result-value" id="fiscal-nominal">—</strong>
+                <p class="lab-result-detail" id="fiscal-summary">—</p>
+                <div class="arrec-fiscal-bars" id="fiscal-bars" aria-hidden="true"></div>
+              </div>
+            </div>
+            <dl class="lab-stats">
+              <div class="is-main"><dt>Resultado primário</dt><dd id="fiscal-primary">—</dd><dd class="lab-stat-note" id="fiscal-primary-note">—</dd></div>
+              <div><dt>Juros</dt><dd id="fiscal-interest-out">—</dd><dd class="lab-stat-note">entram só no nominal</dd></div>
+              <div><dt>Dívida ao fim do ano</dt><dd id="fiscal-debt-end">—</dd><dd class="lab-stat-note">simplificado</dd></div>
+              <div><dt>Variação da dívida</dt><dd id="fiscal-debt-change">—</dd><dd class="lab-stat-note" id="fiscal-debt-change-note">—</dd></div>
+            </dl>
+            <p class="lab-note">Simplificação didática: na prática a dívida também muda com câmbio, inflação, emissões para outras finalidades e ajustes patrimoniais, e a relação dívida/PIB depende do crescimento da economia.</p>
+          </article>
         </div>
       </section>
 
@@ -184,9 +290,9 @@
         <div class="page-prose">
           <p>Parlamentares podem apresentar emendas ao orçamento dentro das regras constitucionais e legais. Uma emenda não significa, por si só, que o recurso já foi pago ou que o parlamentar executará diretamente a política pública.</p>
           <div class="card-grid cols-4">
-            <article><span>Individual</span><h3>Emendas individuais</h3><p>Apresentadas por parlamentares individualmente, conforme as regras de execução e destinação.</p></article>
-            <article><span>Bancada</span><h3>Emendas de bancada</h3><p>Relacionadas às bancadas estaduais ou do Distrito Federal.</p></article>
-            <article><span>Comissão</span><h3>Emendas de comissão</h3><p>Apresentadas no âmbito das comissões legislativas.</p></article>
+            <article><i class="fas fa-user-tie" aria-hidden="true"></i><span>Individual</span><h3>Emendas individuais</h3><p>Apresentadas por parlamentares individualmente, conforme as regras de execução e destinação.</p></article>
+            <article><i class="fas fa-people-group" aria-hidden="true"></i><span>Bancada</span><h3>Emendas de bancada</h3><p>Relacionadas às bancadas estaduais ou do Distrito Federal.</p></article>
+            <article><i class="fas fa-users" aria-hidden="true"></i><span>Comissão</span><h3>Emendas de comissão</h3><p>Apresentadas no âmbito das comissões legislativas.</p></article>
           </div>
         </div>
       </section>
@@ -201,6 +307,7 @@
         <div class="page-prose">
           <p>Contadores de arrecadação e gasto podem ajudar na visualização, mas não substituem os registros oficiais. É necessário conhecer sua metodologia, período e quais valores estão sendo somados.</p>
           <div class="callout"><strong>Para analisar:</strong> identifique a fonte, o período, o conceito usado, se o valor é estimado ou realizado e quais receitas ou despesas estão incluídas.</div>
+          <div class="source-list"><a href="/impostometro"><i class="fas fa-coins" aria-hidden="true"></i> Impostômetro em tempo real</a><a href="/gastometro"><i class="fas fa-gauge-high" aria-hidden="true"></i> Gastômetro em tempo real</a><a href="/gastos-publicos"><i class="fas fa-receipt" aria-hidden="true"></i> Siga uma despesa pública</a></div>
         </div>
       </section>
 
@@ -222,6 +329,7 @@
   <script src="/js/accordion-motion.js"></script>
   <script src="/js/sidebar.js"></script>
   <script src="/js/footer.js"></script>
-  <script src="/js/arrecadacao.js"></script>
+  <script src="/js/number-field.js?v=20261109c"></script>
+  <script src="/js/arrecadacao.js?v=20261109d"></script>
 </body>
 </html>

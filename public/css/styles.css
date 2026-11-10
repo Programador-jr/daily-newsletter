@@ -17,6 +17,15 @@
   --sidebar-muted: #667772;
   --sidebar-border: #d2ddda;
   --sidebar-hover: #dce5e2;
+  /* Superfícies e raios compartilhados (cartões, painéis, laboratórios).
+     Derivam de --primary/--card-bg, então acompanham tema e paleta. */
+  --tint: color-mix(in srgb, var(--primary) 9%, var(--card-bg));
+  --tint-strong: color-mix(in srgb, var(--primary) 16%, var(--card-bg));
+  --tint-gain: color-mix(in srgb, var(--primary) 45%, var(--card-bg));
+  --warm: #b4472f;
+  --radius-card: 14px;
+  --shadow-card: 0 2px 8px rgb(16 36 32 / 4%);
+  --shadow-card-hover: 0 10px 26px rgb(16 36 32 / 9%);
 }
 
 [data-theme="dark"] {
@@ -86,18 +95,6 @@ body {
   justify-content: center;
   padding: 2rem 1rem;
   min-height: 100vh;
-}
-
-a {
-  color: var(--primary);
-  text-decoration: none;
-  animation: color-change 0.3s ease;
-}
-
-a:hover {
-  text-decoration: underline;
-  color: var(--primary-hover);
-  animation: color-change 0.3s ease;
 }
 
 .container {
@@ -2578,5 +2575,59 @@ main[tabindex="-1"]:focus {
 @media (max-width: 480px) {
   .site-update-brand {
     margin-bottom: 18px;
+  }
+}
+
+.footer-legal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+  font-size: 0.85rem;
+}
+
+.footer-legal a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.footer-legal a i {
+  font-size: 0.8rem;
+  color: var(--primary);
+}
+
+.footer-legal a:hover,
+.footer-legal a:focus-visible {
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.footer-legal a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.footer-legal a[aria-current="page"] {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.footer-legal-sep {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+@media (max-width: 768px) {
+  .site-footer {
+    flex-direction: column;
   }
 }

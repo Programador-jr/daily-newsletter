@@ -28,6 +28,9 @@ function localIpv4Addresses() {
 
 app.disable('x-powered-by');
 app.use(securityHeaders);
+// Banner uploads arrive as base64 JSON (up to 2 MB of image); parse them
+// before the global 100 kB limit applies.
+app.use('/api/admin/email-banner', express.json({ limit: '3mb' }));
 app.use(express.json({ limit: '100kb' }));
 app.use(express.urlencoded({ extended: true, limit: '100kb' }));
 
@@ -53,6 +56,8 @@ app.post('/api/admin/test-email', require('./lib/api-handlers/admin/test-email')
 app.get('/api/admin/schedule', require('./lib/api-handlers/admin/schedule'));
 app.put('/api/admin/schedule', require('./lib/api-handlers/admin/schedule'));
 app.all('/api/admin/updates', require('./lib/api-handlers/admin/updates'));
+app.all('/api/admin/digests', require('./lib/api-handlers/admin/digests'));
+app.all('/api/admin/email-banner', require('./lib/api-handlers/admin/email-banner'));
 app.get('/api/updates/active', require('./lib/api-handlers/updates/active'));
 app.get('/api/worker/config', require('./lib/api-handlers/worker/config'));
 app.post('/api/worker/heartbeat', require('./lib/api-handlers/worker/heartbeat'));
@@ -186,6 +191,14 @@ app.get('/como-fiscalizar', (req, res) => {
 
 app.get('/about', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/about.html'));
+});
+
+app.get('/privacidade', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/privacidade.html'));
+});
+
+app.get('/termos', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/termos.html'));
 });
 
 app.get('/admin', (req, res) => {

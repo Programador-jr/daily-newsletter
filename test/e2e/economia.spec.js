@@ -113,6 +113,9 @@ test('simuladores recalculam resultados e juros totais ao alterar os valores', a
   await expect(page.locator('#basket-result')).toContainText('220,00');
   await page.locator('#loan-rate').fill('3');
   await expect(page.locator('#loan-interest')).toContainText('Juros estimados: R$');
-  await page.locator('#fiscal-target').selectOption('no');
+  // O <select> é aprimorado pelo seletor pesquisável (option-picker.js).
+  await page.locator('.economy-picker-field .picker-trigger').click();
+  await page.getByRole('option', { name: /Não cumpriu a meta/ }).click();
+  await expect(page.locator('#fiscal-target')).toHaveValue('no');
   await expect(page.locator('#fiscal-result')).toContainText('1,5%');
 });

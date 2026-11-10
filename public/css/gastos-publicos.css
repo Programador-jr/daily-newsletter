@@ -24,7 +24,7 @@
   --stage-progress: 0;
   padding: 1.1rem;
   border: 1px solid var(--border);
-  border-radius: var(--lab-radius);
+  border-radius: var(--radius-card);
   background: var(--card-bg);
 }
 
@@ -98,7 +98,7 @@ html body main .spend-stage-track button {
 }
 
 .spend-stage-track button.is-done .lab-icon {
-  background: var(--lab-tint-strong);
+  background: var(--tint-strong);
   color: var(--primary);
 }
 
@@ -124,7 +124,7 @@ html body main .spend-stage-track button:hover .lab-icon {
   padding: 1.1rem 1.2rem;
   border: 1px solid color-mix(in srgb, var(--primary) 25%, var(--border));
   border-radius: 12px;
-  background: linear-gradient(160deg, var(--lab-tint), var(--card-bg) 80%);
+  background: linear-gradient(160deg, var(--tint), var(--card-bg) 80%);
 }
 
 .spend-stage-panel.is-changing {
@@ -177,10 +177,6 @@ html body main .spend-stage-track button:hover .lab-icon {
 
 /* Siga uma despesa */
 
-.spend-presets {
-  margin-bottom: 1rem;
-}
-
 .spend-funnel {
   display: grid;
   gap: .5rem;
@@ -225,7 +221,7 @@ html body main .spend-stage-track button:hover .lab-icon {
 }
 
 .spend-funnel > div:nth-child(2) .spend-funnel-track span {
-  background: var(--lab-gain);
+  background: var(--tint-gain);
 }
 
 .spend-funnel > div:nth-child(3) .spend-funnel-track span {
@@ -312,7 +308,7 @@ html body main .spend-quiz-options button i {
 
 html body main .spend-quiz-options button:hover:not(:disabled) {
   border-color: var(--primary);
-  background: var(--lab-tint);
+  background: var(--tint);
 }
 
 html body main .spend-quiz-options button:disabled {
@@ -335,15 +331,15 @@ html body main .spend-quiz-options button[data-result="correct"] i {
 }
 
 html body main .spend-quiz-options button[data-result="wrong"] {
-  border-color: var(--lab-warm);
-  background: color-mix(in srgb, var(--lab-warm) 10%, var(--bg-container));
+  border-color: var(--warm);
+  background: color-mix(in srgb, var(--warm) 10%, var(--bg-container));
 }
 
 .spend-quiz-feedback {
   padding: .8rem .95rem;
   border-left: 3px solid var(--primary);
   border-radius: 8px;
-  background: var(--lab-tint);
+  background: var(--tint);
   color: var(--text-main);
   font-size: .88rem;
   line-height: 1.6;
@@ -351,8 +347,8 @@ html body main .spend-quiz-options button[data-result="wrong"] {
 }
 
 .spend-quiz-feedback[data-result="wrong"] {
-  border-left-color: var(--lab-warm);
-  background: color-mix(in srgb, var(--lab-warm) 8%, var(--card-bg));
+  border-left-color: var(--warm);
+  background: color-mix(in srgb, var(--warm) 8%, var(--card-bg));
 }
 
 .spend-quiz-feedback p {
@@ -417,7 +413,7 @@ html body main .spend-quiz-options button[data-result="wrong"] {
   padding: .9rem 1rem;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: linear-gradient(160deg, var(--lab-tint), var(--card-bg) 80%);
+  background: linear-gradient(160deg, var(--tint), var(--card-bg) 80%);
 }
 
 .spend-compare-bars {
@@ -459,7 +455,7 @@ html body main .spend-quiz-options button[data-result="wrong"] {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: var(--lab-gain);
+  background: var(--tint-gain);
   transition: width 320ms cubic-bezier(.2, .8, .2, 1);
 }
 
@@ -472,7 +468,7 @@ html body main .spend-quiz-options button[data-result="wrong"] {
   padding: .8rem .95rem;
   border-left: 3px solid var(--primary);
   border-radius: 8px;
-  background: var(--lab-tint);
+  background: var(--tint);
   color: var(--text-main);
   font-size: .9rem;
   line-height: 1.6;

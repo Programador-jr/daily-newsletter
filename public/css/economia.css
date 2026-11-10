@@ -720,7 +720,7 @@
   gap: .35rem;
   padding: 1.15rem 1.2rem 1.1rem;
   overflow: hidden;
-  border-radius: var(--lab-radius);
+  border-radius: var(--radius-card);
   transition: transform 200ms ease, border-color 180ms ease, box-shadow 220ms ease;
 }
 
@@ -767,7 +767,7 @@
 
 .economy-page .economy-indicator:not(.is-loaded) .indicator-value {
   border-radius: 8px;
-  background: linear-gradient(90deg, var(--lab-tint) 0%, var(--lab-tint-strong) 50%, var(--lab-tint) 100%);
+  background: linear-gradient(90deg, var(--tint) 0%, var(--tint-strong) 50%, var(--tint) 100%);
   background-size: 200% 100%;
   color: transparent !important;
   animation: economy-skeleton 1.4s ease-in-out infinite;
@@ -789,7 +789,7 @@
   gap: .35rem;
   padding: .2rem .55rem;
   border-radius: 999px;
-  background: var(--lab-tint);
+  background: var(--tint);
   color: var(--primary);
   font-size: .72rem;
   font-weight: 700;
@@ -851,7 +851,7 @@
   display: flex;
   flex-direction: column;
   gap: .3rem;
-  border-radius: var(--lab-radius);
+  border-radius: var(--radius-card);
 }
 
 .economy-rule-icon {
@@ -1020,7 +1020,7 @@
 }
 
 .economy-stack-bar .is-gain {
-  background: var(--lab-gain);
+  background: var(--tint-gain);
 }
 
 .economy-stack-column small {
@@ -1099,7 +1099,7 @@
 
 .economy-page main .economy-price-remove:hover:not(:disabled) {
   border-color: var(--border);
-  color: var(--lab-warm);
+  color: var(--warm);
 }
 
 .economy-page main .economy-price-remove:disabled {
@@ -1160,7 +1160,7 @@
 }
 
 .economy-price-bar[data-direction="down"] .economy-price-bar-fill {
-  background: var(--lab-gain);
+  background: var(--tint-gain);
 }
 
 /* Cenários da Selic */
@@ -1170,7 +1170,7 @@
   gap: .9rem;
   padding: 1.1rem;
   border: 1px solid var(--border);
-  border-radius: var(--lab-radius);
+  border-radius: var(--radius-card);
   background: var(--card-bg);
 }
 
@@ -1230,7 +1230,7 @@
   padding: .2rem .55rem;
   white-space: nowrap;
   border-radius: 999px;
-  background: var(--lab-tint);
+  background: var(--tint);
   color: var(--primary);
   font-size: .72rem;
   font-weight: 700;
@@ -1257,7 +1257,7 @@
 }
 
 .economy-page .economy-calculator {
-  border-radius: var(--lab-radius);
+  border-radius: var(--radius-card);
 }
 
 .economy-calculator .lab-kicker i {
@@ -1278,7 +1278,7 @@
   height: 10px;
   margin-top: .5rem;
   border-radius: 999px;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--lab-warm) 55%, var(--card-bg)) 0%, color-mix(in srgb, var(--border) 80%, transparent) 50%, var(--primary) 100%);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--warm) 55%, var(--card-bg)) 0%, color-mix(in srgb, var(--border) 80%, transparent) 50%, var(--primary) 100%);
 }
 
 .economy-gauge-zero {
@@ -1306,7 +1306,7 @@
 }
 
 .economy-gauge-marker[data-direction="down"] {
-  background: var(--lab-warm);
+  background: var(--warm);
 }
 
 /* Responsividade */
@@ -1704,4 +1704,18 @@
   .economy-chart-wrap[aria-busy="true"] svg {
     transition: none;
   }
+}
+
+/* Seletor do simulador fiscal (padrão global .picker-select) */
+.economy-calculator .economy-picker-field {
+  display: grid;
+  gap: .45rem;
+}
+
+.economy-calculator .economy-picker-field .picker-label {
+  color: var(--text-main);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
 }

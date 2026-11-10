@@ -1,0 +1,268 @@
+/* ARRECADAÇÃO — exemplos interativos (repartição de tributos, previsto × arrecadado
+   e resultado fiscal). Painéis, campos e faixas de estatística vêm de labs.css. */
+
+.page-hero .arrec-index {
+  margin-top: 1.4rem;
+}
+
+.page-prose > .lab-panel {
+  margin-top: 1.5rem;
+}
+
+/* Cores de cada destino da repartição (legíveis nos dois temas) */
+.arrec-stack,
+.arrec-legend {
+  --dest-uniao: var(--primary);
+  --dest-estado: color-mix(in srgb, var(--primary) 45%, var(--card-bg));
+  --dest-municipio: #c98a2b;
+  --dest-regional: #7c6bc9;
+}
+
+/* 1. Repartição */
+
+.arrec-itr-option {
+  gap: .45rem;
+}
+
+.arrec-itr-option[hidden] {
+  display: none;
+}
+
+.arrec-tax-facts {
+  display: grid;
+  gap: .55rem;
+  margin: 0;
+}
+
+.arrec-tax-facts div {
+  padding: .6rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-container);
+}
+
+.arrec-tax-facts dt {
+  color: var(--text-muted);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.arrec-tax-facts dd {
+  margin: .2rem 0 0;
+  color: var(--text-main);
+  font-size: .86rem;
+  font-weight: 600;
+}
+
+.arrec-stack {
+  display: flex;
+  height: 34px;
+  margin-top: .5rem;
+  overflow: hidden;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--border) 50%, transparent);
+}
+
+.arrec-stack-part {
+  display: grid;
+  flex-basis: 0;
+  place-items: center;
+  min-width: 3px;
+  color: #fff;
+  font-size: .72rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  transition: flex-grow 360ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.arrec-stack-part + .arrec-stack-part {
+  border-left: 2px solid var(--card-bg);
+}
+
+.arrec-stack-part.is-uniao { background: var(--dest-uniao); }
+.arrec-stack-part.is-estado { background: var(--dest-estado); color: var(--text-main); }
+.arrec-stack-part.is-municipio { background: var(--dest-municipio); }
+.arrec-stack-part.is-regional { background: var(--dest-regional); }
+
+.arrec-legend {
+  display: grid;
+  gap: .35rem;
+  margin: .4rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.arrec-legend li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .55rem;
+  padding: .35rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: .8rem;
+}
+
+.arrec-legend li:last-child {
+  border-bottom: 0;
+}
+
+.arrec-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+}
+
+.arrec-legend .is-uniao .arrec-swatch { background: var(--dest-uniao); }
+.arrec-legend .is-estado .arrec-swatch { background: var(--dest-estado); }
+.arrec-legend .is-municipio .arrec-swatch { background: var(--dest-municipio); }
+.arrec-legend .is-regional .arrec-swatch { background: var(--dest-regional); }
+
+.arrec-legend-name {
+  min-width: 0;
+  color: var(--text-main);
+}
+
+.arrec-legend-name small {
+  display: block;
+  color: var(--text-muted);
+  font-size: .7rem;
+}
+
+.arrec-legend b {
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* 2. Previsto × arrecadado */
+
+.arrec-progress {
+  position: relative;
+  height: 16px;
+  margin-top: auto;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border) 55%, transparent);
+}
+
+.arrec-progress span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--primary);
+  transition: width 320ms cubic-bezier(.2, .8, .2, 1), background-color 200ms ease;
+}
+
+.arrec-progress i {
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--text-main);
+  transform: translateX(-50%);
+  transition: left 320ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.arrec-forecast-result[data-state="behind"] .arrec-progress span {
+  background: var(--warm);
+}
+
+.arrec-forecast-result[data-state="behind"] .lab-result-value {
+  color: var(--warm);
+}
+
+.lab-stats dd[data-direction="down"] {
+  color: var(--warm);
+}
+
+/* 3. Resultado fiscal */
+
+.lab-result-panel[data-state="deficit"] .lab-result-value {
+  color: var(--warm);
+}
+
+.lab-result-panel[data-state="surplus"] .lab-result-value {
+  color: var(--primary);
+}
+
+.arrec-fiscal-bars {
+  display: grid;
+  gap: .55rem;
+  margin-top: auto;
+  padding-top: .5rem;
+}
+
+.arrec-fiscal-row {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .6rem;
+}
+
+.arrec-fiscal-row small {
+  color: var(--text-muted);
+  font-size: .75rem;
+  font-weight: 600;
+}
+
+.arrec-fiscal-row b {
+  color: var(--text-main);
+  font-size: .78rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.arrec-fiscal-track {
+  display: flex;
+  height: 16px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border) 50%, transparent);
+}
+
+.arrec-fiscal-track span {
+  height: 100%;
+  transition: width 320ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.arrec-fiscal-track .is-revenue { background: var(--primary); }
+.arrec-fiscal-track .is-spending { background: var(--tint-gain); }
+.arrec-fiscal-track .is-interest { background: var(--warm); }
+
+@media (max-width: 640px) {
+  .arrec-fiscal-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .arrec-fiscal-row .arrec-fiscal-track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .arrec-stack {
+    height: 28px;
+  }
+
+  .arrec-legend li {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .arrec-legend b {
+    grid-column: 2;
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrec-stack-part,
+  .arrec-progress span,
+  .arrec-progress i,
+  .arrec-fiscal-track span {
+    transition: none;
+  }
+}

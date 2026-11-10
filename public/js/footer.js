@@ -8,6 +8,14 @@ async function loadHTML(elementId, filePath) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  loadHTML('footer', 'footer.html');
+function markCurrentFooterLink() {
+  const current = window.location.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
+  document.querySelectorAll('#footer .footer-legal a').forEach(link => {
+    if (link.getAttribute('href') === current) link.setAttribute('aria-current', 'page');
+  });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadHTML('footer', 'footer.html');
+  markCurrentFooterLink();
 });   

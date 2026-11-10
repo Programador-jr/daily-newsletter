@@ -1035,6 +1035,8 @@
   ['basket-value', 'basket-inflation'].forEach(id => document.getElementById(id)?.addEventListener('input', updateBasket));
   ['loan-value', 'loan-rate', 'loan-months'].forEach(id => document.getElementById(id)?.addEventListener('input', updateLoan));
   ['real-nominal', 'real-inflation'].forEach(id => document.getElementById(id)?.addEventListener('input', updateRealRate));
+  // Seletor pesquisável no padrão do Impostômetro (components.css + option-picker.js).
+  window.KingsOptionPicker?.enhance(document.getElementById('main'));
   ['revenue-growth', 'fiscal-target'].forEach(id => document.getElementById(id)?.addEventListener('input', updateFiscal));
   document.getElementById('fiscal-target')?.addEventListener('change', updateFiscal);
   updateBasket(); updateLoan(); updateRealRate(); updateFiscal();

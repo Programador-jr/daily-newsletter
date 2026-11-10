@@ -36,8 +36,12 @@ const statusLabels = {
   accepted: 'Aceito', partially_accepted: 'Parcial', failed: 'Falha',
   succeeded: 'Concluído', skipped: 'Sem envio', running: 'Em andamento',
   delivered: 'Enviada', pending: 'Pendente', sending: 'Disparando',
-  no_recipients: 'Sem assinantes', no_news: 'Sem edição'
+  no_recipients: 'Sem assinantes', no_news: 'Sem edição',
+  draft: 'Rascunho', approved: 'Aprovado', sent: 'Enviado'
 };
+let digestSummaries = [];
+let selectedDigest = null;
+let confirmedSubscriberCount = 0;
 
 const errorCodeDescriptions = {
   RUN_TIMEOUT: 'A execução do worker excedeu o tempo limite.',
@@ -82,7 +86,7 @@ function parseRioDateTime(value) {
 }
 
 function setAdminPage(page, { updateHash = true } = {}) {
-  const allowed = ['overview', 'operations', 'audience', 'activity', 'updates'];
+  const allowed = ['overview', 'operations', 'digest', 'audience', 'activity', 'updates'];
   currentAdminPage = allowed.includes(page) ? page : 'overview';
   document.querySelectorAll('[data-admin-page]').forEach(element => {
     const hidden = element.dataset.adminPage !== currentAdminPage ||
@@ -98,6 +102,7 @@ function setAdminPage(page, { updateHash = true } = {}) {
   const titles = {
     overview: ['VISÃO GERAL', 'Visão geral'],
     operations: ['OPERAÇÃO', 'Envios e worker'],
+    digest: ['ENVIO DIÁRIO', 'Resumo diário'],
     audience: ['AUDIÊNCIA', 'Assinantes e entregabilidade'],
     activity: ['AUDITORIA', 'Atividade e logs'],
     updates: ['COMUNICAÇÃO', 'Avisos de atualização']
@@ -111,6 +116,9 @@ function setAdminPage(page, { updateHash = true } = {}) {
     : document.querySelector('#updated-at').dataset.lastLoaded || 'Carregando dados…';
   if (updateHash && window.location.hash !== `#${currentAdminPage}`) {
     window.history.replaceState(null, '', `#${currentAdminPage}`);
+  }
+  if (currentAdminPage === 'digest' && !document.querySelector('#digest-list').dataset.loaded) {
+    refreshDigests().catch(error => showToast('Falha ao carregar resumos', error.message, 'error'));
   }
   if (currentAdminPage === 'updates' && !document.querySelector('#updates-list').dataset.loaded) {
     refreshUpdates().catch(error => showToast('Falha ao carregar avisos', error.message, 'error'));
@@ -603,6 +611,7 @@ function renderWorkerSchedule(schedule, { updateFields = false } = {}) {
   if (updateFields && !document.querySelector('#schedule-form').contains(document.activeElement)) {
     document.querySelector('#interval-hours').value = schedule.intervalHours;
     document.querySelector('#schedule-enabled').checked = schedule.enabled;
+    document.querySelector('#digest-send-time').value = schedule.digestSendTime || '';
   }
   updateCountdown();
 }
@@ -919,7 +928,7 @@ function renderScheduleHistory(history = []) {
     const title = document.createElement('div');
     title.className = 'log-title';
     const previous = entry.fromIntervalHours === undefined ? '' : `de ${entry.fromIntervalHours}h / ${entry.fromEnabled ? 'ativo' : 'pausado'} para `;
-    title.textContent = `${previous}cada ${entry.intervalHours}h · ${entry.enabled ? 'ativo' : 'pausado'}`;
+    title.textContent = `${previous}cada ${entry.intervalHours}h · ${entry.enabled ? 'ativo' : 'pausado'} · resumo ${entry.digestSendTime || 'manual'}`;
     const meta = document.createElement('div');
     meta.className = 'log-meta';
     meta.textContent = `${formatDate(entry.changedAt)} · alterado por ${entry.changedBy || 'admin'}`;
@@ -1002,11 +1011,17 @@ function render(data) {
   document.querySelector('#updated-at').dataset.lastLoaded = document.querySelector('#updated-at').textContent;
   const edition = data.latestEdition;
   document.querySelector('#overview-edition-date').textContent = edition.date ? `Edição ${edition.date}` : 'Sem edição';
-  document.querySelector('#overview-edition-indicator').className = `status ${edition.status || ''}`;
-  document.querySelector('#overview-edition-indicator').textContent = statusLabels[edition.status] || 'Indisponível';
+  // Subscribers only receive the daily digest, so its state is the edition's delivery state.
+  const todayDigest = data.todayDigest;
+  const digestStatus = todayDigest?.status || 'none';
+  const digestLabel = todayDigest ? statusLabels[digestStatus] || digestStatus : 'Sem resumo';
+  const digestClass = todayDigest ? digestStatusClass(digestStatus) : 'no_news';
+  document.querySelector('#overview-edition-indicator').className = `status ${digestClass}`;
+  document.querySelector('#overview-edition-indicator').textContent = digestLabel;
   document.querySelector('#overview-news-count').textContent = Number(edition.totalStories || 0).toLocaleString('pt-BR');
-  document.querySelector('#overview-delivered-count').textContent = Number(edition.deliveredStories || 0).toLocaleString('pt-BR');
-  document.querySelector('#overview-pending-count').textContent = Number(edition.pendingStories || 0).toLocaleString('pt-BR');
+  document.querySelector('#overview-digest-status').textContent = todayDigest?.status === 'sent'
+    ? `enviado a ${Number(todayDigest.sentCount).toLocaleString('pt-BR')}`
+    : digestLabel.toLowerCase();
   document.querySelector('#overview-confirmed-count').textContent = Number(data.subscribers.confirmed || 0).toLocaleString('pt-BR');
   document.querySelector('#overview-subscriber-total').textContent = Number(data.subscribers.total || 0).toLocaleString('pt-BR');
   document.querySelector('#overview-accepted-count').textContent = Number(data.emails.acceptedMessages || 0).toLocaleString('pt-BR');
@@ -1014,11 +1029,11 @@ function render(data) {
   document.querySelector('#overview-failed-count').textContent = Number(data.emails.failedMessages || 0).toLocaleString('pt-BR');
   document.querySelector('#latest-edition-date').textContent = edition.date ? `Edição de ${edition.date}` : 'Nenhuma edição publicada';
   document.querySelector('#latest-total-stories').textContent = Number(edition.totalStories || 0).toLocaleString('pt-BR');
-  document.querySelector('#latest-delivered-stories').textContent = Number(edition.deliveredStories || 0).toLocaleString('pt-BR');
-  document.querySelector('#latest-pending-stories').textContent = Number(edition.pendingStories || 0).toLocaleString('pt-BR');
+  document.querySelector('#latest-delivered-stories').textContent = digestLabel;
+  document.querySelector('#latest-pending-stories').textContent = data.workerSchedule?.digestSendTime || 'Desligado';
   const status = document.querySelector('#latest-status');
-  status.className = `status ${edition.status}`;
-  status.textContent = statusLabels[edition.status] || 'Indisponível';
+  status.className = `status ${digestClass}`;
+  status.textContent = digestLabel;
   const lastRunSummary = document.querySelector('#latest-run-summary');
   const excludedNote = Number(edition.excludedStories || 0) > 0
     ? ` · ${Number(edition.excludedStories).toLocaleString('pt-BR')} fora do disparo: data de publicação diferente da edição`
@@ -1030,12 +1045,8 @@ function render(data) {
   } else {
     lastRunSummary.textContent = `Ainda não houve tentativa de envio para esta edição.${excludedNote}`;
   }
-  const noConfirmedSubscribers = Number(data.subscribers.confirmed || 0) === 0;
-  dispatchButton.disabled = dispatchInProgress || edition.pendingStories <= 0 || noConfirmedSubscribers || edition.status === 'sending';
-  dispatchButton.innerHTML = dispatchInProgress ? '<span class="button-spinner" aria-hidden="true"></span> Disparo em andamento…'
-    : edition.pendingStories <= 0 ? 'Sem notícias pendentes'
-      : noConfirmedSubscribers ? 'Aguardando assinantes confirmados'
-        : 'Enviar agora <span aria-hidden="true">→</span>';
+  confirmedSubscriberCount = Number(data.subscribers.confirmed || 0);
+  renderDigestActions();
   const subscribers = data.subscribers;
   document.querySelector('#subscriber-cards').replaceChildren(
     card('Total de inscrições', subscribers.total),
@@ -1086,12 +1097,10 @@ async function loadDashboard({ showLoader = true } = {}) {
 }
 
 function openDispatchModal() {
-  const edition = latestDashboardData?.latestEdition;
-  const confirmedSubscribers = latestDashboardData?.subscribers.confirmed || 0;
-  if (!edition?.pendingStories || !confirmedSubscribers || dispatchInProgress) return;
-  document.querySelector('#modal-pending-count').textContent = Number(edition.pendingStories).toLocaleString('pt-BR');
-  document.querySelector('#modal-subscriber-count').textContent = Number(confirmedSubscribers).toLocaleString('pt-BR');
-  document.querySelector('#dispatch-modal-copy').textContent = `Confirme o envio das notícias pendentes da edição ${edition.date || 'atual'} para os assinantes com inscrição confirmada.`;
+  if (!canApproveDigest() || dispatchInProgress) return;
+  document.querySelector('#modal-pending-count').textContent = Number(selectedDigest.storyCount || 0).toLocaleString('pt-BR');
+  document.querySelector('#modal-subscriber-count').textContent = confirmedSubscriberCount.toLocaleString('pt-BR');
+  document.querySelector('#dispatch-modal-copy').textContent = `O resumo de ${formatDigestDate(selectedDigest.editionDate)} será enviado agora aos assinantes confirmados. Esta ação não pode ser desfeita.`;
   lastFocusedElement = document.activeElement;
   dispatchModal.classList.remove('hidden');
   confirmDispatchButton.focus();
@@ -1205,6 +1214,7 @@ document.querySelector('#schedule-form').addEventListener('submit', async event 
   const message = document.querySelector('#schedule-message');
   const intervalHours = Number(document.querySelector('#interval-hours').value);
   const enabled = document.querySelector('#schedule-enabled').checked;
+  const digestSendTime = document.querySelector('#digest-send-time').value || null;
   message.classList.remove('error');
   message.textContent = '';
   if (!Number.isInteger(intervalHours) || intervalHours < 1 || intervalHours > 168) {
@@ -1219,14 +1229,14 @@ document.querySelector('#schedule-form').addEventListener('submit', async event 
     const response = await fetch('/api/admin/schedule', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ intervalHours, enabled }),
+      body: JSON.stringify({ intervalHours, enabled, digestSendTime }),
       cache: 'no-store'
     });
     const payload = await response.json();
     if (!response.ok) throw new Error(payload.error || 'Não foi possível salvar o agendamento.');
     renderWorkerSchedule(payload.workerSchedule);
     message.textContent = 'Agendamento salvo. O worker aplicará a alteração na próxima sincronização.';
-    showToast('Agendamento salvo', `Frequência configurada para cada ${intervalHours} hora(s).`);
+    showToast('Agendamento salvo', `Frequência configurada para cada ${intervalHours} hora(s). ${digestSendTime ? `Resumo diário às ${digestSendTime}.` : 'Envio automático do resumo desligado.'}`);
   } catch (error) {
     message.classList.add('error');
     message.textContent = error.message;
@@ -1295,10 +1305,11 @@ async function sendTestEmail(recipient) {
   testEmailMessage.textContent = 'Preparando e enviando a prévia…';
   setLoading(true, 'Enviando e-mail de teste', 'A prévia será enviada somente para ' + recipient + '.');
   try {
-    const response = await fetch('/api/admin/test-email', {
+    if (!selectedDigest) throw new Error('Selecione um resumo antes de enviar o teste.');
+    const response = await fetch('/api/admin/digests', {
       method: 'POST',
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: recipient }),
+      body: JSON.stringify({ action: 'test', id: selectedDigest.id, email: recipient }),
       cache: 'no-store'
     });
     let payload;
@@ -1308,7 +1319,7 @@ async function sendTestEmail(recipient) {
       throw new Error('A rota de envio de teste não retornou JSON. Verifique se o servidor está atualizado e tente novamente.');
     }
     if (!response.ok) throw new Error(payload.error || 'Não foi possível enviar o e-mail de teste.');
-    const message = 'E-mail de teste aceito pelo servidor SMTP. Edição: ' + payload.editionDate + '; notícias: ' + payload.stories + '. Verifique a caixa de entrada e o spam.';
+    const message = 'E-mail de teste aceito pelo servidor SMTP. Resumo: ' + formatDigestDate(payload.editionDate) + '; notícias: ' + payload.stories + '. Verifique a caixa de entrada e o spam.';
     testEmailMessage.textContent = message;
     showToast('Teste enviado', message, 'success', 6500);
   } catch (error) {
@@ -1316,14 +1327,14 @@ async function sendTestEmail(recipient) {
     showToast('Falha no e-mail de teste', error.message, 'error', 6500);
   } finally {
     setLoading(false);
-    testEmailButton.disabled = false;
+    renderDigestActions();
   }
 }
 
 testEmailButton.addEventListener('click', () => {
-  if (dispatchInProgress || testEmailButton.disabled || !testEmailRecipient.reportValidity()) return;
+  if (dispatchInProgress || testEmailButton.disabled || !selectedDigest || !testEmailRecipient.reportValidity()) return;
   document.querySelector('#test-email-modal-copy').textContent =
-    'A edição será enviada somente para ' + testEmailRecipient.value.trim() + '. Nenhum assinante receberá esta mensagem.';
+    'O resumo será enviado somente para ' + testEmailRecipient.value.trim() + '. Nenhum assinante receberá esta mensagem.';
   testEmailModal.classList.remove('hidden');
   confirmTestEmailButton.focus();
 });
@@ -1372,41 +1383,268 @@ document.addEventListener('keydown', event => {
 });
 
 confirmDispatchButton.addEventListener('click', async () => {
-  const edition = latestDashboardData?.latestEdition;
-  const confirmedSubscribers = latestDashboardData?.subscribers.confirmed || 0;
-  if (!edition?.pendingStories || !confirmedSubscribers || dispatchInProgress) return;
+  if (!canApproveDigest() || dispatchInProgress) return;
+  const digestId = selectedDigest.id;
   dispatchInProgress = true;
   closeDispatchModal();
-  dispatchMessage.textContent = 'O worker está processando o disparo. Aguarde a conclusão.';
-  setLoading(true, 'Disparo em andamento', 'Enviando as notícias pendentes aos assinantes confirmados…');
-  render(latestDashboardData);
+  dispatchMessage.textContent = 'Enviando o resumo aos assinantes confirmados. Aguarde a conclusão.';
+  setLoading(true, 'Envio em andamento', 'Enviando o resumo aos assinantes confirmados…');
+  renderDigestActions();
   try {
-    const response = await fetch('/api/admin/dispatch', {
-      method: 'POST', headers: { Accept: 'application/json' }, cache: 'no-store'
+    const response = await fetch('/api/admin/digests', {
+      method: 'POST',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'approve', id: digestId }),
+      cache: 'no-store'
     });
     const payload = await response.json();
-    if (!response.ok) throw new Error(payload.error || 'Não foi possível iniciar o disparo.');
-    setLoading(true, 'Atualizando resultados', 'Carregando o status final do envio…');
-    await loadDashboard({ showLoader: false });
-    const failedRecipients = Number(payload.failedRecipients || 0);
-    const message = failedRecipients > 0
-      ? `${payload.sent ? 'Envio parcial' : 'Envio não concluído'}: o SMTP aceitou ${Number(payload.recipients || 0)} destinatário(s); ${failedRecipients} destinatário(s) falharam. Consulte os registros de entrega antes de tentar novamente.`
-      : payload.sent
-        ? `Concluído: ${payload.newStories} notícia(s); o SMTP aceitou ${payload.recipients} destinatário(s).`
-        : payload.newStories > 0
-          ? 'Nenhum e-mail foi enviado. Verifique se há assinantes confirmados.'
-          : 'Não havia notícias novas para enviar.';
+    if (!response.ok) throw new Error(payload.error || 'Não foi possível enviar o resumo.');
+    let message;
+    let type = 'success';
+    if (payload.queued) {
+      message = 'Resumo na fila. Já havia um envio em andamento; o worker envia este resumo na próxima execução.';
+      type = 'warning';
+    } else {
+      const result = payload.result || {};
+      const failed = Number(result.failedRecipients || 0);
+      message = failed > 0
+        ? `Envio parcial: o SMTP aceitou ${Number(result.recipients || 0)} destinatário(s) e ${failed} falharam. Use "Reenviar para quem falhou" para tentar de novo.`
+        : `Resumo enviado: o SMTP aceitou ${Number(result.recipients || 0)} destinatário(s).`;
+      if (failed > 0) type = 'warning';
+    }
     dispatchMessage.textContent = message;
-    showToast(failedRecipients > 0 ? 'Disparo com falhas' : payload.sent ? 'Disparo concluído' : 'Disparo finalizado', message, failedRecipients > 0 ? 'warning' : payload.sent ? 'success' : 'warning', 6500);
+    showToast(type === 'success' ? 'Resumo enviado' : 'Resumo com pendências', message, type, 6500);
   } catch (error) {
     dispatchMessage.textContent = error.message;
-    showToast('Falha no disparo', error.message, 'error', 6500);
-    try { await loadDashboard({ showLoader: false }); } catch { /* mantém o erro visível */ }
+    showToast('Falha no envio do resumo', error.message, 'error', 6500);
   } finally {
     dispatchInProgress = false;
     setLoading(false);
-    if (latestDashboardData) render(latestDashboardData);
+    const keptMessage = dispatchMessage.textContent;
+    await refreshDigests(digestId).catch(() => {});
+    dispatchMessage.textContent = keptMessage;
+    loadDashboard({ showLoader: false }).catch(() => {});
   }
+});
+
+function formatDigestDate(value) {
+  const match = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return match ? `${match[3]}/${match[2]}/${match[1]}` : String(value || '—');
+}
+
+function digestStatusClass(status) {
+  return status === 'sent' ? 'delivered' : status === 'draft' ? 'pending' : status === 'approved' ? 'sending' : status;
+}
+
+function canApproveDigest() {
+  return Boolean(selectedDigest && ['draft', 'failed'].includes(selectedDigest.status) &&
+    Number(selectedDigest.storyCount || 0) > 0 && confirmedSubscriberCount > 0);
+}
+
+function renderDigestActions() {
+  const status = selectedDigest?.status;
+  dispatchButton.disabled = dispatchInProgress || !canApproveDigest();
+  dispatchButton.innerHTML = dispatchInProgress ? '<span class="button-spinner" aria-hidden="true"></span> Envio em andamento…'
+    : !selectedDigest ? 'Selecione um resumo'
+      : status === 'sent' ? 'Resumo já enviado'
+        : ['approved', 'sending'].includes(status) ? 'Envio em andamento'
+          : !Number(selectedDigest.storyCount || 0) ? 'Resumo sem notícias'
+            : confirmedSubscriberCount <= 0 ? 'Aguardando assinantes confirmados'
+              : status === 'failed' ? 'Reenviar para quem falhou <span aria-hidden="true">→</span>'
+                : 'Enviar agora <span aria-hidden="true">→</span>';
+  testEmailButton.disabled = dispatchInProgress || !selectedDigest;
+}
+
+function renderDigestList() {
+  const list = document.querySelector('#digest-list');
+  list.dataset.loaded = 'true';
+  if (!digestSummaries.length) {
+    list.innerHTML = '<div class="empty">Nenhum resumo na coleção dailydigests.</div>';
+    return;
+  }
+  list.replaceChildren(...digestSummaries.map(digest => {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'log-item digest-item';
+    item.setAttribute('aria-pressed', String(selectedDigest?.id === digest.id));
+    const main = document.createElement('span');
+    main.className = 'log-main';
+    const title = document.createElement('span');
+    title.className = 'log-title';
+    title.textContent = `${formatDigestDate(digest.editionDate)} · ${digest.headline || digest.subject}`;
+    const meta = document.createElement('span');
+    meta.className = 'log-meta';
+    const delivery = digest.delivery || {};
+    meta.textContent = `${digest.storyCount} notícia(s)` +
+      (delivery.sentCount || delivery.failedCount ? ` · ${delivery.sentCount} enviado(s), ${delivery.failedCount} falha(s)` : '') +
+      (digest.sentAt ? ` · enviado em ${formatDate(digest.sentAt)}` : '');
+    main.append(title, meta);
+    const status = document.createElement('span');
+    status.className = `status ${digestStatusClass(digest.status)}`;
+    status.textContent = statusLabels[digest.status] || digest.status;
+    item.append(main, status);
+    item.addEventListener('click', () => selectDigest(digest.id).catch(error => showToast('Falha ao abrir resumo', error.message, 'error')));
+    return item;
+  }));
+}
+
+async function fetchDigestJson(query = '') {
+  const response = await fetch(`/api/admin/digests${query}`, { headers: { Accept: 'application/json' }, cache: 'no-store' });
+  if (response.status === 401) { showLogin(); throw new Error('Sessão expirada.'); }
+  const payload = await response.json();
+  if (!response.ok) throw new Error(payload.error || 'Não foi possível carregar os resumos.');
+  confirmedSubscriberCount = Number(payload.confirmedSubscribers || 0);
+  return payload;
+}
+
+async function selectDigest(id) {
+  const payload = await fetchDigestJson(`?id=${encodeURIComponent(id)}`);
+  selectedDigest = payload.digest;
+  const status = document.querySelector('#digest-status');
+  status.className = `status ${digestStatusClass(selectedDigest.status)}`;
+  status.textContent = statusLabels[selectedDigest.status] || selectedDigest.status;
+  document.querySelector('#digest-detail-title').textContent = `Resumo de ${formatDigestDate(selectedDigest.editionDate)}`;
+  const delivery = selectedDigest.delivery || {};
+  document.querySelector('#digest-meta').textContent = [
+    `Assunto: ${payload.preview.subject}`,
+    `${payload.preview.storyCount} notícia(s)`,
+    `${confirmedSubscriberCount} assinante(s) confirmado(s)`,
+    delivery.sentCount || delivery.failedCount ? `${delivery.sentCount} enviado(s), ${delivery.failedCount} falha(s)` : '',
+    selectedDigest.editorialNotes ? `Nota editorial: ${selectedDigest.editorialNotes}` : ''
+  ].filter(Boolean).join(' · ');
+  document.querySelector('#digest-preview').srcdoc = payload.preview.html;
+  dispatchMessage.textContent = '';
+  testEmailMessage.textContent = '';
+  renderDigestList();
+  renderDigestActions();
+}
+
+async function refreshDigests(selectId = selectedDigest?.id) {
+  loadBanner().catch(error => showToast('Falha ao carregar o banner', error.message, 'error'));
+  const payload = await fetchDigestJson();
+  digestSummaries = payload.digests || [];
+  const nextId = digestSummaries.some(digest => digest.id === selectId) ? selectId : digestSummaries[0]?.id;
+  renderDigestList();
+  if (nextId) await selectDigest(nextId);
+  else { selectedDigest = null; renderDigestActions(); }
+}
+
+const bannerSourceLabels = { default: 'Padrão', upload: 'Arquivo enviado', link: 'Link' };
+
+function bannerMode() {
+  return document.querySelector('input[name="banner-mode"]:checked')?.value || 'upload';
+}
+
+function syncBannerMode() {
+  const mode = bannerMode();
+  document.querySelector('#banner-upload-field').hidden = mode !== 'upload';
+  document.querySelector('#banner-link-field').hidden = mode !== 'link';
+}
+
+function renderBanner(banner) {
+  const image = document.querySelector('#banner-image');
+  image.src = banner.url;
+  image.alt = banner.alt || '';
+  image.hidden = false;
+  document.querySelector('#banner-empty').hidden = true;
+  const source = document.querySelector('#banner-source');
+  source.className = `status ${banner.source === 'default' ? 'pending' : 'delivered'}`;
+  source.textContent = bannerSourceLabels[banner.source] || banner.source;
+  document.querySelector('#banner-alt').value = banner.alt || '';
+  if (banner.source === 'link') document.querySelector('#banner-url').value = banner.url;
+  document.querySelector('#banner-reset').disabled = banner.source === 'default';
+}
+
+async function bannerRequest(method, body) {
+  const response = await fetch('/api/admin/email-banner', {
+    method,
+    headers: { Accept: 'application/json', ...(body ? { 'Content-Type': 'application/json' } : {}) },
+    body: body ? JSON.stringify(body) : undefined,
+    cache: 'no-store'
+  });
+  if (response.status === 401) { showLogin(); throw new Error('Sessão expirada.'); }
+  let payload;
+  try { payload = await response.json(); } catch { payload = {}; }
+  if (!response.ok) throw new Error(payload.error || 'Não foi possível salvar o banner.');
+  return payload.banner;
+}
+
+async function loadBanner() {
+  renderBanner(await bannerRequest('GET'));
+}
+
+function readFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(new Error('Não foi possível ler o arquivo.'));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function afterBannerChange(banner, message) {
+  renderBanner(banner);
+  document.querySelector('#banner-message').textContent = message;
+  showToast('Banner atualizado', message);
+  // The digest preview embeds the banner; refresh it so the change is visible.
+  if (selectedDigest) await selectDigest(selectedDigest.id).catch(() => {});
+}
+
+document.querySelectorAll('input[name="banner-mode"]').forEach(input => input.addEventListener('change', syncBannerMode));
+document.querySelector('#banner-file').addEventListener('change', event => {
+  document.querySelector('#banner-file-name').textContent = event.target.files[0]?.name || 'Nenhum arquivo escolhido';
+});
+
+document.querySelector('#banner-form').addEventListener('submit', async event => {
+  event.preventDefault();
+  const saveButton = document.querySelector('#banner-save');
+  const message = document.querySelector('#banner-message');
+  const alt = document.querySelector('#banner-alt').value.trim();
+  message.textContent = '';
+  try {
+    let body;
+    if (bannerMode() === 'link') {
+      const urlInput = document.querySelector('#banner-url');
+      if (!urlInput.value.trim() || !urlInput.reportValidity()) throw new Error('Informe o link https da imagem.');
+      body = { source: 'link', url: urlInput.value.trim(), alt };
+    } else {
+      const file = document.querySelector('#banner-file').files[0];
+      if (!file) throw new Error('Escolha um arquivo de imagem.');
+      if (!['image/png', 'image/jpeg', 'image/gif', 'image/webp'].includes(file.type)) throw new Error('Use uma imagem PNG, JPG, GIF ou WebP.');
+      if (file.size > 2 * 1024 * 1024) throw new Error('A imagem do banner deve ter no máximo 2 MB.');
+      body = { source: 'upload', dataBase64: await readFileAsDataUrl(file), alt };
+    }
+    saveButton.disabled = true;
+    message.textContent = 'Salvando o banner…';
+    const banner = await bannerRequest('PUT', body);
+    document.querySelector('#banner-file').value = '';
+    document.querySelector('#banner-file-name').textContent = 'Nenhum arquivo escolhido';
+    await afterBannerChange(banner, 'Os próximos e-mails usarão este banner.');
+  } catch (error) {
+    message.textContent = error.message;
+    showToast('Falha ao salvar o banner', error.message, 'error');
+  } finally {
+    saveButton.disabled = false;
+  }
+});
+
+document.querySelector('#banner-reset').addEventListener('click', async () => {
+  const message = document.querySelector('#banner-message');
+  try {
+    const banner = await bannerRequest('DELETE');
+    document.querySelector('#banner-url').value = '';
+    await afterBannerChange(banner, 'Banner padrão restaurado.');
+  } catch (error) {
+    message.textContent = error.message;
+    showToast('Falha ao restaurar o banner', error.message, 'error');
+  }
+});
+
+document.querySelector('#digest-refresh').addEventListener('click', () => {
+  const button = document.querySelector('#digest-refresh');
+  button.disabled = true;
+  refreshDigests().catch(error => showToast('Falha ao carregar resumos', error.message, 'error'))
+    .finally(() => { button.disabled = false; });
 });
 
 loadDashboard().catch(error => {

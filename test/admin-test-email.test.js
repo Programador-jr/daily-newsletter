@@ -12,7 +12,7 @@ function configurePreview(t, overrides = {}) {
   const previous = Object.fromEntries(environmentKeys.map(key => [key, process.env[key]]));
   Object.assign(process.env, {
     ADMIN_USERNAME: 'newsletter-admin',
-    ADMIN_PASSWORD: 'test-password',
+    ADMIN_PASSWORD: 'Test-Password-1',
     ADMIN_SESSION_SECRET: 'test-session-secret-with-more-than-32-characters',
     VERCEL_ENV: 'preview',
     VERCEL_GIT_COMMIT_REF: 'reconciliation/newsletter-r2-homepage',

@@ -367,7 +367,7 @@ html body main .ceap-month:disabled {
   width: 100%;
   min-height: 0;
   border-radius: inherit;
-  background: var(--lab-gain);
+  background: var(--tint-gain);
   transition: height 320ms cubic-bezier(.2, .8, .2, 1), background-color 160ms ease;
 }
 
@@ -395,12 +395,14 @@ html body main .ceap-month[aria-pressed="true"] .ceap-month-label {
   gap: .35rem;
   max-height: 320px;
   overflow-y: auto;
-  overscroll-behavior: contain;
   padding-right: .15rem;
 }
 
+/* A lista de partidos cresce com o conteúdo: não é um contêiner de rolagem,
+   então a roda do mouse sempre rola a página. */
 .annual-party-box .ceap-bar-list {
   max-height: none;
+  overflow: visible;
 }
 
 html body main .ceap-bar {
@@ -424,12 +426,12 @@ html body main .ceap-bar.is-static {
 
 html body main button.ceap-bar:hover {
   border-color: var(--border);
-  background: var(--lab-tint);
+  background: var(--tint);
 }
 
 html body main .ceap-bar[aria-pressed="true"] {
   border-color: var(--primary);
-  background: var(--lab-tint);
+  background: var(--tint);
 }
 
 .ceap-bar-copy {
@@ -494,7 +496,7 @@ html body main .ceap-bar[aria-pressed="true"] {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: var(--lab-gain);
+  background: var(--tint-gain);
 }
 
 .annual-ranking-card:first-child .annual-ranking-bar span {
@@ -553,7 +555,7 @@ html body main .ceap-bar[aria-pressed="true"] {
   height: 14px;
   margin-top: auto;
   border-radius: 999px;
-  background: var(--lab-gain);
+  background: var(--tint-gain);
   overflow: visible;
 }
 
@@ -576,11 +578,11 @@ html body main .ceap-bar[aria-pressed="true"] {
 }
 
 .pix-rule-result[data-state="below"] .lab-result-value {
-  color: var(--lab-warm);
+  color: var(--warm);
 }
 
 .pix-rule-result[data-state="below"] .pix-rule-meter span {
-  background: var(--lab-warm);
+  background: var(--warm);
 }
 
 @media (max-width: 860px) {
@@ -617,7 +619,7 @@ html body main .ceap-bar[aria-pressed="true"] {
 
 /* =====================================================================
    Consultas (Pix, individual e anual) — cartão de busca com seletores
-   pesquisáveis no padrão do Impostômetro (picker.css + option-picker.js)
+   pesquisáveis no padrão do Impostômetro (components.css + option-picker.js)
    ===================================================================== */
 
 .ceap-search {
@@ -626,7 +628,7 @@ html body main .ceap-bar[aria-pressed="true"] {
   gap: 1rem;
   padding: 1.25rem;
   border: 1px solid var(--border);
-  border-radius: var(--lab-radius);
+  border-radius: var(--radius-card);
   background:
   radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--primary) 6%, transparent), transparent 55%),
   var(--card-bg);
@@ -791,7 +793,7 @@ html body main .ceap-search-button:disabled i {
   padding: .5rem .85rem;
   border: 1px solid transparent;
   border-radius: 999px;
-  background: var(--lab-tint);
+  background: var(--tint);
   color: var(--text-main);
   font-size: .82rem;
   line-height: 1.4;
@@ -807,12 +809,12 @@ html body main .ceap-search-button:disabled i {
 }
 
 .ceap-search-status[data-state="error"] {
-  border-color: color-mix(in srgb, var(--lab-warm) 35%, transparent);
-  background: color-mix(in srgb, var(--lab-warm) 9%, var(--card-bg));
+  border-color: color-mix(in srgb, var(--warm) 35%, transparent);
+  background: color-mix(in srgb, var(--warm) 9%, var(--card-bg));
 }
 
 .ceap-search-status[data-state="error"] i {
-  color: var(--lab-warm);
+  color: var(--warm);
 }
 
 @keyframes ceap-search-pulse {
@@ -880,7 +882,7 @@ html body main .ceap-search-button:disabled i {
 
 .results-accordion {
   border: 1px solid var(--border);
-  border-radius: var(--lab-radius);
+  border-radius: var(--radius-card);
   background: var(--card-bg);
   box-shadow: 0 2px 8px rgb(16 36 32 / 4%);
   transition: border-color 180ms ease, box-shadow 220ms ease;
@@ -901,7 +903,7 @@ html body main .ceap-search-button:disabled i {
   justify-content: space-between;
   gap: 1rem;
   padding: .85rem 1rem;
-  border-radius: var(--lab-radius);
+  border-radius: var(--radius-card);
   list-style: none;
   cursor: pointer;
   transition: background-color 160ms ease;
@@ -912,12 +914,12 @@ html body main .ceap-search-button:disabled i {
 }
 
 .results-accordion > summary:hover {
-  background: var(--lab-tint);
+  background: var(--tint);
 }
 
 .results-accordion[open] > summary {
   border-bottom: 1px solid var(--border);
-  border-radius: var(--lab-radius) var(--lab-radius) 0 0;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
 }
 
 .results-accordion > summary:focus-visible {
@@ -997,7 +999,6 @@ html body main .ceap-search-button:disabled i {
 .ceap-table-wrap {
   max-height: min(560px, 72vh);
   overflow: auto;
-  overscroll-behavior: contain;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--bg-container);
@@ -1081,7 +1082,7 @@ html body main .ceap-search-button:disabled i {
 }
 
 .ceap-table tbody tr:not(.is-empty):hover td {
-  background: var(--lab-tint);
+  background: var(--tint);
 }
 
 .ceap-table .is-numeric {
@@ -1159,7 +1160,7 @@ html body main .ceap-table th button:focus-visible {
   padding: .2rem .55rem;
   border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
   border-radius: 999px;
-  background: var(--lab-tint);
+  background: var(--tint);
   color: var(--text-main);
   font-size: .72rem;
   font-weight: 600;
@@ -1197,7 +1198,7 @@ html body main .ceap-table th button:focus-visible {
 
 .pix-summary-item.is-total {
   border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
-  background: var(--lab-tint);
+  background: var(--tint);
 }
 
 /* Paginação */
@@ -1216,7 +1217,7 @@ html body main .ceap-table th button:focus-visible {
 .ceap-pager-label {
   padding: .35rem .85rem;
   border-radius: 999px;
-  background: var(--lab-tint);
+  background: var(--tint);
   color: var(--text-main);
   font-size: .8rem;
   font-weight: 700;

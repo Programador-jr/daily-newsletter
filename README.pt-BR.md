@@ -153,7 +153,7 @@ Acesse [http://localhost:3000](http://localhost:3000).
 | `R2_BUCKET_NAME` | Nome opcional do bucket R2; o padrão é `kings-newsletter-images`. |
 | `R2_PUBLIC_BASE_URL` | URL pública base das imagens enviadas ao R2. O ID da conta, o ID e o segredo da chave de acesso e a URL pública são necessários ao publicar uma notícia com imagem. |
 | `ADMIN_USERNAME` | Nome de usuário do painel administrativo privado. |
-| `ADMIN_PASSWORD` | Senha forte para o painel administrativo privado. |
+| `ADMIN_PASSWORD` | Senha do painel administrativo privado: no mínimo 8 caracteres, com uma letra maiúscula, um número e um caractere especial. O painel fica fechado enquanto a senha não atender a essas regras. |
 | `ADMIN_SESSION_SECRET` | Chave aleatória de assinatura, com pelo menos 32 caracteres, para as sessões administrativas. |
 | `PORT` | Porta local opcional do servidor; o padrão é `3000`. |
 
