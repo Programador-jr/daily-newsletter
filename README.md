@@ -153,7 +153,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | `R2_BUCKET_NAME` | Optional R2 bucket name; defaults to `kings-newsletter-images`. |
 | `R2_PUBLIC_BASE_URL` | Public base URL for uploaded R2 images. The account ID, access key ID, secret access key, and public base URL are required when publishing a story with an image. |
 | `ADMIN_USERNAME` | Username for the private administration panel. |
-| `ADMIN_PASSWORD` | Strong password for the private administration panel. |
+| `ADMIN_PASSWORD` | Password for the private administration panel: at least 8 characters, including an uppercase letter, a digit and a special character. The panel stays closed while it does not meet these rules. |
 | `ADMIN_SESSION_SECRET` | Random signing key of at least 32 characters for administrator sessions. |
 | `PORT` | Optional local server port; defaults to `3000`. |
 

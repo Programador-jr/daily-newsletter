@@ -18,7 +18,7 @@ function setTestEnvironment(t, { withMongo = true } = {}) {
   const previous = Object.fromEntries(envNames.map(name => [name, process.env[name]]));
   Object.assign(process.env, {
     ADMIN_USERNAME: 'dashboard-admin',
-    ADMIN_PASSWORD: 'testing-password-only',
+    ADMIN_PASSWORD: 'Testing-Password-1',
     ADMIN_SESSION_SECRET: 'testing-session-secret-with-at-least-32-characters'
   });
   if (withMongo) process.env.MONGODB_URI = 'mongodb://localhost/kings_newsletter_test';
