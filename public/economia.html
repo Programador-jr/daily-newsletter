@@ -8,16 +8,29 @@
   <meta name="description" content="Entenda os principais indicadores da economia brasileira, leia notícias e consulte fontes oficiais.">
   <meta name="theme-color" content="#064e46">
   <title>Economia — King's Newsletter</title>
+  <link rel="canonical" href="https://kingsnewsletter.com/economia">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="King's Newsletter">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="Economia — King's Newsletter">
+  <meta property="og:description" content="Entenda os principais indicadores da economia brasileira, leia notícias e consulte fontes oficiais.">
+  <meta property="og:url" content="https://kingsnewsletter.com/economia">
+  <meta property="og:image" content="https://kingsnewsletter.com/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/playfair-display-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/css/fonts.css">
-  <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="/css/editorial.css">
-  <link rel="stylesheet" href="/css/components.css">
-  <link rel="stylesheet" href="/css/labs.css">
-  <link rel="stylesheet" href="/css/economia.css">
-  <script src="/js/vercel-observability.js" defer></script>
-  <script src="/js/economia.js" defer></script>
+  <link rel="stylesheet" href="/css/fonts.css?v=20261109d">
+  <link rel="stylesheet" href="/css/styles.css?v=20261109e">
+  <link rel="stylesheet" href="/css/editorial.css?v=20261109d">
+  <link rel="stylesheet" href="/css/components.css?v=20261109d">
+  <link rel="stylesheet" href="/css/labs.css?v=20261109d">
+  <link rel="stylesheet" href="/css/economia.css?v=20261109d">
+  <script src="/js/vercel-observability.js?v=20261109" defer></script>
+  <script src="/js/option-picker.js?v=20261109" defer></script>
+  <script src="/js/number-field.js?v=20261109" defer></script>
+  <script src="/js/economia.js?v=20261109" defer></script>
 </head>
 <body class="editorial-page economy-page">
   <a class="skip-link" href="#main">Pular para o conteúdo</a>
@@ -308,7 +321,7 @@
             <span class="lab-kicker"><i class="fas fa-gauge-high" aria-hidden="true"></i> Arcabouço fiscal</span><h3>Simule um limite de despesa</h3>
             <p>Exemplo hipotético da regra de crescimento: parte da variação real da receita, com piso de 0,6% e teto de 2,5% para o crescimento real das despesas, conforme as condições legais.</p>
             <label for="revenue-growth">Variação real da receita (%)</label><div class="lab-range-pair"><input type="range" min="-5" max="8" step="0.1" value="3" data-sync="revenue-growth" aria-label="Variação real da receita, controle deslizante"><input id="revenue-growth" type="number" min="-20" max="20" step="0.1" value="3" inputmode="decimal"></div>
-            <label for="fiscal-target">Cumpriu a meta fiscal?</label><select id="fiscal-target"><option value="yes">Sim — proporção de 70%</option><option value="no">Não — proporção de 50%</option></select>
+            <label class="economy-picker-field"><span class="picker-label">Cumpriu a meta fiscal?</span><span class="picker-select"><i class="fas fa-scale-balanced picker-select-icon" aria-hidden="true"></i><select id="fiscal-target"><option value="yes" data-meta="70%">Sim, cumpriu a meta</option><option value="no" data-meta="50%">Não cumpriu a meta</option></select><i class="fas fa-chevron-down picker-select-chevron" aria-hidden="true"></i></span></label>
             <div class="economy-calculation-result" aria-live="polite"><span>Crescimento real ilustrativo</span><strong id="fiscal-result">2,1%</strong><small id="fiscal-explanation">70% de 3,0%, dentro do intervalo de 0,6% a 2,5%.</small><div class="economy-rule-band is-interactive" aria-hidden="true"><span class="economy-rule-band-range"></span><span class="economy-rule-band-marker" id="fiscal-marker"></span><small class="economy-rule-band-min">0,6%</small><small class="economy-rule-band-max">2,5%</small></div></div>
           </article>
         </div>
@@ -324,7 +337,7 @@
     </main>
     <div id="footer"></div>
   </div>
-  <script src="/js/sidebar.js"></script>
-  <script src="/js/footer.js"></script>
+  <script src="/js/sidebar.js?v=20261109"></script>
+  <script src="/js/footer.js?v=20261109"></script>
 </body>
 </html>
