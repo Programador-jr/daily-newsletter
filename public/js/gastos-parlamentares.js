@@ -578,6 +578,26 @@ annualPartyMore?.addEventListener('click',()=>{
 
 annualFilter?.addEventListener('input',()=>renderAnnualRows(annualRows));
 
+/* Rolagem encadeada: tabelas e listas têm rolagem própria, mas quando chegam
+   ao fim o mesmo gesto da roda continua rolando a página. Sem isto o navegador
+   "prende" o gesto na área interna até o usuário recomeçar a rolagem. */
+const SCROLL_AREAS='.ceap-table-wrap, .ceap-bar-list';
+document.addEventListener('wheel',event=>{
+  if(event.ctrlKey||Math.abs(event.deltaY)<=Math.abs(event.deltaX))return;
+  const area=event.target instanceof Element?event.target.closest(SCROLL_AREAS):null;
+  if(!area)return;
+  const max=area.scrollHeight-area.clientHeight;
+  if(max<=1)return;
+  const unit=event.deltaMode===1?16:event.deltaMode===2?window.innerHeight:1;
+  const delta=event.deltaY*unit;
+  const room=delta>0?max-area.scrollTop:-area.scrollTop;
+  // Ainda há espaço suficiente na área interna: deixa o navegador rolar.
+  if(Math.abs(room)>=Math.abs(delta)&&Math.abs(room)>1)return;
+  event.preventDefault();
+  area.scrollTop+=room;
+  window.scrollBy(0,delta-room);
+},{passive:false});
+
 /* Simulações educativas (CEAP e emendas Pix) */
 
 document.querySelectorAll('input[type="range"][data-sync]').forEach(range=>{

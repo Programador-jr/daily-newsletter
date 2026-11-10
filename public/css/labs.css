@@ -2,36 +2,6 @@
    painéis de laboratório, controles segmentados, chips, sliders, painéis de resultado,
    faixas de estatísticas e barras comparativas. Cada página carrega este arquivo antes do seu CSS. */
 
-:root {
-  --lab-tint: color-mix(in srgb, var(--primary) 9%, var(--card-bg));
-  --lab-tint-strong: color-mix(in srgb, var(--primary) 16%, var(--card-bg));
-  --lab-gain: color-mix(in srgb, var(--primary) 45%, var(--card-bg));
-  --lab-warm: #b4472f;
-  --lab-radius: 14px;
-}
-
-/* Ícone em chip, usado no topo de cartões e etapas. */
-.lab-icon {
-  display: grid;
-  flex: 0 0 auto;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 11px;
-  background: var(--lab-tint);
-  color: var(--primary);
-  font-size: 1rem;
-}
-
-/* Dentro de .card-grid > article, o chip não herda o estilo de rótulo dos <span>. */
-.card-grid > article > .lab-icon {
-  display: grid;
-  margin-bottom: .85rem;
-  color: var(--primary);
-  font-size: 1rem;
-  letter-spacing: 0;
-  text-transform: none;
-}
 
 /* Botões dos labs usam display próprio; o atributo hidden precisa continuar valendo. */
 html body main :is(.lab-chip, .lab-ghost-button, .lab-segmented button)[hidden] {
@@ -122,7 +92,7 @@ html body main :is(.lab-chip, .lab-ghost-button, .lab-segmented button)[hidden] 
 .lab-index a:hover,
 .lab-index a:focus-visible {
   border-color: var(--primary);
-  background: var(--lab-tint);
+  background: var(--tint);
 }
 
 .lab-heading h3 {
@@ -130,7 +100,7 @@ html body main :is(.lab-chip, .lab-ghost-button, .lab-segmented button)[hidden] 
 }
 
 html body .lab-panel {
-  border-radius: var(--lab-radius);
+  border-radius: var(--radius-card);
 }
 
 .lab-form-grid {
@@ -152,8 +122,7 @@ html body .lab-panel {
   font-weight: 700;
 }
 
-.lab-field input:not([type="range"]),
-.lab-range-pair input[type="number"] {
+.lab-field input:not([type="range"], [type="number"]) {
   width: 100%;
   min-width: 0;
   min-height: 42px;
@@ -175,7 +144,7 @@ html body .lab-panel {
 
 .lab-range-pair {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 6.2rem;
+  grid-template-columns: minmax(0, 1fr) 7rem;
   align-items: center;
   gap: .75rem;
   min-width: 0;
@@ -220,6 +189,11 @@ html body .lab-range-pair input[type="range"] {
 .lab-range-pair input[type="range"]:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 6px;
+}
+
+/* Chips de exemplos logo abaixo do título do painel. */
+.lab-heading + .lab-chip-group {
+  margin-bottom: 1rem;
 }
 
 .lab-chip-group {
@@ -283,7 +257,7 @@ html body main .lab-ghost-button span {
   padding: 1.1rem 1.2rem;
   border: 1px solid color-mix(in srgb, var(--primary) 25%, var(--border));
   border-radius: 12px;
-  background: linear-gradient(160deg, var(--lab-tint), var(--card-bg) 75%);
+  background: linear-gradient(160deg, var(--tint), var(--card-bg) 75%);
 }
 
 .lab-result-label {
@@ -353,7 +327,7 @@ html body main .lab-ghost-button span {
 }
 
 .lab-swatch.is-gain {
-  background: var(--lab-gain);
+  background: var(--tint-gain);
 }
 
 .lab-compare-bars {
@@ -379,7 +353,7 @@ html body main .lab-ghost-button span {
   width: 0;
   height: 12px;
   border-radius: 999px;
-  background: var(--lab-gain);
+  background: var(--tint-gain);
   transition: width 320ms cubic-bezier(.2, .8, .2, 1);
 }
 
@@ -449,7 +423,7 @@ html body main .lab-segmented button[aria-pressed="true"] {
 }
 
 .lab-split-bar .is-gain {
-  background: var(--lab-gain);
+  background: var(--tint-gain);
 }
 
 .lab-split-legend {
@@ -497,7 +471,7 @@ html body main .lab-segmented button[aria-pressed="true"] {
   }
 
   .lab-range-pair {
-    grid-template-columns: minmax(0, 1fr) 5.4rem;
+    grid-template-columns: minmax(0, 1fr) 6.2rem;
   }
 }
 
@@ -532,7 +506,7 @@ html body main .lab-segmented.is-compact button {
 
 .lab-stats > div.is-main {
   border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
-  background: linear-gradient(160deg, var(--lab-tint), var(--card-bg) 80%);
+  background: linear-gradient(160deg, var(--tint), var(--card-bg) 80%);
 }
 
 .lab-stats dt {

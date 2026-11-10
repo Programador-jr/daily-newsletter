@@ -97,6 +97,7 @@
   gap: 1rem;
   margin: 0 3rem 2.25rem;
   padding: 1.15rem 1.25rem;
+  border-radius: var(--radius-card);
 }
 
 .method-icon {
@@ -104,8 +105,8 @@
   width: 42px;
   height: 42px;
   place-items: center;
-  border-radius: 9px;
-  background: color-mix(in srgb, var(--primary) 9%, var(--bg-container));
+  border-radius: 11px;
+  background: var(--tint);
   color: var(--primary);
   font-size: 1rem;
 }
@@ -137,10 +138,13 @@
   justify-content: space-between;
   gap: 2rem;
   margin: 0 3rem 3rem;
-  padding: 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+  padding: 1.5rem 1.6rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 28%, var(--border));
+  border-radius: var(--radius-card);
+  background:
+    radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--primary) 12%, transparent), transparent 60%),
+    var(--tint);
+  box-shadow: var(--shadow-card);
 }
 
 .cta-banner h2 {
@@ -190,16 +194,22 @@
 }
 
 .card-grid > article {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   min-width: 0;
   padding: 1.25rem;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-card);
   background: var(--card-bg);
-  transition: border-color 180ms ease;
+  box-shadow: var(--shadow-card);
+  transition: border-color 180ms ease, box-shadow 220ms ease, transform 220ms ease;
 }
 
 .card-grid > article:hover {
   border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
 }
 
 .card-grid > article > span {
@@ -211,9 +221,31 @@
   text-transform: uppercase;
 }
 
-.card-grid > article > i {
+/* Ícone em chip: <i> direto no cartão ou <span class="lab-icon"> em qualquer lugar. */
+.card-grid > article > i,
+.lab-icon {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: var(--tint);
   color: var(--primary);
   font-size: 1rem;
+}
+
+.card-grid > article > :is(i, .lab-icon) {
+  display: grid;
+  margin-bottom: .85rem;
+  letter-spacing: 0;
+  text-transform: none;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.card-grid > article:hover > :is(i, .lab-icon) {
+  background: var(--primary);
+  color: var(--bg-body);
 }
 
 .card-grid h3 {
@@ -239,7 +271,9 @@
 
 .card-grid > article > a {
   display: inline-block;
-  margin-top: 0.85rem;
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 0.85rem;
   color: var(--primary);
   font-size: 0.78rem;
   font-weight: 600;
@@ -259,8 +293,15 @@
   gap: 1rem;
   padding: 1.15rem;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-card);
   background: var(--card-bg);
+  box-shadow: var(--shadow-card);
+  transition: border-color 180ms ease, box-shadow 220ms ease;
+}
+
+.step-list article:hover {
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+  box-shadow: var(--shadow-card-hover);
 }
 
 .step-list article > span {
@@ -269,8 +310,9 @@
   height: 32px;
   place-items: center;
   border-radius: 50%;
-  background: var(--primary);
-  color: #fff;
+  background: linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 70%, var(--card-bg)));
+  box-shadow: 0 0 0 4px var(--tint);
+  color: var(--bg-body);
   font-size: 0.75rem;
   font-weight: 700;
 }
@@ -293,15 +335,15 @@
 .callout,
 .accent-note {
   margin-top: 1.25rem;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 0.86rem;
   line-height: 1.65;
 }
 
 .callout {
   padding: 1rem 1.2rem;
-  border: 1px dashed var(--primary);
-  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+  border: 1px dashed color-mix(in srgb, var(--primary) 70%, var(--border));
+  background: var(--tint);
   color: var(--text-muted);
 }
 
@@ -309,7 +351,7 @@
   padding: 1.1rem 1.25rem;
   border: 1px solid var(--border);
   border-left: 3px solid var(--primary);
-  background: var(--card-bg);
+  background: linear-gradient(135deg, var(--tint), var(--card-bg) 65%);
   color: var(--text-muted);
 }
 
@@ -342,26 +384,59 @@
 .table-wrap {
   overflow-x: auto;
   margin-top: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-container);
+  box-shadow: var(--shadow-card);
 }
 
 .data-table {
   width: 100%;
   min-width: 650px;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 .data-table th,
 .data-table td {
-  padding: 1rem;
+  padding: 0.9rem 1rem;
   border-bottom: 1px solid var(--border);
   color: var(--text-muted);
   font-size: 0.86rem;
+  line-height: 1.55;
   text-align: left;
+  vertical-align: top;
+}
+
+.data-table thead th {
+  background: color-mix(in srgb, var(--primary) 7%, var(--bg-container));
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .data-table th {
   color: var(--text-main);
   font-weight: 700;
+}
+
+.data-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.data-table tbody tr:nth-child(even) > * {
+  background: color-mix(in srgb, var(--border) 16%, transparent);
+}
+
+.data-table tbody tr:hover > * {
+  background: var(--tint);
+}
+
+.data-table td:first-child {
+  color: var(--text-main);
+  font-weight: 600;
 }
 
 /* ACORDEÃO DE TÓPICOS — perguntas e aprofundamentos recolhíveis.
@@ -375,7 +450,7 @@
 .topic-accordion {
   overflow: hidden;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-card);
   background: var(--card-bg);
   box-shadow: 0 3px 12px rgb(25 31 40 / 4%);
   transition: border-color 180ms ease, box-shadow 180ms ease;
@@ -413,13 +488,27 @@
 }
 
 .topic-accordion summary i {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-container);
   color: var(--text-muted);
-  transition: color 180ms ease, transform 180ms ease;
+  font-size: 0.72rem;
+  transition: color 180ms ease, transform 220ms ease, border-color 180ms ease;
+}
+
+.topic-accordion summary:hover i {
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .topic-accordion[open] summary {
   border-bottom: 1px solid var(--border);
-  background: color-mix(in srgb, var(--primary) 5%, var(--card-bg));
+  background: var(--tint);
 }
 
 .topic-accordion[open] summary i {
@@ -555,9 +644,13 @@
 }
 
 .source-list a {
-  padding: 0.55rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.85rem;
   border: 1px solid var(--border);
-  border-radius: 7px;
+  border-radius: 999px;
+  background: var(--card-bg);
   color: var(--primary);
   text-decoration: none;
   font-size: 0.78rem;
@@ -567,14 +660,15 @@
 
 .source-list a:hover {
   border-color: var(--primary);
-  background: color-mix(in srgb, var(--primary) 5%, var(--bg-container));
+  background: var(--tint);
 }
 
 /* RESPONSIVO */
 
 @media (max-width: 1100px) {
+  /* Quatro cartões: 2 × 2 em vez de 3 + 1 sobrando. */
   .card-grid.cols-4 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .card-grid.cols-5 {
@@ -665,6 +759,15 @@
 @media (max-width: 640px) {
   .table-wrap {
     overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .data-table tbody tr:nth-child(even) > *,
+  .data-table tbody tr:hover > * {
+    background: none;
   }
 
   .data-table {
@@ -690,8 +793,9 @@
   .data-table tr {
     padding: 1rem 1.1rem;
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 12px;
     background: var(--card-bg);
+    box-shadow: var(--shadow-card);
   }
 
   .data-table tr + tr {
@@ -736,7 +840,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .card-grid > article:hover {
+    transform: none;
+  }
+
   .card-grid > article,
+  .card-grid > article > :is(i, .lab-icon),
+  .step-list article,
   .topic-accordion,
   .topic-accordion summary i,
   .filter-chip,
