@@ -6,6 +6,8 @@ const handlers = {
   'admin/logout': require('../lib/api-handlers/admin/logout'),
   'admin/schedule': require('../lib/api-handlers/admin/schedule'),
   'admin/updates': require('../lib/api-handlers/admin/updates'),
+  'admin/digests': require('../lib/api-handlers/admin/digests'),
+  'admin/email-banner': require('../lib/api-handlers/admin/email-banner'),
   'worker/config': require('../lib/api-handlers/worker/config'),
   'worker/heartbeat': require('../lib/api-handlers/worker/heartbeat'),
   'updates/active': require('../lib/api-handlers/updates/active')

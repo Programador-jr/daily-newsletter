@@ -48,6 +48,14 @@
       "destination": "/api/control?route=admin/updates"
     },
     {
+      "source": "/api/admin/digests",
+      "destination": "/api/control?route=admin/digests"
+    },
+    {
+      "source": "/api/admin/email-banner",
+      "destination": "/api/control?route=admin/email-banner"
+    },
+    {
       "source": "/api/updates/active",
       "destination": "/api/control?route=updates/active"
     },
@@ -110,6 +118,8 @@
     },
     { "source": "/como-fiscalizar", "destination": "/como-fiscalizar.html" },
     { "source": "/about", "destination": "/about.html" },
+    { "source": "/privacidade", "destination": "/privacidade.html" },
+    { "source": "/termos", "destination": "/termos.html" },
     { "source": "/admin", "destination": "/admin.html" },
     {
       "source": "/subscription-status",
@@ -117,5 +127,3 @@
     }
   ]
 }
-    { "source": "/privacidade", "destination": "/privacidade.html" },
-    { "source": "/termos", "destination": "/termos.html" },
