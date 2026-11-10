@@ -1,0 +1,156 @@
+/* PÁGINAS LEGAIS — Privacidade e Termos de Uso. Estilos exclusivos destas páginas. */
+
+.legal {
+  padding: 2rem 3rem 4rem;
+  border-top: 1px solid var(--border);
+}
+
+.legal-content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.legal-content > .eyebrow,
+.legal h1,
+.legal-updated {
+  text-align: center;
+}
+
+.legal h1 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2rem;
+  margin: 0.5rem 0 0.5rem;
+}
+
+.legal-updated {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0 0 2rem;
+}
+
+.legal h2 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.35rem;
+  margin: 2.5rem 0 0.75rem;
+  scroll-margin-top: 1.5rem;
+}
+
+.legal h3 {
+  font-size: 1rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.legal p,
+.legal li {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.legal p {
+  margin: 0 0 1rem;
+}
+
+.legal ul {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+}
+
+.legal li {
+  margin-bottom: 0.4rem;
+}
+
+.legal strong {
+  color: var(--text-main);
+}
+
+.legal a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal-toc {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 0 0 2rem;
+}
+
+.legal-toc strong {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.legal-toc ol {
+  margin: 0;
+  padding-left: 1.25rem;
+  columns: 2;
+  column-gap: 2rem;
+}
+
+.legal-toc li {
+  margin-bottom: 0.25rem;
+  break-inside: avoid;
+}
+
+.legal-table-wrap {
+  overflow-x: auto;
+  margin: 0 0 1rem;
+}
+
+.legal table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.legal th,
+.legal td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.legal th {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .legal {
+    padding: 2rem 1.25rem 2.5rem;
+  }
+
+  .legal-toc ol {
+    columns: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .legal thead {
+    display: none;
+  }
+
+  .legal tr {
+    display: block;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .legal td {
+    display: block;
+    padding: 0.2rem 0;
+    border: 0;
+  }
+
+  .legal td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+}

@@ -193,6 +193,14 @@ app.get('/admin', (req, res) => {
 });
 
 app.use((req, res) => {
+app.get('/privacidade', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/privacidade.html'));
+});
+
+app.get('/termos', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/termos.html'));
+});
+
   res.status(404).sendFile(path.join(__dirname, 'public/404.html'));
 });
 
