@@ -269,8 +269,6 @@ The script verifies that current aggregation results match the Node-side baselin
 
 The project is configured for [Vercel](https://vercel.com/) and uses MongoDB for persistent data. Before deploying, add the required environment variables in the Vercel project settings. Set `APP_URL` to the public production URL so email links point to the correct site.
 
-After editing any file in `public/css` or `public/js`, run `npm run assets:stamp`. It adds a content hash (`?v=…`) to every CSS/JS reference in the pages and scripts. Cloudflare, in front of Vercel, keeps CSS and JS in visitors' browsers for 4 hours, so without a new URL returning visitors would get the new HTML with old styles and scripts. `npm test` fails if a version is out of date.
-
 ## Contributing
 
 Bug reports, ideas, and improvements are welcome. Please [open an issue](https://github.com/Programador-jr/daily-newsletter/issues) to discuss larger changes before submitting a pull request. Run `npm test` and `npm run lint` before submitting changes.

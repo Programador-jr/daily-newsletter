@@ -15,6 +15,49 @@
   let navigationShowTimer = null;
   let skeletonRefreshQueued = false;
 
+  // Cada seção do site ganha uma vinheta própria sob a coroa: o leitor vê para
+  // onde está indo (ou onde está) enquanto a página carrega.
+  const THEMES = [
+    { key: "history", label: "História", match: /^\/(historia|presidentes)(\/|$)/ },
+    { key: "axes", label: "12 Eixos", match: /^\/(teste-politico|resultado-politico|results-12axes|catalogo-politico|personalidades|paises|partidos|comparar)(\/|$)/ },
+    { key: "politics", label: "Política", match: /^\/(politica|ideologias|livros|fascismo-nazismo)(\/|$)/ },
+    { key: "state", label: "Estado brasileiro", match: /^\/(como-funciona-estado|estado-brasileiro|tres-poderes|cargos-publicos|politicas-publicas)(\/|$)/ },
+    { key: "chart", label: "Economia", match: /^\/(economia|economy)(\/|$)/ },
+    { key: "chart", label: "Dados públicos", match: /^\/(arrecadacao|impostometro|gastometro|gastos-publicos|gastos-parlamentares|como-fiscalizar)(\/|$)/ },
+    { key: "sports", label: "Esportes", match: /^\/sports(\/|$)/ },
+    { key: "news", label: "Edições", match: /^\/(editions|weekly)(\/|$)/ }
+  ];
+  const DEFAULT_THEME = { key: "news", label: "King's Newsletter" };
+
+  // Vinhetas em SVG puro: aparecem antes de qualquer fonte de ícones carregar.
+  const GLYPHS = {
+    news: `<rect class="pl-line" x="6" y="5" width="36" height="3" rx="1.5"/><rect class="pl-line" x="6" y="11" width="30" height="3" rx="1.5"/><rect class="pl-line" x="6" y="17" width="22" height="3" rx="1.5"/>`,
+    chart: `<path class="pl-axis" d="M5 21H43"/><rect class="pl-bar" x="9" y="11" width="5" height="9" rx="1"/><rect class="pl-bar" x="18" y="7" width="5" height="13" rx="1"/><rect class="pl-bar" x="27" y="13" width="5" height="7" rx="1"/><rect class="pl-bar" x="36" y="3" width="5" height="17" rx="1"/>`,
+    history: `<path class="pl-axis" d="M4 14H44"/><circle class="pl-tick" cx="10" cy="14" r="1.6"/><circle class="pl-tick" cx="20" cy="14" r="1.6"/><circle class="pl-tick" cx="30" cy="14" r="1.6"/><circle class="pl-tick" cx="40" cy="14" r="1.6"/><circle class="pl-cursor" cx="10" cy="14" r="3.6"/>`,
+    politics: `<path class="pl-axis" d="M24 5V21M17 21H31"/><g class="pl-beam"><path class="pl-axis" d="M10 8H38"/><path class="pl-pan" d="M6 14a4 2.4 0 0 0 8 0Z"/><path class="pl-pan" d="M34 14a4 2.4 0 0 0 8 0Z"/><path class="pl-thin" d="M10 8 6 14M10 8l4 6M38 8l-4 6M38 8l4 6"/></g>`,
+    state: `<path class="pl-pan" d="M8 8 24 2l16 6Z"/><rect class="pl-column" x="11" y="10" width="4" height="9"/><rect class="pl-column" x="22" y="10" width="4" height="9"/><rect class="pl-column" x="33" y="10" width="4" height="9"/><path class="pl-axis" d="M7 21H41"/>`,
+    axes: `<circle class="pl-ring" cx="24" cy="12" r="9.5"/><path class="pl-thin" d="M24 2.5v3M24 18.5v3M14.5 12h3M30.5 12h3"/><g class="pl-needle"><path class="pl-pan" d="M24 5.5 26.2 12h-4.4Z"/><path class="pl-tick" d="M24 18.5 21.8 12h4.4Z"/></g>`,
+    sports: `<ellipse class="pl-shadow" cx="24" cy="21.5" rx="6" ry="1.4"/><g class="pl-ball"><circle class="pl-ring" cx="24" cy="9" r="6"/><path class="pl-pan" d="m24 6.2 2.6 1.9-1 3h-3.2l-1-3Z"/></g>`
+  };
+
+  const normalizePath = pathname => (pathname || "/").replace(/\.html$/, "").replace(/\/index$/, "/").replace(/(.)\/$/, "$1");
+  const themeFor = pathname => {
+    const path = normalizePath(pathname);
+    return THEMES.find(theme => theme.match.test(path)) || DEFAULT_THEME;
+  };
+
+  const applyTheme = (overlay, pathname) => {
+    const theme = themeFor(pathname);
+    if (overlay.dataset.loaderTheme === theme.key && overlay.dataset.loaderLabel === theme.label) return;
+    overlay.dataset.loaderTheme = theme.key;
+    overlay.dataset.loaderLabel = theme.label;
+    overlay.setAttribute("aria-label", `Carregando ${theme.label}`);
+    const glyph = overlay.querySelector(".page-loading-glyph");
+    const label = overlay.querySelector(".page-loading-label");
+    if (glyph) glyph.innerHTML = GLYPHS[theme.key] || GLYPHS.news;
+    if (label) label.textContent = theme.label;
+  };
+
   const getOverlay = () => {
     let overlay = document.getElementById(OVERLAY_ID);
     if (overlay) return overlay;
@@ -36,14 +79,20 @@
           <path class="page-loading-crown-track" d="M513 1540H1418"/>
           <path class="page-loading-crown-progress" d="M513 1540H1418" pathLength="100"/>
         </svg>
+      </div>
+      <div class="page-loading-section" aria-hidden="true">
+        <svg class="page-loading-glyph" viewBox="0 0 48 24" focusable="false"></svg>
+        <span class="page-loading-label"></span>
       </div>`;
 
     (document.body || document.documentElement).append(overlay);
+    applyTheme(overlay, window.location.pathname);
     return overlay;
   };
 
-  const show = () => {
+  const show = pathname => {
     const overlay = getOverlay();
+    applyTheme(overlay, pathname || window.location.pathname);
     overlay.classList.remove("is-hidden");
     overlay.setAttribute("aria-hidden", "false");
     document.documentElement.classList.add("page-loader-active");
@@ -56,17 +105,21 @@
     navigationShowTimer = null;
   };
 
-  const showForNavigation = () => {
+  let pendingNavigationPath = null;
+
+  const showForNavigation = pathname => {
     clearNavigationTimer();
+    if (typeof pathname === "string") pendingNavigationPath = pathname;
     navigationShowTimer = window.setTimeout(() => {
       navigationShowTimer = null;
-      show();
+      show(pendingNavigationPath || window.location.pathname);
       navigationTimer = window.setTimeout(hide, NAVIGATION_TIMEOUT);
     }, NAVIGATION_SHOW_DELAY);
   };
 
   const hide = () => {
     clearNavigationTimer();
+    pendingNavigationPath = null;
     const overlay = getOverlay();
     overlay.classList.add("is-hidden");
     overlay.setAttribute("aria-hidden", "true");
@@ -188,19 +241,22 @@
     // Decide depois que todos os handlers rodaram: cards e fichas usam links
     // reais, mas abrem o conteúdo na própria página com preventDefault().
     window.setTimeout(() => {
-      if (!event.defaultPrevented) showForNavigation();
+      if (!event.defaultPrevented) showForNavigation(anchor.pathname);
     }, 0);
   }, true);
 
-  window.addEventListener("beforeunload", showForNavigation);
+  window.addEventListener("beforeunload", () => showForNavigation());
   window.addEventListener("pageshow", event => {
     // Voltar/avançar pode restaurar a página do cache com o overlay da saída.
-    if (event.persisted) hide();
+    if (event.persisted) {
+      pendingNavigationPath = null;
+      hide();
+    }
     finishInitialLoad();
   });
 
   if (!initialLoadFinished) fallbackTimer = window.setTimeout(finishInitialLoad, FALLBACK_TIMEOUT);
 
-  window.pageLoader = Object.freeze({ show, hide, ready: finishInitialLoad });
+  window.pageLoader = Object.freeze({ show: () => show(), hide, ready: finishInitialLoad });
   window.pageSkeleton = Object.freeze({ refresh: refreshSkeletons });
 })();

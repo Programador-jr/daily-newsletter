@@ -85,6 +85,7 @@
     },
     { "source": "/editions", "destination": "/editions.html" },
     { "source": "/weekly", "destination": "/weekly.html" },
+    { "source": "/resumo-diario", "destination": "/resumo-diario.html" },
     { "source": "/historia", "destination": "/historia.html" },
     { "source": "/presidentes", "destination": "/presidentes.html" },
     { "source": "/ideologias", "destination": "/ideologias.html" },

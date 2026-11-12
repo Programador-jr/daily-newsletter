@@ -10,12 +10,19 @@ async function loadHTML(elementId, filePath) {
 
 function markCurrentFooterLink() {
   const current = window.location.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
-  document.querySelectorAll('#footer .footer-legal a').forEach(link => {
+  document.querySelectorAll('#footer nav a').forEach(link => {
     if (link.getAttribute('href') === current) link.setAttribute('aria-current', 'page');
+  });
+}
+
+function stampFooterYear() {
+  document.querySelectorAll('#footer [data-footer-year]').forEach(node => {
+    node.textContent = String(new Date().getFullYear());
   });
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
   await loadHTML('footer', 'footer.html');
   markCurrentFooterLink();
+  stampFooterYear();
 });   

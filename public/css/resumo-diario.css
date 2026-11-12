@@ -1,0 +1,53 @@
+/* O Dia em Perspectiva — apenas o que é exclusivo do resumo diário.
+   Capa, arquivo, sumário e texto corrido vêm de weekly.css (mesma família
+   de leitura); aqui ficam a capa com o dia, o número de ordem das notícias
+   e as imagens com legenda e crédito. Cores sempre por tokens do tema. */
+
+.daily-cover .weekly-cover-number {
+  font-variant-numeric: tabular-nums;
+}
+
+.daily-rank {
+  display: inline-block;
+  min-width: 2.1em;
+  margin-right: 0.55rem;
+  color: var(--text-muted);
+  font-size: 0.82em;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.daily-figure {
+  margin: 0 0 1.1rem;
+}
+
+.daily-figure img {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-container);
+}
+
+.daily-figure figcaption {
+  display: grid;
+  gap: 0.2rem;
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.daily-figure-credit {
+  font-size: 0.72rem;
+  opacity: 0.85;
+}
+
+@media (max-width: 640px) {
+  .daily-figure img {
+    max-height: 260px;
+    border-radius: 8px;
+  }
+}
