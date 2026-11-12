@@ -1857,9 +1857,9 @@
 
 .compare-explainer-head {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: .5rem 2rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .5rem;
   margin-bottom: 1.5rem;
 }
 
@@ -1871,7 +1871,7 @@
 }
 
 .compare-explainer-head p {
-  max-width: 420px;
+  max-width: 720px;
   margin: 0;
   color: var(--text-muted);
   font-size: .82rem;
@@ -1963,11 +1963,6 @@
 
   .compare-results-head,
   .compare-section-head,
-  .compare-explainer-head {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
   .compare-section-note,
   .compare-explainer-head p {
     max-width: none;

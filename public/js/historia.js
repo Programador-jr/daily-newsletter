@@ -152,9 +152,9 @@ const periods = [
       { name: "Dilma Rousseff", years: "2011–2016", role: "Presidenta", achievements: ["Expansão de programas sociais e de infraestrutura", "Políticas de ampliação do acesso à educação e moradia"], controversies: ["Recessão e crise fiscal", "Impeachment concluído em 2016, formalmente relacionado a decretos orçamentários e atrasos em repasses; a interpretação jurídica e política do processo é objeto de debate"] },
       { name: "Michel Temer", years: "2016–2019", role: "Presidente", achievements: ["Reforma trabalhista", "Teto de gastos instituído pela Emenda Constitucional 95", "Medidas de ajuste fiscal"], controversies: ["Denúncias apresentadas pela Procuradoria-Geral da República em 2017; a Câmara dos Deputados barrou a autorização para processá-lo enquanto ocupava a Presidência", "Controvérsias sobre reformas e austeridade"] },
       { name: "Jair Bolsonaro", years: "2019–2023", role: "Presidente", achievements: ["Reforma da Previdência", "Marco legal de alguns setores de infraestrutura", "Auxílio emergencial durante a pandemia"], controversies: ["Condução e conflitos políticos durante a pandemia de COVID-19", "Questionamentos públicos sobre o sistema eleitoral; o TSE confirmou o resultado oficial da eleição de 2022"] },
-      { name: "Luiz Inácio Lula da Silva", years: "2023–atualidade", role: "Presidente", achievements: ["Retomada e criação de programas e políticas federais", "Reforma tributária aprovada durante o mandato", "Atuação internacional em fóruns multilaterais"], controversies: ["Debates sobre política fiscal e gastos públicos", "Conflitos políticos e divergências sobre prioridades econômicas e sociais"] }
+      { name: "Luiz Inácio Lula da Silva", years: "2023–atualidade", role: "Presidente", achievements: ["Retomada e criação de programas e políticas federais", "Reforma tributária aprovada e regulamentada durante o mandato", "Isenção do Imposto de Renda para rendas de até R$ 5 mil mensais, em vigor desde 2026", "Reeleição em 2026 para um quarto mandato, a partir de 2027"], controversies: ["Debates sobre política fiscal e gastos públicos", "Conflitos políticos e divergências sobre prioridades econômicas e sociais"] }
     ],
-    events: ["Constituição de 1988", "Plano Real (1994)", "Impeachment de Fernando Collor (1992)", "Impeachment de Dilma Rousseff (2016)", "Pandemia de COVID-19", "Eleição presidencial de 2022"]
+    events: ["Constituição de 1988", "Plano Real (1994)", "Impeachment de Fernando Collor (1992)", "Impeachment de Dilma Rousseff (2016)", "Pandemia de COVID-19", "Eleição presidencial de 2022", "Ataques de 8 de janeiro de 2023", "Condenação de Jair Bolsonaro pelo STF (2025)", "Eleição presidencial de 2026"]
   }
 ];
 
@@ -421,7 +421,7 @@ const periodNarratives = {
       ],
       [
         "Brasil contemporâneo",
-        "Luiz Inácio Lula da Silva voltou à Presidência em 2023. O período atual inclui a reforma tributária aprovada pelo Congresso, políticas de transição e investimentos, além de disputas políticas e institucionais. A história da Nova República continua em andamento, portanto acontecimentos recentes devem ser tratados como fatos contemporâneos, sujeitos a novas informações e interpretações."
+        "Luiz Inácio Lula da Silva voltou à Presidência em 2023. O período inclui os ataques de 8 de janeiro de 2023 às sedes dos Três Poderes, a reforma tributária e sua regulamentação, a condenação de Jair Bolsonaro pelo STF por tentativa de golpe de Estado, em 2025, e a reeleição de Lula em outubro de 2026 para um quarto mandato, que começa em 5 de janeiro de 2027. A história da Nova República continua em andamento, portanto acontecimentos recentes devem ser tratados como fatos contemporâneos, sujeitos a novas informações e interpretações."
       ]
     ]
   }
@@ -575,7 +575,7 @@ const chapters = [
       ["A eleição direta e a crise de Collor", "Em 1989, os brasileiros voltaram a eleger diretamente o presidente. Fernando Collor assumiu em 1990 com um programa de abertura econômica e estabilização, mas seu governo foi atingido por uma crise política que resultou no impeachment em 1992. Itamar Franco assumiu e conduziu a transição seguinte."],
       ["A estabilização monetária", "O Plano Real, lançado durante o governo Itamar Franco, reorganizou a política monetária e criou uma nova moeda em 1994. Fernando Henrique Cardoso foi eleito naquele ano e governou entre 1995 e 2003, com continuidade da estabilidade monetária, reformas, privatizações e expansão de políticas sociais."],
       ["Os governos do século XXI", "Luiz Inácio Lula da Silva governou de 2003 a 2011, seguido por Dilma Rousseff, de 2011 a 2016. Nesse período houve expansão de políticas sociais, mudanças econômicas e crescimento do acesso a serviços e educação, além de crises políticas e investigações de corrupção. Dilma deixou o cargo após processo de impeachment em 2016."],
-      ["2016 em diante", "Michel Temer governou até 2019. Jair Bolsonaro presidiu de 2019 a 2023, período marcado por disputas políticas intensas e pela pandemia de COVID-19. Em 2023, Lula iniciou seu terceiro mandato. A etapa recente inclui debates sobre política fiscal, programas sociais, meio ambiente, reforma tributária e a relação entre Executivo, Congresso e demais instituições."],
+      ["2016 em diante", "Michel Temer governou até 2019. Jair Bolsonaro presidiu de 2019 a 2023, período marcado por disputas políticas intensas e pela pandemia de COVID-19. Em 2023, Lula iniciou seu terceiro mandato e, em 2026, foi reeleito para um quarto. A etapa recente inclui os ataques de 8 de janeiro de 2023, a condenação de Bolsonaro pelo STF em 2025, debates sobre política fiscal, programas sociais, meio ambiente, reforma tributária e a relação entre Executivo, Congresso e demais instituições."],
       ["Uma história ainda em andamento", "A Nova República não é um período encerrado. Seus acontecimentos mais recentes ainda são objeto de documentação, pesquisa e disputa interpretativa. Por isso, a seção distingue fatos institucionais de interpretações e evita apresentar controvérsias contemporâneas como conclusões definitivas."]
     ]
   }
@@ -967,13 +967,14 @@ deepDives.push(
     ]
   },
   {
-    id: "reforma-tributaria-2023", period: "nova-republica", year: "2023–2024", title: "A reforma tributária do consumo",
+    id: "reforma-tributaria-2023", period: "nova-republica", year: "2023–2026", title: "A reforma tributária do consumo",
     summary: "A Emenda Constitucional 132 mudou a estrutura constitucional da tributação sobre o consumo e abriu uma longa etapa de regulamentação.",
     sections: [
       ["O problema histórico", "O sistema brasileiro de tributação sobre o consumo era composto por vários tributos distribuídos entre União, estados e municípios, com regras complexas e diferentes bases de incidência."],
       ["A aprovação", "Em dezembro de 2023, o Congresso promulgou a Emenda Constitucional 132. O texto criou bases constitucionais para um novo modelo de tributação sobre o consumo."],
       ["O novo modelo", "A reforma estabeleceu o Imposto sobre Bens e Serviços, de competência compartilhada entre estados e municípios, e a Contribuição sobre Bens e Serviços, federal, além do Imposto Seletivo. A implementação foi planejada de forma gradual."],
-      ["Regulamentação", "Em 2024 e nos anos seguintes, leis complementares passaram a detalhar alíquotas, regimes específicos, cashback, transição e funcionamento dos novos tributos. A mudança, portanto, não se encerrou na aprovação da emenda constitucional."]
+      ["Regulamentação", "A Lei Complementar 214, sancionada em janeiro de 2025, regulamentou o IBS, a CBS e o Imposto Seletivo. Em janeiro de 2026, a Lei Complementar 227 alterou o texto e estruturou o Comitê Gestor do IBS. A mudança, portanto, não se encerrou na aprovação da emenda constitucional."],
+      ["A transição", "2026 é o ano de teste: a CBS (0,9%) e o IBS (0,1%) aparecem nas notas fiscais, mas os valores são compensados com PIS e Cofins. A CBS passa a valer integralmente em 2027, e o ICMS e o ISS deixam de existir em 2033."]
     ]
   }
 );
@@ -1032,7 +1033,10 @@ const restoredMilestones = [
   { year: "2020", title: "Pandemia de COVID-19", description: "A pandemia provoca uma crise sanitária, econômica e social de grande escala no Brasil.", period: "nova-republica" },
   { year: "2022", title: "Eleição presidencial", description: "Luiz Inácio Lula da Silva é eleito para um terceiro mandato presidencial, iniciado em 2023.", period: "nova-republica" },
   { year: "2023", title: "Início do terceiro governo Lula", description: "Luiz Inácio Lula da Silva assume novamente a Presidência da República.", period: "nova-republica" },
-  { year: "2023–2024", title: "Reforma tributária", description: "O Congresso aprova a Emenda Constitucional nº 132, que altera a estrutura da tributação sobre o consumo.", period: "nova-republica" }
+  { year: "2023", title: "Ataques de 8 de janeiro", description: "Apoiadores de Jair Bolsonaro invadem e depredam as sedes do Congresso, do Planalto e do STF, em Brasília.", period: "nova-republica" },
+  { year: "2023–2026", title: "Reforma tributária", description: "A Emenda Constitucional nº 132 e a Lei Complementar nº 214/2025 reorganizam a tributação sobre o consumo; a transição começa em 2026.", period: "nova-republica" },
+  { year: "2025", title: "Condenação de Bolsonaro pelo STF", description: "A Primeira Turma do STF condena Jair Bolsonaro a 27 anos e 3 meses de prisão por tentativa de golpe de Estado.", period: "nova-republica" },
+  { year: "2026", title: "Eleição presidencial de 2026", description: "Lula vence Flávio Bolsonaro no segundo turno e é reeleito para um quarto mandato, a partir de 2027.", period: "nova-republica" }
 ];
 
 const milestoneDeepDiveMap = {
@@ -1045,7 +1049,7 @@ const milestoneDeepDiveMap = {
   "1964|Ruptura institucional":"ruptura-1964","1968|AI-5":"ai5-1968","1979|Lei da Anistia":"anistia-1979","1983–1984|Diretas Já":"diretas-1984",
   "1992|Impeachment de Fernando Collor":"collor-1992","1994|Plano Real":"plano-real-1994","2003|Início do primeiro governo Lula":"eleicao-2002",
   "2016|Impeachment de Dilma Rousseff":"dilma-2016","2020|Pandemia de COVID-19":"pandemia-2020","2022|Eleição presidencial":"eleicao-2022",
-  "2023–2024|Reforma tributária":"reforma-tributaria-2023"
+  "2023–2026|Reforma tributária":"reforma-tributaria-2023"
 };
 
 const milestoneDetails = {
@@ -1074,6 +1078,9 @@ const milestoneDetails = {
   "Primeira eleição presidencial direta desde 1960":[["Retorno das diretas","Em 1989, os brasileiros voltaram a escolher diretamente o presidente da República."],["Campanha","A eleição reuniu grande número de candidatos e teve segundo turno entre Fernando Collor e Luiz Inácio Lula da Silva."],["Resultado","Collor venceu e tomou posse em março de 1990."],["Significado","A eleição completou uma etapa central da redemocratização."]],
   "Início do primeiro governo Lula":[["Eleição","Lula venceu a eleição presidencial de 2002 e tomou posse em janeiro de 2003."],["Economia","O governo manteve inicialmente pilares de estabilidade macroeconômica."],["Políticas sociais","Programas de transferência de renda foram integrados e ampliados, com destaque para o Bolsa Família."],["Contexto","O período também foi marcado por crescimento econômico em parte dos anos e grandes crises políticas."]],
   "Eleição de Dilma Rousseff":[["Eleição","Dilma Rousseff foi eleita em 2010 e tomou posse em 2011, tornando-se a primeira mulher na Presidência."],["Primeiro mandato","O governo deu continuidade a políticas sociais e econômicas e enfrentou as manifestações de 2013."],["Segundo mandato","A reeleição de 2014 ocorreu em ambiente de desaceleração econômica e forte polarização."],["Crise","A crise política e econômica se aprofundou até o processo de impeachment em 2016."]],
+  "Ataques de 8 de janeiro":[["O que aconteceu","Em 8 de janeiro de 2023, uma semana após a posse de Lula, apoiadores de Jair Bolsonaro que não aceitavam o resultado da eleição invadiram e depredaram o Palácio do Planalto, o Congresso Nacional e o Supremo Tribunal Federal."],["A resposta","O governo federal decretou intervenção na segurança pública do Distrito Federal. Centenas de pessoas foram presas, e o STF passou a julgar os envolvidos."],["Desdobramentos","As investigações sobre os ataques se ligaram à apuração de uma trama para impedir a posse do presidente eleito, que levou à denúncia de Bolsonaro e de aliados em 2025."]],
+  "Condenação de Bolsonaro pelo STF":[["A acusação","A Procuradoria-Geral da República denunciou Jair Bolsonaro e aliados por tentativa de golpe de Estado, organização criminosa armada, abolição violenta do Estado Democrático de Direito e dano ao patrimônio público."],["O julgamento","Em 11 de setembro de 2025, a Primeira Turma do STF condenou Bolsonaro, por 4 votos a 1, a 27 anos e 3 meses de prisão, a pena mais alta entre os réus do núcleo central."],["O cumprimento","Os recursos foram rejeitados e, em 25 de novembro de 2025, o processo transitou em julgado. Bolsonaro e outros condenados começaram a cumprir pena em regime fechado."],["Por que é um marco","Foi a primeira vez que um ex-presidente brasileiro foi condenado por tentativa de golpe de Estado."]],
+  "Eleição presidencial de 2026":[["A disputa","Em 2026, Lula buscou a reeleição. Com Jair Bolsonaro inelegível, o senador Flávio Bolsonaro (PL) foi o principal candidato da oposição."],["O primeiro turno","Flávio Bolsonaro terminou o primeiro turno, em 4 de outubro, à frente de Lula, mas nenhum candidato alcançou a maioria absoluta dos votos válidos."],["O segundo turno","Em 25 de outubro de 2026, Lula venceu com cerca de 51,8% dos votos válidos, contra 48,2% de Flávio Bolsonaro."],["O novo mandato","Lula, com Geraldo Alckmin como vice, inicia o quarto mandato em 5 de janeiro de 2027, a primeira posse presidencial na data definida pela Emenda Constitucional 111/2021."]],
   "Início do terceiro governo Lula":[["Eleição","Lula venceu a eleição presidencial de 2022 e tomou posse em 1º de janeiro de 2023."],["Novo contexto","O governo encontrou Congresso fragmentado e sociedade politicamente polarizada."],["Temas","Políticas sociais, meio ambiente, investimento e política fiscal estiveram entre os temas centrais."],["Reforma tributária","Em 2023, a Emenda Constitucional 132 alterou a tributação sobre o consumo."]]
 };
 

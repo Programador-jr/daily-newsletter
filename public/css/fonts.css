@@ -47,14 +47,14 @@
   font-style: normal;
   font-weight: 900;
   font-display: block;
-  src: url("/fonts/fa-solid-900.5f8e803ed6.woff2") format("woff2"); }
+  src: url("/fonts/fa-solid-900.ba5880ab23.woff2") format("woff2"); }
 
 @font-face {
   font-family: "Font Awesome 6 Free";
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url("/fonts/fa-regular-400.b1fe310007.woff2") format("woff2"); }
+  src: url("/fonts/fa-regular-400.7dd0cc55b5.woff2") format("woff2"); }
 
 .fas,
 .fa-solid {
@@ -598,6 +598,9 @@ readers do not read off random characters that represent icons */
 .fa-circle-dot::before {
   content: "\f192"; }
 
+.fa-futbol::before {
+  content: "\f1e3"; }
+
 .fa-users::before {
   content: "\f0c0"; }
 
@@ -891,9 +894,6 @@ readers do not read off random characters that represent icons */
 
 .fa-database::before {
   content: "\f1c0"; }
-
-.fa-coffee::before {
-  content: "\f0f4"; }
 
 .fa-exclamation::before {
   content: "\21"; }

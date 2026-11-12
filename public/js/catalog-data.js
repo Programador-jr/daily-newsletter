@@ -92,8 +92,6 @@
     return response.json();
   };
 
-  const versioned = (core, file) => `${BASE_PATH}${file}?v=${encodeURIComponent(formatOf(core).version)}`;
-
   const loadCore = () => {
     if (!corePromise) {
       corePromise = fetchJson(`${BASE_PATH}core.json`).then(hydrateCore);
@@ -107,7 +105,7 @@
     if (!groupPromises.has(group)) {
       const promise = loadCore()
         .then(async (core) => {
-          const details = await fetchJson(versioned(core, `details-${group}.json`));
+          const details = await fetchJson(`${BASE_PATH}details-${group}.json`);
           for (const [collection, byId] of Object.entries(mergeDetails(core, details))) {
             resolvedDetails.set(collection, byId);
           }
@@ -121,7 +119,7 @@
 
   const loadQuiz = () => {
     if (!quizPromise) {
-      quizPromise = loadCore().then(async (core) => mergeQuiz(core, await fetchJson(versioned(core, "quiz.json"))));
+      quizPromise = loadCore().then(async (core) => mergeQuiz(core, await fetchJson(`${BASE_PATH}quiz.json`)));
       quizPromise.catch(() => { quizPromise = null; });
     }
     return quizPromise;

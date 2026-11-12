@@ -1,4 +1,4 @@
-/* CARREGAMENTO GLOBAL — só a coroa do ícone, sem textos (o nome acessível fica no aria-label do overlay). */
+/* CARREGAMENTO GLOBAL — a coroa do ícone e, abaixo, a vinheta da seção (História, Economia, Política...). */
 
 #page-loading-overlay {
   --page-loading-green: #0a5048;
@@ -88,6 +88,164 @@
   animation: page-loading-progress 1.4s cubic-bezier(.45, 0, .25, 1) infinite;
 }
 
+/* Vinheta da seção: um pequeno desenho animado e o nome da área. */
+#page-loading-overlay {
+  grid-template-rows: auto auto;
+  align-content: center;
+  gap: 0.35rem;
+}
+
+.page-loading-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  animation: page-loading-in 520ms 120ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.page-loading-glyph {
+  width: 3.4rem;
+  height: auto;
+  overflow: visible;
+  color: var(--primary, var(--page-loading-green));
+}
+
+.page-loading-glyph * {
+  transform-box: fill-box;
+}
+
+.page-loading-glyph .pl-line,
+.page-loading-glyph .pl-bar,
+.page-loading-glyph .pl-column,
+.page-loading-glyph .pl-pan,
+.page-loading-glyph .pl-cursor {
+  fill: currentColor;
+}
+
+.page-loading-glyph .pl-tick {
+  fill: var(--page-loading-gold);
+}
+
+.page-loading-glyph .pl-axis,
+.page-loading-glyph .pl-thin,
+.page-loading-glyph .pl-ring {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.page-loading-glyph .pl-thin {
+  stroke-width: 1;
+  opacity: .6;
+}
+
+.page-loading-glyph .pl-shadow {
+  fill: currentColor;
+  opacity: .18;
+  transform-origin: center;
+  animation: pl-shadow 900ms ease-in-out infinite;
+}
+
+.page-loading-label {
+  color: color-mix(in srgb, var(--text-muted, #536762) 90%, transparent);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Jornal: linhas sendo escritas. */
+#page-loading-overlay[data-loader-theme="news"] .pl-line {
+  transform-origin: left center;
+  animation: pl-write 1.4s ease-in-out infinite;
+}
+#page-loading-overlay[data-loader-theme="news"] .pl-line:nth-child(2) { animation-delay: 160ms; }
+#page-loading-overlay[data-loader-theme="news"] .pl-line:nth-child(3) { animation-delay: 320ms; }
+
+/* Economia e dados: barras subindo. */
+#page-loading-overlay[data-loader-theme="chart"] .pl-bar {
+  transform-origin: center bottom;
+  animation: pl-grow 1.2s cubic-bezier(.45, 0, .25, 1) infinite;
+}
+#page-loading-overlay[data-loader-theme="chart"] .pl-bar:nth-of-type(2) { animation-delay: 120ms; }
+#page-loading-overlay[data-loader-theme="chart"] .pl-bar:nth-of-type(3) { animation-delay: 240ms; }
+#page-loading-overlay[data-loader-theme="chart"] .pl-bar:nth-of-type(4) { animation-delay: 360ms; fill: var(--page-loading-gold); }
+
+/* História: o cursor percorre a linha do tempo. */
+#page-loading-overlay[data-loader-theme="history"] .pl-cursor {
+  animation: pl-travel 1.8s cubic-bezier(.65, 0, .35, 1) infinite alternate;
+}
+
+/* Política: a balança pondera. */
+#page-loading-overlay[data-loader-theme="politics"] .pl-beam {
+  transform-origin: 50% 0;
+  animation: pl-weigh 1.8s ease-in-out infinite;
+}
+
+/* Estado: as colunas se erguem sob o frontão. */
+#page-loading-overlay[data-loader-theme="state"] .pl-column {
+  transform-origin: center bottom;
+  animation: pl-raise 1.5s ease-in-out infinite;
+}
+#page-loading-overlay[data-loader-theme="state"] .pl-column:nth-of-type(2) { animation-delay: 150ms; }
+#page-loading-overlay[data-loader-theme="state"] .pl-column:nth-of-type(3) { animation-delay: 300ms; }
+#page-loading-overlay[data-loader-theme="state"] .pl-pan { fill: var(--page-loading-gold); }
+
+/* 12 Eixos: a agulha procura a posição. */
+#page-loading-overlay[data-loader-theme="axes"] .pl-needle {
+  transform-origin: center;
+  animation: pl-seek 2.4s cubic-bezier(.5, 0, .2, 1) infinite;
+}
+
+/* Esportes: a bola quica. */
+#page-loading-overlay[data-loader-theme="sports"] .pl-ball {
+  animation: pl-bounce 900ms cubic-bezier(.5, 0, .5, 1) infinite;
+}
+
+@keyframes pl-write {
+  0% { transform: scaleX(.15); opacity: .35; }
+  55%, 100% { transform: scaleX(1); opacity: 1; }
+}
+
+@keyframes pl-grow {
+  0%, 100% { transform: scaleY(.35); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes pl-travel {
+  from { transform: translateX(0); }
+  to { transform: translateX(30px); }
+}
+
+@keyframes pl-weigh {
+  0%, 100% { transform: rotate(-8deg); }
+  50% { transform: rotate(8deg); }
+}
+
+@keyframes pl-raise {
+  0%, 100% { transform: scaleY(.45); opacity: .55; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+@keyframes pl-seek {
+  0% { transform: rotate(0deg); }
+  35% { transform: rotate(140deg); }
+  60% { transform: rotate(95deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pl-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pl-shadow {
+  0%, 100% { transform: scaleX(1); opacity: .2; }
+  50% { transform: scaleX(.6); opacity: .1; }
+}
+
 html.page-loader-active {
   overflow: hidden;
 }
@@ -155,5 +313,10 @@ html.page-loader-active {
 
   .page-loading-crown-progress {
     animation-duration: 2.4s;
+  }
+
+  .page-loading-section,
+  .page-loading-glyph * {
+    animation: none !important;
   }
 }

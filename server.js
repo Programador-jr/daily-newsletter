@@ -42,6 +42,7 @@ app.use('/data', express.static(dataRoot, { dotfiles: 'deny', index: false, setH
 
 app.get('/api/news', require('./api/news'));
 app.get('/api/weekly-editions', require('./api/weekly-editions'));
+app.get('/api/daily-digests', require('./api/daily-digests'));
 app.post('/api/news', require('./api/news'));
 app.post('/api/subscribe', require('./api/subscribe'));
 app.get('/api/confirm', require('./api/confirm'));
@@ -78,6 +79,10 @@ app.get('/editions', (req, res) => {
 
 app.get('/weekly', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/weekly.html'));
+});
+
+app.get('/resumo-diario', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/resumo-diario.html'));
 });
 
 app.get('/historia', (req, res) => {

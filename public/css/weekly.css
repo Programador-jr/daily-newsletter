@@ -738,6 +738,35 @@
     gap: 2rem;
   }
 
+  /* Abaixo de 960px a capa lateral (260px) espremia o texto do card:
+     ela vira uma faixa no topo e o conteúdo ocupa a largura toda. */
+  .weekly-issue-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .weekly-cover {
+    flex-direction: row;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    padding: 1.4rem 1.35rem 1.2rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .weekly-cover-brand {
+    flex-basis: 100%;
+  }
+
+  .weekly-cover-number {
+    font-size: 3rem;
+  }
+
+  .weekly-cover-period {
+    padding-top: 0;
+    border-top: 0;
+  }
+
   /* Sumário no celular: barra fixa logo abaixo do cabeçalho do site. A lista
      abre por cima do texto (posição absoluta) para não empurrar a leitura. */
   /* A barra reserva só a altura do botão; o <details> inteiro flutua por
@@ -833,33 +862,6 @@
 @media (max-width: 768px) {
   .weekly-status {
     margin-inline: 1.25rem;
-  }
-
-  .weekly-issue-card {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .weekly-cover {
-    flex-direction: row;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    gap: 0.75rem 1.25rem;
-    padding: 1.4rem 1.35rem 1.2rem;
-    border-right: 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .weekly-cover-brand {
-    flex-basis: 100%;
-  }
-
-  .weekly-cover-number {
-    font-size: 3rem;
-  }
-
-  .weekly-cover-period {
-    padding-top: 0;
-    border-top: 0;
   }
 
   .weekly-issue-body {

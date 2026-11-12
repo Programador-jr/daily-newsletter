@@ -2912,14 +2912,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const CARD_SERIF = "'Playfair Display', Georgia, serif";
   const CARD_SANS = "Inter, 'Segoe UI', Arial, sans-serif";
-  const CARD_SERIF_MEASURE = "Georgia, 'Times New Roman', serif";
   const CARD_SANS_MEASURE = "'Segoe UI', Arial, sans-serif";
   const CARD_TEXT = "#101010";
-  const CARD_MUTED = "#5B5A55";
-  const CARD_ACCENT = "#102E24";
-  const CARD_PAPER = "#F4F1E8";
-  const CARD_SURFACE = "#FBF9F3";
-  const CARD_BORDER = "#E2DDCF";
 
   const cardNode = (name, attributes = {}) => {
     const node = document.createElementNS("http://www.w3.org/2000/svg", name);
@@ -2988,7 +2982,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return cardMeasureContext.measureText(String(text)).width;
   };
 
-  const cardSerifMeasure = (size, weight = 700) => `${weight} ${size}px ${CARD_SERIF_MEASURE}`;
   const cardSansMeasure = (size, weight = 400) => `${weight} ${size}px ${CARD_SANS_MEASURE}`;
 
   const cardWrap = (text, maxWidth, font, maxLines = 2) => {
@@ -3046,8 +3039,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     return `#${channels.join("")}`;
   };
-
-  const cardTint = (value, amount = 0.16) => cardBlend(value, "#FFFFFF", amount);
 
   const createAnalysisSection = (profile, closestIdeology) => {
     const closest = closestIdeology || rankedProfiles(profile, "ideologies")[0];
@@ -3508,133 +3499,165 @@ document.addEventListener("DOMContentLoaded", () => {
     defs.append(clip);
   };
 
+  // Cartão de resultado no formato de story (1080 × 1920): fundo grafite,
+  // título grande, retrato da personalidade mais compatível ao lado dos 12
+  // eixos e, embaixo, outras personalidades e países próximos.
+  const CARD_DARK = {
+    bg: "#474B53",
+    bgDeep: "#3F434A",
+    circle: "#5B5F67",
+    panel: "#383B42",
+    panelStroke: "#52565E",
+    text: "#F2EFE8",
+    muted: "#C7C4BC",
+    track: "#5F636B",
+    neutral: "#ECE9E2",
+    gold: "#F4C61B"
+  };
+
+  // O cartão mostra percentuais inteiros, como num placar.
+  const cardPercent = (value) => `${Math.round(Number(value) || 0)}%`;
+
   const buildProfileCard = (data) => {
-    const { ideology, topFigure, otherFigures, countries, axes, images, iconSprite, compass } = data;
+    const { ideology, topFigure, otherFigures, countries, axes, images, iconSprite } = data;
+    const C = CARD_DARK;
     const width = 1080;
-    const pad = 56;
+    const height = 1920;
+    const pad = 64;
+    const gap = 26;
     const contentWidth = width - pad * 2;
-    const portraitWidth = 364;
-    const gap = 24;
-    const axesWidth = contentWidth - portraitWidth - gap;
-    const mainHeight = 760;
-    const axesX = pad + portraitWidth + gap;
-    const accent = compass?.region?.base || CARD_ACCENT;
-    const accentSoft = compass?.region?.bg || "#ECE8DC";
     const svg = cardNode("svg", {
       xmlns: "http://www.w3.org/2000/svg",
       "xmlns:xlink": "http://www.w3.org/1999/xlink",
       width,
-      height: 1500,
-      viewBox: `0 0 ${width} 1500`
+      height,
+      viewBox: `0 0 ${width} ${height}`
     });
     const title = cardNode("title");
     title.textContent = `Meu perfil político: ${ideology.item.name}`;
     const desc = cardNode("desc");
     desc.textContent = "Cartão de resultado do Teste Político de 12 Eixos da King's Newsletter.";
     svg.append(title, desc);
-
     const defs = cardNode("defs");
     svg.append(defs);
-    const backgroundGradient = cardNode("linearGradient", { id: "card-bg", x1: 0, y1: 0, x2: 1, y2: 1 });
+
+    // Fundo e círculo de destaque no canto superior direito.
+    const backgroundGradient = cardNode("linearGradient", { id: "card-bg", x1: 0, y1: 0, x2: 0, y2: 1 });
     backgroundGradient.append(
-      cardNode("stop", { offset: "0%", "stop-color": "#FBF9F3" }),
-      cardNode("stop", { offset: "55%", "stop-color": CARD_PAPER }),
-      cardNode("stop", { offset: "100%", "stop-color": "#EFEBDD" })
+      cardNode("stop", { offset: "0%", "stop-color": C.bg }),
+      cardNode("stop", { offset: "100%", "stop-color": C.bgDeep })
     );
     defs.append(backgroundGradient);
-    const background = cardRect(svg, { x: 0, y: 0, width, height: 1500, fill: "url(#card-bg)" });
-    cardRect(svg, { x: 0, y: 0, width, height: 7, fill: accent });
-    cardCircle(svg, { cx: 1060, cy: -70, r: 430, stroke: accent, strokeOpacity: 0.12, strokeWidth: 1.5 });
-    cardCircle(svg, { cx: 1060, cy: -70, r: 330, fill: accentSoft, fillOpacity: 0.5 });
-    cardCircle(svg, { cx: -90, cy: 1540, r: 420, fill: accent, fillOpacity: 0.04 });
+    cardRect(svg, { x: 0, y: 0, width, height, fill: "url(#card-bg)" });
+    cardCircle(svg, { cx: 1105, cy: -25, r: 425, fill: C.circle });
 
-    const crown = cardNode("g", { transform: "translate(56 60)" });
-    crown.append(cardNode("path", { d: "M2 17 L0 5 L7 9 L12 1 L17 9 L24 5 L22 17 Z", fill: accent }));
-    crown.append(cardNode("rect", { x: 1, y: 19, width: 22, height: 3, rx: 1.5, fill: accent, "fill-opacity": 0.7 }));
+    // Cabeçalho: marca, fio e "MEU RESULTADO".
+    const crown = cardNode("g", { transform: "translate(64 78) scale(1.75)" });
+    crown.append(cardNode("path", { d: "M2 17 L0 5 L7 9 L12 1 L17 9 L24 5 L22 17 Z", fill: C.gold }));
+    crown.append(cardNode("rect", { x: 1, y: 19, width: 22, height: 3, rx: 1.5, fill: C.gold, "fill-opacity": 0.75 }));
     svg.append(crown);
-    cardText(svg, "KING'S", { x: 91, y: 84, size: 40, weight: 700, family: CARD_SERIF, fill: CARD_TEXT, letterSpacing: 0.4 });
-    cardText(svg, "NEWSLETTER", { x: 93, y: 104, size: 10, weight: 600, fill: CARD_MUTED, letterSpacing: 4.6 });
-    cardLine(svg, 280, 78, 835, 78, { stroke: CARD_TEXT, strokeOpacity: 0.16 });
-    cardText(svg, "MEU RESULTADO", { x: width - pad, y: 80, size: 14, weight: 700, fill: CARD_TEXT, letterSpacing: 3.4, anchor: "end" });
-    cardText(svg, "TESTE POLÍTICO · 12 EIXOS", { x: width - pad, y: 102, size: 9, weight: 600, fill: CARD_MUTED, letterSpacing: 2.4, anchor: "end" });
+    cardText(svg, "KING'S", { x: 116, y: 116, size: 46, weight: 700, family: CARD_SERIF, fill: C.text, letterSpacing: 0.5 });
+    cardText(svg, "NEWSLETTER", { x: 118, y: 140, size: 13, weight: 600, fill: C.muted, letterSpacing: 6 });
+    cardLine(svg, 330, 108, 680, 108, { stroke: C.text, strokeOpacity: 0.28, strokeWidth: 2 });
+    cardText(svg, "MEU RESULTADO", { x: width - pad, y: 118, size: 28, weight: 700, fill: C.muted, letterSpacing: 6, anchor: "end" });
 
+    // Categoria e nome da ideologia.
     const category = String(ideology.item.category || ideology.item.categoria || "Perfil político").toUpperCase();
-    cardLine(svg, pad, 166, pad + 22, 166, { stroke: accent, strokeOpacity: 0.9, strokeWidth: 2 });
-    cardText(svg, category, { x: pad + 34, y: 171, size: 14, weight: 700, fill: accent, letterSpacing: 4.2 });
-    const h1Size = 68;
-    const h1LineHeight = 72;
-    const h1Lines = cardWrap(ideology.item.name, contentWidth - 40, cardSerifMeasure(h1Size, 700), 2);
-    const h1Y = 244;
+    cardText(svg, category, { x: pad, y: 234, size: 32, weight: 700, fill: C.muted, letterSpacing: 8 });
+    let h1Size = 76;
+    let h1Lines = cardWrap(ideology.item.name, contentWidth, cardSansMeasure(h1Size, 700), 2);
+    if (h1Lines.length > 1) {
+      h1Size = 64;
+      h1Lines = cardWrap(ideology.item.name, contentWidth, cardSansMeasure(h1Size, 700), 2);
+    }
+    const h1LineHeight = h1Size + 8;
+    const h1Y = 312;
     h1Lines.forEach((line, index) => {
-      cardText(svg, line, { x: pad, y: h1Y + index * h1LineHeight, size: h1Size, weight: 700, family: CARD_SERIF, fill: CARD_TEXT, letterSpacing: -1.1 });
+      cardText(svg, line, { x: pad, y: h1Y + index * h1LineHeight, size: h1Size, weight: 700, fill: C.text, letterSpacing: -1 });
     });
-    const mainY = h1Y + (h1Lines.length - 1) * h1LineHeight + 42;
-    const mainBottom = mainY + mainHeight;
 
-    cardClipRect(defs, "card-portrait", pad, mainY, portraitWidth, mainHeight, 26);
-    cardRect(svg, { x: pad, y: mainY, width: portraitWidth, height: mainHeight, rx: 26, fill: "#1B1B19" });
+    // A área de baixo é fixa; o bloco principal ocupa o espaço que sobra.
+    const footerY = 1752;
+    const bottomHeight = 428;
+    const bottomY = footerY - 26 - bottomHeight;
+    const mainY = h1Y + (h1Lines.length - 1) * h1LineHeight + 46;
+    const mainBottom = bottomY - gap;
+    const mainHeight = mainBottom - mainY;
+    const portraitWidth = 390;
+    const axesX = pad + portraitWidth + gap;
+    const axesWidth = width - pad - axesX;
+
+    // Retrato da personalidade mais compatível.
+    cardClipRect(defs, "card-portrait", pad, mainY, portraitWidth, mainHeight, 32);
+    cardRect(svg, { x: pad, y: mainY, width: portraitWidth, height: mainHeight, rx: 32, fill: C.panel });
+    const portraitGroup = cardNode("g", { "clip-path": "url(#card-portrait)" });
     if (images.portrait) {
-      const portraitGroup = cardNode("g", { "clip-path": "url(#card-portrait)" });
       cardImage(portraitGroup, images.portrait, { x: pad, y: mainY, width: portraitWidth, height: mainHeight, clipId: "card-portrait", align: "xMidYMin" });
-      svg.append(portraitGroup);
     } else {
-      cardText(svg, cardInitials(topFigure.item.name), { x: pad + portraitWidth / 2, y: mainY + 300, size: 150, weight: 700, family: CARD_SERIF, fill: "#FFFFFF", opacity: 0.08, anchor: "middle" });
+      cardText(portraitGroup, cardInitials(topFigure.item.name), { x: pad + portraitWidth / 2, y: mainY + mainHeight * 0.42, size: 150, weight: 700, fill: C.text, opacity: 0.1, anchor: "middle" });
     }
     const fade = cardNode("linearGradient", { id: "card-portrait-fade", x1: 0, y1: 0, x2: 0, y2: 1 });
     fade.append(
-      cardNode("stop", { offset: "0%", "stop-color": "#0B1411", "stop-opacity": 0 }),
-      cardNode("stop", { offset: "45%", "stop-color": "#0B1411", "stop-opacity": 0 }),
-      cardNode("stop", { offset: "70%", "stop-color": "#0B1411", "stop-opacity": 0.7 }),
-      cardNode("stop", { offset: "100%", "stop-color": "#0B1411", "stop-opacity": 0.96 })
+      cardNode("stop", { offset: "0%", "stop-color": C.panel, "stop-opacity": 0 }),
+      cardNode("stop", { offset: "48%", "stop-color": C.panel, "stop-opacity": 0 }),
+      cardNode("stop", { offset: "72%", "stop-color": C.panel, "stop-opacity": 0.82 }),
+      cardNode("stop", { offset: "100%", "stop-color": C.panel, "stop-opacity": 0.98 })
     );
     defs.append(fade);
-    const fadeGroup = cardNode("g", { "clip-path": "url(#card-portrait)" });
-    cardRect(fadeGroup, { x: pad, y: mainY, width: portraitWidth, height: mainHeight, fill: "url(#card-portrait-fade)" });
-    svg.append(fadeGroup);
-    cardRect(svg, { x: pad, y: mainY, width: portraitWidth, height: mainHeight, rx: 26, fill: "none", stroke: accent, strokeOpacity: 0.45, strokeWidth: 1.5 });
+    cardRect(portraitGroup, { x: pad, y: mainY, width: portraitWidth, height: mainHeight, fill: "url(#card-portrait-fade)" });
+    svg.append(portraitGroup);
 
-    const figureName = topFigure.item.name;
+    const textLeft = pad + 32;
+    const textMaxWidth = portraitWidth - 64;
     const figureRole = topFigure.item.role || topFigure.item.detail || topFigure.item.areaLabel || "";
-    cardText(svg, formatPercent(topFigure.score), { x: pad + 30, y: mainBottom - 176, size: 68, weight: 700, family: CARD_SERIF, fill: "#FFFFFF", letterSpacing: -1.2 });
-    cardText(svg, "MAIS COMPATÍVEL", { x: pad + 32, y: mainBottom - 142, size: 10.5, weight: 700, fill: "#FFFFFF", opacity: 0.78, letterSpacing: 3 });
-    let nameLines = cardWrap(figureName, portraitWidth - 60, cardSansMeasure(34, 600), 2);
-    const nameFontSize = nameLines.length > 1 ? 30 : 34;
-    const nameLineHeight = nameLines.length > 1 ? 34 : 38;
-    if (nameLines.length > 1) nameLines = cardWrap(figureName, portraitWidth - 60, cardSansMeasure(nameFontSize, 600), 2);
-    const nameY = mainBottom - 108;
+    let nameSize = 46;
+    let nameLines = cardWrap(topFigure.item.name, textMaxWidth, cardSansMeasure(nameSize, 700), 2);
+    if (nameLines.length > 1) {
+      nameSize = 38;
+      nameLines = cardWrap(topFigure.item.name, textMaxWidth, cardSansMeasure(nameSize, 700), 2);
+    }
+    const roleLines = figureRole ? cardWrap(figureRole, textMaxWidth, cardSansMeasure(28, 400), 2) : [];
+    const nameLineHeight = nameSize + 6;
+    const roleY = mainBottom - 44 - Math.max(0, roleLines.length - 1) * 40;
+    const nameLastY = roleLines.length ? roleY - 48 : mainBottom - 44;
+    const nameY = nameLastY - (nameLines.length - 1) * nameLineHeight;
+    const labelY = nameY - nameSize - 22;
+    const scoreY = labelY - 42;
+    cardText(svg, cardPercent(topFigure.score), { x: textLeft, y: scoreY, size: 88, weight: 700, fill: C.text, letterSpacing: -2 });
+    cardText(svg, "MAIS COMPATÍVEL", { x: textLeft, y: labelY, size: 24, weight: 700, fill: C.muted, letterSpacing: 5 });
     nameLines.forEach((line, index) => {
-      cardText(svg, line, { x: pad + 30, y: nameY + index * nameLineHeight, size: nameFontSize, weight: 600, family: CARD_SANS, fill: "#FFFFFF" });
+      cardText(svg, line, { x: textLeft, y: nameY + index * nameLineHeight, size: nameSize, weight: 700, fill: C.text });
     });
-    const roleLines = cardWrap(figureRole, portraitWidth - 60, cardSansMeasure(15, 400), 2);
-    const roleY = nameY + (nameLines.length - 1) * nameLineHeight + 30;
     roleLines.forEach((line, index) => {
-      cardText(svg, line, { x: pad + 30, y: roleY + index * 20, size: 15, weight: 400, family: CARD_SANS, fill: "#FFFFFF", opacity: 0.82 });
+      cardText(svg, line, { x: textLeft, y: roleY + index * 40, size: 28, weight: 400, fill: C.muted });
     });
 
-    cardRect(svg, { x: axesX, y: mainY, width: axesWidth, height: mainHeight, rx: 26, fill: CARD_SURFACE, stroke: CARD_BORDER });
-    cardText(svg, "SEUS 12 EIXOS", { x: axesX + 30, y: mainY + 54, size: 15, weight: 700, fill: CARD_TEXT, letterSpacing: 4.6 });
-    cardLine(svg, axesX + 30, mainY + 72, axesX + axesWidth - 30, mainY + 72, { stroke: CARD_BORDER, strokeOpacity: 1 });
+    // Os 12 eixos.
+    cardRect(svg, { x: axesX, y: mainY, width: axesWidth, height: mainHeight, rx: 32, fill: C.panel, stroke: C.panelStroke });
+    cardText(svg, "SEUS 12 EIXOS", { x: axesX + 30, y: mainY + 58, size: 24, weight: 700, fill: C.muted, letterSpacing: 5 });
     const iconIds = new Set();
-    const innerLeft = axesX + 30;
-    const innerRight = axesX + axesWidth - 30;
-    const tileX = innerLeft;
-    const textX = tileX + 52;
-    const rowStart = mainY + 94;
-    const rowHeight = 54;
-    const barWidth = 160;
-    const barX = innerRight - 64 - barWidth;
-    const textMax = barX - textX - 14;
+    const tileSize = 46;
+    const tileX = axesX + 29;
+    const labelX = tileX + tileSize + 14;
+    const valueRight = axesX + axesWidth - 30;
+    const barWidth = 76;
+    const barX = valueRight - 86 - barWidth;
+    const labelMax = barX - labelX - 12;
+    const firstRow = mainY + 110;
+    const rowSpacing = (mainHeight - 110 - 56) / Math.max(1, axes.length - 1);
     axes.forEach(({ axis, value }, index) => {
-      const rowY = rowStart + index * rowHeight;
+      const cy = firstRow + index * rowSpacing;
       const side = value >= 50 ? "a" : "b";
       const poleName = side === "a" ? axis.a : axis.b;
       const poleValue = value >= 50 ? value : 100 - value;
       const tied = Math.abs(value - 50) < 0.05;
       const rawColor = side === "a" ? axis.aColor : axis.bColor;
       const baseColor = cardParseHex(rawColor) === null ? "#6B7F78" : rawColor;
-      const poleColor = tied ? "#6B7F78" : baseColor;
-      const tileY = rowY + 8;
-      cardRect(svg, { x: tileX, y: tileY, width: 38, height: 38, rx: 10, fill: poleColor, stroke: "#FFFFFF", strokeOpacity: 0.28 });
+      const tileColor = tied ? C.neutral : baseColor;
+      const iconColor = tied ? C.panel : "#FFFFFF";
+      const valueColor = tied ? C.text : cardBlend(baseColor, "#FFFFFF", 0.14);
+      const tileY = cy - tileSize / 2;
+      cardRect(svg, { x: tileX, y: tileY, width: tileSize, height: tileSize, rx: 11, fill: tileColor });
       const iconSide = side === "a" ? "l" : "r";
       const source = iconSprite ? iconSprite.querySelector(`#pi-${axis.id}-${iconSide}`) : null;
       if (source) {
@@ -3645,96 +3668,93 @@ document.addEventListener("DOMContentLoaded", () => {
           defs.append(clone);
           iconIds.add(iconId);
         }
-        const use = cardNode("use", { href: `#${iconId}`, x: tileX + 8, y: tileY + 8, width: 22, height: 22, fill: "#FFFFFF" });
+        const use = cardNode("use", { href: `#${iconId}`, x: tileX + 11, y: tileY + 11, width: 24, height: 24, fill: iconColor, color: iconColor });
         use.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", `#${iconId}`);
         svg.append(use);
       } else {
-        cardText(svg, poleName.slice(0, 1).toUpperCase(), { x: tileX + 19, y: tileY + 24, size: 13, weight: 700, fill: "#FFFFFF", anchor: "middle" });
+        cardText(svg, poleName.slice(0, 1).toUpperCase(), { x: tileX + tileSize / 2, y: cy + 8, size: 22, weight: 700, fill: iconColor, anchor: "middle" });
       }
-      const axisLabel = cardTruncate(axis.name.toUpperCase(), textMax, cardSansMeasure(9, 600));
-      const poleLabel = cardTruncate(poleName, textMax, cardSansMeasure(18, 600));
-      cardText(svg, axisLabel, { x: textX, y: rowY + 18, size: 9, weight: 600, fill: CARD_MUTED, opacity: 0.82, letterSpacing: 1.4 });
-      cardText(svg, poleLabel, { x: textX, y: rowY + 39, size: 18, weight: 600, fill: CARD_TEXT });
-      cardRect(svg, { x: barX, y: rowY + 29, width: barWidth, height: 5, rx: 2.5, fill: CARD_BORDER });
-      cardRect(svg, { x: barX, y: rowY + 29, width: Math.max(2, (barWidth * poleValue) / 100), height: 5, rx: 2.5, fill: poleColor });
-      cardText(svg, formatPercent(poleValue), { x: innerRight, y: rowY + 35, size: 19, weight: 700, fill: poleColor, anchor: "end" });
+      let labelSize = 30;
+      if (cardMeasure(poleName, cardSansMeasure(labelSize, 500)) > labelMax) labelSize = 26;
+      const label = cardTruncate(poleName, labelMax, cardSansMeasure(labelSize, 500));
+      cardText(svg, label, { x: labelX, y: cy + labelSize * 0.36, size: labelSize, weight: 500, fill: C.text });
+      cardRect(svg, { x: barX, y: cy - 3.5, width: barWidth, height: 7, rx: 3.5, fill: C.track });
+      cardRect(svg, { x: barX, y: cy - 3.5, width: Math.max(4, (barWidth * poleValue) / 100), height: 7, rx: 3.5, fill: tied ? C.neutral : baseColor });
+      cardText(svg, cardPercent(poleValue), { x: valueRight, y: cy + 11, size: 31, weight: 700, fill: valueColor, anchor: "end" });
     });
 
-    const bottomY = mainBottom + 28;
-    const bottomHeight = 296;
+    // Painéis de baixo.
     const panelWidth = (contentWidth - gap) / 2;
     const leftX = pad;
     const rightX = pad + panelWidth + gap;
 
-    cardRect(svg, { x: leftX, y: bottomY, width: panelWidth, height: bottomHeight, rx: 24, fill: CARD_SURFACE, stroke: CARD_BORDER });
-    cardText(svg, "OUTRAS", { x: leftX + 24, y: bottomY + 36, size: 14, weight: 700, fill: CARD_MUTED, letterSpacing: 3.6 });
-    cardText(svg, "PERSONALIDADES", { x: leftX + 24, y: bottomY + 56, size: 14, weight: 700, fill: CARD_MUTED, letterSpacing: 3.6 });
-    cardLine(svg, leftX + 24, bottomY + 70, leftX + panelWidth - 24, bottomY + 70, { stroke: CARD_BORDER, strokeOpacity: 1 });
-    const figureStart = bottomY + 84;
-    const figureRowHeight = 58;
+    cardRect(svg, { x: leftX, y: bottomY, width: panelWidth, height: bottomHeight, rx: 32, fill: C.panel, stroke: C.panelStroke });
+    cardText(svg, "OUTRAS", { x: leftX + 31, y: bottomY + 56, size: 24, weight: 700, fill: C.muted, letterSpacing: 5 });
+    cardText(svg, "PERSONALIDADES", { x: leftX + 31, y: bottomY + 97, size: 24, weight: 700, fill: C.muted, letterSpacing: 5 });
+    const avatarSize = 76;
     const avatarPalette = ["#2F6DC0", "#12907F", "#8A3AA0"];
     otherFigures.forEach((entry, index) => {
-      const rowY = figureStart + index * figureRowHeight;
-      const avatarX = leftX + 24;
-      const avatarY = rowY + 8;
-      const avatarSize = 42;
+      const cy = bottomY + 167 + index * 96;
+      const avatarX = leftX + 31;
+      const avatarY = cy - avatarSize / 2;
       const clipId = `card-avatar-${index}`;
-      cardClipCircle(defs, clipId, avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2);
+      cardClipCircle(defs, clipId, avatarX + avatarSize / 2, cy, avatarSize / 2);
       const avatar = images.figures[index];
       if (avatar) {
         cardImage(svg, avatar, { x: avatarX, y: avatarY, width: avatarSize, height: avatarSize, clipId, align: "xMidYMin" });
       } else {
-        cardCircle(svg, { cx: avatarX + avatarSize / 2, cy: avatarY + avatarSize / 2, r: avatarSize / 2, fill: cardTint(avatarPalette[index % avatarPalette.length], 0.08) });
-        cardText(svg, cardInitials(entry.item.name), { x: avatarX + avatarSize / 2, y: avatarY + 27, size: 13, weight: 700, fill: CARD_TEXT, anchor: "middle" });
+        cardCircle(svg, { cx: avatarX + avatarSize / 2, cy, r: avatarSize / 2, fill: avatarPalette[index % avatarPalette.length] });
+        cardText(svg, cardInitials(entry.item.name), { x: avatarX + avatarSize / 2, y: cy + 9, size: 24, weight: 700, fill: "#FFFFFF", anchor: "middle" });
       }
-      cardCircle(svg, { cx: avatarX + avatarSize / 2, cy: avatarY + avatarSize / 2, r: avatarSize / 2 - 0.5, fill: "none", stroke: CARD_BORDER, strokeOpacity: 1 });
-      const nameMax = panelWidth - 48 - avatarSize - 14 - 74;
-      const name = cardTruncate(entry.item.name, nameMax, cardSansMeasure(17, 600));
-      cardText(svg, name, { x: avatarX + avatarSize + 14, y: avatarY + 28, size: 17, weight: 600, fill: CARD_TEXT });
-      cardText(svg, formatPercent(entry.score), { x: leftX + panelWidth - 24, y: avatarY + 29, size: 19, weight: 700, fill: accent, anchor: "end" });
+      const scoreRight = leftX + panelWidth - 31;
+      const nameX = avatarX + avatarSize + 18;
+      const nameMax = scoreRight - 82 - nameX;
+      const lines = cardWrap(entry.item.name, nameMax, cardSansMeasure(30, 500), 2);
+      const firstLineY = lines.length > 1 ? cy - 7 : cy + 11;
+      lines.forEach((line, lineIndex) => {
+        cardText(svg, line, { x: nameX, y: firstLineY + lineIndex * 36, size: 30, weight: 500, fill: C.text });
+      });
+      cardText(svg, cardPercent(entry.score), { x: scoreRight, y: cy + 11, size: 31, weight: 700, fill: C.text, anchor: "end" });
     });
 
-    cardRect(svg, { x: rightX, y: bottomY, width: panelWidth, height: bottomHeight, rx: 24, fill: CARD_SURFACE, stroke: CARD_BORDER });
-    cardText(svg, "PAÍSES PRÓXIMOS", { x: rightX + 24, y: bottomY + 38, size: 14, weight: 700, fill: CARD_MUTED, letterSpacing: 3.6 });
-    cardLine(svg, rightX + 24, bottomY + 54, rightX + panelWidth - 24, bottomY + 54, { stroke: CARD_BORDER, strokeOpacity: 1 });
-    const countryStart = bottomY + 84;
-    const countryRowHeight = 62;
+    cardRect(svg, { x: rightX, y: bottomY, width: panelWidth, height: bottomHeight, rx: 32, fill: C.panel, stroke: C.panelStroke });
+    cardText(svg, "PAÍSES PRÓXIMOS", { x: rightX + 31, y: bottomY + 56, size: 24, weight: 700, fill: C.muted, letterSpacing: 5 });
+    const flagWidth = 76;
+    const flagHeight = 52;
     countries.forEach((entry, index) => {
-      const rowY = countryStart + index * countryRowHeight;
-      const flagX = rightX + 24;
-      const flagY = rowY + 8;
-      const flagWidth = 44;
-      const flagHeight = 30;
+      const cy = bottomY + 113 + index * 73;
+      const flagX = rightX + 31;
+      const flagY = cy - flagHeight / 2;
       const clipId = `card-flag-${index}`;
-      cardClipRect(defs, clipId, flagX, flagY, flagWidth, flagHeight, 4);
+      cardClipRect(defs, clipId, flagX, flagY, flagWidth, flagHeight, 7);
       const flag = images.countries[index];
       if (flag) {
         cardImage(svg, flag, { x: flagX, y: flagY, width: flagWidth, height: flagHeight, clipId, align: "xMidYMid" });
       } else {
-        cardRect(svg, { x: flagX, y: flagY, width: flagWidth, height: flagHeight, rx: 4, fill: CARD_BORDER });
-        cardText(svg, entry.item.sigla || entry.item.name.slice(0, 3).toUpperCase(), { x: flagX + flagWidth / 2, y: flagY + 20, size: 8, weight: 700, fill: CARD_TEXT, anchor: "middle" });
+        cardRect(svg, { x: flagX, y: flagY, width: flagWidth, height: flagHeight, rx: 7, fill: C.track });
+        cardText(svg, entry.item.sigla || entry.item.name.slice(0, 3).toUpperCase(), { x: flagX + flagWidth / 2, y: cy + 7, size: 18, weight: 700, fill: C.text, anchor: "middle" });
       }
-      cardRect(svg, { x: flagX, y: flagY, width: flagWidth, height: flagHeight, rx: 4, fill: "none", stroke: CARD_BORDER, strokeOpacity: 1 });
-      const nameMax = panelWidth - 48 - flagWidth - 12 - 74;
-      const nameLines = cardWrap(entry.item.name, nameMax, cardSansMeasure(16, 600), 2);
-      const nameX = flagX + flagWidth + 12;
-      const nameY = nameLines.length > 1 ? rowY + 24 : rowY + 29;
-      nameLines.forEach((line, lineIndex) => {
-        cardText(svg, line, { x: nameX, y: nameY + lineIndex * 18, size: 16, weight: 600, fill: CARD_TEXT });
+      const scoreRight = rightX + panelWidth - 31;
+      const nameX = flagX + flagWidth + 18;
+      const nameMax = scoreRight - 82 - nameX;
+      let size = 30;
+      let lines = cardWrap(entry.item.name, nameMax, cardSansMeasure(size, 500), 1);
+      if (cardMeasure(entry.item.name, cardSansMeasure(size, 500)) > nameMax) {
+        size = 25;
+        lines = cardWrap(entry.item.name, nameMax, cardSansMeasure(size, 500), 2);
+      }
+      const firstLineY = lines.length > 1 ? cy - 4 : cy + size * 0.36;
+      lines.forEach((line, lineIndex) => {
+        cardText(svg, line, { x: nameX, y: firstLineY + lineIndex * (size + 3), size, weight: 500, fill: C.text });
       });
-      cardText(svg, formatPercent(entry.score), { x: rightX + panelWidth - 24, y: rowY + 30, size: 19, weight: 700, fill: accent, anchor: "end" });
+      cardText(svg, cardPercent(entry.score), { x: scoreRight, y: cy + 11, size: 31, weight: 700, fill: C.text, anchor: "end" });
     });
 
-    const footerY = bottomY + bottomHeight + 40;
-    cardLine(svg, pad, footerY, width - pad, footerY, { stroke: CARD_BORDER, strokeOpacity: 1 });
-    cardText(svg, "DESCOBRA SEU PERFIL", { x: pad, y: footerY + 30, size: 13, weight: 700, fill: CARD_TEXT, letterSpacing: 3.2 });
-    cardText(svg, "DAILYNEWSLETTER.VERCEL.APP", { x: width - pad, y: footerY + 30, size: 13, weight: 700, fill: accent, letterSpacing: 3.2, anchor: "end" });
-    cardText(svg, "Imagens: catálogo 12 Axes · Créditos e fontes nas fichas do site", { x: pad, y: footerY + 52, size: 10, weight: 400, fill: CARD_MUTED, opacity: 0.85 });
-    cardText(svg, "Percentuais: afinidade com o polo destacado · Estimativa educativa, não diagnóstico político.", { x: pad, y: footerY + 68, size: 10, weight: 400, fill: CARD_MUTED, opacity: 0.85 });
-    const height = footerY + 92;
-    background.setAttribute("height", String(height));
-    svg.setAttribute("height", String(height));
-    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    // Rodapé.
+    cardLine(svg, pad, footerY, width - pad, footerY, { stroke: C.text, strokeOpacity: 0.22, strokeWidth: 2 });
+    cardText(svg, "DESCUBRA SEU PERFIL", { x: pad, y: footerY + 62, size: 28, weight: 700, fill: C.muted, letterSpacing: 6 });
+    cardText(svg, "KINGSNEWSLETTER.COM", { x: width - pad, y: footerY + 62, size: 30, weight: 700, fill: C.text, letterSpacing: 3, anchor: "end" });
+    cardText(svg, "Percentuais: afinidade com o polo destacado. Estimativa educativa, não diagnóstico político.", { x: pad, y: footerY + 118, size: 17, weight: 400, fill: C.muted, opacity: 0.7 });
     return svg;
   };
 
@@ -3766,7 +3786,7 @@ document.addEventListener("DOMContentLoaded", () => {
       compass
     });
     const width = Number(svg.getAttribute("width")) || 1080;
-    const height = Number(svg.getAttribute("height")) || 1500;
+    const height = Number(svg.getAttribute("height")) || 1920;
     const svgBlob = new Blob([new XMLSerializer().serializeToString(svg)], { type: "image/svg+xml;charset=utf-8" });
     const svgUrl = URL.createObjectURL(svgBlob);
     try {
