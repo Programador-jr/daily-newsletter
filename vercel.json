@@ -16,6 +16,14 @@
   ],
   "rewrites": [
     {
+      "source": "/economy",
+      "destination": "https://kings-economy.vercel.app/economy"
+    },
+    {
+      "source": "/economy/:path*",
+      "destination": "https://kings-economy.vercel.app/economy/:path*"
+    },
+    {
       "source": "/media/:path*",
       "destination": "https://pub-fcf4bc76fe3b4643b8c8b2c76bc61ad1.r2.dev/:path*"
     },
