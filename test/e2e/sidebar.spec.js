@@ -40,7 +40,7 @@ test('sidebar is persistent and complete on every desktop screen', async ({ page
     const headerLinks = page.locator('.header-primary-links a');
 
     await expect(sidebar, route).toBeVisible();
-    await expect(sidebar.locator('a'), route).toHaveCount(27);
+    await expect(sidebar.locator('a'), route).toHaveCount(28);
     await expect(headerLinks, route).toHaveCount(0);
     await expect(page.locator('.header-nav-actions #theme-toggle')).toBeVisible();
     await expect(sidebar.locator('#theme-toggle')).toHaveCount(0);
