@@ -54,12 +54,16 @@ King's Newsletter is a responsive news platform for following current events and
 
 - **Numbered editions** — every edition has a persistent issue number as well as its date, with a searchable archive.
 - **Searchable archive** — browse previous editions and filter stories.
+- **Weekly editions** — an editorial weekly summary at `/weekly`, with its own archive.
+- **Daily digest** — `/resumo-diario` publishes the daily digests already sent to subscribers.
 - **Brazilian History** — an interactive timeline, historical milestones, presidents, governments, constitutions, and topic guides.
 - **Civic education** — reference guides to political ideologies, public policy, public spending, and the constitutional roles of the three branches of government.
 - **Responsive interface** — desktop and mobile layouts, with light and dark themes.
-- **Email subscriptions** — confirmation flow, unsubscribe links, and notifications when new editions are published.
-- **Delivery tracking** — records sent stories to help prevent duplicate notifications.
-- **Administration panel** — subscriber, email delivery, news edition, and worker metrics, with controls for pending deliveries and worker scheduling.
+- **Email subscriptions** — confirmation flow, unsubscribe links, and a single daily digest email instead of one email per story.
+- **Delivery tracking** — records sent digests to help prevent duplicate deliveries and resume interrupted sends.
+- **Administration panel** — subscriber, email delivery, news edition, and worker metrics, with daily digest review and approval, email banner settings, and worker scheduling.
+- **King's Economy** — `/economy` is served by the separate King's Economy project through a Vercel rewrite.
+- **Privacy and terms** — `/privacidade` and `/termos` pages, plus SEO metadata, `sitemap.xml`, and `robots.txt`.
 
 ## Technology stack
 
@@ -163,9 +167,9 @@ Keep `.env` private. Never publish credentials or commit them to the repository.
 
 The administration panel is available at `/admin` and requires a username and password. Configure `ADMIN_USERNAME`, `ADMIN_PASSWORD`, and `ADMIN_SESSION_SECRET` in your local environment and in Vercel. The session signing key must be random and at least 32 characters long. The panel uses the site's `MONGODB_URI`; without it, the panel cannot load data.
 
-The panel displays confirmed and pending subscribers, the latest edition's story count, delivered and pending stories, SMTP-accepted or rejected messages, failures, and worker executions. **Dispatch pending news** asks for confirmation and sends only stories not already recorded as delivered. Delivery and worker execution records are stored from the implementation that introduced these metrics; older console logs are not imported. Times are shown in `America/Rio_Branco`. “Accepted” means the SMTP server accepted the message for processing, not that it reached the recipient's inbox.
+The panel displays confirmed and pending subscribers, the latest edition's story count, delivered and pending stories, SMTP-accepted or rejected messages, failures, and worker executions. Subscribers receive one daily digest, read from the `dailydigests` collection: an administrator can review it, send a test copy, and approve it, or it goes out automatically at the configured send time. **Dispatch** asks for confirmation and runs the same digest send, resuming any interrupted delivery. The email banner can be set from a public HTTPS link or an uploaded image (up to 2 MB, stored in R2). Delivery and worker execution records are stored from the implementation that introduced these metrics; older console logs are not imported. Times are shown in `America/Rio_Branco`. “Accepted” means the SMTP server accepted the message for processing, not that it reached the recipient's inbox.
 
-The panel also configures the worker interval (1–168 hours), lets administrators pause or resume scheduling, and shows a countdown and the latest status reported by the worker. Configure the same `WORKER_CONTROL_SECRET` in the site's environment and the worker's `.env`, and keep it separate from `NOTIFY_SECRET`. The worker fetches configuration and reports its status over outbound HTTPS every 30 seconds. It does not require a public port or fixed IP address. Set this variable in Vercel's production environment and redeploy to enable remote control in production.
+The panel also configures the worker interval (1–168 hours) and the daily digest send time (`HH:MM`; leave it empty to turn automatic sending off), lets administrators pause or resume scheduling, and shows a countdown and the latest status reported by the worker. Configure the same `WORKER_CONTROL_SECRET` in the site's environment and the worker's `.env`, and keep it separate from `NOTIFY_SECRET`. The worker fetches configuration and reports its status over outbound HTTPS every 30 seconds. It does not require a public port or fixed IP address. Set this variable in Vercel's production environment and redeploy to enable remote control in production.
 
 On startup, the server warns when MongoDB, email, or protected publishing is not configured. Partial SMTP configuration, an invalid `PORT`, or a non-HTTP `APP_URL` stops startup with a message identifying the setting without printing its value.
 
@@ -176,22 +180,27 @@ On startup, the server warns when MongoDB, email, or protected publishing is not
 | `GET` | `/api/news` | Get the latest edition. |
 | `GET` | `/api/news?date=dd/mm/yyyy` | Get an edition by date. |
 | `GET` | `/api/news?history=true` | List available edition dates. |
+| `GET` | `/api/weekly-editions?slug=...` | Get the latest published weekly edition (or the one matching `slug`) and the weekly archive. |
+| `GET` | `/api/daily-digests?date=...` | Get the latest sent daily digest (or the one for `date`, as `yyyy-mm-dd` or `dd/mm/yyyy`) and the digest archive. |
 | `POST` | `/api/news` | Publish or update stories for an edition. Requires `NOTIFY_SECRET`; R2 settings are also required when uploading an image. |
 | `POST` | `/api/subscribe` | Request an email subscription confirmation. |
 | `GET` | `/api/confirm?token=...` | Confirm a subscription. |
 | `GET`, `POST` | `/api/unsubscribe?token=...` | GET displays the cancellation confirmation; POST completes the cancellation. |
-| `POST` | `/api/notify-news` | Send notifications for newly published stories. Requires `NOTIFY_SECRET`. |
+| `POST` | `/api/notify-news` | Send due daily digests (approved or scheduled) and resume interrupted sends. Called by the worker. Requires `NOTIFY_SECRET`. |
 | `POST` | `/api/migrate-news` | One-time import of JSON editions from `data/` into MongoDB. Requires `NOTIFY_SECRET`; available as a Vercel function, not mounted by the local Express server. |
 | `POST` | `/api/admin/login` | Start an administrator session. |
 | `POST` | `/api/admin/logout` | End an administrator session. |
 | `GET` | `/api/admin/dashboard?days=7` | Read subscriber, email, and worker metrics. Requires an administrator session. |
 | `POST` | `/api/admin/test-email` | Send a test edition to the recipient supplied by an authenticated administrator. Requires a valid admin session signed with `ADMIN_SESSION_SECRET`; available in Preview and production. |
 | `GET`, `POST`, `PUT`, `DELETE` | `/api/admin/updates` | Manage announcement cards. Requires an administrator session. |
-| `GET`, `PUT` | `/api/admin/schedule` | Read or update the worker interval and enabled state. Requires an administrator session. |
-| `POST` | `/api/admin/dispatch` | Immediately send pending news. Requires an administrator session. |
+| `GET`, `PUT` | `/api/admin/schedule` | Read or update the worker interval, enabled state, and digest send time (`digestSendTime`). Requires an administrator session. |
+| `POST` | `/api/admin/dispatch` | Immediately run the daily digest send. Requires an administrator session. |
+| `GET`, `POST` | `/api/admin/digests` | List daily digests, or `POST` with `action: "approve"` or `action: "test"`. Requires an administrator session. |
+| `GET`, `PUT`, `DELETE` | `/api/admin/email-banner` | Read, set (link or upload), or reset the email banner. Requires an administrator session. |
 | `GET` | `/api/updates/active` | Read the currently active announcement. |
 | `GET` | `/api/worker/config` | Read worker scheduling configuration. Requires `WORKER_CONTROL_SECRET`. |
 | `POST` | `/api/worker/heartbeat` | Report the worker's status and next run time. Requires `WORKER_CONTROL_SECRET`. |
+| `GET` | `/api/impostometro`, `/api/gastometro` | Data for the tax and public spending meters, routed on Vercel to `/api/public-data`. |
 | `GET` | `/api/camara-deputados`, `/api/camara-despesas`, `/api/camara-ceap`, `/api/transferegov-emendas` | Public data handlers mounted by the local Express server. On Vercel, use `/api/public-data?source=...`; friendly-path rewrites are not currently configured, so the frontend's friendly-path requests are not routed there. |
 
 Edition dates use the `dd/mm/yyyy` format. The API also returns `issueNumber` once an edition record exists. News publishing, notification, and migration requests use `NOTIFY_SECRET` as a Bearer token; worker endpoints use `WORKER_CONTROL_SECRET`. Administrator endpoints use the session cookie created at login, not an `Authorization` secret.
@@ -211,7 +220,7 @@ npm run lint
 
 Unit tests use stubs for MongoDB and email delivery, so they do not require external services or production credentials. The browser suite uses Playwright and Chromium. The workflow is configured to run unit tests on Node.js 20 and 22, lint, and browser checks for pull requests targeting `main`. Browser traces and reports are uploaded when browser checks fail.
 
-The `npm test` script lists its unit-test files explicitly and currently omits `test/worker-schedule.test.js`; run that test separately with `node --test test/worker-schedule.test.js`.
+The `npm test` script lists its unit-test files explicitly and currently omits `test/worker-schedule.test.js` and `test/political-score.test.js`; run them separately with `node --test test/worker-schedule.test.js test/political-score.test.js`.
 
 Run browser tests locally after installing Chromium:
 
@@ -232,7 +241,7 @@ If email delivery fails, verify that both SMTP variables are configured, that th
 
 - Set `APP_URL` to the canonical site origin (for example, `https://your-domain.com`), without a path, query string, or fragment. Email links must not depend on the incoming `Host` header.
 - In production, `APP_URL` and `MONGODB_URI` are required; startup reports missing required configuration clearly.
-- Unsubscribe uses GET only to display the confirmation page and POST to complete the action. The handler sets `Referrer-Policy: no-referrer` for this flow. `vercel.json` currently defines rewrites but no custom security-header rules.
+- Unsubscribe uses GET only to display the confirmation page and POST to complete the action. The handler sets `Referrer-Policy: no-referrer` for this flow. The local Express server sets security headers (CSP, `X-Frame-Options`, HSTS over HTTPS) through `lib/security-headers.js`; on Vercel, `vercel.json` defines rewrites and `Cache-Control` rules for static assets, but no security-header rules.
 - Câmara dos Deputados and Transferegov queries use time and size limits, bounded local caching, and shared CDN caching for successful public responses. Deputy and spending lists use `s-maxage=300` (5 minutes), CEAP uses `s-maxage=1800` (30 minutes), and Transferegov amendments use `s-maxage=600` (10 minutes). `stale-while-revalidate` allows temporarily stale data while the CDN refreshes it. Error responses do not receive these cache headers, and the news API is not placed in shared CDN cache to avoid delaying newly published editions.
 - The application code does not directly call `url.parse()`. To identify the source of a `DEP0169` warning, reproduce it with `NODE_OPTIONS=--trace-deprecation` and inspect the runtime/deployment stack trace rather than updating dependencies blindly.
 

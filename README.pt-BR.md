@@ -54,12 +54,16 @@ A King's Newsletter é uma plataforma responsiva de notícias para acompanhar ac
 
 - **Edições numeradas** — cada edição recebe um número persistente, além da data, com histórico pesquisável.
 - **Arquivo pesquisável** — consulte edições anteriores e filtre notícias.
+- **Edições semanais** — resumo editorial da semana em `/weekly`, com histórico próprio.
+- **Resumo diário** — `/resumo-diario` publica os resumos diários já enviados aos assinantes.
 - **História do Brasil** — linha do tempo interativa, marcos históricos, presidentes, governos, constituições e guias temáticos.
 - **Educação cívica** — guias de referência sobre ideologias políticas, políticas públicas, gastos públicos e funções constitucionais dos três Poderes.
 - **Interface responsiva** — layouts para computadores e dispositivos móveis, com temas claro e escuro.
-- **Assinaturas por e-mail** — fluxo de confirmação, links de cancelamento e notificações quando novas edições são publicadas.
-- **Rastreamento de envios** — registra as notícias enviadas para ajudar a evitar notificações duplicadas.
-- **Painel administrativo** — métricas de inscritos, entrega de e-mails, edições e worker, além de controles para envios pendentes e agendamento.
+- **Assinaturas por e-mail** — fluxo de confirmação, links de cancelamento e um único e-mail de resumo diário, em vez de um e-mail por notícia.
+- **Rastreamento de envios** — registra os resumos enviados para evitar envios duplicados e retomar envios interrompidos.
+- **Painel administrativo** — métricas de inscritos, entrega de e-mails, edições e worker, com revisão e aprovação do resumo diário, configuração do banner do e-mail e agendamento.
+- **King's Economy** — `/economy` é servido pelo projeto separado King's Economy por meio de um rewrite da Vercel.
+- **Privacidade e termos** — páginas `/privacidade` e `/termos`, além de metadados de SEO, `sitemap.xml` e `robots.txt`.
 
 ## Tecnologias
 
@@ -163,9 +167,9 @@ Mantenha o arquivo `.env` privado. Nunca publique credenciais nem as envie ao re
 
 O painel fica disponível em `/admin` e exige usuário e senha. Configure `ADMIN_USERNAME`, `ADMIN_PASSWORD` e `ADMIN_SESSION_SECRET` no ambiente local e na Vercel. A chave de assinatura da sessão deve ser aleatória e ter pelo menos 32 caracteres. O painel utiliza a variável `MONGODB_URI` do site; sem ela, não consegue carregar os dados.
 
-O painel exibe inscritos confirmados e pendentes, quantidade de notícias da edição mais recente, notícias entregues e pendentes, mensagens aceitas ou rejeitadas pelo SMTP, falhas e execuções do worker. O botão **Disparar notícias pendentes** solicita confirmação e envia apenas notícias ainda não registradas como entregues. Os registros de envio e execução passam a ser armazenados a partir da implementação dessas métricas; logs antigos do console não são importados. Os horários são exibidos em `America/Rio_Branco`. “Aceito” significa que o servidor SMTP aceitou a mensagem para processamento, não que ela chegou à caixa de entrada do destinatário.
+O painel exibe inscritos confirmados e pendentes, quantidade de notícias da edição mais recente, notícias entregues e pendentes, mensagens aceitas ou rejeitadas pelo SMTP, falhas e execuções do worker. Os assinantes recebem um único resumo diário, lido da coleção `dailydigests`: um administrador pode revisá-lo, enviar uma cópia de teste e aprová-lo, ou ele é enviado automaticamente no horário configurado. O botão **Disparar** solicita confirmação e executa o mesmo envio do resumo, retomando entregas interrompidas. O banner do e-mail pode ser definido por um link HTTPS público ou pelo envio de uma imagem (até 2 MB, armazenada no R2). Os registros de envio e execução passam a ser armazenados a partir da implementação dessas métricas; logs antigos do console não são importados. Os horários são exibidos em `America/Rio_Branco`. “Aceito” significa que o servidor SMTP aceitou a mensagem para processamento, não que ela chegou à caixa de entrada do destinatário.
 
-O painel também permite configurar o intervalo do worker (de 1 a 168 horas), pausar ou retomar o agendamento e consultar uma contagem regressiva e o último estado informado pelo worker. Configure o mesmo `WORKER_CONTROL_SECRET` no ambiente do site e no arquivo `.env` do worker, mantendo-o separado de `NOTIFY_SECRET`. O worker consulta a configuração e informa seu estado por HTTPS de saída a cada 30 segundos. Não é necessária uma porta pública nem um IP fixo. Configure essa variável no ambiente de produção da Vercel e faça uma nova implantação para habilitar o controle remoto em produção.
+O painel também permite configurar o intervalo do worker (de 1 a 168 horas) e o horário de envio do resumo diário (`HH:MM`; deixe vazio para desativar o envio automático), pausar ou retomar o agendamento e consultar uma contagem regressiva e o último estado informado pelo worker. Configure o mesmo `WORKER_CONTROL_SECRET` no ambiente do site e no arquivo `.env` do worker, mantendo-o separado de `NOTIFY_SECRET`. O worker consulta a configuração e informa seu estado por HTTPS de saída a cada 30 segundos. Não é necessária uma porta pública nem um IP fixo. Configure essa variável no ambiente de produção da Vercel e faça uma nova implantação para habilitar o controle remoto em produção.
 
 Na inicialização, o servidor avisa quando MongoDB, e-mail ou publicação protegida não estão configurados. Uma configuração SMTP parcial, uma variável `PORT` inválida ou uma `APP_URL` que não use HTTP/HTTPS interrompe a inicialização com uma mensagem que identifica a configuração sem revelar seu valor.
 
@@ -176,22 +180,27 @@ Na inicialização, o servidor avisa quando MongoDB, e-mail ou publicação prot
 | `GET` | `/api/news` | Retorna a edição mais recente. |
 | `GET` | `/api/news?date=dd/mm/yyyy` | Retorna uma edição por data. |
 | `GET` | `/api/news?history=true` | Lista as datas de edições disponíveis. |
+| `GET` | `/api/weekly-editions?slug=...` | Retorna a edição semanal publicada mais recente (ou a do `slug` informado) e o histórico semanal. |
+| `GET` | `/api/daily-digests?date=...` | Retorna o resumo diário enviado mais recente (ou o da `date` informada, em `yyyy-mm-dd` ou `dd/mm/yyyy`) e o histórico de resumos. |
 | `POST` | `/api/news` | Publica ou atualiza notícias de uma edição. Exige `NOTIFY_SECRET`; também requer R2 ao enviar uma imagem. |
 | `POST` | `/api/subscribe` | Solicita confirmação de assinatura por e-mail. |
 | `GET` | `/api/confirm?token=...` | Confirma uma assinatura. |
 | `GET`, `POST` | `/api/unsubscribe?token=...` | GET exibe a confirmação do cancelamento; POST conclui o cancelamento. |
-| `POST` | `/api/notify-news` | Envia notificações de notícias publicadas. Exige `NOTIFY_SECRET`. |
+| `POST` | `/api/notify-news` | Envia os resumos diários devidos (aprovados ou agendados) e retoma envios interrompidos. Chamado pelo worker. Exige `NOTIFY_SECRET`. |
 | `POST` | `/api/migrate-news` | Importação pontual das edições JSON de `data/` para o MongoDB. Exige `NOTIFY_SECRET`; existe como função da Vercel, mas não é montada no servidor Express local. |
 | `POST` | `/api/admin/login` | Inicia uma sessão administrativa. |
 | `POST` | `/api/admin/logout` | Encerra uma sessão administrativa. |
 | `GET` | `/api/admin/dashboard?days=7` | Consulta métricas de inscritos, e-mails e worker. Exige sessão administrativa. |
 | `POST` | `/api/admin/test-email` | Envia uma cópia de teste ao endereço informado por um administrador autenticado. Exige uma sessão válida assinada com `ADMIN_SESSION_SECRET` e funciona em Preview e produção. |
 | `GET`, `POST`, `PUT`, `DELETE` | `/api/admin/updates` | Gerencia avisos do site. Exige sessão administrativa. |
-| `GET`, `PUT` | `/api/admin/schedule` | Consulta ou altera o intervalo e o estado do agendamento do worker. Exige sessão administrativa. |
-| `POST` | `/api/admin/dispatch` | Envia imediatamente as notícias pendentes. Exige sessão administrativa. |
+| `GET`, `PUT` | `/api/admin/schedule` | Consulta ou altera o intervalo, o estado do agendamento do worker e o horário do resumo (`digestSendTime`). Exige sessão administrativa. |
+| `POST` | `/api/admin/dispatch` | Executa imediatamente o envio do resumo diário. Exige sessão administrativa. |
+| `GET`, `POST` | `/api/admin/digests` | Lista os resumos diários, ou `POST` com `action: "approve"` ou `action: "test"`. Exige sessão administrativa. |
+| `GET`, `PUT`, `DELETE` | `/api/admin/email-banner` | Consulta, define (link ou envio de imagem) ou redefine o banner do e-mail. Exige sessão administrativa. |
 | `GET` | `/api/updates/active` | Consulta o aviso ativo no momento. |
 | `GET` | `/api/worker/config` | Consulta a configuração de agendamento do worker. Exige `WORKER_CONTROL_SECRET`. |
 | `POST` | `/api/worker/heartbeat` | Informa o estado do worker e o horário da próxima execução. Exige `WORKER_CONTROL_SECRET`. |
+| `GET` | `/api/impostometro`, `/api/gastometro` | Dados do Impostômetro e do Gastômetro, encaminhados na Vercel para `/api/public-data`. |
 | `GET` | `/api/camara-deputados`, `/api/camara-despesas`, `/api/camara-ceap`, `/api/transferegov-emendas` | Manipuladores de dados públicos montados pelo Express local. Na Vercel, use `/api/public-data?source=...`; os rewrites dos caminhos amigáveis ainda não estão configurados, então as requisições atuais do frontend para esses caminhos não são encaminhadas lá. |
 
 As datas das edições usam o formato `dd/mm/yyyy`. A API também retorna `issueNumber` quando a edição já foi registrada. Publicação, notificação e migração usam `NOTIFY_SECRET` como token Bearer; os endpoints do worker usam `WORKER_CONTROL_SECRET`. Os endpoints administrativos usam o cookie de sessão criado no login, não um segredo no cabeçalho `Authorization`.
@@ -211,7 +220,7 @@ npm run lint
 
 Os testes unitários usam substitutos para o MongoDB e o envio de e-mails, portanto não exigem serviços externos nem credenciais de produção. Os testes de navegador usam Playwright e Chromium. O workflow está configurado para executar testes unitários no Node.js 20 e 22, lint e testes de navegador em pull requests direcionados à `main`. Rastros e relatórios do navegador são enviados como artefatos quando essas verificações falham.
 
-O script `npm test` lista explicitamente os arquivos dos testes unitários e atualmente não inclui `test/worker-schedule.test.js`; execute esse teste separadamente com `node --test test/worker-schedule.test.js`.
+O script `npm test` lista explicitamente os arquivos dos testes unitários e atualmente não inclui `test/worker-schedule.test.js` nem `test/political-score.test.js`; execute-os separadamente com `node --test test/worker-schedule.test.js test/political-score.test.js`.
 
 Para executar os testes de navegador localmente, instale o Chromium:
 
@@ -232,7 +241,7 @@ Se o envio falhar, verifique se as duas variáveis SMTP estão configuradas, se 
 
 - Configure `APP_URL` como a origem canônica do site (por exemplo, `https://seudominio.com`), sem caminho, query string ou fragmento. Os links enviados por e-mail não devem depender do cabeçalho `Host` recebido.
 - Em produção, `APP_URL` e `MONGODB_URI` são obrigatórias; a inicialização informa claramente quando falta configuração necessária.
-- O cancelamento de inscrição usa GET apenas para exibir a página de confirmação e POST para concluir a ação. O manipulador define `Referrer-Policy: no-referrer` nesse fluxo. Atualmente, `vercel.json` configura rewrites, mas não declara regras próprias de cabeçalhos de segurança.
+- O cancelamento de inscrição usa GET apenas para exibir a página de confirmação e POST para concluir a ação. O manipulador define `Referrer-Policy: no-referrer` nesse fluxo. O servidor Express local define cabeçalhos de segurança (CSP, `X-Frame-Options`, HSTS em HTTPS) por meio de `lib/security-headers.js`; na Vercel, o `vercel.json` declara rewrites e regras de `Cache-Control` para arquivos estáticos, mas nenhuma regra de cabeçalhos de segurança.
 - As consultas à Câmara dos Deputados e ao Transferegov usam limites de tempo e tamanho, cache local limitado e cache compartilhado no CDN para respostas públicas bem-sucedidas. As listas de deputados e despesas usam `s-maxage=300` (5 minutos), a CEAP usa `s-maxage=1800` (30 minutos) e as emendas do Transferegov usam `s-maxage=600` (10 minutos). O `stale-while-revalidate` permite servir dados temporariamente desatualizados enquanto o CDN atualiza o cache. Respostas de erro não recebem esses cabeçalhos, e a API de notícias não usa cache compartilhado no CDN para evitar atrasos após a publicação de uma edição.
 - O código da aplicação não chama `url.parse()` diretamente. Para identificar a origem de um aviso `DEP0169`, reproduza-o com `NODE_OPTIONS=--trace-deprecation` e inspecione o stack trace do runtime/implantação em vez de atualizar dependências sem diagnóstico.
 
