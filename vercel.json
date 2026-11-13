@@ -292,8 +292,8 @@
   ],
   "redirects": [
     {
-      "source": "/sports/",
-      "destination": "/sports",
+      "source": "/sports",
+      "destination": "/sports/",
       "permanent": true
     }
   ]
