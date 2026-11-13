@@ -27,19 +27,44 @@ function isHttpsUrl(value) {
   }
 }
 
+function hasValidImageSignature(bytes, contentType) {
+  if (contentType === 'image/jpeg') {
+    return bytes.length >= 3 && bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff;
+  }
+  if (contentType === 'image/png') {
+    return bytes.length >= 8 && [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]
+      .every((value, index) => bytes[index] === value);
+  }
+  if (contentType === 'image/gif') {
+    const signature = String.fromCharCode(...bytes.slice(0, 6));
+    return signature === 'GIF87a' || signature === 'GIF89a';
+  }
+  if (contentType === 'image/webp') {
+    return bytes.length >= 12 &&
+      String.fromCharCode(...bytes.slice(0, 4)) === 'RIFF' &&
+      String.fromCharCode(...bytes.slice(8, 12)) === 'WEBP';
+  }
+  if (contentType === 'image/avif') {
+    const brand = String.fromCharCode(...bytes.slice(8, 12));
+    return bytes.length >= 12 && String.fromCharCode(...bytes.slice(4, 8)) === 'ftyp' &&
+      (brand === 'avif' || brand === 'avis');
+  }
+  return false;
+}
+
 async function verifyExternalImageUrl(sourceUrl, declaredContentType) {
   let currentUrl = sourceUrl;
   let redirects = 0;
-  let method = 'HEAD';
 
   while (redirects <= 3) {
     const url = await validatePublicHttpsUrl(currentUrl);
     const response = await fetch(url, {
-      method,
+      method: 'GET',
       redirect: 'manual',
       headers: {
         'User-Agent': 'kings-newsletter-image-verifier/1.0',
-        Accept: 'image/avif,image/webp,image/*'
+        Accept: 'image/avif,image/webp,image/*',
+        Range: 'bytes=0-15'
       },
       signal: AbortSignal.timeout(12000)
     });
@@ -53,12 +78,7 @@ async function verifyExternalImageUrl(sourceUrl, declaredContentType) {
       continue;
     }
 
-    if ((response.status === 405 || response.status === 501) && method === 'HEAD') {
-      method = 'GET';
-      continue;
-    }
-
-    if (!response.ok) {
+    if (![200, 206].includes(response.status)) {
       throw new Error('Não foi possível verificar a imagem da fonte (HTTP ' + response.status + ').');
     }
 
@@ -73,8 +93,13 @@ async function verifyExternalImageUrl(sourceUrl, declaredContentType) {
       throw new Error('A imagem excede o limite de 8 MB.');
     }
 
-    if (method === 'GET' && response.body?.cancel) {
-      await response.body.cancel().catch(() => {});
+    const reader = response.body?.getReader?.();
+    if (!reader) throw new Error('A resposta não contém dados de imagem.');
+    const firstChunk = await reader.read();
+    const bytes = Array.from(firstChunk.value || []);
+    await reader.cancel().catch(() => {});
+    if (!hasValidImageSignature(bytes, contentType)) {
+      throw new Error('Os bytes recebidos não correspondem ao formato de imagem declarado.');
     }
 
     return { url: url.href, contentType };
