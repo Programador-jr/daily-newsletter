@@ -289,5 +289,12 @@
       "source": "/subscription-status",
       "destination": "/subscription-status.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/sports/",
+      "destination": "/sports",
+      "permanent": true
+    }
   ]
 }
