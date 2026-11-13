@@ -320,6 +320,30 @@ test('a context that opens with its own question uses it as the section heading'
   assert.match(text, /O que merece atenção\? A previsão não indica danos\./);
 });
 
+test('a story contextLabel names the context section in html and text', () => {
+  const digest = makeDigest({ stories: [{ title: 'Apostas e violência', context: 'A conta chega a quem nem apostou.', contextLabel: ' Quem paga a conta ' }] });
+  const { html, text } = renderDigestEmail(digest);
+  assert.match(html, />Quem paga a conta<\/p>/);
+  assert.doesNotMatch(html, /Além da manchete|Por que importa\?/);
+  assert.match(text, /Quem paga a conta: A conta chega a quem nem apostou\./);
+});
+
+test('contextLabel wins over an opening question, which is not repeated', () => {
+  const digest = makeDigest({ stories: [{ title: 'Orçamento', context: 'Por que importa?\n\nDívida continua sendo dívida.', contextLabel: 'Faça as contas' }] });
+  const { html } = renderDigestEmail(digest);
+  assert.match(html, />Faça as contas<\/p>/);
+  assert.doesNotMatch(html, /Por que importa\?/);
+});
+
+test('without a label or opening question the context uses the default heading', () => {
+  const tooLong = 'x'.repeat(81);
+  const digest = makeDigest({ stories: [{ title: 'Sem rótulo', context: 'Texto.', contextLabel: tooLong }] });
+  const { html, text } = renderDigestEmail(digest);
+  assert.match(html, />Além da manchete<\/p>/);
+  assert.doesNotMatch(html, new RegExp(tooLong));
+  assert.match(text, /Além da manchete: Texto\./);
+});
+
 test('subscriber emails use the banner chosen in the admin and carry no signature', async () => {
   state.subscribers = [subscriber('s1', 'one@example.com')];
   state.digests[0].status = 'approved';
