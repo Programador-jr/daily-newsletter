@@ -313,11 +313,16 @@ test('news publishing requires and stores a verified external image without usin
   const originalFetch = global.fetch;
   global.fetch = async () => ({
     ok: true,
-    status: 200,
+    status: 206,
     headers: {
-      get: name => name.toLowerCase() === 'content-type' ? 'image/jpeg' : name.toLowerCase() === 'content-length' ? '1234' : null
+      get: name => name.toLowerCase() === 'content-type' ? 'image/jpeg' : name.toLowerCase() === 'content-length' ? '16' : null
     },
-    body: null
+    body: {
+      getReader: () => ({
+        read: async () => ({ value: Uint8Array.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05]), done: false }),
+        cancel: async () => {}
+      })
+    }
   });
   t.after(() => { global.fetch = originalFetch; });
 
