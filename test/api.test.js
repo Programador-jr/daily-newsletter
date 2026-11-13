@@ -29,6 +29,9 @@ const modules = {
   '../lib/edition-numbering': {
     ensureEdition: async date => state.editions.find(item => item.editionDate === date) || { editionDate: date, issueNumber: 1 }
   },
+  '../lib/r2': {
+    validatePublicHttpsUrl: async value => new URL(value)
+  },
   '../lib/db': {
     connectDatabase: async () => {
       state.databaseCalls += 1;
@@ -305,8 +308,19 @@ test('news publishing rejects invalid dates and empty editions', async () => {
   }
 });
 
-test('news publishing normalizes valid stories without sending notifications', async () => {
+test('news publishing requires and stores a verified external image without using R2', async t => {
   state.bulkWriteResult = { upsertedCount: 1, modifiedCount: 0 };
+  const originalFetch = global.fetch;
+  global.fetch = async () => ({
+    ok: true,
+    status: 200,
+    headers: {
+      get: name => name.toLowerCase() === 'content-type' ? 'image/jpeg' : name.toLowerCase() === 'content-length' ? '1234' : null
+    },
+    body: null
+  });
+  t.after(() => { global.fetch = originalFetch; });
+
   const response = createResponse();
 
   await newsHandler(createRequest({
@@ -322,19 +336,62 @@ test('news publishing normalizes valid stories without sending notifications', a
         source: ' Fonte ',
         publishedAt: '06/10/2026',
         url: ' https://example.com/story ',
-        headline: true
+        headline: true,
+        imageUrl: 'https://images.example.com/story.jpg',
+        imageAlt: 'Imagem de arquivo relacionada à notícia.',
+        imageSourceUrl: 'https://commons.wikimedia.org/wiki/File:Example.jpg',
+        imageSourceName: 'Wikimedia Commons',
+        imageCredit: 'Autoria Exemplo / Wikimedia Commons',
+        imageLicense: 'CC BY 4.0',
+        imageLicenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+        imageTerms: 'Atribuição obrigatória; indicar alterações.',
+        imageOrigin: 'Imagem contextual de arquivo.',
+        imageKind: 'contextual_archive',
+        imageContentType: 'image/jpeg',
+        imageLicenseVerified: true
       }]
     }
   }), response);
 
+  const saved = state.bulkWriteCalls[0][0][0].updateOne.update.$set.image;
   assert.equal(response.statusCode, 200);
   assert.equal(response.body.inserted, 1);
   assert.equal(response.body.issueNumber, 1);
   assert.equal(state.bulkWriteCalls.length, 1);
   assert.equal(state.bulkWriteCalls[0][0][0].updateOne.filter.url, 'https://example.com/story');
   assert.equal(state.bulkWriteCalls[0][0][0].updateOne.update.$set.title, 'Notícia');
+  assert.equal(saved.url, 'https://images.example.com/story.jpg');
+  assert.equal(saved.contentType, 'image/jpeg');
+  assert.equal(saved.storage, 'external');
+  assert.equal(saved.licenseVerified, true);
+  assert.equal(saved.urlVerified, true);
   assert.equal(response.body.notification, null);
   assert.equal(state.notificationCalls, 0);
+});
+
+test('news publishing rejects stories without verified image and license metadata', async () => {
+  const response = createResponse();
+
+  await newsHandler(createRequest({
+    method: 'POST',
+    headers: { authorization: 'Bearer test-notify-secret' },
+    body: {
+      date: '06/10/2026',
+      stories: [{
+        category: 'Política',
+        title: 'Notícia sem imagem',
+        summary: 'Resumo',
+        context: 'Contexto',
+        source: 'Fonte',
+        publishedAt: '06/10/2026',
+        url: 'https://example.com/story'
+      }]
+    }
+  }), response);
+
+  assert.equal(response.statusCode, 400);
+  assert.match(response.body.error, /campos inválidos/);
+  assert.equal(state.bulkWriteCalls.length, 0);
 });
 
 test('subscription endpoint stops requests when the distributed rate limit is exceeded', async () => {
