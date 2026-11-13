@@ -66,6 +66,7 @@ const toPublicStory = story => {
     title: text(story.title),
     summary: text(story.summary),
     context: text(story.context),
+    contextLabel: text(story.contextLabel).length <= 80 ? text(story.contextLabel) : '',
     source: text(story.source),
     url: safeUrl(story.articleUrl || story.url),
     image

@@ -24,7 +24,8 @@
   const BRAND = 'O Dia em Perspectiva';
   const PAGE_PATH = '/resumo-diario';
   const SIGN_OFF = 'King’s Newsletter — Informação, contexto e análise para compreender o que acontece no Brasil e no mundo.';
-  const CONTEXT_HEADING = 'Por que isso importa?';
+  // Título do contexto quando a matéria não traz `contextLabel` nem abre com pergunta.
+  const CONTEXT_HEADING = 'Além da manchete';
   const WATCH_ID = 'o-que-acompanhar';
   const WATCH_HEADING = 'O que acompanhar';
   const WORDS_PER_MINUTE = 200;
@@ -78,7 +79,7 @@
   };
 
   /* Cada linha é um parágrafo; "*", "-" ou "•" formam lista; uma linha curta
-     terminada em "?" vira subtítulo ("Por que isso importa?"). */
+     terminada em "?" vira subtítulo (ex.: "O que merece atenção?"). */
   const isQuestion = line => line.length <= 90 && /\?$/.test(line);
 
   const textBlocks = text => {
@@ -412,8 +413,16 @@
     if (figure) block.append(figure);
     textBlocks(story.summary).forEach(node => block.append(node));
     if (story.context) {
-      if (!isQuestion(firstLine(story.context))) block.append(el('h4', 'weekly-question', CONTEXT_HEADING));
-      textBlocks(story.context).forEach(node => block.append(node));
+      const label = typeof story.contextLabel === 'string' ? story.contextLabel.trim() : '';
+      let context = story.context;
+      if (label) {
+        // O rótulo da matéria substitui a pergunta de abertura, se houver.
+        if (isQuestion(firstLine(context))) context = String(context).trim().split(/\r?\n/).slice(1).join('\n');
+        block.append(el('h4', 'weekly-question', label));
+      } else if (!isQuestion(firstLine(context))) {
+        block.append(el('h4', 'weekly-question', CONTEXT_HEADING));
+      }
+      textBlocks(context).forEach(node => block.append(node));
     }
     const source = renderSource(story);
     if (source) block.append(source);
