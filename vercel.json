@@ -74,6 +74,10 @@
   ],
   "rewrites": [
     {
+      "source": "/sports/",
+      "destination": "https://kings-sports.vercel.app/sports"
+    },
+    {
       "source": "/sports/:path*",
       "destination": "https://kings-sports.vercel.app/sports/:path*"
     },
