@@ -2,7 +2,7 @@ const { connectDatabase } = require('../lib/db');
 const News = require('../lib/news');
 const Edition = require('../lib/edition');
 const { ensureEdition } = require('../lib/edition-numbering');
-const { uploadImageFromUrl } = require('../lib/r2');
+const { validatePublicHttpsUrl } = require('../lib/r2');
 const { isBearerAuthorized } = require('../lib/bearer-auth');
 const { setPublicCache } = require('../lib/public-cache');
 
@@ -10,6 +10,78 @@ const { setPublicCache } = require('../lib/public-cache');
 // e o Mongo deixa de ser consultado a cada visita da home e do arquivo.
 const NEWS_CDN_SECONDS = 300;
 const NEWS_STALE_SECONDS = 86400;
+const MAX_EXTERNAL_IMAGE_BYTES = 8 * 1024 * 1024;
+const ALLOWED_IMAGE_TYPES = new Set([
+  'image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'
+]);
+const IMAGE_KINDS = new Set([
+  'original', 'contextual_archive', 'illustrative_archive', 'contextual_map'
+]);
+
+function isHttpsUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && !url.username && !url.password;
+  } catch {
+    return false;
+  }
+}
+
+async function verifyExternalImageUrl(sourceUrl, declaredContentType) {
+  let currentUrl = sourceUrl;
+  let redirects = 0;
+  let method = 'HEAD';
+
+  while (redirects <= 3) {
+    const url = await validatePublicHttpsUrl(currentUrl);
+    const response = await fetch(url, {
+      method,
+      redirect: 'manual',
+      headers: {
+        'User-Agent': 'kings-newsletter-image-verifier/1.0',
+        Accept: 'image/avif,image/webp,image/*'
+      },
+      signal: AbortSignal.timeout(12000)
+    });
+
+    if ([301, 302, 303, 307, 308].includes(response.status)) {
+      if (redirects === 3) throw new Error('A imagem excedeu o limite de redirecionamentos.');
+      const location = response.headers.get('location');
+      if (!location) throw new Error('Redirecionamento de imagem inválido.');
+      currentUrl = new URL(location, url).href;
+      redirects += 1;
+      continue;
+    }
+
+    if ((response.status === 405 || response.status === 501) && method === 'HEAD') {
+      method = 'GET';
+      continue;
+    }
+
+    if (!response.ok) {
+      throw new Error('Não foi possível verificar a imagem da fonte (HTTP ' + response.status + ').');
+    }
+
+    const contentType = (response.headers.get('content-type') || '').split(';')[0].trim().toLowerCase();
+    if (!ALLOWED_IMAGE_TYPES.has(contentType)) {
+      throw new Error('A URL não entrega um arquivo de imagem compatível.');
+    }
+    if (declaredContentType && declaredContentType !== contentType) {
+      throw new Error('O MIME declarado não corresponde ao conteúdo servido pela imagem.');
+    }
+    if (Number(response.headers.get('content-length') || 0) > MAX_EXTERNAL_IMAGE_BYTES) {
+      throw new Error('A imagem excede o limite de 8 MB.');
+    }
+
+    if (method === 'GET' && response.body?.cancel) {
+      await response.body.cancel().catch(() => {});
+    }
+
+    return { url: url.href, contentType };
+  }
+
+  throw new Error('Não foi possível validar a URL direta da imagem.');
+}
 
 function parseDate(value) {
   if (typeof value !== 'string') return null;
@@ -79,6 +151,7 @@ function publishedDateStages() {
 }
 
 function normalizeStory(story, editionDate) {
+  const image = story.image && typeof story.image === 'object' ? story.image : {};
   return {
     editionDate,
     category: String(story.category || '').trim(),
@@ -89,14 +162,31 @@ function normalizeStory(story, editionDate) {
     publishedAt: String(story.publishedAt || '').trim(),
     url: String(story.url || '').trim(),
     headline: Boolean(story.headline),
-    imageUrl: String(story.imageUrl || '').trim(),
-    imageAlt: String(story.imageAlt || '').trim()
+    imageUrl: String(story.imageUrl || image.url || '').trim(),
+    imageAlt: String(story.imageAlt || image.alt || '').trim(),
+    imageSourceUrl: String(story.imageSourceUrl || image.sourceUrl || '').trim(),
+    imageSourceName: String(story.imageSourceName || image.sourceName || image.source || '').trim(),
+    imageCredit: String(story.imageCredit || image.credit || '').trim(),
+    imageLicense: String(story.imageLicense || image.license || '').trim(),
+    imageLicenseUrl: String(story.imageLicenseUrl || image.licenseUrl || '').trim(),
+    imageTerms: String(story.imageTerms || image.terms || '').trim(),
+    imageOrigin: String(story.imageOrigin || image.origin || '').trim(),
+    imageKind: String(story.imageKind || image.kind || '').trim(),
+    imageContentType: String(story.imageContentType || image.contentType || image.mimeType || '').trim().toLowerCase(),
+    imageLicenseVerified: story.imageLicenseVerified === true || image.licenseVerified === true
   };
 }
 
 function validateStory(story) {
-  return story.category && story.title && story.summary && story.context &&
-    story.source && story.publishedAt && /^https?:\/\//.test(story.url);
+  return Boolean(
+    story.category && story.title && story.summary && story.context &&
+    story.source && story.publishedAt && /^https?:\/\//.test(story.url) &&
+    isHttpsUrl(story.imageUrl) && story.imageAlt &&
+    isHttpsUrl(story.imageSourceUrl) && story.imageSourceName &&
+    story.imageCredit && story.imageLicense && isHttpsUrl(story.imageLicenseUrl) &&
+    story.imageTerms && story.imageOrigin && IMAGE_KINDS.has(story.imageKind) &&
+    ALLOWED_IMAGE_TYPES.has(story.imageContentType) && story.imageLicenseVerified === true
+  );
 }
 
 module.exports = async function handler(req, res) {
@@ -182,20 +272,44 @@ module.exports = async function handler(req, res) {
     // editionDate identifies the newsletter edition; publishedAt preserves the real publication date.
     const editionStories = normalized;
 
-    for (const story of editionStories) {
-      const sourceImageUrl = story.imageUrl;
-      const imageAlt = story.imageAlt || story.title;
-      delete story.imageUrl;
-      delete story.imageAlt;
-
-      if (sourceImageUrl) {
-        const uploadedImage = await uploadImageFromUrl(sourceImageUrl);
+    try {
+      await Promise.all(editionStories.map(async story => {
+        const verifiedImage = await verifyExternalImageUrl(story.imageUrl, story.imageContentType);
         story.image = {
-          url: uploadedImage.url,
-          alt: imageAlt,
-          contentType: uploadedImage.contentType
+          url: verifiedImage.url,
+          alt: story.imageAlt,
+          contentType: verifiedImage.contentType,
+          mimeType: verifiedImage.contentType,
+          source: story.imageSourceName,
+          sourceUrl: story.imageSourceUrl,
+          credit: story.imageCredit,
+          attribution: story.imageCredit,
+          license: story.imageLicense,
+          licenseUrl: story.imageLicenseUrl,
+          terms: story.imageTerms,
+          origin: story.imageOrigin,
+          kind: story.imageKind,
+          storage: 'external',
+          licenseVerified: story.imageLicenseVerified,
+          urlVerified: true,
+          isOriginal: story.imageKind === 'original',
+          isContextual: story.imageKind !== 'original',
+          isArchive: story.imageKind.includes('archive'),
+          checkedAt: new Date()
         };
-      }
+
+        for (const field of [
+          'imageUrl', 'imageAlt', 'imageSourceUrl', 'imageSourceName',
+          'imageCredit', 'imageLicense', 'imageLicenseUrl', 'imageTerms',
+          'imageOrigin', 'imageKind', 'imageContentType', 'imageLicenseVerified'
+        ]) {
+          delete story[field];
+        }
+      }));
+    } catch (error) {
+      return res.status(400).json({
+        error: 'Imagem rejeitada: ' + (error?.message || 'não foi possível validar a imagem.')
+      });
     }
 
     const existingHeadline = await News.findOne({ editionDate, headline: true })
@@ -234,9 +348,6 @@ module.exports = async function handler(req, res) {
   } catch (error) {
     // Uma falha não pode ficar guardada na CDN no lugar da edição.
     res.setHeader('Cache-Control', 'no-store');
-    if (error?.code === 'R2_NOT_CONFIGURED') {
-      return res.status(503).json({ error: 'O armazenamento de imagens ainda não está configurado.' });
-    }
     console.error('Erro ao salvar notícias:', error);
     return res.status(500).json({ error: 'Não foi possível salvar as notícias.' });
   }
